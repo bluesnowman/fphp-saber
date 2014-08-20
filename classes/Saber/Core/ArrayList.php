@@ -237,7 +237,7 @@ namespace Saber\Core {
 
 			$failed = false;
 			for ($i = 0; $i < $length; $i++) {
-				if (!$predicate($this->value[$i], Core\Int32::box($i))->unbox() || $failed) {
+				if (!$predicate($this->value[$i], Core\Int32::create($i))->unbox() || $failed) {
 					$buffer[] = $this->value[$i];
 					$failed = true;
 				}
@@ -269,7 +269,7 @@ namespace Saber\Core {
 			$length = $this->__length();
 
 			for ($i = 0; $i < $length; $i++) {
-				$procedure($this->value[$i], Core\Int32::box($i));
+				$procedure($this->value[$i], Core\Int32::create($i));
 			}
 		}
 
@@ -305,7 +305,7 @@ namespace Saber\Core {
 			$length = $this->__length();
 
 			for ($i = 0; $i < $length; $i++) {
-				if (!$predicate($this->value[$i], Core\Int32::box($i))->unbox()) {
+				if (!$predicate($this->value[$i], Core\Int32::create($i))->unbox()) {
 					return Core\Bool::false();
 				}
 			}
@@ -326,7 +326,7 @@ namespace Saber\Core {
 
 			for ($i = 0; $i < $length; $i++) {
 				$value = $this->value[$i];
-				if ($predicate($value, Core\Int32::box($i))->unbox()) {
+				if ($predicate($value, Core\Int32::create($i))->unbox()) {
 					$buffer[] = $value;
 				}
 			}
@@ -347,7 +347,7 @@ namespace Saber\Core {
 
 			for ($i = 0; $i < $length; $i++) {
 				$value = $this->value[$i];
-				if ($predicate($value, Core\Int32::box($i))->unbox()) {
+				if ($predicate($value, Core\Int32::create($i))->unbox()) {
 					return $value;
 				}
 			}
@@ -416,7 +416,7 @@ namespace Saber\Core {
 
 			for ($i = 0; $i < $length; $i++) {
 				if ($object->__equals($this->value[$i])) {
-					return Core\Int32::box($i);
+					return Core\Int32::create($i);
 				}
 			}
 
@@ -449,7 +449,7 @@ namespace Saber\Core {
 		 * @return Core\Bool                                        whether the list is empty
 		 */
 		public final function isEmpty() {
-			return Core\Bool::box($this->__isEmpty());
+			return Core\Bool::create($this->__isEmpty());
 		}
 
 		/**
@@ -500,7 +500,7 @@ namespace Saber\Core {
 		 * @return Core\Int32                                       the length of this array list
 		 */
 		public final function length() {
-			return Core\Int32::box($this->__length());
+			return Core\Int32::create($this->__length());
 		}
 
 		/**
@@ -515,7 +515,7 @@ namespace Saber\Core {
 			$length = $this->__length();
 
 			for ($i = 0; $i < $length; $i++) {
-				$buffer[] = $subroutine($this->value[$i], Core\Int32::box($i));
+				$buffer[] = $subroutine($this->value[$i], Core\Int32::create($i));
 			}
 
 			return new static($buffer);
@@ -608,7 +608,7 @@ namespace Saber\Core {
 			$length = $this->__length();
 
 			for ($i = 0; $i < $length; $i++) {
-				if ($predicate($this->value[$i], Core\Int32::box($i))->unbox()) {
+				if ($predicate($this->value[$i], Core\Int32::create($i))->unbox()) {
 					return Core\Bool::true();
 				}
 			}
@@ -664,7 +664,7 @@ namespace Saber\Core {
 
 			for ($i = 0; $i < $length; $i++) {
 				$value = $this->value[$i];
-				if (!$predicate($value, Core\Int32::box($i))->unbox()) {
+				if (!$predicate($value, Core\Int32::create($i))->unbox()) {
 					break;
 				}
 				$buffer[] = $value;

@@ -72,7 +72,7 @@ namespace Saber\Core {
 		 * @return Core\Integer                                     the absolute value
 		 */
 		public function abs() {
-			return Core\Integer::box(gmp_strval(gmp_abs($this->unbox())));
+			return Core\Integer::create(gmp_strval(gmp_abs($this->unbox())));
 		}
 
 		/**
@@ -83,7 +83,7 @@ namespace Saber\Core {
 		 * @return Core\Integer                                     the result
 		 */
 		public function add(Core\Integer $that) {
-			return Core\Integer::box(gmp_strval(gmp_add($this->unbox(), $that->unbox())));
+			return Core\Integer::create(gmp_strval(gmp_add($this->unbox(), $that->unbox())));
 		}
 
 		/**
@@ -96,7 +96,7 @@ namespace Saber\Core {
 		 *                                                          object
 		 */
 		public function compareTo(Core\Integer $that) {
-			return Core\Int32::box(gmp_cmp($this->unbox(), $that->unbox()));
+			return Core\Int32::create(gmp_cmp($this->unbox(), $that->unbox()));
 		}
 
 		/**
@@ -106,7 +106,7 @@ namespace Saber\Core {
 		 * @return Core\Integer                                     the result
 		 */
 		public function decrement() {
-			return $this->subtract(Core\Integer::box(1));
+			return $this->subtract(Core\Integer::one());
 		}
 
 		/**
@@ -118,7 +118,7 @@ namespace Saber\Core {
 		 * @return Core\Integer                                     the result
 		 */
 		public function divide(Core\Integer $that) {
-			return Core\Integer::box(gmp_strval(gmp_div_q($this->unbox(), $that->unbox())));
+			return Core\Integer::create(gmp_strval(gmp_div_q($this->unbox(), $that->unbox())));
 		}
 
 		/**
@@ -129,7 +129,7 @@ namespace Saber\Core {
 		 *                                                          an even number
 		 */
 		public function even() {
-			return Core\Bool::box(gmp_strval(gmp_div_r($this->unbox(), '2')) == '0');
+			return Core\Bool::create(gmp_strval(gmp_div_r($this->unbox(), '2')) == '0');
 		}
 
 		/**
@@ -140,7 +140,7 @@ namespace Saber\Core {
 		 * @return Core\Integer                                     the greatest common divisor
 		 */
 		public function gcd(Core\Integer $that) {
-			return Core\Integer::box(gmp_strval(gmp_gcd($this->unbox(), $that->unbox())));
+			return Core\Integer::create(gmp_strval(gmp_gcd($this->unbox(), $that->unbox())));
 		}
 
 		/**
@@ -150,7 +150,7 @@ namespace Saber\Core {
 		 * @return Core\Integer                                     the result
 		 */
 		public function increment() {
-			return $this->add(Core\Integer::box(1));
+			return $this->add(Core\Integer::one());
 		}
 
 		/**
@@ -160,7 +160,7 @@ namespace Saber\Core {
 		 * @return Core\Bool                                        whether the number is negative
 		 */
 		public function isNegative() {
-			return Core\Bool::box(gmp_sign($this->unbox()) == -1);
+			return Core\Bool::create(gmp_sign($this->unbox()) == -1);
 		}
 
 		/**
@@ -172,7 +172,7 @@ namespace Saber\Core {
 		 * @return Core\Integer                                     the result
 		 */
 		public function modulo(Core\Integer $that) {
-			return Core\Integer::box(gmp_strval(gmp_div_r($this->unbox(), $that->unbox())));
+			return Core\Integer::create(gmp_strval(gmp_div_r($this->unbox(), $that->unbox())));
 		}
 
 		/**
@@ -184,7 +184,7 @@ namespace Saber\Core {
 		 * @return Core\Integer                                     the result
 		 */
 		public function multiply(Core\Integer $that) {
-			return Core\Integer::box(gmp_strval(gmp_mul($this->unbox(), $that->unbox())));
+			return Core\Integer::create(gmp_strval(gmp_mul($this->unbox(), $that->unbox())));
 		}
 
 		/**
@@ -194,7 +194,7 @@ namespace Saber\Core {
 		 * @return Core\Integer                                     the result
 		 */
 		public function negate() {
-			return Core\Integer::box(gmp_strval(gmp_neg($this->unbox())));
+			return Core\Integer::create(gmp_strval(gmp_neg($this->unbox())));
 		}
 
 		/**
@@ -205,7 +205,7 @@ namespace Saber\Core {
 		 *                                                          an odd number
 		 */
 		public function odd() {
-			return Core\Bool::box(gmp_strval(gmp_div_r($this->unbox(), '2')) != '0');
+			return Core\Bool::create(gmp_strval(gmp_div_r($this->unbox(), '2')) != '0');
 		}
 
 		/**
@@ -217,7 +217,7 @@ namespace Saber\Core {
 		 * @return Core\Integer                                     the result
 		 */
 		public function subtract(Core\Integer $that) {
-			return Core\Integer::box(gmp_strval(gmp_sub($this->unbox(), $that->unbox())));
+			return Core\Integer::create(gmp_strval(gmp_sub($this->unbox(), $that->unbox())));
 		}
 
 		#endregion

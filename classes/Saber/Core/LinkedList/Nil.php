@@ -50,7 +50,7 @@ namespace Saber\Core\LinkedList {
 		 *                                                          to the current object
 		 */
 		public function equals(Core\Any $that) {
-			return Core\Bool::box(($that !== null) && ($that instanceof static));
+			return Core\Bool::create(($that !== null) && ($that instanceof static));
 		}
 
 		/**
@@ -72,7 +72,7 @@ namespace Saber\Core\LinkedList {
 		 *                                                          to the current object
 		 */
 		public function identical(Core\Any $that) {
-			return Core\Bool::box(($that !== null) && ($that instanceof static));
+			return Core\Bool::create(($that !== null) && ($that instanceof static));
 		}
 
 		/**

@@ -65,7 +65,7 @@ namespace Saber\Core\AnyRef {
 		 */
 		public function equals(Core\Any $that) {
 			if (($that !== null) && ($that instanceof static)) {
-				return Core\Bool::box(strcmp((string) serialize($this->unbox()), (string) serialize($that->unbox())) == 0);
+				return Core\Bool::create(strcmp((string) serialize($this->unbox()), (string) serialize($that->unbox())) == 0);
 			}
 			return Core\Bool::false();
 		}
@@ -80,7 +80,7 @@ namespace Saber\Core\AnyRef {
 		 */
 		public function identical(Core\Any $that) {
 			if (($that !== null) && ($that instanceof static)) {
-				return Core\Bool::box(spl_object_hash($this) == spl_object_hash($that));
+				return Core\Bool::create(spl_object_hash($this) == spl_object_hash($that));
 			}
 			return Core\Bool::false();
 		}

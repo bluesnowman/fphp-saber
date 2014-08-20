@@ -36,6 +36,7 @@ namespace Saber\Core\Any {
 		#endregion
 
 		#region Methods -> Boxing/Creation
+
 		/**
 		 * This method returns a value as a boxed object.  A value is typically a PHP typed
 		 * primitive or object.  It is considered type-safe.
@@ -157,7 +158,7 @@ namespace Saber\Core\Any {
 		 * @return Core\String                                      the object's hash code
 		 */
 		public final function hashCode() {
-			return Core\String::box($this->__hashCode());
+			return Core\String::create($this->__hashCode());
 		}
 
 		/**
@@ -190,7 +191,7 @@ namespace Saber\Core\Any {
 		 * @return Core\String                                      the object as a string
 		 */
 		public final function toString() {
-			return Core\String::box($this->__toString());
+			return Core\String::create($this->__toString());
 		}
 
 		/**
@@ -201,7 +202,7 @@ namespace Saber\Core\Any {
 		 * @return Core\String                                      the object's class type
 		 */
 		public final function typeOf() {
-			return Core\String::box($this->__typeOf());
+			return Core\String::create($this->__typeOf());
 		}
 
 		#endregion

@@ -65,7 +65,7 @@ namespace Saber\Core {
 		 * @return Core\Bool                                        the object
 		 */
 		public static function false() {
-			return Core\Bool::box(false);
+			return Core\Bool::create(false);
 		}
 
 		/**
@@ -75,7 +75,7 @@ namespace Saber\Core {
 		 * @return Core\Bool                                        the object
 		 */
 		public static function true() {
-			return Core\Bool::box(true);
+			return Core\Bool::create(true);
 		}
 
 		#endregion
@@ -104,7 +104,7 @@ namespace Saber\Core {
 		 * @return Core\Bool                                        whether both sides evaluate to true
 		 */
 		public function and_(Core\Bool $that) {
-			return Core\Bool::box(($this->unbox() && $that->unbox()));
+			return Core\Bool::create($this->unbox() && $that->unbox());
 		}
 
 		/**
@@ -139,7 +139,7 @@ namespace Saber\Core {
 		 * @return Core\Bool                                        whether at least one side is true
 		 */
 		public function or_(Core\Bool $that) {
-			return Core\Bool::box(($this->unbox() || $that->unbox()));
+			return Core\Bool::create($this->unbox() || $that->unbox());
 		}
 
 		/**
@@ -150,7 +150,7 @@ namespace Saber\Core {
 		 * @return Core\Bool                                        whether at least one side is false
 		 */
 		public function nand(Core\Bool $that) {
-			return Core\Bool::box(!($this->unbox() && $that->unbox()));
+			return Core\Bool::create(!($this->unbox() && $that->unbox()));
 		}
 
 		/**
@@ -161,7 +161,7 @@ namespace Saber\Core {
 		 * @return Core\Bool                                        whether both sides evaluate to false
 		 */
 		public function nor(Core\Bool $that) {
-			return Core\Bool::box(!($this->unbox() || $that->unbox()));
+			return Core\Bool::create(!($this->unbox() || $that->unbox()));
 		}
 
 		/**
@@ -171,7 +171,7 @@ namespace Saber\Core {
 		 * @return Core\Bool                                        the negation
 		 */
 		public function not() {
-			return Core\Bool::box(!$this->unbox());
+			return Core\Bool::create(!$this->unbox());
 		}
 
 		/**
@@ -182,7 +182,7 @@ namespace Saber\Core {
 		 * @return Core\Int32                                       the value as an integer
 		 */
 		public function toInt32() {
-			return Core\Int32::box($this->unbox());
+			return Core\Int32::create($this->unbox());
 		}
 
 		/**
@@ -195,7 +195,7 @@ namespace Saber\Core {
 		 *                                                          but not both
 		 */
 		public function xor_(Core\Bool $that) {
-			return Core\Bool::box($this->unbox() xor $that->unbox());
+			return Core\Bool::create($this->unbox() xor $that->unbox());
 		}
 
 		#endregion

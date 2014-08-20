@@ -45,7 +45,7 @@ namespace Saber\Core {
 		 * @return Core\Float                                       the absolute value
 		 */
 		public function abs() {
-			return Core\Float::box(abs($this->unbox()));
+			return Core\Float::create(abs($this->unbox()));
 		}
 
 		/**
@@ -56,7 +56,7 @@ namespace Saber\Core {
 		 * @return Core\Float                                       the result
 		 */
 		public function add(Core\Float $that) {
-			return Core\Float::box($this->unbox() + $that->unbox());
+			return Core\Float::create($this->unbox() + $that->unbox());
 		}
 
 		/**
@@ -102,7 +102,7 @@ namespace Saber\Core {
 		 * @return Core\Float                                       the result
 		 */
 		public function divide(Core\Float $that) {
-			return Core\Float::box($this->unbox() / $that->unbox());
+			return Core\Float::create($this->unbox() / $that->unbox());
 		}
 
 		/**
@@ -138,7 +138,7 @@ namespace Saber\Core {
 		 * @return Core\Float                                       the result
 		 */
 		public function modulo(Core\Float $that) {
-			return Core\Float::box(fmod($this->unbox(), $that->unbox()));
+			return Core\Float::create(fmod($this->unbox(), $that->unbox()));
 		}
 
 		/**
@@ -150,7 +150,7 @@ namespace Saber\Core {
 		 * @return Core\Float                                       the result
 		 */
 		public function multiply(Core\Float $that) {
-			return Core\Float::box($this->unbox() * $that->unbox());
+			return Core\Float::create($this->unbox() * $that->unbox());
 		}
 
 		/**
@@ -160,7 +160,7 @@ namespace Saber\Core {
 		 * @return Core\Float                                       the result
 		 */
 		public function negate() {
-			return Core\Float::box($this->unbox() * -1.0);
+			return Core\Float::create($this->unbox() * -1.0);
 		}
 
 		/**
@@ -172,7 +172,7 @@ namespace Saber\Core {
 		 * @return Core\Float                                       the result
 		 */
 		public function subtract(Core\Float $that) {
-			return Core\Float::box($this->unbox() - $that->unbox());
+			return Core\Float::create($this->unbox() - $that->unbox());
 		}
 
 		#endregion

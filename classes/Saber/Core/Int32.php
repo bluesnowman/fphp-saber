@@ -45,7 +45,7 @@ namespace Saber\Core {
 		 * @return Core\Int32                                       the absolute value
 		 */
 		public function abs() {
-			return Core\Int32::box(abs($this->unbox()));
+			return Core\Int32::create(abs($this->unbox()));
 		}
 
 		/**
@@ -56,7 +56,7 @@ namespace Saber\Core {
 		 * @return Core\Int32                                       the result
 		 */
 		public function add(Core\Int32 $that) {
-			return Core\Int32::box($this->unbox() + $that->unbox());
+			return Core\Int32::create($this->unbox() + $that->unbox());
 		}
 
 		/**
@@ -102,7 +102,7 @@ namespace Saber\Core {
 		 * @return Core\Int32                                       the result
 		 */
 		public function divide(Core\Int32 $that) {
-			return Core\Int32::box($this->unbox() / $that->unbox());
+			return Core\Int32::create($this->unbox() / $that->unbox());
 		}
 
 		/**
@@ -113,7 +113,7 @@ namespace Saber\Core {
 		 *                                                          an even number
 		 */
 		public function even() {
-			return Core\Bool::box(($this->unbox() % 2) == 0);
+			return Core\Bool::create(($this->unbox() % 2) == 0);
 		}
 
 		/**
@@ -124,7 +124,7 @@ namespace Saber\Core {
 		 * @return Core\Int32                                       the greatest common divisor
 		 */
 		public function gcd(Core\Int32 $that) {
-			return Core\Int32::box($this->_gcd(abs($this->unbox()), abs($that->unbox())));
+			return Core\Int32::create($this->_gcd(abs($this->unbox()), abs($that->unbox())));
 		}
 
 		/**
@@ -172,7 +172,7 @@ namespace Saber\Core {
 		 * @return Core\Int32                                       the result
 		 */
 		public function multiply(Core\Int32 $that) {
-			return Core\Int32::box($this->unbox() * $that->unbox());
+			return Core\Int32::create($this->unbox() * $that->unbox());
 		}
 
 		/**
@@ -193,7 +193,7 @@ namespace Saber\Core {
 		 *                                                          an odd number
 		 */
 		public function odd() {
-			return Core\Bool::box(($this->unbox() % 2) != 0);
+			return Core\Bool::create(($this->unbox() % 2) != 0);
 		}
 
 		/**
@@ -205,7 +205,7 @@ namespace Saber\Core {
 		 * @return Core\Int32                                       the result
 		 */
 		public function subtract(Core\Int32 $that) {
-			return Core\Int32::box($this->unbox() - $that->unbox());
+			return Core\Int32::create($this->unbox() - $that->unbox());
 		}
 
 	}

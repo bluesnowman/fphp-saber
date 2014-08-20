@@ -108,7 +108,7 @@ namespace Saber\Core {
 		 *                                                          character
 		 */
 		public function isAlpha() {
-			return Core\Bool::box(ctype_alpha($this->unbox()));
+			return Core\Bool::create(ctype_alpha($this->unbox()));
 		}
 
 		/**
@@ -119,7 +119,7 @@ namespace Saber\Core {
 		 *                                                          character
 		 */
 		public function isAlphaNum() {
-			return Core\Bool::box(ctype_alnum($this->unbox()));
+			return Core\Bool::create(ctype_alnum($this->unbox()));
 		}
 
 		/**
@@ -130,7 +130,7 @@ namespace Saber\Core {
 		 *                                                          character
 		 */
 		public function isAscii() {
-			return Core\Bool::box(preg_match('/^[\x20-\x7f]$/', $this->unbox()));
+			return Core\Bool::create(preg_match('/^[\x20-\x7f]$/', $this->unbox()));
 		}
 
 		/**
@@ -141,7 +141,7 @@ namespace Saber\Core {
 		 *                                                          character
 		 */
 		public function isControl() {
-			return Core\Bool::box(ctype_cntrl($this->unbox()));
+			return Core\Bool::create(ctype_cntrl($this->unbox()));
 		}
 
 		/**
@@ -152,7 +152,7 @@ namespace Saber\Core {
 		 *                                                          character
 		 */
 		public function isCyrillic() {
-			return Core\Bool::box(preg_match('/^\p{Cyrillic}$/u', $this->unbox()));
+			return Core\Bool::create(preg_match('/^\p{Cyrillic}$/u', $this->unbox()));
 		}
 
 		/**
@@ -162,7 +162,7 @@ namespace Saber\Core {
 		 * @return Core\Bool                                        whether this is a digit
 		 */
 		public function isDigit() {
-			return Core\Bool::box(ctype_digit($this->unbox()));
+			return Core\Bool::create(ctype_digit($this->unbox()));
 		}
 
 		/**
@@ -172,7 +172,7 @@ namespace Saber\Core {
 		 * @return Core\Bool                                        whether this is a hex-digit
 		 */
 		public function isHexDigit() {
-			return Core\Bool::box(ctype_xdigit($this->unbox()));
+			return Core\Bool::create(ctype_xdigit($this->unbox()));
 		}
 
 		/**
@@ -183,7 +183,7 @@ namespace Saber\Core {
 		 *                                                          character
 		 */
 		public function isLatin1() {
-			return Core\Bool::box(preg_match('/^\p{Latin}$/', $this->unbox()));
+			return Core\Bool::create(preg_match('/^\p{Latin}$/', $this->unbox()));
 		}
 
 		/**
@@ -194,7 +194,7 @@ namespace Saber\Core {
 		 *                                                          character
 		 */
 		public function isLowerCase() {
-			return Core\Bool::box(ctype_lower($this->unbox()));
+			return Core\Bool::create(ctype_lower($this->unbox()));
 		}
 
 		/**
@@ -204,7 +204,7 @@ namespace Saber\Core {
 		 * @return Core\Bool                                        whether this is a number
 		 */
 		public function isNumber() {
-			return Core\Bool::box(preg_match('/^\p{N}$/', $this->unbox()));
+			return Core\Bool::create(preg_match('/^\p{N}$/', $this->unbox()));
 		}
 
 		/**
@@ -214,7 +214,7 @@ namespace Saber\Core {
 		 * @return Core\Bool                                        whether this is an oct-digit
 		 */
 		public function isOctDigit() {
-			return Core\Bool::box(preg_match('/^[0-7]$/', $this->unbox()));
+			return Core\Bool::create(preg_match('/^[0-7]$/', $this->unbox()));
 		}
 
 		/**
@@ -225,7 +225,7 @@ namespace Saber\Core {
 		 *                                                          character
 		 */
 		public function isPrintable() {
-			return Core\Bool::box(ctype_print($this->unbox()));
+			return Core\Bool::create(ctype_print($this->unbox()));
 		}
 
 		/**
@@ -236,7 +236,7 @@ namespace Saber\Core {
 		 *                                                          character
 		 */
 		public function isPunctuation() {
-			return Core\Bool::box(ctype_punct($this->unbox()));
+			return Core\Bool::create(ctype_punct($this->unbox()));
 		}
 
 		/**
@@ -246,7 +246,7 @@ namespace Saber\Core {
 		 * @return Core\Bool                                        whether this is a mark
 		 */
 		public function isSeparator() {
-			return Core\Bool::box(preg_match('/^\p{Z}$/', $this->unbox()));
+			return Core\Bool::create(preg_match('/^\p{Z}$/', $this->unbox()));
 		}
 
 		/**
@@ -256,7 +256,7 @@ namespace Saber\Core {
 		 * @return Core\Bool                                        whether this is a space
 		 */
 		public function isSpace() {
-			return Core\Bool::box(ctype_space($this->unbox()));
+			return Core\Bool::create(ctype_space($this->unbox()));
 		}
 
 		/**
@@ -266,7 +266,7 @@ namespace Saber\Core {
 		 * @return Core\Bool                                        whether this is a symbol
 		 */
 		public function isSymbol() {
-			return Core\Bool::box(preg_match('/^\p{S}$/', $this->unbox()));
+			return Core\Bool::create(preg_match('/^\p{S}$/', $this->unbox()));
 		}
 
 		/**
@@ -277,7 +277,7 @@ namespace Saber\Core {
 		 *                                                          character
 		 */
 		public function isUpperCase() {
-			return Core\Bool::box(ctype_upper($this->unbox()));
+			return Core\Bool::create(ctype_upper($this->unbox()));
 		}
 
 		/**
@@ -288,7 +288,7 @@ namespace Saber\Core {
 		 * @return Core\Int32                                       the value as an integer
 		 */
 		public function toInt32() {
-			return Core\Int32::box(ord($this->unbox()));
+			return Core\Int32::create(ord($this->unbox()));
 		}
 
 		/**
@@ -298,7 +298,7 @@ namespace Saber\Core {
 		 * @return Core\Char                                        the lower case letter
 		 */
 		public function toLowerCase() {
-			return Core\Char::box(strtolower($this->unbox()));
+			return Core\Char::create(strtolower($this->unbox()));
 		}
 
 		/**
@@ -308,7 +308,7 @@ namespace Saber\Core {
 		 * @return Core\Char                                        the upper case letter
 		 */
 		public function toUpperCase() {
-			return Core\Char::box(strtoupper($this->unbox()));
+			return Core\Char::create(strtoupper($this->unbox()));
 		}
 
 		#endregion

@@ -41,7 +41,7 @@ namespace Saber\Core {
 			}
 			else if (is_string($value)) {
 				$buffer = Core\String::nil();
-				for ($i = strlen($value) - 1; $i >= 0; $i--) {
+				for ($i = mb_strlen($value) - 1; $i >= 0; $i--) {
 					$buffer = $buffer->prepend(Core\Char::box($value[$i]));
 				}
 				return $buffer;
@@ -432,7 +432,7 @@ namespace Saber\Core {
 				$index = $index->increment();
 			}
 
-			return Core\Int32::box(-1);
+			return Core\Int32::negative();
 		}
 
 		/**
@@ -470,7 +470,7 @@ namespace Saber\Core {
 		 * @return Core\Bool                                        whether the string is empty
 		 */
 		public final function isEmpty() {
-			return Core\Bool::box($this->__isEmpty());
+			return Core\Bool::create($this->__isEmpty());
 		}
 
 		/**

@@ -171,7 +171,7 @@ namespace Saber\Core {
 		 */
 		public function first() {
 			$this->assert(function($other) {
-				return Core\Bool::box($other == $this->length());
+				return Core\Bool::create($other == $this->length());
 			}, 2);
 
 			return $this->value[0];
@@ -195,7 +195,7 @@ namespace Saber\Core {
 		 */
 		public function second() {
 			$this->assert(function($other) {
-				return Core\Bool::box($other == $this->length());
+				return Core\Bool::create($other == $this->length());
 			}, 2);
 
 			return $this->value[1];
@@ -209,10 +209,10 @@ namespace Saber\Core {
 		 */
 		public function swap() {
 			$this->assert(function($other) {
-				return Core\Bool::box($other == $this->length());
+				return Core\Bool::create($other == $this->length());
 			}, 2);
 
-			return Core\Tuple::box($this->value[1], $this->value[0]);
+			return Core\Tuple::create($this->value[1], $this->value[0]);
 		}
 
 		#endregion

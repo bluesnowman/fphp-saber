@@ -467,7 +467,7 @@ namespace Saber\Core {
 		 * @return Core\Bool                                        whether the list is empty
 		 */
 		public final function isEmpty() {
-			return Core\Bool::box($this->__isEmpty());
+			return Core\Bool::create($this->__isEmpty());
 		}
 
 		/**

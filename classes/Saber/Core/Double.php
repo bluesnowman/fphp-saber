@@ -45,7 +45,7 @@ namespace Saber\Core {
 		 * @return Core\Double                                      the absolute value
 		 */
 		public function abs() {
-			return Core\Double::box(abs($this->unbox()));
+			return Core\Double::create(abs($this->unbox()));
 		}
 
 		/**
@@ -56,7 +56,7 @@ namespace Saber\Core {
 		 * @return Core\Double                                      the result
 		 */
 		public function add(Core\Double $that) {
-			return Core\Double::box($this->unbox() + $that->unbox());
+			return Core\Double::create($this->unbox() + $that->unbox());
 		}
 
 		/**
@@ -102,7 +102,7 @@ namespace Saber\Core {
 		 * @return Core\Double                                      the result
 		 */
 		public function divide(Core\Double $that) {
-			return Core\Double::box($this->unbox() / $that->unbox());
+			return Core\Double::create($this->unbox() / $that->unbox());
 		}
 
 		/**
@@ -138,7 +138,7 @@ namespace Saber\Core {
 		 * @return Core\Double                                      the result
 		 */
 		public function modulo(Core\Double $that) {
-			return Core\Double::box(fmod($this->unbox(), $that->unbox()));
+			return Core\Double::create(fmod($this->unbox(), $that->unbox()));
 		}
 
 		/**
@@ -150,7 +150,7 @@ namespace Saber\Core {
 		 * @return Core\Double                                      the result
 		 */
 		public function multiply(Core\Double $that) {
-			return Core\Double::box($this->unbox() * $that->unbox());
+			return Core\Double::create($this->unbox() * $that->unbox());
 		}
 
 		/**
@@ -160,7 +160,7 @@ namespace Saber\Core {
 		 * @return Core\Double                                      the result
 		 */
 		public function negate() {
-			return Core\Double::box($this->unbox() * -1.0);
+			return Core\Double::create($this->unbox() * -1.0);
 		}
 
 		/**
@@ -172,7 +172,7 @@ namespace Saber\Core {
 		 * @return Core\Double                                      the result
 		 */
 		public function subtract(Core\Double $that) {
-			return Core\Double::box($this->unbox() - $that->unbox());
+			return Core\Double::create($this->unbox() - $that->unbox());
 		}
 
 		#endregion

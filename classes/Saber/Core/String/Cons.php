@@ -99,7 +99,7 @@ namespace Saber\Core\String {
 			if (($that === null) || ($this->__typeOf() != $that->__typeOf())) {
 				return Core\Bool::false();
 			}
-			return Core\Bool::box($this->head()->__equals($that->head()) && $this->tail()->__equals($that->tail()));
+			return Core\Bool::create($this->head()->__equals($that->head()) && $this->tail()->__equals($that->tail()));
 		}
 
 		/**
@@ -125,7 +125,7 @@ namespace Saber\Core\String {
 			if (($that === null) || ($this->__typeOf() != $that->__typeOf())) {
 				return Core\Bool::false();
 			}
-			return Core\Bool::box($this->head()->__identical($that->head()) && $this->tail()->__identical($that->tail()));
+			return Core\Bool::create($this->head()->__identical($that->head()) && $this->tail()->__identical($that->tail()));
 		}
 
 		/**

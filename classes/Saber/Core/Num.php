@@ -99,7 +99,7 @@ namespace Saber\Core {
 		 * @return Core\Double                                      the value as a double
 		 */
 		public function toDouble() {
-			return Core\Double::box($this->unbox());
+			return Core\Double::create($this->unbox());
 		}
 
 		/**
@@ -110,7 +110,7 @@ namespace Saber\Core {
 		 * @return Core\Float                                       the value as a float
 		 */
 		public function toFloat() {
-			return Core\Float::box($this->unbox());
+			return Core\Float::create($this->unbox());
 		}
 
 		/**
@@ -121,7 +121,7 @@ namespace Saber\Core {
 		 * @return Core\Int32                                       the value as an integer
 		 */
 		public function toInt32() {
-			return Core\Int32::box($this->unbox());
+			return Core\Int32::create($this->unbox());
 		}
 
 		/**
@@ -132,7 +132,7 @@ namespace Saber\Core {
 		 * @return Core\Integer                                     the value as an integer
 		 */
 		public function toInteger() {
-			return Core\Integer::box($this->unbox());
+			return Core\Integer::create($this->unbox());
 		}
 
 		#endregion

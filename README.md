@@ -11,8 +11,8 @@ A functional php library.
 
 ### [Boxing](http://msdn.microsoft.com/en-us/library/yz2be5wk.aspx)
 
-To "box" a PHP typed primitive or object, create an instance of the respective data type using a
-class's `box` method.  The `box` is enforces type safety.
+To "box" a PHP typed primitive or object, create an instance of the respective data type using the
+class's `box` method.  This method enforces type safety.
 
 ````
 $object = Core\Int32::box(23);
@@ -152,11 +152,13 @@ To run just a specific group of unit tests:
 make execute GROUP=AnyVal
 ````
 
-For more information, see the [documentation](https://github.com/bluesnowman/fphp-saber/blob/master/Makefile) in the `Makefile` file itself.
+For more information, see the [documentation](https://github.com/bluesnowman/fphp-saber/blob/master/Makefile)
+in the `Makefile` file itself.
 
 ### Pull Requests
 
-Help improve on this library.  If you have a bug fix, suggestion, or improvement, please submit a pull request along with any applicable test cases.
+Help improve on this library.  If you have a bug fix, suggestion, or improvement, please submit a
+pull request along with any applicable test cases.
 
 ### License
 

@@ -36,7 +36,7 @@ $value = $object->unbox();
 This library generally implements a fluent API; therefore, methods can be chained.
 
 ````
-$object = Core\Int32::box(23)->increment()->increment();
+$object = Core\Int32::box(23)->increment()->decrement();
 ````
 
 ### Methods
@@ -60,25 +60,25 @@ $value = Core\Int32::box(23)->__increment();
 An `operator` function is used to find the result of applying an operation to one or two operands.
 
 ````
-$operator = function(Core\Any $carry, Core\Any $element) { return [Core\Any]; };
+Core\Any function(Core\Any $carry [, Core\Any $element])
 ````
 
 A `predicate` function is used to find the result of preforming a Boolean evaluation.
 
 ````
-$predicate = function(Core\Any $element, Core\Int32 $index) { return [Core\Bool]; };
+Core\Bool function(Core\Any $element [, Core\Int32 $index])
 ````
 
 A `procedure` function is used to preform an operation without returning a value.
 
 ````
-$procedure = function(Core\Any $element, Core\Int32 $index) { return [Core\Unit]; };
+Core\Unit function(Core\Any $element [, Core\Int32 $index])
 ````
 
 A `subroutine` function is used to preform an operation that does return a value.
 
 ````
-$subroutine = function(Core\Any $element, Core\Int32 $index) { return [Core\Any]; };
+Core\Any function(Core\Any $element [, Core\Int32 $index])
 ````
 
 ### Hierarchy
@@ -111,6 +111,8 @@ $subroutine = function(Core\Any $element, Core\Int32 $index) { return [Core\Any]
         + Core\Integer
     + Core\Nothing
     + Core\Unit
++ Core\Monad
+  + Core\Control
 ````
 
 ### Unit Tests

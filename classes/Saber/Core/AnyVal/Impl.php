@@ -64,8 +64,8 @@ namespace Saber\Core\AnyVal {
 		 *                                                          to the current object
 		 */
 		public function equals(Core\Any $that) {
-			if ($that !== null) {
-				return Core\Bool::create(($that instanceof static) && ($this->unbox() == $that->unbox()));
+			if (($that !== null) && ($that instanceof static)) {
+				return Core\Bool::create($this->unbox() == $that->unbox());
 			}
 			return Core\Bool::false();
 		}
@@ -79,8 +79,8 @@ namespace Saber\Core\AnyVal {
 		 *                                                          to the current object
 		 */
 		public function identical(Core\Any $that) {
-			if ($that !== null) {
-				return Core\Bool::create(($that instanceof static) && ($this->unbox() === $that->unbox()));
+			if (($that !== null) && ($that instanceof static)) {
+				return Core\Bool::create($this->unbox() === $that->unbox());
 			}
 			return Core\Bool::false();
 		}

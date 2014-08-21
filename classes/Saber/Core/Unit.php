@@ -50,7 +50,7 @@ namespace Saber\Core {
 		 * @return string                                           the object as a string
 		 */
 		public function __toString() {
-			return 'void';
+			return 'null';
 		}
 
 		#endregion

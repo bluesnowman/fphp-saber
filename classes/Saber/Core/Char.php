@@ -34,6 +34,12 @@ namespace Saber\Core {
 
 		#endregion
 
+		#region Properties
+
+		protected $encoding;
+
+		#endregion
+
 		#region Methods -> Boxing/Creation
 
 		/**
@@ -47,11 +53,12 @@ namespace Saber\Core {
 		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
 		public static function box($value/*...*/) {
-			if (is_string($value) && (mb_strlen($value, 'UTF-8') == 1)) {
-				return new static($value);
+			$encoding = (func_num_args() > 1) ? func_get_arg(1) : 'UTF-8';
+			if (is_string($value) && (mb_strlen($value, $encoding) == 1)) {
+				return new static($value, $encoding);
 			}
 			else if (!is_string($value) && is_numeric($value)) {
-				return new static(chr((int) $value));
+				return new static(chr((int) $value), $encoding);
 			}
 			else {
 				$type = gettype($value);
@@ -63,13 +70,29 @@ namespace Saber\Core {
 		}
 
 		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered "not" type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param mixed $value                                      the value(s) to be boxed
+		 * @return Core\Any                                         the boxed object
+		 */
+		public static function create($value/*...*/) {
+			$encoding = (func_num_args() > 1) ? func_get_arg(1) : 'UTF-8';
+			return new static($value, $encoding);
+		}
+
+		/**
 		 * This constructor initializes the class with the specified value.
 		 *
 		 * @access public
 		 * @param char $value                                       the value to be assigned
+		 * @param string $encoding                                  the character encoding to be used
 		 */
-		public function __construct($value) {
+		public function __construct($value, $encoding) {
 			$this->value = (string) $value;
+			$this->encoding = $encoding;
 		}
 
 		#endregion
@@ -298,7 +321,7 @@ namespace Saber\Core {
 		 * @return Core\Char                                        the lower case letter
 		 */
 		public function toLowerCase() {
-			return Core\Char::create(strtolower($this->unbox()));
+			return Core\Char::create(mb_strtolower($this->unbox(), $this->encoding));
 		}
 
 		/**
@@ -308,7 +331,7 @@ namespace Saber\Core {
 		 * @return Core\Char                                        the upper case letter
 		 */
 		public function toUpperCase() {
-			return Core\Char::create(strtoupper($this->unbox()));
+			return Core\Char::create(mb_strtoupper($this->unbox(), $this->encoding));
 		}
 
 		#endregion

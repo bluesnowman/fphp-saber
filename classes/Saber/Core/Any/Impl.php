@@ -103,7 +103,7 @@ namespace Saber\Core\Any {
 		public function __call($method, $args) {
 			if (preg_match('/^__[a-z_][a-z0-9_]*$/i', $method)) {
 				$name = substr($method, 2);
-				if (method_exists($this, $name) && !in_array($name, array('assert', 'box', 'call', 'choice', 'unbox'))) {
+				if (method_exists($this, $name) && !in_array($name, array('assert', 'box', 'call', 'unbox'))) {
 					$result = call_user_func_array(array($this, $name), $args);
 					if ($result instanceof Core\Any) {
 						return $result->unbox();
@@ -148,16 +148,6 @@ namespace Saber\Core\Any {
 				throw new Throwable\UnexpectedValue\Exception('Failed assertion in class ":type".', array(':type' => $this->__typeOf()));
 			}
 			return $this;
-		}
-
-		/**
-		 * This method returns a choice block.
-		 *
-		 * @access public
-		 * @return Core\Control\Choice\Cons                         the choice block
-		 */
-		public final function choice() {
-			return Core\Control::choice($this);
 		}
 
 		/**

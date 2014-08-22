@@ -18,15 +18,6 @@
 
 namespace Saber\Core {
 
-	use \Saber\Core;
-
-	class Control implements Core\Monad {
-
-		public static function choice(Core\Any $object/*, Core\Int32 $index*/) {
-			$index = (func_num_args() > 0) ? func_get_arg(0) : Core\Int32::zero();
-			return new Core\Control\Choice\Cons($object, $index);
-		}
-
-	}
+	interface AnyCtrl { }
 
 }

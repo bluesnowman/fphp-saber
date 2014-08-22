@@ -16,8 +16,17 @@
  * limitations under the License.
  */
 
-namespace Saber\Core {
+namespace Saber\Control {
 
-	interface Monad { }
+	use \Saber\Control;
+	use \Saber\Core;
+
+	class Monad implements Core\AnyCtrl {
+
+		public static function choice(Core\Any $object) {
+			return Control\Monad\Choice::cons($object, Control\Monad\Choice::nil());
+		}
+
+	}
 
 }

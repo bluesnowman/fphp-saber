@@ -60,25 +60,29 @@ $value = Core\Int32::box(23)->__increment();
 An `operator` function is used to find the result of applying an operation to one or two operands.
 
 ````
-Core\Any function(Core\Any $carry [, Core\Any $element])
+Core\Any function(Core\Any $z)
+Core\Any function(Core\Any $z, Core\Any $x)
 ````
 
 A `predicate` function is used to find the result of preforming a Boolean evaluation.
 
 ````
-Core\Bool function(Core\Any $element [, Core\Int32 $index])
+Core\Bool function(Core\Any $x)
+Core\Bool function(Core\Any $x, Core\Int32 $i)
 ````
 
 A `procedure` function is used to preform an operation without returning a value.
 
 ````
-Core\Unit function(Core\Any $element [, Core\Int32 $index])
+Core\Unit function(Core\Any $x)
+Core\Unit function(Core\Any $x, Core\Int32 $i)
 ````
 
 A `subroutine` function is used to preform an operation that does return a value.
 
 ````
-Core\Any function(Core\Any $element [, Core\Int32 $index])
+Core\Any function(Core\Any $x)
+Core\Any function(Core\Any $x, Core\Int32 $i)
 ````
 
 ### Hierarchy
@@ -111,8 +115,8 @@ Core\Any function(Core\Any $element [, Core\Int32 $index])
         + Core\Integer
     + Core\Nothing
     + Core\Unit
-+ Core\Monad
-  + Core\Control
++ Core\AnyCtrl
+  + Control\Monad
 ````
 
 ### Unit Tests

@@ -1,5 +1,5 @@
 <?php
-
+ 
 /**
  * Copyright 2014 Blue Snowman
  *
@@ -15,30 +15,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+ 
+namespace Saber\Control\Monad {
 
-namespace Saber\Core\Control {
-
+	use \Saber\Control;
 	use \Saber\Core;
+ 
+	abstract class Choice {
 
-	abstract class Choice implements Core\Monad {
-
-		protected $object;
-		protected $index;
-
-		public function __construct(Core\Any $object, Core\Int32 $index) {
-			$this->object = $object;
-			$this->index = $index;
+		public static function cons(Core\Any $x, Control\Monad\Choice $xs) {
+			return new Control\Monad\Choice\Cons($x, $xs);
 		}
 
-		public function end() {
-			return $this->object;
+		public static function nil() {
+			return new Control\Monad\Choice\Nil();
 		}
+
+		public abstract function end();
 
 		public abstract function otherwise(callable $procedure);
 
-		public abstract function unless(callable $predicate, callable $procedure);
+		public abstract function unless(Core\Any $y, callable $procedure);
 
-		public abstract function when(callable $predicate, callable $procedure);
+		public abstract function when(Core\Any $y, callable $procedure);
 
 	}
 

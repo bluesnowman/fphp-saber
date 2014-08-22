@@ -77,8 +77,8 @@ namespace Saber\Core {
 			if ($depth > 0) {
 				$buffer = array();
 
-				foreach ($this->value as $value) {
-					$buffer[] = $value->unbox($depth - 1);
+				foreach ($this->value as $x) {
+					$buffer[] = $x->unbox($depth - 1);
 				}
 
 				return $buffer;
@@ -134,8 +134,8 @@ namespace Saber\Core {
 		 * @return Core\ArrayList                                   the list
 		 */
 		public function concat(Core\ArrayList $that) {
-			foreach ($that->unbox() as $value) {
-				$this->value[] = $value;
+			foreach ($that->unbox() as $y) {
+				$this->value[] = $y;
 			}
 			return $this;
 		}
@@ -196,12 +196,12 @@ namespace Saber\Core {
 			$buffer = array();
 			$skip = false;
 
-			foreach ($this->value as $value) {
-				if ($value->__equals($object) && !$skip) {
+			foreach ($this->value as $x) {
+				if ($x->__equals($object) && !$skip) {
 					$skip = true;
 					continue;
 				}
-				$buffer[] = $value;
+				$buffer[] = $x;
 			}
 
 			return new static($buffer);
@@ -325,9 +325,9 @@ namespace Saber\Core {
 			$length = $this->__length();
 
 			for ($i = 0; $i < $length; $i++) {
-				$value = $this->value[$i];
-				if ($predicate($value, Core\Int32::create($i))->unbox()) {
-					$buffer[] = $value;
+				$x = $this->value[$i];
+				if ($predicate($x, Core\Int32::create($i))->unbox()) {
+					$buffer[] = $x;
 				}
 			}
 
@@ -346,9 +346,9 @@ namespace Saber\Core {
 			$length = $this->__length();
 
 			for ($i = 0; $i < $length; $i++) {
-				$value = $this->value[$i];
-				if ($predicate($value, Core\Int32::create($i))->unbox()) {
-					return $value;
+				$x = $this->value[$i];
+				if ($predicate($x, Core\Int32::create($i))->unbox()) {
+					return $x;
 				}
 			}
 
@@ -364,14 +364,14 @@ namespace Saber\Core {
 		 * @return Core\Any                                         the result
 		 */
 		public function foldLeft(callable $operator, Core\Any $initial) {
-			$x = $initial;
+			$z = $initial;
 			$length = $this->__length();
 
 			for ($i = 0; $i < $length; $i++) {
-				$x = $operator($x, $this->value[$i]);
+				$z = $operator($z, $this->value[$i]);
 			}
 
-			return $x;
+			return $z;
 		}
 
 		/**
@@ -383,14 +383,14 @@ namespace Saber\Core {
 		 * @return Core\Any                                         the result
 		 */
 		public function foldRight(callable $operator, Core\Any $initial) {
-			$x = $initial;
+			$z = $initial;
 			$length = $this->__length();
 
 			for ($i = $length - 1; $i >= 0; $i--) {
-				$x = $operator($x, $this->value[$i]);
+				$z = $operator($z, $this->value[$i]);
 			}
 
-			return $x;
+			return $z;
 		}
 
 		/**
@@ -465,14 +465,14 @@ namespace Saber\Core {
 			$length = $this->__length();
 
 			if ($length > 0) {
-				$value = $this->value[0];
+				$x = $this->value[0];
 
-				$class = get_class($value);
+				$class = get_class($x);
 				if ($object instanceof $class) {
 					throw new Throwable\InvalidArgument\Exception('Unable to create array list. Expected type ":class", but got ":type".', array(':class' => $class, ':type' => get_class($object)));
 				}
 
-				$buffer[] = $value;
+				$buffer[] = $x;
 				for ($i = 1; $i < $length; $i++) {
 					$buffer[] = $this->value[$i];
 				}
@@ -663,11 +663,11 @@ namespace Saber\Core {
 			$length = $this->__length();
 
 			for ($i = 0; $i < $length; $i++) {
-				$value = $this->value[$i];
-				if (!$predicate($value, Core\Int32::create($i))->unbox()) {
+				$x = $this->value[$i];
+				if (!$predicate($x, Core\Int32::create($i))->unbox()) {
 					break;
 				}
-				$buffer[] = $value;
+				$buffer[] = $x;
 			}
 
 			return new static($buffer);

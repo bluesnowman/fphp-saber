@@ -19,6 +19,7 @@
 namespace Saber\Core {
 
 	use \Saber\Core;
+	use \Saber\Data;
 	use \Saber\Throwable;
 
 	interface Any {
@@ -112,7 +113,7 @@ namespace Saber\Core {
 		 *
 		 * @access public
 		 * @param Core\Any $that                                    the object to be evaluated
-		 * @return Core\Bool                                        whether the specified object is equal
+		 * @return Data\Bool                                        whether the specified object is equal
 		 *                                                          to the current object
 		 */
 		public function equals(Core\Any $that);
@@ -121,7 +122,7 @@ namespace Saber\Core {
 		 * This method returns the object's hash code.
 		 *
 		 * @access public
-		 * @return Core\String                                      the object's hash code
+		 * @return Data\String                                      the object's hash code
 		 */
 		public function hashCode();
 
@@ -130,7 +131,7 @@ namespace Saber\Core {
 		 *
 		 * @access public
 		 * @param Core\Any $that                                    the object to be evaluated
-		 * @return Core\Bool                                        whether the specified object is identical
+		 * @return Data\Bool                                        whether the specified object is identical
 		 *                                                          to the current object
 		 */
 		public function identical(Core\Any $that);
@@ -157,7 +158,7 @@ namespace Saber\Core {
 		 * This method returns the object as a string.
 		 *
 		 * @access public
-		 * @return Core\String                                      the object as a string
+		 * @return Data\String                                      the object as a string
 		 */
 		public function toString();
 
@@ -165,7 +166,7 @@ namespace Saber\Core {
 		 * This method returns the object's class type.
 		 *
 		 * @access public
-		 * @return Core\String                                      the object's class type
+		 * @return Data\String                                      the object's class type
 		 */
 		public function typeOf();
 

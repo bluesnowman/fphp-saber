@@ -16,12 +16,13 @@
  * limitations under the License.
  */
 
-namespace Saber\Core {
+namespace Saber\Data {
 
 	use \Saber\Core;
+	use \Saber\Data;
 	use \Saber\Throwable;
 
-	class ArrayList extends Core\Collection {
+	abstract class LinkedList extends Data\Collection {
 
 		#region Methods -> Boxing/Creation
 
@@ -36,54 +37,64 @@ namespace Saber\Core {
 		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
 		public static function box($value/*...*/) {
-			if (($value === null) || !is_array($value)) {
+			if (is_array($value)) {
+				$buffer = static::nil();
+				for ($i = count($value) - 1; $i >= 0; $i--) {
+					$buffer = $buffer->prepend($value[$i]);
+				}
+				return $buffer;
+			}
+			else {
 				$type = gettype($value);
 				if ($type == 'object') {
 					$type = get_class($value);
 				}
-				throw new Throwable\InvalidArgument\Exception('Unable to create array list. Expected an array, but got ":type".', array(':type' => $type));
+				throw new Throwable\InvalidArgument\Exception('Unable to box value. Expected an array, but got ":type".', array(':type' => $type));
 			}
-			foreach ($value as $object) {
-				if (!(is_object($object) && ($object instanceof Core\Any))) {
-					$type = gettype($value);
-					if ($type == 'object') {
-						$type = get_class($value);
-					}
-					throw new Throwable\InvalidArgument\Exception('Unable to create array list. Expected a boxed value, but got ":type".', array(':type' => $type));
-				}
-			}
-			return new Core\ArrayList($value);
 		}
 
 		/**
-		 * This constructor initializes the class with the specified value.
+		 * This method returns a "cons" object for a list.
 		 *
 		 * @access public
-		 * @param array $value                                      the value to be assigned
-		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
+		 * @static
+		 * @param Core\Any $head                                    the head to be used
+		 * @param Data\LinkedList $tail                             the tail to be used
+		 * @return Data\LinkedList\Cons                             the "cons" object
 		 */
-		public function __construct(array $value) {
-			$this->value = $value;
+		public static function cons(Core\Any $head, Data\LinkedList $tail) {
+			return new Data\LinkedList\Cons($head, $tail);
+		}
+
+		/**
+		 * This method returns a "nil" object for a list.
+		 *
+		 * @access public
+		 * @static
+		 * @return Data\LinkedList\Nil                              the "nil" object
+		 */
+		public static function nil() {
+			return new Data\LinkedList\Nil();
 		}
 
 		/**
 		 * This method returns the value contained within the boxed object.
 		 *
 		 * @access public
-		 * @param integer $depth                                    how many levels to unbox
+		 * @param integer $depth                                    how many levels to un-box
 		 * @return array                                            the un-boxed value
 		 */
 		public function unbox($depth = 0) {
-			if ($depth > 0) {
-				$buffer = array();
+			$buffer = array();
 
-				foreach ($this->value as $x) {
-					$buffer[] = $x->unbox($depth - 1);
-				}
-
-				return $buffer;
+			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
+				$x = $xs->head();
+				$buffer[] = ($depth > 0)
+					? $x->unbox($depth - 1)
+					: $x;
 			}
-			return $this->value;
+
+			return $buffer;
 		}
 
 		#endregion
@@ -94,20 +105,10 @@ namespace Saber\Core {
 		 * This method (aka "null") returns whether this list is empty.
 		 *
 		 * @access public
-		 * @return Core\Bool                                        whether the list is empty
+		 * @return Data\Bool                                        whether the list is empty
 		 */
 		public function __isEmpty() {
-			return ($this->__length() == 0);
-		}
-
-		/**
-		 * This method returns the length of this array list.
-		 *
-		 * @access public
-		 * @return integer                                          the length of this array list
-		 */
-		public function __length() {
-			return count($this->value);
+			return ($this instanceof Data\LinkedList\Nil);
 		}
 
 		#endregion
@@ -115,28 +116,38 @@ namespace Saber\Core {
 		#region Methods -> Object Oriented -> Universal
 
 		/**
-		 * This method appends the specified object to this object's list.
+		 * This method appends the specified object to this object's list. Performs in O(n) time.
 		 *
 		 * @access public
 		 * @param Core\Any $object                                  the object to be appended
-		 * @return Core\ArrayList                                   the list
+		 * @return Data\LinkedList                                  the list
 		 */
 		public function append(Core\Any $object) {
-			$this->value[] = $object;
-			return $this;
+			return $this->concat(static::cons($object, static::nil()));
 		}
 
 		/**
-		 * This method concatenates a list to this object's list.
+		 * This method compares the specified object with the current object for order.
 		 *
 		 * @access public
-		 * @param Core\ArrayList $that                              the list to be concatenated
-		 * @return Core\ArrayList                                   the list
+		 * @abstract
+		 * @param Data\LinkedList $that                             the object to be compared
+		 * @return Data\Int32                                       whether the current object is less than,
+		 *                                                          equal to, or greater than the specified
+		 *                                                          object
 		 */
-		public function concat(Core\ArrayList $that) {
-			foreach ($that->unbox() as $y) {
-				$this->value[] = $y;
-			}
+		public abstract function compareTo(Data\LinkedList $that);
+
+		/**
+		 * This method concatenates a list to this object's list. Performs in O(n) time.
+		 *
+		 * @access public
+		 * @param Data\LinkedList $that                             the list to be concatenated
+		 * @return Data\LinkedList                                  the list
+		 */
+		public function concat(Data\LinkedList $that) {
+			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail());
+			$xs->tail = $that;
 			return $this;
 		}
 
@@ -145,44 +156,13 @@ namespace Saber\Core {
 		 *
 		 * @access public
 		 * @param Core\Any $object                                  the object to find
-		 * @return Core\Bool                                        whether the specified object is
+		 * @return Data\Bool                                        whether the specified object is
 		 *                                                          contained within the list
 		 */
 		public function contains(Core\Any $object) {
-			return $this->some(function(Core\Any $element, Core\Int32 $index) use ($object) {
+			return $this->some(function(Core\Any $element, Data\Int32 $index) use ($object) {
 				return $element->equals($object);
 			});
-		}
-
-		/**
-		 * This method compares the specified object with the current object for order.
-		 *
-		 * @access public
-		 * @param Core\ArrayList $that                              the object to be compared
-		 * @return Core\Int32                                       whether the current object is less than,
-		 *                                                          equal to, or greater than the specified
-		 *                                                          object
-		 */
-		public function compareTo(Core\ArrayList $that) {
-			$x_length = $this->__length();
-			$y_length = $that->__length();
-
-			for ($i = 0; $i < $x_length && $i < $y_length; $i++) {
-				$r = $this->value[$i]->compareTo($that->value[$i]);
-				if ($r->unbox() != 0) {
-					return $r;
-				}
-			}
-
-			if ($x_length < $y_length) {
-				return Core\Int32::negative();
-			}
-			else if ($x_length == $y_length) {
-				return Core\Int32::zero();
-			}
-			else { // ($x_length > $y_length)
-				return Core\Int32::one();
-			}
 		}
 
 		/**
@@ -190,86 +170,103 @@ namespace Saber\Core {
 		 *
 		 * @access public
 		 * @param Core\Any $object                                  the object to be removed
-		 * @return Core\ArrayList                                   the list
+		 * @return Data\LinkedList                                  the list
 		 */
 		public function delete(Core\Any $object) {
-			$buffer = array();
-			$skip = false;
+			$start = static::nil();
+			$tail = null;
 
-			foreach ($this->value as $x) {
-				if ($x->__equals($object) && !$skip) {
-					$skip = true;
-					continue;
+			$index = Data\Int32::zero();
+			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
+				$head = $xs->head();
+				if (!$object->__equals($head)) {
+					$cons = static::cons($head, static::nil());
+
+					if ($tail !== null) {
+						$tail->tail = $cons;
+					}
+					else {
+						$start = $cons;
+					}
+
+					$tail = $cons;
 				}
-				$buffer[] = $x;
+				else {
+					$cons = $xs->tail();
+
+					if ($tail !== null) {
+						$tail->tail = $cons;
+					}
+					else {
+						$start = $cons;
+					}
+
+					break;
+				}
+				$index = $index->increment();
 			}
 
-			return new static($buffer);
+			return $start;
 		}
 
 		/**
 		 * This method returns the list after dropping the first "n" elements.
 		 *
 		 * @access public
-		 * @param Core\Int32 $n                                     the number of elements to drop
-		 * @return Core\ArrayList                                   the list
+		 * @param Data\Int32 $n                                     the number of elements to drop
+		 * @return Data\LinkedList                                  the list
 		 */
-		public function drop(Core\Int32 $n) {
-			$buffer = array();
-			$length = $this->__length();
+		public function drop(Data\Int32 $n) {
+			$i = Data\Int32::zero();
 
-			for ($i = $n->unbox(); $i < $length; $i++) {
-				$buffer[] = $this->value[$i];
+			for ($xs = $this; ($i->unbox() < $n->unbox()) && ! $xs->__isEmpty(); $xs = $xs->tail()) {
+				$i = $i->increment();
 			}
 
-			return new static($buffer);
+			return $xs;
 		}
 
 		/**
 		 * This method return the list from element where the predicate function fails.
 		 *
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return Core\ArrayList                                   the list
+		 * @return Data\LinkedList                                  the list
 		 */
 		public function dropWhile(callable $predicate) {
-			$buffer = array();
-			$length = $this->__length();
+			$i = Data\Int32::zero();
 
-			$failed = false;
-			for ($i = 0; $i < $length; $i++) {
-				if (!$predicate($this->value[$i], Core\Int32::create($i))->unbox() || $failed) {
-					$buffer[] = $this->value[$i];
-					$failed = true;
-				}
+			for ($xs = $this; ! $xs->__isEmpty() && $predicate($xs->head(), $i)->unbox(); $xs = $xs->tail()) {
+				$i = $i->increment();
 			}
 
-			return new static($buffer);
+			return $xs;
 		}
 
 		/**
 		 * This method return the list from element where the predicate function doesn't fail.
 		 *
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return Core\ArrayList                                   the list
+		 * @return Data\LinkedList                                  the list
 		 */
 		public function dropWhileEnd(callable $predicate) {
-			return $this->dropWhile(function(Core\Any $object, Core\Int32 $index) use ($predicate) {
+			return $this->dropWhile(function(Core\Any $object, Data\Int32 $index) use ($predicate) {
 				return $predicate($object, $index)->not();
 			});
 		}
 
 		/**
-		 * This method iterates over the elements in the list, yielding each element to the procedure
-		 * function.
+		 * This method iterates over the elements in the list, yielding each element to the
+		 * callback function.
 		 *
 		 * @access public
 		 * @param callable $procedure                               the procedure function to be used
 		 */
 		public function each(callable $procedure) {
-			$length = $this->__length();
+			$i = Data\Int32::zero();
 
-			for ($i = 0; $i < $length; $i++) {
-				$procedure($this->value[$i], Core\Int32::create($i));
+			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
+				$procedure($xs->head(), $i);
+				$i = $i->increment();
 			}
 		}
 
@@ -277,19 +274,22 @@ namespace Saber\Core {
 		 * This method returns the element at the specified index.
 		 *
 		 * @access public
-		 * @param Core\Int32 $index                                 the index of the element
+		 * @param Data\Int32 $index                                 the index of the element
 		 * @return Core\Any                                         the element at the specified index
 		 * @throws Throwable\OutOfBounds\Exception                  indicates the specified index
 		 *                                                          cannot be found
 		 */
-		public function element(Core\Int32 $index) {
-			$i = $index->unbox();
+		public function element(Data\Int32 $index) {
+			$i = Data\Int32::zero();
 
-			if (($i < 0) || ($i >= $this->length())) {
-				throw new Throwable\OutOfBounds\Exception('Unable to return element at index :index.', array(':index' => $i));
+			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
+				if ($i->__equals($index)) {
+					return $xs->head();
+				}
+				$i = $i->increment();
 			}
 
-			return $this->value[$i];
+			throw new Throwable\OutOfBounds\Exception('Unable to return element at index :index.', array(':index' => $index->unbox()));
 		}
 
 		/**
@@ -298,19 +298,20 @@ namespace Saber\Core {
 		 *
 		 * @access public
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return Core\Bool                                        whether each element passed the
+		 * @return Data\Bool                                        whether each element passed the
 		 *                                                          truthy test
 		 */
 		public function every(callable $predicate) { // aka "all" or "forall"
-			$length = $this->__length();
+			$i = Data\Int32::zero();
 
-			for ($i = 0; $i < $length; $i++) {
-				if (!$predicate($this->value[$i], Core\Int32::create($i))->unbox()) {
-					return Core\Bool::false();
+			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
+				if (!$predicate($xs->head(), $i)->unbox()) {
+					return Data\Bool::false();
 				}
+				$i = $i->increment();
 			}
 
-			return Core\Bool::true(); // yes, empty list returns "true"
+			return Data\Bool::true(); // yes, empty list returns "true"
 		}
 
 		/**
@@ -318,20 +319,31 @@ namespace Saber\Core {
 		 *
 		 * @access public
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return Core\ArrayList                                   the list
+		 * @return Data\LinkedList                                  the list
 		 */
 		public function filter(callable $predicate) {
-			$buffer = array();
-			$length = $this->__length();
+			$start = static::nil();
+			$tail = null;
 
-			for ($i = 0; $i < $length; $i++) {
-				$x = $this->value[$i];
-				if ($predicate($x, Core\Int32::create($i))->unbox()) {
-					$buffer[] = $x;
+			$i = Data\Int32::zero();
+			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
+				$x = $xs->head();
+				if ($predicate($x, $i)->unbox()) {
+					$ys = static::cons($x, static::nil());
+
+					if ($tail !== null) {
+						$tail->tail = $ys;
+					}
+					else {
+						$start = $ys;
+					}
+
+					$tail = $ys;
 				}
+				$i = $i->increment();
 			}
 
-			return new static($buffer);
+			return $start;
 		}
 
 		/**
@@ -343,13 +355,14 @@ namespace Saber\Core {
 		 * @throws Throwable\EmptyCollection\Exception              indicates that the collection is empty
 		 */
 		public function first(callable $predicate) {
-			$length = $this->__length();
+			$i = Data\Int32::zero();
 
-			for ($i = 0; $i < $length; $i++) {
-				$x = $this->value[$i];
-				if ($predicate($x, Core\Int32::create($i))->unbox()) {
+			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
+				$x = $xs->head();
+				if ($predicate($x, $i)->unbox()) {
 					return $x;
 				}
+				$i = $i->increment();
 			}
 
 			throw new Throwable\EmptyCollection\Exception('Unable to return first object. Linked list is empty.');
@@ -365,17 +378,16 @@ namespace Saber\Core {
 		 */
 		public function foldLeft(callable $operator, Core\Any $initial) {
 			$z = $initial;
-			$length = $this->__length();
 
-			for ($i = 0; $i < $length; $i++) {
-				$z = $operator($z, $this->value[$i]);
+			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
+				$z = $operator($z, $xs->head());
 			}
 
 			return $z;
 		}
 
 		/**
-		 * This method applies a right-fold reduction on the list using the operation function.
+		 * This method applies a right-fold reduction on the list using the operator function.
 		 *
 		 * @access public
 		 * @param callable $operator                                the operator function to be used
@@ -384,61 +396,70 @@ namespace Saber\Core {
 		 */
 		public function foldRight(callable $operator, Core\Any $initial) {
 			$z = $initial;
-			$length = $this->__length();
 
-			for ($i = $length - 1; $i >= 0; $i--) {
-				$z = $operator($z, $this->value[$i]);
+			if ($this->__isEmpty()) {
+				return $z;
 			}
 
-			return $z;
+			return $operator($this->head(), $this->tail()->foldRight($operator, $z));
 		}
 
 		/**
 		 * This method returns the head object in this list.
 		 *
 		 * @access public
-		 * @return Core\Any                                         the head object in this list
+		 * @abstract
+		 * @return Core\Any                                         the head object in this linked
+		 *                                                          list
 		 */
-		public function head() {
-			return $this->value[0];
-		}
+		public abstract function head();
 
 		/**
 		 * This method return the index of the first occurrence of the object; otherwise, it returns -1;
 		 *
 		 * @access public
 		 * @param Core\Any $object                                  the object to be searched for
-		 * @return Core\Int32                                       the index of the first occurrence
+		 * @return Data\Int32                                       the index of the first occurrence
 		 *                                                          or otherwise -1
 		 */
 		public function indexOf(Core\Any $object) {
-			$length = $this->__length();
+			$i = Data\Int32::zero();
 
-			for ($i = 0; $i < $length; $i++) {
-				if ($object->__equals($this->value[$i])) {
-					return Core\Int32::create($i);
+			for ($xs = $this->tail(); ! $xs->__isEmpty(); $xs = $xs->tail()) {
+				if ($object->__equals($xs->head())) {
+					return $i;
 				}
+				$i = $i->increment();
 			}
 
-			return Core\Int32::negative();
+			return Data\Int32::negative();
 		}
 
 		/**
 		 * This method returns all but the last element of in the list.
 		 *
 		 * @access public
-		 * @return Core\ArrayList                                   the list, minus the last
+		 * @return Data\LinkedList                                  the list, minus the last
 		 *                                                          element
 		 */
 		public function init() {
-			$buffer = array();
-			$length = $this->__length() - 1;
+			$start = static::nil();
+			$tail = null;
 
-			for ($i = 0; $i < $length; $i++) {
-				$buffer[] = $this->value[$i];
+			for ($xs = $this; ! $xs->__isEmpty() && ! $xs->tail()->__isEmpty(); $xs = $xs->tail()) {
+				$ys = static::cons($xs->head(), static::nil());
+
+				if ($tail !== null) {
+					$tail->tail = $ys;
+				}
+				else {
+					$start = $ys;
+				}
+
+				$tail = $ys;
 			}
 
-			return new static($buffer);
+			return $start;
 		}
 
 		/**
@@ -446,10 +467,10 @@ namespace Saber\Core {
 		 *
 		 * @access public
 		 * @final
-		 * @return Core\Bool                                        whether the list is empty
+		 * @return Data\Bool                                        whether the list is empty
 		 */
 		public final function isEmpty() {
-			return Core\Bool::create($this->__isEmpty());
+			return Data\Bool::create($this->__isEmpty());
 		}
 
 		/**
@@ -457,28 +478,12 @@ namespace Saber\Core {
 		 *
 		 * @access public
 		 * @param Core\Any $object                                  the object to be interspersed
-		 * @return Core\ArrayList                                   the list
-		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
+		 * @return Data\LinkedList                                  the list
 		 */
 		public function intersperse(Core\Any $object) {
-			$buffer = array();
-			$length = $this->__length();
-
-			if ($length > 0) {
-				$x = $this->value[0];
-
-				$class = get_class($x);
-				if ($object instanceof $class) {
-					throw new Throwable\InvalidArgument\Exception('Unable to create array list. Expected type ":class", but got ":type".', array(':class' => $class, ':type' => get_class($object)));
-				}
-
-				$buffer[] = $x;
-				for ($i = 1; $i < $length; $i++) {
-					$buffer[] = $this->value[$i];
-				}
-			}
-
-			return new static($buffer);
+			return ($this->__isEmpty() || $this->tail()->__isEmpty())
+				? $this
+				: static::cons($this->head(), static::cons($object, $this->tail()->intersperse($object)));
 		}
 
 		/**
@@ -489,18 +494,25 @@ namespace Saber\Core {
 		 *                                                          list
 		 */
 		public function last() {
-			return $this->value[$this->__length() - 1];
+			$x = $this->head();
+
+			for ($xs = $this->tail(); ! $xs->__isEmpty(); $xs = $xs->tail()) {
+				$x = $xs->head();
+			}
+
+			return $x;
 		}
 
 		/**
-		 * This method returns the length of this array list.
+		 * This method returns the length of this list. Performs in O(n) time.
 		 *
 		 * @access public
-		 * @final
-		 * @return Core\Int32                                       the length of this array list
+		 * @return Data\Int32                                       the length of this list
 		 */
-		public final function length() {
-			return Core\Int32::create($this->__length());
+		public function length() {
+			return $this->foldLeft(function(Data\Int32 $length) {
+				return $length->increment();
+			}, Data\Int32::zero());
 		}
 
 		/**
@@ -508,17 +520,28 @@ namespace Saber\Core {
 		 *
 		 * @access public
 		 * @param callable $subroutine                              the subroutine function to be used
-		 * @return Core\ArrayList                                   the list
+		 * @return Data\LinkedList                                  the list
 		 */
 		public function map(callable $subroutine) {
-			$buffer = array();
-			$length = $this->__length();
+			$start = static::nil();
+			$tail = null;
 
-			for ($i = 0; $i < $length; $i++) {
-				$buffer[] = $subroutine($this->value[$i], Core\Int32::create($i));
+			$i = Data\Int32::zero();
+			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
+				$ys = static::cons($subroutine($xs->head(), $i), static::nil());
+
+				if ($tail !== null) {
+					$tail->tail = $ys;
+				}
+				else {
+					$start = $ys;
+				}
+
+				$tail = $ys;
+				$i = $i->increment();
 			}
 
-			return new static($buffer);
+			return $start;
 		}
 
 		/**
@@ -527,11 +550,11 @@ namespace Saber\Core {
 		 *
 		 * @access public
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return Core\Bool                                        whether each element passed the
+		 * @return Data\Bool                                        whether each element passed the
 		 *                                                          falsy test
 		 */
 		public function none(callable $predicate) {
-			return $this->every(function(Core\Any $object, Core\Int32 $index) use ($predicate) {
+			return $this->every(function(Core\Any $object, Data\Int32 $index) use ($predicate) {
 				return $predicate($object, $index)->not();
 			});
 		}
@@ -541,22 +564,21 @@ namespace Saber\Core {
 		 *
 		 * @access public
 		 * @param Core\Any $object                                  the object to be prepended
-		 * @return Core\ArrayList                                   the list
+		 * @return Data\LinkedList                                  the list
 		 */
 		public function prepend(Core\Any $object) {
-			array_unshift($this->value, $object);
-			return $this;
+			return static::cons($object, $this);
 		}
 
 		/**
 		 * This method returns the list within the specified range.
 		 *
 		 * @access public
-		 * @param Core\Int32 $start                                 the starting index
-		 * @param Core\Int32 $end                                   the ending index
-		 * @return Core\ArrayList                                   the list
+		 * @param Data\Int32 $start                                 the starting index
+		 * @param Data\Int32 $end                                   the ending index
+		 * @return Data\LinkedList                                  the list
 		 */
-		public function range(Core\Int32 $start, Core\Int32 $end) {
+		public function range(Data\Int32 $start, Data\Int32 $end) {
 			return $this->take($end)->drop($start);
 		}
 
@@ -565,11 +587,11 @@ namespace Saber\Core {
 		 *
 		 * @access public
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return Core\ArrayList                                   the list
+		 * @return Data\LinkedList                                  the list
 		 */
 		public function remove(callable $predicate) {
-			return $this->filter(function(Core\Any $object, Core\Int32 $index) use ($predicate) {
-				return $predicate($object, $index)->not();
+			return $this->filter(function(Core\Any $element, Data\Int32 $index) use ($predicate) {
+				return $predicate($element, $index)->not();
 			});
 		}
 
@@ -577,22 +599,24 @@ namespace Saber\Core {
 		 * This method reverses the order of the elements in this list.
 		 *
 		 * @access public
-		 * @return Core\ArrayList                                   the list
+		 * @return Data\LinkedList                                  the list
 		 */
 		public function reverse() {
-			return new static(array_reverse($this->value));
+			return $this->foldLeft(function(Data\LinkedList $tail, Core\Any $head) {
+				return static::cons($head, $tail);
+			}, static::nil());
 		}
 
 		/**
 		 * This method returns the extracted slice of the list.
 		 *
 		 * @access public
-		 * @param Core\Int32 $offset                                the starting index
-		 * @param Core\Int32 $length                                the length of the slice
-		 * @return Core\ArrayList                                   the list
+		 * @param Data\Int32 $offset                                the starting index
+		 * @param Data\Int32 $length                                the length of the slice
+		 * @return Data\LinkedList                                  the list
 		 */
-		public function slice(Core\Int32 $offset, Core\Int32 $length) {
-			return new static(array_slice($this->value, $offset->unbox(), $length->unbox()));
+		public function slice(Data\Int32 $offset, Data\Int32 $length) {
+			return $this->take($length->add($offset))->drop($offset);
 		}
 
 		/**
@@ -601,54 +625,42 @@ namespace Saber\Core {
 		 *
 		 * @access public
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return Core\Bool                                        whether some of the elements
+		 * @return Data\Bool                                        whether some of the elements
 		 *                                                          passed the truthy test
 		 */
 		public function some($predicate) {
-			$length = $this->__length();
+			$i = Data\Int32::zero();
 
-			for ($i = 0; $i < $length; $i++) {
-				if ($predicate($this->value[$i], Core\Int32::create($i))->unbox()) {
-					return Core\Bool::true();
+			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
+				if ($predicate($xs->head(), $i)->unbox()) {
+					return Data\Bool::true();
 				}
+				$i = $i->increment();
 			}
 
-			return Core\Bool::false();
+			return Data\Bool::false();
 		}
 
 		/**
 		 * This method returns the tail of this list.
 		 *
 		 * @access public
-		 * @return Core\ArrayList                                   the tail of this list
+		 * @abstract
+		 * @return Data\LinkedList                                  the tail of this list
 		 */
-		public function tail() {
-			$buffer = array();
-			$length = $this->__length();
-
-			for ($i = 1; $i < $length; $i++) {
-				$buffer[] = $this->value[$i];
-			}
-
-			return new static($buffer);
-		}
+		public abstract function tail();
 
 		/**
 		 * This method returns the first "n" elements in the list.
 		 *
 		 * @access public
-		 * @param Core\Int32 $n                                     the number of elements to take
-		 * @return Core\ArrayList                                   the list
+		 * @param Data\Int32 $n                                     the number of elements to take
+		 * @return Data\LinkedList                                  the list
 		 */
-		public function take(Core\Int32 $n) {
-			$buffer = array();
-			$length = min($n->unbox(), $this->__length());
-
-			for ($i = 0; $i < $length; $i++) {
-				$buffer[] = $this->value[$i];
-			}
-
-			return new static($buffer);
+		public function take(Data\Int32 $n) {
+			return (($n->unbox() <= 0) || $this->__isEmpty())
+				? static::nil()
+				: static::cons($this->head(), $this->tail()->take($n->subtract(Data\Int32::one())));
 		}
 
 		/**
@@ -656,21 +668,38 @@ namespace Saber\Core {
 		 *
 		 * @access public
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return Core\ArrayList                                   the list
+		 * @return Data\LinkedList                                  the list
 		 */
 		public function takeWhile(callable $predicate) {
-			$buffer = array();
-			$length = $this->__length();
+			$start = static::nil();
+			$tail = null;
 
-			for ($i = 0; $i < $length; $i++) {
-				$x = $this->value[$i];
-				if (!$predicate($x, Core\Int32::create($i))->unbox()) {
-					break;
+			$taking = true;
+
+			$i = Data\Int32::zero();
+			for ($xs = $this; ! $xs->__isEmpty() && $taking; $xs = $xs->tail()) {
+				$x = $xs->head();
+
+				if ($predicate($x, $i)->unbox()) {
+					$ys = static::cons($x, static::nil());
+
+					if ($tail !== null) {
+						$tail->tail = $ys;
+					}
+					else {
+						$start = $ys;
+					}
+
+					$tail = $ys;
 				}
-				$buffer[] = $x;
+				else {
+					$taking = false;
+				}
+
+				$i = $i->increment();
 			}
 
-			return new static($buffer);
+			return $start;
 		}
 
 		/**
@@ -678,10 +707,10 @@ namespace Saber\Core {
 		 *
 		 * @access public
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return Core\ArrayList                                   the list
+		 * @return Data\LinkedList                                  the list
 		 */
 		public function takeWhileEnd(callable $predicate) {
-			return $this->takeWhile(function(Core\Any $object, Core\Int32 $index) use ($predicate) {
+			return $this->takeWhile(function(Core\Any $object, Data\Int32 $index) use ($predicate) {
 				return $predicate($object, $index)->not();
 			});
 		}
@@ -695,7 +724,7 @@ namespace Saber\Core {
 		 * to true.
 		 *
 		 * @access public
-		 * @return Core\Bool                                        whether all of the elements of
+		 * @return Data\Bool                                        whether all of the elements of
 		 *                                                          the list evaluate to true
 		 */
 		public function and_() {
@@ -707,7 +736,7 @@ namespace Saber\Core {
 		 * to false.
 		 *
 		 * @access public
-		 * @return Core\Bool                                        whether all of the elements of
+		 * @return Data\Bool                                        whether all of the elements of
 		 *                                                          the list evaluate to false
 		 *
 		 * @see http://www.sitepoint.com/javascript-truthy-falsy/
@@ -721,7 +750,7 @@ namespace Saber\Core {
 		 * false.
 		 *
 		 * @access public
-		 * @return Core\Bool                                        whether all of the elements of
+		 * @return Data\Bool                                        whether all of the elements of
 		 *                                                          the list strictly evaluate
 		 *                                                          to false
 		 */
@@ -734,7 +763,7 @@ namespace Saber\Core {
 		 * false.
 		 *
 		 * @access public
-		 * @return Core\Bool                                        whether all of the elements of
+		 * @return Data\Bool                                        whether all of the elements of
 		 *                                                          the list evaluate to false
 		 *
 		 * @see http://www.sitepoint.com/javascript-truthy-falsy/
@@ -748,20 +777,17 @@ namespace Saber\Core {
 		 * to true.
 		 *
 		 * @access public
-		 * @return Core\Bool                                        whether all of the elements of
+		 * @return Data\Bool                                        whether all of the elements of
 		 *                                                          the list strictly evaluate
 		 *                                                          to true
 		 */
 		public function true() {
-			$length = $this->__length();
-
-			for ($i = 0; $i < $length; $i++) {
-				if ($this->value[$i]->unbox() !== true) {
-					return Core\Bool::false();
+			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
+				if ($xs->head()->unbox() !== true) {
+					return Data\Bool::false();
 				}
 			}
-
-			return Core\Bool::true();
+			return Data\Bool::true();
 		}
 
 		/**
@@ -769,19 +795,16 @@ namespace Saber\Core {
 		 * true.
 		 *
 		 * @access public
-		 * @return Core\Bool                                        whether all of the elements of
+		 * @return Data\Bool                                        whether all of the elements of
 		 *                                                          the list evaluate to true
 		 */
 		public function truthy() {
-			$length = $this->__length();
-
-			for ($i = 0; $i < $length; $i++) {
-				if (!$this->value[$i]->unbox()) {
-					return Core\Bool::false();
+			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
+				if (!$xs->head()->unbox()) {
+					return Data\Bool::false();
 				}
 			}
-
-			return Core\Bool::true();
+			return Data\Bool::true();
 		}
 
 		#endregion
@@ -792,20 +815,22 @@ namespace Saber\Core {
 		 * This method returns the average of all elements in the list.
 		 *
 		 * @access public
-		 * @return Core\Num                                         the result
+		 * @return Data\Num                                         the result
 		 */
 		public function average() {
-			if ($this->__isEmpty()) {
-				return Core\Int32::zero();
+			$xs = $this;
+
+			if ($xs->__isEmpty()) {
+				return Data\Int32::zero();
 			}
 
-			$length = $this->__length();
-			$x = $this->value[0];
+			$x = $xs->head();
+
 			$t = $x->__typeOf();
 			$y = $t::zero();
 
-			for ($i = 1; $i < $length; $i++) {
-				$x = $x->add($this->value[$i]);
+			for ($xs = $xs->tail(); ! $xs->__isEmpty(); $xs = $xs->tail()) {
+				$x = $x->add($xs->head());
 				$y = $y->increment();
 			}
 
@@ -816,18 +841,19 @@ namespace Saber\Core {
 		 * This method returns the product of all elements in the list.
 		 *
 		 * @access public
-		 * @return Core\Num                                         the result
+		 * @return Data\Num                                         the result
 		 */
 		public function product() {
-			if ($this->__isEmpty()) {
-				return Core\Int32::one();
+			$xs = $this;
+
+			if ($xs->__isEmpty()) {
+				return Data\Int32::one();
 			}
 
-			$length = $this->__length();
-			$x = $this->value[0];
+			$x = $xs->head();
 
-			for ($i = 1; $i < $length; $i++) {
-				$x = $x->multiply($this->value[$i]);
+			for ($xs = $xs->tail(); ! $xs->__isEmpty(); $xs = $xs->tail()) {
+				$x = $x->multiply($xs->head());
 			}
 
 			return $x;
@@ -837,18 +863,19 @@ namespace Saber\Core {
 		 * This method returns the sum of all elements in the list.
 		 *
 		 * @access public
-		 * @return Core\Num                                         the result
+		 * @return Data\Num                                         the result
 		 */
 		public function sum() {
-			if ($this->__isEmpty()) {
-				return Core\Int32::zero();
+			$xs = $this;
+
+			if ($xs->__isEmpty()) {
+				return Data\Int32::zero();
 			}
 
-			$length = $this->__length();
-			$x = $this->value[0];
+			$x = $xs->head();
 
-			for ($i = 1; $i < $length; $i++) {
-				$x = $x->add($this->value[$i]);
+			for ($xs = $xs->tail(); ! $xs->__isEmpty(); $xs = $xs->tail()) {
+				$x = $x->add($xs->head());
 			}
 
 			return $x;

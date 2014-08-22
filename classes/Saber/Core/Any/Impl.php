@@ -19,6 +19,7 @@
 namespace Saber\Core\Any {
 
 	use \Saber\Core;
+	use \Saber\Data;
 	use \Saber\Throwable;
 
 	trait Impl {
@@ -155,10 +156,10 @@ namespace Saber\Core\Any {
 		 *
 		 * @access public
 		 * @final
-		 * @return Core\String                                      the object's hash code
+		 * @return Data\String                                      the object's hash code
 		 */
 		public final function hashCode() {
-			return Core\String::create($this->__hashCode());
+			return Data\String::create($this->__hashCode());
 		}
 
 		/**
@@ -188,10 +189,10 @@ namespace Saber\Core\Any {
 		 *
 		 * @access public
 		 * @final
-		 * @return Core\String                                      the object as a string
+		 * @return Data\String                                      the object as a string
 		 */
 		public final function toString() {
-			return Core\String::create($this->__toString());
+			return Data\String::create($this->__toString());
 		}
 
 		/**
@@ -199,10 +200,10 @@ namespace Saber\Core\Any {
 		 *
 		 * @access public
 		 * @final
-		 * @return Core\String                                      the object's class type
+		 * @return Data\String                                      the object's class type
 		 */
 		public final function typeOf() {
-			return Core\String::create($this->__typeOf());
+			return Data\String::create($this->__typeOf());
 		}
 
 		#endregion

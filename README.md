@@ -7,7 +7,7 @@ A functional php library.
 
 * PHP 5.4+
 * The [mbstring](http://php.net/manual/en/book.mbstring.php) extension.
-* The [gmp](http://php.net/manual/en/book.gmp.php) extension (only if using `Core\Integer`).
+* The [gmp](http://php.net/manual/en/book.gmp.php) extension (only if using `Data\Integer`).
 
 ### [Boxing](http://msdn.microsoft.com/en-us/library/yz2be5wk.aspx)
 
@@ -15,14 +15,14 @@ To "box" a PHP typed primitive or object, create an instance of the respective d
 class's `box` method.  This method enforces type safety.
 
 ````
-$object = Core\Int32::box(23);
+$object = Data\Int32::box(23);
 ````
 
 For better performance, type safety can be ignored by using the `create` method to create an instance
 of the respective data type.
 
 ````
-$object = Core\Int32::create(23);
+$object = Data\Int32::create(23);
 ````
 
 To "unbox" a boxed object, call the `unbox` method on the respective class to get its value.
@@ -36,7 +36,7 @@ $value = $object->unbox();
 This library generally implements a fluent API; therefore, methods can be chained.
 
 ````
-$object = Core\Int32::box(23)->increment()->decrement();
+$object = Data\Int32::box(23)->increment()->decrement();
 ````
 
 ### Methods
@@ -45,14 +45,14 @@ Methods that are NOT preceded by two underscores will return a boxed object.  Th
 to this rule is the `unbox` method.
 
 ````
-$object = Core\Int32::box(23)->increment();
+$object = Data\Int32::box(23)->increment();
 ````
 
 Methods that are preceded by two underscores will return the unboxed value, which is typically a
 PHP typed primitive or object.
 
 ````
-$value = Core\Int32::box(23)->__increment();
+$value = Data\Int32::box(23)->__increment();
 ````
 
 ### Callables
@@ -67,22 +67,22 @@ Core\Any function(Core\Any $z, Core\Any $x)
 A `predicate` function is used to find the result of preforming a Boolean evaluation.
 
 ````
-Core\Bool function(Core\Any $x)
-Core\Bool function(Core\Any $x, Core\Int32 $i)
+Data\Bool function(Core\Any $x)
+Data\Bool function(Core\Any $x, Data\Int32 $i)
 ````
 
 A `procedure` function is used to preform an operation without returning a value.
 
 ````
-Core\Unit function(Core\Any $x)
-Core\Unit function(Core\Any $x, Core\Int32 $i)
+Data\Unit function(Core\Any $x)
+Data\Unit function(Core\Any $x, Data\Int32 $i)
 ````
 
 A `subroutine` function is used to preform an operation that does return a value.
 
 ````
 Core\Any function(Core\Any $x)
-Core\Any function(Core\Any $x, Core\Int32 $i)
+Core\Any function(Core\Any $x, Data\Int32 $i)
 ````
 
 ### Hierarchy
@@ -97,24 +97,24 @@ Core\Any function(Core\Any $x, Core\Int32 $i)
         + Throwable\OutOfBounds\Exception
         + Throwable\UnexpectedValue\Exception
         + Throwable\UnimplementedMethod\Exception
-    + Core\Collection
-      + Core\ArrayList
-      + Core\LinkedList
-      + Core\String
-    + Core\Tuple
-    + Core\Wrapper
+    + Data\Collection
+      + Data\ArrayList
+      + Data\LinkedList
+      + Data\String
+    + Data\Tuple
+    + Data\Wrapper
   + Core\AnyVal
-    + Core\Bool
-    + Core\Char
-    + Core\Num
-      + Core\Floating
-        + Core\Double
-        + Core\Float
-      + Core\Integral
-        + Core\Int32
-        + Core\Integer
+    + Data\Bool
+    + Data\Char
+    + Data\Num
+      + Data\Floating
+        + Data\Double
+        + Data\Float
+      + Data\Integral
+        + Data\Int32
+        + Data\Integer
     + Core\Nothing
-    + Core\Unit
+    + Data\Unit
 + Core\AnyCtrl
   + Control\Monad
 ````

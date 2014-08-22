@@ -16,28 +16,42 @@
  * limitations under the License.
  */
 
-namespace Saber\Core {
+namespace Saber\Data {
 
 	use \Saber\Core;
+	use \Saber\Data;
 
-	class Wrapper implements Core\AnyRef {
+	class Unit implements Core\AnyVal {
 
 		#region Traits
 
-		use Core\AnyRef\Impl;
+		use Core\AnyVal\Impl;
 
 		#endregion
 
 		#region Methods -> Boxing/Creation
 
 		/**
-		 * This constructor initializes the class with the specified value.
+		 * This constructor initializes the class.
 		 *
 		 * @access public
-		 * @param mixed $value                                      the value to be assigned
 		 */
-		public function __construct($value) {
-			$this->value = $value;
+		public function __construct() {
+			$this->value = null;
+		}
+
+		#endregion
+
+		#region Methods -> Native Oriented
+
+		/**
+		 * This method returns the object as a string.
+		 *
+		 * @access public
+		 * @return string                                           the object as a string
+		 */
+		public function __toString() {
+			return 'null';
 		}
 
 		#endregion
@@ -48,13 +62,13 @@ namespace Saber\Core {
 		 * This method compares the specified object with the current object for order.
 		 *
 		 * @access public
-		 * @param Core\Wrapper $that                                the object to be compared
-		 * @return Core\Int32                                       whether the current object is less than,
+		 * @param Data\Unit $that                                   the object to be compared
+		 * @return Data\Int32                                       whether the current object is less than,
 		 *                                                          equal to, or greater than the specified
 		 *                                                          object
 		 */
-		public function compareTo(Core\Wrapper $that) {
-			return Core\Int32::zero();
+		public function compareTo(Data\Unit $that) {
+			return Data\Int32::zero();
 		}
 
 		#endregion

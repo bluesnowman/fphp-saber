@@ -16,9 +16,10 @@
  * limitations under the License.
  */
 
-namespace Saber\Core {
+namespace Saber\Data {
 
 	use \Saber\Core;
+	use \Saber\Data;
 
 	abstract class Num implements Core\AnyVal {
 
@@ -34,7 +35,7 @@ namespace Saber\Core {
 		 * This method returns an object with a "0" value.
 		 *
 		 * @access public
-		 * @return Core\Num                                           the object
+		 * @return Data\Num                                           the object
 		 */
 		public static function zero() {
 			return new static(0);
@@ -44,7 +45,7 @@ namespace Saber\Core {
 		 * This method returns an object with a "1" value.
 		 *
 		 * @access public
-		 * @return Core\Num                                           the object
+		 * @return Data\Num                                           the object
 		 */
 		public static function one() {
 			return new static(1);
@@ -54,7 +55,7 @@ namespace Saber\Core {
 		 * This method returns an object with a "-1" value.
 		 *
 		 * @access public
-		 * @return Core\Num                                           the object
+		 * @return Data\Num                                           the object
 		 */
 		public static function negative() {
 			return new static(-1);
@@ -69,7 +70,7 @@ namespace Saber\Core {
 		 *
 		 * @access public
 		 * @abstract
-		 * @return Core\Num                                         the result
+		 * @return Data\Num                                         the result
 		 */
 		public abstract function decrement();
 
@@ -78,7 +79,7 @@ namespace Saber\Core {
 		 *
 		 * @access public
 		 * @abstract
-		 * @return Core\Num                                         the result
+		 * @return Data\Num                                         the result
 		 */
 		public abstract function increment();
 
@@ -86,20 +87,20 @@ namespace Saber\Core {
 		 * This method returns whether the number is negative.
 		 *
 		 * @access public
-		 * @return Core\Bool                                        whether the number is negative
+		 * @return Data\Bool                                        whether the number is negative
 		 */
 		public function isNegative() {
-			return ($this->value >= 0) ? Core\Bool::true() : Core\Bool::false();
+			return ($this->value >= 0) ? Data\Bool::true() : Data\Bool::false();
 		}
 
 		/**
 		 * This method return the value as a Double.
 		 *
 		 * @access public
-		 * @return Core\Double                                      the value as a double
+		 * @return Data\Double                                      the value as a double
 		 */
 		public function toDouble() {
-			return Core\Double::create($this->unbox());
+			return Data\Double::create($this->unbox());
 		}
 
 		/**
@@ -107,10 +108,10 @@ namespace Saber\Core {
 		 * lost of precision.
 		 *
 		 * @access public
-		 * @return Core\Float                                       the value as a float
+		 * @return Data\Float                                       the value as a float
 		 */
 		public function toFloat() {
-			return Core\Float::create($this->unbox());
+			return Data\Float::create($this->unbox());
 		}
 
 		/**
@@ -118,10 +119,10 @@ namespace Saber\Core {
 		 * lost of precision.
 		 *
 		 * @access public
-		 * @return Core\Int32                                       the value as an integer
+		 * @return Data\Int32                                       the value as an integer
 		 */
 		public function toInt32() {
-			return Core\Int32::create($this->unbox());
+			return Data\Int32::create($this->unbox());
 		}
 
 		/**
@@ -129,10 +130,10 @@ namespace Saber\Core {
 		 * lost of precision.
 		 *
 		 * @access public
-		 * @return Core\Integer                                     the value as an integer
+		 * @return Data\Integer                                     the value as an integer
 		 */
 		public function toInteger() {
-			return Core\Integer::create($this->unbox());
+			return Data\Integer::create($this->unbox());
 		}
 
 		#endregion

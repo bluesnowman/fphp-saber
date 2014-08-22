@@ -16,9 +16,10 @@
  * limitations under the License.
  */
 
-namespace Saber\Core {
+namespace Saber\Data {
 
 	use \Saber\Core;
+	use \Saber\Data;
 	use \Saber\Throwable;
 
 	class Bool implements Core\AnyVal {
@@ -62,20 +63,20 @@ namespace Saber\Core {
 		 * This method returns an object with a "false" value.
 		 *
 		 * @access public
-		 * @return Core\Bool                                        the object
+		 * @return Data\Bool                                        the object
 		 */
 		public static function false() {
-			return Core\Bool::create(false);
+			return Data\Bool::create(false);
 		}
 
 		/**
 		 * This method returns an object with a "true" value.
 		 *
 		 * @access public
-		 * @return Core\Bool                                        the object
+		 * @return Data\Bool                                        the object
 		 */
 		public static function true() {
-			return Core\Bool::create(true);
+			return Data\Bool::create(true);
 		}
 
 		#endregion
@@ -100,34 +101,34 @@ namespace Saber\Core {
 		 * This method returns whether both sides evaluate to true for the result to be true.
 		 *
 		 * @access public
-		 * @param Core\Bool $that                                   the object to be compared
-		 * @return Core\Bool                                        whether both sides evaluate to true
+		 * @param Data\Bool $that                                   the object to be compared
+		 * @return Data\Bool                                        whether both sides evaluate to true
 		 */
-		public function and_(Core\Bool $that) {
-			return Core\Bool::create($this->unbox() && $that->unbox());
+		public function and_(Data\Bool $that) {
+			return Data\Bool::create($this->unbox() && $that->unbox());
 		}
 
 		/**
 		 * This method compares the specified object with the current object for order.
 		 *
 		 * @access public
-		 * @param Core\Bool $that                                   the object to be compared
-		 * @return Core\Int32                                       whether the current object is less than,
+		 * @param Data\Bool $that                                   the object to be compared
+		 * @return Data\Int32                                       whether the current object is less than,
 		 *                                                          equal to, or greater than the specified
 		 *                                                          object
 		 */
-		public function compareTo(Core\Bool $that) {
+		public function compareTo(Data\Bool $that) {
 			$x = $this->unbox();
 			$y = $that->unbox();
 
 			if (!$x && $y) {
-				return Core\Int32::negative();
+				return Data\Int32::negative();
 			}
 			else if ($x == $y) {
-				return Core\Int32::zero();
+				return Data\Int32::zero();
 			}
 			else { // ($x && !$y)
-				return Core\Int32::one();
+				return Data\Int32::one();
 			}
 		}
 
@@ -135,43 +136,43 @@ namespace Saber\Core {
 		 * This method returns whether at least one side is true for the result to be true.
 		 *
 		 * @access public
-		 * @param Core\Bool $that                                   the object to be compared
-		 * @return Core\Bool                                        whether at least one side is true
+		 * @param Data\Bool $that                                   the object to be compared
+		 * @return Data\Bool                                        whether at least one side is true
 		 */
-		public function or_(Core\Bool $that) {
-			return Core\Bool::create($this->unbox() || $that->unbox());
+		public function or_(Data\Bool $that) {
+			return Data\Bool::create($this->unbox() || $that->unbox());
 		}
 
 		/**
 		 * This method returns whether at least one side is false for the result to be true.
 		 *
 		 * @access public
-		 * @param Core\Bool $that                                   the object to be compared
-		 * @return Core\Bool                                        whether at least one side is false
+		 * @param Data\Bool $that                                   the object to be compared
+		 * @return Data\Bool                                        whether at least one side is false
 		 */
-		public function nand(Core\Bool $that) {
-			return Core\Bool::create(!($this->unbox() && $that->unbox()));
+		public function nand(Data\Bool $that) {
+			return Data\Bool::create(!($this->unbox() && $that->unbox()));
 		}
 
 		/**
 		 * This method returns whether both sides evaluate to false for the result to be true.
 		 *
 		 * @access public
-		 * @param Core\Bool $that                                   the object to be compared
-		 * @return Core\Bool                                        whether both sides evaluate to false
+		 * @param Data\Bool $that                                   the object to be compared
+		 * @return Data\Bool                                        whether both sides evaluate to false
 		 */
-		public function nor(Core\Bool $that) {
-			return Core\Bool::create(!($this->unbox() || $that->unbox()));
+		public function nor(Data\Bool $that) {
+			return Data\Bool::create(!($this->unbox() || $that->unbox()));
 		}
 
 		/**
 		 * This method returns the negation.
 		 *
 		 * @access public
-		 * @return Core\Bool                                        the negation
+		 * @return Data\Bool                                        the negation
 		 */
 		public function not() {
-			return Core\Bool::create(!$this->unbox());
+			return Data\Bool::create(!$this->unbox());
 		}
 
 		/**
@@ -179,10 +180,10 @@ namespace Saber\Core {
 		 * lost of precision.
 		 *
 		 * @access public
-		 * @return Core\Int32                                       the value as an integer
+		 * @return Data\Int32                                       the value as an integer
 		 */
 		public function toInt32() {
-			return Core\Int32::create($this->unbox());
+			return Data\Int32::create($this->unbox());
 		}
 
 		/**
@@ -190,12 +191,12 @@ namespace Saber\Core {
 		 * be true.
 		 *
 		 * @access public
-		 * @param Core\Bool $that                                   the object to be compared
-		 * @return Core\Bool                                        whether one side evaluates to true,
+		 * @param Data\Bool $that                                   the object to be compared
+		 * @return Data\Bool                                        whether one side evaluates to true,
 		 *                                                          but not both
 		 */
-		public function xor_(Core\Bool $that) {
-			return Core\Bool::create($this->unbox() xor $that->unbox());
+		public function xor_(Data\Bool $that) {
+			return Data\Bool::create($this->unbox() xor $that->unbox());
 		}
 
 		#endregion

@@ -16,26 +16,10 @@
  * limitations under the License.
  */
 
-namespace Saber\Core {
+namespace Saber\Data {
 
-	use \Saber\Core;
+	use \Saber\Data;
 
-	abstract class Floating extends Core\Num {
-
-		#region Methods -> Native Oriented
-
-		/**
-		 * This method returns the object as a string.
-		 *
-		 * @access public
-		 * @return string                                           the object as a string
-		 */
-		public function __toString() {
-			return sprintf('%F', $this->unbox());
-		}
-
-		#endregion
-
-	}
+	abstract class Integral extends Data\Num { }
 
 }

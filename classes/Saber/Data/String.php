@@ -16,12 +16,13 @@
  * limitations under the License.
  */
 
-namespace Saber\Core {
+namespace Saber\Data {
 
 	use \Saber\Core;
+	use \Saber\Data;
 	use \Saber\Throwable;
 
-	abstract class LinkedList extends Core\Collection {
+	abstract class String extends Data\Collection {
 
 		#region Methods -> Boxing/Creation
 
@@ -36,10 +37,13 @@ namespace Saber\Core {
 		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
 		public static function box($value/*...*/) {
-			if (is_array($value)) {
-				$buffer = static::nil();
-				for ($i = count($value) - 1; $i >= 0; $i--) {
-					$buffer = $buffer->prepend($value[$i]);
+			if ($value === null) {
+				return Data\String::nil();
+			}
+			else if (is_string($value)) {
+				$buffer = Data\String::nil();
+				for ($i = mb_strlen($value) - 1; $i >= 0; $i--) {
+					$buffer = $buffer->prepend(Data\Char::box($value[$i]));
 				}
 				return $buffer;
 			}
@@ -53,44 +57,41 @@ namespace Saber\Core {
 		}
 
 		/**
-		 * This method returns a "cons" object for a list.
+		 * This method returns a string "cons" object.
 		 *
 		 * @access public
 		 * @static
 		 * @param Core\Any $head                                    the head to be used
-		 * @param Core\LinkedList $tail                             the tail to be used
-		 * @return Core\LinkedList\Cons                             the "cons" object
+		 * @param Data\String $tail                                 the tail to be used
+		 * @return Data\String\Cons                                 the object
 		 */
-		public static function cons(Core\Any $head, Core\LinkedList $tail) {
-			return new Core\LinkedList\Cons($head, $tail);
+		public static function cons(Core\Any $head, Data\String $tail) {
+			return new Data\String\Cons($head, $tail);
 		}
 
 		/**
-		 * This method returns a "nil" object for a list.
+		 * This method returns a string "nil" object.
 		 *
 		 * @access public
 		 * @static
-		 * @return Core\LinkedList\Nil                              the "nil" object
+		 * @return Data\String\Nil                                  the object
 		 */
 		public static function nil() {
-			return new Core\LinkedList\Nil();
+			return new Data\String\Nil();
 		}
 
 		/**
 		 * This method returns the value contained within the boxed object.
 		 *
 		 * @access public
-		 * @param integer $depth                                    how many levels to un-box
+		 * @param integer $depth                                    how many levels to unbox
 		 * @return array                                            the un-boxed value
 		 */
 		public function unbox($depth = 0) {
-			$buffer = array();
+			$buffer = '';
 
 			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				$x = $xs->head();
-				$buffer[] = ($depth > 0)
-					? $x->unbox($depth - 1)
-					: $x;
+				$buffer .= $xs->head()->unbox();
 			}
 
 			return $buffer;
@@ -101,13 +102,13 @@ namespace Saber\Core {
 		#region Methods -> Native Oriented
 
 		/**
-		 * This method (aka "null") returns whether this list is empty.
+		 * This method (aka "null") returns whether this string is empty.
 		 *
 		 * @access public
-		 * @return Core\Bool                                        whether the list is empty
+		 * @return Data\Bool                                        whether the string is empty
 		 */
 		public function __isEmpty() {
-			return ($this instanceof Core\LinkedList\Nil);
+			return ($this instanceof Data\String\Nil);
 		}
 
 		#endregion
@@ -119,7 +120,7 @@ namespace Saber\Core {
 		 *
 		 * @access public
 		 * @param Core\Any $object                                  the object to be appended
-		 * @return Core\LinkedList                                  the list
+		 * @return Data\String                                      the string
 		 */
 		public function append(Core\Any $object) {
 			return $this->concat(static::cons($object, static::nil()));
@@ -130,38 +131,43 @@ namespace Saber\Core {
 		 *
 		 * @access public
 		 * @abstract
-		 * @param Core\LinkedList $that                             the object to be compared
-		 * @return Core\Int32                                       whether the current object is less than,
+		 * @param Data\String $that                                 the object to be compared
+		 * @return Data\Int32                                       whether the current object is less than,
 		 *                                                          equal to, or greater than the specified
 		 *                                                          object
 		 */
-		public abstract function compareTo(Core\LinkedList $that);
+		public abstract function compareTo(Data\String $that);
 
 		/**
-		 * This method concatenates a list to this object's list. Performs in O(n) time.
+		 * This method concatenates a string to this object's list. Performs in O(n) time.
 		 *
 		 * @access public
-		 * @param Core\LinkedList $that                             the list to be concatenated
-		 * @return Core\LinkedList                                  the list
+		 * @param Data\String $list                                 the string to be concatenated
+		 * @return Data\String                                      the string
 		 */
-		public function concat(Core\LinkedList $that) {
+		public function concat(Data\String $list) {
 			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail());
-			$xs->tail = $that;
+			$xs->tail = $list;
 			return $this;
 		}
 
 		/**
-		 * This method evaluates whether the specified object is contained within the list.
+		 * This method evaluates whether the specified object is contained within the linked
+		 * list.
 		 *
 		 * @access public
 		 * @param Core\Any $object                                  the object to find
-		 * @return Core\Bool                                        whether the specified object is
-		 *                                                          contained within the list
+		 * @return Data\Bool                                        whether the specified object is
+		 *                                                          contained within the linked
+		 *                                                          list
 		 */
 		public function contains(Core\Any $object) {
-			return $this->some(function(Core\Any $element, Core\Int32 $index) use ($object) {
-				return $element->equals($object);
-			});
+			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
+				if ($xs->head()->__equals($object)) {
+					return Data\Bool::true();
+				}
+			}
+			return Data\Bool::false();
 		}
 
 		/**
@@ -169,13 +175,13 @@ namespace Saber\Core {
 		 *
 		 * @access public
 		 * @param Core\Any $object                                  the object to be removed
-		 * @return Core\LinkedList                                  the list
+		 * @return Data\String                                      the string
 		 */
 		public function delete(Core\Any $object) {
 			$start = static::nil();
 			$tail = null;
 
-			$index = Core\Int32::zero();
+			$index = Data\Int32::zero();
 			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
 				$head = $xs->head();
 				if (!$object->__equals($head)) {
@@ -209,14 +215,14 @@ namespace Saber\Core {
 		}
 
 		/**
-		 * This method returns the list after dropping the first "n" elements.
+		 * This method returns the string after dropping the first "n" elements.
 		 *
 		 * @access public
-		 * @param Core\Int32 $n                                     the number of elements to drop
-		 * @return Core\LinkedList                                  the list
+		 * @param Data\Int32 $n                                     the number of elements to drop
+		 * @return Data\String                                      the string
 		 */
-		public function drop(Core\Int32 $n) {
-			$i = Core\Int32::zero();
+		public function drop(Data\Int32 $n) {
+			$i = Data\Int32::zero();
 
 			for ($xs = $this; ($i->unbox() < $n->unbox()) && ! $xs->__isEmpty(); $xs = $xs->tail()) {
 				$i = $i->increment();
@@ -226,46 +232,46 @@ namespace Saber\Core {
 		}
 
 		/**
-		 * This method return the list from element where the predicate function fails.
+		 * This method return the string from element where the predicate function fails.
 		 *
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return Core\LinkedList                                  the list
+		 * @return Data\String                                      the string
 		 */
 		public function dropWhile(callable $predicate) {
-			$i = Core\Int32::zero();
+			$index = Data\Int32::zero();
 
-			for ($xs = $this; ! $xs->__isEmpty() && $predicate($xs->head(), $i)->unbox(); $xs = $xs->tail()) {
-				$i = $i->increment();
+			for ($xs = $this; ! $xs->__isEmpty() && $predicate($xs->head(), $index)->unbox(); $xs = $xs->tail()) {
+				$index = $index->increment();
 			}
 
 			return $xs;
 		}
 
 		/**
-		 * This method return the list from element where the predicate function doesn't fail.
+		 * This method return the string from element where the predicate function doesn't fail.
 		 *
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return Core\LinkedList                                  the list
+		 * @return Data\String                                      the string
 		 */
 		public function dropWhileEnd(callable $predicate) {
-			return $this->dropWhile(function(Core\Any $object, Core\Int32 $index) use ($predicate) {
+			return $this->dropWhile(function(Core\Any $object, Data\Int32 $index) use ($predicate) {
 				return $predicate($object, $index)->not();
 			});
 		}
 
 		/**
-		 * This method iterates over the elements in the list, yielding each element to the
-		 * callback function.
+		 * This method iterates over the elements in the string, yielding each element to the procedure
+		 * function.
 		 *
 		 * @access public
 		 * @param callable $procedure                               the procedure function to be used
 		 */
 		public function each(callable $procedure) {
-			$i = Core\Int32::zero();
+			$index = Data\Int32::zero();
 
 			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				$procedure($xs->head(), $i);
-				$i = $i->increment();
+				$procedure($xs->head(), $index);
+				$index = $index->increment();
 			}
 		}
 
@@ -273,80 +279,80 @@ namespace Saber\Core {
 		 * This method returns the element at the specified index.
 		 *
 		 * @access public
-		 * @param Core\Int32 $index                                 the index of the element
+		 * @param Data\Int32 $index                                 the index of the element
 		 * @return Core\Any                                         the element at the specified index
 		 * @throws Throwable\OutOfBounds\Exception                  indicates the specified index
 		 *                                                          cannot be found
 		 */
-		public function element(Core\Int32 $index) {
-			$i = Core\Int32::zero();
+		public function element(Data\Int32 $index) {
+			$count = Data\Int32::zero();
 
 			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				if ($i->__equals($index)) {
+				if ($count->__equals($index)) {
 					return $xs->head();
 				}
-				$i = $i->increment();
+				$count = $count->increment();
 			}
 
 			throw new Throwable\OutOfBounds\Exception('Unable to return element at index :index.', array(':index' => $index->unbox()));
 		}
 
 		/**
-		 * This method (aka "all" or "forall") iterates over the elements in the list, yielding each
+		 * This method (aka "all" or "forall") iterates over the elements in the string, yielding each
 		 * element to the predicate function, or fails the truthy test.  Opposite of "none".
 		 *
 		 * @access public
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return Core\Bool                                        whether each element passed the
+		 * @return Data\Bool                                        whether each element passed the
 		 *                                                          truthy test
 		 */
 		public function every(callable $predicate) { // aka "all" or "forall"
-			$i = Core\Int32::zero();
+			$index = Data\Int32::zero();
 
 			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				if (!$predicate($xs->head(), $i)->unbox()) {
-					return Core\Bool::false();
+				if (!$predicate($xs->head(), $index)->unbox()) {
+					return Data\Bool::false();
 				}
-				$i = $i->increment();
+				$index = $index->increment();
 			}
 
-			return Core\Bool::true(); // yes, empty list returns "true"
+			return Data\Bool::true(); // yes, empty list returns "true"
 		}
 
 		/**
-		 * This method returns a list of those elements that satisfy the predicate.
+		 * This method returns a string of those elements that satisfy the predicate.
 		 *
 		 * @access public
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return Core\LinkedList                                  the list
+		 * @return Data\String                                      the string
 		 */
 		public function filter(callable $predicate) {
 			$start = static::nil();
 			$tail = null;
 
-			$i = Core\Int32::zero();
+			$index = Data\Int32::zero();
 			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				$x = $xs->head();
-				if ($predicate($x, $i)->unbox()) {
-					$ys = static::cons($x, static::nil());
+				$head = $xs->head();
+				if ($predicate($head, $index)->unbox()) {
+					$cons = static::cons($head, static::nil());
 
 					if ($tail !== null) {
-						$tail->tail = $ys;
+						$tail->tail = $cons;
 					}
 					else {
-						$start = $ys;
+						$start = $cons;
 					}
 
-					$tail = $ys;
+					$tail = $cons;
 				}
-				$i = $i->increment();
+				$index = $index->increment();
 			}
 
 			return $start;
 		}
 
 		/**
-		 * This method returns the first object in the list that passes the truthy test.
+		 * This method returns the first object in the string that passes the truthy test.
 		 *
 		 * @access public
 		 * @param callable $predicate                               the predicate function to be used
@@ -354,21 +360,19 @@ namespace Saber\Core {
 		 * @throws Throwable\EmptyCollection\Exception              indicates that the collection is empty
 		 */
 		public function first(callable $predicate) {
-			$i = Core\Int32::zero();
-
+			$index = Data\Int32::zero();
 			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				$x = $xs->head();
-				if ($predicate($x, $i)->unbox()) {
-					return $x;
+				$head = $xs->head();
+				if ($predicate($head, $index)->unbox()) {
+					return $head;
 				}
-				$i = $i->increment();
+				$index = $index->increment();
 			}
-
-			throw new Throwable\EmptyCollection\Exception('Unable to return first object. Linked list is empty.');
+			throw new Throwable\EmptyCollection\Exception('Unable to return first object. String is empty.');
 		}
 
 		/**
-		 * This method applies a left-fold reduction on the list using the operator function.
+		 * This method applies a left-fold reduction on the string using the operator function.
 		 *
 		 * @access public
 		 * @param callable $operator                                the operator function to be used
@@ -376,17 +380,17 @@ namespace Saber\Core {
 		 * @return Core\Any                                         the result
 		 */
 		public function foldLeft(callable $operator, Core\Any $initial) {
-			$z = $initial;
+			$x = $initial;
 
 			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				$z = $operator($z, $xs->head());
+				$x = $operator($x, $xs->head());
 			}
 
-			return $z;
+			return $x;
 		}
 
 		/**
-		 * This method applies a right-fold reduction on the list using the operator function.
+		 * This method applies a right-fold reduction on the string using the operator function.
 		 *
 		 * @access public
 		 * @param callable $operator                                the operator function to be used
@@ -394,17 +398,15 @@ namespace Saber\Core {
 		 * @return Core\Any                                         the result
 		 */
 		public function foldRight(callable $operator, Core\Any $initial) {
-			$z = $initial;
-
 			if ($this->__isEmpty()) {
-				return $z;
+				return $initial;
 			}
 
-			return $operator($this->head(), $this->tail()->foldRight($operator, $z));
+			return $operator($this->head(), $this->tail()->foldRight($operator, $initial));
 		}
 
 		/**
-		 * This method returns the head object in this list.
+		 * This method returns the head object in this string.
 		 *
 		 * @access public
 		 * @abstract
@@ -418,27 +420,27 @@ namespace Saber\Core {
 		 *
 		 * @access public
 		 * @param Core\Any $object                                  the object to be searched for
-		 * @return Core\Int32                                       the index of the first occurrence
+		 * @return Data\Int32                                       the index of the first occurrence
 		 *                                                          or otherwise -1
 		 */
 		public function indexOf(Core\Any $object) {
-			$i = Core\Int32::zero();
+			$index = Data\Int32::zero();
 
 			for ($xs = $this->tail(); ! $xs->__isEmpty(); $xs = $xs->tail()) {
 				if ($object->__equals($xs->head())) {
-					return $i;
+					return $index;
 				}
-				$i = $i->increment();
+				$index = $index->increment();
 			}
 
-			return Core\Int32::negative();
+			return Data\Int32::negative();
 		}
 
 		/**
-		 * This method returns all but the last element of in the list.
+		 * This method returns all but the last element of in the string.
 		 *
 		 * @access public
-		 * @return Core\LinkedList                                  the list, minus the last
+		 * @return Data\String                                      the string, minus the last
 		 *                                                          element
 		 */
 		public function init() {
@@ -446,38 +448,38 @@ namespace Saber\Core {
 			$tail = null;
 
 			for ($xs = $this; ! $xs->__isEmpty() && ! $xs->tail()->__isEmpty(); $xs = $xs->tail()) {
-				$ys = static::cons($xs->head(), static::nil());
+				$cons = static::cons($xs->head(), static::nil());
 
 				if ($tail !== null) {
-					$tail->tail = $ys;
+					$tail->tail = $cons;
 				}
 				else {
-					$start = $ys;
+					$start = $cons;
 				}
 
-				$tail = $ys;
+				$tail = $cons;
 			}
 
 			return $start;
 		}
 
 		/**
-		 * This method (aka "null") returns whether this list is empty.
+		 * This method (aka "null") returns whether this string is empty.
 		 *
 		 * @access public
 		 * @final
-		 * @return Core\Bool                                        whether the list is empty
+		 * @return Data\Bool                                        whether the string is empty
 		 */
 		public final function isEmpty() {
-			return Core\Bool::create($this->__isEmpty());
+			return Data\Bool::create($this->__isEmpty());
 		}
 
 		/**
-		 * The method intersperses the specified object between each element in the list.
+		 * The method intersperses the specified object between each element in the string.
 		 *
 		 * @access public
 		 * @param Core\Any $object                                  the object to be interspersed
-		 * @return Core\LinkedList                                  the list
+		 * @return Data\String                                      the string
 		 */
 		public function intersperse(Core\Any $object) {
 			return ($this->__isEmpty() || $this->tail()->__isEmpty())
@@ -486,188 +488,188 @@ namespace Saber\Core {
 		}
 
 		/**
-		 * This method returns the last element in this list.
+		 * This method returns the last element in this string.
 		 *
 		 * @access public
 		 * @return Core\Any                                         the last element in this linked
 		 *                                                          list
 		 */
 		public function last() {
-			$x = $this->head();
+			$head = $this->head();
 
 			for ($xs = $this->tail(); ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				$x = $xs->head();
+				$head = $xs->head();
 			}
 
-			return $x;
+			return $head;
 		}
 
 		/**
-		 * This method returns the length of this list. Performs in O(n) time.
+		 * This method returns the length of this string. Performs in O(n) time.
 		 *
 		 * @access public
-		 * @return Core\Int32                                       the length of this list
+		 * @return Data\Int32                                       the length of this string
 		 */
 		public function length() {
-			return $this->foldLeft(function(Core\Int32 $length) {
-				return $length->increment();
-			}, Core\Int32::zero());
+			return $this->foldLeft(function(Data\Int32 $i) {
+				return $i->increment();
+			}, Data\Int32::zero());
 		}
 
 		/**
-		 * This method applies each element in this list to the subroutine function.
+		 * This method applies each element in this string to the subroutine function.
 		 *
 		 * @access public
 		 * @param callable $subroutine                              the subroutine function to be used
-		 * @return Core\LinkedList                                  the list
+		 * @return Data\String                                      the string
 		 */
 		public function map(callable $subroutine) {
 			$start = static::nil();
 			$tail = null;
 
-			$i = Core\Int32::zero();
+			$index = Data\Int32::zero();
 			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				$ys = static::cons($subroutine($xs->head(), $i), static::nil());
+				$cons = static::cons($subroutine($xs->head(), $index), static::nil());
 
 				if ($tail !== null) {
-					$tail->tail = $ys;
+					$tail->tail = $cons;
 				}
 				else {
-					$start = $ys;
+					$start = $cons;
 				}
 
-				$tail = $ys;
-				$i = $i->increment();
+				$tail = $cons;
+				$index = $index->increment();
 			}
 
 			return $start;
 		}
 
 		/**
-		 * This method iterates over the elements in the list, yielding each element to the
+		 * This method iterates over the elements in the string, yielding each element to the
 		 * predicate function, or fails the falsy test.
 		 *
 		 * @access public
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return Core\Bool                                        whether each element passed the
+		 * @return Data\Bool                                        whether each element passed the
 		 *                                                          falsy test
 		 */
 		public function none(callable $predicate) {
-			return $this->every(function(Core\Any $object, Core\Int32 $index) use ($predicate) {
+			return $this->every(function(Core\Any $object, Data\Int32 $index) use ($predicate) {
 				return $predicate($object, $index)->not();
 			});
 		}
 
 		/**
-		 * This method prepends the specified object to the front of this list.
+		 * This method prepends the specified object to the front of this string.
 		 *
 		 * @access public
 		 * @param Core\Any $object                                  the object to be prepended
-		 * @return Core\LinkedList                                  the list
+		 * @return Data\String                                      the string
 		 */
 		public function prepend(Core\Any $object) {
 			return static::cons($object, $this);
 		}
 
 		/**
-		 * This method returns the list within the specified range.
+		 * This method returns the linked list within the specified range.
 		 *
 		 * @access public
-		 * @param Core\Int32 $start                                 the starting index
-		 * @param Core\Int32 $end                                   the ending index
-		 * @return Core\LinkedList                                  the list
+		 * @param Data\Int32 $start                                 the starting index
+		 * @param Data\Int32 $end                                   the ending index
+		 * @return Data\String                                      the string
 		 */
-		public function range(Core\Int32 $start, Core\Int32 $end) {
+		public function range(Data\Int32 $start, Data\Int32 $end) {
 			return $this->take($end)->drop($start);
 		}
 
 		/**
-		 * This method returns a list of those elements that don't satisfy the predicate.
+		 * This method returns a string of those elements that don't satisfy the predicate.
 		 *
 		 * @access public
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return Core\LinkedList                                  the list
+		 * @return Data\String                                      the string
 		 */
 		public function remove(callable $predicate) {
-			return $this->filter(function(Core\Any $element, Core\Int32 $index) use ($predicate) {
-				return $predicate($element, $index)->not();
+			return $this->filter(function(Core\Any $object, Data\Int32 $index) use ($predicate) {
+				return $predicate($object, $index)->not();
 			});
 		}
 
 		/**
-		 * This method reverses the order of the elements in this list.
+		 * This method reverses the order of the elements in this string.
 		 *
 		 * @access public
-		 * @return Core\LinkedList                                  the list
+		 * @return Data\String                                      the string
 		 */
 		public function reverse() {
-			return $this->foldLeft(function(Core\LinkedList $tail, Core\Any $head) {
+			return $this->foldLeft(function(Data\String $tail, Core\Any $head) {
 				return static::cons($head, $tail);
 			}, static::nil());
 		}
 
 		/**
-		 * This method returns the extracted slice of the list.
+		 * This method returns the extracted slice of the string.
 		 *
 		 * @access public
-		 * @param Core\Int32 $offset                                the starting index
-		 * @param Core\Int32 $length                                the length of the slice
-		 * @return Core\LinkedList                                  the list
+		 * @param Data\Int32 $offset                                the starting index
+		 * @param Data\Int32 $length                                the length of the slice
+		 * @return Data\LinkedList                                  the string
 		 */
-		public function slice(Core\Int32 $offset, Core\Int32 $length) {
+		public function slice(Data\Int32 $offset, Data\Int32 $length) {
 			return $this->take($length->add($offset))->drop($offset);
 		}
 
 		/**
-		 * This method (aka "any") returns whether some of the elements in the list passed the truthy
+		 * This method (aka "any") returns whether some of the elements in the string passed the truthy
 		 * test.
 		 *
 		 * @access public
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return Core\Bool                                        whether some of the elements
+		 * @return Data\Bool                                        whether some of the elements
 		 *                                                          passed the truthy test
 		 */
 		public function some($predicate) {
-			$i = Core\Int32::zero();
+			$index = Data\Int32::zero();
 
 			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				if ($predicate($xs->head(), $i)->unbox()) {
-					return Core\Bool::true();
+				if ($predicate($xs->head(), $index)->unbox()) {
+					return Data\Bool::true();
 				}
-				$i = $i->increment();
+				$index = $index->increment();
 			}
 
-			return Core\Bool::false();
+			return Data\Bool::false();
 		}
 
 		/**
-		 * This method returns the tail of this list.
+		 * This method returns the tail of this string.
 		 *
 		 * @access public
 		 * @abstract
-		 * @return Core\LinkedList                                  the tail of this list
+		 * @return Data\String                                      the tail of this string
 		 */
 		public abstract function tail();
 
 		/**
-		 * This method returns the first "n" elements in the list.
+		 * This method returns the first "n" elements in the string.
 		 *
 		 * @access public
-		 * @param Core\Int32 $n                                     the number of elements to take
-		 * @return Core\LinkedList                                  the list
+		 * @param Data\Int32 $n                                     the number of elements to take
+		 * @return Data\String                                      the string
 		 */
-		public function take(Core\Int32 $n) {
+		public function take(Data\Int32 $n) {
 			return (($n->unbox() <= 0) || $this->__isEmpty())
 				? static::nil()
-				: static::cons($this->head(), $this->tail()->take($n->subtract(Core\Int32::one())));
+				: static::cons($this->head(), $this->tail()->take($n->subtract(Data\Int32::one())));
 		}
 
 		/**
-		 * This method returns each element in this list until the predicate fails.
+		 * This method returns each element in this string until the predicate fails.
 		 *
 		 * @access public
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return Core\LinkedList                                  the list
+		 * @return Data\String                                      the string
 		 */
 		public function takeWhile(callable $predicate) {
 			$start = static::nil();
@@ -675,41 +677,41 @@ namespace Saber\Core {
 
 			$taking = true;
 
-			$i = Core\Int32::zero();
+			$index = Data\Int32::zero();
 			for ($xs = $this; ! $xs->__isEmpty() && $taking; $xs = $xs->tail()) {
-				$x = $xs->head();
+				$head = $xs->head();
 
-				if ($predicate($x, $i)->unbox()) {
-					$ys = static::cons($x, static::nil());
+				if ($predicate($head, $index)->unbox()) {
+					$cons = static::cons($head, static::nil());
 
 					if ($tail !== null) {
-						$tail->tail = $ys;
+						$tail->tail = $cons;
 					}
 					else {
-						$start = $ys;
+						$start = $cons;
 					}
 
-					$tail = $ys;
+					$tail = $cons;
 				}
 				else {
 					$taking = false;
 				}
 
-				$i = $i->increment();
+				$index = $index->increment();
 			}
 
 			return $start;
 		}
 
 		/**
-		 * This method returns each element in this list until the predicate doesn't fail.
+		 * This method returns each element in this string until the predicate doesn't fail.
 		 *
 		 * @access public
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return Core\LinkedList                                  the list
+		 * @return Data\String                                      the string
 		 */
 		public function takeWhileEnd(callable $predicate) {
-			return $this->takeWhile(function(Core\Any $object, Core\Int32 $index) use ($predicate) {
+			return $this->takeWhile(function(Core\Any $object, Data\Int32 $index) use ($predicate) {
 				return $predicate($object, $index)->not();
 			});
 		}
@@ -719,24 +721,24 @@ namespace Saber\Core {
 		#region Methods -> Object Oriented -> Boolean Operations
 
 		/**
-		 * This method (aka "truthy") returns whether all of the elements of the list evaluate
+		 * This method (aka "truthy") returns whether all of the elements of the string evaluate
 		 * to true.
 		 *
 		 * @access public
-		 * @return Core\Bool                                        whether all of the elements of
-		 *                                                          the list evaluate to true
+		 * @return Data\Bool                                        whether all of the elements of
+		 *                                                          the string evaluate to true
 		 */
 		public function and_() {
 			return $this->truthy();
 		}
 
 		/**
-		 * This method (aka "falsy") returns whether all of the elements of the list evaluate
+		 * This method (aka "falsy") returns whether all of the elements of the string evaluate
 		 * to false.
 		 *
 		 * @access public
-		 * @return Core\Bool                                        whether all of the elements of
-		 *                                                          the list evaluate to false
+		 * @return Data\Bool                                        whether all of the elements of
+		 *                                                          the string evaluate to false
 		 *
 		 * @see http://www.sitepoint.com/javascript-truthy-falsy/
 		 */
@@ -745,12 +747,12 @@ namespace Saber\Core {
 		}
 
 		/**
-		 * This method returns whether all of the elements of the list strictly evaluate to
+		 * This method returns whether all of the elements of the string strictly evaluate to
 		 * false.
 		 *
 		 * @access public
-		 * @return Core\Bool                                        whether all of the elements of
-		 *                                                          the list strictly evaluate
+		 * @return Data\Bool                                        whether all of the elements of
+		 *                                                          the string strictly evaluate
 		 *                                                          to false
 		 */
 		public function false() {
@@ -758,12 +760,12 @@ namespace Saber\Core {
 		}
 
 		/**
-		 * This method (aka "or") returns whether all of the elements of the list evaluate to
+		 * This method (aka "or") returns whether all of the elements of the string evaluate to
 		 * false.
 		 *
 		 * @access public
-		 * @return Core\Bool                                        whether all of the elements of
-		 *                                                          the list evaluate to false
+		 * @return Data\Bool                                        whether all of the elements of
+		 *                                                          the string evaluate to false
 		 *
 		 * @see http://www.sitepoint.com/javascript-truthy-falsy/
 		 */
@@ -772,112 +774,38 @@ namespace Saber\Core {
 		}
 
 		/**
-		 * This method returns whether all of the elements of the list strictly evaluate
+		 * This method returns whether all of the elements of the string strictly evaluate
 		 * to true.
 		 *
 		 * @access public
-		 * @return Core\Bool                                        whether all of the elements of
-		 *                                                          the list strictly evaluate
+		 * @return Data\Bool                                        whether all of the elements of
+		 *                                                          the string strictly evaluate
 		 *                                                          to true
 		 */
 		public function true() {
 			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
 				if ($xs->head()->unbox() !== true) {
-					return Core\Bool::false();
+					return Data\Bool::false();
 				}
 			}
-			return Core\Bool::true();
+			return Data\Bool::true();
 		}
 
 		/**
-		 * This method (aka "and") returns whether all of the elements of the list evaluate to
+		 * This method (aka "and") returns whether all of the elements of the string evaluate to
 		 * true.
 		 *
 		 * @access public
-		 * @return Core\Bool                                        whether all of the elements of
-		 *                                                          the list evaluate to true
+		 * @return Data\Bool                                        whether all of the elements of
+		 *                                                          the string evaluate to true
 		 */
 		public function truthy() {
 			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
 				if (!$xs->head()->unbox()) {
-					return Core\Bool::false();
+					return Data\Bool::false();
 				}
 			}
-			return Core\Bool::true();
-		}
-
-		#endregion
-
-		#region Methods -> Object Oriented -> Numeric Operations
-
-		/**
-		 * This method returns the average of all elements in the list.
-		 *
-		 * @access public
-		 * @return Core\Num                                         the result
-		 */
-		public function average() {
-			$xs = $this;
-
-			if ($xs->__isEmpty()) {
-				return Core\Int32::zero();
-			}
-
-			$x = $xs->head();
-
-			$t = $x->__typeOf();
-			$y = $t::zero();
-
-			for ($xs = $xs->tail(); ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				$x = $x->add($xs->head());
-				$y = $y->increment();
-			}
-
-			return $x->divide($y);
-		}
-
-		/**
-		 * This method returns the product of all elements in the list.
-		 *
-		 * @access public
-		 * @return Core\Num                                         the result
-		 */
-		public function product() {
-			$xs = $this;
-
-			if ($xs->__isEmpty()) {
-				return Core\Int32::one();
-			}
-
-			$x = $xs->head();
-
-			for ($xs = $xs->tail(); ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				$x = $x->multiply($xs->head());
-			}
-
-			return $x;
-		}
-
-		/**
-		 * This method returns the sum of all elements in the list.
-		 *
-		 * @access public
-		 * @return Core\Num                                         the result
-		 */
-		public function sum() {
-			$xs = $this;
-
-			if ($xs->__isEmpty()) {
-				return Core\Int32::zero();
-			}
-
-			$x = $xs->head();
-
-			for ($xs = $xs->tail(); ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				$x = $x->add($xs->head());
-			}
-
-			return $x;
+			return Data\Bool::true();
 		}
 
 		#endregion

@@ -16,9 +16,10 @@
  * limitations under the License.
  */
 
-namespace Saber\Core {
+namespace Saber\Data {
 
 	use \Saber\Core;
+	use \Saber\Data;
 
 	/**
 	 * @requires extension gmp
@@ -52,10 +53,10 @@ namespace Saber\Core {
 		 * @dataProvider dataAdd
 		 */
 		public function testAdd($provided, $expected) {
-			$p0 = Core\Integer::box($provided[0])->add(Core\Integer::box($provided[1]));
+			$p0 = Data\Integer::box($provided[0])->add(Data\Integer::box($provided[1]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Integer', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Integer', $p0);
 			$this->assertEquals($e0, $p0->unbox());
 		}
 

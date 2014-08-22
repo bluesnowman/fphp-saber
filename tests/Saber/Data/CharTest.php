@@ -16,9 +16,10 @@
  * limitations under the License.
  */
 
-namespace Saber\Core {
+namespace Saber\Data {
 
 	use \Saber\Core;
+	use \Saber\Data;
 
 	/**
 	 * @group AnyVal
@@ -45,11 +46,11 @@ namespace Saber\Core {
 		 * @dataProvider dataBox
 		 */
 		public function testBox($provided, $expected) {
-			$p0 = Core\Char::box($provided[0]);
-			$e0 = new Core\Char($expected[0]);
+			$p0 = Data\Char::box($provided[0]);
+			$e0 = new Data\Char($expected[0], 'UTF-8');
 
 			$this->assertInstanceOf('\\Saber\\Core\\AnyVal', $p0);
-			$this->assertInstanceOf('\\Saber\\Core\\Char', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Char', $p0);
 			$this->assertEquals($e0, $p0);
 			$this->assertTrue($e0->__equals($p0));
 			$this->assertTrue($e0->__identical($p0));
@@ -81,10 +82,10 @@ namespace Saber\Core {
 		 * @dataProvider dataCompareTo
 		 */
 		public function testCompareTo($provided, $expected) {
-			$p0 = Core\Char::box($provided[0])->compareTo(Core\Char::box($provided[1]));
+			$p0 = Data\Char::box($provided[0])->compareTo(Data\Char::box($provided[1]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Int32', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -112,10 +113,10 @@ namespace Saber\Core {
 		 * @dataProvider dataIsAlpha
 		 */
 		public function testIsAlpha($provided, $expected) {
-			$p0 = Core\Char::box($provided[0])->isAlpha();
+			$p0 = Data\Char::box($provided[0])->isAlpha();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -144,10 +145,10 @@ namespace Saber\Core {
 		 * @dataProvider dataIsAlphaNum
 		 */
 		public function testIsAlphaNum($provided, $expected) {
-			$p0 = Core\Char::box($provided[0])->isAlphaNum();
+			$p0 = Data\Char::box($provided[0])->isAlphaNum();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -176,10 +177,10 @@ namespace Saber\Core {
 		 * @dataProvider dataIsAscii
 		 */
 		public function testIsAscii($provided, $expected) {
-			$p0 = Core\Char::box($provided[0])->isAscii();
+			$p0 = Data\Char::box($provided[0])->isAscii();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -203,10 +204,10 @@ namespace Saber\Core {
 		 * @dataProvider dataIsControl
 		 */
 		public function testIsControl($provided, $expected) {
-			$p0 = Core\Char::box($provided[0])->isControl();
+			$p0 = Data\Char::box($provided[0])->isControl();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -231,10 +232,10 @@ namespace Saber\Core {
 		 * @dataProvider dataIsCyrillic
 		 */
 		public function testIsCyrillic($provided, $expected) {
-			$p0 = Core\Char::box($provided[0])->isCyrillic();
+			$p0 = Data\Char::box($provided[0])->isCyrillic();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -268,10 +269,10 @@ namespace Saber\Core {
 		 * @dataProvider dataIsDigit
 		 */
 		public function testIsHexadecimal($provided, $expected) {
-			$p0 = Core\Char::box($provided[0])->isDigit();
+			$p0 = Data\Char::box($provided[0])->isDigit();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -317,10 +318,10 @@ namespace Saber\Core {
 		 * @dataProvider dataIsHexDigit
 		 */
 		public function testIsHexDigit($provided, $expected) {
-			$p0 = Core\Char::box($provided[0])->isHexDigit();
+			$p0 = Data\Char::box($provided[0])->isHexDigit();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -346,10 +347,10 @@ namespace Saber\Core {
 		 * @dataProvider dataIsLatin1
 		 */
 		public function testIsLatin1($provided, $expected) {
-			$p0 = Core\Char::box($provided[0])->isLatin1();
+			$p0 = Data\Char::box($provided[0])->isLatin1();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -378,10 +379,10 @@ namespace Saber\Core {
 		 * @dataProvider dataIsLowerCase
 		 */
 		public function testIsLowerCase($provided, $expected) {
-			$p0 = Core\Char::box($provided[0])->isLowerCase();
+			$p0 = Data\Char::box($provided[0])->isLowerCase();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -407,10 +408,10 @@ namespace Saber\Core {
 		 * @dataProvider dataIsNumber
 		 */
 		public function testIsNumber($provided, $expected) {
-			$p0 = Core\Char::box($provided[0])->isNumber();
+			$p0 = Data\Char::box($provided[0])->isNumber();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -443,10 +444,10 @@ namespace Saber\Core {
 		 * @dataProvider dataIsOctDigit
 		 */
 		public function testIsOctDigit($provided, $expected) {
-			$p0 = Core\Char::box($provided[0])->isOctDigit();
+			$p0 = Data\Char::box($provided[0])->isOctDigit();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -470,10 +471,10 @@ namespace Saber\Core {
 		 * @dataProvider dataIsPrintable
 		 */
 		public function testIsPrintable($provided, $expected) {
-			$p0 = Core\Char::box($provided[0])->isPrintable();
+			$p0 = Data\Char::box($provided[0])->isPrintable();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -498,10 +499,10 @@ namespace Saber\Core {
 		 * @dataProvider dataIsPunctuation
 		 */
 		public function testIsPunctuation($provided, $expected) {
-			$p0 = Core\Char::box($provided[0])->isPunctuation();
+			$p0 = Data\Char::box($provided[0])->isPunctuation();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -526,10 +527,10 @@ namespace Saber\Core {
 		 * @dataProvider dataIsSeparator
 		 */
 		public function testIsSeparator($provided, $expected) {
-			$p0 = Core\Char::box($provided[0])->isSeparator();
+			$p0 = Data\Char::box($provided[0])->isSeparator();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -554,10 +555,10 @@ namespace Saber\Core {
 		 * @dataProvider dataIsSpace
 		 */
 		public function testIsSpace($provided, $expected) {
-			$p0 = Core\Char::box($provided[0])->isSpace();
+			$p0 = Data\Char::box($provided[0])->isSpace();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -583,10 +584,10 @@ namespace Saber\Core {
 		 * @dataProvider dataIsSymbol
 		 */
 		public function testIsSymbol($provided, $expected) {
-			$p0 = Core\Char::box($provided[0])->isSymbol();
+			$p0 = Data\Char::box($provided[0])->isSymbol();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -615,10 +616,10 @@ namespace Saber\Core {
 		 * @dataProvider dataIsUpperCase
 		 */
 		public function testIsUpperCase($provided, $expected) {
-			$p0 = Core\Char::box($provided[0])->isUpperCase();
+			$p0 = Data\Char::box($provided[0])->isUpperCase();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -641,10 +642,10 @@ namespace Saber\Core {
 		 * @dataProvider dataToInt32
 		 */
 		public function testToInt32($provided, $expected) {
-			$p0 = Core\Char::box($provided[0])->toInt32();
+			$p0 = Data\Char::box($provided[0])->toInt32();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Int32', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -667,10 +668,10 @@ namespace Saber\Core {
 		 * @dataProvider dataToLowerCase
 		 */
 		public function testToLowerCase($provided, $expected) {
-			$p0 = Core\Char::box($provided[0])->toLowerCase();
+			$p0 = Data\Char::box($provided[0])->toLowerCase();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Char', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Char', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -694,7 +695,7 @@ namespace Saber\Core {
 		 * @dataProvider dataToString
 		 */
 		public function testToString($provided, $expected) {
-			$p0 = Core\Char::box($provided[0])->__toString();
+			$p0 = Data\Char::box($provided[0])->__toString();
 			$e0 = $expected[0];
 
 			$this->assertInternalType('string', $p0);
@@ -720,10 +721,10 @@ namespace Saber\Core {
 		 * @dataProvider dataToUpperCase
 		 */
 		public function testToUpperCase($provided, $expected) {
-			$p0 = Core\Char::box($provided[0])->toUpperCase();
+			$p0 = Data\Char::box($provided[0])->toUpperCase();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Char', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Char', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 

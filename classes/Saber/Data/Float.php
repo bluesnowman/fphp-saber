@@ -16,11 +16,11 @@
  * limitations under the License.
  */
 
-namespace Saber\Core {
+namespace Saber\Data {
 
-	use \Saber\Core;
+	use \Saber\Data;
 
-	class Double extends Core\Floating {
+	class Float extends Data\Floating {
 
 		#region Methods -> Boxing/Creation
 
@@ -28,7 +28,7 @@ namespace Saber\Core {
 		 * This constructor initializes the class with the specified value.
 		 *
 		 * @access public
-		 * @param double $value                                     the value to be assigned
+		 * @param float $value                                      the value to be assigned
 		 */
 		public function __construct($value) {
 			$this->value = (double) $value;
@@ -42,44 +42,44 @@ namespace Saber\Core {
 		 * This method returns the absolute value of this object's value.
 		 *
 		 * @access public
-		 * @return Core\Double                                      the absolute value
+		 * @return Data\Float                                       the absolute value
 		 */
 		public function abs() {
-			return Core\Double::create(abs($this->unbox()));
+			return Data\Float::create(abs($this->unbox()));
 		}
 
 		/**
 		 * This method returns the result of adding the specified value to this object's value.
 		 *
 		 * @access public
-		 * @param Core\Double $that                                 the value to be added
-		 * @return Core\Double                                      the result
+		 * @param Data\Float $that                                  the value to be added
+		 * @return Data\Float                                       the result
 		 */
-		public function add(Core\Double $that) {
-			return Core\Double::create($this->unbox() + $that->unbox());
+		public function add(Data\Float $that) {
+			return Data\Float::create($this->unbox() + $that->unbox());
 		}
 
 		/**
 		 * This method compares the specified object with the current object for order.
 		 *
 		 * @access public
-		 * @param Core\Double $that                                 the object to be compared
-		 * @return Core\Int32                                       whether the current object is less than,
+		 * @param Data\Float $that                                  the object to be compared
+		 * @return Data\Int32                                       whether the current object is less than,
 		 *                                                          equal to, or greater than the specified
 		 *                                                          object
 		 */
-		public function compareTo(Core\Double $that) {
+		public function compareTo(Data\Float $that) {
 			$x = $this->unbox();
 			$y = $that->unbox();
 
 			if ($x < $y) {
-				return Core\Int32::negative();
+				return Data\Int32::negative();
 			}
 			else if ($x == $y) {
-				return Core\Int32::zero();
+				return Data\Int32::zero();
 			}
 			else { // ($x > $y)
-				return Core\Int32::one();
+				return Data\Int32::one();
 			}
 		}
 
@@ -87,10 +87,10 @@ namespace Saber\Core {
 		 * This method returns the result of decrementing this object's value.
 		 *
 		 * @access public
-		 * @return Core\Double                                      the result
+		 * @return Data\Float                                       the result
 		 */
 		public function decrement() {
-			return $this->subtract(Core\Double::one());
+			return $this->subtract(Data\Float::one());
 		}
 
 		/**
@@ -98,19 +98,19 @@ namespace Saber\Core {
 		 * value.
 		 *
 		 * @access public
-		 * @param Core\Double $that                                 the value to be divided
-		 * @return Core\Double                                      the result
+		 * @param Data\Float $that                                  the value to be divided
+		 * @return Data\Float                                       the result
 		 */
-		public function divide(Core\Double $that) {
-			return Core\Double::create($this->unbox() / $that->unbox());
+		public function divide(Data\Float $that) {
+			return Data\Float::create($this->unbox() / $that->unbox());
 		}
 
 		/**
 		 * This method recursively calculates the greatest common divisor.
 		 *
 		 * @access protected
-		 * @param double $a                                         the "this" value to be processed
-		 * @param double $b                                         the "that" value to be processed
+		 * @param float $a                                          the "this" value to be processed
+		 * @param float $b                                          the "that" value to be processed
 		 * @return float                                            the greatest common divisor
 		 *
 		 * @see http://stackoverflow.com/questions/13828011/look-for-the-gcd-greatest-common-divisor-of-more-than-2-integers
@@ -123,10 +123,10 @@ namespace Saber\Core {
 		 * This method returns the result of incrementing this object's value.
 		 *
 		 * @access public
-		 * @return Core\Double                                      the result
+		 * @return Data\Float                                       the result
 		 */
 		public function increment() {
-			return $this->add(Core\Double::one());
+			return $this->add(Data\Float::one());
 		}
 
 		/**
@@ -134,11 +134,11 @@ namespace Saber\Core {
 		 * object's value.
 		 *
 		 * @access public
-		 * @param Core\Double $that                                 the value to be divided
-		 * @return Core\Double                                      the result
+		 * @param Data\Float $that                                  the value to be divided
+		 * @return Data\Float                                       the result
 		 */
-		public function modulo(Core\Double $that) {
-			return Core\Double::create(fmod($this->unbox(), $that->unbox()));
+		public function modulo(Data\Float $that) {
+			return Data\Float::create(fmod($this->unbox(), $that->unbox()));
 		}
 
 		/**
@@ -146,21 +146,21 @@ namespace Saber\Core {
 		 * value.
 		 *
 		 * @access public
-		 * @param Core\Double $that                                 the value to be multiplied
-		 * @return Core\Double                                      the result
+		 * @param Data\Float $that                                  the value to be multiplied
+		 * @return Data\Float                                       the result
 		 */
-		public function multiply(Core\Double $that) {
-			return Core\Double::create($this->unbox() * $that->unbox());
+		public function multiply(Data\Float $that) {
+			return Data\Float::create($this->unbox() * $that->unbox());
 		}
 
 		/**
 		 * This method returns the result of negating this object's value.
 		 *
 		 * @access public
-		 * @return Core\Double                                      the result
+		 * @return Data\Float                                       the result
 		 */
 		public function negate() {
-			return Core\Double::create($this->unbox() * -1.0);
+			return Data\Float::create($this->unbox() * -1.0);
 		}
 
 		/**
@@ -168,11 +168,11 @@ namespace Saber\Core {
 		 * value.
 		 *
 		 * @access public
-		 * @param Core\Double $that                                 the value to be subtracted
-		 * @return Core\Double                                      the result
+		 * @param Data\Float $that                                  the value to be subtracted
+		 * @return Data\Float                                       the result
 		 */
-		public function subtract(Core\Double $that) {
-			return Core\Double::create($this->unbox() - $that->unbox());
+		public function subtract(Data\Float $that) {
+			return Data\Float::create($this->unbox() - $that->unbox());
 		}
 
 		#endregion

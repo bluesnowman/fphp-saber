@@ -16,12 +16,13 @@
  * limitations under the License.
  */
 
-namespace Saber\Core\String {
+namespace Saber\Data\LinkedList {
 
 	use \Saber\Core;
+	use \Saber\Data;
 	use \Saber\Throwable;
 
-	class Nil extends Core\String {
+	class Nil extends Data\LinkedList {
 
 		#region Methods -> Object Oriented -> Universal
 
@@ -29,16 +30,16 @@ namespace Saber\Core\String {
 		 * This method compares the specified object with the current object for order.
 		 *
 		 * @access public
-		 * @param Core\String $that                                 the object to be compared
-		 * @return Core\Int32                                       whether the current object is less than,
+		 * @param Data\LinkedList $that                             the object to be compared
+		 * @return Data\Int32                                       whether the current object is less than,
 		 *                                                          equal to, or greater than the specified
 		 *                                                          object
 		 */
-		public function compareTo(Core\String $that) {
-			if ($that instanceof Core\String\Nil) {
-				return Core\Int32::zero();
+		public function compareTo(Data\LinkedList $that) {
+			if ($that instanceof Data\LinkedList\Nil) {
+				return Data\Int32::zero();
 			}
-			return Core\Int32::negative();
+			return Data\Int32::negative();
 		}
 
 		/**
@@ -46,21 +47,21 @@ namespace Saber\Core\String {
 		 *
 		 * @access public
 		 * @param Core\Any $that                                    the object to be evaluated
-		 * @return Core\Bool                                        whether the specified object is equal
+		 * @return Data\Bool                                        whether the specified object is equal
 		 *                                                          to the current object
 		 */
 		public function equals(Core\Any $that) {
-			return Core\Bool::create(($that !== null) && ($that instanceof static));
+			return Data\Bool::create(($that !== null) && ($that instanceof static));
 		}
 
 		/**
-		 * This method returns the head object in this string.
+		 * This method returns the head object in this linked list.
 		 *
 		 * @access public
 		 * @throws Throwable\EmptyCollection\Exception              indicates that the collection is empty
 		 */
 		public function head() {
-			throw new Throwable\EmptyCollection\Exception('Unable to return head object. String is empty.');
+			throw new Throwable\EmptyCollection\Exception('Unable to return head object. Linked list is empty.');
 		}
 
 		/**
@@ -68,21 +69,21 @@ namespace Saber\Core\String {
 		 *
 		 * @access public
 		 * @param Core\Any $that                                    the object to be evaluated
-		 * @return Core\Bool                                        whether the specified object is identical
+		 * @return Data\Bool                                        whether the specified object is identical
 		 *                                                          to the current object
 		 */
 		public function identical(Core\Any $that) {
-			return Core\Bool::create(($that !== null) && ($that instanceof static));
+			return Data\Bool::create(($that !== null) && ($that instanceof static));
 		}
 
 		/**
-		 * This method returns the tail of this string.
+		 * This method returns the tail of this linked list.
 		 *
 		 * @access public
 		 * @throws Throwable\EmptyCollection\Exception              indicates that the collection is empty
 		 */
 		public function tail() {
-			throw new Throwable\EmptyCollection\Exception('Unable to return tail. String is empty.');
+			throw new Throwable\EmptyCollection\Exception('Unable to return tail. Linked list is empty.');
 		}
 
 		#endregion

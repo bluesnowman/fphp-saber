@@ -16,9 +16,10 @@
  * limitations under the License.
  */
 
-namespace Saber\Core {
+namespace Saber\Data {
 
 	use \Saber\Core;
+	use \Saber\Data;
 
 	/**
 	 * @group AnyVal
@@ -45,11 +46,11 @@ namespace Saber\Core {
 		 * @dataProvider dataBox
 		 */
 		public function testBox($provided, $expected) {
-			$p0 = Core\Unit::box($provided[0]);
-			$e0 = new Core\Unit($expected[0]);
+			$p0 = Data\Unit::box($provided[0]);
+			$e0 = new Data\Unit($expected[0]);
 
 			$this->assertInstanceOf('\\Saber\\Core\\AnyVal', $p0);
-			$this->assertInstanceOf('\\Saber\\Core\\Unit', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Unit', $p0);
 			$this->assertEquals($e0, $p0);
 			$this->assertTrue($e0->__equals($p0));
 			$this->assertTrue($e0->__identical($p0));
@@ -82,10 +83,10 @@ namespace Saber\Core {
 		 * @dataProvider dataCompareTo
 		 */
 		public function testCompareTo($provided, $expected) {
-			$p0 = Core\Unit::box($provided[0])->compareTo(Core\Unit::box($provided[1]));
+			$p0 = Data\Unit::box($provided[0])->compareTo(Data\Unit::box($provided[1]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Int32', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -96,9 +97,9 @@ namespace Saber\Core {
 		 */
 		public function dataToString() {
 			$data = array(
-				array(array(null), array('void')),
-				array(array(''), array('void')),
-				array(array(0), array('void')),
+				array(array(null), array('null')),
+				array(array(''), array('null')),
+				array(array(0), array('null')),
 			);
 			return $data;
 		}
@@ -109,7 +110,7 @@ namespace Saber\Core {
 		 * @dataProvider dataToString
 		 */
 		public function testToString($provided, $expected) {
-			$p0 = Core\Unit::box($provided[0])->__toString();
+			$p0 = Data\Unit::box($provided[0])->__toString();
 			$e0 = $expected[0];
 
 			$this->assertInternalType('string', $p0);

@@ -86,7 +86,7 @@ namespace Saber\Throwable\OutOfBounds {
 			$p0 = Throwable\OutOfBounds\Exception::box($provided[0][0], $provided[0][1], $provided[0][2])->compareTo(Throwable\OutOfBounds\Exception::box($provided[1][0], $provided[1][1], $provided[1][2]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Int32', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 

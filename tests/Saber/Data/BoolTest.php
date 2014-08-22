@@ -16,9 +16,10 @@
  * limitations under the License.
  */
 
-namespace Saber\Core {
+namespace Saber\Data {
 
 	use \Saber\Core;
+	use \Saber\Data;
 
 	/**
 	 * @group AnyVal
@@ -54,10 +55,10 @@ namespace Saber\Core {
 		 * @dataProvider dataAND
 		 */
 		public function testAND($provided, $expected) {
-			$p0 = Core\Bool::box($provided[0])->and_(Core\Bool::box($provided[1]));
+			$p0 = Data\Bool::box($provided[0])->and_(Data\Bool::box($provided[1]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -85,11 +86,11 @@ namespace Saber\Core {
 		 * @dataProvider dataBox
 		 */
 		public function testBox($provided, $expected) {
-			$p0 = Core\Bool::box($provided[0]);
-			$e0 = new Core\Bool($expected[0]);
+			$p0 = Data\Bool::box($provided[0]);
+			$e0 = new Data\Bool($expected[0]);
 
 			$this->assertInstanceOf('\\Saber\\Core\\AnyVal', $p0);
-			$this->assertInstanceOf('\\Saber\\Core\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
 			$this->assertEquals($e0, $p0);
 			$this->assertTrue($e0->__equals($p0));
 			$this->assertTrue($e0->__identical($p0));
@@ -130,10 +131,10 @@ namespace Saber\Core {
 		 * @dataProvider dataCompareTo
 		 */
 		public function testCompareTo($provided, $expected) {
-			$p0 = Core\Bool::box($provided[0])->compareTo(Core\Bool::box($provided[1]));
+			$p0 = Data\Bool::box($provided[0])->compareTo(Data\Bool::box($provided[1]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Int32', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -166,10 +167,10 @@ namespace Saber\Core {
 		 * @dataProvider dataOR
 		 */
 		public function testOR($provided, $expected) {
-			$p0 = Core\Bool::box($provided[0])->or_(Core\Bool::box($provided[1]));
+			$p0 = Data\Bool::box($provided[0])->or_(Data\Bool::box($provided[1]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -202,10 +203,10 @@ namespace Saber\Core {
 		 * @dataProvider dataNAND
 		 */
 		public function testNAND($provided, $expected) {
-			$p0 = Core\Bool::box($provided[0])->nand(Core\Bool::box($provided[1]));
+			$p0 = Data\Bool::box($provided[0])->nand(Data\Bool::box($provided[1]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -238,10 +239,10 @@ namespace Saber\Core {
 		 * @dataProvider dataNOR
 		 */
 		public function testNOR($provided, $expected) {
-			$p0 = Core\Bool::box($provided[0])->nor(Core\Bool::box($provided[1]));
+			$p0 = Data\Bool::box($provided[0])->nor(Data\Bool::box($provided[1]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -269,10 +270,10 @@ namespace Saber\Core {
 		 * @dataProvider dataNOT
 		 */
 		public function testNOT($provided, $expected) {
-			$p0 = Core\Bool::box($provided[0])->not();
+			$p0 = Data\Bool::box($provided[0])->not();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -300,10 +301,10 @@ namespace Saber\Core {
 		 * @dataProvider dataToInt32
 		 */
 		public function testToInt32($provided, $expected) {
-			$p0 = Core\Bool::box($provided[0])->toInt32();
+			$p0 = Data\Bool::box($provided[0])->toInt32();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Int32', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -331,7 +332,7 @@ namespace Saber\Core {
 		 * @dataProvider dataToString
 		 */
 		public function testToString($provided, $expected) {
-			$p0 = Core\Bool::box($provided[0])->__toString();
+			$p0 = Data\Bool::box($provided[0])->__toString();
 			$e0 = $expected[0];
 
 			$this->assertInternalType('string', $p0);
@@ -367,10 +368,10 @@ namespace Saber\Core {
 		 * @dataProvider dataXOR
 		 */
 		public function testXOR($provided, $expected) {
-			$p0 = Core\Bool::box($provided[0])->xor_(Core\Bool::box($provided[1]));
+			$p0 = Data\Bool::box($provided[0])->xor_(Data\Bool::box($provided[1]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 

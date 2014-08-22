@@ -19,6 +19,7 @@
 namespace Saber\Core\AnyErr {
 
 	use \Saber\Core;
+	use \Saber\Data;
 	use \Saber\Throwable;
 
 	trait Impl {
@@ -101,7 +102,7 @@ namespace Saber\Core\AnyErr {
 		 *
 		 * @access public
 		 * @param Core\AnyErr $that                                 the object to be compared
-		 * @return Core\Int32                                       whether the current object is less than,
+		 * @return Data\Int32                                       whether the current object is less than,
 		 *                                                          equal to, or greater than the specified
 		 *                                                          object
 		 */
@@ -110,13 +111,13 @@ namespace Saber\Core\AnyErr {
 			$y = $that->getCode();
 
 			if ($x < $y) {
-				return Core\Int32::negative();
+				return Data\Int32::negative();
 			}
 			else if ($x == $y) {
-				return Core\Int32::zero();
+				return Data\Int32::zero();
 			}
 			else { // ($x > $y)
-				return Core\Int32::one();
+				return Data\Int32::one();
 			}
 		}
 

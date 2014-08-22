@@ -16,9 +16,10 @@
  * limitations under the License.
  */
 
-namespace Saber\Core {
+namespace Saber\Data {
 
 	use \Saber\Core;
+	use \Saber\Data;
 	use \Saber\Throwable;
 
 	/**
@@ -103,23 +104,23 @@ namespace Saber\Core {
 		 * This method compares the specified object with the current object for order.
 		 *
 		 * @access public
-		 * @param Core\Char $that                                   the object to be compared
-		 * @return Core\Int32                                       whether the current object is less than,
+		 * @param Data\Char $that                                   the object to be compared
+		 * @return Data\Int32                                       whether the current object is less than,
 		 *                                                          equal to, or greater than the specified
 		 *                                                          object
 		 */
-		public function compareTo(Core\Char $that) {
+		public function compareTo(Data\Char $that) {
 			$x = $this->unbox();
 			$y = $that->unbox();
 
 			if ($x < $y) {
-				return Core\Int32::negative();
+				return Data\Int32::negative();
 			}
 			else if ($x == $y) {
-				return Core\Int32::zero();
+				return Data\Int32::zero();
 			}
 			else { // ($x > $y)
-				return Core\Int32::one();
+				return Data\Int32::one();
 			}
 		}
 
@@ -127,180 +128,180 @@ namespace Saber\Core {
 		 * This method returns whether this character is an alphabetic character.
 		 *
 		 * @access public
-		 * @return Core\Bool                                        whether this is an alphabetic
+		 * @return Data\Bool                                        whether this is an alphabetic
 		 *                                                          character
 		 */
 		public function isAlpha() {
-			return Core\Bool::create(ctype_alpha($this->unbox()));
+			return Data\Bool::create(ctype_alpha($this->unbox()));
 		}
 
 		/**
 		 * This method returns whether this character is an alphanumeric character.
 		 *
 		 * @access public
-		 * @return Core\Bool                                        whether this is an alphanumeric
+		 * @return Data\Bool                                        whether this is an alphanumeric
 		 *                                                          character
 		 */
 		public function isAlphaNum() {
-			return Core\Bool::create(ctype_alnum($this->unbox()));
+			return Data\Bool::create(ctype_alnum($this->unbox()));
 		}
 
 		/**
 		 * This method returns whether this character is an ASCII character.
 		 *
 		 * @access public
-		 * @return Core\Bool                                        whether this is an ASCII
+		 * @return Data\Bool                                        whether this is an ASCII
 		 *                                                          character
 		 */
 		public function isAscii() {
-			return Core\Bool::create(preg_match('/^[\x20-\x7f]$/', $this->unbox()));
+			return Data\Bool::create(preg_match('/^[\x20-\x7f]$/', $this->unbox()));
 		}
 
 		/**
 		 * This method returns whether this character is a control character.
 		 *
 		 * @access public
-		 * @return Core\Bool                                        whether this is a control
+		 * @return Data\Bool                                        whether this is a control
 		 *                                                          character
 		 */
 		public function isControl() {
-			return Core\Bool::create(ctype_cntrl($this->unbox()));
+			return Data\Bool::create(ctype_cntrl($this->unbox()));
 		}
 
 		/**
 		 * This method returns whether this character is a Cyrillic character.
 		 *
 		 * @access public
-		 * @return Core\Bool                                        whether this is a Cyrillic
+		 * @return Data\Bool                                        whether this is a Cyrillic
 		 *                                                          character
 		 */
 		public function isCyrillic() {
-			return Core\Bool::create(preg_match('/^\p{Cyrillic}$/u', $this->unbox()));
+			return Data\Bool::create(preg_match('/^\p{Cyrillic}$/u', $this->unbox()));
 		}
 
 		/**
 		 * This method returns whether this character is a digit.
 		 *
 		 * @access public
-		 * @return Core\Bool                                        whether this is a digit
+		 * @return Data\Bool                                        whether this is a digit
 		 */
 		public function isDigit() {
-			return Core\Bool::create(ctype_digit($this->unbox()));
+			return Data\Bool::create(ctype_digit($this->unbox()));
 		}
 
 		/**
 		 * This method returns whether this character is a hex-digit (i.e. '/^[0-9a-f]$/i').
 		 *
 		 * @access public
-		 * @return Core\Bool                                        whether this is a hex-digit
+		 * @return Data\Bool                                        whether this is a hex-digit
 		 */
 		public function isHexDigit() {
-			return Core\Bool::create(ctype_xdigit($this->unbox()));
+			return Data\Bool::create(ctype_xdigit($this->unbox()));
 		}
 
 		/**
 		 * This method returns whether this character is an ISO 8859-1 (Latin-1) character.
 		 *
 		 * @access public
-		 * @return Core\Bool                                        whether this is an Latin-1
+		 * @return Data\Bool                                        whether this is an Latin-1
 		 *                                                          character
 		 */
 		public function isLatin1() {
-			return Core\Bool::create(preg_match('/^\p{Latin}$/', $this->unbox()));
+			return Data\Bool::create(preg_match('/^\p{Latin}$/', $this->unbox()));
 		}
 
 		/**
 		 * This method returns whether this character is a lower case character.
 		 *
 		 * @access public
-		 * @return Core\Bool                                        whether this is a lower case
+		 * @return Data\Bool                                        whether this is a lower case
 		 *                                                          character
 		 */
 		public function isLowerCase() {
-			return Core\Bool::create(ctype_lower($this->unbox()));
+			return Data\Bool::create(ctype_lower($this->unbox()));
 		}
 
 		/**
 		 * This method returns whether this character is a number.
 		 *
 		 * @access public
-		 * @return Core\Bool                                        whether this is a number
+		 * @return Data\Bool                                        whether this is a number
 		 */
 		public function isNumber() {
-			return Core\Bool::create(preg_match('/^\p{N}$/', $this->unbox()));
+			return Data\Bool::create(preg_match('/^\p{N}$/', $this->unbox()));
 		}
 
 		/**
 		 * This method returns whether this character is an oct-digit.
 		 *
 		 * @access public
-		 * @return Core\Bool                                        whether this is an oct-digit
+		 * @return Data\Bool                                        whether this is an oct-digit
 		 */
 		public function isOctDigit() {
-			return Core\Bool::create(preg_match('/^[0-7]$/', $this->unbox()));
+			return Data\Bool::create(preg_match('/^[0-7]$/', $this->unbox()));
 		}
 
 		/**
 		 * This method returns whether this character is a printable character.
 		 *
 		 * @access public
-		 * @return Core\Bool                                        whether this is a printable
+		 * @return Data\Bool                                        whether this is a printable
 		 *                                                          character
 		 */
 		public function isPrintable() {
-			return Core\Bool::create(ctype_print($this->unbox()));
+			return Data\Bool::create(ctype_print($this->unbox()));
 		}
 
 		/**
 		 * This method returns whether this character is a punctuation character.
 		 *
 		 * @access public
-		 * @return Core\Bool                                        whether this is a punctuation
+		 * @return Data\Bool                                        whether this is a punctuation
 		 *                                                          character
 		 */
 		public function isPunctuation() {
-			return Core\Bool::create(ctype_punct($this->unbox()));
+			return Data\Bool::create(ctype_punct($this->unbox()));
 		}
 
 		/**
 		 * This method returns whether this character is a separator character.
 		 *
 		 * @access public
-		 * @return Core\Bool                                        whether this is a mark
+		 * @return Data\Bool                                        whether this is a mark
 		 */
 		public function isSeparator() {
-			return Core\Bool::create(preg_match('/^\p{Z}$/', $this->unbox()));
+			return Data\Bool::create(preg_match('/^\p{Z}$/', $this->unbox()));
 		}
 
 		/**
 		 * This method returns whether this character is a space.
 		 *
 		 * @access public
-		 * @return Core\Bool                                        whether this is a space
+		 * @return Data\Bool                                        whether this is a space
 		 */
 		public function isSpace() {
-			return Core\Bool::create(ctype_space($this->unbox()));
+			return Data\Bool::create(ctype_space($this->unbox()));
 		}
 
 		/**
 		 * This method returns whether this character is a symbol.
 		 *
 		 * @access public
-		 * @return Core\Bool                                        whether this is a symbol
+		 * @return Data\Bool                                        whether this is a symbol
 		 */
 		public function isSymbol() {
-			return Core\Bool::create(preg_match('/^\p{S}$/', $this->unbox()));
+			return Data\Bool::create(preg_match('/^\p{S}$/', $this->unbox()));
 		}
 
 		/**
 		 * This method returns whether this character is an upper case character.
 		 *
 		 * @access public
-		 * @return Core\Bool                                        whether this is an upper case
+		 * @return Data\Bool                                        whether this is an upper case
 		 *                                                          character
 		 */
 		public function isUpperCase() {
-			return Core\Bool::create(ctype_upper($this->unbox()));
+			return Data\Bool::create(ctype_upper($this->unbox()));
 		}
 
 		/**
@@ -308,30 +309,30 @@ namespace Saber\Core {
 		 * lost of precision.
 		 *
 		 * @access public
-		 * @return Core\Int32                                       the value as an integer
+		 * @return Data\Int32                                       the value as an integer
 		 */
 		public function toInt32() {
-			return Core\Int32::create(ord($this->unbox()));
+			return Data\Int32::create(ord($this->unbox()));
 		}
 
 		/**
 		 * This method returns the corresponding lower case letter, if any.
 		 *
 		 * @access public
-		 * @return Core\Char                                        the lower case letter
+		 * @return Data\Char                                        the lower case letter
 		 */
 		public function toLowerCase() {
-			return Core\Char::create(mb_strtolower($this->unbox(), $this->encoding));
+			return Data\Char::create(mb_strtolower($this->unbox(), $this->encoding));
 		}
 
 		/**
 		 * This method returns the corresponding upper case letter, if any.
 		 *
 		 * @access public
-		 * @return Core\Char                                        the upper case letter
+		 * @return Data\Char                                        the upper case letter
 		 */
 		public function toUpperCase() {
-			return Core\Char::create(mb_strtoupper($this->unbox(), $this->encoding));
+			return Data\Char::create(mb_strtoupper($this->unbox(), $this->encoding));
 		}
 
 		#endregion

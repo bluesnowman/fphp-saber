@@ -16,9 +16,10 @@
  * limitations under the License.
  */
 
-namespace Saber\Core {
+namespace Saber\Data {
 
 	use \Saber\Core;
+	use \Saber\Data;
 
 	/**
 	 * @group AnyVal
@@ -46,10 +47,10 @@ namespace Saber\Core {
 		 * @dataProvider dataAbs
 		 */
 		public function testAbs($provided, $expected) {
-			$p0 = Core\Int32::box($provided[0])->abs();
+			$p0 = Data\Int32::box($provided[0])->abs();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Int32', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
 			$this->assertEquals($e0, $p0->unbox());
 		}
 
@@ -79,10 +80,10 @@ namespace Saber\Core {
 		 * @dataProvider dataAdd
 		 */
 		public function testAdd($provided, $expected) {
-			$p0 = Core\Int32::box($provided[0])->add(Core\Int32::box($provided[1]));
+			$p0 = Data\Int32::box($provided[0])->add(Data\Int32::box($provided[1]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Int32', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
 			$this->assertEquals($e0, $p0->unbox());
 		}
 
@@ -106,11 +107,11 @@ namespace Saber\Core {
 		 * @dataProvider dataBox
 		 */
 		public function testBox($provided, $expected) {
-			$p0 = Core\Int32::box($provided[0]);
-			$e0 = new Core\Int32($expected[0]);
+			$p0 = Data\Int32::box($provided[0]);
+			$e0 = new Data\Int32($expected[0]);
 
 			$this->assertInstanceOf('\\Saber\\Core\\AnyVal', $p0);
-			$this->assertInstanceOf('\\Saber\\Core\\Int32', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
 			$this->assertEquals($e0, $p0);
 			$this->assertTrue($e0->__equals($p0));
 			$this->assertTrue($e0->__identical($p0));
@@ -151,10 +152,10 @@ namespace Saber\Core {
 		 * @dataProvider dataCompareTo
 		 */
 		public function testCompareTo($provided, $expected) {
-			$p0 = Core\Int32::box($provided[0])->compareTo(Core\Int32::box($provided[1]));
+			$p0 = Data\Int32::box($provided[0])->compareTo(Data\Int32::box($provided[1]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Int32', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -181,10 +182,10 @@ namespace Saber\Core {
 		 * @dataProvider dataDecrement
 		 */
 		public function testDecrement($provided, $expected) {
-			$p0 = Core\Int32::box($provided[0])->decrement();
+			$p0 = Data\Int32::box($provided[0])->decrement();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Int32', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
 			$this->assertEquals($e0, $p0->unbox());
 		}
 
@@ -216,10 +217,10 @@ namespace Saber\Core {
 		 * @dataProvider dataDivide
 		 */
 		public function testDivide($provided, $expected) {
-			$p0 = Core\Int32::box($provided[0])->divide(Core\Int32::box($provided[1]));
+			$p0 = Data\Int32::box($provided[0])->divide(Data\Int32::box($provided[1]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Int32', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
 			$this->assertEquals($e0, $p0->unbox());
 		}
 
@@ -251,10 +252,10 @@ namespace Saber\Core {
 		 * @dataProvider dataEven
 		 */
 		public function testEven($provided, $expected) {
-			$p0 = Core\Int32::box($provided[0])->even();
+			$p0 = Data\Int32::box($provided[0])->even();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -277,10 +278,10 @@ namespace Saber\Core {
 		 * @dataProvider dataGCD
 		 */
 		public function testGCD($provided, $expected) {
-			$p0 = Core\Int32::box($provided[0])->gcd(Core\Int32::box($provided[1]));
+			$p0 = Data\Int32::box($provided[0])->gcd(Data\Int32::box($provided[1]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Int32', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
 			$this->assertEquals($e0, $p0->unbox());
 		}
 
@@ -308,10 +309,10 @@ namespace Saber\Core {
 		 * @dataProvider dataIncrement
 		 */
 		public function testIncrement($provided, $expected) {
-			$p0 = Core\Int32::box($provided[0])->increment();
+			$p0 = Data\Int32::box($provided[0])->increment();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Int32', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
 			$this->assertEquals($e0, $p0->unbox());
 		}
 
@@ -348,10 +349,10 @@ namespace Saber\Core {
 		 * @dataProvider dataModulo
 		 */
 		public function testModulo($provided, $expected) {
-			$p0 = Core\Int32::box($provided[0])->modulo(Core\Int32::box($provided[1]));
+			$p0 = Data\Int32::box($provided[0])->modulo(Data\Int32::box($provided[1]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Int32', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
 			$this->assertEquals($e0, $p0->unbox());
 		}
 
@@ -406,10 +407,10 @@ namespace Saber\Core {
 		 * @dataProvider dataMultiply
 		 */
 		public function testMultiply($provided, $expected) {
-			$p0 = Core\Int32::box($provided[0])->multiply(Core\Int32::box($provided[1]));
+			$p0 = Data\Int32::box($provided[0])->multiply(Data\Int32::box($provided[1]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Int32', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
 			$this->assertEquals($e0, $p0->unbox());
 		}
 
@@ -437,10 +438,10 @@ namespace Saber\Core {
 		 * @dataProvider dataNegate
 		 */
 		public function testNegate($provided, $expected) {
-			$p0 = Core\Int32::box($provided[0])->negate();
+			$p0 = Data\Int32::box($provided[0])->negate();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Int32', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
 			$this->assertEquals($e0, $p0->unbox());
 		}
 
@@ -472,10 +473,10 @@ namespace Saber\Core {
 		 * @dataProvider dataOdd
 		 */
 		public function testOdd($provided, $expected) {
-			$p0 = Core\Int32::box($provided[0])->odd();
+			$p0 = Data\Int32::box($provided[0])->odd();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -507,10 +508,10 @@ namespace Saber\Core {
 		 * @dataProvider dataSubtract
 		 */
 		public function testSubtract($provided, $expected) {
-			$p0 = Core\Int32::box($provided[0])->subtract(Core\Int32::box($provided[1]));
+			$p0 = Data\Int32::box($provided[0])->subtract(Data\Int32::box($provided[1]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Int32', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
 			$this->assertEquals($e0, $p0->unbox());
 		}
 
@@ -536,7 +537,7 @@ namespace Saber\Core {
 		 * @dataProvider dataToString
 		 */
 		public function testToString($provided, $expected) {
-			$p0 = Core\Int32::box($provided[0])->__toString();
+			$p0 = Data\Int32::box($provided[0])->__toString();
 			$e0 = $expected[0];
 
 			$this->assertInternalType('string', $p0);

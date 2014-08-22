@@ -19,7 +19,7 @@
 namespace Saber\Core\AnyVal {
 
 	use \Saber\Core;
-	use \Saber\Throwable;
+	use \Saber\Data;
 
 	trait Impl {
 
@@ -60,14 +60,14 @@ namespace Saber\Core\AnyVal {
 		 *
 		 * @access public
 		 * @param Core\Any $that                                    the object to be evaluated
-		 * @return Core\Bool                                        whether the specified object is equal
+		 * @return Data\Bool                                        whether the specified object is equal
 		 *                                                          to the current object
 		 */
 		public function equals(Core\Any $that) {
 			if (($that !== null) && ($that instanceof static)) {
-				return Core\Bool::create($this->unbox() == $that->unbox());
+				return Data\Bool::create($this->unbox() == $that->unbox());
 			}
-			return Core\Bool::false();
+			return Data\Bool::false();
 		}
 
 		/**
@@ -75,14 +75,14 @@ namespace Saber\Core\AnyVal {
 		 *
 		 * @access public
 		 * @param Core\Any $that                                    the object to be evaluated
-		 * @return Core\Bool                                        whether the specified object is identical
+		 * @return Data\Bool                                        whether the specified object is identical
 		 *                                                          to the current object
 		 */
 		public function identical(Core\Any $that) {
 			if (($that !== null) && ($that instanceof static)) {
-				return Core\Bool::create($this->unbox() === $that->unbox());
+				return Data\Bool::create($this->unbox() === $that->unbox());
 			}
-			return Core\Bool::false();
+			return Data\Bool::false();
 		}
 
 		#endregion

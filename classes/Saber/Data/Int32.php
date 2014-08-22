@@ -16,11 +16,11 @@
  * limitations under the License.
  */
 
-namespace Saber\Core {
+namespace Saber\Data {
 
-	use \Saber\Core;
+	use \Saber\Data;
 
-	class Int32 extends Core\Integral {
+	class Int32 extends Data\Integral {
 
 		#region Methods -> Boxing/Creation
 
@@ -42,44 +42,44 @@ namespace Saber\Core {
 		 * This method returns the absolute value of this object's value.
 		 *
 		 * @access public
-		 * @return Core\Int32                                       the absolute value
+		 * @return Data\Int32                                       the absolute value
 		 */
 		public function abs() {
-			return Core\Int32::create(abs($this->unbox()));
+			return Data\Int32::create(abs($this->unbox()));
 		}
 
 		/**
 		 * This method returns the result of adding the specified value to this object's value.
 		 *
 		 * @access public
-		 * @param Core\Int32 $that                                  the value to be added
-		 * @return Core\Int32                                       the result
+		 * @param Data\Int32 $that                                  the value to be added
+		 * @return Data\Int32                                       the result
 		 */
-		public function add(Core\Int32 $that) {
-			return Core\Int32::create($this->unbox() + $that->unbox());
+		public function add(Data\Int32 $that) {
+			return Data\Int32::create($this->unbox() + $that->unbox());
 		}
 
 		/**
 		 * This method compares the specified object with the current object for order.
 		 *
 		 * @access public
-		 * @param Core\Int32 $that                                  the object to be compared
-		 * @return Core\Int32                                       whether the current object is less than,
+		 * @param Data\Int32 $that                                  the object to be compared
+		 * @return Data\Int32                                       whether the current object is less than,
 		 *                                                          equal to, or greater than the specified
 		 *                                                          object
 		 */
-		public function compareTo(Core\Int32 $that) {
+		public function compareTo(Data\Int32 $that) {
 			$x = $this->unbox();
 			$y = $that->unbox();
 
 			if ($x < $y) {
-				return Core\Int32::negative();
+				return Data\Int32::negative();
 			}
 			else if ($x == $y) {
-				return Core\Int32::zero();
+				return Data\Int32::zero();
 			}
 			else { // ($x > $y)
-				return Core\Int32::one();
+				return Data\Int32::one();
 			}
 		}
 
@@ -87,10 +87,10 @@ namespace Saber\Core {
 		 * This method returns the result of decrementing this object's value.
 		 *
 		 * @access public
-		 * @return Core\Int32                                       the result
+		 * @return Data\Int32                                       the result
 		 */
 		public function decrement() {
-			return $this->subtract(Core\Int32::one());
+			return $this->subtract(Data\Int32::one());
 		}
 
 		/**
@@ -98,33 +98,33 @@ namespace Saber\Core {
 		 * value.
 		 *
 		 * @access public
-		 * @param Core\Int32 $that                                  the value to be divided
-		 * @return Core\Int32                                       the result
+		 * @param Data\Int32 $that                                  the value to be divided
+		 * @return Data\Int32                                       the result
 		 */
-		public function divide(Core\Int32 $that) {
-			return Core\Int32::create($this->unbox() / $that->unbox());
+		public function divide(Data\Int32 $that) {
+			return Data\Int32::create($this->unbox() / $that->unbox());
 		}
 
 		/**
 		 * This method evaluates whether this object's value is an even number.
 		 *
 		 * @access public
-		 * @return Core\Bool                                        whether this object's value is
+		 * @return Data\Bool                                        whether this object's value is
 		 *                                                          an even number
 		 */
 		public function even() {
-			return Core\Bool::create(($this->unbox() % 2) == 0);
+			return Data\Bool::create(($this->unbox() % 2) == 0);
 		}
 
 		/**
 		 * This method returns the greatest common divisor.
 		 *
 		 * @access public
-		 * @param Core\Int32 $that                                  the value to be processed
-		 * @return Core\Int32                                       the greatest common divisor
+		 * @param Data\Int32 $that                                  the value to be processed
+		 * @return Data\Int32                                       the greatest common divisor
 		 */
-		public function gcd(Core\Int32 $that) {
-			return Core\Int32::create($this->_gcd(abs($this->unbox()), abs($that->unbox())));
+		public function gcd(Data\Int32 $that) {
+			return Data\Int32::create($this->_gcd(abs($this->unbox()), abs($that->unbox())));
 		}
 
 		/**
@@ -145,10 +145,10 @@ namespace Saber\Core {
 		 * This method returns the result of incrementing this object's value.
 		 *
 		 * @access public
-		 * @return Core\Int32                                       the result
+		 * @return Data\Int32                                       the result
 		 */
 		public function increment() {
-			return $this->add(Core\Int32::one());
+			return $this->add(Data\Int32::one());
 		}
 
 		/**
@@ -156,11 +156,11 @@ namespace Saber\Core {
 		 * object's value.
 		 *
 		 * @access public
-		 * @param Core\Int32 $that                                  the value to be divided
-		 * @return Core\Int32                                       the result
+		 * @param Data\Int32 $that                                  the value to be divided
+		 * @return Data\Int32                                       the result
 		 */
-		public function modulo(Core\Int32 $that) {
-			return Core\Int32::box($this->unbox() % $that->unbox());
+		public function modulo(Data\Int32 $that) {
+			return Data\Int32::box($this->unbox() % $that->unbox());
 		}
 
 		/**
@@ -168,32 +168,32 @@ namespace Saber\Core {
 		 * value.
 		 *
 		 * @access public
-		 * @param Core\Int32 $that                                  the value to be multiplied
-		 * @return Core\Int32                                       the result
+		 * @param Data\Int32 $that                                  the value to be multiplied
+		 * @return Data\Int32                                       the result
 		 */
-		public function multiply(Core\Int32 $that) {
-			return Core\Int32::create($this->unbox() * $that->unbox());
+		public function multiply(Data\Int32 $that) {
+			return Data\Int32::create($this->unbox() * $that->unbox());
 		}
 
 		/**
 		 * This method returns the result of negating this object's value.
 		 *
 		 * @access public
-		 * @return Core\Int32                                       the result
+		 * @return Data\Int32                                       the result
 		 */
 		public function negate() {
-			return Core\Int32::box($this->unbox() * -1);
+			return Data\Int32::box($this->unbox() * -1);
 		}
 
 		/**
 		 * This method evaluates whether this object's value is an odd number.
 		 *
 		 * @access public
-		 * @return Core\Bool                                        whether this object's value is
+		 * @return Data\Bool                                        whether this object's value is
 		 *                                                          an odd number
 		 */
 		public function odd() {
-			return Core\Bool::create(($this->unbox() % 2) != 0);
+			return Data\Bool::create(($this->unbox() % 2) != 0);
 		}
 
 		/**
@@ -201,11 +201,11 @@ namespace Saber\Core {
 		 * value.
 		 *
 		 * @access public
-		 * @param Core\Int32 $that                                  the value to be subtracted
-		 * @return Core\Int32                                       the result
+		 * @param Data\Int32 $that                                  the value to be subtracted
+		 * @return Data\Int32                                       the result
 		 */
-		public function subtract(Core\Int32 $that) {
-			return Core\Int32::create($this->unbox() - $that->unbox());
+		public function subtract(Data\Int32 $that) {
+			return Data\Int32::create($this->unbox() - $that->unbox());
 		}
 
 	}

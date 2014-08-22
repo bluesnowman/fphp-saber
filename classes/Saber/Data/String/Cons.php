@@ -16,11 +16,12 @@
  * limitations under the License.
  */
 
-namespace Saber\Core\LinkedList {
+namespace Saber\Data\String {
 
 	use \Saber\Core;
+	use \Saber\Data;
 
-	class Cons extends Core\LinkedList {
+	class Cons extends Data\String {
 
 		#region Properties
 
@@ -28,7 +29,7 @@ namespace Saber\Core\LinkedList {
 		 * This variable stores the tail of this linked list.
 		 *
 		 * @access protected
-		 * @var Core\LinkedList
+		 * @var Data\String
 		 */
 		protected $tail;
 
@@ -42,9 +43,9 @@ namespace Saber\Core\LinkedList {
 		 * @access public
 		 * @param Core\Any $head                                    the object to be assigned
 		 *                                                          to the head
-		 * @param Core\LinkedList $tail                             the tail to be linked
+		 * @param Data\String $tail                                 the tail to be linked
 		 */
-		public function __construct(Core\Any $head, Core\LinkedList $tail) {
+		public function __construct(Core\Any $head, Data\String $tail) {
 			$this->value = $head;
 			$this->tail = $tail;
 		}
@@ -57,12 +58,12 @@ namespace Saber\Core\LinkedList {
 		 * This method compares the specified object with the current object for order.
 		 *
 		 * @access public
-		 * @param Core\LinkedList $that                             the object to be compared
-		 * @return Core\Int32                                       whether the current object is less than,
+		 * @param Data\String $that                                 the object to be compared
+		 * @return Data\Int32                                       whether the current object is less than,
 		 *                                                          equal to, or greater than the specified
 		 *                                                          object
 		 */
-		public function compareTo(Core\LinkedList $that) {
+		public function compareTo(Data\String $that) {
 			$xs = $this;
 			$ys = $that;
 
@@ -77,13 +78,13 @@ namespace Saber\Core\LinkedList {
 			$y_length = $ys->length();
 
 			if ($x_length < $y_length) {
-				return Core\Int32::negative();
+				return Data\Int32::negative();
 			}
 			else if ($x_length == $y_length) {
-				return Core\Int32::zero();
+				return Data\Int32::zero();
 			}
 			else { // ($x_length > $y_length)
-				return Core\Int32::one();
+				return Data\Int32::one();
 			}
 		}
 
@@ -92,14 +93,14 @@ namespace Saber\Core\LinkedList {
 		 *
 		 * @access public
 		 * @param Core\Any $that                                    the object to be evaluated
-		 * @return Core\Bool                                        whether the specified object is equal
+		 * @return Data\Bool                                        whether the specified object is equal
 		 *                                                          to the current object
 		 */
 		public function equals(Core\Any $that) {
 			if (($that === null) || ($this->__typeOf() != $that->__typeOf())) {
-				return Core\Bool::false();
+				return Data\Bool::false();
 			}
-			return Core\Bool::create($this->head()->__equals($that->head()) && $this->tail()->__equals($that->tail()));
+			return Data\Bool::create($this->head()->__equals($that->head()) && $this->tail()->__equals($that->tail()));
 		}
 
 		/**
@@ -118,21 +119,21 @@ namespace Saber\Core\LinkedList {
 		 *
 		 * @access public
 		 * @param Core\Any $that                                    the object to be evaluated
-		 * @return Core\Bool                                        whether the specified object is identical
+		 * @return Data\Bool                                        whether the specified object is identical
 		 *                                                          to the current object
 		 */
 		public function identical(Core\Any $that) {
 			if (($that === null) || ($this->__typeOf() != $that->__typeOf())) {
-				return Core\Bool::false();
+				return Data\Bool::false();
 			}
-			return Core\Bool::create($this->head()->__identical($that->head()) && $this->tail()->__identical($that->tail()));
+			return Data\Bool::create($this->head()->__identical($that->head()) && $this->tail()->__identical($that->tail()));
 		}
 
 		/**
 		 * This method returns the tail of this linked list.
 		 *
 		 * @access public
-		 * @return Core\LinkedList                                  the tail of this linked list
+		 * @return Data\String                                      the tail of this linked list
 		 */
 		public function tail() {
 			return $this->tail;

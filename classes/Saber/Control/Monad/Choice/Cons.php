@@ -34,10 +34,13 @@ namespace Saber\Control\Monad\Choice {
 		}
 
 		public function end() {
-			if (!$this->xs()->end() && ($this->f !== null)) {
-				return $this->f($this->x);
+			if (!$this->xs->end()) {
+				if (is_callable($this->f)) {
+					return $this->f($this->x);
+				}
+				return false;
 			}
-			return false;
+			return true;
 		}
 
 		public function otherwise(callable $procedure) {

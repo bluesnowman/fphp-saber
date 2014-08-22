@@ -19,7 +19,7 @@
 namespace Saber\Core\AnyRef {
 
 	use \Saber\Core;
-	use \Saber\Throwable;
+	use \Saber\Data;
 
 	trait Impl {
 
@@ -60,14 +60,14 @@ namespace Saber\Core\AnyRef {
 		 *
 		 * @access public
 		 * @param Core\Any $that                                    the object to be evaluated
-		 * @return Core\Bool                                        whether the specified object is equal
+		 * @return Data\Bool                                        whether the specified object is equal
 		 *                                                          to the current object
 		 */
 		public function equals(Core\Any $that) {
 			if (($that !== null) && ($that instanceof static)) {
-				return Core\Bool::create(strcmp((string) serialize($this->unbox()), (string) serialize($that->unbox())) == 0);
+				return Data\Bool::create(strcmp((string) serialize($this->unbox()), (string) serialize($that->unbox())) == 0);
 			}
-			return Core\Bool::false();
+			return Data\Bool::false();
 		}
 
 		/**
@@ -75,14 +75,14 @@ namespace Saber\Core\AnyRef {
 		 *
 		 * @access public
 		 * @param Core\Any $that                                    the object to be evaluated
-		 * @return Core\Bool                                        whether the specified object is identical
+		 * @return Data\Bool                                        whether the specified object is identical
 		 *                                                          to the current object
 		 */
 		public function identical(Core\Any $that) {
 			if (($that !== null) && ($that instanceof static)) {
-				return Core\Bool::create(spl_object_hash($this) == spl_object_hash($that));
+				return Data\Bool::create(spl_object_hash($this) == spl_object_hash($that));
 			}
-			return Core\Bool::false();
+			return Data\Bool::false();
 		}
 
 		#endregion

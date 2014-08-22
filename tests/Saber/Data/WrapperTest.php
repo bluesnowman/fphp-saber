@@ -16,9 +16,10 @@
  * limitations under the License.
  */
 
-namespace Saber\Core {
+namespace Saber\Data {
 
 	use \Saber\Core;
+	use \Saber\Data;
 
 	/**
 	 * @group AnyRef
@@ -46,11 +47,11 @@ namespace Saber\Core {
 		 * @dataProvider dataBox
 		 */
 		public function testBox($provided, $expected) {
-			$p0 = Core\Wrapper::box($provided[0]);
-			$e0 = new Core\Wrapper($expected[0]);
+			$p0 = Data\Wrapper::box($provided[0]);
+			$e0 = new Data\Wrapper($expected[0]);
 
 			$this->assertInstanceOf('\\Saber\\Core\\AnyRef', $p0);
-			$this->assertInstanceOf('\\Saber\\Core\\Wrapper', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Wrapper', $p0);
 			$this->assertEquals($e0, $p0);
 			$this->assertTrue($e0->__equals($p0));
 
@@ -87,10 +88,10 @@ namespace Saber\Core {
 		 * @dataProvider dataCompareTo
 		 */
 		public function testCompareTo($provided, $expected) {
-			$p0 = Core\Wrapper::box($provided[0])->compareTo(Core\Wrapper::box($provided[1]));
+			$p0 = Data\Wrapper::box($provided[0])->compareTo(Data\Wrapper::box($provided[1]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Core\\Int32', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -115,7 +116,7 @@ namespace Saber\Core {
 		 * @dataProvider dataToString
 		 */
 		public function testToString($provided, $expected) {
-			$p0 = Core\Wrapper::box($provided[0])->__toString();
+			$p0 = Data\Wrapper::box($provided[0])->__toString();
 			$e0 = $expected[0];
 
 			$this->assertInternalType('string', $p0);

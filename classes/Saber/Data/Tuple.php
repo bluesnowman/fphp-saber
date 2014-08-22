@@ -16,9 +16,10 @@
  * limitations under the License.
  */
 
-namespace Saber\Core {
+namespace Saber\Data {
 
 	use \Saber\Core;
+	use \Saber\Data;
 	use \Saber\Throwable;
 
 	class Tuple implements Core\AnyRef {
@@ -117,12 +118,12 @@ namespace Saber\Core {
 		 * This method compares the specified object with the current object for order.
 		 *
 		 * @access public
-		 * @param Core\Tuple $that                                  the object to be compared
-		 * @return Core\Int32                                       whether the current object is less than,
+		 * @param Data\Tuple $that                                  the object to be compared
+		 * @return Data\Int32                                       whether the current object is less than,
 		 *                                                          equal to, or greater than the specified
 		 *                                                          object
 		 */
-		public function compareTo(Core\Tuple $that) {
+		public function compareTo(Data\Tuple $that) {
 			$x_length = $this->length();
 			$y_length = $this->length();
 
@@ -134,13 +135,13 @@ namespace Saber\Core {
 			}
 
 			if ($x_length < $y_length) {
-				return Core\Int32::negative();
+				return Data\Int32::negative();
 			}
 			else if ($x_length == $y_length) {
-				return Core\Int32::zero();
+				return Data\Int32::zero();
 			}
 			else { // ($x_length > $y_length)
-				return Core\Int32::one();
+				return Data\Int32::one();
 			}
 		}
 
@@ -148,12 +149,12 @@ namespace Saber\Core {
 		 * This method returns the element at the specified index.
 		 *
 		 * @access public
-		 * @param Core\Int32 $index                                 the index of the element
+		 * @param Data\Int32 $index                                 the index of the element
 		 * @return Core\Any                                         the element at the specified index
 		 * @throws Throwable\OutOfBounds\Exception                  indicates the specified index
 		 *                                                          cannot be found
 		 */
-		public function element(Core\Int32 $index) {
+		public function element(Data\Int32 $index) {
 			$i = $index->unbox();
 
 			if (($i < 0) || ($i >= $this->count)) {
@@ -171,7 +172,7 @@ namespace Saber\Core {
 		 */
 		public function first() {
 			$this->assert(function($other) {
-				return Core\Bool::create($other == $this->length());
+				return Data\Bool::create($other == $this->length());
 			}, 2);
 
 			return $this->value[0];
@@ -181,7 +182,7 @@ namespace Saber\Core {
 		 * This method returns the length of this array list.
 		 *
 		 * @access public
-		 * @return Core\Int32                                       the length of this array list
+		 * @return Data\Int32                                       the length of this array list
 		 */
 		public function length() {
 			return $this->count;
@@ -195,7 +196,7 @@ namespace Saber\Core {
 		 */
 		public function second() {
 			$this->assert(function($other) {
-				return Core\Bool::create($other == $this->length());
+				return Data\Bool::create($other == $this->length());
 			}, 2);
 
 			return $this->value[1];
@@ -209,10 +210,10 @@ namespace Saber\Core {
 		 */
 		public function swap() {
 			$this->assert(function($other) {
-				return Core\Bool::create($other == $this->length());
+				return Data\Bool::create($other == $this->length());
 			}, 2);
 
-			return Core\Tuple::create($this->value[1], $this->value[0]);
+			return Data\Tuple::create($this->value[1], $this->value[0]);
 		}
 
 		#endregion

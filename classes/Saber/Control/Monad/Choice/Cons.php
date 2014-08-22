@@ -36,7 +36,8 @@ namespace Saber\Control\Monad\Choice {
 		public function end() {
 			if (!$this->xs->end()) {
 				if (is_callable($this->f)) {
-					return $this->f($this->x);
+					$f = $this->f;
+					return $f($this->x);
 				}
 				return false;
 			}

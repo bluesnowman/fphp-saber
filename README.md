@@ -113,7 +113,6 @@ Core\Any function(Core\Any $x, Data\Int32 $i)
       + Data\Integral
         + Data\Int32
         + Data\Integer
-    + Core\Nothing
     + Data\Unit
 + Core\AnyCtrl
   + Control\Monad

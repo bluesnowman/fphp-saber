@@ -28,44 +28,36 @@ namespace Saber\Control {
 	class MonadTest extends Core\AnyTest {
 
 		/**
-		 * This method provides the data for testing the evaluation of one value "AND" another.
-		 *
-		 * @return array
+		 * This method tests a set of choices.
 		 */
-		public function dataChoice() {
-			$data = array(
-				array(array(1), array(1)),
-			);
-			return $data;
-		}
+		public function testChoice() {
+			$p0 = Data\Int32::box(0);
+			$e0 = 0;
 
-		/**
-		 * This method tests a set of choice.
-		 *
-		 * @dataProvider dataChoice
-		 */
-		public function testChoice($provided, $expected) {
-			$p0 = Data\Int32::box($provided[0]);
-			$e0 = $expected[0];
+			$p1 = Data\Int32::box(1);
+			$e1 = 1;
 
 			Control\Monad::choice($p0)
-				->when(Data\Int32::box(1), function(Data\Int32 $x) use ($e0) {
+				->when($p0, function(Data\Int32 $x) use($e0) {
+					$this->assertSame($e0, $x->unbox());
+				})
+				->otherwise(function(Data\Int32 $x) use($e1) {
+					$this->assertSame($e1, $x->unbox());
+				})
+			->end();
+			Control\Monad::choice($p0)
+				->when($p1, function(Data\Int32 $x) use($e1) {
+					$this->assertSame($e1, $x->unbox());
+				})
+				->when($p0, function(Data\Int32 $x) use($e0) {
 					$this->assertSame($e0, $x->unbox());
 				})
 			->end();
 			Control\Monad::choice($p0)
-				->when(Data\Int32::box(2), function(Data\Int32 $x) use ($e0) {
-					$this->assertSame($e0, $x->unbox());
+				->when($p1, function(Data\Int32 $x) use($e1) {
+					$this->assertSame($e1, $x->unbox());
 				})
-				->when(Data\Int32::box(1), function(Data\Int32 $x) use ($e0) {
-					$this->assertSame($e0, $x->unbox());
-				})
-			->end();
-			Control\Monad::choice($p0)
-				->when(Data\Int32::box(2), function(Data\Int32 $x) use ($e0) {
-					$this->assertSame($e0, $x->unbox());
-				})
-				->otherwise(function(Data\Int32 $x) use ($e0) {
+				->otherwise(function(Data\Int32 $x) use($e0) {
 					$this->assertSame($e0, $x->unbox());
 				})
 			->end();

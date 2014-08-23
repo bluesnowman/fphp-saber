@@ -64,25 +64,62 @@ Core\Any function(Core\Any $z)
 Core\Any function(Core\Any $z, Core\Any $x)
 ````
 
-A `predicate` function is used to find the result of preforming a Boolean evaluation.
+A `predicate` function is used to find the result of performing a Boolean evaluation.
 
 ````
 Data\Bool function(Core\Any $x)
 Data\Bool function(Core\Any $x, Data\Int32 $i)
 ````
 
-A `procedure` function is used to preform an operation without returning a value.
+A `procedure` function is used to perform an operation without returning a value.
 
 ````
 Data\Unit function(Core\Any $x)
 Data\Unit function(Core\Any $x, Data\Int32 $i)
 ````
 
-A `subroutine` function is used to preform an operation that does return a value.
+A `subroutine` function is used to perform an operation that does return a value.
 
 ````
 Core\Any function(Core\Any $x)
 Core\Any function(Core\Any $x, Data\Int32 $i)
+````
+
+### Choices
+
+Objects can be evaluated against each other using the `when` clause.  A `when` clause is
+satisfied when both `x` and `y` match (i.e. when `$x->equals($y)` evaluates to `true`).
+
+````
+$x = Data::Int32::box(8);
+$y = Data::Int32::box(8);
+
+Control\Monad::choice($x)
+	->when($y, function(Data\Int32 $x) {
+		// passes, do something
+	})
+	->otherwise(function(Data\Int32 $x) {
+		// skipped
+	})
+->end();
+````
+
+Objects can also be evaluated against each other using the `unless` clause.  An `unless`
+clause is satisfied when both `x` and `y` do NOT match (i.e. when `$x->equals($y)` evaluates
+to `false`).
+
+````
+$x = Data::Int32::box(8);
+$y = Data::Int32::box(7);
+
+Control\Monad::choice($x)
+	->unless($y, function(Data\Int32 $x) {
+		// passes, do something
+	})
+	->otherwise(function(Data\Int32 $x) {
+		// skipped
+	})
+->end();
 ````
 
 ### Hierarchy
@@ -151,7 +188,7 @@ To run all unit tests:
 make execute
 ````
 
-To run just a specific group of unit tests:
+To run just a specific group of unit tests, for example:
 
 ````
 make execute GROUP=AnyVal

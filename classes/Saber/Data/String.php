@@ -183,27 +183,27 @@ namespace Saber\Data {
 
 			$index = Data\Int32::zero();
 			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				$head = $xs->head();
-				if (!$object->__equals($head)) {
-					$cons = static::cons($head, static::nil());
+				$x = $xs->head();
+				if (!$object->__equals($x)) {
+					$ys = static::cons($x, static::nil());
 
 					if ($tail !== null) {
-						$tail->tail = $cons;
+						$tail->tail = $ys;
 					}
 					else {
-						$start = $cons;
+						$start = $ys;
 					}
 
-					$tail = $cons;
+					$tail = $ys;
 				}
 				else {
-					$cons = $xs->tail();
+					$ys = $xs->tail();
 
 					if ($tail !== null) {
-						$tail->tail = $cons;
+						$tail->tail = $ys;
 					}
 					else {
-						$start = $cons;
+						$start = $ys;
 					}
 
 					break;
@@ -238,10 +238,10 @@ namespace Saber\Data {
 		 * @return Data\String                                      the string
 		 */
 		public function dropWhile(callable $predicate) {
-			$index = Data\Int32::zero();
+			$i = Data\Int32::zero();
 
-			for ($xs = $this; ! $xs->__isEmpty() && $predicate($xs->head(), $index)->unbox(); $xs = $xs->tail()) {
-				$index = $index->increment();
+			for ($xs = $this; ! $xs->__isEmpty() && $predicate($xs->head(), $i)->unbox(); $xs = $xs->tail()) {
+				$i = $i->increment();
 			}
 
 			return $xs;
@@ -285,13 +285,13 @@ namespace Saber\Data {
 		 *                                                          cannot be found
 		 */
 		public function element(Data\Int32 $index) {
-			$count = Data\Int32::zero();
+			$i = Data\Int32::zero();
 
 			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				if ($count->__equals($index)) {
+				if ($i->__equals($index)) {
 					return $xs->head();
 				}
-				$count = $count->increment();
+				$i = $i->increment();
 			}
 
 			throw new Throwable\OutOfBounds\Exception('Unable to return element at index :index.', array(':index' => $index->unbox()));
@@ -307,13 +307,13 @@ namespace Saber\Data {
 		 *                                                          truthy test
 		 */
 		public function every(callable $predicate) { // aka "all" or "forall"
-			$index = Data\Int32::zero();
+			$i = Data\Int32::zero();
 
 			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				if (!$predicate($xs->head(), $index)->unbox()) {
+				if (!$predicate($xs->head(), $i)->unbox()) {
 					return Data\Bool::false();
 				}
-				$index = $index->increment();
+				$i = $i->increment();
 			}
 
 			return Data\Bool::true(); // yes, empty list returns "true"
@@ -332,18 +332,18 @@ namespace Saber\Data {
 
 			$index = Data\Int32::zero();
 			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				$head = $xs->head();
-				if ($predicate($head, $index)->unbox()) {
-					$cons = static::cons($head, static::nil());
+				$x = $xs->head();
+				if ($predicate($x, $index)->unbox()) {
+					$ys = static::cons($x, static::nil());
 
 					if ($tail !== null) {
-						$tail->tail = $cons;
+						$tail->tail = $ys;
 					}
 					else {
-						$start = $cons;
+						$start = $ys;
 					}
 
-					$tail = $cons;
+					$tail = $ys;
 				}
 				$index = $index->increment();
 			}
@@ -360,13 +360,13 @@ namespace Saber\Data {
 		 * @throws Throwable\EmptyCollection\Exception              indicates that the collection is empty
 		 */
 		public function first(callable $predicate) {
-			$index = Data\Int32::zero();
+			$i = Data\Int32::zero();
 			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				$head = $xs->head();
-				if ($predicate($head, $index)->unbox()) {
-					return $head;
+				$x = $xs->head();
+				if ($predicate($x, $i)->unbox()) {
+					return $x;
 				}
-				$index = $index->increment();
+				$i = $i->increment();
 			}
 			throw new Throwable\EmptyCollection\Exception('Unable to return first object. String is empty.');
 		}
@@ -380,13 +380,13 @@ namespace Saber\Data {
 		 * @return Core\Any                                         the result
 		 */
 		public function foldLeft(callable $operator, Core\Any $initial) {
-			$x = $initial;
+			$z = $initial;
 
 			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				$x = $operator($x, $xs->head());
+				$z = $operator($z, $xs->head());
 			}
 
-			return $x;
+			return $z;
 		}
 
 		/**
@@ -398,11 +398,13 @@ namespace Saber\Data {
 		 * @return Core\Any                                         the result
 		 */
 		public function foldRight(callable $operator, Core\Any $initial) {
+			$z = $initial;
+
 			if ($this->__isEmpty()) {
-				return $initial;
+				return $z;
 			}
 
-			return $operator($this->head(), $this->tail()->foldRight($operator, $initial));
+			return $operator($this->head(), $this->tail()->foldRight($operator, $z));
 		}
 
 		/**
@@ -424,13 +426,13 @@ namespace Saber\Data {
 		 *                                                          or otherwise -1
 		 */
 		public function indexOf(Core\Any $object) {
-			$index = Data\Int32::zero();
+			$i = Data\Int32::zero();
 
 			for ($xs = $this->tail(); ! $xs->__isEmpty(); $xs = $xs->tail()) {
 				if ($object->__equals($xs->head())) {
-					return $index;
+					return $i;
 				}
-				$index = $index->increment();
+				$i = $i->increment();
 			}
 
 			return Data\Int32::negative();
@@ -448,16 +450,16 @@ namespace Saber\Data {
 			$tail = null;
 
 			for ($xs = $this; ! $xs->__isEmpty() && ! $xs->tail()->__isEmpty(); $xs = $xs->tail()) {
-				$cons = static::cons($xs->head(), static::nil());
+				$ys = static::cons($xs->head(), static::nil());
 
 				if ($tail !== null) {
-					$tail->tail = $cons;
+					$tail->tail = $ys;
 				}
 				else {
-					$start = $cons;
+					$start = $ys;
 				}
 
-				$tail = $cons;
+				$tail = $ys;
 			}
 
 			return $start;
@@ -495,13 +497,13 @@ namespace Saber\Data {
 		 *                                                          list
 		 */
 		public function last() {
-			$head = $this->head();
+			$x = $this->head();
 
 			for ($xs = $this->tail(); ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				$head = $xs->head();
+				$x = $xs->head();
 			}
 
-			return $head;
+			return $x;
 		}
 
 		/**
@@ -527,19 +529,19 @@ namespace Saber\Data {
 			$start = static::nil();
 			$tail = null;
 
-			$index = Data\Int32::zero();
+			$i = Data\Int32::zero();
 			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				$cons = static::cons($subroutine($xs->head(), $index), static::nil());
+				$ys = static::cons($subroutine($xs->head(), $i), static::nil());
 
 				if ($tail !== null) {
-					$tail->tail = $cons;
+					$tail->tail = $ys;
 				}
 				else {
-					$start = $cons;
+					$start = $ys;
 				}
 
-				$tail = $cons;
-				$index = $index->increment();
+				$tail = $ys;
+				$i = $i->increment();
 			}
 
 			return $start;
@@ -630,13 +632,13 @@ namespace Saber\Data {
 		 *                                                          passed the truthy test
 		 */
 		public function some($predicate) {
-			$index = Data\Int32::zero();
+			$i = Data\Int32::zero();
 
 			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				if ($predicate($xs->head(), $index)->unbox()) {
+				if ($predicate($xs->head(), $i)->unbox()) {
 					return Data\Bool::true();
 				}
-				$index = $index->increment();
+				$i = $i->increment();
 			}
 
 			return Data\Bool::false();
@@ -679,19 +681,19 @@ namespace Saber\Data {
 
 			$index = Data\Int32::zero();
 			for ($xs = $this; ! $xs->__isEmpty() && $taking; $xs = $xs->tail()) {
-				$head = $xs->head();
+				$x = $xs->head();
 
-				if ($predicate($head, $index)->unbox()) {
-					$cons = static::cons($head, static::nil());
+				if ($predicate($x, $index)->unbox()) {
+					$ys = static::cons($x, static::nil());
 
 					if ($tail !== null) {
-						$tail->tail = $cons;
+						$tail->tail = $ys;
 					}
 					else {
-						$start = $cons;
+						$start = $ys;
 					}
 
-					$tail = $cons;
+					$tail = $ys;
 				}
 				else {
 					$taking = false;

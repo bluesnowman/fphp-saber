@@ -18,6 +18,7 @@
 
 namespace Saber\Core {
 
+	use \Saber\Control;
 	use \Saber\Core;
 	use \Saber\Data;
 	use \Saber\Throwable;
@@ -109,6 +110,14 @@ namespace Saber\Core {
 		public function assert(callable $predicate, $other = null);
 
 		/**
+		 * This method returns a choice block.
+		 *
+		 * @access public
+		 * @return Control\Monad\Choice                              the choice monad
+		 */
+		public function choice();
+
+		/**
 		 * This method evaluates whether the specified object is equal to the current object.
 		 *
 		 * @access public
@@ -153,6 +162,14 @@ namespace Saber\Core {
 		 * @return Core\Any                                         the minimum value
 		 */
 		public function min(Core\Any $that);
+
+		/**
+		 * This method echos out this object as a string.
+		 *
+		 * @access public
+		 * @return Core\Any                                         a reference to this object
+		 */
+		public function show();
 
 		/**
 		 * This method returns the object as a string.

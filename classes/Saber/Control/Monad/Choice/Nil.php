@@ -24,18 +24,59 @@ namespace Saber\Control\Monad\Choice {
  
 	class Nil extends Control\Monad\Choice {
 
-		public function end() {
+		/**
+		 * This method causes the choice block to be closed and executed.
+		 *
+		 * @access public
+		 * @return boolean                                          whether a clause has executed
+		 */
+		public function __end() {
 			return false;
 		}
 
+		/**
+		 * This method sets the procedure that will execute should no other clauses
+		 * be satisfied.
+		 *
+		 * @access public
+		 * @param callable $procedure                               the procedure to be executed
+		 * @return Control\Monad\Choice                             a reference to the next choice
+		 *                                                          monad node
+		 * @throws Throwable\UnimplementedMethod\Exception          indicates that this method cannot
+		 *                                                          be called
+		 */
 		public function otherwise(callable $procedure) {
 			throw new Throwable\UnimplementedMethod\Exception('Method :method has not been implemented.', array(':method' => __FUNCTION__));
 		}
 
+		/**
+		 * This method sets the procedure that will be executed should "y" not equal "x".
+		 *
+		 * @access public
+		 * @param Core\Any $y                                       the object to be evaluated
+		 *                                                          against
+		 * @param callable $procedure                               the procedure to be executed
+		 * @return Control\Monad\Choice                             a reference to the next choice
+		 *                                                          monad node
+		 * @throws Throwable\UnimplementedMethod\Exception          indicates that this method cannot
+		 *                                                          be called
+		 */
 		public function unless(Core\Any $y, callable $procedure) {
 			throw new Throwable\UnimplementedMethod\Exception('Method :method has not been implemented.', array(':method' => __FUNCTION__));
 		}
 
+		/**
+		 * This method sets the procedure that will be executed should "y" equal "x".
+		 *
+		 * @access public
+		 * @param Core\Any $y                                       the object to be evaluated
+		 *                                                          against
+		 * @param callable $procedure                               the procedure to be executed
+		 * @return Control\Monad\Choice                             a reference to the next choice
+		 *                                                          monad node
+		 * @throws Throwable\UnimplementedMethod\Exception          indicates that this method cannot
+		 *                                                          be called
+		 */
 		public function when(Core\Any $y, callable $procedure) {
 			throw new Throwable\UnimplementedMethod\Exception('Method :method has not been implemented.', array(':method' => __FUNCTION__));
 		}

@@ -18,6 +18,7 @@
 
 namespace Saber\Core\Any {
 
+	use \Saber\Control;
 	use \Saber\Core;
 	use \Saber\Data;
 	use \Saber\Throwable;
@@ -104,7 +105,7 @@ namespace Saber\Core\Any {
 		public function __call($method, $args) {
 			if (preg_match('/^__[a-z_][a-z0-9_]*$/i', $method)) {
 				$name = substr($method, 2);
-				if (method_exists($this, $name) && !in_array($name, array('assert', 'box', 'call', 'unbox'))) {
+				if (method_exists($this, $name) && !in_array($name, array('assert', 'call', 'choice', 'unbox'))) {
 					$result = call_user_func_array(array($this, $name), $args);
 					if ($result instanceof Core\Any) {
 						return $result->unbox();
@@ -152,6 +153,16 @@ namespace Saber\Core\Any {
 		}
 
 		/**
+		 * This method returns a choice block.
+		 *
+		 * @access public
+		 * @return Control\Monad\Choice                              the choice monad
+		 */
+		public function choice() {
+			return Control\Monad::choice($this);
+		}
+
+		/**
 		 * This method returns the object's hash code.
 		 *
 		 * @access public
@@ -182,6 +193,17 @@ namespace Saber\Core\Any {
 		 */
 		public function min(Core\Any $that) {
 			return ($this->__compareTo($that) <= 0) ? $this : $that;
+		}
+
+		/**
+		 * This method echos out this object as a string.
+		 *
+		 * @access public
+		 * @return Core\Any                                         a reference to this object
+		 */
+		public function show() {
+			echo $this->__toString();
+			return $this;
 		}
 
 		/**

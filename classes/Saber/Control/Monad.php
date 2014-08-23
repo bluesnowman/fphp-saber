@@ -23,6 +23,14 @@ namespace Saber\Control {
 
 	class Monad implements Core\AnyCtrl {
 
+		/**
+		 * This method returns a choice monad for evaluating an object.
+		 *
+		 * @access public
+		 * @static
+		 * @param Core\Any $object                                  the object to be evaluated
+		 * @return Monad\Choice                                     the choice monad
+		 */
 		public static function choice(Core\Any $object) {
 			return Control\Monad\Choice::cons($object, Control\Monad\Choice::nil());
 		}

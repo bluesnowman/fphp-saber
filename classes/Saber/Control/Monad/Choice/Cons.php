@@ -79,7 +79,7 @@ namespace Saber\Control\Monad\Choice {
 		 * @return boolean                                          whether a clause has executed
 		 */
 		public function __end() {
-			if (!$this->xs->end()) {
+			if (!$this->xs->__end()) {
 				$f = $this->f;
 				if (($f !== null) && is_callable($f)) {
 					return $f($this->x);

@@ -29,7 +29,7 @@ namespace Saber\Control {
 		 * @access public
 		 * @static
 		 * @param Core\Any $object                                  the object to be evaluated
-		 * @return Monad\Choice                                     the choice monad
+		 * @return Control\Monad\Choice                             the choice monad
 		 */
 		public static function choice(Core\Any $object) {
 			return Control\Monad\Choice::cons($object, Control\Monad\Choice::nil());

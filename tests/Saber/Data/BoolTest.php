@@ -103,6 +103,27 @@ namespace Saber\Data {
 		}
 
 		/**
+		 * This method tests the ability to make a choice.
+		 */
+		public function testChoice() {
+			$x = Data\Bool::true();
+
+			$p0 = $x->choice();
+
+			$this->assertInstanceOf('\\Saber\\Control\\Monad\\Choice', $p0);
+
+			$p1 = $x->choice()->when(Data\Bool::true(), function(Data\Bool $x) {})->end()->unbox();
+
+			$this->assertInternalType('boolean', $p1);
+			$this->assertTrue($p1);
+
+			$p2 = $x->choice()->when(Data\Bool::false(), function(Data\Bool $x) {})->end()->unbox();
+
+			$this->assertInternalType('boolean', $p2);
+			$this->assertFalse($p2);
+		}
+
+		/**
 		 * This method provides the data for testing the evaluation of one value compared to another.
 		 *
 		 * @return array
@@ -275,6 +296,32 @@ namespace Saber\Data {
 
 			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
 			$this->assertSame($e0, $p0->unbox());
+		}
+
+		/**
+		 * This method provides the data for testing the ability to show a value.
+		 *
+		 * @return array
+		 */
+		public function dataShow() {
+			$data = array(
+				array(array(true), array('true')),
+				array(array(false), array('false')),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the ability to show a value.
+		 *
+		 * @dataProvider dataShow
+		 */
+		public function testShow($provided, $expected) {
+			$p0 = Data\Bool::box($provided[0]);
+			$e0 = $expected[0];
+
+			$this->expectOutputString($e0);
+			$p0->show();
 		}
 
 		/**

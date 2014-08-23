@@ -91,8 +91,8 @@ Objects can be evaluated against each other using the `when` clause.  A `when` c
 satisfied when both `x` and `y` match (i.e. when `$x->equals($y)` evaluates to `true`).
 
 ````
-$x = Data::Int32::box(8);
-$y = Data::Int32::box(8);
+$x = Data\Int32::box(8);
+$y = Data\Int32::box(8);
 
 Control\Monad::choice($x)
 	->when($y, function(Data\Int32 $x) {
@@ -109,8 +109,8 @@ clause is satisfied when both `x` and `y` do NOT match (i.e. when `$x->equals($y
 to `false`).
 
 ````
-$x = Data::Int32::box(8);
-$y = Data::Int32::box(7);
+$x = Data\Int32::box(8);
+$y = Data\Int32::box(7);
 
 Control\Monad::choice($x)
 	->unless($y, function(Data\Int32 $x) {

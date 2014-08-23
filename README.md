@@ -195,7 +195,7 @@ make execute GROUP=AnyVal
 ````
 
 For more information, see the [documentation](https://github.com/bluesnowman/fphp-saber/blob/master/Makefile)
-in the `Makefile` file itself.
+in the `Makefile` itself.
 
 ### Pull Requests
 

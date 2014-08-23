@@ -321,7 +321,9 @@ namespace Saber\Data {
 			$e0 = $expected[0];
 
 			$this->expectOutputString($e0);
-			$p0->show();
+			$p1 = $p0->show();
+
+			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p1);
 		}
 
 		/**

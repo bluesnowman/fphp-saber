@@ -41,15 +41,15 @@ $object = Data\Int32::box(23)->increment()->decrement();
 
 ### Methods
 
-Methods that are NOT preceded by two underscores will return a boxed object.  The only exception
-to this rule is the `unbox` method.
+In general, methods that are NOT preceded by two underscores will return a boxed object.  An
+exception to this rule is the `unbox` method.
 
 ````
 $object = Data\Int32::box(23)->increment();
 ````
 
-Methods that are preceded by two underscores will return the unboxed value, which is typically a
-PHP typed primitive or object.
+Methods that are preceded by two underscores will return the unboxed value, which is typically
+a PHP typed primitive or object.  This is made possible via PHP's magical `__call` method.
 
 ````
 $value = Data\Int32::box(23)->__increment();

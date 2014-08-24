@@ -87,8 +87,6 @@ $value = Data\Int32::box(23)->__increment();
 `$f` usually represents a function (i.e. a callable); however, it is preferred to use one of the naming
 conventions in the next section.
 
-``
-
 ### Callables
 
 An `$operator` function is used to find the result of applying an operation to one or two operands.

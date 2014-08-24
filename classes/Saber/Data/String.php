@@ -147,16 +147,7 @@ namespace Saber\Data {
 		 *                                                          passed the truthy test
 		 */
 		public function any($predicate) {
-			$i = Data\Int32::zero();
-
-			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				if ($predicate($xs->head(), $i)->unbox()) {
-					return Data\Bool::true();
-				}
-				$i = $i->increment();
-			}
-
-			return Data\Bool::false();
+			return $this->find($predicate)->isDefined();
 		}
 
 		/**

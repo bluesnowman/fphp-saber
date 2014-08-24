@@ -108,7 +108,7 @@ namespace Saber\Data {
 		 *                                                          passed the truthy test
 		 */
 		public function any(callable $predicate) {
-			return Data\Bool::create($this->__isDefined() && $predicate($this->object(), Data\Int32::zero())->unbox());
+			return $this->find($predicate)->isDefined();
 		}
 
 		/**
@@ -170,6 +170,21 @@ namespace Saber\Data {
 		 * @return Data\Option                                      the option
 		 */
 		public function filter(callable $predicate) {
+			if ($this->__isDefined() && $predicate($this->object(), Data\Int32::zero())->unbox()) {
+				return $this;
+			}
+			return static::none();
+		}
+
+		/**
+		 * This method returns the first object in the collection that passes the truthy test, if any.
+		 *
+		 * @access public
+		 * @param callable $predicate                               the predicate function to be used
+		 * @return Data\Option                                      an option containing the first object
+		 *                                                          satisfying the predicate, if any
+		 */
+		public function find(callable $predicate) {
 			if ($this->__isDefined() && $predicate($this->object(), Data\Int32::zero())->unbox()) {
 				return $this;
 			}

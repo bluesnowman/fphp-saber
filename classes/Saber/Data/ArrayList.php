@@ -116,6 +116,40 @@ namespace Saber\Data {
 		#region Methods -> Object Oriented -> Universal
 
 		/**
+		 * This method (aka "every" or "forall") iterates over the elements in the list, yielding each
+		 * element to the predicate function, or fails the truthy test.  Opposite of "none".
+		 *
+		 * @access public
+		 * @param callable $predicate                               the predicate function to be used
+		 * @return Data\Bool                                        whether each element passed the
+		 *                                                          truthy test
+		 */
+		public function all(callable $predicate) {
+			$length = $this->__length();
+
+			for ($i = 0; $i < $length; $i++) {
+				if (!$predicate($this->value[$i], Data\Int32::create($i))->unbox()) {
+					return Data\Bool::false();
+				}
+			}
+
+			return Data\Bool::true(); // yes, empty list returns "true"
+		}
+
+		/**
+		 * This method (aka "exists" or "some") returns whether some of the elements in the list passed the truthy
+		 * test.
+		 *
+		 * @access public
+		 * @param callable $predicate                               the predicate function to be used
+		 * @return Data\Bool                                        whether some of the elements
+		 *                                                          passed the truthy test
+		 */
+		public function any($predicate) {
+			return $this->find($predicate)->isDefined();
+		}
+
+		/**
 		 * This method appends the specified object to this object's list.
 		 *
 		 * @access public
@@ -150,7 +184,7 @@ namespace Saber\Data {
 		 *                                                          contained within the list
 		 */
 		public function contains(Core\Any $object) {
-			return $this->some(function(Core\Any $element, Data\Int32 $index) use ($object) {
+			return $this->any(function(Core\Any $element, Data\Int32 $index) use ($object) {
 				return $element->equals($object);
 			});
 		}
@@ -291,27 +325,6 @@ namespace Saber\Data {
 			}
 
 			return $this->value[$i];
-		}
-
-		/**
-		 * This method (aka "all" or "forall") iterates over the elements in the list, yielding each
-		 * element to the predicate function, or fails the truthy test.  Opposite of "none".
-		 *
-		 * @access public
-		 * @param callable $predicate                               the predicate function to be used
-		 * @return Data\Bool                                        whether each element passed the
-		 *                                                          truthy test
-		 */
-		public function every(callable $predicate) { // aka "all" or "forall"
-			$length = $this->__length();
-
-			for ($i = 0; $i < $length; $i++) {
-				if (!$predicate($this->value[$i], Data\Int32::create($i))->unbox()) {
-					return Data\Bool::false();
-				}
-			}
-
-			return Data\Bool::true(); // yes, empty list returns "true"
 		}
 
 		/**
@@ -552,7 +565,7 @@ namespace Saber\Data {
 		 *                                                          falsy test
 		 */
 		public function none(callable $predicate) {
-			return $this->every(function(Core\Any $object, Data\Int32 $index) use ($predicate) {
+			return $this->all(function(Core\Any $object, Data\Int32 $index) use ($predicate) {
 				return $predicate($object, $index)->not();
 			});
 		}
@@ -614,27 +627,6 @@ namespace Saber\Data {
 		 */
 		public function slice(Data\Int32 $offset, Data\Int32 $length) {
 			return new static(array_slice($this->value, $offset->unbox(), $length->unbox()));
-		}
-
-		/**
-		 * This method (aka "any") returns whether some of the elements in the list passed the truthy
-		 * test.
-		 *
-		 * @access public
-		 * @param callable $predicate                               the predicate function to be used
-		 * @return Data\Bool                                        whether some of the elements
-		 *                                                          passed the truthy test
-		 */
-		public function some($predicate) {
-			$length = $this->__length();
-
-			for ($i = 0; $i < $length; $i++) {
-				if ($predicate($this->value[$i], Data\Int32::create($i))->unbox()) {
-					return Data\Bool::true();
-				}
-			}
-
-			return Data\Bool::false();
 		}
 
 		/**

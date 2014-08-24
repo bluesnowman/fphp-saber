@@ -105,7 +105,7 @@ namespace Saber\Data {
 		 * This method (aka "null") returns whether this collection is empty.
 		 *
 		 * @access public
-		 * @return Data\Bool                                        whether the collection is empty
+		 * @return boolean                                          whether the collection is empty
 		 */
 		public function __isEmpty() {
 			return ($this instanceof Data\LinkedList\Nil);
@@ -369,25 +369,25 @@ namespace Saber\Data {
 		}
 
 		/**
-		 * This method returns the first object in the collection that passes the truthy test.
+		 * This method returns the first object in the collection that passes the truthy test, if any.
 		 *
 		 * @access public
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return Core\Any                                         the first element
-		 * @throws Throwable\EmptyCollection\Exception              indicates that the collection is empty
+		 * @return Data\Option                                      an option containing the first object
+		 *                                                          satisfying the predicate, if any
 		 */
-		public function first(callable $predicate) {
+		public function find(callable $predicate) {
 			$i = Data\Int32::zero();
 
 			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
 				$x = $xs->head();
 				if ($predicate($x, $i)->unbox()) {
-					return $x;
+					return Data\Option::some($x);
 				}
 				$i = $i->increment();
 			}
 
-			throw new Throwable\EmptyCollection\Exception('Unable to return first object. Linked list is empty.');
+			return Data\Option::none();
 		}
 
 		/**
@@ -435,6 +435,16 @@ namespace Saber\Data {
 		 *                                                          collection
 		 */
 		public abstract function head();
+
+		/**
+		 * This method returns an option using the head for the boxed object.
+		 *
+		 * @access public
+		 * @return Data\Option                                      the option
+		 */
+		public function headOption() {
+			return (!$this->__isEmpty()) ? Data\Option::some($this->head()) : Data\Option::none();
+		}
 
 		/**
 		 * This method return the index of the first occurrence of the object; otherwise, it returns -1;
@@ -522,6 +532,16 @@ namespace Saber\Data {
 			}
 
 			return $x;
+		}
+
+		/**
+		 * This method returns an option using the last for the boxed object.
+		 *
+		 * @access public
+		 * @return Data\Option                                      the option
+		 */
+		public function lastOption() {
+			return (!$this->__isEmpty()) ? Data\Option::some($this->last()) : Data\Option::none();
 		}
 
 		/**

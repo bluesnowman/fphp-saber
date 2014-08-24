@@ -336,24 +336,24 @@ namespace Saber\Data {
 		}
 
 		/**
-		 * This method returns the first object in the list that passes the truthy test.
+		 * This method returns the first object in the collection that passes the truthy test, if any.
 		 *
 		 * @access public
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return Core\Any                                         the first element
-		 * @throws Throwable\EmptyCollection\Exception              indicates that the collection is empty
+		 * @return Data\Option                                      an option containing the first object
+		 *                                                          satisfying the predicate, if any
 		 */
-		public function first(callable $predicate) {
+		public function find(callable $predicate) {
 			$length = $this->__length();
 
 			for ($i = 0; $i < $length; $i++) {
 				$x = $this->value[$i];
 				if ($predicate($x, Data\Int32::create($i))->unbox()) {
-					return $x;
+					return Data\Option::some($x);
 				}
 			}
 
-			throw new Throwable\EmptyCollection\Exception('Unable to return first object. Linked list is empty.');
+			return Data\Option::none();
 		}
 
 		/**
@@ -402,6 +402,16 @@ namespace Saber\Data {
 		 */
 		public function head() {
 			return $this->value[0];
+		}
+
+		/**
+		 * This method returns an option using the head for the boxed object.
+		 *
+		 * @access public
+		 * @return Data\Option                                      the option
+		 */
+		public function headOption() {
+			return (!$this->__isEmpty()) ? Data\Option::some($this->head()) : Data\Option::none();
 		}
 
 		/**
@@ -491,6 +501,16 @@ namespace Saber\Data {
 		 */
 		public function last() {
 			return $this->value[$this->__length() - 1];
+		}
+
+		/**
+		 * This method returns an option using the last for the boxed object.
+		 *
+		 * @access public
+		 * @return Data\Option                                      the option
+		 */
+		public function lastOption() {
+			return (!$this->__isEmpty()) ? Data\Option::some($this->last()) : Data\Option::none();
 		}
 
 		/**

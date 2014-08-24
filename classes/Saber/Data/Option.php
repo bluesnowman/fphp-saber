@@ -61,6 +61,17 @@ namespace Saber\Data {
 		#region Methods -> Native Oriented
 
 		/**
+		 * This method returns whether this instance is a "some" option.
+		 *
+		 * @access public
+		 * @return boolean                                          whether this instance is a "some"
+		 *                                                          option
+		 */
+		public function __isDefined() {
+			return ($this instanceof Data\Option\Some);
+		}
+
+		/**
 		 * This method returns the boxed object as a string.
 		 *
 		 * @access public
@@ -84,7 +95,7 @@ namespace Saber\Data {
 		 *                                                          truthy test
 		 */
 		public function all(callable $predicate) {
-			return Data\Bool::create($this->__isNone() || $predicate($this->object(), Data\Int32::zero())->unbox());
+			return Data\Bool::create(!$this->__isDefined() || $predicate($this->object(), Data\Int32::zero())->unbox());
 		}
 
 		/**
@@ -97,7 +108,7 @@ namespace Saber\Data {
 		 *                                                          passed the truthy test
 		 */
 		public function any(callable $predicate) {
-			return Data\Bool::create($this->__isSome() && $predicate($this->object(), Data\Int32::zero())->unbox());
+			return Data\Bool::create($this->__isDefined() && $predicate($this->object(), Data\Int32::zero())->unbox());
 		}
 
 		/**
@@ -108,7 +119,7 @@ namespace Saber\Data {
 		 * @return Data\Option                                      the option
 		 */
 		public function bind(callable $subroutine) {
-			return ($this->__isSome()) ? $subroutine($this->object(), Data\Int32::zero()) : static::none();
+			return ($this->__isDefined()) ? $subroutine($this->object(), Data\Int32::zero()) : static::none();
 		}
 
 		/**
@@ -121,8 +132,8 @@ namespace Saber\Data {
 		 *                                                          object
 		 */
 		public function compareTo(Data\Option $that) {
-			$x = $this->__isSome();
-			$y = $that->__isSome();
+			$x = $this->__isDefined();
+			$y = $that->__isDefined();
 
 			if (!$x && $y) {
 				return Data\Int32::negative();
@@ -146,7 +157,7 @@ namespace Saber\Data {
 		 * @param callable $procedure                               the procedure function to be used
 		 */
 		public function each(callable $procedure) {
-			if ($this->__isSome()) {
+			if ($this->__isDefined()) {
 				$procedure($this->object(), Data\Int32::zero());
 			}
 		}
@@ -159,32 +170,22 @@ namespace Saber\Data {
 		 * @return Data\Option                                      the option
 		 */
 		public function filter(callable $predicate) {
-			if ($this->__isSome() && $predicate($this->object(), Data\Int32::zero())->unbox()) {
+			if ($this->__isDefined() && $predicate($this->object(), Data\Int32::zero())->unbox()) {
 				return $this;
 			}
 			return static::none();
 		}
 
 		/**
-		 * This method returns whether this instance is a "none" option.
-		 *
-		 * @access public
-		 * @return Data\Bool                                        whether this instance is a "none"
-		 *                                                          option
-		 */
-		public function isNone() {
-			return Data\Bool::create($this instanceof Data\Option\None);
-		}
-
-		/**
 		 * This method returns whether this instance is a "some" option.
 		 *
 		 * @access public
+		 * @final
 		 * @return Data\Bool                                        whether this instance is a "some"
 		 *                                                          option
 		 */
-		public function isSome() {
-			return Data\Bool::create($this instanceof Data\Option\Some);
+		public final function isDefined() {
+			return Data\Bool::create($this->__isDefined());
 		}
 
 		/**
@@ -194,7 +195,7 @@ namespace Saber\Data {
 		 * @return Data\Int32                                       the length of this option
 		 */
 		public function length() {
-			return ($this->__isSome()) ? Data\Int32::one() : Data\Int32::zero();
+			return ($this->__isDefined()) ? Data\Int32::one() : Data\Int32::zero();
 		}
 
 		/**
@@ -205,7 +206,7 @@ namespace Saber\Data {
 		 * @return Data\Option                                      the option
 		 */
 		public function map(callable $subroutine) {
-			return ($this->__isSome()) ? static::some($subroutine($this->object())) : static::none();
+			return ($this->__isDefined()) ? static::some($subroutine($this->object())) : static::none();
 		}
 
 		/**
@@ -226,7 +227,7 @@ namespace Saber\Data {
 		 * @return Data\Option                                      the option
 		 */
 		public function orElse(Data\Option $option) {
-			return ($this->__isSome()) ? $this : $option;
+			return ($this->__isDefined()) ? $this : $option;
 		}
 
 		/**
@@ -238,7 +239,23 @@ namespace Saber\Data {
 		 * @return Core\Any                                         the boxed object
 		 */
 		public function orSome(Core\Any $object) {
-			return ($this->__isSome()) ? $this->object() : $object;
+			return ($this->__isDefined()) ? $this->object() : $object;
+		}
+
+		/**
+		 * This method returns the option as an array.
+		 *
+		 * @access public
+		 * @return Data\ArrayList                                   the option as an array list
+		 */
+		public function toArray() {
+			$array = array();
+
+			if ($this->__isDefined()) {
+				$array[] = $this->object();
+			}
+
+			return Data\ArrayList::create($array);
 		}
 
 		/**
@@ -247,8 +264,8 @@ namespace Saber\Data {
 		 * @access public
 		 * @return Data\LinkedList                                  the option as a linked list
 		 */
-		public function toLinkedList() {
-			return ($this->__isSome()) ? Data\LinkedList::cons($this->object(), Data\LinkedList::nil()) : Data\LinkedList::nil();
+		public function toList() {
+			return ($this->__isDefined()) ? Data\LinkedList::cons($this->object(), Data\LinkedList::nil()) : Data\LinkedList::nil();
 		}
 
 		#endregion

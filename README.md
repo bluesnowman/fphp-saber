@@ -170,6 +170,7 @@ Control\Monad::choice($x)
       + Data\ArrayList
       + Data\LinkedList
       + Data\String
+    + Data\Option
     + Data\Tuple
     + Data\Wrapper
   + Core\AnyVal

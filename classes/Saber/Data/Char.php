@@ -18,6 +18,8 @@
 
 namespace Saber\Data {
 
+	include_once(implode(DIRECTORY_SEPARATOR, array(dirname(__FILE__), '..', 'Extension', 'mbstring.php')));
+
 	use \Saber\Core;
 	use \Saber\Data;
 	use \Saber\Throwable;

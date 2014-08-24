@@ -116,6 +116,50 @@ namespace Saber\Data {
 		#region Methods -> Object Oriented -> Universal
 
 		/**
+		 * This method (aka "every" or "forall") iterates over the elements in the string, yielding each
+		 * element to the predicate function, or fails the truthy test.  Opposite of "none".
+		 *
+		 * @access public
+		 * @param callable $predicate                               the predicate function to be used
+		 * @return Data\Bool                                        whether each element passed the
+		 *                                                          truthy test
+		 */
+		public function all(callable $predicate) {
+			$i = Data\Int32::zero();
+
+			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
+				if (!$predicate($xs->head(), $i)->unbox()) {
+					return Data\Bool::false();
+				}
+				$i = $i->increment();
+			}
+
+			return Data\Bool::true(); // yes, empty list returns "true"
+		}
+
+		/**
+		 * This method (aka "exists" or "some") returns whether some of the elements in the collection
+		 * passed the truthy test.
+		 *
+		 * @access public
+		 * @param callable $predicate                               the predicate function to be used
+		 * @return Data\Bool                                        whether some of the elements
+		 *                                                          passed the truthy test
+		 */
+		public function any($predicate) {
+			$i = Data\Int32::zero();
+
+			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
+				if ($predicate($xs->head(), $i)->unbox()) {
+					return Data\Bool::true();
+				}
+				$i = $i->increment();
+			}
+
+			return Data\Bool::false();
+		}
+
+		/**
 		 * This method appends the specified object to this object's list. Performs in O(n) time.
 		 *
 		 * @access public
@@ -295,28 +339,6 @@ namespace Saber\Data {
 			}
 
 			throw new Throwable\OutOfBounds\Exception('Unable to return element at index :index.', array(':index' => $index->unbox()));
-		}
-
-		/**
-		 * This method (aka "all" or "forall") iterates over the elements in the string, yielding each
-		 * element to the predicate function, or fails the truthy test.  Opposite of "none".
-		 *
-		 * @access public
-		 * @param callable $predicate                               the predicate function to be used
-		 * @return Data\Bool                                        whether each element passed the
-		 *                                                          truthy test
-		 */
-		public function every(callable $predicate) { // aka "all" or "forall"
-			$i = Data\Int32::zero();
-
-			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				if (!$predicate($xs->head(), $i)->unbox()) {
-					return Data\Bool::false();
-				}
-				$i = $i->increment();
-			}
-
-			return Data\Bool::true(); // yes, empty list returns "true"
 		}
 
 		/**
@@ -557,7 +579,7 @@ namespace Saber\Data {
 		 *                                                          falsy test
 		 */
 		public function none(callable $predicate) {
-			return $this->every(function(Core\Any $object, Data\Int32 $index) use ($predicate) {
+			return $this->all(function(Core\Any $object, Data\Int32 $index) use ($predicate) {
 				return $predicate($object, $index)->not();
 			});
 		}
@@ -620,28 +642,6 @@ namespace Saber\Data {
 		 */
 		public function slice(Data\Int32 $offset, Data\Int32 $length) {
 			return $this->take($length->add($offset))->drop($offset);
-		}
-
-		/**
-		 * This method (aka "any") returns whether some of the elements in the string passed the truthy
-		 * test.
-		 *
-		 * @access public
-		 * @param callable $predicate                               the predicate function to be used
-		 * @return Data\Bool                                        whether some of the elements
-		 *                                                          passed the truthy test
-		 */
-		public function some($predicate) {
-			$i = Data\Int32::zero();
-
-			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				if ($predicate($xs->head(), $i)->unbox()) {
-					return Data\Bool::true();
-				}
-				$i = $i->increment();
-			}
-
-			return Data\Bool::false();
 		}
 
 		/**

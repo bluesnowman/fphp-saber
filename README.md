@@ -19,7 +19,8 @@ $object = Data\Int32::box(23);
 ````
 
 For better performance, type safety can be ignored by using the `create` method to create an instance
-of the respective data type.
+of the respective data type.  (It recommended to use this method instead of calling the constructor
+directly.)
 
 ````
 $object = Data\Int32::create(23);
@@ -55,30 +56,63 @@ a PHP typed primitive or object.  This is made possible via PHP's magical `__cal
 $value = Data\Int32::box(23)->__increment();
 ````
 
+### Variables
+
+`$x` usually represents an object or a value; typically, it is the principal object being worked with in that scope.
+
+`$xs` usually represents a collection of `$x` objects/values.
+
+`$xss` usually represents a collection of `$xs` collections.
+
+`$y` usually represents an object or a value; typically, it is the secondary object being worked with in that scope.
+
+`$ys` usually represents a collection of `$y` objects/values.
+
+`$yss` usually represents a collection of `$ys` collections.
+
+`$z` usually represents an object or a value; typically, it is an additional object being worked with in that scope.
+
+`$zs` usually represents a collection of `$z` objects/values.
+
+`$zss` usually represents a collection of `$zs` collections.
+
+`$c` usually represents a carry.
+
+`$i` usually represents an index.
+
+`$j` usually represents an index.
+
+`$k` usually represents an index.
+
+`$f` usually represents a function (i.e. a callable); however, it is preferred to use one of the naming
+conventions in the next section.
+
+``
+
 ### Callables
 
-An `operator` function is used to find the result of applying an operation to one or two operands.
+An `$operator` function is used to find the result of applying an operation to one or two operands.
 
 ````
-Core\Any function(Core\Any $z)
-Core\Any function(Core\Any $z, Core\Any $x)
+Core\Any function(Core\Any $c)
+Core\Any function(Core\Any $c, Core\Any $x)
 ````
 
-A `predicate` function is used to find the result of performing a Boolean evaluation.
+A `$predicate` function is used to find the result of performing a Boolean evaluation.
 
 ````
 Data\Bool function(Core\Any $x)
 Data\Bool function(Core\Any $x, Data\Int32 $i)
 ````
 
-A `procedure` function is used to perform an operation without returning a value.
+A `$procedure` function is used to perform an operation that does NOT return a value.
 
 ````
 Data\Unit function(Core\Any $x)
 Data\Unit function(Core\Any $x, Data\Int32 $i)
 ````
 
-A `subroutine` function is used to perform an operation that does return a value.
+A `$subroutine` function is used to perform an operation that does return a value.
 
 ````
 Core\Any function(Core\Any $x)

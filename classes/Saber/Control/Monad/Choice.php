@@ -24,6 +24,8 @@ namespace Saber\Control\Monad {
  
 	abstract class Choice {
 
+		#region Methods -> Boxing/Creation
+
 		/**
 		 * This method returns a "cons" object for a choice.
 		 *
@@ -48,6 +50,23 @@ namespace Saber\Control\Monad {
 			return new Control\Monad\Choice\Nil();
 		}
 
+		#endregion
+
+		#region Methods -> Native Oriented
+
+		/**
+		 * This method causes the choice block to be closed and executed.
+		 *
+		 * @access public
+		 * @abstract
+		 * @return boolean                                          whether a clause has executed
+		 */
+		public abstract function __end();
+
+		#endregion
+
+		#region Methods -> Object Oriented -> Universal
+
 		/**
 		 * This method causes the choice block to be closed and executed.
 		 *
@@ -58,15 +77,6 @@ namespace Saber\Control\Monad {
 		public final function end() {
 			return Data\Bool::create($this->__end());
 		}
-
-		/**
-		 * This method causes the choice block to be closed and executed.
-		 *
-		 * @access public
-		 * @abstract
-		 * @return boolean                                          whether a clause has executed
-		 */
-		public abstract function __end();
 
 		/**
 		 * This method sets the procedure that will execute should no other clauses
@@ -105,6 +115,8 @@ namespace Saber\Control\Monad {
 		 *                                                          monad node
 		 */
 		public abstract function when(Core\Any $y, callable $procedure);
+
+		#endregion
 
 	}
 

@@ -258,10 +258,10 @@ namespace Saber\Data {
 		}
 
 		/**
-		 * This method returns the option as an array.
+		 * This method returns the collection as an array.
 		 *
 		 * @access public
-		 * @return Data\ArrayList                                   the option as an array list
+		 * @return Data\ArrayList                                   the collection as an array list
 		 */
 		public function toArray() {
 			$array = array();

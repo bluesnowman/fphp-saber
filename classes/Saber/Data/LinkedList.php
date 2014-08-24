@@ -78,6 +78,21 @@ namespace Saber\Data {
 		}
 
 		/**
+		 * This method creates a list of "n" length with every element set to the given object.
+		 *
+		 * @access public
+		 * @param Int32 $n
+		 * @param Core\Any $object
+		 * @return LinkedList\Cons|LinkedList\Nil
+		 */
+		public static function replicate(Data\Int32 $n, Core\Any $object) {
+			if ($n->unbox() <= 0) {
+				return static::nil();
+			}
+			return static::cons($object, static::replicate($n->decrement(), $object));
+		}
+
+		/**
 		 * This method returns the value contained within the boxed object.
 		 *
 		 * @access public
@@ -780,6 +795,22 @@ namespace Saber\Data {
 		 */
 		public function falsy() {
 			return $this->truthy()->not();
+		}
+
+		/**
+		 * This method returns the collection as an array.
+		 *
+		 * @access public
+		 * @return Data\ArrayList                                   the collection as an array list
+		 */
+		public function toArray() {
+			$array = array();
+
+			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
+				$array[] = $xs->head();
+			}
+
+			return Data\ArrayList::create($array);
 		}
 
 		/**

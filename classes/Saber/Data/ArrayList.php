@@ -53,7 +53,7 @@ namespace Saber\Data {
 					throw new Throwable\InvalidArgument\Exception('Unable to create array list. Expected a boxed value, but got ":type".', array(':type' => $type));
 				}
 			}
-			return new Data\ArrayList($value);
+			return new static($value);
 		}
 
 		/**
@@ -65,6 +65,24 @@ namespace Saber\Data {
 		 */
 		public function __construct(array $value) {
 			$this->value = $value;
+		}
+
+		/**
+		 * This method creates a list of "n" length with every element set to the given object.
+		 *
+		 * @access public
+		 * @param Int32 $n
+		 * @param Core\Any $object
+		 * @return LinkedList\Cons|LinkedList\Nil
+		 */
+		public static function replicate(Data\Int32 $n, Core\Any $object) {
+			$buffer = array();
+
+			for ($i = $n->unbox() - 1; $i >= 0; $i--) {
+				$buffer[] = $object;
+			}
+
+			return new static($buffer);
 		}
 
 		/**

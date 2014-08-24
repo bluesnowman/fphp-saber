@@ -43,7 +43,7 @@ namespace Saber\Data {
 			else if (is_string($value)) {
 				$buffer = Data\String::nil();
 				for ($i = mb_strlen($value) - 1; $i >= 0; $i--) {
-					$buffer = $buffer->prepend(Data\Char::box($value[$i]));
+					$buffer = $buffer->prepend(Data\Char::box(mb_substr($value, $i, 1)));
 				}
 				return $buffer;
 			}

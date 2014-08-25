@@ -388,6 +388,35 @@ namespace Saber\Data {
 		}
 
 		/**
+		 * This method returns the linked list flattened.
+		 *
+		 * @access public
+		 * @return Data\LinkedList                                  the flattened linked list
+		 */
+		public function flatten() {
+			$array = array();
+
+			$xs = $this;
+			$x_length = $xs->__length();
+
+			for ($i = 0; $i < $x_length; $i++) {
+				$x = $xs->element($i);
+				if ($x instanceof Data\Collection) {
+					$ys = $x->flatten()->toArray();
+					$y_length = $ys->__length();
+					for ($j = 0; $j < $y_length; $j++) {
+						$array[] = $ys->element($j);
+					}
+				}
+				else {
+					$array[] = $x;
+				}
+			}
+
+			return $array;
+		}
+
+		/**
 		 * This method applies a left-fold reduction on the list using the operator function.
 		 *
 		 * @access public
@@ -715,6 +744,32 @@ namespace Saber\Data {
 			return $this->takeWhile(function(Core\Any $object, Data\Int32 $index) use ($predicate) {
 				return $predicate($object, $index)->not();
 			});
+		}
+
+		/**
+		 * This method returns the collection as an array.
+		 *
+		 * @access public
+		 * @return Data\ArrayList                                   the collection as an array list
+		 */
+		public function toArray() {
+			return $this;
+		}
+
+		/**
+		 * This method returns the collection as a linked list.
+		 *
+		 * @access public
+		 * @return Data\LinkedList                                  the collection as a linked list
+		 */
+		public function toList() {
+			$list = Data\LinkedList::nil();
+
+			for ($i = $this->__length() - 1; $i >= 0; $i--) {
+				$list = $list->prepend($this->value[$i]);
+			}
+
+			return $list;
 		}
 
 		#endregion

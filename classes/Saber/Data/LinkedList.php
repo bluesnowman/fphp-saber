@@ -397,6 +397,36 @@ namespace Saber\Data {
 		}
 
 		/**
+		 * This method returns the linked list flattened.
+		 *
+		 * @access public
+		 * @return Data\LinkedList                                  the flattened linked list
+		 */
+		public function flatten() {
+			$start = static::nil();
+			$tail = null;
+
+			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
+				$x = $xs->head();
+
+				$ys = ($x instanceof Data\Collection)
+					? $x->flatten()->toList()
+					: static::cons($x, static::nil());
+
+				if ($tail !== null) {
+					$tail->tail = $ys;
+				}
+				else {
+					$start = $ys;
+				}
+
+				$tail = $ys;
+			}
+
+			return $start;
+		}
+
+		/**
 		 * This method applies a left-fold reduction on the collection using the operator function.
 		 *
 		 * @access public
@@ -740,6 +770,32 @@ namespace Saber\Data {
 			});
 		}
 
+		/**
+		 * This method returns the collection as an array.
+		 *
+		 * @access public
+		 * @return Data\ArrayList                                   the collection as an array list
+		 */
+		public function toArray() {
+			$array = array();
+
+			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
+				$array[] = $xs->head();
+			}
+
+			return Data\ArrayList::create($array);
+		}
+
+		/**
+		 * This method returns the collection as a linked list.
+		 *
+		 * @access public
+		 * @return Data\LinkedList                                  the collection as a linked list
+		 */
+		public function toList() {
+			return $this;
+		}
+
 		#endregion
 
 		#region Methods -> Object Oriented -> Boolean Operations
@@ -795,22 +851,6 @@ namespace Saber\Data {
 		 */
 		public function falsy() {
 			return $this->truthy()->not();
-		}
-
-		/**
-		 * This method returns the collection as an array.
-		 *
-		 * @access public
-		 * @return Data\ArrayList                                   the collection as an array list
-		 */
-		public function toArray() {
-			$array = array();
-
-			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				$array[] = $xs->head();
-			}
-
-			return Data\ArrayList::create($array);
 		}
 
 		/**

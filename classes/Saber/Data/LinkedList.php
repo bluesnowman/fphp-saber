@@ -81,15 +81,15 @@ namespace Saber\Data {
 		 * This method creates a list of "n" length with every element set to the given object.
 		 *
 		 * @access public
-		 * @param Int32 $n
-		 * @param Core\Any $object
-		 * @return LinkedList\Cons|LinkedList\Nil
+		 * @param Int32 $n                                          the number of times to replicate
+		 * @param Core\Any $y                                       the object to be replicated
+		 * @return Data\LinkedList                                  the collection
 		 */
-		public static function replicate(Data\Int32 $n, Core\Any $object) {
+		public static function replicate(Data\Int32 $n, Core\Any $y) {
 			if ($n->unbox() <= 0) {
 				return static::nil();
 			}
-			return static::cons($object, static::replicate($n->decrement(), $object));
+			return static::cons($y, static::replicate($n->decrement(), $y));
 		}
 
 		/**
@@ -149,7 +149,7 @@ namespace Saber\Data {
 				$i = $i->increment();
 			}
 
-			return Data\Bool::true(); // yes, empty collection returns "true"
+			return Data\Bool::true(); // yes, an empty list returns "true"
 		}
 
 		/**

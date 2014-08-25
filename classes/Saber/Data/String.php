@@ -18,6 +18,8 @@
 
 namespace Saber\Data {
 
+	include_once(implode(DIRECTORY_SEPARATOR, array(dirname(__FILE__), '..', 'Extension', 'mbstring.php')));
+
 	use \Saber\Core;
 	use \Saber\Data;
 	use \Saber\Throwable;
@@ -45,7 +47,7 @@ namespace Saber\Data {
 				}
 				throw new Throwable\InvalidArgument\Exception('Unable to box value. Expected a string, but got ":type".', array(':type' => $type));
 			}
-			new static($value);
+			return new static($value);
 		}
 
 		/**
@@ -111,7 +113,7 @@ namespace Saber\Data {
 		 * @return integer                                          the length of this string
 		 */
 		public function __length() {
-			return count($this->value);
+			return mb_strlen($this->unbox(), Data\Char::UTF_8_ENCODING);
 		}
 
 		#endregion
@@ -131,7 +133,7 @@ namespace Saber\Data {
 			$length = $this->__length();
 
 			for ($i = 0; $i < $length; $i++) {
-				$x = mb_substr($this->unbox(), $i, 1);
+				$x = mb_substr($this->unbox(), $i, 1, Data\Char::UTF_8_ENCODING);
 				if (!$predicate(Data\Char::create($x), Data\Int32::create($i))->unbox()) {
 					return Data\Bool::false();
 				}
@@ -205,8 +207,8 @@ namespace Saber\Data {
 			$y_length = $that->__length();
 
 			for ($i = 0; $i < $x_length && $i < $y_length; $i++) {
-				$x = Data\Char::create(mb_substr($this->unbox(), $i, 1));
-				$y = Data\Char::create(mb_substr($that->unbox(), $i, 1));
+				$x = Data\Char::create(mb_substr($this->unbox(), $i, 1, Data\Char::UTF_8_ENCODING));
+				$y = Data\Char::create(mb_substr($that->unbox(), $i, 1, Data\Char::UTF_8_ENCODING));
 				$r = $x->compareTo($y);
 				if ($r->unbox() != 0) {
 					return $r;
@@ -237,7 +239,7 @@ namespace Saber\Data {
 			$skip = false;
 
 			for ($i = 0; $i < $length; $i++) {
-				$x = Data\Char::create(mb_substr($this->unbox(), $i, 1));
+				$x = Data\Char::create(mb_substr($this->unbox(), $i, 1, Data\Char::UTF_8_ENCODING));
 				if ($x->__equals($y) && !$skip) {
 					$skip = true;
 					continue;
@@ -260,7 +262,7 @@ namespace Saber\Data {
 			$length = $this->__length();
 
 			for ($i = $n->unbox(); $i < $length; $i++) {
-				$buffer .= mb_substr($this->unbox(), $i, 1);
+				$buffer .= mb_substr($this->unbox(), $i, 1, Data\Char::UTF_8_ENCODING);
 			}
 
 			return new static($buffer);
@@ -278,7 +280,7 @@ namespace Saber\Data {
 
 			$failed = false;
 			for ($i = 0; $i < $length; $i++) {
-				$x = mb_substr($this->unbox(), $i, 1);
+				$x = mb_substr($this->unbox(), $i, 1, Data\Char::UTF_8_ENCODING);
 				if (!$predicate(Data\Char::create($x), Data\Int32::create($i))->unbox() || $failed) {
 					$buffer .= $x;
 					$failed = true;
@@ -311,7 +313,7 @@ namespace Saber\Data {
 			$length = $this->__length();
 
 			for ($i = 0; $i < $length; $i++) {
-				$procedure(Data\Char::create(mb_substr($this->unbox(), $i, 1)), Data\Int32::create($i));
+				$procedure(Data\Char::create(mb_substr($this->unbox(), $i, 1, Data\Char::UTF_8_ENCODING)), Data\Int32::create($i));
 			}
 		}
 
@@ -331,7 +333,7 @@ namespace Saber\Data {
 				throw new Throwable\OutOfBounds\Exception('Unable to return element at index :index.', array(':index' => $i));
 			}
 
-			return Data\Char::create(mb_substr($this->unbox(), $i, 1));
+			return Data\Char::create(mb_substr($this->unbox(), $i, 1, Data\Char::UTF_8_ENCODING));
 		}
 
 		/**
@@ -346,7 +348,7 @@ namespace Saber\Data {
 			$length = $this->__length();
 
 			for ($i = 0; $i < $length; $i++) {
-				$x = mb_substr($this->unbox(), $i, 1);
+				$x = mb_substr($this->unbox(), $i, 1, Data\Char::UTF_8_ENCODING);
 				if ($predicate(Data\Char::create($x), Data\Int32::create($i))->unbox()) {
 					$buffer .= $x;
 				}
@@ -367,7 +369,7 @@ namespace Saber\Data {
 			$length = $this->__length();
 
 			for ($i = 0; $i < $length; $i++) {
-				$x = Data\Char::create(mb_substr($this->unbox(), $i, 1));
+				$x = Data\Char::create(mb_substr($this->unbox(), $i, 1, Data\Char::UTF_8_ENCODING));
 				if ($predicate($x, Data\Int32::create($i))->unbox()) {
 					return Data\Option::some($x);
 				}
@@ -389,7 +391,7 @@ namespace Saber\Data {
 			$length = $this->__length();
 
 			for ($i = 0; $i < $length; $i++) {
-				$z = $operator($z, Data\Char::create(mb_substr($this->unbox(), $i, 1)));
+				$z = $operator($z, Data\Char::create(mb_substr($this->unbox(), $i, 1, Data\Char::UTF_8_ENCODING)));
 			}
 
 			return $z;
@@ -408,7 +410,7 @@ namespace Saber\Data {
 			$length = $this->__length();
 
 			for ($i = $length - 1; $i >= 0; $i--) {
-				$z = $operator($z, Data\Char::create(mb_substr($this->unbox(), $i, 1)));
+				$z = $operator($z, Data\Char::create(mb_substr($this->unbox(), $i, 1, Data\Char::UTF_8_ENCODING)));
 			}
 
 			return $z;
@@ -421,7 +423,7 @@ namespace Saber\Data {
 		 * @return Core\Any                                         the head object in this string
 		 */
 		public function head() {
-			return Data\Char::create(mb_substr($this->unbox(), 0, 1));
+			return Data\Char::create(mb_substr($this->unbox(), 0, 1, Data\Char::UTF_8_ENCODING));
 		}
 
 		/**
@@ -446,7 +448,7 @@ namespace Saber\Data {
 			$length = $this->__length();
 
 			for ($i = 0; $i < $length; $i++) {
-				$x = Data\Char::create(mb_substr($this->unbox(), $i, 1));
+				$x = Data\Char::create(mb_substr($this->unbox(), $i, 1, Data\Char::UTF_8_ENCODING));
 				if ($x->__equals($object)) {
 					return Data\Int32::create($i);
 				}
@@ -467,7 +469,7 @@ namespace Saber\Data {
 			$length = $this->__length() - 1;
 
 			for ($i = 0; $i < $length; $i++) {
-				$buffer .= mb_substr($this->unbox(), $i, 1);
+				$buffer .= mb_substr($this->unbox(), $i, 1, Data\Char::UTF_8_ENCODING);
 			}
 
 			return new static($buffer);
@@ -497,10 +499,10 @@ namespace Saber\Data {
 			$length = $this->__length();
 
 			if ($length > 0) {
-				$buffer .= mb_substr($this->unbox(), 0, 1);
+				$buffer .= mb_substr($this->unbox(), 0, 1, Data\Char::UTF_8_ENCODING);
 				for ($i = 1; $i < $length; $i++) {
 					$buffer .= $object->__toString();
-					$buffer .= mb_substr($this->unbox(), $i, 1);
+					$buffer .= mb_substr($this->unbox(), $i, 1, Data\Char::UTF_8_ENCODING);
 				}
 			}
 
@@ -515,7 +517,7 @@ namespace Saber\Data {
 		 *                                                          string
 		 */
 		public function last() {
-			return Data\Char::create(mb_substr($this->unbox(), $this->__length() - 1, 1));
+			return Data\Char::create(mb_substr($this->unbox(), $this->__length() - 1, 1, Data\Char::UTF_8_ENCODING));
 		}
 
 		/**
@@ -551,7 +553,7 @@ namespace Saber\Data {
 			$length = $this->__length();
 
 			for ($i = 0; $i < $length; $i++) {
-				$buffer .= $subroutine(Data\Char::create(mb_substr($this->unbox(), $i, 1)), Data\Int32::create($i))->unbox();
+				$buffer .= $subroutine(Data\Char::create(mb_substr($this->unbox(), $i, 1, Data\Char::UTF_8_ENCODING)), Data\Int32::create($i))->unbox();
 			}
 
 			return new static($buffer);
@@ -615,7 +617,13 @@ namespace Saber\Data {
 		 * @return Data\String                                   the string
 		 */
 		public function reverse() {
-			return new static(mb_strrev($this->unbox()));
+			$buffer = '';
+
+			for ($i = $this->__length() - 1; $i >= 0; $i--) {
+				$buffer .= mb_substr($this->unbox(), $i, 1, Data\Char::UTF_8_ENCODING);
+			}
+
+			return new static($buffer);
 		}
 
 		/**
@@ -627,7 +635,7 @@ namespace Saber\Data {
 		 * @return Data\String                                      the string
 		 */
 		public function slice(Data\Int32 $offset, Data\Int32 $length) {
-			return new static(mb_substr($this->unbox(), $offset->unbox(), $length->unbox()));
+			return new static(mb_substr($this->unbox(), $offset->unbox(), $length->unbox(), Data\Char::UTF_8_ENCODING));
 		}
 
 		/**
@@ -641,7 +649,7 @@ namespace Saber\Data {
 			$length = $this->__length();
 
 			for ($i = 1; $i < $length; $i++) {
-				$buffer .= mb_substr($this->unbox(), $i, 1);
+				$buffer .= mb_substr($this->unbox(), $i, 1, Data\Char::UTF_8_ENCODING);
 			}
 
 			return new static($buffer);
@@ -659,7 +667,7 @@ namespace Saber\Data {
 			$length = min($n->unbox(), $this->__length());
 
 			for ($i = 0; $i < $length; $i++) {
-				$buffer .= mb_substr($this->unbox(), $i, 1);
+				$buffer .= mb_substr($this->unbox(), $i, 1, Data\Char::UTF_8_ENCODING);
 			}
 
 			return new static($buffer);
@@ -677,7 +685,7 @@ namespace Saber\Data {
 			$length = $this->__length();
 
 			for ($i = 0; $i < $length; $i++) {
-				$x = mb_substr($this->unbox(), $i, 1);;
+				$x = mb_substr($this->unbox(), $i, 1, Data\Char::UTF_8_ENCODING);;
 				if (!$predicate(Data\Char::create($x), Data\Int32::create($i))->unbox()) {
 					break;
 				}

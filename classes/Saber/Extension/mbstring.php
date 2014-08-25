@@ -26,17 +26,6 @@ if (!extension_loaded('mbstring')) {
 		}
 	}
 
-	if (!function_exists('mb_strrev')) {
-		function mb_strrev($string, $encoding = 'UTF-8') {
-			$buffer = '';
-			$length = mb_strlen($string, $encoding);
-			for ($i = $length - 1; $i >= 0; $i--) {
-				$buffer .= mb_substr($string, $i, 1, $encoding);
-			}
-			return $buffer;
-		}
-	}
-
 	if (!function_exists('mb_substr')) {
 		function mb_substr($string, $start, $length = null, $encoding = 'UTF-8') {
 			if ($length === null) {

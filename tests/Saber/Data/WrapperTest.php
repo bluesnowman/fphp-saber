@@ -78,12 +78,12 @@ namespace Saber\Data {
 
 			$this->assertInstanceOf('\\Saber\\Control\\Monad\\Choice', $p0);
 
-			$p1 = $x->choice()->when(Data\Wrapper::box(null), function(Data\Unit $x) {})->end()->unbox();
+			$p1 = $x->choice()->when(Data\Wrapper::box(null), function(Data\Wrapper $x) {})->end()->unbox();
 
 			$this->assertInternalType('boolean', $p1);
 			$this->assertTrue($p1);
 
-			$p2 = $x->choice()->when(Data\Wrapper::box(1), function(Data\Unit $x) {})->end()->unbox();
+			$p2 = $x->choice()->when(Data\Wrapper::box(1), function(Data\Wrapper $x) {})->end()->unbox();
 
 			$this->assertInternalType('boolean', $p2);
 			$this->assertFalse($p2);

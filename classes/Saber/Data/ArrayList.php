@@ -388,10 +388,10 @@ namespace Saber\Data {
 		}
 
 		/**
-		 * This method returns the linked list flattened.
+		 * This method returns the array list flattened.
 		 *
 		 * @access public
-		 * @return Data\LinkedList                                  the flattened linked list
+		 * @return Data\ArrayList                                  the flattened array list
 		 */
 		public function flatten() {
 			$array = array();

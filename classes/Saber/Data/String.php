@@ -379,6 +379,16 @@ namespace Saber\Data {
 		}
 
 		/**
+		 * This method returns the string flattened.
+		 *
+		 * @access public
+		 * @return Data\String                                      the flattened string
+		 */
+		public function flatten() {
+			return $this;
+		}
+
+		/**
 		 * This method applies a left-fold reduction on the string using the operator function.
 		 *
 		 * @access public

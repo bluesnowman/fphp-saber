@@ -27,6 +27,42 @@ namespace Saber\Data {
 	class StringTest extends Core\AnyTest {
 
 		/**
+		 * This method provides the data for testing that a value has any elements that pass the truthy test.
+		 *
+		 * @return array
+		 */
+		public function dataAny() {
+			$data = array(
+				array(array('', 's'), array(false)),
+				array(array('s', 's'), array(true)),
+				array(array('w', 's'), array(false)),
+				array(array('string', 's'), array(true)),
+				array(array('string', 'i'), array(true)),
+				array(array('string', 'g'), array(true)),
+				array(array('string', 'x'), array(false)),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests that a value has any elements that pass the truthy test.
+		 *
+		 * @dataProvider dataAny
+		 */
+		public function testAny($provided, $expected) {
+			$x = Data\String::box($provided[0]);
+			$y = Data\Char::box($provided[1]);
+
+			$p0 = $x->any(function(Core\Any $x, Data\Int32 $i) use ($y) {
+				return $x->equals($y);
+			});
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
+			$this->assertSame($e0, $p0->unbox());
+		}
+
+		/**
 		 * This method provides the data for testing the boxing of a value.
 		 *
 		 * @return array
@@ -57,6 +93,86 @@ namespace Saber\Data {
 
 			$this->assertInternalType('string', $p1);
 			$this->assertSame($e1, $p1);
+		}
+
+		/**
+		 * This method provides the data for testing that a value is empty.
+		 *
+		 * @return array
+		 */
+		public function dataIsEmpty() {
+			$data = array(
+				array(array(''), array(true)),
+				array(array('s'), array(false)),
+				array(array('string'), array(false)),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests that a value is empty.
+		 *
+		 * @dataProvider dataIsEmpty
+		 */
+		public function testIsEmpty($provided, $expected) {
+			$p0 = Data\String::box($provided[0])->isEmpty();
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
+			$this->assertSame($e0, $p0->unbox());
+		}
+
+		/**
+		 * This method provides the data for testing that a value is of a particular length.
+		 *
+		 * @return array
+		 */
+		public function dataLength() {
+			$data = array(
+				array(array(''), array(0)),
+				array(array('s'), array(1)),
+				array(array('string'), array(6)),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests that a value is of a particular length.
+		 *
+		 * @dataProvider dataLength
+		 */
+		public function testLength($provided, $expected) {
+			$p0 = Data\String::box($provided[0])->length();
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
+			$this->assertSame($e0, $p0->unbox());
+		}
+
+		/**
+		 * This method provides the data for testing that a value is repeated "n" times.
+		 *
+		 * @return array
+		 */
+		public function dataReplicate() {
+			$data = array(
+				array(array(1, 's'), array('s')),
+				array(array(5, 's'), array('sssss')),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests that a value is repeated "n" times.
+		 *
+		 * @dataProvider dataReplicate
+		 */
+		public function testReplicate($provided, $expected) {
+			$p0 = Data\String::replicate(Data\Int32::box($provided[0]), Data\Char::box($provided[1]));
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\String', $p0);
+			$this->assertSame($e0, $p0->unbox());
 		}
 
 		/**

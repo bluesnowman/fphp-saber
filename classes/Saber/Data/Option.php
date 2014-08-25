@@ -123,33 +123,6 @@ namespace Saber\Data {
 		}
 
 		/**
-		 * This method compares the specified object with the current object for order.
-		 *
-		 * @access public
-		 * @param Data\Option $that                                 the object to be compared
-		 * @return Data\Int32                                       whether the current object is less than,
-		 *                                                          equal to, or greater than the specified
-		 *                                                          object
-		 */
-		public function compareTo(Data\Option $that) {
-			$x = $this->__isDefined();
-			$y = $that->__isDefined();
-
-			if (!$x && $y) {
-				return Data\Int32::negative();
-			}
-			else if ($x && !$y) {
-				return Data\Int32::one();
-			}
-			else if (!$x && !$y) {
-				return Data\Int32::zero();
-			}
-			else {
-				return $this->object()->compareTo($that->object());
-			}
-		}
-
-		/**
 		 * This method iterates over the elements in the option, yielding each element to the
 		 * procedure function.
 		 *

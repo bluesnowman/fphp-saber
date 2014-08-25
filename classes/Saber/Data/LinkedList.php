@@ -205,13 +205,13 @@ namespace Saber\Data {
 		 * This method evaluates whether the specified object is contained within the collection.
 		 *
 		 * @access public
-		 * @param Core\Any $object                                  the object to find
+		 * @param Core\Any $y                                       the object to find
 		 * @return Data\Bool                                        whether the specified object is
 		 *                                                          contained within the collection
 		 */
-		public function contains(Core\Any $object) {
-			return $this->any(function(Core\Any $element, Data\Int32 $index) use ($object) {
-				return $element->equals($object);
+		public function contains(Core\Any $y) {
+			return $this->any(function(Core\Any $x, Data\Int32 $i) use ($y) {
+				return $x->equals($y);
 			});
 		}
 
@@ -637,8 +637,8 @@ namespace Saber\Data {
 		 * @return Data\LinkedList                                  the collection
 		 */
 		public function remove(callable $predicate) {
-			return $this->filter(function(Core\Any $element, Data\Int32 $index) use ($predicate) {
-				return $predicate($element, $index)->not();
+			return $this->filter(function(Core\Any $x, Data\Int32 $i) use ($predicate) {
+				return $predicate($x, $i)->not();
 			});
 		}
 

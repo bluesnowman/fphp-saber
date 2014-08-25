@@ -27,16 +27,19 @@ namespace Saber\Data\Option {
 		#region Methods -> Object Oriented -> Universal
 
 		/**
-		 * This method returns the object stored within the option.
+		 * This method compares the specified object with the current object for order.
 		 *
 		 * @access public
-		 * @abstract
-		 * @return Core\Any                                         the stored object
-		 * @throws Throwable\UnimplementedMethod\Exception          indicates that this method cannot
-		 *                                                          be called
+		 * @param Data\Option $that                                 the object to be compared
+		 * @return Data\Int32                                       whether the current object is less than,
+		 *                                                          equal to, or greater than the specified
+		 *                                                          object
 		 */
-		public function object() {
-			throw new Throwable\UnimplementedMethod\Exception('Method :method has not been implemented.', array(':method' => __FUNCTION__));
+		public function compareTo(Data\Option $that) {
+			if ($that instanceof Data\Option\None) {
+				return Data\Int32::zero();
+			}
+			return Data\Int32::negative();
 		}
 
 		/**
@@ -48,10 +51,32 @@ namespace Saber\Data\Option {
 		 *                                                          to the current object
 		 */
 		public function equals(Core\Any $that) {
-			if (($that !== null) && ($that instanceof static)) {
-				return Data\Bool::true();
-			}
-			return Data\Bool::false();
+			return Data\Bool::create(($that !== null) && ($that instanceof static));
+		}
+
+		/**
+		 * This method evaluates whether the specified object is identical to the current object.
+		 *
+		 * @access public
+		 * @param Core\Any $that                                    the object to be evaluated
+		 * @return Data\Bool                                        whether the specified object is identical
+		 *                                                          to the current object
+		 */
+		public function identical(Core\Any $that) {
+			return Data\Bool::create(($that !== null) && ($that instanceof static));
+		}
+
+		/**
+		 * This method returns the object stored within the option.
+		 *
+		 * @access public
+		 * @abstract
+		 * @return Core\Any                                         the stored object
+		 * @throws Throwable\UnimplementedMethod\Exception          indicates that this method cannot
+		 *                                                          be called
+		 */
+		public function object() {
+			throw new Throwable\UnimplementedMethod\Exception('Method :method has not been implemented.', array(':method' => __FUNCTION__));
 		}
 
 		#endregion

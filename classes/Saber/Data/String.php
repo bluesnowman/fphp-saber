@@ -159,11 +159,11 @@ namespace Saber\Data {
 		 * This method appends the specified object to this object's string.
 		 *
 		 * @access public
-		 * @param Core\Any $object                                  the object to be appended
+		 * @param Data\Char $char                                   the object to be appended
 		 * @return Data\String                                      the string
 		 */
-		public function append(Core\Any $object) {
-			$this->value .= $object->__toString();
+		public function append(Data\Char $char) {
+			$this->value .= $char->unbox();
 			return $this;
 		}
 
@@ -183,13 +183,13 @@ namespace Saber\Data {
 		 * This method evaluates whether the specified object is contained within the string.
 		 *
 		 * @access public
-		 * @param Core\Any $object                                  the object to find
+		 * @param Core\Any $y                                       the object to find
 		 * @return Data\Bool                                        whether the specified object is
 		 *                                                          contained within the string
 		 */
-		public function contains(Core\Any $object) {
-			return $this->any(function(Core\Any $x, Data\Int32 $i) use ($object) {
-				return $x->equals($object);
+		public function contains(Core\Any $y) {
+			return $this->any(function(Core\Any $x, Data\Int32 $i) use ($y) {
+				return $x->equals($y);
 			});
 		}
 

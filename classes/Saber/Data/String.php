@@ -22,7 +22,7 @@ namespace Saber\Data {
 	use \Saber\Data;
 	use \Saber\Throwable;
 
-	abstract class String extends Data\Collection {
+	class String extends Data\Collection {
 
 		#region Methods -> Boxing/Creation
 
@@ -37,64 +37,57 @@ namespace Saber\Data {
 		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
 		public static function box($value/*...*/) {
-			if ($value === null) {
-				return Data\String::nil();
-			}
-			else if (is_string($value)) {
-				$buffer = Data\String::nil();
-				for ($i = mb_strlen($value) - 1; $i >= 0; $i--) {
-					$buffer = $buffer->prepend(Data\Char::box(mb_substr($value, $i, 1)));
-				}
-				return $buffer;
-			}
-			else {
+			//$encoding = (func_num_args() > 1) ? func_get_arg(1) : 'UTF-8';
+			if (!is_string($value)) {
 				$type = gettype($value);
 				if ($type == 'object') {
 					$type = get_class($value);
 				}
-				throw new Throwable\InvalidArgument\Exception('Unable to box value. Expected an array, but got ":type".', array(':type' => $type));
+				throw new Throwable\InvalidArgument\Exception('Unable to box value. Expected a string, but got ":type".', array(':type' => $type));
 			}
+			new static($value);
 		}
 
 		/**
-		 * This method returns a string "cons" object.
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered "not" type-safe.
 		 *
 		 * @access public
 		 * @static
-		 * @param Core\Any $head                                    the head to be used
-		 * @param Data\String $tail                                 the tail to be used
-		 * @return Data\String\Cons                                 the object
+		 * @param mixed $value                                      the value(s) to be boxed
+		 * @return Core\Any                                         the boxed object
 		 */
-		public static function cons(Core\Any $head, Data\String $tail) {
-			return new Data\String\Cons($head, $tail);
+		public static function create($value/*...*/) {
+			return new static($value);
 		}
 
 		/**
-		 * This method returns a string "nil" object.
+		 * This constructor initializes the class with the specified value.
 		 *
 		 * @access public
-		 * @static
-		 * @return Data\String\Nil                                  the object
+		 * @param string $value                                     the value to be assigned
 		 */
-		public static function nil() {
-			return new Data\String\Nil();
+		public function __construct($value) {
+			$this->value = (string) $value;
 		}
 
 		/**
-		 * This method returns the value contained within the boxed object.
+		 * This method creates a string of "n" length with every element set to the given object.
 		 *
 		 * @access public
-		 * @param integer $depth                                    how many levels to unbox
-		 * @return array                                            the un-boxed value
+		 * @param Int32 $n                                          the number of times to replicate
+		 * @param Core\Any $y                                       the object to be replicated
+		 * @return Data\String                                      the string
 		 */
-		public function unbox($depth = 0) {
+		public static function replicate(Data\Int32 $n, Core\Any $y) {
 			$buffer = '';
+			$length = $n->unbox();
 
-			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				$buffer .= $xs->head()->unbox();
+			for ($i = 0; $i < $length; $i++) {
+				$buffer .= $y->__toString();
 			}
 
-			return $buffer;
+			return new static($buffer);
 		}
 
 		#endregion
@@ -105,10 +98,20 @@ namespace Saber\Data {
 		 * This method (aka "null") returns whether this string is empty.
 		 *
 		 * @access public
-		 * @return Data\Bool                                        whether the string is empty
+		 * @return boolean                                          whether the string is empty
 		 */
 		public function __isEmpty() {
-			return ($this instanceof Data\String\Nil);
+			return ($this->__length() == 0);
+		}
+
+		/**
+		 * This method returns the length of this string.
+		 *
+		 * @access public
+		 * @return integer                                          the length of this string
+		 */
+		public function __length() {
+			return count($this->value);
 		}
 
 		#endregion
@@ -125,20 +128,20 @@ namespace Saber\Data {
 		 *                                                          truthy test
 		 */
 		public function all(callable $predicate) {
-			$i = Data\Int32::zero();
+			$length = $this->__length();
 
-			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				if (!$predicate($xs->head(), $i)->unbox()) {
+			for ($i = 0; $i < $length; $i++) {
+				$x = mb_substr($this->unbox(), $i, 1);
+				if (!$predicate(Data\Char::create($x), Data\Int32::create($i))->unbox()) {
 					return Data\Bool::false();
 				}
-				$i = $i->increment();
 			}
 
-			return Data\Bool::true(); // yes, empty list returns "true"
+			return Data\Bool::true(); // yes, an empty string returns "true"
 		}
 
 		/**
-		 * This method (aka "exists" or "some") returns whether some of the elements in the collection
+		 * This method (aka "exists" or "some") returns whether some of the elements in the string
 		 * passed the truthy test.
 		 *
 		 * @access public
@@ -151,102 +154,98 @@ namespace Saber\Data {
 		}
 
 		/**
-		 * This method appends the specified object to this object's list. Performs in O(n) time.
+		 * This method appends the specified object to this object's string.
 		 *
 		 * @access public
 		 * @param Core\Any $object                                  the object to be appended
 		 * @return Data\String                                      the string
 		 */
 		public function append(Core\Any $object) {
-			return $this->concat(static::cons($object, static::nil()));
+			$this->value .= $object->__toString();
+			return $this;
+		}
+
+		/**
+		 * This method concatenates a string to this object's string.
+		 *
+		 * @access public
+		 * @param Data\String $that                                 the string to be concatenated
+		 * @return Data\String                                      the string
+		 */
+		public function concat(Data\String $that) {
+			$this->value .= $that->unbox();
+			return $this;
+		}
+
+		/**
+		 * This method evaluates whether the specified object is contained within the string.
+		 *
+		 * @access public
+		 * @param Core\Any $object                                  the object to find
+		 * @return Data\Bool                                        whether the specified object is
+		 *                                                          contained within the string
+		 */
+		public function contains(Core\Any $object) {
+			return $this->any(function(Core\Any $x, Data\Int32 $i) use ($object) {
+				return $x->equals($object);
+			});
 		}
 
 		/**
 		 * This method compares the specified object with the current object for order.
 		 *
 		 * @access public
-		 * @abstract
 		 * @param Data\String $that                                 the object to be compared
 		 * @return Data\Int32                                       whether the current object is less than,
 		 *                                                          equal to, or greater than the specified
 		 *                                                          object
 		 */
-		public abstract function compareTo(Data\String $that);
+		public function compareTo(Data\String $that) {
+			$x_length = $this->__length();
+			$y_length = $that->__length();
 
-		/**
-		 * This method concatenates a string to this object's list. Performs in O(n) time.
-		 *
-		 * @access public
-		 * @param Data\String $list                                 the string to be concatenated
-		 * @return Data\String                                      the string
-		 */
-		public function concat(Data\String $list) {
-			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail());
-			$xs->tail = $list;
-			return $this;
-		}
-
-		/**
-		 * This method evaluates whether the specified object is contained within the linked
-		 * list.
-		 *
-		 * @access public
-		 * @param Core\Any $object                                  the object to find
-		 * @return Data\Bool                                        whether the specified object is
-		 *                                                          contained within the linked
-		 *                                                          list
-		 */
-		public function contains(Core\Any $object) {
-			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				if ($xs->head()->__equals($object)) {
-					return Data\Bool::true();
+			for ($i = 0; $i < $x_length && $i < $y_length; $i++) {
+				$x = Data\Char::create(mb_substr($this->unbox(), $i, 1));
+				$y = Data\Char::create(mb_substr($that->unbox(), $i, 1));
+				$r = $x->compareTo($y);
+				if ($r->unbox() != 0) {
+					return $r;
 				}
 			}
-			return Data\Bool::false();
+
+			if ($x_length < $y_length) {
+				return Data\Int32::negative();
+			}
+			else if ($x_length == $y_length) {
+				return Data\Int32::zero();
+			}
+			else { // ($x_length > $y_length)
+				return Data\Int32::one();
+			}
 		}
 
 		/**
 		 * This method remove the first occurrence that equals the specified object.
 		 *
 		 * @access public
-		 * @param Core\Any $object                                  the object to be removed
+		 * @param Core\Any $y                                       the object to be removed
 		 * @return Data\String                                      the string
 		 */
-		public function delete(Core\Any $object) {
-			$start = static::nil();
-			$tail = null;
+		public function delete(Core\Any $y) {
+			$buffer = '';
+			$length = $this->__length();
+			$skip = false;
 
-			$index = Data\Int32::zero();
-			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				$x = $xs->head();
-				if (!$object->__equals($x)) {
-					$ys = static::cons($x, static::nil());
-
-					if ($tail !== null) {
-						$tail->tail = $ys;
-					}
-					else {
-						$start = $ys;
-					}
-
-					$tail = $ys;
+			for ($i = 0; $i < $length; $i++) {
+				$x = Data\Char::create(mb_substr($this->unbox(), $i, 1));
+				if ($x->__equals($y) && !$skip) {
+					$skip = true;
+					continue;
 				}
-				else {
-					$ys = $xs->tail();
-
-					if ($tail !== null) {
-						$tail->tail = $ys;
-					}
-					else {
-						$start = $ys;
-					}
-
-					break;
-				}
-				$index = $index->increment();
+				$buffer .= $x->unbox();
 			}
 
-			return $start;
+			return new static($buffer);
 		}
 
 		/**
@@ -257,13 +256,14 @@ namespace Saber\Data {
 		 * @return Data\String                                      the string
 		 */
 		public function drop(Data\Int32 $n) {
-			$i = Data\Int32::zero();
+			$buffer = '';
+			$length = $this->__length();
 
-			for ($xs = $this; ($i->unbox() < $n->unbox()) && ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				$i = $i->increment();
+			for ($i = $n->unbox(); $i < $length; $i++) {
+				$buffer .= mb_substr($this->unbox(), $i, 1);
 			}
 
-			return $xs;
+			return new static($buffer);
 		}
 
 		/**
@@ -273,13 +273,19 @@ namespace Saber\Data {
 		 * @return Data\String                                      the string
 		 */
 		public function dropWhile(callable $predicate) {
-			$i = Data\Int32::zero();
+			$buffer = '';
+			$length = $this->__length();
 
-			for ($xs = $this; ! $xs->__isEmpty() && $predicate($xs->head(), $i)->unbox(); $xs = $xs->tail()) {
-				$i = $i->increment();
+			$failed = false;
+			for ($i = 0; $i < $length; $i++) {
+				$x = mb_substr($this->unbox(), $i, 1);
+				if (!$predicate(Data\Char::create($x), Data\Int32::create($i))->unbox() || $failed) {
+					$buffer .= $x;
+					$failed = true;
+				}
 			}
 
-			return $xs;
+			return new static($buffer);
 		}
 
 		/**
@@ -289,8 +295,8 @@ namespace Saber\Data {
 		 * @return Data\String                                      the string
 		 */
 		public function dropWhileEnd(callable $predicate) {
-			return $this->dropWhile(function(Core\Any $object, Data\Int32 $index) use ($predicate) {
-				return $predicate($object, $index)->not();
+			return $this->dropWhile(function(Core\Any $x, Data\Int32 $i) use ($predicate) {
+				return $predicate($x, $i)->not();
 			});
 		}
 
@@ -302,11 +308,10 @@ namespace Saber\Data {
 		 * @param callable $procedure                               the procedure function to be used
 		 */
 		public function each(callable $procedure) {
-			$index = Data\Int32::zero();
+			$length = $this->__length();
 
-			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				$procedure($xs->head(), $index);
-				$index = $index->increment();
+			for ($i = 0; $i < $length; $i++) {
+				$procedure(Data\Char::create(mb_substr($this->unbox(), $i, 1)), Data\Int32::create($i));
 			}
 		}
 
@@ -320,16 +325,13 @@ namespace Saber\Data {
 		 *                                                          cannot be found
 		 */
 		public function element(Data\Int32 $index) {
-			$i = Data\Int32::zero();
+			$i = $index->unbox();
 
-			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				if ($i->__equals($index)) {
-					return $xs->head();
-				}
-				$i = $i->increment();
+			if (($i < 0) || ($i >= $this->__length())) {
+				throw new Throwable\OutOfBounds\Exception('Unable to return element at index :index.', array(':index' => $i));
 			}
 
-			throw new Throwable\OutOfBounds\Exception('Unable to return element at index :index.', array(':index' => $index->unbox()));
+			return Data\Char::create(mb_substr($this->unbox(), $i, 1));
 		}
 
 		/**
@@ -340,28 +342,17 @@ namespace Saber\Data {
 		 * @return Data\String                                      the string
 		 */
 		public function filter(callable $predicate) {
-			$start = static::nil();
-			$tail = null;
+			$buffer = '';
+			$length = $this->__length();
 
-			$index = Data\Int32::zero();
-			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				$x = $xs->head();
-				if ($predicate($x, $index)->unbox()) {
-					$ys = static::cons($x, static::nil());
-
-					if ($tail !== null) {
-						$tail->tail = $ys;
-					}
-					else {
-						$start = $ys;
-					}
-
-					$tail = $ys;
+			for ($i = 0; $i < $length; $i++) {
+				$x = mb_substr($this->unbox(), $i, 1);
+				if ($predicate(Data\Char::create($x), Data\Int32::create($i))->unbox()) {
+					$buffer .= $x;
 				}
-				$index = $index->increment();
 			}
 
-			return $start;
+			return new static($buffer);
 		}
 
 		/**
@@ -373,14 +364,13 @@ namespace Saber\Data {
 		 *                                                          satisfying the predicate, if any
 		 */
 		public function find(callable $predicate) {
-			$i = Data\Int32::zero();
+			$length = $this->__length();
 
-			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				$x = $xs->head();
-				if ($predicate($x, $i)->unbox()) {
+			for ($i = 0; $i < $length; $i++) {
+				$x = Data\Char::create(mb_substr($this->unbox(), $i, 1));
+				if ($predicate($x, Data\Int32::create($i))->unbox()) {
 					return Data\Option::some($x);
 				}
-				$i = $i->increment();
 			}
 
 			return Data\Option::none();
@@ -396,16 +386,17 @@ namespace Saber\Data {
 		 */
 		public function foldLeft(callable $operator, Core\Any $initial) {
 			$z = $initial;
+			$length = $this->__length();
 
-			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				$z = $operator($z, $xs->head());
+			for ($i = 0; $i < $length; $i++) {
+				$z = $operator($z, Data\Char::create(mb_substr($this->unbox(), $i, 1)));
 			}
 
 			return $z;
 		}
 
 		/**
-		 * This method applies a right-fold reduction on the string using the operator function.
+		 * This method applies a right-fold reduction on the string using the operation function.
 		 *
 		 * @access public
 		 * @param callable $operator                                the operator function to be used
@@ -414,23 +405,24 @@ namespace Saber\Data {
 		 */
 		public function foldRight(callable $operator, Core\Any $initial) {
 			$z = $initial;
+			$length = $this->__length();
 
-			if ($this->__isEmpty()) {
-				return $z;
+			for ($i = $length - 1; $i >= 0; $i--) {
+				$z = $operator($z, Data\Char::create(mb_substr($this->unbox(), $i, 1)));
 			}
 
-			return $operator($this->head(), $this->tail()->foldRight($operator, $z));
+			return $z;
 		}
 
 		/**
 		 * This method returns the head object in this string.
 		 *
 		 * @access public
-		 * @abstract
-		 * @return Core\Any                                         the head object in this linked
-		 *                                                          list
+		 * @return Core\Any                                         the head object in this string
 		 */
-		public abstract function head();
+		public function head() {
+			return Data\Char::create(mb_substr($this->unbox(), 0, 1));
+		}
 
 		/**
 		 * This method returns an option using the head for the boxed object.
@@ -451,13 +443,13 @@ namespace Saber\Data {
 		 *                                                          or otherwise -1
 		 */
 		public function indexOf(Core\Any $object) {
-			$i = Data\Int32::zero();
+			$length = $this->__length();
 
-			for ($xs = $this->tail(); ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				if ($object->__equals($xs->head())) {
-					return $i;
+			for ($i = 0; $i < $length; $i++) {
+				$x = Data\Char::create(mb_substr($this->unbox(), $i, 1));
+				if ($x->__equals($object)) {
+					return Data\Int32::create($i);
 				}
-				$i = $i->increment();
 			}
 
 			return Data\Int32::negative();
@@ -471,23 +463,14 @@ namespace Saber\Data {
 		 *                                                          element
 		 */
 		public function init() {
-			$start = static::nil();
-			$tail = null;
+			$buffer = '';
+			$length = $this->__length() - 1;
 
-			for ($xs = $this; ! $xs->__isEmpty() && ! $xs->tail()->__isEmpty(); $xs = $xs->tail()) {
-				$ys = static::cons($xs->head(), static::nil());
-
-				if ($tail !== null) {
-					$tail->tail = $ys;
-				}
-				else {
-					$start = $ys;
-				}
-
-				$tail = $ys;
+			for ($i = 0; $i < $length; $i++) {
+				$buffer .= mb_substr($this->unbox(), $i, 1);
 			}
 
-			return $start;
+			return new static($buffer);
 		}
 
 		/**
@@ -507,11 +490,21 @@ namespace Saber\Data {
 		 * @access public
 		 * @param Core\Any $object                                  the object to be interspersed
 		 * @return Data\String                                      the string
+		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
 		public function intersperse(Core\Any $object) {
-			return ($this->__isEmpty() || $this->tail()->__isEmpty())
-				? $this
-				: static::cons($this->head(), static::cons($object, $this->tail()->intersperse($object)));
+			$buffer = '';
+			$length = $this->__length();
+
+			if ($length > 0) {
+				$buffer .= mb_substr($this->unbox(), 0, 1);
+				for ($i = 1; $i < $length; $i++) {
+					$buffer .= $object->__toString();
+					$buffer .= mb_substr($this->unbox(), $i, 1);
+				}
+			}
+
+			return new static($buffer);
 		}
 
 		/**
@@ -519,16 +512,10 @@ namespace Saber\Data {
 		 *
 		 * @access public
 		 * @return Core\Any                                         the last element in this linked
-		 *                                                          list
+		 *                                                          string
 		 */
 		public function last() {
-			$x = $this->head();
-
-			for ($xs = $this->tail(); ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				$x = $xs->head();
-			}
-
-			return $x;
+			return Data\Char::create(mb_substr($this->unbox(), $this->__length() - 1, 1));
 		}
 
 		/**
@@ -542,15 +529,14 @@ namespace Saber\Data {
 		}
 
 		/**
-		 * This method returns the length of this string. Performs in O(n) time.
+		 * This method returns the length of this string.
 		 *
 		 * @access public
+		 * @final
 		 * @return Data\Int32                                       the length of this string
 		 */
-		public function length() {
-			return $this->foldLeft(function(Data\Int32 $i) {
-				return $i->increment();
-			}, Data\Int32::zero());
+		public final function length() {
+			return Data\Int32::create($this->__length());
 		}
 
 		/**
@@ -561,25 +547,14 @@ namespace Saber\Data {
 		 * @return Data\String                                      the string
 		 */
 		public function map(callable $subroutine) {
-			$start = static::nil();
-			$tail = null;
+			$buffer = '';
+			$length = $this->__length();
 
-			$i = Data\Int32::zero();
-			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				$ys = static::cons($subroutine($xs->head(), $i), static::nil());
-
-				if ($tail !== null) {
-					$tail->tail = $ys;
-				}
-				else {
-					$start = $ys;
-				}
-
-				$tail = $ys;
-				$i = $i->increment();
+			for ($i = 0; $i < $length; $i++) {
+				$buffer .= $subroutine(Data\Char::create(mb_substr($this->unbox(), $i, 1)), Data\Int32::create($i))->unbox();
 			}
 
-			return $start;
+			return new static($buffer);
 		}
 
 		/**
@@ -605,11 +580,11 @@ namespace Saber\Data {
 		 * @return Data\String                                      the string
 		 */
 		public function prepend(Core\Any $object) {
-			return static::cons($object, $this);
+			return new static($object->__toString() . $this->unbox());
 		}
 
 		/**
-		 * This method returns the linked list within the specified range.
+		 * This method returns the string within the specified range.
 		 *
 		 * @access public
 		 * @param Data\Int32 $start                                 the starting index
@@ -628,8 +603,8 @@ namespace Saber\Data {
 		 * @return Data\String                                      the string
 		 */
 		public function remove(callable $predicate) {
-			return $this->filter(function(Core\Any $object, Data\Int32 $index) use ($predicate) {
-				return $predicate($object, $index)->not();
+			return $this->filter(function(Core\Any $x, Data\Int32 $i) use ($predicate) {
+				return $predicate($x, $i)->not();
 			});
 		}
 
@@ -637,12 +612,10 @@ namespace Saber\Data {
 		 * This method reverses the order of the elements in this string.
 		 *
 		 * @access public
-		 * @return Data\String                                      the string
+		 * @return Data\String                                   the string
 		 */
 		public function reverse() {
-			return $this->foldLeft(function(Data\String $tail, Core\Any $head) {
-				return static::cons($head, $tail);
-			}, static::nil());
+			return new static(mb_strrev($this->unbox()));
 		}
 
 		/**
@@ -651,20 +624,28 @@ namespace Saber\Data {
 		 * @access public
 		 * @param Data\Int32 $offset                                the starting index
 		 * @param Data\Int32 $length                                the length of the slice
-		 * @return Data\LinkedList                                  the string
+		 * @return Data\String                                      the string
 		 */
 		public function slice(Data\Int32 $offset, Data\Int32 $length) {
-			return $this->take($length->add($offset))->drop($offset);
+			return new static(mb_substr($this->unbox(), $offset->unbox(), $length->unbox()));
 		}
 
 		/**
 		 * This method returns the tail of this string.
 		 *
 		 * @access public
-		 * @abstract
 		 * @return Data\String                                      the tail of this string
 		 */
-		public abstract function tail();
+		public function tail() {
+			$buffer = '';
+			$length = $this->__length();
+
+			for ($i = 1; $i < $length; $i++) {
+				$buffer .= mb_substr($this->unbox(), $i, 1);
+			}
+
+			return new static($buffer);
+		}
 
 		/**
 		 * This method returns the first "n" elements in the string.
@@ -674,9 +655,14 @@ namespace Saber\Data {
 		 * @return Data\String                                      the string
 		 */
 		public function take(Data\Int32 $n) {
-			return (($n->unbox() <= 0) || $this->__isEmpty())
-				? static::nil()
-				: static::cons($this->head(), $this->tail()->take($n->subtract(Data\Int32::one())));
+			$buffer = '';
+			$length = min($n->unbox(), $this->__length());
+
+			for ($i = 0; $i < $length; $i++) {
+				$buffer .= mb_substr($this->unbox(), $i, 1);
+			}
+
+			return new static($buffer);
 		}
 
 		/**
@@ -687,35 +673,18 @@ namespace Saber\Data {
 		 * @return Data\String                                      the string
 		 */
 		public function takeWhile(callable $predicate) {
-			$start = static::nil();
-			$tail = null;
+			$buffer = '';
+			$length = $this->__length();
 
-			$taking = true;
-
-			$index = Data\Int32::zero();
-			for ($xs = $this; ! $xs->__isEmpty() && $taking; $xs = $xs->tail()) {
-				$x = $xs->head();
-
-				if ($predicate($x, $index)->unbox()) {
-					$ys = static::cons($x, static::nil());
-
-					if ($tail !== null) {
-						$tail->tail = $ys;
-					}
-					else {
-						$start = $ys;
-					}
-
-					$tail = $ys;
+			for ($i = 0; $i < $length; $i++) {
+				$x = mb_substr($this->unbox(), $i, 1);;
+				if (!$predicate(Data\Char::create($x), Data\Int32::create($i))->unbox()) {
+					break;
 				}
-				else {
-					$taking = false;
-				}
-
-				$index = $index->increment();
+				$buffer .= $x;
 			}
 
-			return $start;
+			return new static($buffer);
 		}
 
 		/**
@@ -726,101 +695,9 @@ namespace Saber\Data {
 		 * @return Data\String                                      the string
 		 */
 		public function takeWhileEnd(callable $predicate) {
-			return $this->takeWhile(function(Core\Any $object, Data\Int32 $index) use ($predicate) {
-				return $predicate($object, $index)->not();
+			return $this->takeWhile(function(Core\Any $x, Data\Int32 $i) use ($predicate) {
+				return $predicate($x, $i)->not();
 			});
-		}
-
-		#endregion
-
-		#region Methods -> Object Oriented -> Boolean Operations
-
-		/**
-		 * This method (aka "truthy") returns whether all of the elements of the string evaluate
-		 * to true.
-		 *
-		 * @access public
-		 * @return Data\Bool                                        whether all of the elements of
-		 *                                                          the string evaluate to true
-		 */
-		public function and_() {
-			return $this->truthy();
-		}
-
-		/**
-		 * This method (aka "falsy") returns whether all of the elements of the string evaluate
-		 * to false.
-		 *
-		 * @access public
-		 * @return Data\Bool                                        whether all of the elements of
-		 *                                                          the string evaluate to false
-		 *
-		 * @see http://www.sitepoint.com/javascript-truthy-falsy/
-		 */
-		public function or_() {
-			return $this->falsy();
-		}
-
-		/**
-		 * This method returns whether all of the elements of the string strictly evaluate to
-		 * false.
-		 *
-		 * @access public
-		 * @return Data\Bool                                        whether all of the elements of
-		 *                                                          the string strictly evaluate
-		 *                                                          to false
-		 */
-		public function false() {
-			return $this->true()->not();
-		}
-
-		/**
-		 * This method (aka "or") returns whether all of the elements of the string evaluate to
-		 * false.
-		 *
-		 * @access public
-		 * @return Data\Bool                                        whether all of the elements of
-		 *                                                          the string evaluate to false
-		 *
-		 * @see http://www.sitepoint.com/javascript-truthy-falsy/
-		 */
-		public function falsy() {
-			return $this->truthy()->not();
-		}
-
-		/**
-		 * This method returns whether all of the elements of the string strictly evaluate
-		 * to true.
-		 *
-		 * @access public
-		 * @return Data\Bool                                        whether all of the elements of
-		 *                                                          the string strictly evaluate
-		 *                                                          to true
-		 */
-		public function true() {
-			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				if ($xs->head()->unbox() !== true) {
-					return Data\Bool::false();
-				}
-			}
-			return Data\Bool::true();
-		}
-
-		/**
-		 * This method (aka "and") returns whether all of the elements of the string evaluate to
-		 * true.
-		 *
-		 * @access public
-		 * @return Data\Bool                                        whether all of the elements of
-		 *                                                          the string evaluate to true
-		 */
-		public function truthy() {
-			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				if (!$xs->head()->unbox()) {
-					return Data\Bool::false();
-				}
-			}
-			return Data\Bool::true();
 		}
 
 		#endregion

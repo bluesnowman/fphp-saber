@@ -71,15 +71,15 @@ namespace Saber\Data {
 		 * This method creates a list of "n" length with every element set to the given object.
 		 *
 		 * @access public
-		 * @param Int32 $n
-		 * @param Core\Any $object
-		 * @return LinkedList\Cons|LinkedList\Nil
+		 * @param Int32 $n                                          the number of times to replicate
+		 * @param Core\Any $y                                       the object to be replicated
+		 * @return Data\ArrayList                                   the collection
 		 */
-		public static function replicate(Data\Int32 $n, Core\Any $object) {
+		public static function replicate(Data\Int32 $n, Core\Any $y) {
 			$buffer = array();
 
 			for ($i = $n->unbox() - 1; $i >= 0; $i--) {
-				$buffer[] = $object;
+				$buffer[] = $y;
 			}
 
 			return new static($buffer);
@@ -113,7 +113,7 @@ namespace Saber\Data {
 		 * This method (aka "null") returns whether this list is empty.
 		 *
 		 * @access public
-		 * @return Data\Bool                                        whether the list is empty
+		 * @return boolean                                          whether the list is empty
 		 */
 		public function __isEmpty() {
 			return ($this->__length() == 0);
@@ -151,7 +151,7 @@ namespace Saber\Data {
 				}
 			}
 
-			return Data\Bool::true(); // yes, empty list returns "true"
+			return Data\Bool::true(); // yes, an empty array returns "true"
 		}
 
 		/**

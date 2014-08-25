@@ -37,9 +37,15 @@ namespace Saber\Data {
 
 		#endregion
 
-		#region Properties
+		#region Constants
 
-		protected $encoding;
+		/**
+		 * This constant stores the string representing a UTF-8 encoding.
+		 *
+		 * @access public
+		 * @const string
+		 */
+		const UTF_8_ENCODING = 'UTF-8';
 
 		#endregion
 
@@ -56,12 +62,12 @@ namespace Saber\Data {
 		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
 		public static function box($value/*...*/) {
-			$encoding = (func_num_args() > 1) ? func_get_arg(1) : 'UTF-8';
-			if (is_string($value) && (mb_strlen($value, $encoding) == 1)) {
-				return new static($value, $encoding);
+			//$encoding = (func_num_args() > 1) ? func_get_arg(1) : Data\Char::UTF_8_ENCODING;
+			if (is_string($value) && (mb_strlen($value, Data\Char::UTF_8_ENCODING) == 1)) {
+				return new static($value);
 			}
 			else if (!is_string($value) && is_numeric($value)) {
-				return new static(chr((int) $value), $encoding);
+				return new static(chr((int) $value));
 			}
 			else {
 				$type = gettype($value);
@@ -82,8 +88,7 @@ namespace Saber\Data {
 		 * @return Core\Any                                         the boxed object
 		 */
 		public static function create($value/*...*/) {
-			$encoding = (func_num_args() > 1) ? func_get_arg(1) : 'UTF-8';
-			return new static($value, $encoding);
+			return new static($value);
 		}
 
 		/**
@@ -91,11 +96,9 @@ namespace Saber\Data {
 		 *
 		 * @access public
 		 * @param char $value                                       the value to be assigned
-		 * @param string $encoding                                  the character encoding to be used
 		 */
-		public function __construct($value, $encoding) {
+		public function __construct($value) {
 			$this->value = (string) $value;
-			$this->encoding = $encoding;
 		}
 
 		#endregion
@@ -324,7 +327,7 @@ namespace Saber\Data {
 		 * @return Data\Char                                        the lower case letter
 		 */
 		public function toLowerCase() {
-			return Data\Char::create(mb_strtolower($this->unbox(), $this->encoding));
+			return Data\Char::create(mb_strtolower($this->unbox(), Data\Char::UTF_8_ENCODING));
 		}
 
 		/**
@@ -334,7 +337,7 @@ namespace Saber\Data {
 		 * @return Data\Char                                        the upper case letter
 		 */
 		public function toUpperCase() {
-			return Data\Char::create(mb_strtoupper($this->unbox(), $this->encoding));
+			return Data\Char::create(mb_strtoupper($this->unbox(), Data\Char::UTF_8_ENCODING));
 		}
 
 		#endregion

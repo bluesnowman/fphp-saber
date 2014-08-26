@@ -6,7 +6,7 @@ A functional php library.
 ### Requirements
 
 * PHP 5.4+
-* The [mbstring](http://php.net/manual/en/book.mbstring.php) extension (optional).
+* The [mbstring](http://php.net/manual/en/book.mbstring.php) extension (only if dealing with multibyte character sets).
 * The [gmp](http://php.net/manual/en/book.gmp.php) extension (only if using `Data\Integer`).
 
 ### [Boxing](http://msdn.microsoft.com/en-us/library/yz2be5wk.aspx)
@@ -15,7 +15,7 @@ To "box" a PHP typed primitive or object, create an instance of the respective d
 class's `box` method.  This method enforces type safety.
 
 ````
-$object = Data\Int32::box(23);
+$object = Data\Int32::box(7);
 ````
 
 For better performance, type safety can be ignored by using the `create` method to create an instance
@@ -23,7 +23,7 @@ of the respective data type.  (It recommended to use this method instead of call
 directly.)
 
 ````
-$object = Data\Int32::create(23);
+$object = Data\Int32::create(7);
 ````
 
 To "unbox" a boxed object, call the `unbox` method on the respective class to get its value.
@@ -37,7 +37,7 @@ $value = $object->unbox();
 This library generally implements a fluent API; therefore, methods can be chained.
 
 ````
-$object = Data\Int32::box(23)->increment()->decrement();
+$object = Data\Int32::box(7)->increment()->decrement();
 ````
 
 ### Methods
@@ -46,39 +46,27 @@ In general, methods that are NOT preceded by two underscores will return a boxed
 exception to this rule is the `unbox` method.
 
 ````
-$object = Data\Int32::box(23)->increment();
+$object = Data\Int32::box(7)->increment();
 ````
 
 Methods that are preceded by two underscores will return the unboxed value, which is typically
 a PHP typed primitive or object.  This is made possible via PHP's magical `__call` method.
 
 ````
-$value = Data\Int32::box(23)->__increment();
+$value = Data\Int32::box(7)->__increment();
 ````
 
 ### Variables
 
-`$x` usually represents an object or a value; typically, it is the principal object being worked with in that scope.
-`$xs` usually represents a collection of `$x` objects/values.
-`$xss` usually represents a collection of `$xs` collections.
+`$x`, `$y`, and `$z` usually represent an object or a value.<br />
+`$xs`, `$ys`, and `$zs` usually represent a collection of `$x`, `$y`, and `$z` objects/values, respectively.<br />
+`$xss`, `$yss`, and `$zss` usually represent a collection of `$xs`, `$ys`, and `$zs` collections, respectively.<br />
 
-`$y` usually represents an object or a value; typically, it is the secondary object being worked with in that scope.
-`$ys` usually represents a collection of `$y` objects/values.
-`$yss` usually represents a collection of `$ys` collections.
+`$c` usually represents a carry.<br />
+`$i`, `$j`, and `$k` usually represent an index.<br />
+`$n` usually represents a count.<br />
 
-`$z` usually represents an object or a value; typically, it is an additional object being worked with in that scope.
-`$zs` usually represents a collection of `$z` objects/values.
-`$zss` usually represents a collection of `$zs` collections.
-
-`$c` usually represents a carry.
-`$n` usually represents a count.
-
-`$i` usually represents an index.
-`$j` usually represents an index.
-`$k` usually represents an index.
-
-`$f` usually represents a function (i.e. a callable); however, it is preferred to use one of the naming
-conventions in the next section.
+`$f` usually represents a function (i.e. a callable); however, it is preferred to use one of the naming conventions in the next section.<br />
 
 ### Callables
 

@@ -105,7 +105,7 @@ namespace Saber\Core\Any {
 		public function __call($method, $args) {
 			if (preg_match('/^__[a-z_][a-z0-9_]*$/i', $method)) {
 				$name = substr($method, 2);
-				if (method_exists($this, $name) && !in_array($name, array('assert', 'call', 'choice', 'unbox'))) {
+				if (method_exists($this, $name) && !in_array($name, array('assert', 'call', 'choice', 'iterator', 'unbox'))) {
 					$result = call_user_func_array(array($this, $name), $args);
 					if ($result instanceof Core\Any) {
 						return $result->unbox();

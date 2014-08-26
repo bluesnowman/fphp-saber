@@ -555,7 +555,7 @@ namespace Saber\Data {
 		}
 
 		/**
-		 * This method return an iterator for this collection.
+		 * This method returns an iterator for this collection.
 		 *
 		 * @access public
 		 * @return Data\LinkedList\Iterator                         an iterator for this collection

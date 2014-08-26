@@ -22,13 +22,7 @@ namespace Saber\Data {
 	use \Saber\Data;
 	use \Saber\Throwable;
 
-	abstract class Option implements Core\AnyRef {
-
-		#region Traits
-
-		use Core\AnyRef\Impl;
-
-		#endregion
+	abstract class Option extends Data\Collection {
 
 		#region Methods -> Boxing/Creation
 

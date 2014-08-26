@@ -59,29 +59,22 @@ $value = Data\Int32::box(23)->__increment();
 ### Variables
 
 `$x` usually represents an object or a value; typically, it is the principal object being worked with in that scope.
-
 `$xs` usually represents a collection of `$x` objects/values.
-
 `$xss` usually represents a collection of `$xs` collections.
 
 `$y` usually represents an object or a value; typically, it is the secondary object being worked with in that scope.
-
 `$ys` usually represents a collection of `$y` objects/values.
-
 `$yss` usually represents a collection of `$ys` collections.
 
 `$z` usually represents an object or a value; typically, it is an additional object being worked with in that scope.
-
 `$zs` usually represents a collection of `$z` objects/values.
-
 `$zss` usually represents a collection of `$zs` collections.
 
 `$c` usually represents a carry.
+`$n` usually represents a count.
 
 `$i` usually represents an index.
-
 `$j` usually represents an index.
-
 `$k` usually represents an index.
 
 `$f` usually represents a function (i.e. a callable); however, it is preferred to use one of the naming
@@ -168,9 +161,13 @@ Control\Monad::choice($x)
         + Throwable\UnimplementedMethod\Exception
     + Data\Collection
       + Data\ArrayList
+        + Data\ArrayList\Iterator
       + Data\LinkedList
+        + Data\LinkedList\Iterator
+      + Data\Option
+        + Data\Option
       + Data\String
-    + Data\Option
+        + Data\String\Iterator
     + Data\Tuple
     + Data\Wrapper
   + Core\AnyVal

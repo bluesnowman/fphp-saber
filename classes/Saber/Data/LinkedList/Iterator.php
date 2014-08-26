@@ -103,10 +103,12 @@ namespace Saber\Data\LinkedList {
 		 * This method causes the iterator to advance to the next object.
 		 *
 		 * @access public
+		 * @return Data\Bool                                        whether there are more objects
 		 */
 		public function next() {
 			$this->current = $this->current->tail();
 			$this->position = $this->position->increment();
+			return Data\Bool::create($this->valid());
 		}
 
 		/**
@@ -123,10 +125,10 @@ namespace Saber\Data\LinkedList {
 		 * This method returns whether the iterator is still valid.
 		 *
 		 * @access public
-		 * @return boolean
+		 * @return boolean                                          whether there are more objects
 		 */
 		public function valid() {
-			return $this->current->__isEmpty();
+			return !$this->current->__isEmpty();
 		}
 
 	}

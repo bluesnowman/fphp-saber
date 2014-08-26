@@ -93,9 +93,11 @@ namespace Saber\Data\Option {
 		 * This method causes the iterator to advance to the next object.
 		 *
 		 * @access public
+		 * @return Data\Bool                                        whether there are more objects
 		 */
 		public function next() {
 			$this->position = $this->position->increment();
+			return Data\Bool::create($this->valid());
 		}
 
 		/**
@@ -111,7 +113,7 @@ namespace Saber\Data\Option {
 		 * This method returns whether the iterator is still valid.
 		 *
 		 * @access public
-		 * @return boolean
+		 * @return boolean                                          whether there are more objects
 		 */
 		public function valid() {
 			return ($this->position->unbox() < $this->collection->__length());

@@ -153,7 +153,7 @@ Control\Monad::choice($x)
       + Data\LinkedList
         + Data\LinkedList\Iterator
       + Data\Option
-        + Data\Option
+        + Data\Option\Iterator
       + Data\String
         + Data\String\Iterator
     + Data\Tuple

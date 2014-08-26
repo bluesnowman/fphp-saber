@@ -92,7 +92,7 @@ namespace Saber\Data {
 				$buffer .= $y->__toString();
 			}
 
-			return new static($buffer);
+			return static::create($buffer);
 		}
 
 		#endregion
@@ -166,8 +166,7 @@ namespace Saber\Data {
 		 * @return Data\String                                      the string
 		 */
 		public function append(Data\Char $char) {
-			$this->value .= $char->unbox();
-			return $this;
+			return static::create($this->unbox() . $char->unbox());
 		}
 
 		/**
@@ -178,8 +177,7 @@ namespace Saber\Data {
 		 * @return Data\String                                      the string
 		 */
 		public function concat(Data\String $that) {
-			$this->value .= $that->unbox();
-			return $this;
+			return static::create($this->unbox() . $that->unbox());
 		}
 
 		/**
@@ -250,7 +248,7 @@ namespace Saber\Data {
 				$buffer .= $x->unbox();
 			}
 
-			return new static($buffer);
+			return static::create($buffer);
 		}
 
 		/**
@@ -268,7 +266,7 @@ namespace Saber\Data {
 				$buffer .= mb_substr($this->unbox(), $i, 1, Data\Char::UTF_8_ENCODING);
 			}
 
-			return new static($buffer);
+			return static::create($buffer);
 		}
 
 		/**
@@ -290,7 +288,7 @@ namespace Saber\Data {
 				}
 			}
 
-			return new static($buffer);
+			return static::create($buffer);
 		}
 
 		/**
@@ -357,7 +355,7 @@ namespace Saber\Data {
 				}
 			}
 
-			return new static($buffer);
+			return static::create($buffer);
 		}
 
 		/**
@@ -485,7 +483,7 @@ namespace Saber\Data {
 				$buffer .= mb_substr($this->unbox(), $i, 1, Data\Char::UTF_8_ENCODING);
 			}
 
-			return new static($buffer);
+			return static::create($buffer);
 		}
 
 		/**
@@ -529,7 +527,7 @@ namespace Saber\Data {
 				}
 			}
 
-			return new static($buffer);
+			return static::create($buffer);
 		}
 
 		/**
@@ -579,7 +577,7 @@ namespace Saber\Data {
 				$buffer .= $subroutine(Data\Char::create(mb_substr($this->unbox(), $i, 1, Data\Char::UTF_8_ENCODING)), Data\Int32::create($i))->unbox();
 			}
 
-			return new static($buffer);
+			return static::create($buffer);
 		}
 
 		/**
@@ -605,7 +603,7 @@ namespace Saber\Data {
 		 * @return Data\String                                      the string
 		 */
 		public function prepend(Core\Any $object) {
-			return new static($object->__toString() . $this->unbox());
+			return static::create($object->__toString() . $this->unbox());
 		}
 
 		/**
@@ -646,7 +644,7 @@ namespace Saber\Data {
 				$buffer .= mb_substr($this->unbox(), $i, 1, Data\Char::UTF_8_ENCODING);
 			}
 
-			return new static($buffer);
+			return static::create($buffer);
 		}
 
 		/**
@@ -658,7 +656,7 @@ namespace Saber\Data {
 		 * @return Data\String                                      the string
 		 */
 		public function slice(Data\Int32 $offset, Data\Int32 $length) {
-			return new static(mb_substr($this->unbox(), $offset->unbox(), $length->unbox(), Data\Char::UTF_8_ENCODING));
+			return static::create(mb_substr($this->unbox(), $offset->unbox(), $length->unbox(), Data\Char::UTF_8_ENCODING));
 		}
 
 		/**
@@ -675,7 +673,7 @@ namespace Saber\Data {
 				$buffer .= mb_substr($this->unbox(), $i, 1, Data\Char::UTF_8_ENCODING);
 			}
 
-			return new static($buffer);
+			return static::create($buffer);
 		}
 
 		/**
@@ -693,7 +691,7 @@ namespace Saber\Data {
 				$buffer .= mb_substr($this->unbox(), $i, 1, Data\Char::UTF_8_ENCODING);
 			}
 
-			return new static($buffer);
+			return static::create($buffer);
 		}
 
 		/**
@@ -715,7 +713,7 @@ namespace Saber\Data {
 				$buffer .= $x;
 			}
 
-			return new static($buffer);
+			return static::create($buffer);
 		}
 
 		/**

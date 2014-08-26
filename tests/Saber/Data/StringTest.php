@@ -27,7 +27,43 @@ namespace Saber\Data {
 	class StringTest extends Core\AnyTest {
 
 		/**
-		 * This method provides the data for testing that a value has any elements that pass the truthy test.
+		 * This method provides the data for testing if all elements pass the truthy test.
+		 *
+		 * @return array
+		 */
+		public function dataAll() {
+			$data = array(
+				array(array('', 's'), array(true)),
+				array(array('s', 's'), array(true)),
+				array(array('w', 's'), array(false)),
+				array(array('sssss', 's'), array(true)),
+				array(array('wssss', 's'), array(false)),
+				array(array('sswss', 's'), array(false)),
+				array(array('ssssw', 's'), array(false)),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests if all elements pass the truthy test.
+		 *
+		 * @dataProvider dataAll
+		 */
+		public function testAll($provided, $expected) {
+			$x = Data\String::box($provided[0]);
+			$y = Data\Char::box($provided[1]);
+
+			$p0 = $x->all(function(Core\Any $x, Data\Int32 $i) use ($y) {
+				return $x->equals($y);
+			});
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
+			$this->assertSame($e0, $p0->unbox());
+		}
+
+		/**
+		 * This method provides the data for testing if any elements pass the truthy test.
 		 *
 		 * @return array
 		 */
@@ -45,7 +81,7 @@ namespace Saber\Data {
 		}
 
 		/**
-		 * This method tests that a value has any elements that pass the truthy test.
+		 * This method tests if any elements pass the truthy test.
 		 *
 		 * @dataProvider dataAny
 		 */
@@ -59,6 +95,33 @@ namespace Saber\Data {
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
+			$this->assertSame($e0, $p0->unbox());
+		}
+
+		/**
+		 * This method provides the data for testing that a value is appended.
+		 *
+		 * @return array
+		 */
+		public function dataAppend() {
+			$data = array(
+				array(array('', 's'), array('s')),
+				array(array('s', 's'), array('ss')),
+				array(array('string', 's'), array('strings')),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests that a value is appended.
+		 *
+		 * @dataProvider dataAppend
+		 */
+		public function testAppend($provided, $expected) {
+			$p0 = Data\String::box($provided[0])->append(Data\Char::box($provided[1]));
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\String', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 

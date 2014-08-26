@@ -6,7 +6,7 @@ A functional php library.
 ### Requirements
 
 * PHP 5.4+
-* The [mbstring](http://php.net/manual/en/book.mbstring.php) extension (only if dealing with multibyte character sets).
+* The [mbstring](http://php.net/manual/en/book.mbstring.php) extension (only if dealing with different character sets).
 * The [gmp](http://php.net/manual/en/book.gmp.php) extension (only if using `Data\Integer`).
 
 ### [Boxing](http://msdn.microsoft.com/en-us/library/yz2be5wk.aspx)

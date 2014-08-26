@@ -531,6 +531,19 @@ namespace Saber\Data {
 		}
 
 		/**
+		 * The method intersperses the specified object between each element in the collection.
+		 *
+		 * @access public
+		 * @param Core\Any $object                                  the object to be interspersed
+		 * @return Data\LinkedList                                  the collection
+		 */
+		public function intersperse(Core\Any $object) {
+			return ($this->__isEmpty() || $this->tail()->__isEmpty())
+				? $this
+				: static::cons($this->head(), static::cons($object, $this->tail()->intersperse($object)));
+		}
+
+		/**
 		 * This method (aka "null") returns whether this collection is empty.
 		 *
 		 * @access public
@@ -542,16 +555,13 @@ namespace Saber\Data {
 		}
 
 		/**
-		 * The method intersperses the specified object between each element in the collection.
+		 * This method return an iterator for this collection.
 		 *
 		 * @access public
-		 * @param Core\Any $object                                  the object to be interspersed
-		 * @return Data\LinkedList                                  the collection
+		 * @return Data\LinkedList\Iterator                         an iterator for this collection
 		 */
-		public function intersperse(Core\Any $object) {
-			return ($this->__isEmpty() || $this->tail()->__isEmpty())
-				? $this
-				: static::cons($this->head(), static::cons($object, $this->tail()->intersperse($object)));
+		public function iterator() {
+			return new Data\LinkedList\Iterator($this);
 		}
 
 		/**

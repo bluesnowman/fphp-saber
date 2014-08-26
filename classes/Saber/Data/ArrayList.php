@@ -513,6 +513,16 @@ namespace Saber\Data {
 		}
 
 		/**
+		 * This method return an iterator for this collection.
+		 *
+		 * @access public
+		 * @return Data\ArrayList\Iterator                          an iterator for this collection
+		 */
+		public function iterator() {
+			return new Data\ArrayList\Iterator($this);
+		}
+
+		/**
 		 * This method (aka "null") returns whether this list is empty.
 		 *
 		 * @access public

@@ -39,13 +39,16 @@ namespace Saber\Data {
 		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
 		public static function box($value/*...*/) {
-			//$encoding = (func_num_args() > 1) ? func_get_arg(1) : 'UTF-8';
 			if (!is_string($value)) {
 				$type = gettype($value);
 				if ($type == 'object') {
 					$type = get_class($value);
 				}
 				throw new Throwable\InvalidArgument\Exception('Unable to box value. Expected a string, but got ":type".', array(':type' => $type));
+			}
+			if (func_num_args() > 1) {
+				$encoding = func_get_arg(1);
+				$value = mb_convert_encoding($value, Data\Char::UTF_8_ENCODING, $encoding);
 			}
 			return new static($value);
 		}
@@ -483,6 +486,16 @@ namespace Saber\Data {
 			}
 
 			return new static($buffer);
+		}
+
+		/**
+		 * This method return an iterator for this collection.
+		 *
+		 * @access public
+		 * @return Data\String\Iterator                             an iterator for this collection
+		 */
+		public function iterator() {
+			return new Data\String\Iterator($this);
 		}
 
 		/**

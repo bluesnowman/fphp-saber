@@ -165,6 +165,16 @@ namespace Saber\Data {
 		}
 
 		/**
+		 * This method return an iterator for this collection.
+		 *
+		 * @access public
+		 * @return Data\Option\Iterator                             an iterator for this collection
+		 */
+		public function iterator() {
+			return new Data\Option\Iterator($this);
+		}
+
+		/**
 		 * This method returns whether this instance is a "some" option.
 		 *
 		 * @access public

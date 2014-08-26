@@ -62,8 +62,15 @@ namespace Saber\Data {
 		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
 		public static function box($value/*...*/) {
-			//$encoding = (func_num_args() > 1) ? func_get_arg(1) : Data\Char::UTF_8_ENCODING;
-			if (is_string($value) && (mb_strlen($value, Data\Char::UTF_8_ENCODING) == 1)) {
+			if (is_string($value)) {
+				if (func_num_args() > 1) {
+					$encoding = func_get_arg(1);
+					$value = mb_convert_encoding($value, Data\Char::UTF_8_ENCODING, $encoding);
+				}
+				$length = mb_strlen($value, Data\Char::UTF_8_ENCODING);
+				if ($length != 1) {
+					throw new Throwable\InvalidArgument\Exception('Unable to box value. Expected a character, but got "string" of length ":length".', array(':length' => $length));
+				}
 				return new static($value);
 			}
 			else if (!is_string($value) && is_numeric($value)) {

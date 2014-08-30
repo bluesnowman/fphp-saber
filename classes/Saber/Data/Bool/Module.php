@@ -152,7 +152,7 @@ namespace Saber\Data\Bool {
 		}
 
 		/**
-		 * This method casts the boolean value to an integer value.
+		 * This method casts the boolean value to an int32 value.
 		 *
 		 * @access public
 		 * @static

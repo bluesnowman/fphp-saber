@@ -22,7 +22,7 @@ namespace Saber\Data {
 	use \Saber\Data;
 	use \Saber\Throwable;
 
-	class Bool implements Core\AnyVal {
+	final class Bool implements Core\AnyVal {
 
 		#region Traits
 
@@ -31,6 +31,37 @@ namespace Saber\Data {
 		#endregion
 
 		#region Methods -> Boxing/Creation
+
+		/**
+		 * This method is called when the function is not defined and will attempt to remap
+		 * the call.  Particularly, this method provides a shortcut means of unboxing a method's
+		 * result when the method name is preceded by a double-underscore.
+		 *
+		 * @access public
+		 * @param string $method                                    the method being called
+		 * @param array $args                                       the arguments associated with the call
+		 * @return mixed                                            the un-boxed value
+		 * @throws Throwable\UnimplementedMethod\Exception          indicates that the class has not
+		 *                                                          implemented the called method
+		 */
+		public function __call($method, $args) {
+			if (preg_match('/^[a-z_][a-z0-9_]*$/i', $method)) {
+				array_unshift($args, $this);
+				$result = call_user_func_array(get_class($this). '\\Module::' . $method, $args);
+				return $result;
+			}
+			else if (preg_match('/^__[a-z_][a-z0-9_]*$/i', $method)) {
+				$name = substr($method, 2);
+				if (method_exists($this, $name) && !in_array($name, array('assert', 'call', 'choice', 'iterator', 'unbox'))) {
+					$result = call_user_func_array(array($this, $name), $args);
+					if ($result instanceof Core\Any) {
+						return $result->unbox();
+					}
+					return $result;
+				}
+			}
+			throw new Throwable\UnimplementedMethod\Exception('Unable to call method. No method ":method" exists in class ":class".', array(':class' => $this->__typeOf(), ':method' => $method));
+		}
 
 		/**
 		 * This method returns a value as a boxed object.  A value is typically a PHP typed
@@ -93,20 +124,20 @@ namespace Saber\Data {
 			return ($this->unbox()) ? 'true' : 'false';
 		}
 
+		/**
+		 * This method returns the object's class type.
+		 *
+		 * @access public
+		 * @final
+		 * @return string                                           the object's class type
+		 */
+		public function __typeOf() {
+			return get_called_class();
+		}
+
 		#endregion
 
 		#region Methods -> Object Oriented -> Universal
-
-		/**
-		 * This method returns whether both sides evaluate to true for the result to be true.
-		 *
-		 * @access public
-		 * @param Data\Bool $that                                   the object to be compared
-		 * @return Data\Bool                                        whether both sides evaluate to true
-		 */
-		public function and_(Data\Bool $that) {
-			return Data\Bool::create($this->unbox() && $that->unbox());
-		}
 
 		/**
 		 * This method compares the specified object with the current object for order.
@@ -130,73 +161,6 @@ namespace Saber\Data {
 			else { // ($x && !$y)
 				return Data\Int32::one();
 			}
-		}
-
-		/**
-		 * This method returns whether at least one side is true for the result to be true.
-		 *
-		 * @access public
-		 * @param Data\Bool $that                                   the object to be compared
-		 * @return Data\Bool                                        whether at least one side is true
-		 */
-		public function or_(Data\Bool $that) {
-			return Data\Bool::create($this->unbox() || $that->unbox());
-		}
-
-		/**
-		 * This method returns whether at least one side is false for the result to be true.
-		 *
-		 * @access public
-		 * @param Data\Bool $that                                   the object to be compared
-		 * @return Data\Bool                                        whether at least one side is false
-		 */
-		public function nand(Data\Bool $that) {
-			return Data\Bool::create(!($this->unbox() && $that->unbox()));
-		}
-
-		/**
-		 * This method returns whether both sides evaluate to false for the result to be true.
-		 *
-		 * @access public
-		 * @param Data\Bool $that                                   the object to be compared
-		 * @return Data\Bool                                        whether both sides evaluate to false
-		 */
-		public function nor(Data\Bool $that) {
-			return Data\Bool::create(!($this->unbox() || $that->unbox()));
-		}
-
-		/**
-		 * This method returns the negation.
-		 *
-		 * @access public
-		 * @return Data\Bool                                        the negation
-		 */
-		public function not() {
-			return Data\Bool::create(!$this->unbox());
-		}
-
-		/**
-		 * This method return the value as an Int32. Note: Using this method may result in
-		 * lost of precision.
-		 *
-		 * @access public
-		 * @return Data\Int32                                       the value as an integer
-		 */
-		public function toInt32() {
-			return Data\Int32::create($this->unbox());
-		}
-
-		/**
-		 * This method returns whether one side evaluates to true, but not both, for the result to
-		 * be true.
-		 *
-		 * @access public
-		 * @param Data\Bool $that                                   the object to be compared
-		 * @return Data\Bool                                        whether one side evaluates to true,
-		 *                                                          but not both
-		 */
-		public function xor_(Data\Bool $that) {
-			return Data\Bool::create($this->unbox() xor $that->unbox());
 		}
 
 		#endregion

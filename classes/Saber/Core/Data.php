@@ -79,7 +79,7 @@ namespace Saber\Core {
 			$class = get_class($this);
 			if (preg_match('/^__[a-z_][a-z0-9_]*$/i', $method)) {
 				$method = substr($method, 2);
-				if (!in_array($method, array('choice', 'unbox'))) {
+				if (!in_array($method, array('choice', 'unbox', 'value'))) {
 					$module = $class . '\\Module';
 					if (method_exists($module, $method)) {
 						array_unshift($args, $this);
@@ -92,11 +92,13 @@ namespace Saber\Core {
 				}
 			}
 			else {
-				$module = $class . '\\Module';
-				if (method_exists($module, $method)) {
-					array_unshift($args, $this);
-					$result = call_user_func_array(array($module, $method), $args);
-					return $result;
+				if (!in_array($method, array('value'))) {
+					$module = $class . '\\Module';
+					if (method_exists($module, $method)) {
+						array_unshift($args, $this);
+						$result = call_user_func_array(array($module, $method), $args);
+						return $result;
+					}
 				}
 			}
 			throw new Throwable\UnimplementedMethod\Exception('Unable to call method. No method ":method" exists in class ":class".', array(':class' => $class, ':method' => $method));
@@ -110,6 +112,16 @@ namespace Saber\Core {
 		 * @return string                                           the object as a string
 		 */
 		public abstract function __toString();
+
+		/**
+		 * This method returns the value encapsulated by the object.
+		 *
+		 * @access public
+		 * @return mixed                                            the value
+		 */
+		public function __value() {
+			return $this->value;
+		}
 
 		#endregion
 

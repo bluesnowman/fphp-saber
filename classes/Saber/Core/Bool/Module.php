@@ -26,26 +26,25 @@ namespace Saber\Core\Bool {
 		#region Methods -> Data Typing
 
 		/**
-		 * This method casts the boolean value to an int32 value.
+		 * This method return the value as an Int32. Note: Using this method may result in
+		 * lost of precision.
 		 *
 		 * @access public
 		 * @static
-		 * @param Core\Bool $x                                      the object to be casted
-		 * @return Core\Int32                                       an object representing the casted
-		 *                                                          value
+		 * @param Core\Bool $x                                      the object to be converted
+		 * @return Core\Int32                                       the value as an Int32
 		 */
 		public static function toInt32(Core\Bool $x) {
 			return Core\Int32::create($x->unbox());
 		}
 
 		/**
-		 * This method converts the boolean value to a string value.
+		 * This method returns the value as a String.
 		 *
 		 * @access public
 		 * @static
 		 * @param Core\Bool $x                                      the object to be converted
-		 * @return Core\String                                      an object representing the converted
-		 *                                                          value
+		 * @return Core\Int32                                       the value as a String
 		 */
 		public static function toString(Core\Bool $x) {
 			return Core\String::create($x->__toString());

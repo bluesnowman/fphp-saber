@@ -16,10 +16,10 @@
  * limitations under the License.
  */
 
-namespace Saber\Data {
+namespace Saber\Core {
 
-	use \Saber\Data;
+	use \Saber\Core;
 
-	abstract class Integral extends Data\Num { }
+	abstract class Integral extends Core\Num { }
 
 }

@@ -16,13 +16,28 @@
  * limitations under the License.
  */
 
-namespace Saber\Data {
+namespace Saber\Core {
 
-	use \Saber\Data;
+	use \Saber\Core;
+	use \Saber\Throwable;
 
-	class Int32 extends Data\Integral {
+	final class Int32 extends Core\Integral {
 
 		#region Methods -> Boxing/Creation
+
+		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param mixed $value                                      the value(s) to be boxed
+		 * @return Core\Any                                         the boxed object
+		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
+		 */
+		public static function box($value/*...*/) {
+			return new static($value);
+		}
 
 		/**
 		 * This constructor initializes the class with the specified value.
@@ -34,179 +49,62 @@ namespace Saber\Data {
 			$this->value = (int) $value;
 		}
 
+		/**
+		 * This method returns an object with a "0" value.
+		 *
+		 * @access public
+		 * @return Core\Int32                                       the object
+		 */
+		public static function zero() {
+			return new Core\Int32(0);
+		}
+
+		/**
+		 * This method returns an object with a "1" value.
+		 *
+		 * @access public
+		 * @return Core\Int32                                       the object
+		 */
+		public static function one() {
+			return new Core\Int32(1);
+		}
+
+		/**
+		 * This method returns an object with a "-1" value.
+		 *
+		 * @access public
+		 * @return Core\Int32                                       the object
+		 */
+		public static function negative() {
+			return new Core\Int32(-1);
+		}
+
+		/**
+		 * This method returns the value contained within the boxed object.
+		 *
+		 * @access public
+		 * @param integer $depth                                    how many levels to unbox
+		 * @return mixed                                            the un-boxed value
+		 */
+		public function unbox($depth = 0) {
+			return $this->value;
+		}
+
 		#endregion
 
-		#region Methods -> Object Oriented -> Universal
+		#region Methods -> Native Oriented
 
 		/**
-		 * This method returns the absolute value of this object's value.
+		 * This method returns the object as a string.
 		 *
 		 * @access public
-		 * @return Data\Int32                                       the absolute value
+		 * @return string                                           the object as a string
 		 */
-		public function abs() {
-			return Data\Int32::create(abs($this->unbox()));
+		public function __toString() {
+			return sprintf('%d', $this->value);
 		}
 
-		/**
-		 * This method returns the result of adding the specified value to this object's value.
-		 *
-		 * @access public
-		 * @param Data\Int32 $that                                  the value to be added
-		 * @return Data\Int32                                       the result
-		 */
-		public function add(Data\Int32 $that) {
-			return Data\Int32::create($this->unbox() + $that->unbox());
-		}
-
-		/**
-		 * This method compares the specified object with the current object for order.
-		 *
-		 * @access public
-		 * @param Data\Int32 $that                                  the object to be compared
-		 * @return Data\Int32                                       whether the current object is less than,
-		 *                                                          equal to, or greater than the specified
-		 *                                                          object
-		 */
-		public function compareTo(Data\Int32 $that) {
-			$x = $this->unbox();
-			$y = $that->unbox();
-
-			if ($x < $y) {
-				return Data\Int32::negative();
-			}
-			else if ($x == $y) {
-				return Data\Int32::zero();
-			}
-			else { // ($x > $y)
-				return Data\Int32::one();
-			}
-		}
-
-		/**
-		 * This method returns the result of decrementing this object's value.
-		 *
-		 * @access public
-		 * @return Data\Int32                                       the result
-		 */
-		public function decrement() {
-			return $this->subtract(Data\Int32::one());
-		}
-
-		/**
-		 * This method returns the result of dividing the specified value against this object's
-		 * value.
-		 *
-		 * @access public
-		 * @param Data\Int32 $that                                  the value to be divided
-		 * @return Data\Int32                                       the result
-		 */
-		public function divide(Data\Int32 $that) {
-			return Data\Int32::create($this->unbox() / $that->unbox());
-		}
-
-		/**
-		 * This method evaluates whether this object's value is an even number.
-		 *
-		 * @access public
-		 * @return Data\Bool                                        whether this object's value is
-		 *                                                          an even number
-		 */
-		public function even() {
-			return Data\Bool::create(($this->unbox() % 2) == 0);
-		}
-
-		/**
-		 * This method returns the greatest common divisor.
-		 *
-		 * @access public
-		 * @param Data\Int32 $that                                  the value to be processed
-		 * @return Data\Int32                                       the greatest common divisor
-		 */
-		public function gcd(Data\Int32 $that) {
-			return Data\Int32::create($this->_gcd(abs($this->unbox()), abs($that->unbox())));
-		}
-
-		/**
-		 * This method recursively calculates the greatest common divisor.
-		 *
-		 * @access protected
-		 * @param integer $x                                        the "this" value to be processed
-		 * @param integer $y                                        the "that" value to be processed
-		 * @return integer                                          the greatest common divisor
-		 *
-		 * @see http://stackoverflow.com/questions/13828011/look-for-the-gcd-greatest-common-divisor-of-more-than-2-integers
-		 */
-		protected function _gcd($x, $y) {
-		    return $y ? $this->_gcd($y, $x % $y) : $x;
-		}
-
-		/**
-		 * This method returns the result of incrementing this object's value.
-		 *
-		 * @access public
-		 * @return Data\Int32                                       the result
-		 */
-		public function increment() {
-			return $this->add(Data\Int32::one());
-		}
-
-		/**
-		 * This method returns the result of finding the modulus of the specified value against this
-		 * object's value.
-		 *
-		 * @access public
-		 * @param Data\Int32 $that                                  the value to be divided
-		 * @return Data\Int32                                       the result
-		 */
-		public function modulo(Data\Int32 $that) {
-			return Data\Int32::box($this->unbox() % $that->unbox());
-		}
-
-		/**
-		 * This method returns the result of multiplying the specified value against this object's
-		 * value.
-		 *
-		 * @access public
-		 * @param Data\Int32 $that                                  the value to be multiplied
-		 * @return Data\Int32                                       the result
-		 */
-		public function multiply(Data\Int32 $that) {
-			return Data\Int32::create($this->unbox() * $that->unbox());
-		}
-
-		/**
-		 * This method returns the result of negating this object's value.
-		 *
-		 * @access public
-		 * @return Data\Int32                                       the result
-		 */
-		public function negate() {
-			return Data\Int32::box($this->unbox() * -1);
-		}
-
-		/**
-		 * This method evaluates whether this object's value is an odd number.
-		 *
-		 * @access public
-		 * @return Data\Bool                                        whether this object's value is
-		 *                                                          an odd number
-		 */
-		public function odd() {
-			return Data\Bool::create(($this->unbox() % 2) != 0);
-		}
-
-		/**
-		 * This method returns the result of subtracting the specified value from this object's
-		 * value.
-		 *
-		 * @access public
-		 * @param Data\Int32 $that                                  the value to be subtracted
-		 * @return Data\Int32                                       the result
-		 */
-		public function subtract(Data\Int32 $that) {
-			return Data\Int32::create($this->unbox() - $that->unbox());
-		}
+		#endregion
 
 	}
 

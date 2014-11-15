@@ -30,11 +30,12 @@ namespace Saber\Core\Char {
 		#region Methods -> Data Typing
 
 		/**
-		 * This method casts the char value to an int32 value.
+		 * This method return the value as an Int32. Note: Using this method may result in
+		 * lost of precision.
 		 *
 		 * @access public
 		 * @static
-		 * @param Core\Char $x                                      the object to be casted
+		 * @param Core\Char $x                                      the object to be converted
 		 * @return Core\Int32                                       an object representing the casted
 		 *                                                          value
 		 */

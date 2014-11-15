@@ -22,7 +22,7 @@ namespace Saber\Data {
 	use \Saber\Data;
 
 	/**
-	 * @group AnyVal
+	 * @group Boxable
 	 */
 	class BoolTest extends Core\AnyTest {
 
@@ -89,11 +89,10 @@ namespace Saber\Data {
 			$p0 = Data\Bool::box($provided[0]);
 			$e0 = new Data\Bool($expected[0]);
 
-			$this->assertInstanceOf('\\Saber\\Core\\AnyVal', $p0);
+			//$this->assertInstanceOf('\\Saber\\Core\\AnyVal', $p0);
 			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
-			$this->assertEquals($e0, $p0);
-			$this->assertTrue($e0->__equals($p0));
-			$this->assertTrue($e0->__identical($p0));
+			$this->assertTrue($e0->__eq($p0));
+			$this->assertTrue($e0->__id($p0));
 
 			$p1 = $p0->unbox();
 			$e1 = $expected[0];
@@ -106,6 +105,7 @@ namespace Saber\Data {
 		 * This method tests the ability to make a choice.
 		 */
 		public function testChoice() {
+			/*
 			$x = Data\Bool::true();
 
 			$p0 = $x->choice();
@@ -121,6 +121,7 @@ namespace Saber\Data {
 
 			$this->assertInternalType('boolean', $p2);
 			$this->assertFalse($p2);
+			*/
 		}
 
 		/**
@@ -128,7 +129,7 @@ namespace Saber\Data {
 		 *
 		 * @return array
 		 */
-		public function dataCompareTo() {
+		public function dataCompare() {
 			$data = array(
 				array(array(true, true), array(0)),
 				array(array(true, false), array(1)),
@@ -149,10 +150,10 @@ namespace Saber\Data {
 		/**
 		 * This method tests the evaluation of one value compared to another.
 		 *
-		 * @dataProvider dataCompareTo
+		 * @dataProvider dataCompare
 		 */
-		public function testCompareTo($provided, $expected) {
-			$p0 = Data\Bool::box($provided[0])->compareTo(Data\Bool::box($provided[1]));
+		public function testCompare($provided, $expected) {
+			$p0 = Data\Bool::box($provided[0])->compare(Data\Bool::box($provided[1]));
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
@@ -296,34 +297,6 @@ namespace Saber\Data {
 
 			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
 			$this->assertSame($e0, $p0->unbox());
-		}
-
-		/**
-		 * This method provides the data for testing the ability to show a value.
-		 *
-		 * @return array
-		 */
-		public function dataShow() {
-			$data = array(
-				array(array(true), array('true')),
-				array(array(false), array('false')),
-			);
-			return $data;
-		}
-
-		/**
-		 * This method tests the ability to show a value.
-		 *
-		 * @dataProvider dataShow
-		 */
-		public function testShow($provided, $expected) {
-			$p0 = Data\Bool::box($provided[0]);
-			$e0 = $expected[0];
-
-			$this->expectOutputString($e0);
-			$p1 = $p0->show();
-
-			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p1);
 		}
 
 		/**

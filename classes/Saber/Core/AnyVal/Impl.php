@@ -48,7 +48,7 @@ namespace Saber\Core\AnyVal {
 		 * @return string                                           the object as a string
 		 */
 		public function __toString() {
-			return '' . $this->unbox();
+			return strval($this->value);
 		}
 
 		#endregion

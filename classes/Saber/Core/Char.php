@@ -16,24 +16,17 @@
  * limitations under the License.
  */
 
-namespace Saber\Data {
+namespace Saber\Core {
 
 	include_once(implode(DIRECTORY_SEPARATOR, array(dirname(__FILE__), '..', 'Extension', 'mbstring.php')));
 
 	use \Saber\Core;
-	use \Saber\Data;
 	use \Saber\Throwable;
 
 	/**
 	 * @see http://www.haskell.org/ghc/docs/6.4.2/html/libraries/base/Data-Char.html
 	 */
-	class Char implements Core\AnyVal {
-
-		#region Traits
-
-		use Core\AnyVal\Impl;
-
-		#endregion
+	final class Char extends Core\Data implements Core\Data\Boxable, Core\Data\Val {
 
 		#region Constants
 
@@ -63,9 +56,9 @@ namespace Saber\Data {
 			if (is_string($value)) {
 				if (func_num_args() > 1) {
 					$encoding = func_get_arg(1);
-					$value = mb_convert_encoding($value, Data\Char::UTF_8_ENCODING, $encoding);
+					$value = mb_convert_encoding($value, Core\Char::UTF_8_ENCODING, $encoding);
 				}
-				$length = mb_strlen($value, Data\Char::UTF_8_ENCODING);
+				$length = mb_strlen($value, Core\Char::UTF_8_ENCODING);
 				if ($length != 1) {
 					throw new Throwable\InvalidArgument\Exception('Unable to box value. Expected a character, but got "string" of length ":length".', array(':length' => $length));
 				}
@@ -84,19 +77,6 @@ namespace Saber\Data {
 		}
 
 		/**
-		 * This method returns a value as a boxed object.  A value is typically a PHP typed
-		 * primitive or object.  It is considered "not" type-safe.
-		 *
-		 * @access public
-		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return Core\Any                                         the boxed object
-		 */
-		public static function create($value/*...*/) {
-			return new static($value);
-		}
-
-		/**
 		 * This constructor initializes the class with the specified value.
 		 *
 		 * @access public
@@ -106,32 +86,29 @@ namespace Saber\Data {
 			$this->value = (string) $value;
 		}
 
-		#endregion
-
-		#region Methods -> Object Oriented -> Universal
-
 		/**
-		 * This method compares the specified object with the current object for order.
+		 * This method returns the value contained within the boxed object.
 		 *
 		 * @access public
-		 * @param Data\Char $that                                   the object to be compared
-		 * @return Data\Int32                                       whether the current object is less than,
-		 *                                                          equal to, or greater than the specified
-		 *                                                          object
+		 * @param integer $depth                                    how many levels to unbox
+		 * @return mixed                                            the un-boxed value
 		 */
-		public function compareTo(Data\Char $that) {
-			$x = $this->unbox();
-			$y = $that->unbox();
+		public function unbox($depth = 0) {
+			return $this->value;
+		}
 
-			if ($x < $y) {
-				return Data\Int32::negative();
-			}
-			else if ($x == $y) {
-				return Data\Int32::zero();
-			}
-			else { // ($x > $y)
-				return Data\Int32::one();
-			}
+		#endregion
+
+		#region Methods -> Native Oriented
+
+		/**
+		 * This method returns the object as a string.
+		 *
+		 * @access public
+		 * @return string                                           the object as a string
+		 */
+		public function __toString() {
+			return $this->value;
 		}
 
 		#endregion

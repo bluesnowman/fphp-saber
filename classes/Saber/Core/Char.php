@@ -49,7 +49,7 @@ namespace Saber\Core {
 		 * @access public
 		 * @static
 		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return Core\Any                                         the boxed object
+		 * @return Core\Data                                        the boxed object
 		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
 		public static function box($value/*...*/) {
@@ -62,10 +62,10 @@ namespace Saber\Core {
 				if ($length != 1) {
 					throw new Throwable\InvalidArgument\Exception('Unable to box value. Expected a character, but got "string" of length ":length".', array(':length' => $length));
 				}
-				return new static($value);
+				return new Core\Char($value);
 			}
 			else if (!is_string($value) && is_numeric($value)) {
-				return new static(chr((int) $value));
+				return new Core\Char(chr((int) $value));
 			}
 			else {
 				$type = gettype($value);

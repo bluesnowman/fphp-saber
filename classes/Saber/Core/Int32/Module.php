@@ -94,8 +94,8 @@ namespace Saber\Core\Int32 {
 		 *
 		 * @access protected
 		 * @static
-		 * @param Core\Int32 $x                                     the left operand
-		 * @param Core\Int32 $y                                     the right operand
+		 * @param integer $x                                        the left operand
+		 * @param integer $y                                        the right operand
 		 * @return integer                                          the result
 		 *
 		 * @see http://stackoverflow.com/questions/13828011/look-for-the-gcd-greatest-common-divisor-of-more-than-2-integers
@@ -231,10 +231,10 @@ namespace Saber\Core\Int32 {
 		 *
 		 * @access public
 		 * @static
-		 * @param Core\Bool $x                                      the object to be converted
-		 * @return Core\Int32                                       the value as a String
+		 * @param Core\Int32 $x                                     the object to be converted
+		 * @return Core\String                                      the value as a String
 		 */
-		public static function toString(Core\Bool $x) {
+		public static function toString(Core\Int32 $x) {
 			return Core\String::create($x->__toString());
 		}
 
@@ -248,7 +248,7 @@ namespace Saber\Core\Int32 {
 		 * @access public
 		 * @static
 		 * @param Core\Int32 $x                                     the left operand
-		 * @param Core\INt32 $y                                     the right operand
+		 * @param Core\Int32 $y                                     the right operand
 		 * @return Core\Int32                                       the order as to whether the left
 		 *                                                          operand is less than, equals to,
 		 *                                                          or greater than the right operand
@@ -274,7 +274,7 @@ namespace Saber\Core\Int32 {
 		 * @access public
 		 * @static
 		 * @param Core\Int32 $x                                     the left operand
-		 * @param Core\INt32 $y                                     the right operand
+		 * @param Core\Int32 $y                                     the right operand
 		 * @return Core\Bool                                        whether the left operand is greater
 		 *                                                          than or equal to the right operand
 		 */
@@ -288,7 +288,7 @@ namespace Saber\Core\Int32 {
 		 * @access public
 		 * @static
 		 * @param Core\Int32 $x                                     the left operand
-		 * @param Core\INt32 $y                                     the right operand
+		 * @param Core\Int32 $y                                     the right operand
 		 * @return Core\Bool                                        whether the left operand is greater
 		 *                                                          than the right operand
 		 */
@@ -302,7 +302,7 @@ namespace Saber\Core\Int32 {
 		 * @access public
 		 * @static
 		 * @param Core\Int32 $x                                     the left operand
-		 * @param Core\INt32 $y                                     the right operand
+		 * @param Core\Int32 $y                                     the right operand
 		 * @return Core\Bool                                        whether the left operand is less than
 		 *                                                          or equal to the right operand
 		 */
@@ -316,7 +316,7 @@ namespace Saber\Core\Int32 {
 		 * @access public
 		 * @static
 		 * @param Core\Int32 $x                                     the left operand
-		 * @param Core\INt32 $y                                     the right operand
+		 * @param Core\Int32 $y                                     the right operand
 		 * @return Core\Bool                                        whether the left operand is less than
 		 *                                                          the right operand
 		 */
@@ -330,7 +330,7 @@ namespace Saber\Core\Int32 {
 		 * @access public
 		 * @static
 		 * @param Core\Int32 $x                                     the left operand
-		 * @param Core\INt32 $y                                     the right operand
+		 * @param Core\Int32 $y                                     the right operand
 		 * @return Core\Int32                                       the maximum value
 		 */
 		public static function max(Core\Int32 $x, Core\Int32 $y) {
@@ -343,7 +343,7 @@ namespace Saber\Core\Int32 {
 		 * @access public
 		 * @static
 		 * @param Core\Int32 $x                                     the left operand
-		 * @param Core\INt32 $y                                     the right operand
+		 * @param Core\Int32 $y                                     the right operand
 		 * @return Core\Int32                                       the minimum value
 		 */
 		public static function min(Core\Int32 $x, Core\Int32 $y) {
@@ -372,7 +372,7 @@ namespace Saber\Core\Int32 {
 		 * @access public
 		 * @static
 		 * @param Core\Int32 $x                                     the object to be evaluated
-		 * @return string                                           the object's hash code
+		 * @return Core\String                                      the object's hash code
 		 */
 		public static function hashCode(Core\Int32 $x) {
 			return Core\String::create($x->__toString());
@@ -387,6 +387,7 @@ namespace Saber\Core\Int32 {
 		 *
 		 * @access public
 		 * @static
+		 * @param Core\Int32 $x                                     the object to be evaluated
 		 * @return Core\Bool                                        whether the operand is an even
 		 *                                                          number
 		 */
@@ -399,6 +400,7 @@ namespace Saber\Core\Int32 {
 		 *
 		 * @access public
 		 * @static
+		 * @param Core\Int32 $x                                     the object to be evaluated
 		 * @return Core\Bool                                        whether the operand is an odd
 		 *                                                          number
 		 */
@@ -411,11 +413,12 @@ namespace Saber\Core\Int32 {
 		 *
 		 * @access public
 		 * @static
+		 * @param Core\Int32 $x                                     the object to be evaluated
 		 * @return Core\Bool                                        whether the operand is a negative
 		 *                                                          number
 		 */
 		public static function isNegative(Core\Int32 $x) {
-			return ($x->unbox() >= 0) ? Core\Bool::true() : Core\Bool::false();
+			return Core\Bool::create($x->unbox() < 0);
 		}
 
 		#endregion

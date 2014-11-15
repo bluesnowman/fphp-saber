@@ -44,7 +44,7 @@ namespace Saber\Core\Bool {
 		 * @access public
 		 * @static
 		 * @param Core\Bool $x                                      the object to be converted
-		 * @return Core\Int32                                       the value as a String
+		 * @return Core\String                                      the value as a String
 		 */
 		public static function toString(Core\Bool $x) {
 			return Core\String::create($x->__toString());
@@ -387,7 +387,7 @@ namespace Saber\Core\Bool {
 		 * @access public
 		 * @static
 		 * @param Core\Bool $x                                      the object to be evaluated
-		 * @return string                                           the object's hash code
+		 * @return Core\String                                      the object's hash code
 		 */
 		public static function hashCode(Core\Bool $x) {
 			return Core\String::create($x->__toString());

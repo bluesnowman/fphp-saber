@@ -36,21 +36,19 @@ namespace Saber\Core\Char {
 		 * @access public
 		 * @static
 		 * @param Core\Char $x                                      the object to be converted
-		 * @return Core\Int32                                       an object representing the casted
-		 *                                                          value
+		 * @return Core\Int32                                       the value as an Int32
 		 */
 		public static function toInt32(Core\Char $x) {
 			return Core\Int32::create(ord($x->unbox()));
 		}
 
 		/**
-		 * This method converts the boolean value to a string value.
+		 * This method returns the value as a String.
 		 *
 		 * @access public
 		 * @static
 		 * @param Core\Char $x                                      the object to be converted
-		 * @return Core\String                                      an object representing the converted
-		 *                                                          value
+		 * @return Core\String                                      the value as a String
 		 */
 		public static function toString(Core\Char $x) {
 			return Core\String::create($x->__toString());
@@ -268,7 +266,7 @@ namespace Saber\Core\Char {
 		 * @access public
 		 * @static
 		 * @param Core\Char $x                                      the object to be evaluated
-		 * @return string                                           the object's hash code
+		 * @return Core\String                                      the object's hash code
 		 */
 		public static function hashCode(Core\Char $x) {
 			return Core\String::create($x->__toString());

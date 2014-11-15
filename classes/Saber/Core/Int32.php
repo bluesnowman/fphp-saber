@@ -32,7 +32,7 @@ namespace Saber\Core {
 		 * @access public
 		 * @static
 		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return Core\Any                                         the boxed object
+		 * @return Core\Data                                        the boxed object
 		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
 		public static function box($value/*...*/) {
@@ -53,6 +53,7 @@ namespace Saber\Core {
 		 * This method returns an object with a "0" value.
 		 *
 		 * @access public
+		 * @static
 		 * @return Core\Int32                                       the object
 		 */
 		public static function zero() {
@@ -63,6 +64,7 @@ namespace Saber\Core {
 		 * This method returns an object with a "1" value.
 		 *
 		 * @access public
+		 * @static
 		 * @return Core\Int32                                       the object
 		 */
 		public static function one() {
@@ -73,6 +75,7 @@ namespace Saber\Core {
 		 * This method returns an object with a "-1" value.
 		 *
 		 * @access public
+		 * @static
 		 * @return Core\Int32                                       the object
 		 */
 		public static function negative() {

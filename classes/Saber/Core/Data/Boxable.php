@@ -32,7 +32,7 @@ namespace Saber\Core\Data {
 		 * @access public
 		 * @static
 		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return Core\Data                                        the boxed object
+		 * @return Core\Data\Boxable                                the boxed object
 		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
 		public static function box($value/*...*/);

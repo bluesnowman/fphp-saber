@@ -69,7 +69,6 @@ namespace Saber\Data {
 		 * @static
 		 * @param mixed $value                                      the value(s) to be boxed
 		 * @return Data\Type                                        the boxed object
-		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
 		public static function box($value/*...*/) {
 			return new Data\Int32($value);

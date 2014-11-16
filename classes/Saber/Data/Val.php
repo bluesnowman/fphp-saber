@@ -16,10 +16,8 @@
  * limitations under the License.
  */
 
-namespace Saber\Core {
+namespace Saber\Data {
 
-	use \Saber\Core;
-
-	abstract class Integral extends Core\Num { }
+	interface Val { }
 
 }

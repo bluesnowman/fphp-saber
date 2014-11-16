@@ -22,7 +22,7 @@ namespace Saber\Data {
 	use \Saber\Data;
 
 	/**
-	 * @group Boxable
+	 * @group Type
 	 */
 	class BoolTest extends Core\AnyTest {
 

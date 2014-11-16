@@ -16,10 +16,15 @@
  * limitations under the License.
  */
 
-namespace Saber\Core\Data {
+namespace Saber\Core {
 
 	use \Saber\Core;
+	use \Saber\Throwable;
 
-	interface Val extends Core\Data\Ord { }
+	abstract class Data {
+
+
+
+	}
 
 }

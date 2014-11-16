@@ -16,12 +16,12 @@
  * limitations under the License.
  */
 
-namespace Saber\Core {
+namespace Saber\Data {
 
-	use \Saber\Core;
+	use \Saber\Data;
 	use \Saber\Throwable;
 
-	abstract class Data {
+	abstract class Type {
 
 		#region Properties
 
@@ -35,20 +35,7 @@ namespace Saber\Core {
 
 		#endregion
 
-		#region Methods -> Creation
-
-		/**
-		 * This method returns a value as a boxed object.  A value is typically a PHP typed
-		 * primitive or object.  It is considered "not" type-safe.
-		 *
-		 * @access public
-		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return Core\Data                                        the boxed object
-		 */
-		public static function create($value/*...*/) {
-			return new static($value);
-		}
+		#region Methods -> Implementation
 
 		/**
 		 * This method releases any internal references to an object.
@@ -58,10 +45,6 @@ namespace Saber\Core {
 		public function __destruct() {
 			$this->value = null;
 		}
-
-		#endregion
-
-		#region Methods -> Native Oriented
 
 		/**
 		 * This method is called when the function is not defined and will attempt to remap
@@ -80,11 +63,10 @@ namespace Saber\Core {
 			if (preg_match('/^__[a-z_][a-z0-9_]*$/i', $method)) {
 				$method = substr($method, 2);
 				if (!in_array($method, array('choice', 'unbox', 'value'))) {
-					$module = $class . '\\Module';
-					if (method_exists($module, $method)) {
+					if (method_exists($class, $method)) {
 						array_unshift($args, $this);
-						$result = call_user_func_array(array($module, $method), $args);
-						if ($result instanceof Core\Data\Boxable) {
+						$result = call_user_func_array(array($class, $method), $args);
+						if ($result instanceof Data\Type\Boxable) {
 							return $result->unbox();
 						}
 						return $result;
@@ -93,10 +75,9 @@ namespace Saber\Core {
 			}
 			else {
 				if (!in_array($method, array('value'))) {
-					$module = $class . '\\Module';
-					if (method_exists($module, $method)) {
+					if (method_exists($class, $method)) {
 						array_unshift($args, $this);
-						$result = call_user_func_array(array($module, $method), $args);
+						$result = call_user_func_array(array($class, $method), $args);
 						return $result;
 					}
 				}
@@ -113,17 +94,21 @@ namespace Saber\Core {
 		 */
 		public abstract function __toString();
 
+		#endregion
+
+		#region Methods -> Data Typing
+
 		/**
-		 * This method returns the value encapsulated by the object.
+		 * This method returns the object's class type.
 		 *
 		 * @access public
-		 * @return mixed                                            the value
+		 * @static
+		 * @param Data\Type $x                                      the object to be evaluated
+		 * @return Data\String                                      the object's class type
 		 */
-		public function __value() {
-			return $this->value;
+		public static function typeOf(Data\Type $x) {
+			return Data\String::create(get_class($x));
 		}
-
-		#endregion
 
 	}
 

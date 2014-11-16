@@ -16,14 +16,13 @@
  * limitations under the License.
  */
 
-namespace Saber\Core\Data {
+namespace Saber\Data\Type {
 
-	use \Saber\Core;
-	use \Saber\Throwable;
+	use \Saber\Data;
 
 	interface Boxable {
 
-		#region Methods -> Companion
+		#region Methods -> Instantiation
 
 		/**
 		 * This method returns a value as a boxed object.  A value is typically a PHP typed
@@ -32,10 +31,24 @@ namespace Saber\Core\Data {
 		 * @access public
 		 * @static
 		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return Core\Data\Boxable                                the boxed object
-		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
+		 * @return Data\Type                                        the boxed object
 		 */
 		public static function box($value/*...*/);
+
+		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered "not" type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param mixed $value                                      the value(s) to be boxed
+		 * @return Data\Type                                        the boxed object
+		 */
+		public static function create($value/*...*/);
+
+		#endregion
+
+		#region Methods -> Implementation
 
 		/**
 		 * This method returns the value contained within the boxed object.

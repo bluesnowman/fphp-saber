@@ -18,16 +18,8 @@
 
 namespace Saber\Data {
 
-	use \Saber\Core;
+	use \Saber\Data;
 
-	abstract class Collection implements Core\AnyRef {
-
-		#region Traits
-
-		use Core\AnyRef\Impl;
-
-		#endregion
-
-	}
+	abstract class Collection extends Data\Type implements Data\Ref { }
 
 }

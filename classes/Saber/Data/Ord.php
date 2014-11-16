@@ -16,10 +16,10 @@
  * limitations under the License.
  */
 
-namespace Saber\Core\Data {
+namespace Saber\Data {
 
-	use \Saber\Core;
+	use \Saber\Data;
 
-	interface Ord extends Core\Data\Eq { }
+	interface Ord extends Data\Eq { }
 
 }

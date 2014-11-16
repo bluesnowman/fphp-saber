@@ -16,9 +16,7 @@
  * limitations under the License.
  */
 
-namespace Saber\Core\Data {
-
-	use \Saber\Core;
+namespace Saber\Data {
 
 	interface Ref { }
 

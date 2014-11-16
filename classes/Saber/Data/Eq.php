@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-namespace Saber\Core\Data {
+namespace Saber\Data {
 
 	interface Eq { }
 

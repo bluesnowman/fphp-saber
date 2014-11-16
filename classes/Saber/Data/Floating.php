@@ -16,10 +16,10 @@
  * limitations under the License.
  */
 
-namespace Saber\Core {
+namespace Saber\Data {
 
-	use \Saber\Core;
+	use \Saber\Data;
 
-	abstract class Floating extends Core\Num { }
+	abstract class Floating extends Data\Num { }
 
 }

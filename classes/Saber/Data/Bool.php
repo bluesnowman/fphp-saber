@@ -73,7 +73,7 @@ namespace Saber\Data {
 			if ((func_num_args() > 1) && func_get_arg(1) && is_string($value) && in_array(strtolower($value), array('false', 'f', 'no', 'n', '0'))) {
 				$value = false;
 			}
-			return new Data\Bool($value);
+			return new static($value);
 		}
 
 		/**
@@ -86,7 +86,7 @@ namespace Saber\Data {
 		 * @return Data\Type                                        the boxed object
 		 */
 		public static function create($value/*...*/) {
-			return new Data\Bool($value);
+			return new static($value);
 		}
 
 		/**
@@ -153,7 +153,8 @@ namespace Saber\Data {
 		 *                                                          to the right operand
 		 */
 		public static function eq(Data\Bool $x, Data\Type $y) { // ==
-			if ($y instanceof Data\Bool) {
+			$class = get_class($x);
+			if ($y instanceof $class) {
 				return Data\Bool::create($x->unbox() == $y->unbox());
 			}
 			return Data\Bool::false();

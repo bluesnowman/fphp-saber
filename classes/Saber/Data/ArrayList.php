@@ -163,7 +163,7 @@ namespace Saber\Data {
 		 * @return Data\Bool                                        whether some of the elements
 		 *                                                          passed the truthy test
 		 */
-		public function any($predicate) {
+		public function any(callable $predicate) {
 			return $this->find($predicate)->isDefined();
 		}
 

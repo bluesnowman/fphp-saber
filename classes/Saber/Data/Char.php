@@ -171,7 +171,8 @@ namespace Saber\Data {
 		 *                                                          to the right operand
 		 */
 		public static function eq(Data\Char $x, Data\Type $y) { // ==
-			if ($y instanceof Data\Char) {
+			$class = get_class($x);
+			if ($y instanceof $class) {
 				return Data\Bool::create($x->unbox() == $y->unbox());
 			}
 			return Data\Bool::false();

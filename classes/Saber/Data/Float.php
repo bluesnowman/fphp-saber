@@ -324,7 +324,74 @@ namespace Saber\Data {
 		}
 
 		#endregion
-		
+
+		#region Methods -> Equality
+
+		/**
+		 * This method evaluates whether the left operand is equal to the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\Float $x                                     the left operand
+		 * @param Data\Type $y                                      the right operand
+		 * @return Data\Bool                                        whether the left operand is equal
+		 *                                                          to the right operand
+		 */
+		public static function eq(Data\Float $x, Data\Type $y) { // ==
+			$class = get_class($x);
+			if ($y instanceof $class) {
+				return Data\Bool::create($x->unbox() == $y->unbox());
+			}
+			return Data\Bool::false();
+		}
+
+		/**
+		 * This method evaluates whether the left operand is identical to the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\Float $x                                     the left operand
+		 * @param Data\Type $y                                      the right operand
+		 * @return Data\Bool                                        whether the left operand is identical
+		 *                                                          to the right operand
+		 */
+		public static function id(Data\Float $x, Data\Type $y) { // ===
+			if (get_class($x) === get_class($y)) {
+				return Data\Bool::create($x->unbox() === $y->unbox());
+			}
+			return Data\Bool::false();
+		}
+
+		/**
+		 * This method evaluates whether the left operand is NOT equal to the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\Float $x                                     the left operand
+		 * @param Data\Type $y                                      the right operand
+		 * @return Data\Bool                                        whether the left operand is NOT equal
+		 *                                                          to the right operand
+		 */
+		public static function ne(Data\Float $x, Data\Type $y) { // !=
+			return Data\Bool::not(Data\Float::eq($x, $y));
+		}
+
+		/**
+		 * This method evaluates whether the left operand is NOT identical to the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\Float $x                                     the left operand
+		 * @param Data\Type $y                                      the right operand
+		 * @return Data\Bool                                        whether the left operand is NOT identical
+		 *                                                          to the right operand
+		 */
+		public static function ni(Data\Float $x, Data\Type $y) { // !==
+			return Data\Bool::not(Data\Float::id($x, $y));
+		}
+
+		#endregion
+
 		#region Methods -> Ordering
 
 		/**

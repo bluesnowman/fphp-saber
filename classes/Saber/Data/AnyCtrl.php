@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-namespace Saber\Core {
+namespace Saber\Data {
 
 	interface AnyCtrl { }
 

@@ -35,13 +35,13 @@ namespace Saber\Data {
 		public abstract function object();
 
 		/**
-		 * This method returns the boxed object as a string.
+		 * This method returns the object as a string.
 		 *
 		 * @access public
-		 * @return string                                           the boxed object as a string
+		 * @return string                                           the object as a string
 		 */
 		public function __toString() {
-			return '' . $this->object();
+			return (string) serialize($this->object());
 		}
 
 		#endregion
@@ -149,7 +149,7 @@ namespace Saber\Data {
 			if (Data\Bool::and_(Data\Option::isDefined($xs), $predicate($xs->object(), Data\Int32::zero()))->unbox()) {
 				return $xs;
 			}
-			return static::none();
+			return Data\Option::none();
 		}
 
 		/**
@@ -166,7 +166,7 @@ namespace Saber\Data {
 			if (Data\Bool::and_(Data\Option::isDefined($xs), $predicate($xs->object(), Data\Int32::zero()))->unbox()) {
 				return $xs;
 			}
-			return static::none();
+			return Data\Option::none();
 		}
 
 		/**

@@ -19,7 +19,6 @@
 namespace Saber\Control\Monad {
 
 	use \Saber\Control;
-	use \Saber\Core;
 	use \Saber\Data;
  
 	abstract class Choice {
@@ -31,11 +30,11 @@ namespace Saber\Control\Monad {
 		 *
 		 * @access public
 		 * @static
-		 * @param Core\Any $x                                       the object to be evaluated
+		 * @param Data\Type $x                                      the object to be evaluated
 		 * @param Control\Monad\Choice $xs                          the tail
 		 * @return Control\Monad\Choice\Cons                        the "cons" object
 		 */
-		public static function cons(Core\Any $x, Control\Monad\Choice $xs) {
+		public static function cons(Data\Type $x, Control\Monad\Choice $xs) {
 			return new Control\Monad\Choice\Cons($x, $xs);
 		}
 
@@ -95,26 +94,26 @@ namespace Saber\Control\Monad {
 		 *
 		 * @access public
 		 * @abstract
-		 * @param Core\Any $y                                       the object to be evaluated
+		 * @param Data\Type $y                                      the object to be evaluated
 		 *                                                          against
 		 * @param callable $procedure                               the procedure to be executed
 		 * @return Control\Monad\Choice                             a reference to the next choice
 		 *                                                          monad node
 		 */
-		public abstract function unless(Core\Any $y, callable $procedure);
+		public abstract function unless(Data\Type $y, callable $procedure);
 
 		/**
 		 * This method sets the procedure that will be executed should "y" equal "x".
 		 *
 		 * @access public
 		 * @abstract
-		 * @param Core\Any $y                                       the object to be evaluated
+		 * @param Data\Type $y                                      the object to be evaluated
 		 *                                                          against
 		 * @param callable $procedure                               the procedure to be executed
 		 * @return Control\Monad\Choice                             a reference to the next choice
 		 *                                                          monad node
 		 */
-		public abstract function when(Core\Any $y, callable $procedure);
+		public abstract function when(Data\Type $y, callable $procedure);
 
 		#endregion
 

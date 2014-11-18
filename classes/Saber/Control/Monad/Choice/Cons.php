@@ -19,7 +19,7 @@
 namespace Saber\Control\Monad\Choice {
 
 	use \Saber\Control;
-	use \Saber\Core;
+	use \Saber\Data;
  
 	class Cons extends Control\Monad\Choice {
 
@@ -36,7 +36,7 @@ namespace Saber\Control\Monad\Choice {
 		 * This variable stores the object to be evaluated.
 		 *
 		 * @access protected
-		 * @var Core\Any
+		 * @var Data\Type
 		 */
 		protected $x;
 
@@ -52,10 +52,10 @@ namespace Saber\Control\Monad\Choice {
 		 * This constructor initializes the class with the specified object and tail.
 		 *
 		 * @access public
-		 * @param Core\Any $x                                       the object to be evaluated
+		 * @param Data\Type $x                                      the object to be evaluated
 		 * @param Control\Monad\Choice $xs                          the tail
 		 */
-		public function __construct(Core\Any $x, Control\Monad\Choice $xs) {
+		public function __construct(Data\Type $x, Control\Monad\Choice $xs) {
 			$this->f = null;
 			$this->x = $x;
 			$this->xs = $xs;
@@ -110,13 +110,13 @@ namespace Saber\Control\Monad\Choice {
 		 * This method sets the procedure that will be executed should "y" not equal "x".
 		 *
 		 * @access public
-		 * @param Core\Any $y                                       the object to be evaluated
+		 * @param Data\Type $y                                      the object to be evaluated
 		 *                                                          against
 		 * @param callable $procedure                               the procedure to be executed
 		 * @return Control\Monad\Choice                             a reference to the next choice
 		 *                                                          monad node
 		 */
-		public function unless(Core\Any $y, callable $procedure) {
+		public function unless(Data\Type $y, callable $procedure) {
 			$this->f = function($x) use ($y, $procedure) {
 				if (!$y->__equals($x)) {
 					$procedure($x);
@@ -131,13 +131,13 @@ namespace Saber\Control\Monad\Choice {
 		 * This method sets the procedure that will be executed should "y" equal "x".
 		 *
 		 * @access public
-		 * @param Core\Any $y                                       the object to be evaluated
+		 * @param Data\Type $y                                      the object to be evaluated
 		 *                                                          against
 		 * @param callable $procedure                               the procedure to be executed
 		 * @return Control\Monad\Choice                             a reference to the next choice
 		 *                                                          monad node
 		 */
-		public function when(Core\Any $y, callable $procedure) {
+		public function when(Data\Type $y, callable $procedure) {
 			$this->f = function($x) use ($y, $procedure) {
 				if ($y->__equals($x)) {
 					$procedure($x);

@@ -19,7 +19,7 @@
 namespace Saber\Control\Monad\Choice {
 
 	use \Saber\Control;
-	use \Saber\Core;
+	use \Saber\Data;
 	use \Saber\Throwable;
  
 	class Nil extends Control\Monad\Choice {
@@ -53,7 +53,7 @@ namespace Saber\Control\Monad\Choice {
 		 * This method sets the procedure that will be executed should "y" not equal "x".
 		 *
 		 * @access public
-		 * @param Core\Any $y                                       the object to be evaluated
+		 * @param Data\Type $y                                      the object to be evaluated
 		 *                                                          against
 		 * @param callable $procedure                               the procedure to be executed
 		 * @return Control\Monad\Choice                             a reference to the next choice
@@ -61,7 +61,7 @@ namespace Saber\Control\Monad\Choice {
 		 * @throws Throwable\UnimplementedMethod\Exception          indicates that this method cannot
 		 *                                                          be called
 		 */
-		public function unless(Core\Any $y, callable $procedure) {
+		public function unless(Data\Type $y, callable $procedure) {
 			throw new Throwable\UnimplementedMethod\Exception('Method :method has not been implemented.', array(':method' => __FUNCTION__));
 		}
 
@@ -69,7 +69,7 @@ namespace Saber\Control\Monad\Choice {
 		 * This method sets the procedure that will be executed should "y" equal "x".
 		 *
 		 * @access public
-		 * @param Core\Any $y                                       the object to be evaluated
+		 * @param Data\Type $y                                      the object to be evaluated
 		 *                                                          against
 		 * @param callable $procedure                               the procedure to be executed
 		 * @return Control\Monad\Choice                             a reference to the next choice
@@ -77,7 +77,7 @@ namespace Saber\Control\Monad\Choice {
 		 * @throws Throwable\UnimplementedMethod\Exception          indicates that this method cannot
 		 *                                                          be called
 		 */
-		public function when(Core\Any $y, callable $procedure) {
+		public function when(Data\Type $y, callable $procedure) {
 			throw new Throwable\UnimplementedMethod\Exception('Method :method has not been implemented.', array(':method' => __FUNCTION__));
 		}
 

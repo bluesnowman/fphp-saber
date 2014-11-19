@@ -69,7 +69,7 @@ namespace Saber\Data {
 		 * @access public
 		 * @static
 		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return Data\Type                                        the boxed object
+		 * @return Data\String                                      the boxed object
 		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
 		public static function box($value/*...*/) {
@@ -94,7 +94,7 @@ namespace Saber\Data {
 		 * @access public
 		 * @static
 		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return Data\Type                                        the boxed object
+		 * @return Data\String                                      the boxed object
 		 */
 		public static function create($value/*...*/) {
 			return new static($value);

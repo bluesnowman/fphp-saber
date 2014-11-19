@@ -47,7 +47,7 @@ namespace Saber\Data {
 		}
 
 		/**
-		 * This method is called when the function is not defined and will attempt to remap
+		 * This method is called when a method is not defined and will attempt to remap
 		 * the call.  Particularly, this method provides a shortcut means of unboxing a method's
 		 * result when the method name is preceded by a double-underscore.
 		 *
@@ -62,7 +62,7 @@ namespace Saber\Data {
 			$class = get_class($this);
 			if (preg_match('/^__[a-z_][a-z0-9_]*$/i', $method)) {
 				$method = substr($method, 2);
-				if (!in_array($method, array('choice', 'unbox', 'value'))) {
+				if (!in_array($method, array('choice', 'unbox'))) {
 					if (method_exists($class, $method)) {
 						array_unshift($args, $this);
 						$result = call_user_func_array(array($class, $method), $args);
@@ -74,7 +74,7 @@ namespace Saber\Data {
 				}
 			}
 			else {
-				if (!in_array($method, array('value'))) {
+				if (!in_array($method, array('object'))) {
 					if (method_exists($class, $method)) {
 						array_unshift($args, $this);
 						$result = call_user_func_array(array($class, $method), $args);
@@ -83,6 +83,36 @@ namespace Saber\Data {
 				}
 			}
 			throw new Throwable\UnimplementedMethod\Exception('Unable to call method. No method ":method" exists in class ":class".', array(':class' => $class, ':method' => $method));
+		}
+
+		/**
+		 * This method is called when a method is not defined and will attempt to remap
+		 * the call.  Particularly, this method provides a shortcut means of unboxing a method's
+		 * result when the method name is preceded by a double-underscore.
+		 *
+		 * @access public
+		 * @param string $method                                    the method being called
+		 * @param array $args                                       the arguments associated with the call
+		 * @return mixed                                            the un-boxed value
+		 * @throws Throwable\UnimplementedMethod\Exception          indicates that the class has not
+		 *                                                          implemented the called method
+		 */
+		public static function __callStatic($method, $args) {
+			$class = get_called_class();
+			if (preg_match('/^__[a-z_][a-z0-9_]*$/i', $method)) {
+				$method = substr($method, 2);
+				if (!in_array($method, array('choice', 'unbox'))) {
+					if (method_exists($class, $method)) {
+						$result = call_user_func_array(array($class, $method), $args);
+						if ($result instanceof Data\Type\Boxable) {
+							return $result->unbox();
+						}
+						return $result;
+					}
+				}
+			}
+			throw new Throwable\UnimplementedMethod\Exception('Unable to call static method. No method ":method" exists in class ":class".', array(':class' => $class, ':method' => $method));
+
 		}
 
 		/**

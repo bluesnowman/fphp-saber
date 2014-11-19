@@ -285,6 +285,235 @@ namespace Saber\Data {
 
 		#endregion
 
+		#region Methods -> Equality
+
+		/**
+		 * This method evaluates whether the specified object is equal to the current object.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\Option $xs                                   the left operand
+		 * @param Data\Type $ys                                     the object to be evaluated
+		 * @return Data\Bool                                        whether the specified object is equal
+		 *                                                          to the current object
+		 */
+		public static function eq(Data\Option $xs, Data\Type $ys) {
+			$class = get_class($xs);
+			if ($ys instanceof $class) {
+				if ($ys instanceof Data\Option\Some) {
+					$x = $xs->object();
+					$y = $ys->object();
+					if ($x === null) {
+						return Data\Bool::create($y === null);
+					}
+					$module = get_class($x);
+					$method = 'eq';
+					if (method_exists($module, $method)) {
+						return call_user_func_array(array($module, $method), array($x, $y));
+					}
+					return Data\Bool::create(spl_object_hash($x) === spl_object_hash($y));
+				}
+				else if ($ys instanceof Data\Option\None) {
+					return Data\Bool::true();
+				}
+			}
+			return Data\Bool::false();
+		}
+
+		/**
+		 * This method evaluates whether the specified object is identical to the current object.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\Option $xs                                   the left operand
+		 * @param Data\Type $ys                                     the object to be evaluated
+		 * @return Data\Bool                                        whether the specified object is identical
+		 *                                                          to the current object
+		 */
+		public static function id(Data\Option $xs, Data\Type $ys) {
+			if (get_class($xs) === get_class($ys)) {
+				if ($ys instanceof Data\Option\Some) {
+					$x = $xs->object();
+					$y = $ys->object();
+					if ($x === null) {
+						return Data\Bool::create($y === null);
+					}
+					$module = get_class($x);
+					$method = 'id';
+					if (method_exists($module, $method)) {
+						return call_user_func_array(array($module, $method), array($x, $y));
+					}
+					return Data\Bool::create(spl_object_hash($x) === spl_object_hash($y));
+				}
+				else if ($ys instanceof Data\Option\None) {
+					return Data\Bool::true();
+				}
+			}
+			return Data\Bool::false();
+		}
+
+		/**
+		 * This method evaluates whether the left operand is NOT equal to the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\Option $xs                                   the left operand
+		 * @param Data\Type $ys                                     the right operand
+		 * @return Data\Bool                                        whether the left operand is NOT equal
+		 *                                                          to the right operand
+		 */
+		public static function ne(Data\Option $xs, Data\Type $ys) { // !=
+			return Data\Bool::not(Data\Option::eq($xs, $ys));
+		}
+
+		/**
+		 * This method evaluates whether the left operand is NOT identical to the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\Option $xs                                   the left operand
+		 * @param Data\Type $ys                                     the right operand
+		 * @return Data\Bool                                        whether the left operand is NOT identical
+		 *                                                          to the right operand
+		 */
+		public static function ni(Data\Option $xs, Data\Type $ys) { // !==
+			return Data\Bool::not(Data\Option::id($xs, $ys));
+		}
+
+		#endregion
+
+		#region Methods -> Ordering
+
+		/**
+		 * This method compares the specified object with the current object for order.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\Option $xs                                   the left operand
+		 * @param Data\Option $ys                                   the object to be compared
+		 * @return Data\Int32                                       whether the current object is less than,
+		 *                                                          equal to, or greater than the specified
+		 *                                                          object
+		 */
+		public static function compare(Data\Option $xs, Data\Option $ys) {
+			$x = Data\Option::isDefined($xs)->unbox();
+			$y = Data\Option::isDefined($ys)->unbox();
+
+			if (!$x && $y) {
+				return Data\Int32::negative();
+			}
+			if (!$x && !$y) {
+				return Data\Int32::zero();
+			}
+			if ($x && !$y) {
+				return Data\Int32::one();
+			}
+
+			$x = $xs->object();
+			$y = $ys->object();
+
+			if (($x === null) && ($y !== null)) {
+				return Data\Int32::negative();
+			}
+			if (($x === null) && ($y === null)) {
+				return Data\Int32::zero();
+			}
+			if (($x !== null) && ($y === null)) {
+				return Data\Int32::one();
+			}
+
+			$module = get_class($x);
+			$method = 'compare';
+			if (method_exists($module, $method)) {
+				return call_user_func_array(array($module, $method), array($x, $y));
+			}
+			return Data\String::compare(Data\String::create(spl_object_hash($x)), Data\String::create(spl_object_hash($y)));
+		}
+
+		/**
+		 * This method evaluates whether the left operand is greater than or equal to the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\Option $xs                                   the left operand
+		 * @param Data\Option $ys                                   the right operand
+		 * @return Data\Bool                                        whether the left operand is greater
+		 *                                                          than or equal to the right operand
+		 */
+		public static function ge(Data\Option $xs, Data\Option $ys) { // >=
+			return Data\Bool::create(Data\Option::compare($xs, $ys)->unbox() >= 0);
+		}
+
+		/**
+		 * This method evaluates whether the left operand is greater than the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\Option $xs                                   the left operand
+		 * @param Data\Option $ys                                   the right operand
+		 * @return Data\Bool                                        whether the left operand is greater
+		 *                                                          than the right operand
+		 */
+		public static function gt(Data\Option $xs, Data\Option $ys) { // >
+			return Data\Bool::create(Data\Option::compare($xs, $ys)->unbox() > 0);
+		}
+
+		/**
+		 * This method evaluates whether the left operand is less than or equal to the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\Option $xs                                   the left operand
+		 * @param Data\Option $ys                                   the right operand
+		 * @return Data\Bool                                        whether the left operand is less than
+		 *                                                          or equal to the right operand
+		 */
+		public static function le(Data\Option $xs, Data\Option $ys) { // <=
+			return Data\Bool::create(Data\Option::compare($xs, $ys)->unbox() <= 0);
+		}
+
+		/**
+		 * This method evaluates whether the left operand is less than the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\Option $xs                                   the left operand
+		 * @param Data\Option $ys                                   the right operand
+		 * @return Data\Bool                                        whether the left operand is less than
+		 *                                                          the right operand
+		 */
+		public static function lt(Data\Option $xs, Data\Option $ys) { // <
+			return Data\Bool::create(Data\Option::compare($xs, $ys)->unbox() < 0);
+		}
+
+		/**
+		 * This method returns the numerically highest value.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\Option $xs                                   the left operand
+		 * @param Data\Option $ys                                   the right operand
+		 * @return Data\Int32                                       the maximum value
+		 */
+		public static function max(Data\Option $xs, Data\Option $ys) {
+			return (Data\Option::compare($xs, $ys)->unbox() >= 0) ? $xs : $ys;
+		}
+
+		/**
+		 * This method returns the numerically lowest value.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\Option $xs                                   the left operand
+		 * @param Data\Option $ys                                   the right operand
+		 * @return Data\Int32                                       the minimum value
+		 */
+		public static function min(Data\Option $xs, Data\Option $ys) {
+			return (Data\Option::compare($xs, $ys)->unbox() <= 0) ? $xs : $ys;
+		}
+
+		#endregion
+
 	}
 
 }

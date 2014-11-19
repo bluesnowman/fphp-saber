@@ -20,6 +20,6 @@ namespace Saber\Data {
 
 	use \Saber\Data;
 
-	interface Ord extends Data\Eq { }
+	interface Ord extends Data\Equality { }
 
 }

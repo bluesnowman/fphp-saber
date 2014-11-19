@@ -18,6 +18,6 @@
 
 namespace Saber\Data {
 
-	interface Eq { }
+	interface Equality { }
 
 }

@@ -21,7 +21,7 @@ namespace Saber\Data {
 	use \Saber\Core;
 	use \Saber\Data;
 
-	class Wrapper implements Core\AnyRef {
+	class Object implements Core\AnyRef {
 
 		#region Traits
 
@@ -49,12 +49,12 @@ namespace Saber\Data {
 		 * This method compares the specified object with the current object for order.
 		 *
 		 * @access public
-		 * @param Data\Wrapper $that                                the object to be compared
+		 * @param Data\Object $that                                the object to be compared
 		 * @return Data\Int32                                       whether the current object is less than,
 		 *                                                          equal to, or greater than the specified
 		 *                                                          object
 		 */
-		public function compareTo(Data\Wrapper $that) {
+		public function compareTo(Data\Object $that) {
 			return Data\Int32::zero();
 		}
 

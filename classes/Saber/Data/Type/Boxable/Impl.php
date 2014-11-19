@@ -16,10 +16,12 @@
  * limitations under the License.
  */
 
-namespace Saber\Data {
+namespace Saber\Data\Type\Boxable {
 
 	use \Saber\Data;
 
-	interface Ord extends Data\Equality { }
+	trait Impl {
+
+	}
 
 }

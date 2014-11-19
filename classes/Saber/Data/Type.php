@@ -126,7 +126,19 @@ namespace Saber\Data {
 
 		#endregion
 
-		#region Methods -> Data Typing
+		#region Methods -> Basic Operations
+
+		/**
+		 * This method returns the object's hash code.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\Type $x                                      the object to be evaluated
+		 * @return Data\String                                      the object's hash code
+		 */
+		public static function hashCode(Data\Type $x) {
+			return Data\String::create(spl_object_hash($x));
+		}
 
 		/**
 		 * This method returns the object's class type.

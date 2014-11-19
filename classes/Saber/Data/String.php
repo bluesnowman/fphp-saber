@@ -160,7 +160,7 @@ namespace Saber\Data {
 		 *                                                          passed the truthy test
 		 */
 		public static function any(Data\String $xs, callable $predicate) {
-			return Data\String::find($xs, $predicate)->isDefined();
+			return Data\Option::isDefined(Data\String::find($xs, $predicate));
 		}
 
 		/**
@@ -203,30 +203,6 @@ namespace Saber\Data {
 			return Data\String::any($xs, function(Data\Char $x, Data\Int32 $i) use ($y) {
 				return Data\Char::eq($x, $y);
 			});
-		}
-
-		/**
-		 * This method compares the specified object with the current object for order.
-		 *
-		 * @access public
-		 * @static
-		 * @param Data\String $xs                                   the left operand
-		 * @param Data\String $ys                                   the object to be compared
-		 * @return Data\Int32                                       whether the current object is less than,
-		 *                                                          equal to, or greater than the specified
-		 *                                                          object
-		 */
-		public static function compare(Data\String $xs, Data\String $ys) {
-			$__r = strcmp($xs->unbox(), $ys->unbox());
-			if ($__r < 0) {
-				return Data\Int32::negative();
-			}
-			else if ($__r == 0) {
-				return Data\Int32::zero();
-			}
-			else {
-				return Data\Int32::one();
-			}
 		}
 
 		/**
@@ -791,6 +767,194 @@ namespace Saber\Data {
 			return Data\String::takeWhile($xs, function(Data\Type $x, Data\Int32 $i) use ($predicate) {
 				return Data\Bool::not($predicate($x, $i));
 			});
+		}
+
+		#endregion
+
+		#region Methods -> Equality
+
+		/**
+		 * This method evaluates whether the specified object is equal to the current object.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\String $xs                                   the left operand
+		 * @param Data\Type $ys                                     the object to be evaluated
+		 * @return Data\Bool                                        whether the specified object is equal
+		 *                                                          to the current object
+		 */
+		public static function eq(Data\String $xs, Data\Type $ys) {
+			$class = get_class($xs);
+			if ($ys instanceof $class) {
+				return Data\Bool::create($xs->unbox() == $ys->unbox());
+			}
+			return Data\Bool::false();
+		}
+
+		/**
+		 * This method evaluates whether the specified object is identical to the current object.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\String $xs                                   the left operand
+		 * @param Data\Type $ys                                     the object to be evaluated
+		 * @return Data\Bool                                        whether the specified object is identical
+		 *                                                          to the current object
+		 */
+		public static function id(Data\String $xs, Data\Type $ys) {
+			if (get_class($xs) === get_class($ys)) {
+				return Data\Bool::create($xs->unbox() === $ys->unbox());
+			}
+			return Data\Bool::false();
+		}
+
+		/**
+		 * This method evaluates whether the left operand is NOT equal to the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\String $xs                                   the left operand
+		 * @param Data\Type $ys                                     the right operand
+		 * @return Data\Bool                                        whether the left operand is NOT equal
+		 *                                                          to the right operand
+		 */
+		public static function ne(Data\String $xs, Data\Type $ys) { // !=
+			return Data\Bool::not(Data\Option::eq($xs, $ys));
+		}
+
+		/**
+		 * This method evaluates whether the left operand is NOT identical to the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\String $xs                                   the left operand
+		 * @param Data\Type $ys                                     the right operand
+		 * @return Data\Bool                                        whether the left operand is NOT identical
+		 *                                                          to the right operand
+		 */
+		public static function ni(Data\String $xs, Data\Type $ys) { // !==
+			return Data\Bool::not(Data\Option::id($xs, $ys));
+		}
+
+		#endregion
+
+		#region Methods -> Ordering
+
+		/**
+		 * This method compares the specified object with the current object for order.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\String $xs                                   the left operand
+		 * @param Data\String $ys                                   the object to be compared
+		 * @return Data\Int32                                       whether the current object is less than,
+		 *                                                          equal to, or greater than the specified
+		 *                                                          object
+		 */
+		public static function compare(Data\String $xs, Data\String $ys) {
+			if (($xs === null) && ($ys !== null)) {
+				return Data\Int32::negative();
+			}
+			if (($xs === null) && ($ys === null)) {
+				return Data\Int32::zero();
+			}
+			if (($xs !== null) && ($ys === null)) {
+				return Data\Int32::one();
+			}
+
+			$r = strcmp($xs->unbox(), $ys->unbox());
+
+			if ($r < 0) {
+				return Data\Int32::negative();
+			}
+			else if ($r == 0) {
+				return Data\Int32::zero();
+			}
+			else {
+				return Data\Int32::one();
+			}
+		}
+
+		/**
+		 * This method evaluates whether the left operand is greater than or equal to the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\String $xs                                   the left operand
+		 * @param Data\String $ys                                   the right operand
+		 * @return Data\Bool                                        whether the left operand is greater
+		 *                                                          than or equal to the right operand
+		 */
+		public static function ge(Data\String $xs, Data\String $ys) { // >=
+			return Data\Bool::create(Data\String::compare($xs, $ys)->unbox() >= 0);
+		}
+
+		/**
+		 * This method evaluates whether the left operand is greater than the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\String $xs                                   the left operand
+		 * @param Data\String $ys                                   the right operand
+		 * @return Data\Bool                                        whether the left operand is greater
+		 *                                                          than the right operand
+		 */
+		public static function gt(Data\String $xs, Data\String $ys) { // >
+			return Data\Bool::create(Data\String::compare($xs, $ys)->unbox() > 0);
+		}
+
+		/**
+		 * This method evaluates whether the left operand is less than or equal to the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\String $xs                                   the left operand
+		 * @param Data\String $ys                                   the right operand
+		 * @return Data\Bool                                        whether the left operand is less than
+		 *                                                          or equal to the right operand
+		 */
+		public static function le(Data\String $xs, Data\String $ys) { // <=
+			return Data\Bool::create(Data\String::compare($xs, $ys)->unbox() <= 0);
+		}
+
+		/**
+		 * This method evaluates whether the left operand is less than the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\String $xs                                   the left operand
+		 * @param Data\String $ys                                   the right operand
+		 * @return Data\Bool                                        whether the left operand is less than
+		 *                                                          the right operand
+		 */
+		public static function lt(Data\String $xs, Data\String $ys) { // <
+			return Data\Bool::create(Data\String::compare($xs, $ys)->unbox() < 0);
+		}
+
+		/**
+		 * This method returns the numerically highest value.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\String $xs                                   the left operand
+		 * @param Data\String $ys                                   the right operand
+		 * @return Data\Int32                                       the maximum value
+		 */
+		public static function max(Data\String $xs, Data\String $ys) {
+			return (Data\String::compare($xs, $ys)->unbox() >= 0) ? $xs : $ys;
+		}
+
+		/**
+		 * This method returns the numerically lowest value.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\String $xs                                   the left operand
+		 * @param Data\String $ys                                   the right operand
+		 * @return Data\Int32                                       the minimum value
+		 */
+		public static function min(Data\String $xs, Data\String $ys) {
+			return (Data\String::compare($xs, $ys)->unbox() <= 0) ? $xs : $ys;
 		}
 
 		#endregion

@@ -351,18 +351,6 @@ namespace Saber\Data {
 			return Control\Monad::choice($x);
 		}
 
-		/**
-		 * This method returns the object's hash code.
-		 *
-		 * @access public
-		 * @static
-		 * @param Data\Char $x                                      the object to be evaluated
-		 * @return Data\String                                      the object's hash code
-		 */
-		public static function hashCode(Data\Char $x) {
-			return Data\String::create($x->__toString());
-		}
-
 		#endregion
 
 		#region Methods -> Processing

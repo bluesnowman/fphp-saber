@@ -221,7 +221,7 @@ namespace Saber\Data {
 
 			for ($i = Data\Int32::zero(); Data\Int32::lt($i, $length)->unbox(); $i = Data\Int32::increment($i)) {
 				$x = Data\String::element($xs, $i);
-				if (Data\Bool::eq($x, $y)->unbox() && !$skip) {
+				if (Data\Char::eq($x, $y)->unbox() && !$skip) {
 					$skip = true;
 					continue;
 				}
@@ -339,10 +339,10 @@ namespace Saber\Data {
 			$buffer = '';
 			$length = Data\String::length($xs)->unbox();
 
-			for ($i = 0; $i < $length; $i++) {
-				$x = mb_substr($xs->unbox(), $i, 1, Data\Char::UTF_8_ENCODING);
-				if ($predicate(Data\Char::create($x), Data\Int32::create($i))->unbox()) {
-					$buffer .= $x;
+			for ($i = Data\Int32::zero(); Data\Int32::lt($i, $length)->unbox(); $i = Data\Int32::increment($i)) {
+				$x = Data\String::element($xs, $i);
+				if ($predicate($x, $i)->unbox()) {
+					$buffer .= $x->unbox();
 				}
 			}
 
@@ -419,7 +419,7 @@ namespace Saber\Data {
 			$z = $initial;
 			$length = Data\String::length($xs);
 
-			for ($i = Data\Int32::decrement($length); Data\Int32::ge($i, Data\Int32::zero())->unbox(); $i = Data\Int32::decrement($length)) {
+			for ($i = Data\Int32::decrement($length); Data\Int32::ge($i, Data\Int32::zero())->unbox(); $i = Data\Int32::decrement($i)) {
 				$z = $operator($z, Data\String::element($xs, $i));
 			}
 
@@ -484,10 +484,35 @@ namespace Saber\Data {
 		 */
 		public static function init(Data\String $xs) {
 			$buffer = '';
-			$length = Data\String::length($xs);
+			$length = Data\Int32::decrement(Data\String::length($xs));
 
 			for ($i = Data\Int32::zero(); Data\Int32::lt($i, $length)->unbox(); $i = Data\Int32::increment($i)) {
 				$buffer .= Data\String::element($xs, $i)->unbox();
+			}
+
+			return Data\String::create($buffer);
+		}
+
+		/**
+		 * The method intersperses the specified object between each element in the string.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\String $xs                                   the left operand
+		 * @param Data\Type $y                                      the object to be interspersed
+		 * @return Data\String                                      the string
+		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
+		 */
+		public static function intersperse(Data\String $xs, Data\Type $y) {
+			$buffer = '';
+			$length = Data\String::length($xs);
+
+			if ($length->unbox() > 0) {
+				$buffer .= Data\String::element($xs, Data\Int32::zero())->unbox();
+				for ($i = Data\Int32::one(); Data\Int32::lt($i, $length)->unbox(); $i = Data\Int32::increment($i)) {
+					$buffer .= $y->__toString();
+					$buffer .= Data\String::element($xs, $i)->unbox();
+				}
 			}
 
 			return Data\String::create($buffer);
@@ -515,31 +540,6 @@ namespace Saber\Data {
 		 */
 		public static function iterator(Data\String $xs) {
 			return new Data\String\Iterator($xs);
-		}
-
-		/**
-		 * The method intersperses the specified object between each element in the string.
-		 *
-		 * @access public
-		 * @static
-		 * @param Data\String $xs                                   the left operand
-		 * @param Data\Type $object                                 the object to be interspersed
-		 * @return Data\String                                      the string
-		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
-		 */
-		public static function intersperse(Data\String $xs, Data\Type $object) {
-			$buffer = '';
-			$length = Data\String::length($xs)->unbox();
-
-			if ($length > 0) {
-				$buffer .= mb_substr($xs->unbox(), 0, 1, Data\Char::UTF_8_ENCODING);
-				for ($i = 1; $i < $length; $i++) {
-					$buffer .= $object->__toString();
-					$buffer .= mb_substr($xs->unbox(), $i, 1, Data\Char::UTF_8_ENCODING);
-				}
-			}
-
-			return Data\String::create($buffer);
 		}
 
 		/**
@@ -819,7 +819,7 @@ namespace Saber\Data {
 		 *                                                          to the right operand
 		 */
 		public static function ne(Data\String $xs, Data\Type $ys) { // !=
-			return Data\Bool::not(Data\Option::eq($xs, $ys));
+			return Data\Bool::not(Data\String::eq($xs, $ys));
 		}
 
 		/**
@@ -833,7 +833,7 @@ namespace Saber\Data {
 		 *                                                          to the right operand
 		 */
 		public static function ni(Data\String $xs, Data\Type $ys) { // !==
-			return Data\Bool::not(Data\Option::id($xs, $ys));
+			return Data\Bool::not(Data\String::id($xs, $ys));
 		}
 
 		#endregion

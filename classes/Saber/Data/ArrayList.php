@@ -52,7 +52,7 @@ namespace Saber\Data {
 					throw new Throwable\InvalidArgument\Exception('Unable to create array list. Expected a boxed value, but got ":type".', array(':type' => $type));
 				}
 			}
-			return new static($value);
+			return new Data\ArrayList($value);
 		}
 
 		/**
@@ -64,6 +64,16 @@ namespace Saber\Data {
 		 */
 		public function __construct(array $value) {
 			$this->value = $value;
+		}
+
+		/**
+		 * This method returns the object as a string.
+		 *
+		 * @access public
+		 * @return string                                           the object as a string
+		 */
+		public function __toString() {
+			return (string) serialize($this->unbox());
 		}
 
 		/**
@@ -81,7 +91,7 @@ namespace Saber\Data {
 				$buffer[] = $y;
 			}
 
-			return new static($buffer);
+			return new Data\ArrayList($buffer);
 		}
 
 		/**
@@ -106,34 +116,6 @@ namespace Saber\Data {
 
 		#endregion
 
-		#region Methods -> Native Oriented
-
-		/**
-		 * This method (aka "null") returns whether this list is empty.
-		 *
-		 * @access public
-		 * @static
-		 * @param Data\ArrayList $xs                                the left operand
-		 * @return boolean                                          whether the list is empty
-		 */
-		public static function __isEmpty(Data\ArrayList $xs) {
-			return ($this->__length() == 0);
-		}
-
-		/**
-		 * This method returns the length of this array list.
-		 *
-		 * @access public
-		 * @static
-		 * @param Data\ArrayList $xs                                the left operand
-		 * @return integer                                          the length of this array list
-		 */
-		public static function __length(Data\ArrayList $xs) {
-			return count($this->value);
-		}
-
-		#endregion
-
 		#region Methods -> Object Oriented -> Universal
 
 		/**
@@ -148,10 +130,10 @@ namespace Saber\Data {
 		 *                                                          truthy test
 		 */
 		public static function all(Data\ArrayList $xs, callable $predicate) {
-			$length = $this->__length();
+			$length = Data\ArrayList::length($xs);
 
-			for ($i = 0; $i < $length; $i++) {
-				if (!$predicate($this->value[$i], Data\Int32::create($i))->unbox()) {
+			for ($i = Data\Int32::zero(); Data\Int32::lt($i, $length)->unbox(); $i = Data\Int32::increment($i)) {
+				if (!$predicate(Data\ArrayList::element($xs, $i), $i)->unbox()) {
 					return Data\Bool::false();
 				}
 			}
@@ -171,7 +153,7 @@ namespace Saber\Data {
 		 *                                                          passed the truthy test
 		 */
 		public static function any(Data\ArrayList $xs, callable $predicate) {
-			return $this->find($predicate)->isDefined();
+			return Data\Option::isDefined(Data\ArrayList::find($xs, $predicate));
 		}
 
 		/**
@@ -180,12 +162,13 @@ namespace Saber\Data {
 		 * @access public
 		 * @static
 		 * @param Data\ArrayList $xs                                the left operand
-		 * @param Data\Type $object                                  the object to be appended
+		 * @param Data\Type $y                                      the object to be appended
 		 * @return Data\ArrayList                                   the list
 		 */
-		public static function append(Data\Type $object) {
-			$this->value[] = $object;
-			return $this;
+		public static function append(Data\ArrayList $xs, Data\Type $y) {
+			$buffer = $xs->unbox();
+			$buffer[] = $y;
+			return new Data\ArrayList($buffer);
 		}
 
 		/**
@@ -194,14 +177,15 @@ namespace Saber\Data {
 		 * @access public
 		 * @static
 		 * @param Data\ArrayList $xs                                the left operand
-		 * @param Data\ArrayList $that                              the list to be concatenated
+		 * @param Data\ArrayList $ys                                the list to be concatenated
 		 * @return Data\ArrayList                                   the list
 		 */
-		public static function concat(Data\ArrayList $that) {
-			foreach ($that->unbox() as $y) {
-				$this->value[] = $y;
+		public static function concat(Data\ArrayList $xs, Data\ArrayList $ys) {
+			$buffer = $xs->unbox();
+			foreach ($ys->unbox() as $y) {
+				$buffer[] = $y;
 			}
-			return $this;
+			return new Data\ArrayList($buffer);
 		}
 
 		/**
@@ -214,11 +198,621 @@ namespace Saber\Data {
 		 * @return Data\Bool                                        whether the specified object is
 		 *                                                          contained within the list
 		 */
-		public static function contains(Data\Type $y) {
-			return $this->any(function(Data\Type $x, Data\Int32 $i) use ($y) {
+		public static function contains(Data\ArrayList $xs, Data\Type $y) {
+			return Data\ArrayList::any($xs, function(Data\Type $x, Data\Int32 $i) use ($y) {
 				return $x->equals($y);
 			});
 		}
+
+		/**
+		 * This method remove the first occurrence that equals the specified object.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\ArrayList $xs                                the left operand
+		 * @param Data\Type $object                                 the object to be removed
+		 * @return Data\ArrayList                                   the list
+		 */
+		public static function delete(Data\ArrayList $xs, Data\Type $object) {
+			$buffer = array();
+			$skip = false;
+
+			foreach ($this->value as $x) {
+				if ($x->__equals($object) && !$skip) {
+					$skip = true;
+					continue;
+				}
+				$buffer[] = $x;
+			}
+
+			return new Data\ArrayList($buffer);
+		}
+
+		/**
+		 * This method returns the list after dropping the first "n" elements.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\ArrayList $xs                                the left operand
+		 * @param Data\Int32 $n                                     the number of elements to drop
+		 * @return Data\ArrayList                                   the list
+		 */
+		public static function drop(Data\ArrayList $xs, Data\Int32 $n) {
+			$buffer = array();
+			$length = Data\ArrayList::length($xs);
+
+			for ($i = $n; Data\Int32::lt($i, $length)->unbox(); $i = Data\Int32::increment($i)) {
+				$buffer[] = Data\ArrayList::element($xs, $i);
+			}
+
+			return new Data\ArrayList($buffer);
+		}
+
+		/**
+		 * This method return the list from element where the predicate function fails.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\ArrayList $xs                                the left operand
+		 * @param callable $predicate                               the predicate function to be used
+		 * @return Data\ArrayList                                   the list
+		 */
+		public static function dropWhile(Data\ArrayList $xs, callable $predicate) {
+			$buffer = array();
+			$length = Data\ArrayList::length($xs);
+
+			$failed = false;
+			for ($i = Data\Int32::zero(); Data\Int32::lt($i, $length)->unbox(); $i = Data\Int32::increment($i)) {
+				$x = Data\ArrayList::element($xs, $i);
+				if (!$predicate($x, $i)->unbox() || $failed) {
+					$buffer[] = $x;
+					$failed = true;
+				}
+			}
+
+			return new Data\ArrayList($buffer);
+		}
+
+		/**
+		 * This method return the list from element where the predicate function doesn't fail.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\ArrayList $xs                                the left operand
+		 * @param callable $predicate                               the predicate function to be used
+		 * @return Data\ArrayList                                   the list
+		 */
+		public static function dropWhileEnd(Data\ArrayList $xs, callable $predicate) {
+			return Data\ArrayList::dropWhile($xs, function(Data\Type $x, Data\Int32 $i) use ($predicate) {
+				return Data\Bool::not($predicate($x, $i));
+			});
+		}
+
+		/**
+		 * This method iterates over the elements in the list, yielding each element to the procedure
+		 * function.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\ArrayList $xs                                the left operand
+		 * @param callable $procedure                               the procedure function to be used
+		 */
+		public static function each(Data\ArrayList $xs, callable $procedure) {
+			$length = Data\ArrayList::length($xs);
+
+			for ($i = Data\Int32::zero(); Data\Int32::lt($i, $length)->unbox(); $i = Data\Int32::increment($i)) {
+				$procedure(Data\ArrayList::element($xs, $i), $i);
+			}
+		}
+
+		/**
+		 * This method returns the element at the specified index.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\ArrayList $xs                                the left operand
+		 * @param Data\Int32 $index                                 the index of the element
+		 * @return Data\Type                                        the element at the specified index
+		 * @throws Throwable\OutOfBounds\Exception                  indicates the specified index
+		 *                                                          cannot be found
+		 */
+		public static function element(Data\ArrayList $xs, Data\Int32 $index) {
+			$i = $index->unbox();
+
+			if (($i < 0) || ($i >= $this->length())) {
+				throw new Throwable\OutOfBounds\Exception('Unable to return element at index :index.', array(':index' => $i));
+			}
+
+			return $xs->value[$i];
+		}
+
+		/**
+		 * This method returns a list of those elements that satisfy the predicate.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\ArrayList $xs                                the left operand
+		 * @param callable $predicate                               the predicate function to be used
+		 * @return Data\ArrayList                                   the list
+		 */
+		public static function filter(Data\ArrayList $xs, callable $predicate) {
+			$buffer = array();
+			$length = Data\ArrayList::length($xs);
+
+			for ($i = Data\Int32::zero(); Data\Int32::lt($i, $length)->unbox(); $i = Data\Int32::increment($i)) {
+				$x = Data\ArrayList::element($xs, $i);
+				if ($predicate($x, $i)->unbox()) {
+					$buffer[] = $x;
+				}
+			}
+
+			return new Data\ArrayList($buffer);
+		}
+
+		/**
+		 * This method returns the first object in the collection that passes the truthy test, if any.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\ArrayList $xs                                the left operand
+		 * @param callable $predicate                               the predicate function to be used
+		 * @return Data\Option                                      an option containing the first object
+		 *                                                          satisfying the predicate, if any
+		 */
+		public static function find(Data\ArrayList $xs, callable $predicate) {
+			$length = Data\ArrayList::length($xs);
+
+			for ($i = Data\Int32::zero(); Data\Int32::lt($i, $length)->unbox(); $i = Data\Int32::increment($i)) {
+				$x = Data\ArrayList::element($xs, $i);
+				if ($predicate($x, $i)->unbox()) {
+					return Data\Option::some($x);
+				}
+			}
+
+			return Data\Option::none();
+		}
+
+		/**
+		 * This method returns the array list flattened.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\ArrayList $xs                                the left operand
+		 * @return Data\ArrayList                                   the flattened array list
+		 */
+		public static function flatten(Data\ArrayList $xs) {
+			$buffer = array();
+			$x_length = Data\ArrayList::length($xs);
+
+			for ($i = Data\Int32::zero(); Data\Int32::lt($i, $x_length)->unbox(); $i = Data\Int32::increment($i)) {
+				$x = Data\ArrayList::element($xs, $i);
+				if ($x instanceof Data\ArrayList) {
+					$ys = Data\ArrayList::flatten($x);
+					$y_length = Data\ArrayList::length($ys);
+					for ($j = Data\Int32::zero(); Data\Int32::lt($j, $y_length)->unbox(); $j = Data\Int32::increment($j)) {
+						$buffer[] = Data\ArrayList::element($ys, $j);
+					}
+				}
+				else {
+					$buffer[] = $x;
+				}
+			}
+
+			return $buffer;
+		}
+
+		/**
+		 * This method applies a left-fold reduction on the list using the operator function.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\ArrayList $xs                                the left operand
+		 * @param callable $operator                                the operator function to be used
+		 * @param Data\Type $initial                                the initial value to be used
+		 * @return Data\Type                                        the result
+		 */
+		public static function foldLeft(Data\ArrayList $xs, callable $operator, Data\Type $initial) {
+			$z = $initial;
+			$length = Data\ArrayList::length($xs);
+
+			for ($i = Data\Int32::zero(); Data\Int32::lt($i, $length)->unbox(); $i = Data\Int32::increment($i)) {
+				$z = $operator($z, Data\ArrayList::element($xs, $i));
+			}
+
+			return $z;
+		}
+
+		/**
+		 * This method applies a right-fold reduction on the list using the operation function.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\ArrayList $xs                                the left operand
+		 * @param callable $operator                                the operator function to be used
+		 * @param Data\Type $initial                                the initial value to be used
+		 * @return Data\Type                                        the result
+		 */
+		public static function foldRight(Data\ArrayList $xs, callable $operator, Data\Type $initial) {
+			$z = $initial;
+			$length = Data\ArrayList::length($xs);
+
+			for ($i = Data\Int32::decrement($length); Data\Int32::ge($i, Data\Int32::zero())->unbox(); $i = Data\Int32::decrement($length)) {
+				$z = $operator($z, Data\ArrayList::element($xs, $i));
+			}
+
+			return $z;
+		}
+
+		/**
+		 * This method returns the head object in this list.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\ArrayList $xs                                the left operand
+		 * @return Data\Type                                        the head object in this list
+		 */
+		public static function head(Data\ArrayList $xs) {
+			return Data\ArrayList::element($xs, Data\Int32::zero());
+		}
+
+		/**
+		 * This method returns an option using the head for the boxed object.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\ArrayList $xs                                the left operand
+		 * @return Data\Option                                      the option
+		 */
+		public static function headOption(Data\ArrayList $xs) {
+			return (!Data\ArrayList::isEmpty($xs)->unbox()) ? Data\Option::some(Data\ArrayList::head($xs)) : Data\Option::none();
+		}
+
+		/**
+		 * This method return the index of the first occurrence of the object; otherwise, it returns -1;
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\ArrayList $xs                                the left operand
+		 * @param Data\Type $y                                      the object to be searched for
+		 * @return Data\Int32                                       the index of the first occurrence
+		 *                                                          or otherwise -1
+		 */
+		public static function indexOf(Data\ArrayList $xs, Data\Type $y) {
+			$length = Data\ArrayList::length($xs);
+
+			for ($i = Data\Int32::zero(); Data\Int32::lt($i, $length)->unbox(); $i = Data\Int32::increment($i)) {
+				$x = Data\ArrayList::element($xs, $i);
+				if (call_user_func_array(array(get_class($x), 'eq'), array($x, $y))->unbox()) {
+					return $i;
+				}
+			}
+
+			return Data\Int32::negative();
+		}
+
+		/**
+		 * This method returns all but the last element of in the list.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\ArrayList $xs                                the left operand
+		 * @return Data\ArrayList                                   the list, minus the last
+		 *                                                          element
+		 */
+		public static function init(Data\ArrayList $xs) {
+			$buffer = array();
+			$length = Data\Int32::decrement(Data\ArrayList::length($xs));
+
+			for ($i = Data\Int32::zero(); Data\Int32::lt($i, $length)->unbox(); $i = Data\Int32::increment($i)) {
+				$buffer[] = Data\ArrayList::element($xs, $i);
+			}
+
+			return new Data\ArrayList($buffer);
+		}
+
+		/**
+		 * The method intersperses the specified object between each element in the list.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\ArrayList $xs                                the left operand
+		 * @param Data\Type $y                                      the object to be interspersed
+		 * @return Data\ArrayList                                   the list
+		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
+		 */
+		public static function intersperse(Data\ArrayList $xs, Data\Type $y) {
+			$buffer = array();
+			$length = Data\ArrayList::length($xs);
+
+			if ($length > 0) {
+				$buffer[] = Data\ArrayList::element($xs, Data\Int32::zero());
+				for ($i = Data\Int32::one(); Data\Int32::lt($i, $length)->unbox(); $i = Data\Int32::increment($i)) {
+					$buffer[] = $y;
+					$buffer[] = Data\ArrayList::element($xs, $i);
+				}
+			}
+
+			return new Data\ArrayList($buffer);
+		}
+
+		/**
+		 * This method (aka "null") returns whether this list is empty.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\ArrayList $xs                                the left operand
+		 * @return Data\Bool                                        whether the list is empty
+		 */
+		public static function isEmpty(Data\ArrayList $xs) {
+			return Data\Int32::eq(Data\ArrayList::length($xs), Data\Int32::zero());
+		}
+
+		/**
+		 * This method returns an iterator for this collection.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\ArrayList $xs                                the left operand
+		 * @return Data\ArrayList\Iterator                          an iterator for this collection
+		 */
+		public static function iterator(Data\ArrayList $xs) {
+			return new Data\ArrayList\Iterator($xs);
+		}
+
+		/**
+		 * This method returns the last element in this list.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\ArrayList $xs                                the left operand
+		 * @return Data\Type                                        the last element in this linked
+		 *                                                          list
+		 */
+		public static function last(Data\ArrayList $xs) {
+			return Data\ArrayList::element($xs, Data\Int32::decrement(Data\ArrayList::length($xs)));
+		}
+
+		/**
+		 * This method returns an option using the last for the boxed object.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\ArrayList $xs                                the left operand
+		 * @return Data\Option                                      the option
+		 */
+		public static function lastOption(Data\ArrayList $xs) {
+			return (!Data\ArrayList::isEmpty($xs)->unbox()) ? Data\Option::some(Data\ArrayList::last($xs)) : Data\Option::none();
+		}
+
+		/**
+		 * This method returns the length of this array list.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\ArrayList $xs                                the left operand
+		 * @return Data\Int32                                       the length of this array list
+		 */
+		public static function length(Data\ArrayList $xs) {
+			return Data\Int32::create(count($xs->unbox()));
+		}
+
+		/**
+		 * This method applies each element in this list to the subroutine function.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\ArrayList $xs                                the left operand
+		 * @param callable $subroutine                              the subroutine function to be used
+		 * @return Data\ArrayList                                   the list
+		 */
+		public static function map(Data\ArrayList $xs, callable $subroutine) {
+			$buffer = array();
+			$length = Data\ArrayList::length($xs);
+
+			for ($i = Data\Int32::zero(); Data\Int32::lt($i, $length)->unbox(); $i = Data\Int32::increment($i)) {
+				$buffer[] = $subroutine(Data\ArrayList::element($xs, $i), $i);
+			}
+
+			return new Data\ArrayList($buffer);
+		}
+
+		/**
+		 * This method iterates over the elements in the list, yielding each element to the
+		 * predicate function, or fails the falsy test.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\ArrayList $xs                                the left operand
+		 * @param callable $predicate                               the predicate function to be used
+		 * @return Data\Bool                                        whether each element passed the
+		 *                                                          falsy test
+		 */
+		public static function none(Data\ArrayList $xs, callable $predicate) {
+			return Data\ArrayList::all($xs, function(Data\Type $x, Data\Int32 $i) use ($predicate) {
+				return Data\Bool::not($predicate($x, $i));
+			});
+		}
+
+		/**
+		 * This method prepends the specified object to the front of this list.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\ArrayList $xs                                the left operand
+		 * @param Data\Type $y                                      the object to be prepended
+		 * @return Data\ArrayList                                   the list
+		 */
+		public static function prepend(Data\ArrayList $xs, Data\Type $y) {
+			$buffer = $xs->unbox();
+			array_unshift($buffer, $y);
+			return new Data\ArrayList($buffer);
+		}
+
+		/**
+		 * This method returns the list within the specified range.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\ArrayList $xs                                the left operand
+		 * @param Data\Int32 $start                                 the starting index
+		 * @param Data\Int32 $end                                   the ending index
+		 * @return Data\ArrayList                                   the list
+		 */
+		public static function range(Data\ArrayList $xs, Data\Int32 $start, Data\Int32 $end) {
+			return Data\ArrayList::drop(Data\ArrayList::take($xs, $end), $start);
+		}
+
+		/**
+		 * This method returns a list of those elements that don't satisfy the predicate.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\ArrayList $xs                                the left operand
+		 * @param callable $predicate                               the predicate function to be used
+		 * @return Data\ArrayList                                   the list
+		 */
+		public static function remove(Data\ArrayList $xs, callable $predicate) {
+			return Data\ArrayList::filter($xs, function(Data\Type $x, Data\Int32 $i) use ($predicate) {
+				return Data\Bool::not($predicate($x, $i));
+			});
+		}
+
+		/**
+		 * This method reverses the order of the elements in this list.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\ArrayList $xs                                the left operand
+		 * @return Data\ArrayList                                   the list
+		 */
+		public static function reverse(Data\ArrayList $xs) {
+			return new Data\ArrayList(array_reverse($xs->unbox()));
+		}
+
+		/**
+		 * This method returns the extracted slice of the list.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\ArrayList $xs                                the left operand
+		 * @param Data\Int32 $offset                                the starting index
+		 * @param Data\Int32 $length                                the length of the slice
+		 * @return Data\ArrayList                                   the list
+		 */
+		public static function slice(Data\ArrayList $xs, Data\Int32 $offset, Data\Int32 $length) {
+			return new Data\ArrayList(array_slice($xs->unbox(), $offset->unbox(), $length->unbox()));
+		}
+
+		/**
+		 * This method returns the tail of this list.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\ArrayList $xs                                the left operand
+		 * @return Data\ArrayList                                   the tail of this list
+		 */
+		public static function tail(Data\ArrayList $xs) {
+			$buffer = array();
+			$length = Data\ArrayList::length($xs);
+
+			for ($i = Data\Int32::one(); Data\Int32::lt($i, $length)->unbox(); $i = Data\Int32::increment($i)) {
+				$buffer[] = Data\ArrayList::element($xs, $i);
+			}
+
+			return new Data\ArrayList($buffer);
+		}
+
+		/**
+		 * This method returns the first "n" elements in the list.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\ArrayList $xs                                the left operand
+		 * @param Data\Int32 $n                                     the number of elements to take
+		 * @return Data\ArrayList                                   the list
+		 */
+		public static function take(Data\ArrayList $xs, Data\Int32 $n) {
+			$buffer = array();
+			$length = Data\Int32::min($n, Data\ArrayList::length($xs));
+
+			for ($i = Data\Int32::zero(); Data\Int32::lt($i, $length)->unbox(); $i = Data\Int32::increment($i)) {
+				$buffer[] = Data\ArrayList::element($xs, $i);
+			}
+
+			return new Data\ArrayList($buffer);
+		}
+
+		/**
+		 * This method returns each element in this list until the predicate fails.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\ArrayList $xs                                the left operand
+		 * @param callable $predicate                               the predicate function to be used
+		 * @return Data\ArrayList                                   the list
+		 */
+		public static function takeWhile(Data\ArrayList $xs, callable $predicate) {
+			$buffer = array();
+			$length = Data\ArrayList::length($xs);
+
+			for ($i = Data\Int32::zero(); Data\Int32::lt($i, $length)->unbox(); $i = Data\Int32::increment($i)) {
+				$x = Data\ArrayList::element($xs, $i);
+				if (!$predicate($x, $i)->unbox()) {
+					break;
+				}
+				$buffer[] = $x;
+			}
+
+			return new Data\ArrayList($buffer);
+		}
+
+		/**
+		 * This method returns each element in this list until the predicate doesn't fail.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\ArrayList $xs                                the left operand
+		 * @param callable $predicate                               the predicate function to be used
+		 * @return Data\ArrayList                                   the list
+		 */
+		public static function takeWhileEnd(Data\ArrayList $xs, callable $predicate) {
+			return Data\ArrayList::takeWhile($xs, function(Data\Type $x, Data\Int32 $i) use ($predicate) {
+				return Data\Bool::not($predicate($x, $i));
+			});
+		}
+
+		/**
+		 * This method returns the collection as an array.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\ArrayList $xs                                the left operand
+		 * @return Data\ArrayList                                   the collection as an array list
+		 */
+		public static function toArray(Data\ArrayList $xs) {
+			return $xs;
+		}
+
+		/**
+		 * This method returns the collection as a linked list.
+		 *
+		 * @access public
+		 * @static
+		 * @param Data\ArrayList $xs                                the left operand
+		 * @return Data\LinkedList                                  the collection as a linked list
+		 */
+		public static function toList(Data\ArrayList $xs) {
+			$list = Data\LinkedList::nil();
+			$length = Data\ArrayList::length($xs);
+
+			for ($i = Data\Int32::decrement($length); Data\Int32::ge($i, Data\Int32::zero())->unbox(); $i = Data\Int32::decrement($i)) {
+				$list = Data\LinkedList::prepend($xs, $i);
+			}
+
+			return $list;
+		}
+
+		#endregion
 
 		/**
 		 * This method compares the specified object with the current object for order.
@@ -226,14 +820,14 @@ namespace Saber\Data {
 		 * @access public
 		 * @static
 		 * @param Data\ArrayList $xs                                the left operand
-		 * @param Data\ArrayList $that                              the object to be compared
+		 * @param Data\ArrayList $ys                              the object to be compared
 		 * @return Data\Int32                                       whether the current object is less than,
 		 *                                                          equal to, or greater than the specified
 		 *                                                          object
 		 */
-		public static function compareTo(Data\ArrayList $that) {
-			$x_length = $this->__length();
-			$y_length = $that->__length();
+		public static function compare(Data\ArrayList $xs, Data\ArrayList $ys) {
+			$x_length = Data\ArrayList::length($xs);
+			$y_length = Data\ArrayList::length($ys);
 
 			for ($i = 0; $i < $x_length && $i < $y_length; $i++) {
 				$r = $this->value[$i]->compareTo($that->value[$i]);
@@ -253,620 +847,6 @@ namespace Saber\Data {
 			}
 		}
 
-		/**
-		 * This method remove the first occurrence that equals the specified object.
-		 *
-		 * @access public
-		 * @static
-		 * @param Data\ArrayList $xs                                the left operand
-		 * @param Data\Type $object                                 the object to be removed
-		 * @return Data\ArrayList                                   the list
-		 */
-		public static function delete(Data\Type $object) {
-			$buffer = array();
-			$skip = false;
-
-			foreach ($this->value as $x) {
-				if ($x->__equals($object) && !$skip) {
-					$skip = true;
-					continue;
-				}
-				$buffer[] = $x;
-			}
-
-			return new static($buffer);
-		}
-
-		/**
-		 * This method returns the list after dropping the first "n" elements.
-		 *
-		 * @access public
-		 * @static
-		 * @param Data\ArrayList $xs                                the left operand
-		 * @param Data\Int32 $n                                     the number of elements to drop
-		 * @return Data\ArrayList                                   the list
-		 */
-		public static function drop(Data\Int32 $n) {
-			$buffer = array();
-			$length = $this->__length();
-
-			for ($i = $n->unbox(); $i < $length; $i++) {
-				$buffer[] = $this->value[$i];
-			}
-
-			return new static($buffer);
-		}
-
-		/**
-		 * This method return the list from element where the predicate function fails.
-		 *
-		 * @access public
-		 * @static
-		 * @param Data\ArrayList $xs                                the left operand
-		 * @param callable $predicate                               the predicate function to be used
-		 * @return Data\ArrayList                                   the list
-		 */
-		public static function dropWhile(Data\ArrayList $xs, callable $predicate) {
-			$buffer = array();
-			$length = $this->__length();
-
-			$failed = false;
-			for ($i = 0; $i < $length; $i++) {
-				if (!$predicate($this->value[$i], Data\Int32::create($i))->unbox() || $failed) {
-					$buffer[] = $this->value[$i];
-					$failed = true;
-				}
-			}
-
-			return new static($buffer);
-		}
-
-		/**
-		 * This method return the list from element where the predicate function doesn't fail.
-		 *
-		 * @access public
-		 * @static
-		 * @param Data\ArrayList $xs                                the left operand
-		 * @param callable $predicate                               the predicate function to be used
-		 * @return Data\ArrayList                                   the list
-		 */
-		public static function dropWhileEnd(Data\ArrayList $xs, callable $predicate) {
-			return $this->dropWhile(function(Data\Type $object, Data\Int32 $index) use ($predicate) {
-				return $predicate($object, $index)->not();
-			});
-		}
-
-		/**
-		 * This method iterates over the elements in the list, yielding each element to the procedure
-		 * function.
-		 *
-		 * @access public
-		 * @static
-		 * @param Data\ArrayList $xs                                the left operand
-		 * @param callable $procedure                               the procedure function to be used
-		 */
-		public static function each(Data\ArrayList $xs, callable $procedure) {
-			$length = $this->__length();
-
-			for ($i = 0; $i < $length; $i++) {
-				$procedure($this->value[$i], Data\Int32::create($i));
-			}
-		}
-
-		/**
-		 * This method returns the element at the specified index.
-		 *
-		 * @access public
-		 * @static
-		 * @param Data\ArrayList $xs                                the left operand
-		 * @param Data\Int32 $index                                 the index of the element
-		 * @return Data\Type                                         the element at the specified index
-		 * @throws Throwable\OutOfBounds\Exception                  indicates the specified index
-		 *                                                          cannot be found
-		 */
-		public static function element(Data\Int32 $index) {
-			$i = $index->unbox();
-
-			if (($i < 0) || ($i >= $this->length())) {
-				throw new Throwable\OutOfBounds\Exception('Unable to return element at index :index.', array(':index' => $i));
-			}
-
-			return $this->value[$i];
-		}
-
-		/**
-		 * This method returns a list of those elements that satisfy the predicate.
-		 *
-		 * @access public
-		 * @static
-		 * @param Data\ArrayList $xs                                the left operand
-		 * @param callable $predicate                               the predicate function to be used
-		 * @return Data\ArrayList                                   the list
-		 */
-		public static function filter(Data\ArrayList $xs, callable $predicate) {
-			$buffer = array();
-			$length = $this->__length();
-
-			for ($i = 0; $i < $length; $i++) {
-				$x = $this->value[$i];
-				if ($predicate($x, Data\Int32::create($i))->unbox()) {
-					$buffer[] = $x;
-				}
-			}
-
-			return new static($buffer);
-		}
-
-		/**
-		 * This method returns the first object in the collection that passes the truthy test, if any.
-		 *
-		 * @access public
-		 * @static
-		 * @param Data\ArrayList $xs                                the left operand
-		 * @param callable $predicate                               the predicate function to be used
-		 * @return Data\Option                                      an option containing the first object
-		 *                                                          satisfying the predicate, if any
-		 */
-		public static function find(Data\ArrayList $xs, callable $predicate) {
-			$length = $this->__length();
-
-			for ($i = 0; $i < $length; $i++) {
-				$x = $this->value[$i];
-				if ($predicate($x, Data\Int32::create($i))->unbox()) {
-					return Data\Option::some($x);
-				}
-			}
-
-			return Data\Option::none();
-		}
-
-		/**
-		 * This method returns the array list flattened.
-		 *
-		 * @access public
-		 * @static
-		 * @param Data\ArrayList $xs                                the left operand
-		 * @return Data\ArrayList                                  the flattened array list
-		 */
-		public static function flatten(Data\ArrayList $xs) {
-			$array = array();
-
-			$xs = $this;
-			$x_length = $xs->__length();
-
-			for ($i = 0; $i < $x_length; $i++) {
-				$x = $xs->element($i);
-				if ($x instanceof Data\Collection) {
-					$ys = $x->flatten()->toArray();
-					$y_length = $ys->__length();
-					for ($j = 0; $j < $y_length; $j++) {
-						$array[] = $ys->element($j);
-					}
-				}
-				else {
-					$array[] = $x;
-				}
-			}
-
-			return $array;
-		}
-
-		/**
-		 * This method applies a left-fold reduction on the list using the operator function.
-		 *
-		 * @access public
-		 * @static
-		 * @param Data\ArrayList $xs                                the left operand
-		 * @param callable $operator                                the operator function to be used
-		 * @param Data\Type $initial                                 the initial value to be used
-		 * @return Data\Type                                         the result
-		 */
-		public static function foldLeft(Data\ArrayList $xs, callable $operator, Data\Type $initial) {
-			$z = $initial;
-			$length = $this->__length();
-
-			for ($i = 0; $i < $length; $i++) {
-				$z = $operator($z, $this->value[$i]);
-			}
-
-			return $z;
-		}
-
-		/**
-		 * This method applies a right-fold reduction on the list using the operation function.
-		 *
-		 * @access public
-		 * @static
-		 * @param Data\ArrayList $xs                                the left operand
-		 * @param callable $operator                                the operator function to be used
-		 * @param Data\Type $initial                                 the initial value to be used
-		 * @return Data\Type                                         the result
-		 */
-		public static function foldRight(Data\ArrayList $xs, callable $operator, Data\Type $initial) {
-			$z = $initial;
-			$length = $this->__length();
-
-			for ($i = $length - 1; $i >= 0; $i--) {
-				$z = $operator($z, $this->value[$i]);
-			}
-
-			return $z;
-		}
-
-		/**
-		 * This method returns the head object in this list.
-		 *
-		 * @access public
-		 * @static
-		 * @param Data\ArrayList $xs                                the left operand
-		 * @return Data\Type                                         the head object in this list
-		 */
-		public static function head(Data\ArrayList $xs) {
-			return $this->value[0];
-		}
-
-		/**
-		 * This method returns an option using the head for the boxed object.
-		 *
-		 * @access public
-		 * @static
-		 * @param Data\ArrayList $xs                                the left operand
-		 * @return Data\Option                                      the option
-		 */
-		public static function headOption(Data\ArrayList $xs) {
-			return (!$this->__isEmpty()) ? Data\Option::some($this->head()) : Data\Option::none();
-		}
-
-		/**
-		 * This method return the index of the first occurrence of the object; otherwise, it returns -1;
-		 *
-		 * @access public
-		 * @static
-		 * @param Data\ArrayList $xs                                the left operand
-		 * @param Data\Type $object                                 the object to be searched for
-		 * @return Data\Int32                                       the index of the first occurrence
-		 *                                                          or otherwise -1
-		 */
-		public static function indexOf(Data\Type $object) {
-			$length = $this->__length();
-
-			for ($i = 0; $i < $length; $i++) {
-				if ($object->__equals($this->value[$i])) {
-					return Data\Int32::create($i);
-				}
-			}
-
-			return Data\Int32::negative();
-		}
-
-		/**
-		 * This method returns all but the last element of in the list.
-		 *
-		 * @access public
-		 * @static
-		 * @param Data\ArrayList $xs                                the left operand
-		 * @return Data\ArrayList                                   the list, minus the last
-		 *                                                          element
-		 */
-		public static function init(Data\ArrayList $xs) {
-			$buffer = array();
-			$length = $this->__length() - 1;
-
-			for ($i = 0; $i < $length; $i++) {
-				$buffer[] = $this->value[$i];
-			}
-
-			return new static($buffer);
-		}
-
-		/**
-		 * This method returns an iterator for this collection.
-		 *
-		 * @access public
-		 * @static
-		 * @param Data\ArrayList $xs                                the left operand
-		 * @return Data\ArrayList\Iterator                          an iterator for this collection
-		 */
-		public static function iterator(Data\ArrayList $xs) {
-			return new Data\ArrayList\Iterator($this);
-		}
-
-		/**
-		 * This method (aka "null") returns whether this list is empty.
-		 *
-		 * @access public
-		 * @static
-		 * @param Data\ArrayList $xs                                the left operand
-		 * @return Data\Bool                                        whether the list is empty
-		 */
-		public static function isEmpty(Data\ArrayList $xs) {
-			return Data\Bool::create($this->__isEmpty());
-		}
-
-		/**
-		 * The method intersperses the specified object between each element in the list.
-		 *
-		 * @access public
-		 * @static
-		 * @param Data\ArrayList $xs                                the left operand
-		 * @param Data\Type $object                                  the object to be interspersed
-		 * @return Data\ArrayList                                   the list
-		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
-		 */
-		public static function intersperse(Data\Type $object) {
-			$buffer = array();
-			$length = $this->__length();
-
-			if ($length > 0) {
-				$x = $this->value[0];
-
-				$class = get_class($x);
-				if ($object instanceof $class) {
-					throw new Throwable\InvalidArgument\Exception('Unable to create array list. Expected type ":class", but got ":type".', array(':class' => $class, ':type' => get_class($object)));
-				}
-
-				$buffer[] = $x;
-				for ($i = 1; $i < $length; $i++) {
-					$buffer[] = $this->value[$i];
-				}
-			}
-
-			return new static($buffer);
-		}
-
-		/**
-		 * This method returns the last element in this list.
-		 *
-		 * @access public
-		 * @static
-		 * @param Data\ArrayList $xs                                the left operand
-		 * @return Data\Type                                         the last element in this linked
-		 *                                                          list
-		 */
-		public static function last(Data\ArrayList $xs) {
-			return $this->value[$this->__length() - 1];
-		}
-
-		/**
-		 * This method returns an option using the last for the boxed object.
-		 *
-		 * @access public
-		 * @static
-		 * @param Data\ArrayList $xs                                the left operand
-		 * @return Data\Option                                      the option
-		 */
-		public static function lastOption(Data\ArrayList $xs) {
-			return (!$this->__isEmpty()) ? Data\Option::some($this->last()) : Data\Option::none();
-		}
-
-		/**
-		 * This method returns the length of this array list.
-		 *
-		 * @access public
-		 * @static
-		 * @param Data\ArrayList $xs                                the left operand
-		 * @return Data\Int32                                       the length of this array list
-		 */
-		public static function length(Data\ArrayList $xs) {
-			return Data\Int32::create($this->__length());
-		}
-
-		/**
-		 * This method applies each element in this list to the subroutine function.
-		 *
-		 * @access public
-		 * @static
-		 * @param Data\ArrayList $xs                                the left operand
-		 * @param callable $subroutine                              the subroutine function to be used
-		 * @return Data\ArrayList                                   the list
-		 */
-		public static function map(Data\ArrayList $xs, callable $subroutine) {
-			$buffer = array();
-			$length = $this->__length();
-
-			for ($i = 0; $i < $length; $i++) {
-				$buffer[] = $subroutine($this->value[$i], Data\Int32::create($i));
-			}
-
-			return new static($buffer);
-		}
-
-		/**
-		 * This method iterates over the elements in the list, yielding each element to the
-		 * predicate function, or fails the falsy test.
-		 *
-		 * @access public
-		 * @static
-		 * @param Data\ArrayList $xs                                the left operand
-		 * @param callable $predicate                               the predicate function to be used
-		 * @return Data\Bool                                        whether each element passed the
-		 *                                                          falsy test
-		 */
-		public static function none(Data\ArrayList $xs, callable $predicate) {
-			return $this->all(function(Data\Type $object, Data\Int32 $index) use ($predicate) {
-				return $predicate($object, $index)->not();
-			});
-		}
-
-		/**
-		 * This method prepends the specified object to the front of this list.
-		 *
-		 * @access public
-		 * @static
-		 * @param Data\ArrayList $xs                                the left operand
-		 * @param Data\Type $object                                  the object to be prepended
-		 * @return Data\ArrayList                                   the list
-		 */
-		public static function prepend(Data\Type $object) {
-			array_unshift($this->value, $object);
-			return $this;
-		}
-
-		/**
-		 * This method returns the list within the specified range.
-		 *
-		 * @access public
-		 * @static
-		 * @param Data\ArrayList $xs                                the left operand
-		 * @param Data\Int32 $start                                 the starting index
-		 * @param Data\Int32 $end                                   the ending index
-		 * @return Data\ArrayList                                   the list
-		 */
-		public static function range(Data\Int32 $start, Data\Int32 $end) {
-			return $this->take($end)->drop($start);
-		}
-
-		/**
-		 * This method returns a list of those elements that don't satisfy the predicate.
-		 *
-		 * @access public
-		 * @static
-		 * @param Data\ArrayList $xs                                the left operand
-		 * @param callable $predicate                               the predicate function to be used
-		 * @return Data\ArrayList                                   the list
-		 */
-		public static function remove(Data\ArrayList $xs, callable $predicate) {
-			return $this->filter(function(Data\Type $object, Data\Int32 $index) use ($predicate) {
-				return $predicate($object, $index)->not();
-			});
-		}
-
-		/**
-		 * This method reverses the order of the elements in this list.
-		 *
-		 * @access public
-		 * @static
-		 * @param Data\ArrayList $xs                                the left operand
-		 * @return Data\ArrayList                                   the list
-		 */
-		public static function reverse(Data\ArrayList $xs) {
-			return new static(array_reverse($this->value));
-		}
-
-		/**
-		 * This method returns the extracted slice of the list.
-		 *
-		 * @access public
-		 * @static
-		 * @param Data\ArrayList $xs                                the left operand
-		 * @param Data\Int32 $offset                                the starting index
-		 * @param Data\Int32 $length                                the length of the slice
-		 * @return Data\ArrayList                                   the list
-		 */
-		public static function slice(Data\Int32 $offset, Data\Int32 $length) {
-			return new static(array_slice($this->value, $offset->unbox(), $length->unbox()));
-		}
-
-		/**
-		 * This method returns the tail of this list.
-		 *
-		 * @access public
-		 * @static
-		 * @param Data\ArrayList $xs                                the left operand
-		 * @return Data\ArrayList                                   the tail of this list
-		 */
-		public static function tail(Data\ArrayList $xs) {
-			$buffer = array();
-			$length = $this->__length();
-
-			for ($i = 1; $i < $length; $i++) {
-				$buffer[] = $this->value[$i];
-			}
-
-			return new static($buffer);
-		}
-
-		/**
-		 * This method returns the first "n" elements in the list.
-		 *
-		 * @access public
-		 * @static
-		 * @param Data\ArrayList $xs                                the left operand
-		 * @param Data\Int32 $n                                     the number of elements to take
-		 * @return Data\ArrayList                                   the list
-		 */
-		public static function take(Data\Int32 $n) {
-			$buffer = array();
-			$length = min($n->unbox(), $this->__length());
-
-			for ($i = 0; $i < $length; $i++) {
-				$buffer[] = $this->value[$i];
-			}
-
-			return new static($buffer);
-		}
-
-		/**
-		 * This method returns each element in this list until the predicate fails.
-		 *
-		 * @access public
-		 * @static
-		 * @param Data\ArrayList $xs                                the left operand
-		 * @param callable $predicate                               the predicate function to be used
-		 * @return Data\ArrayList                                   the list
-		 */
-		public static function takeWhile(Data\ArrayList $xs, callable $predicate) {
-			$buffer = array();
-			$length = $this->__length();
-
-			for ($i = 0; $i < $length; $i++) {
-				$x = $this->value[$i];
-				if (!$predicate($x, Data\Int32::create($i))->unbox()) {
-					break;
-				}
-				$buffer[] = $x;
-			}
-
-			return new static($buffer);
-		}
-
-		/**
-		 * This method returns each element in this list until the predicate doesn't fail.
-		 *
-		 * @access public
-		 * @static
-		 * @param Data\ArrayList $xs                                the left operand
-		 * @param callable $predicate                               the predicate function to be used
-		 * @return Data\ArrayList                                   the list
-		 */
-		public static function takeWhileEnd(Data\ArrayList $xs, callable $predicate) {
-			return $this->takeWhile(function(Data\Type $object, Data\Int32 $index) use ($predicate) {
-				return $predicate($object, $index)->not();
-			});
-		}
-
-		/**
-		 * This method returns the collection as an array.
-		 *
-		 * @access public
-		 * @static
-		 * @param Data\ArrayList $xs                                the left operand
-		 * @return Data\ArrayList                                   the collection as an array list
-		 */
-		public static function toArray(Data\ArrayList $xs) {
-			return $this;
-		}
-
-		/**
-		 * This method returns the collection as a linked list.
-		 *
-		 * @access public
-		 * @static
-		 * @param Data\ArrayList $xs                                the left operand
-		 * @return Data\LinkedList                                  the collection as a linked list
-		 */
-		public static function toList(Data\ArrayList $xs) {
-			$list = Data\LinkedList::nil();
-
-			for ($i = $this->__length() - 1; $i >= 0; $i--) {
-				$list = $list->prepend($this->value[$i]);
-			}
-
-			return $list;
-		}
-
-		#endregion
-
 		#region Methods -> Object Oriented -> Boolean Operations
 
 		/**
@@ -880,7 +860,7 @@ namespace Saber\Data {
 		 *                                                          the list evaluate to true
 		 */
 		public static function and_(Data\ArrayList $xs) {
-			return $this->truthy();
+			return Data\ArrayList::truthy($xs);
 		}
 
 		/**
@@ -896,7 +876,7 @@ namespace Saber\Data {
 		 * @see http://www.sitepoint.com/javascript-truthy-falsy/
 		 */
 		public static function or_(Data\ArrayList $xs) {
-			return $this->falsy();
+			return Data\ArrayList::falsy($xs);
 		}
 
 		/**
@@ -911,7 +891,7 @@ namespace Saber\Data {
 		 *                                                          to false
 		 */
 		public static function false(Data\ArrayList $xs) {
-			return $this->true()->not();
+			return Data\Bool::not(Data\ArrayList::true($xs));
 		}
 
 		/**
@@ -927,7 +907,7 @@ namespace Saber\Data {
 		 * @see http://www.sitepoint.com/javascript-truthy-falsy/
 		 */
 		public static function falsy(Data\ArrayList $xs) {
-			return $this->truthy()->not();
+			return Data\Bool::not(Data\ArrayList::truthy($xs));
 		}
 
 		/**
@@ -942,10 +922,10 @@ namespace Saber\Data {
 		 *                                                          to true
 		 */
 		public static function true(Data\ArrayList $xs) {
-			$length = $this->__length();
+			$length = Data\ArrayList::length($xs);
 
-			for ($i = 0; $i < $length; $i++) {
-				if ($this->value[$i]->unbox() !== true) {
+			for ($i = Data\Int32::zero(); Data\Int32::lt($i, $length)->unbox(); $i = Data\Int32::increment($i)) {
+				if (Data\Bool::id(Data\ArrayList::element($xs, $i), Data\Bool::false())->unbox()) {
 					return Data\Bool::false();
 				}
 			}
@@ -964,10 +944,10 @@ namespace Saber\Data {
 		 *                                                          the list evaluate to true
 		 */
 		public static function truthy(Data\ArrayList $xs) {
-			$length = $this->__length();
+			$length = Data\ArrayList::length($xs);
 
-			for ($i = 0; $i < $length; $i++) {
-				if (!$this->value[$i]->unbox()) {
+			for ($i = Data\Int32::zero(); Data\Int32::lt($i, $length)->unbox(); $i = Data\Int32::increment($i)) {
+				if (!Data\ArrayList::element($xs, $i)->unbox()) {
 					return Data\Bool::false();
 				}
 			}
@@ -988,17 +968,17 @@ namespace Saber\Data {
 		 * @return Data\Num                                         the result
 		 */
 		public static function average(Data\ArrayList $xs) {
-			if ($this->__isEmpty()) {
+			if (Data\ArrayList::isEmpty($xs)->unbox()) {
 				return Data\Int32::zero();
 			}
 
-			$length = $this->__length();
-			$x = $this->value[0];
-			$t = $x->__typeOf();
+			$length = Data\ArrayList::length($xs);
+			$x = Data\ArrayList::element($xs, Data\Int32::zero());
+			$t = Data\Type::typeOf($x);
 			$y = $t::zero();
 
-			for ($i = 1; $i < $length; $i++) {
-				$x = $x->add($this->value[$i]);
+			for ($i = Data\Int32::one(); Data\Int32::lt($i, $length)->unbox(); $i = Data\Int32::increment($i)) {
+				$x = $x->add(Data\ArrayList::element($xs, $i));
 				$y = $y->increment();
 			}
 
@@ -1014,15 +994,17 @@ namespace Saber\Data {
 		 * @return Data\Num                                         the result
 		 */
 		public static function product(Data\ArrayList $xs) {
-			if ($this->__isEmpty()) {
+			if (Data\ArrayList::isEmpty($xs)->unbox()) {
 				return Data\Int32::one();
 			}
 
-			$length = $this->__length();
-			$x = $this->value[0];
+			$length = Data\ArrayList::length($xs);
 
-			for ($i = 1; $i < $length; $i++) {
-				$x = $x->multiply($this->value[$i]);
+			$x = Data\ArrayList::element($xs, Data\Int32::zero());
+			$number = get_class($x);
+
+			for ($i = Data\Int32::one(); Data\Int32::lt($i, $length)->unbox(); $i = Data\Int32::increment($i)) {
+				$x = $number::multiply($x, Data\ArrayList::element($xs, $i));
 			}
 
 			return $x;
@@ -1037,15 +1019,17 @@ namespace Saber\Data {
 		 * @return Data\Num                                         the result
 		 */
 		public static function sum(Data\ArrayList $xs) {
-			if ($this->__isEmpty()) {
+			if (Data\ArrayList::isEmpty($xs)->unbox()) {
 				return Data\Int32::zero();
 			}
 
-			$length = $this->__length();
-			$x = $this->value[0];
+			$length = Data\ArrayList::length($xs);
 
-			for ($i = 1; $i < $length; $i++) {
-				$x = $x->add($this->value[$i]);
+			$x = Data\ArrayList::element($xs, Data\Int32::zero());
+			$number = get_class($x);
+
+			for ($i = Data\Int32::one(); Data\Int32::lt($i, $length)->unbox(); $i = Data\Int32::increment($i)) {
+				$x = $number::add($x, Data\ArrayList::element($xs, $i));
 			}
 
 			return $x;

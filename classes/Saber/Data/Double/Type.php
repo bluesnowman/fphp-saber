@@ -16,10 +16,12 @@
  * limitations under the License.
  */
 
-namespace Saber\Data {
+namespace Saber\Data\Double {
 
-	use \Saber\Core;
+	use \Saber\Data;
 
-	class Type extends Core\Type { }
+	class Type extends Data\Type implements Core\Type\Boxable {
+
+	}
 
 }

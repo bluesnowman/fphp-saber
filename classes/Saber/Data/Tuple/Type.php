@@ -16,10 +16,12 @@
  * limitations under the License.
  */
 
-namespace Saber\Data {
+namespace Saber\Data\Tuple {
 
 	use \Saber\Core;
 
-	class Type extends Core\Type { }
+	class Type extends Core\Type implements Core\Type\Boxable {
+
+	}
 
 }

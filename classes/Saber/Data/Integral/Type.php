@@ -16,10 +16,10 @@
  * limitations under the License.
  */
 
-namespace Saber\Data {
+namespace Saber\Data\Integral {
 
-	use \Saber\Core;
+	use \Saber\Data;
 
-	class Type extends Core\Type { }
+	abstract class Type extends Data\Num\Type { }
 
 }

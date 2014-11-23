@@ -16,10 +16,10 @@
  * limitations under the License.
  */
 
-namespace Saber\Data {
+namespace Saber\Core {
 
-	use \Saber\Core;
+	abstract class Module {
 
-	class Type extends Core\Type { }
+	}
 
 }

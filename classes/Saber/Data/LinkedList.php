@@ -23,6 +23,18 @@ namespace Saber\Data {
 
 	abstract class LinkedList extends Data\Collection {
 
+		#region Properties
+
+		/**
+		 * This variable stores a reference to a list's tail.
+		 *
+		 * @access protected
+		 * @var Data\LinkedList
+		 */
+		protected $tail;
+
+		#endregion
+
 		#region Methods -> Boxing/Creation
 
 		/**
@@ -37,11 +49,11 @@ namespace Saber\Data {
 		 */
 		public static function box($value/*...*/) {
 			if (is_array($value)) {
-				$buffer = static::nil();
+				$zs = Data\LinkedList::nil();
 				for ($i = count($value) - 1; $i >= 0; $i--) {
-					$buffer = $buffer->prepend($value[$i]);
+					$zs = Data\LinkedList::prepend($zs, $value[$i]);
 				}
-				return $buffer;
+				return $zs;
 			}
 			else {
 				$type = gettype($value);
@@ -102,11 +114,11 @@ namespace Saber\Data {
 		public function unbox($depth = 0) {
 			$buffer = array();
 
-			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				$x = $xs->head();
+			for ($zs = $this; ! Data\LinkedList::isEmpty($zs)->unbox(); $zs = Data\LinkedList::tail($zs)) {
+				$z = Data\LinkedList::head($zs);
 				$buffer[] = ($depth > 0)
-					? $x->unbox($depth - 1)
-					: $x;
+					? $z->unbox($depth - 1)
+					: $z;
 			}
 
 			return $buffer;
@@ -209,7 +221,7 @@ namespace Saber\Data {
 		 */
 		public static function contains(Data\LinkedList $xs, Data\Type $y) {
 			return Data\LinkedList::any($xs, function(Data\Type $x, Data\Int32 $i) use ($y) {
-				return $x->equals($y);
+				return call_user_func_array(array(get_class($x), 'eq'), array($x, $y));
 			});
 		}
 
@@ -219,18 +231,18 @@ namespace Saber\Data {
 		 * @access public
 		 * @static
 		 * @param Data\LinkedList $xs                               the left operand
-		 * @param Data\Type $object                                  the object to be removed
+		 * @param Data\Type $y                                      the object to be removed
 		 * @return Data\LinkedList                                  the collection
 		 */
-		public static function delete(Data\LinkedList $xs, Data\Type $object) {
-			$start = static::nil();
+		public static function delete(Data\LinkedList $xs, Data\Type $y) {
+			$start = Data\LinkedList::nil();
 			$tail = null;
 
 			$index = Data\Int32::zero();
-			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				$head = $xs->head();
-				if (!$object->__equals($head)) {
-					$cons = static::cons($head, static::nil());
+			for ($zs = $xs; ! Data\LinkedList::isEmpty($zs)->unbox(); $zs = Data\LinkedList::tail($zs)) {
+				$head = Data\LinkedList::head($zs);
+				if (!call_user_func_array(array(get_class($head), 'eq'), array($head, $y))->unbox()) {
+					$cons = Data\LinkedList::cons($head, Data\LinkedList::nil());
 
 					if ($tail !== null) {
 						$tail->tail = $cons;
@@ -242,7 +254,7 @@ namespace Saber\Data {
 					$tail = $cons;
 				}
 				else {
-					$cons = $xs->tail();
+					$cons = Data\LinkedList::tail($zs);
 
 					if ($tail !== null) {
 						$tail->tail = $cons;
@@ -253,7 +265,7 @@ namespace Saber\Data {
 
 					break;
 				}
-				$index = $index->increment();
+				$index = Data\Int32::increment($index);
 			}
 
 			return $start;
@@ -271,11 +283,11 @@ namespace Saber\Data {
 		public static function drop(Data\LinkedList $xs, Data\Int32 $n) {
 			$i = Data\Int32::zero();
 
-			for ($xs = $this; ($i->unbox() < $n->unbox()) && ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				$i = $i->increment();
+			for ($zs = $xs; ($i->unbox() < $n->unbox()) && ! Data\LinkedList::isEmpty($zs)->unbox(); $zs = Data\LinkedList::tail($zs)) {
+				$i = Data\Int32::increment($i);
 			}
 
-			return $xs;
+			return $zs;
 		}
 
 		/**
@@ -290,11 +302,11 @@ namespace Saber\Data {
 		public static function dropWhile(Data\LinkedList $xs, callable $predicate) {
 			$i = Data\Int32::zero();
 
-			for ($xs = $this; ! $xs->__isEmpty() && $predicate($xs->head(), $i)->unbox(); $xs = $xs->tail()) {
-				$i = $i->increment();
+			for ($zs = $xs; ! Data\LinkedList::isEmpty($zs)->unbox() && $predicate(Data\LinkedList::head($zs), $i)->unbox(); $zs = Data\LinkedList::tail($zs)) {
+				$i = Data\Int32::increment($i);
 			}
 
-			return $xs;
+			return $zs;
 		}
 
 		/**
@@ -324,9 +336,9 @@ namespace Saber\Data {
 		public static function each(Data\LinkedList $xs, callable $procedure) {
 			$i = Data\Int32::zero();
 
-			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				$procedure($xs->head(), $i);
-				$i = $i->increment();
+			for ($zs = $xs; ! Data\LinkedList::isEmpty($zs)->unbox(); $zs = Data\LinkedList::tail($zs)) {
+				$procedure(Data\LinkedList::head($zs), $i);
+				$i = Data\Int32::increment($i);
 			}
 		}
 
@@ -336,22 +348,22 @@ namespace Saber\Data {
 		 * @access public
 		 * @static
 		 * @param Data\LinkedList $xs                               the left operand
-		 * @param Data\Int32 $index                                 the index of the element
-		 * @return Data\Type                                         the element at the specified index
+		 * @param Data\Int32 $i                                     the index of the element
+		 * @return Data\Type                                        the element at the specified index
 		 * @throws Throwable\OutOfBounds\Exception                  indicates the specified index
 		 *                                                          cannot be found
 		 */
-		public static function element(Data\LinkedList $xs, Data\Int32 $index) {
-			$i = Data\Int32::zero();
+		public static function element(Data\LinkedList $xs, Data\Int32 $i) {
+			$j = Data\Int32::zero();
 
-			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				if ($i->__equals($index)) {
-					return $xs->head();
+			for ($zs = $xs; ! Data\LinkedList::isEmpty($zs)->unbox(); $zs = Data\LinkedList::tail($zs)) {
+				if (Data\Int32::eq($i, $j)->unbox()) {
+					return Data\LinkedList::head($zs);
 				}
-				$i = Data\Int32::increment($i);
+				$j = Data\Int32::increment($j);
 			}
 
-			throw new Throwable\OutOfBounds\Exception('Unable to return element at index :index.', array(':index' => $index->unbox()));
+			throw new Throwable\OutOfBounds\Exception('Unable to return element at index :index.', array(':index' => $i->unbox()));
 		}
 
 		/**
@@ -364,14 +376,14 @@ namespace Saber\Data {
 		 * @return Data\LinkedList                                  the collection
 		 */
 		public static function filter(Data\LinkedList $xs, callable $predicate) {
-			$start = static::nil();
+			$start = Data\LinkedList::nil();
 			$tail = null;
 
 			$i = Data\Int32::zero();
-			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				$x = $xs->head();
-				if ($predicate($x, $i)->unbox()) {
-					$ys = static::cons($x, static::nil());
+			for ($zs = $xs; ! Data\LinkedList::isEmpty($zs)->unbox(); $zs = Data\LinkedList::tail($zs)) {
+				$z = Data\LinkedList::head($zs);
+				if ($predicate($z, $i)->unbox()) {
+					$ys = Data\LinkedList::cons($z, Data\LinkedList::nil());
 
 					if ($tail !== null) {
 						$tail->tail = $ys;
@@ -421,15 +433,15 @@ namespace Saber\Data {
 		 * @return Data\LinkedList                                  the flattened linked list
 		 */
 		public static function flatten(Data\LinkedList $xs) {
-			$start = static::nil();
+			$start = Data\LinkedList::nil();
 			$tail = null;
 
-			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				$x = $xs->head();
+			for ($zs = $xs; ! Data\LinkedList::isEmpty($zs)->unbox(); $zs = Data\LinkedList::tail($zs)) {
+				$z = Data\LinkedList::head($zs);
 
-				$ys = ($x instanceof Data\Collection)
-					? $x->flatten()->toList()
-					: static::cons($x, static::nil());
+				$ys = ($z instanceof Data\Collection)
+					? Data\LinkedList::toList(Data\LinkedList::flatten($z))
+					: Data\LinkedList::cons($z, Data\LinkedList::nil());
 
 				if ($tail !== null) {
 					$tail->tail = $ys;
@@ -478,11 +490,11 @@ namespace Saber\Data {
 		public static function foldRight(Data\LinkedList $xs, callable $operator, Data\Type $initial) {
 			$z = $initial;
 
-			if ($this->__isEmpty()) {
+			if (Data\LinkedList::isEmpty($xs)) {
 				return $z;
 			}
 
-			return $operator($this->head(), $this->tail()->foldRight($operator, $z));
+			return $operator(Data\LinkedList::head($xs), Data\LinkedList::foldRight(Data\LinkedList::tail($xs), $operator, $z));
 		}
 
 		/**
@@ -542,11 +554,11 @@ namespace Saber\Data {
 		 *                                                          element
 		 */
 		public static function init(Data\LinkedList $xs) {
-			$start = static::nil();
+			$start = Data\LinkedList::nil();
 			$tail = null;
 
-			for ($xs = $this; ! $xs->__isEmpty() && ! $xs->tail()->__isEmpty(); $xs = $xs->tail()) {
-				$ys = static::cons($xs->head(), static::nil());
+			for ($zs = $xs; ! Data\LinkedList::isEmpty($zs)->unbox() && ! Data\LinkedList::isEmpty(Data\LinkedList::tail($zs))->unbox(); $zs = Data\LinkedList::tail($zs)) {
+				$ys = Data\LinkedList::cons(Data\LinkedList::head($zs), Data\LinkedList::nil());
 
 				if ($tail !== null) {
 					$tail->tail = $ys;
@@ -567,13 +579,13 @@ namespace Saber\Data {
 		 * @access public
 		 * @static
 		 * @param Data\LinkedList $xs                               the left operand
-		 * @param Data\Type $object                                 the object to be interspersed
+		 * @param Data\Type $y                                      the object to be interspersed
 		 * @return Data\LinkedList                                  the collection
 		 */
-		public static function intersperse(Data\LinkedList $xs, Data\Type $object) {
-			return ($this->__isEmpty() || $this->tail()->__isEmpty())
-				? $this
-				: static::cons($this->head(), static::cons($object, $this->tail()->intersperse($object)));
+		public static function intersperse(Data\LinkedList $xs, Data\Type $y) {
+			return (Data\LinkedList::isEmpty($xs) || Data\LinkedList::isEmpty(Data\LinkedList::tail($xs))->unbox())
+				? $xs
+				: Data\LinkedList::cons(Data\LinkedList::head($xs), Data\LinkedList::cons($y, Data\LinkedList::intersperse(Data\LinkedList::tail($xs), $y)));
 		}
 
 		/**
@@ -606,7 +618,7 @@ namespace Saber\Data {
 		 * @access public
 		 * @static
 		 * @param Data\LinkedList $xs                               the left operand
-		 * @return Data\Type                                         the last element in this collection
+		 * @return Data\Type                                        the last element in this collection
 		 */
 		public static function last(Data\LinkedList $xs) {
 			$z = Data\LinkedList::head($xs);
@@ -627,7 +639,7 @@ namespace Saber\Data {
 		 * @return Data\Option                                      the option
 		 */
 		public static function lastOption(Data\LinkedList $xs) {
-			return (!$this->__isEmpty()) ? Data\Option::some($this->last()) : Data\Option::none();
+			return (!Data\LinkedList::isEmpty($xs)->unbox()) ? Data\Option::some(Data\LinkedList::last($xs)) : Data\Option::none();
 		}
 
 		/**
@@ -654,12 +666,12 @@ namespace Saber\Data {
 		 * @return Data\LinkedList                                  the collection
 		 */
 		public static function map(Data\LinkedList $xs, callable $subroutine) {
-			$start = static::nil();
+			$start = Data\LinkedList::nil();
 			$tail = null;
 
 			$i = Data\Int32::zero();
-			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				$ys = static::cons($subroutine($xs->head(), $i), static::nil());
+			for ($zs = $xs; ! Data\LinkedList::isEmpty($zs)->unbox(); $zs = Data\LinkedList::tail($zs)) {
+				$ys = Data\LinkedList::cons($subroutine(Data\LinkedList::head($zs), $i), Data\LinkedList::nil());
 
 				if ($tail !== null) {
 					$tail->tail = $ys;
@@ -669,7 +681,7 @@ namespace Saber\Data {
 				}
 
 				$tail = $ys;
-				$i = $i->increment();
+				$i = Data\Int32::increment($i);
 			}
 
 			return $start;
@@ -702,7 +714,7 @@ namespace Saber\Data {
 		 * @return Data\LinkedList                                  the collection
 		 */
 		public static function prepend(Data\LinkedList $xs, Data\Type $y) {
-			return static::cons($y, $xs);
+			return Data\LinkedList::cons($y, $xs);
 		}
 
 		/**
@@ -798,17 +810,17 @@ namespace Saber\Data {
 		 * @return Data\LinkedList                                  the collection
 		 */
 		public static function takeWhile(Data\LinkedList $xs, callable $predicate) {
-			$start = static::nil();
+			$start = Data\LinkedList::nil();
 			$tail = null;
 
 			$taking = true;
 
 			$i = Data\Int32::zero();
-			for ($xs = $this; ! $xs->__isEmpty() && $taking; $xs = $xs->tail()) {
-				$x = $xs->head();
+			for ($zs = $xs; ! Data\LinkedList::isEmpty($zs)->unbox() && $taking; $zs = Data\LinkedList::tail($zs)) {
+				$z = Data\LinkedList::head($zs);
 
-				if ($predicate($x, $i)->unbox()) {
-					$ys = static::cons($x, static::nil());
+				if ($predicate($z, $i)->unbox()) {
+					$ys = Data\LinkedList::cons($z, Data\LinkedList::nil());
 
 					if ($tail !== null) {
 						$tail->tail = $ys;
@@ -823,7 +835,7 @@ namespace Saber\Data {
 					$taking = false;
 				}
 
-				$i = $i->increment();
+				$i = Data\Int32::increment($i);
 			}
 
 			return $start;
@@ -991,23 +1003,23 @@ namespace Saber\Data {
 		 * @return Data\Num                                         the result
 		 */
 		public static function average(Data\LinkedList $xs) {
-			$xs = $this;
+			$zs = $xs;
 
-			if ($xs->__isEmpty()) {
+			if (Data\LinkedList::isEmpty($zs)->unbox()) {
 				return Data\Int32::zero();
 			}
 
-			$x = $xs->head();
+			$z = Data\LinkedList::head($zs);
 
-			$t = $x->__typeOf();
+			$t = $z->__typeOf();
 			$y = $t::zero();
 
-			for ($xs = $xs->tail(); ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				$x = $x->add($xs->head());
+			for ($zs = Data\LinkedList::tail($zs); ! Data\LinkedList::isEmpty($zs)->unbox(); $zs = Data\LinkedList::tail($zs)) {
+				$z = $z->add(Data\LinkedList::head($zs));
 				$y = $y->increment();
 			}
 
-			return $x->divide($y);
+			return $z->divide($y);
 		}
 
 		/**
@@ -1019,19 +1031,20 @@ namespace Saber\Data {
 		 * @return Data\Num                                         the result
 		 */
 		public static function product(Data\LinkedList $xs) {
-			$xs = $this;
+			$zs = $xs;
 
-			if ($xs->__isEmpty()) {
+			if (Data\LinkedList::isEmpty($zs)->unbox()) {
 				return Data\Int32::one();
 			}
 
-			$x = $xs->head();
+			$z = Data\LinkedList::head($zs);
+			$number = get_class($z);
 
-			for ($xs = $xs->tail(); ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				$x = $x->multiply($xs->head());
+			for ($zs = Data\LinkedList::tail($zs); ! Data\LinkedList::isEmpty($zs)->unbox(); $zs = Data\LinkedList::tail($zs)) {
+				$z = $number::multiply($z, Data\LinkedList::head($zs));
 			}
 
-			return $x;
+			return $z;
 		}
 
 		/**
@@ -1043,19 +1056,20 @@ namespace Saber\Data {
 		 * @return Data\Num                                         the result
 		 */
 		public static function sum(Data\LinkedList $xs) {
-			$xs = $this;
+			$zs = $xs;
 
-			if ($xs->__isEmpty()) {
+			if (Data\LinkedList::isEmpty($zs)->unbox()) {
 				return Data\Int32::zero();
 			}
 
-			$x = $xs->head();
+			$z = Data\LinkedList::head($zs);
+			$number = get_class($z);
 
-			for ($xs = $xs->tail(); ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				$x = $x->add($xs->head());
+			for ($zs = Data\LinkedList::tail($zs); ! Data\LinkedList::isEmpty($zs)->unbox(); $zs = Data\LinkedList::tail($zs)) {
+				$z = $number::add($z, Data\LinkedList::head($zs));
 			}
 
-			return $x;
+			return $z;
 		}
 
 		#endregion

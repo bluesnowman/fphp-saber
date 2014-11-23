@@ -320,9 +320,6 @@ namespace Saber\Data {
 		 *                                                          cannot be found
 		 */
 		public static function element(Data\String $xs, Data\Int32 $i) {
-			if (Data\Bool::or_(Data\Int32::lt($i, Data\Int32::zero()), Data\Int32::ge($i, Data\String::length($xs)))->unbox()) {
-				throw new Throwable\OutOfBounds\Exception('Unable to return element at index :index.', array(':index' => $i->unbox()));
-			}
 			return Data\Char::create(mb_substr($xs->unbox(), $i->unbox(), 1, Data\Char::UTF_8_ENCODING));
 		}
 

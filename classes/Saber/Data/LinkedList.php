@@ -348,7 +348,7 @@ namespace Saber\Data {
 				if ($i->__equals($index)) {
 					return $xs->head();
 				}
-				$i = $i->increment();
+				$i = Data\Int32::increment($i);
 			}
 
 			throw new Throwable\OutOfBounds\Exception('Unable to return element at index :index.', array(':index' => $index->unbox()));
@@ -382,7 +382,7 @@ namespace Saber\Data {
 
 					$tail = $ys;
 				}
-				$i = $i->increment();
+				$i = Data\Int32::increment($i);
 			}
 
 			return $start;
@@ -401,12 +401,12 @@ namespace Saber\Data {
 		public static function find(Data\LinkedList $xs, callable $predicate) {
 			$i = Data\Int32::zero();
 
-			for ($xs = $this; ! $xs->__isEmpty(); $xs = $xs->tail()) {
-				$x = $xs->head();
-				if ($predicate($x, $i)->unbox()) {
-					return Data\Option::some($x);
+			for ($zs = $xs; ! Data\LinkedList::isEmpty($zs)->unbox(); $zs = Data\LinkedList::tail($zs)) {
+				$z = Data\LinkedList::head($zs);
+				if ($predicate($z, $i)->unbox()) {
+					return Data\Option::some($z);
 				}
-				$i = $i->increment();
+				$i = Data\Int32::increment($i);
 			}
 
 			return Data\Option::none();

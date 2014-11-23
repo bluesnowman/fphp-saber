@@ -200,7 +200,7 @@ namespace Saber\Data {
 		 */
 		public static function contains(Data\ArrayList $xs, Data\Type $y) {
 			return Data\ArrayList::any($xs, function(Data\Type $x, Data\Int32 $i) use ($y) {
-				return $x->equals($y);
+				return call_user_func_array(array(get_class($x), 'eq'), array($x, $y));
 			});
 		}
 
@@ -210,19 +210,19 @@ namespace Saber\Data {
 		 * @access public
 		 * @static
 		 * @param Data\ArrayList $xs                                the left operand
-		 * @param Data\Type $object                                 the object to be removed
+		 * @param Data\Type $y                                      the object to be removed
 		 * @return Data\ArrayList                                   the list
 		 */
-		public static function delete(Data\ArrayList $xs, Data\Type $object) {
+		public static function delete(Data\ArrayList $xs, Data\Type $y) {
 			$buffer = array();
 			$skip = false;
 
-			foreach ($this->value as $x) {
-				if ($x->__equals($object) && !$skip) {
+			foreach ($xs->unbox() as $z) {
+				if (call_user_func_array(array(get_class($z), 'eq'), array($z, $y))->unbox() && !$skip) {
 					$skip = true;
 					continue;
 				}
-				$buffer[] = $x;
+				$buffer[] = $z;
 			}
 
 			return new Data\ArrayList($buffer);
@@ -311,19 +311,13 @@ namespace Saber\Data {
 		 * @access public
 		 * @static
 		 * @param Data\ArrayList $xs                                the left operand
-		 * @param Data\Int32 $index                                 the index of the element
+		 * @param Data\Int32 $i                                     the index of the element
 		 * @return Data\Type                                        the element at the specified index
 		 * @throws Throwable\OutOfBounds\Exception                  indicates the specified index
 		 *                                                          cannot be found
 		 */
-		public static function element(Data\ArrayList $xs, Data\Int32 $index) {
-			$i = $index->unbox();
-
-			if (($i < 0) || ($i >= $this->length())) {
-				throw new Throwable\OutOfBounds\Exception('Unable to return element at index :index.', array(':index' => $i));
-			}
-
-			return $xs->value[$i];
+		public static function element(Data\ArrayList $xs, Data\Int32 $i) {
+			return $xs->value[$i->unbox()];
 		}
 
 		/**
@@ -802,14 +796,12 @@ namespace Saber\Data {
 		 * @return Data\LinkedList                                  the collection as a linked list
 		 */
 		public static function toList(Data\ArrayList $xs) {
-			$list = Data\LinkedList::nil();
 			$length = Data\ArrayList::length($xs);
-
+			$zs = Data\LinkedList::nil();
 			for ($i = Data\Int32::decrement($length); Data\Int32::ge($i, Data\Int32::zero())->unbox(); $i = Data\Int32::decrement($i)) {
-				$list = Data\LinkedList::prepend($xs, $i);
+				$zs = Data\LinkedList::prepend($zs, Data\ArrayList::element($xs, $i));
 			}
-
-			return $list;
+			return $zs;
 		}
 
 		#endregion
@@ -826,23 +818,34 @@ namespace Saber\Data {
 		 *                                                          object
 		 */
 		public static function compare(Data\ArrayList $xs, Data\ArrayList $ys) {
+			if (($xs === null) && ($ys !== null)) {
+				return Data\Int32::negative();
+			}
+			if (($xs === null) && ($ys === null)) {
+				return Data\Int32::zero();
+			}
+			if (($xs !== null) && ($ys === null)) {
+				return Data\Int32::one();
+			}
+
 			$x_length = Data\ArrayList::length($xs);
 			$y_length = Data\ArrayList::length($ys);
-
-			for ($i = 0; $i < $x_length && $i < $y_length; $i++) {
-				$r = $this->value[$i]->compareTo($that->value[$i]);
-				if ($r->unbox() != 0) {
-					return $r;
-				}
-			}
 
 			if ($x_length < $y_length) {
 				return Data\Int32::negative();
 			}
-			else if ($x_length == $y_length) {
-				return Data\Int32::zero();
+			else if ($x_length > $y_length) {
+				return Data\Int32::one();
 			}
-			else { // ($x_length > $y_length)
+			else { // ($x_length == $y_length)
+				for ($i = Data\Int32::zero(); Data\Int32::lt($i, $x_length)->unbox(); $i = Data\Int32::increment($i)) {
+					$x = Data\ArrayList::element($xs, $i);
+					$y = Data\ArrayList::element($ys, $i);
+					$r = call_user_func_array(array(get_class($x), 'compare'), array($x, $y));
+					if ($r->unbox() != 0) {
+						return $r;
+					}
+				}
 				return Data\Int32::one();
 			}
 		}
@@ -925,7 +928,7 @@ namespace Saber\Data {
 			$length = Data\ArrayList::length($xs);
 
 			for ($i = Data\Int32::zero(); Data\Int32::lt($i, $length)->unbox(); $i = Data\Int32::increment($i)) {
-				if (Data\Bool::id(Data\ArrayList::element($xs, $i), Data\Bool::false())->unbox()) {
+				if (Data\Bool::ni(Data\Bool::true(), Data\ArrayList::element($xs, $i))->unbox()) {
 					return Data\Bool::false();
 				}
 			}

@@ -18,8 +18,8 @@
 
 namespace Saber\Data\Floating {
 
-	use \Saber\Data;
+	use \Saber\Data\Num;
 
-	abstract class Type extends Data\Num { }
+	abstract class Type extends Num\Type { }
 
 }

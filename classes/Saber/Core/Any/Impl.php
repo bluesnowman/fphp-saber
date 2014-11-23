@@ -170,7 +170,7 @@ namespace Saber\Core\Any {
 		 * @return Data\String                                      the object's hash code
 		 */
 		public final function hashCode() {
-			return Data\String::create($this->__hashCode());
+			return String\Module::create($this->__hashCode());
 		}
 
 		/**
@@ -214,7 +214,7 @@ namespace Saber\Core\Any {
 		 * @return Data\String                                      the object as a string
 		 */
 		public final function toString() {
-			return Data\String::create($this->__toString());
+			return String\Module::create($this->__toString());
 		}
 
 		/**
@@ -225,7 +225,7 @@ namespace Saber\Core\Any {
 		 * @return Data\String                                      the object's class type
 		 */
 		public final function typeOf() {
-			return Data\String::create($this->__typeOf());
+			return String\Module::create($this->__typeOf());
 		}
 
 		#endregion

@@ -97,7 +97,7 @@ namespace Saber\Data\Option {
 		 */
 		public function next() {
 			$this->position = $this->position->increment();
-			return Data\Bool::create($this->valid());
+			return Bool\Module::create($this->valid());
 		}
 
 		/**

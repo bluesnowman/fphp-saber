@@ -22,7 +22,7 @@ namespace Saber\Data\Int32 {
 	use \Saber\Data;
 	use \Saber\Throwable;
 
-	class Module extends Data\Integral {
+	class Module extends Integral\Type {
 
 		#region Methods -> Implementation
 
@@ -283,7 +283,7 @@ namespace Saber\Data\Int32 {
 		 * @return Data\Double                                      the value as a Double
 		 */
 		public static function toDouble(Data\Int32 $x) {
-			return Data\Double::create($x->unbox());
+			return Double\Module::create($x->unbox());
 		}
 
 		/**
@@ -296,7 +296,7 @@ namespace Saber\Data\Int32 {
 		 * @return Data\Float                                       the value as a Float
 		 */
 		public static function toFloat(Data\Int32 $x) {
-			return Data\Float::create($x->unbox());
+			return Float\Module::create($x->unbox());
 		}
 
 		/**
@@ -334,7 +334,7 @@ namespace Saber\Data\Int32 {
 		 * @return Data\String                                      the value as a String
 		 */
 		public static function toString(Data\Int32 $x) {
-			return Data\String::create($x->__toString());
+			return String\Module::create($x->__toString());
 		}
 
 		#endregion
@@ -354,9 +354,9 @@ namespace Saber\Data\Int32 {
 		public static function eq(Data\Int32 $x, Data\Type $y) { // ==
 			$class = get_class($x);
 			if ($y instanceof $class) {
-				return Data\Bool::create($x->unbox() == $y->unbox());
+				return Bool\Module::create($x->unbox() == $y->unbox());
 			}
-			return Data\Bool::false();
+			return Bool\Module::false();
 		}
 
 		/**
@@ -371,9 +371,9 @@ namespace Saber\Data\Int32 {
 		 */
 		public static function id(Data\Int32 $x, Data\Type $y) { // ===
 			if (get_class($x) === get_class($y)) {
-				return Data\Bool::create($x->unbox() === $y->unbox());
+				return Bool\Module::create($x->unbox() === $y->unbox());
 			}
-			return Data\Bool::false();
+			return Bool\Module::false();
 		}
 
 		/**
@@ -387,7 +387,7 @@ namespace Saber\Data\Int32 {
 		 *                                                          to the right operand
 		 */
 		public static function ne(Data\Int32 $x, Data\Type $y) { // !=
-			return Data\Bool::not(Data\Int32::eq($x, $y));
+			return Bool\Module::not(Data\Int32::eq($x, $y));
 		}
 
 		/**
@@ -401,7 +401,7 @@ namespace Saber\Data\Int32 {
 		 *                                                          to the right operand
 		 */
 		public static function ni(Data\Int32 $x, Data\Type $y) { // !==
-			return Data\Bool::not(Data\Int32::id($x, $y));
+			return Bool\Module::not(Data\Int32::id($x, $y));
 		}
 
 		#endregion
@@ -445,7 +445,7 @@ namespace Saber\Data\Int32 {
 		 *                                                          than or equal to the right operand
 		 */
 		public static function ge(Data\Int32 $x, Data\Int32 $y) { // >=
-			return Data\Bool::create(Data\Int32::compare($x, $y)->unbox() >= 0);
+			return Bool\Module::create(Data\Int32::compare($x, $y)->unbox() >= 0);
 		}
 
 		/**
@@ -459,7 +459,7 @@ namespace Saber\Data\Int32 {
 		 *                                                          than the right operand
 		 */
 		public static function gt(Data\Int32 $x, Data\Int32 $y) { // >
-			return Data\Bool::create(Data\Int32::compare($x, $y)->unbox() > 0);
+			return Bool\Module::create(Data\Int32::compare($x, $y)->unbox() > 0);
 		}
 
 		/**
@@ -473,7 +473,7 @@ namespace Saber\Data\Int32 {
 		 *                                                          or equal to the right operand
 		 */
 		public static function le(Data\Int32 $x, Data\Int32 $y) { // <=
-			return Data\Bool::create(Data\Int32::compare($x, $y)->unbox() <= 0);
+			return Bool\Module::create(Data\Int32::compare($x, $y)->unbox() <= 0);
 		}
 
 		/**
@@ -487,7 +487,7 @@ namespace Saber\Data\Int32 {
 		 *                                                          the right operand
 		 */
 		public static function lt(Data\Int32 $x, Data\Int32 $y) { // <
-			return Data\Bool::create(Data\Int32::compare($x, $y)->unbox() < 0);
+			return Bool\Module::create(Data\Int32::compare($x, $y)->unbox() < 0);
 		}
 
 		/**
@@ -541,7 +541,7 @@ namespace Saber\Data\Int32 {
 		 * @return Data\String                                      the object's hash code
 		 */
 		public static function hashCode(Data\Int32 $x) {
-			return Data\String::create($x->__toString());
+			return String\Module::create($x->__toString());
 		}
 
 		#endregion
@@ -558,7 +558,7 @@ namespace Saber\Data\Int32 {
 		 *                                                          number
 		 */
 		public static function isEven(Data\Int32 $x) {
-			return Data\Bool::create(($x->unbox() % 2) == 0);
+			return Bool\Module::create(($x->unbox() % 2) == 0);
 		}
 
 		/**
@@ -571,7 +571,7 @@ namespace Saber\Data\Int32 {
 		 *                                                          number
 		 */
 		public static function isOdd(Data\Int32 $x) {
-			return Data\Bool::create(($x->unbox() % 2) != 0);
+			return Bool\Module::create(($x->unbox() % 2) != 0);
 		}
 
 		/**
@@ -584,7 +584,7 @@ namespace Saber\Data\Int32 {
 		 *                                                          number
 		 */
 		public static function isNegative(Data\Int32 $x) {
-			return Data\Bool::create($x->unbox() < 0);
+			return Bool\Module::create($x->unbox() < 0);
 		}
 
 		#endregion

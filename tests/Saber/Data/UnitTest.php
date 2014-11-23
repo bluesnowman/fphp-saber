@@ -46,7 +46,7 @@ namespace Saber\Data {
 		 * @dataProvider dataBox
 		 */
 		public function testBox($provided, $expected) {
-			$p0 = Data\Unit::box($provided[0]);
+			$p0 = Unit\Module::box($provided[0]);
 			$e0 = new Data\Unit($expected[0]);
 
 			$this->assertInstanceOf('\\Saber\\Core\\AnyVal', $p0);
@@ -67,18 +67,18 @@ namespace Saber\Data {
 		 * This method tests the ability to make a choice.
 		 */
 		public function testChoice() {
-			$x = Data\Unit::box(null);
+			$x = Unit\Module::box(null);
 
 			$p0 = $x->choice();
 
 			$this->assertInstanceOf('\\Saber\\Control\\Monad\\Choice', $p0);
 
-			$p1 = $x->choice()->when(Data\Unit::box(null), function(Data\Unit $x) {})->end()->unbox();
+			$p1 = $x->choice()->when(Unit\Module::box(null), function(Unit\Type $x) {})->end()->unbox();
 
 			$this->assertInternalType('boolean', $p1);
 			$this->assertTrue($p1);
 
-			$p2 = $x->choice()->when(Data\Bool::true(), function(Data\Unit $x) {})->end()->unbox();
+			$p2 = $x->choice()->when(Bool\Module::true(), function(Unit\Type $x) {})->end()->unbox();
 
 			$this->assertInternalType('boolean', $p2);
 			$this->assertFalse($p2);
@@ -104,7 +104,7 @@ namespace Saber\Data {
 		 * @dataProvider dataCompareTo
 		 */
 		public function testCompareTo($provided, $expected) {
-			$p0 = Data\Unit::box($provided[0])->compareTo(Data\Unit::box($provided[1]));
+			$p0 = Unit\Module::box($provided[0])->compareTo(Unit\Module::box($provided[1]));
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
@@ -131,7 +131,7 @@ namespace Saber\Data {
 		 * @dataProvider dataShow
 		 */
 		public function testShow($provided, $expected) {
-			$p0 = Data\Unit::box($provided[0]);
+			$p0 = Unit\Module::box($provided[0]);
 			$e0 = $expected[0];
 
 			$this->expectOutputString($e0);
@@ -160,7 +160,7 @@ namespace Saber\Data {
 		 * @dataProvider dataToString
 		 */
 		public function testToString($provided, $expected) {
-			$p0 = Data\Unit::box($provided[0])->__toString();
+			$p0 = Unit\Module::box($provided[0])->__toString();
 			$e0 = $expected[0];
 
 			$this->assertInternalType('string', $p0);

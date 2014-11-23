@@ -21,7 +21,7 @@ namespace Saber\Data\Float {
 	use \Saber\Control;
 	use \Saber\Data;
 
-	class Module extends Data\Floating {
+	class Module extends Floating\Type {
 
 		#region Methods -> Implementation
 
@@ -128,11 +128,11 @@ namespace Saber\Data\Float {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Float $x                                     the operand
+		 * @param Float\Type $x                                     the operand
 		 * @return Data\Float                                       the result
 		 */
-		public static function abs(Data\Float $x) {
-			return Data\Float::create(abs($x->unbox()));
+		public static function abs(Float\Type $x) {
+			return Float\Module::create(abs($x->unbox()));
 		}
 
 		/**
@@ -140,12 +140,12 @@ namespace Saber\Data\Float {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Float $x                                     the left operand
-		 * @param Data\Float $y                                     the right operand
+		 * @param Float\Type $x                                     the left operand
+		 * @param Float\Type $y                                     the right operand
 		 * @return Data\Float                                       the result
 		 */
-		public static function add(Data\Float $x, Data\Float $y) {
-			return Data\Float::create($x->unbox() + $y->unbox());
+		public static function add(Float\Type $x, Float\Type $y) {
+			return Float\Module::create($x->unbox() + $y->unbox());
 		}
 
 		/**
@@ -153,11 +153,11 @@ namespace Saber\Data\Float {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Float $x                                     the operand
+		 * @param Float\Type $x                                     the operand
 		 * @return Data\Float                                       the result
 		 */
-		public static function decrement(Data\Float $x) {
-			return Data\Float::subtract($x, Data\Float::one());
+		public static function decrement(Float\Type $x) {
+			return Float\Module::subtract($x, Float\Module::one());
 		}
 
 		/**
@@ -166,12 +166,12 @@ namespace Saber\Data\Float {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Float $x                                     the left operand
-		 * @param Data\Float $y                                     the right operand
+		 * @param Float\Type $x                                     the left operand
+		 * @param Float\Type $y                                     the right operand
 		 * @return Data\Float                                       the result
 		 */
-		public static function divide(Data\Float $x, Data\Float $y) {
-			return Data\Float::create($x->unbox() / $y->unbox());
+		public static function divide(Float\Type $x, Float\Type $y) {
+			return Float\Module::create($x->unbox() / $y->unbox());
 		}
 
 		/**
@@ -186,7 +186,7 @@ namespace Saber\Data\Float {
 		 * @see http://stackoverflow.com/questions/13828011/look-for-the-gcd-greatest-common-divisor-of-more-than-2-integers
 		 */
 		protected function _gcd($x, $y) {
-		    return ($y > 0.01) ? Data\Float::_gcd($y, fmod($x, $y)) : $x;
+		    return ($y > 0.01) ? Float\Module::_gcd($y, fmod($x, $y)) : $x;
 		}
 
 		/**
@@ -194,11 +194,11 @@ namespace Saber\Data\Float {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Float $x                                     the operand
+		 * @param Float\Type $x                                     the operand
 		 * @return Data\Float                                       the result
 		 */
-		public static function increment(Data\Float $x) {
-			return Data\Float::add($x, Data\Float::one());
+		public static function increment(Float\Type $x) {
+			return Float\Module::add($x, Float\Module::one());
 		}
 
 		/**
@@ -207,12 +207,12 @@ namespace Saber\Data\Float {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Float $x                                     the left operand
-		 * @param Data\Float $y                                     the right operand
+		 * @param Float\Type $x                                     the left operand
+		 * @param Float\Type $y                                     the right operand
 		 * @return Data\Float                                       the result
 		 */
-		public static function modulo(Data\Float $x, Data\Float $y) {
-			return Data\Float::create(fmod($x->unbox(), $y->unbox()));
+		public static function modulo(Float\Type $x, Float\Type $y) {
+			return Float\Module::create(fmod($x->unbox(), $y->unbox()));
 		}
 
 		/**
@@ -221,12 +221,12 @@ namespace Saber\Data\Float {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Float $x                                     the left operand
-		 * @param Data\Float $y                                     the right operand
+		 * @param Float\Type $x                                     the left operand
+		 * @param Float\Type $y                                     the right operand
 		 * @return Data\Float                                       the result
 		 */
-		public static function multiply(Data\Float $x, Data\Float $y) {
-			return Data\Float::create($x->unbox() * $y->unbox());
+		public static function multiply(Float\Type $x, Float\Type $y) {
+			return Float\Module::create($x->unbox() * $y->unbox());
 		}
 
 		/**
@@ -234,11 +234,11 @@ namespace Saber\Data\Float {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Float $x                                     the operand
+		 * @param Float\Type $x                                     the operand
 		 * @return Data\Float                                       the result
 		 */
-		public static function negate(Data\Float $x) {
-			return Data\Float::create($x->unbox() * -1.0);
+		public static function negate(Float\Type $x) {
+			return Float\Module::create($x->unbox() * -1.0);
 		}
 
 		/**
@@ -247,12 +247,12 @@ namespace Saber\Data\Float {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Float $x                                     the left operand
-		 * @param Data\Float $y                                     the right operand
+		 * @param Float\Type $x                                     the left operand
+		 * @param Float\Type $y                                     the right operand
 		 * @return Data\Float                                       the result
 		 */
-		public static function subtract(Data\Float $x, Data\Float $y) {
-			return Data\Float::create($x->unbox() - $y->unbox());
+		public static function subtract(Float\Type $x, Float\Type $y) {
+			return Float\Module::create($x->unbox() - $y->unbox());
 		}
 
 		#endregion
@@ -265,11 +265,11 @@ namespace Saber\Data\Float {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Float $x                                     the object to be converted
+		 * @param Float\Type $x                                     the object to be converted
 		 * @return Data\Double                                      the value as a Double
 		 */
-		public static function toDouble(Data\Float $x) {
-			return Data\Double::create($x->unbox());
+		public static function toDouble(Float\Type $x) {
+			return Double\Module::create($x->unbox());
 		}
 
 		/**
@@ -278,11 +278,11 @@ namespace Saber\Data\Float {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Float $x                                     the object to be converted
+		 * @param Float\Type $x                                     the object to be converted
 		 * @return Data\Float                                       the value as a Float
 		 */
-		public static function toFloat(Data\Float $x) {
-			return Data\Float::create($x->unbox());
+		public static function toFloat(Float\Type $x) {
+			return Float\Module::create($x->unbox());
 		}
 
 		/**
@@ -291,10 +291,10 @@ namespace Saber\Data\Float {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Float $x                                     the object to be converted
+		 * @param Float\Type $x                                     the object to be converted
 		 * @return Data\Int32                                       the value as an Int32
 		 */
-		public static function toInt32(Data\Float $x) {
+		public static function toInt32(Float\Type $x) {
 			return Data\Int32::create($x->unbox());
 		}
 
@@ -304,10 +304,10 @@ namespace Saber\Data\Float {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Float $x                                     the object to be converted
+		 * @param Float\Type $x                                     the object to be converted
 		 * @return Data\Integer                                     the value as an Integer
 		 */
-		public static function toInteger(Data\Float $x) {
+		public static function toInteger(Float\Type $x) {
 			return Data\Integer::create($x->unbox());
 		}
 
@@ -316,11 +316,11 @@ namespace Saber\Data\Float {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Float $x                                     the object to be converted
+		 * @param Float\Type $x                                     the object to be converted
 		 * @return Data\String                                      the value as a String
 		 */
-		public static function toString(Data\Float $x) {
-			return Data\String::create($x->__toString());
+		public static function toString(Float\Type $x) {
+			return String\Module::create($x->__toString());
 		}
 
 		#endregion
@@ -332,17 +332,17 @@ namespace Saber\Data\Float {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Float $x                                     the left operand
+		 * @param Float\Type $x                                     the left operand
 		 * @param Data\Type $y                                      the right operand
 		 * @return Data\Bool                                        whether the left operand is equal
 		 *                                                          to the right operand
 		 */
-		public static function eq(Data\Float $x, Data\Type $y) { // ==
+		public static function eq(Float\Type $x, Data\Type $y) { // ==
 			$class = get_class($x);
 			if ($y instanceof $class) {
-				return Data\Bool::create($x->unbox() == $y->unbox());
+				return Bool\Module::create($x->unbox() == $y->unbox());
 			}
-			return Data\Bool::false();
+			return Bool\Module::false();
 		}
 
 		/**
@@ -350,16 +350,16 @@ namespace Saber\Data\Float {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Float $x                                     the left operand
+		 * @param Float\Type $x                                     the left operand
 		 * @param Data\Type $y                                      the right operand
 		 * @return Data\Bool                                        whether the left operand is identical
 		 *                                                          to the right operand
 		 */
-		public static function id(Data\Float $x, Data\Type $y) { // ===
+		public static function id(Float\Type $x, Data\Type $y) { // ===
 			if (get_class($x) === get_class($y)) {
-				return Data\Bool::create($x->unbox() === $y->unbox());
+				return Bool\Module::create($x->unbox() === $y->unbox());
 			}
-			return Data\Bool::false();
+			return Bool\Module::false();
 		}
 
 		/**
@@ -367,13 +367,13 @@ namespace Saber\Data\Float {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Float $x                                     the left operand
+		 * @param Float\Type $x                                     the left operand
 		 * @param Data\Type $y                                      the right operand
 		 * @return Data\Bool                                        whether the left operand is NOT equal
 		 *                                                          to the right operand
 		 */
-		public static function ne(Data\Float $x, Data\Type $y) { // !=
-			return Data\Bool::not(Data\Float::eq($x, $y));
+		public static function ne(Float\Type $x, Data\Type $y) { // !=
+			return Bool\Module::not(Float\Module::eq($x, $y));
 		}
 
 		/**
@@ -381,13 +381,13 @@ namespace Saber\Data\Float {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Float $x                                     the left operand
+		 * @param Float\Type $x                                     the left operand
 		 * @param Data\Type $y                                      the right operand
 		 * @return Data\Bool                                        whether the left operand is NOT identical
 		 *                                                          to the right operand
 		 */
-		public static function ni(Data\Float $x, Data\Type $y) { // !==
-			return Data\Bool::not(Data\Float::id($x, $y));
+		public static function ni(Float\Type $x, Data\Type $y) { // !==
+			return Bool\Module::not(Float\Module::id($x, $y));
 		}
 
 		#endregion
@@ -399,13 +399,13 @@ namespace Saber\Data\Float {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Float $x                                     the left operand
-		 * @param Data\Float $y                                     the right operand
+		 * @param Float\Type $x                                     the left operand
+		 * @param Float\Type $y                                     the right operand
 		 * @return Data\Int32                                       the order as to whether the left
 		 *                                                          operand is less than, equals to,
 		 *                                                          or greater than the right operand
 		 */
-		public static function compare(Data\Float $x, Data\Float $y) {
+		public static function compare(Float\Type $x, Float\Type $y) {
 			$__x = $x->unbox();
 			$__y = $y->unbox();
 
@@ -425,13 +425,13 @@ namespace Saber\Data\Float {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Float $x                                     the left operand
-		 * @param Data\Float $y                                     the right operand
+		 * @param Float\Type $x                                     the left operand
+		 * @param Float\Type $y                                     the right operand
 		 * @return Data\Bool                                        whether the left operand is greater
 		 *                                                          than or equal to the right operand
 		 */
-		public static function ge(Data\Float $x, Data\Float $y) { // >=
-			return Data\Bool::create(Data\Float::compare($x, $y)->unbox() >= 0);
+		public static function ge(Float\Type $x, Float\Type $y) { // >=
+			return Bool\Module::create(Float\Module::compare($x, $y)->unbox() >= 0);
 		}
 
 		/**
@@ -439,13 +439,13 @@ namespace Saber\Data\Float {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Float $x                                     the left operand
-		 * @param Data\Float $y                                     the right operand
+		 * @param Float\Type $x                                     the left operand
+		 * @param Float\Type $y                                     the right operand
 		 * @return Data\Bool                                        whether the left operand is greater
 		 *                                                          than the right operand
 		 */
-		public static function gt(Data\Float $x, Data\Float $y) { // >
-			return Data\Bool::create(Data\Float::compare($x, $y)->unbox() > 0);
+		public static function gt(Float\Type $x, Float\Type $y) { // >
+			return Bool\Module::create(Float\Module::compare($x, $y)->unbox() > 0);
 		}
 
 		/**
@@ -453,13 +453,13 @@ namespace Saber\Data\Float {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Float $x                                     the left operand
-		 * @param Data\Float $y                                     the right operand
+		 * @param Float\Type $x                                     the left operand
+		 * @param Float\Type $y                                     the right operand
 		 * @return Data\Bool                                        whether the left operand is less than
 		 *                                                          or equal to the right operand
 		 */
-		public static function le(Data\Float $x, Data\Float $y) { // <=
-			return Data\Bool::create(Data\Float::compare($x, $y)->unbox() <= 0);
+		public static function le(Float\Type $x, Float\Type $y) { // <=
+			return Bool\Module::create(Float\Module::compare($x, $y)->unbox() <= 0);
 		}
 
 		/**
@@ -467,13 +467,13 @@ namespace Saber\Data\Float {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Float $x                                     the left operand
-		 * @param Data\Float $y                                     the right operand
+		 * @param Float\Type $x                                     the left operand
+		 * @param Float\Type $y                                     the right operand
 		 * @return Data\Bool                                        whether the left operand is less than
 		 *                                                          the right operand
 		 */
-		public static function lt(Data\Float $x, Data\Float $y) { // <
-			return Data\Bool::create(Data\Float::compare($x, $y)->unbox() < 0);
+		public static function lt(Float\Type $x, Float\Type $y) { // <
+			return Bool\Module::create(Float\Module::compare($x, $y)->unbox() < 0);
 		}
 
 		/**
@@ -481,12 +481,12 @@ namespace Saber\Data\Float {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Float $x                                     the left operand
-		 * @param Data\Float $y                                     the right operand
+		 * @param Float\Type $x                                     the left operand
+		 * @param Float\Type $y                                     the right operand
 		 * @return Data\Float                                       the maximum value
 		 */
-		public static function max(Data\Float $x, Data\Float $y) {
-			return (Data\Float::compare($x, $y)->unbox() >= 0) ? $x : $y;
+		public static function max(Float\Type $x, Float\Type $y) {
+			return (Float\Module::compare($x, $y)->unbox() >= 0) ? $x : $y;
 		}
 
 		/**
@@ -494,12 +494,12 @@ namespace Saber\Data\Float {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Float $x                                     the left operand
-		 * @param Data\Float $y                                     the right operand
+		 * @param Float\Type $x                                     the left operand
+		 * @param Float\Type $y                                     the right operand
 		 * @return Data\Float                                       the minimum value
 		 */
-		public static function min(Data\Float $x, Data\Float $y) {
-			return (Data\Float::compare($x, $y)->unbox() <= 0) ? $x : $y;
+		public static function min(Float\Type $x, Float\Type $y) {
+			return (Float\Module::compare($x, $y)->unbox() <= 0) ? $x : $y;
 		}
 
 		#endregion
@@ -523,11 +523,11 @@ namespace Saber\Data\Float {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Float $x                                     the object to be evaluated
+		 * @param Float\Type $x                                     the object to be evaluated
 		 * @return Data\String                                      the object's hash code
 		 */
-		public static function hashCode(Data\Float $x) {
-			return Data\String::create($x->__toString());
+		public static function hashCode(Float\Type $x) {
+			return String\Module::create($x->__toString());
 		}
 
 		#endregion
@@ -539,12 +539,12 @@ namespace Saber\Data\Float {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Float $x                                     the object to be evaluated
+		 * @param Float\Type $x                                     the object to be evaluated
 		 * @return Data\Bool                                        whether the operand is a negative
 		 *                                                          number
 		 */
-		public static function isNegative(Data\Float $x) {
-			return Data\Bool::create($x->unbox() < 0);
+		public static function isNegative(Float\Type $x) {
+			return Bool\Module::create($x->unbox() < 0);
 		}
 
 		#endregion

@@ -42,9 +42,9 @@ namespace Saber\Data\ArrayList {
 		 * This constructor initializes this class with the specified collection.
 		 *
 		 * @access public
-		 * @param Data\ArrayList $arrayList                         the collection to be iterated
+		 * @param ArrayList\Type $arrayList                         the collection to be iterated
 		 */
-		public function __construct(Data\ArrayList $arrayList) {
+		public function __construct(ArrayList\Type $arrayList) {
 			$this->collection = $arrayList;
 			$this->position = Data\Int32::zero();
 		}
@@ -97,7 +97,7 @@ namespace Saber\Data\ArrayList {
 		 */
 		public function next() {
 			$this->position = $this->position->increment();
-			return Data\Bool::create($this->valid());
+			return Bool\Module::create($this->valid());
 		}
 
 		/**

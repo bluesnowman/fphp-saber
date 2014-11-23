@@ -42,9 +42,9 @@ namespace Saber\Data\String {
 		 * This constructor initializes this class with the specified collection.
 		 *
 		 * @access public
-		 * @param Data\String $string                               the collection to be iterated
+		 * @param String\Type $string                               the collection to be iterated
 		 */
-		public function __construct(Data\String $string) {
+		public function __construct(String\Type $string) {
 			$this->collection = $string;
 			$this->position = Data\Int32::zero();
 		}
@@ -97,7 +97,7 @@ namespace Saber\Data\String {
 		 */
 		public function next() {
 			$this->position = $this->position->increment();
-			return Data\Bool::create($this->valid());
+			return Bool\Module::create($this->valid());
 		}
 
 		/**

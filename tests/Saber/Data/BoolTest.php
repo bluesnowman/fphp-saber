@@ -55,7 +55,7 @@ namespace Saber\Data {
 		 * @dataProvider dataAND
 		 */
 		public function testAND($provided, $expected) {
-			$p0 = Data\Bool::and_(Data\Bool::box($provided[0]), Data\Bool::box($provided[1]));
+			$p0 = Bool\Module::and_(Bool\Module::box($provided[0]), Bool\Module::box($provided[1]));
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
@@ -86,13 +86,13 @@ namespace Saber\Data {
 		 * @dataProvider dataBox
 		 */
 		public function testBox($provided, $expected) {
-			$p0 = Data\Bool::box($provided[0]);
+			$p0 = Bool\Module::box($provided[0]);
 			$e0 = new Data\Bool($expected[0]);
 
 			//$this->assertInstanceOf('\\Saber\\Core\\AnyVal', $p0);
 			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
-			$this->assertTrue(Data\Bool::eq($e0, $p0)->unbox());
-			$this->assertTrue(Data\Bool::id($e0, $p0)->unbox());
+			$this->assertTrue(Bool\Module::eq($e0, $p0)->unbox());
+			$this->assertTrue(Bool\Module::id($e0, $p0)->unbox());
 
 			$p1 = $p0->unbox();
 			$e1 = $expected[0];
@@ -106,18 +106,18 @@ namespace Saber\Data {
 		 */
 		public function testChoice() {
 			/*
-			$x = Data\Bool::true();
+			$x = Bool\Module::true();
 
 			$p0 = $x->choice();
 
 			$this->assertInstanceOf('\\Saber\\Control\\Monad\\Choice', $p0);
 
-			$p1 = $x->choice()->when(Data\Bool::true(), function(Data\Bool $x) {})->end()->unbox();
+			$p1 = $x->choice()->when(Bool\Module::true(), function(Bool\Type $x) {})->end()->unbox();
 
 			$this->assertInternalType('boolean', $p1);
 			$this->assertTrue($p1);
 
-			$p2 = $x->choice()->when(Data\Bool::false(), function(Data\Bool $x) {})->end()->unbox();
+			$p2 = $x->choice()->when(Bool\Module::false(), function(Bool\Type $x) {})->end()->unbox();
 
 			$this->assertInternalType('boolean', $p2);
 			$this->assertFalse($p2);
@@ -153,7 +153,7 @@ namespace Saber\Data {
 		 * @dataProvider dataCompare
 		 */
 		public function testCompare($provided, $expected) {
-			$p0 = Data\Bool::compare(Data\Bool::box($provided[0]), Data\Bool::box($provided[1]));
+			$p0 = Bool\Module::compare(Bool\Module::box($provided[0]), Bool\Module::box($provided[1]));
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
@@ -189,7 +189,7 @@ namespace Saber\Data {
 		 * @dataProvider dataOR
 		 */
 		public function testOR($provided, $expected) {
-			$p0 = Data\Bool::or_(Data\Bool::box($provided[0]), Data\Bool::box($provided[1]));
+			$p0 = Bool\Module::or_(Bool\Module::box($provided[0]), Bool\Module::box($provided[1]));
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
@@ -225,7 +225,7 @@ namespace Saber\Data {
 		 * @dataProvider dataNAND
 		 */
 		public function testNAND($provided, $expected) {
-			$p0 = Data\Bool::nand(Data\Bool::box($provided[0]), Data\Bool::box($provided[1]));
+			$p0 = Bool\Module::nand(Bool\Module::box($provided[0]), Bool\Module::box($provided[1]));
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
@@ -261,7 +261,7 @@ namespace Saber\Data {
 		 * @dataProvider dataNOR
 		 */
 		public function testNOR($provided, $expected) {
-			$p0 = Data\Bool::nor(Data\Bool::box($provided[0]), Data\Bool::box($provided[1]));
+			$p0 = Bool\Module::nor(Bool\Module::box($provided[0]), Bool\Module::box($provided[1]));
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
@@ -292,7 +292,7 @@ namespace Saber\Data {
 		 * @dataProvider dataNOT
 		 */
 		public function testNOT($provided, $expected) {
-			$p0 = Data\Bool::not(Data\Bool::box($provided[0]));
+			$p0 = Bool\Module::not(Bool\Module::box($provided[0]));
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
@@ -323,7 +323,7 @@ namespace Saber\Data {
 		 * @dataProvider dataToInt32
 		 */
 		public function testToInt32($provided, $expected) {
-			$p0 = Data\Bool::toInt32(Data\Bool::box($provided[0]));
+			$p0 = Bool\Module::toInt32(Bool\Module::box($provided[0]));
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
@@ -354,7 +354,7 @@ namespace Saber\Data {
 		 * @dataProvider dataToString
 		 */
 		public function testToString($provided, $expected) {
-			$p0 = Data\Bool::box($provided[0])->__toString();
+			$p0 = Bool\Module::box($provided[0])->__toString();
 			$e0 = $expected[0];
 
 			$this->assertInternalType('string', $p0);
@@ -390,7 +390,7 @@ namespace Saber\Data {
 		 * @dataProvider dataXOR
 		 */
 		public function testXOR($provided, $expected) {
-			$p0 = Data\Bool::xor_(Data\Bool::box($provided[0]), Data\Bool::box($provided[1]));
+			$p0 = Bool\Module::xor_(Bool\Module::box($provided[0]), Bool\Module::box($provided[1]));
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);

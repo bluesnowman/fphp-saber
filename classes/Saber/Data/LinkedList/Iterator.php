@@ -50,9 +50,9 @@ namespace Saber\Data\LinkedList {
 		 * This constructor initializes this class with the specified collection.
 		 *
 		 * @access public
-		 * @param Data\LinkedList $linkedList                       the collection to be iterated
+		 * @param LinkedList\Type $linkedList                       the collection to be iterated
 		 */
-		public function __construct(Data\LinkedList $linkedList) {
+		public function __construct(LinkedList\Type $linkedList) {
 			$this->collection = $linkedList;
 			$this->current = $linkedList;
 			$this->position = Data\Int32::zero();
@@ -108,7 +108,7 @@ namespace Saber\Data\LinkedList {
 		public function next() {
 			$this->current = $this->current->tail();
 			$this->position = $this->position->increment();
-			return Data\Bool::create($this->valid());
+			return Bool\Module::create($this->valid());
 		}
 
 		/**

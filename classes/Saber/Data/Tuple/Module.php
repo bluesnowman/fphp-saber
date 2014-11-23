@@ -166,7 +166,7 @@ namespace Saber\Data\Tuple {
 		 */
 		public function first() {
 			$this->assert(function($other) {
-				return Data\Bool::create($other == $this->length());
+				return Bool\Module::create($other == $this->length());
 			}, 2);
 
 			return $this->value[0];
@@ -190,7 +190,7 @@ namespace Saber\Data\Tuple {
 		 */
 		public function second() {
 			$this->assert(function($other) {
-				return Data\Bool::create($other == $this->length());
+				return Bool\Module::create($other == $this->length());
 			}, 2);
 
 			return $this->value[1];
@@ -204,7 +204,7 @@ namespace Saber\Data\Tuple {
 		 */
 		public function swap() {
 			$this->assert(function($other) {
-				return Data\Bool::create($other == $this->length());
+				return Bool\Module::create($other == $this->length());
 			}, 2);
 
 			return Data\Tuple::create($this->value[1], $this->value[0]);

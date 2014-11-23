@@ -30,12 +30,12 @@ namespace Saber\Data\LinkedList\Nil {
 		 * This method compares the specified object with the current object for order.
 		 *
 		 * @access public
-		 * @param Data\LinkedList $that                             the object to be compared
+		 * @param LinkedList\Type $that                             the object to be compared
 		 * @return Data\Int32                                       whether the current object is less than,
 		 *                                                          equal to, or greater than the specified
 		 *                                                          object
 		 */
-		public function compareTo(Data\LinkedList $that) {
+		public function compareTo(LinkedList\Type $that) {
 			if ($that instanceof Data\LinkedList\Nil) {
 				return Data\Int32::zero();
 			}
@@ -51,7 +51,7 @@ namespace Saber\Data\LinkedList\Nil {
 		 *                                                          to the current object
 		 */
 		public function equals(Core\Any $that) {
-			return Data\Bool::create(($that !== null) && ($that instanceof static));
+			return Bool\Module::create(($that !== null) && ($that instanceof static));
 		}
 
 		/**
@@ -73,7 +73,7 @@ namespace Saber\Data\LinkedList\Nil {
 		 *                                                          to the current object
 		 */
 		public function identical(Core\Any $that) {
-			return Data\Bool::create(($that !== null) && ($that instanceof static));
+			return Bool\Module::create(($that !== null) && ($that instanceof static));
 		}
 
 		/**

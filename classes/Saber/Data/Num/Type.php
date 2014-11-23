@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-namespace Saber\Data\Num {
+namespace Saber\Num\Type {
 
 	use \Saber\Data;
 

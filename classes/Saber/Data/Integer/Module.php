@@ -27,7 +27,7 @@ namespace Saber\Data\Integer {
 	 * @see http://verysimple.com/2013/11/05/compile-php-extensions-for-mamp/
 	 * @see http://coder1.com/articles/how-to-install-php-gmp-mac-osx-1037
 	 */
-	class Module extends Data\Integral {
+	class Module extends Integral\Type {
 
 		#region Methods -> Implementation
 
@@ -280,7 +280,7 @@ namespace Saber\Data\Integer {
 		 * @return Data\String                                      the value as a String
 		 */
 		public static function toString(Data\Integer $x) {
-			return Data\String::create($x->__toString());
+			return String\Module::create($x->__toString());
 		}
 
 		#endregion
@@ -300,9 +300,9 @@ namespace Saber\Data\Integer {
 		public static function eq(Data\Integer $x, Data\Type $y) { // ==
 			$class = get_class($x);
 			if ($y instanceof $class) {
-				return Data\Bool::create($x->unbox() == $y->unbox());
+				return Bool\Module::create($x->unbox() == $y->unbox());
 			}
-			return Data\Bool::false();
+			return Bool\Module::false();
 		}
 
 		/**
@@ -317,9 +317,9 @@ namespace Saber\Data\Integer {
 		 */
 		public static function id(Data\Integer $x, Data\Type $y) { // ===
 			if (get_class($x) === get_class($y)) {
-				return Data\Bool::create($x->unbox() === $y->unbox());
+				return Bool\Module::create($x->unbox() === $y->unbox());
 			}
-			return Data\Bool::false();
+			return Bool\Module::false();
 		}
 
 		/**
@@ -333,7 +333,7 @@ namespace Saber\Data\Integer {
 		 *                                                          to the right operand
 		 */
 		public static function ne(Data\Integer $x, Data\Type $y) { // !=
-			return Data\Bool::not(Data\Integer::eq($x, $y));
+			return Bool\Module::not(Data\Integer::eq($x, $y));
 		}
 
 		/**
@@ -347,7 +347,7 @@ namespace Saber\Data\Integer {
 		 *                                                          to the right operand
 		 */
 		public static function ni(Data\Integer $x, Data\Type $y) { // !==
-			return Data\Bool::not(Data\Integer::id($x, $y));
+			return Bool\Module::not(Data\Integer::id($x, $y));
 		}
 
 		#endregion
@@ -382,7 +382,7 @@ namespace Saber\Data\Integer {
 		 *                                                          than or equal to the right operand
 		 */
 		public static function ge(Data\Integer $x, Data\Integer $y) { // >=
-			return Data\Bool::create(Data\Integer::compare($x, $y)->unbox() >= 0);
+			return Bool\Module::create(Data\Integer::compare($x, $y)->unbox() >= 0);
 		}
 
 		/**
@@ -396,7 +396,7 @@ namespace Saber\Data\Integer {
 		 *                                                          than the right operand
 		 */
 		public static function gt(Data\Integer $x, Data\Integer $y) { // >
-			return Data\Bool::create(Data\Integer::compare($x, $y)->unbox() > 0);
+			return Bool\Module::create(Data\Integer::compare($x, $y)->unbox() > 0);
 		}
 
 		/**
@@ -410,7 +410,7 @@ namespace Saber\Data\Integer {
 		 *                                                          or equal to the right operand
 		 */
 		public static function le(Data\Integer $x, Data\Integer $y) { // <=
-			return Data\Bool::create(Data\Integer::compare($x, $y)->unbox() <= 0);
+			return Bool\Module::create(Data\Integer::compare($x, $y)->unbox() <= 0);
 		}
 
 		/**
@@ -424,7 +424,7 @@ namespace Saber\Data\Integer {
 		 *                                                          the right operand
 		 */
 		public static function lt(Data\Integer $x, Data\Integer $y) { // <
-			return Data\Bool::create(Data\Integer::compare($x, $y)->unbox() < 0);
+			return Bool\Module::create(Data\Integer::compare($x, $y)->unbox() < 0);
 		}
 
 		/**
@@ -478,7 +478,7 @@ namespace Saber\Data\Integer {
 		 * @return Data\String                                      the object's hash code
 		 */
 		public static function hashCode(Data\Integer $x) {
-			return Data\String::create($x->__toString());
+			return String\Module::create($x->__toString());
 		}
 
 		#endregion
@@ -495,7 +495,7 @@ namespace Saber\Data\Integer {
 		 *                                                          number
 		 */
 		public static function isEven(Data\Integer $x) {
-			return Data\Bool::create(gmp_strval(gmp_div_r($x->unbox(), '2')) == '0');
+			return Bool\Module::create(gmp_strval(gmp_div_r($x->unbox(), '2')) == '0');
 		}
 
 		/**
@@ -508,7 +508,7 @@ namespace Saber\Data\Integer {
 		 *                                                          number
 		 */
 		public static function isOdd(Data\Integer $x) {
-			return Data\Bool::create(gmp_strval(gmp_div_r($x->unbox(), '2')) != '0');
+			return Bool\Module::create(gmp_strval(gmp_div_r($x->unbox(), '2')) != '0');
 		}
 
 		/**
@@ -521,7 +521,7 @@ namespace Saber\Data\Integer {
 		 *                                                          number
 		 */
 		public static function isNegative(Data\Integer $x) {
-			return Data\Bool::create(gmp_sign($x->unbox()) == -1);
+			return Bool\Module::create(gmp_sign($x->unbox()) == -1);
 		}
 
 		#endregion

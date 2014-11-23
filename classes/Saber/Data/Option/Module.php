@@ -21,7 +21,7 @@ namespace Saber\Data\Option {
 	use \Saber\Data;
 	use \Saber\Throwable;
 
-	abstract class Module extends Data\Collection\Module {
+	abstract class Module extends Collection\Module {
 
 		#region Methods -> Implementation
 
@@ -88,7 +88,7 @@ namespace Saber\Data\Option {
 		 *                                                          truthy test
 		 */
 		public static function all(Data\Option $xs, callable $predicate) {
-			return Data\Bool::or_(Data\Bool::not(Data\Option::isDefined($xs)), $predicate($xs->object(), Data\Int32::zero()));
+			return Bool\Module::or_(Bool\Module::not(Data\Option::isDefined($xs)), $predicate($xs->object(), Data\Int32::zero()));
 		}
 
 		/**
@@ -146,7 +146,7 @@ namespace Saber\Data\Option {
 		 * @return Data\Option                                      the option
 		 */
 		public static function filter(Data\Option $xs, callable $predicate) {
-			if (Data\Bool::and_(Data\Option::isDefined($xs), $predicate($xs->object(), Data\Int32::zero()))->unbox()) {
+			if (Bool\Module::and_(Data\Option::isDefined($xs), $predicate($xs->object(), Data\Int32::zero()))->unbox()) {
 				return $xs;
 			}
 			return Data\Option::none();
@@ -163,7 +163,7 @@ namespace Saber\Data\Option {
 		 *                                                          satisfying the predicate, if any
 		 */
 		public static function find(Data\Option $xs, callable $predicate) {
-			if (Data\Bool::and_(Data\Option::isDefined($xs), $predicate($xs->object(), Data\Int32::zero()))->unbox()) {
+			if (Bool\Module::and_(Data\Option::isDefined($xs), $predicate($xs->object(), Data\Int32::zero()))->unbox()) {
 				return $xs;
 			}
 			return Data\Option::none();
@@ -249,7 +249,7 @@ namespace Saber\Data\Option {
 				$array[] = $xs->object();
 			}
 
-			return Data\ArrayList::create($array);
+			return ArrayList\Module::create($array);
 		}
 
 		/**
@@ -262,8 +262,8 @@ namespace Saber\Data\Option {
 		 */
 		public static function toList(Data\Option $xs) {
 			return (Data\Option::isDefined($xs)->unbox())
-				? Data\LinkedList::cons($xs->object(), Data\LinkedList::nil())
-				: Data\LinkedList::nil();
+				? LinkedList\Module::cons($xs->object(), LinkedList\Module::nil())
+				: LinkedList\Module::nil();
 		}
 
 		#endregion
@@ -280,7 +280,7 @@ namespace Saber\Data\Option {
 		 *                                                          option
 		 */
 		public static function isDefined(Data\Option $xs) {
-			return Data\Bool::create($xs instanceof Data\Option\Some);
+			return Bool\Module::create($xs instanceof Data\Option\Some);
 		}
 
 		#endregion
@@ -304,20 +304,20 @@ namespace Saber\Data\Option {
 					$x = $xs->object();
 					$y = $ys->object();
 					if ($x === null) {
-						return Data\Bool::create($y === null);
+						return Bool\Module::create($y === null);
 					}
 					$module = get_class($x);
 					$method = 'eq';
 					if (method_exists($module, $method)) {
 						return call_user_func_array(array($module, $method), array($x, $y));
 					}
-					return Data\Bool::create(spl_object_hash($x) === spl_object_hash($y));
+					return Bool\Module::create(spl_object_hash($x) === spl_object_hash($y));
 				}
 				else if ($ys instanceof Data\Option\None) {
-					return Data\Bool::true();
+					return Bool\Module::true();
 				}
 			}
-			return Data\Bool::false();
+			return Bool\Module::false();
 		}
 
 		/**
@@ -336,20 +336,20 @@ namespace Saber\Data\Option {
 					$x = $xs->object();
 					$y = $ys->object();
 					if ($x === null) {
-						return Data\Bool::create($y === null);
+						return Bool\Module::create($y === null);
 					}
 					$module = get_class($x);
 					$method = 'id';
 					if (method_exists($module, $method)) {
 						return call_user_func_array(array($module, $method), array($x, $y));
 					}
-					return Data\Bool::create(spl_object_hash($x) === spl_object_hash($y));
+					return Bool\Module::create(spl_object_hash($x) === spl_object_hash($y));
 				}
 				else if ($ys instanceof Data\Option\None) {
-					return Data\Bool::true();
+					return Bool\Module::true();
 				}
 			}
-			return Data\Bool::false();
+			return Bool\Module::false();
 		}
 
 		/**
@@ -363,7 +363,7 @@ namespace Saber\Data\Option {
 		 *                                                          to the right operand
 		 */
 		public static function ne(Data\Option $xs, Data\Type $ys) { // !=
-			return Data\Bool::not(Data\Option::eq($xs, $ys));
+			return Bool\Module::not(Data\Option::eq($xs, $ys));
 		}
 
 		/**
@@ -377,7 +377,7 @@ namespace Saber\Data\Option {
 		 *                                                          to the right operand
 		 */
 		public static function ni(Data\Option $xs, Data\Type $ys) { // !==
-			return Data\Bool::not(Data\Option::id($xs, $ys));
+			return Bool\Module::not(Data\Option::id($xs, $ys));
 		}
 
 		#endregion
@@ -427,7 +427,7 @@ namespace Saber\Data\Option {
 			if (method_exists($module, $method)) {
 				return call_user_func_array(array($module, $method), array($x, $y));
 			}
-			return Data\String::compare(Data\String::create(spl_object_hash($x)), Data\String::create(spl_object_hash($y)));
+			return String\Module::compare(String\Module::create(spl_object_hash($x)), String\Module::create(spl_object_hash($y)));
 		}
 
 		/**
@@ -441,7 +441,7 @@ namespace Saber\Data\Option {
 		 *                                                          than or equal to the right operand
 		 */
 		public static function ge(Data\Option $xs, Data\Option $ys) { // >=
-			return Data\Bool::create(Data\Option::compare($xs, $ys)->unbox() >= 0);
+			return Bool\Module::create(Data\Option::compare($xs, $ys)->unbox() >= 0);
 		}
 
 		/**
@@ -455,7 +455,7 @@ namespace Saber\Data\Option {
 		 *                                                          than the right operand
 		 */
 		public static function gt(Data\Option $xs, Data\Option $ys) { // >
-			return Data\Bool::create(Data\Option::compare($xs, $ys)->unbox() > 0);
+			return Bool\Module::create(Data\Option::compare($xs, $ys)->unbox() > 0);
 		}
 
 		/**
@@ -469,7 +469,7 @@ namespace Saber\Data\Option {
 		 *                                                          or equal to the right operand
 		 */
 		public static function le(Data\Option $xs, Data\Option $ys) { // <=
-			return Data\Bool::create(Data\Option::compare($xs, $ys)->unbox() <= 0);
+			return Bool\Module::create(Data\Option::compare($xs, $ys)->unbox() <= 0);
 		}
 
 		/**
@@ -483,7 +483,7 @@ namespace Saber\Data\Option {
 		 *                                                          the right operand
 		 */
 		public static function lt(Data\Option $xs, Data\Option $ys) { // <
-			return Data\Bool::create(Data\Option::compare($xs, $ys)->unbox() < 0);
+			return Bool\Module::create(Data\Option::compare($xs, $ys)->unbox() < 0);
 		}
 
 		/**

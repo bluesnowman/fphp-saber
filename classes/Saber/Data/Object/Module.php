@@ -43,12 +43,12 @@ namespace Saber\Data\Object {
 		 * This method compares the specified object with the current object for order.
 		 *
 		 * @access public
-		 * @param Data\Object $that                                the object to be compared
+		 * @param Object\Type $that                                the object to be compared
 		 * @return Data\Int32                                       whether the current object is less than,
 		 *                                                          equal to, or greater than the specified
 		 *                                                          object
 		 */
-		public function compareTo(Data\Object $that) {
+		public function compareTo(Object\Type $that) {
 			return Data\Int32::zero();
 		}
 

@@ -43,9 +43,9 @@ namespace Saber\Data\LinkedList\Cons {
 		 * @access public
 		 * @param Core\Any $head                                    the object to be assigned
 		 *                                                          to the head
-		 * @param Data\LinkedList $tail                             the tail to be linked
+		 * @param LinkedList\Type $tail                             the tail to be linked
 		 */
-		public function __construct(Core\Any $head, Data\LinkedList $tail) {
+		public function __construct(Core\Any $head, LinkedList\Type $tail) {
 			$this->value = $head;
 			$this->tail = $tail;
 		}
@@ -58,12 +58,12 @@ namespace Saber\Data\LinkedList\Cons {
 		 * This method compares the specified object with the current object for order.
 		 *
 		 * @access public
-		 * @param Data\LinkedList $that                             the object to be compared
+		 * @param LinkedList\Type $that                             the object to be compared
 		 * @return Data\Int32                                       whether the current object is less than,
 		 *                                                          equal to, or greater than the specified
 		 *                                                          object
 		 */
-		public function compareTo(Data\LinkedList $that) {
+		public function compareTo(LinkedList\Type $that) {
 			$xs = $this;
 			$ys = $that;
 
@@ -98,9 +98,9 @@ namespace Saber\Data\LinkedList\Cons {
 		 */
 		public function equals(Core\Any $that) {
 			if (($that === null) || ($this->__typeOf() != $that->__typeOf())) {
-				return Data\Bool::false();
+				return Bool\Module::false();
 			}
-			return Data\Bool::create($this->head()->__equals($that->head()) && $this->tail()->__equals($that->tail()));
+			return Bool\Module::create($this->head()->__equals($that->head()) && $this->tail()->__equals($that->tail()));
 		}
 
 		/**
@@ -124,9 +124,9 @@ namespace Saber\Data\LinkedList\Cons {
 		 */
 		public function identical(Core\Any $that) {
 			if (($that === null) || ($this->__typeOf() != $that->__typeOf())) {
-				return Data\Bool::false();
+				return Bool\Module::false();
 			}
-			return Data\Bool::create($this->head()->__identical($that->head()) && $this->tail()->__identical($that->tail()));
+			return Bool\Module::create($this->head()->__identical($that->head()) && $this->tail()->__identical($that->tail()));
 		}
 
 		/**

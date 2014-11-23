@@ -137,7 +137,7 @@ namespace Saber\Data {
 		 * @return Data\String                                      the object's hash code
 		 */
 		public static function hashCode(Data\Type $x) {
-			return Data\String::create(spl_object_hash($x));
+			return String\Module::create(spl_object_hash($x));
 		}
 
 		/**
@@ -149,7 +149,7 @@ namespace Saber\Data {
 		 * @return Data\String                                      the object's class type
 		 */
 		public static function typeOf(Data\Type $x) {
-			return Data\String::create(get_class($x));
+			return String\Module::create(get_class($x));
 		}
 
 	}

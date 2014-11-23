@@ -147,7 +147,7 @@ Control\Monad::choice($x)
         + Throwable\OutOfBounds\Exception
         + Throwable\UnexpectedValue\Exception
         + Throwable\UnimplementedMethod\Exception
-    + Data\Collection
+    + Collection\Type
       + Data\ArrayList
         + Data\ArrayList\Iterator
       + Data\LinkedList
@@ -161,11 +161,11 @@ Control\Monad::choice($x)
   + Core\AnyVal
     + Data\Bool
     + Data\Char
-    + Data\Num
-      + Data\Floating
+    + Num\Type
+      + Floating\Type
         + Data\Double
         + Data\Float
-      + Data\Integral
+      + Integral\Type
         + Data\Int32
         + Data\Integer
     + Data\Unit

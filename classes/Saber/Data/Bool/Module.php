@@ -96,7 +96,7 @@ namespace Saber\Data\Bool {
 		 * @return Data\Bool                                        the object
 		 */
 		public static function false() {
-			return Data\Bool::create(false);
+			return Bool\Module::create(false);
 		}
 
 		/**
@@ -106,7 +106,7 @@ namespace Saber\Data\Bool {
 		 * @return Data\Bool                                        the object
 		 */
 		public static function true() {
-			return Data\Bool::create(true);
+			return Bool\Module::create(true);
 		}
 
 		#endregion
@@ -119,10 +119,10 @@ namespace Saber\Data\Bool {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Bool $x                                      the object to be converted
+		 * @param Bool\Type $x                                      the object to be converted
 		 * @return Data\Int32                                       the value as an Int32
 		 */
-		public static function toInt32(Data\Bool $x) {
+		public static function toInt32(Bool\Type $x) {
 			return Data\Int32::create($x->unbox());
 		}
 
@@ -131,11 +131,11 @@ namespace Saber\Data\Bool {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Bool $x                                      the object to be converted
+		 * @param Bool\Type $x                                      the object to be converted
 		 * @return Data\String                                      the value as a String
 		 */
-		public static function toString(Data\Bool $x) {
-			return Data\String::create($x->__toString());
+		public static function toString(Bool\Type $x) {
+			return String\Module::create($x->__toString());
 		}
 
 		#endregion
@@ -147,17 +147,17 @@ namespace Saber\Data\Bool {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Bool $x                                      the left operand
+		 * @param Bool\Type $x                                      the left operand
 		 * @param Data\Type $y                                      the right operand
 		 * @return Data\Bool                                        whether the left operand is equal
 		 *                                                          to the right operand
 		 */
-		public static function eq(Data\Bool $x, Data\Type $y) { // ==
+		public static function eq(Bool\Type $x, Data\Type $y) { // ==
 			$class = get_class($x);
 			if ($y instanceof $class) {
-				return Data\Bool::create($x->unbox() == $y->unbox());
+				return Bool\Module::create($x->unbox() == $y->unbox());
 			}
-			return Data\Bool::false();
+			return Bool\Module::false();
 		}
 
 		/**
@@ -165,16 +165,16 @@ namespace Saber\Data\Bool {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Bool $x                                      the left operand
+		 * @param Bool\Type $x                                      the left operand
 		 * @param Data\Type $y                                      the right operand
 		 * @return Data\Bool                                        whether the left operand is identical
 		 *                                                          to the right operand
 		 */
-		public static function id(Data\Bool $x, Data\Type $y) { // ===
+		public static function id(Bool\Type $x, Data\Type $y) { // ===
 			if (get_class($x) === get_class($y)) {
-				return Data\Bool::create($x->unbox() === $y->unbox());
+				return Bool\Module::create($x->unbox() === $y->unbox());
 			}
-			return Data\Bool::false();
+			return Bool\Module::false();
 		}
 
 		/**
@@ -182,13 +182,13 @@ namespace Saber\Data\Bool {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Bool $x                                      the left operand
+		 * @param Bool\Type $x                                      the left operand
 		 * @param Data\Type $y                                      the right operand
 		 * @return Data\Bool                                        whether the left operand is NOT equal
 		 *                                                          to the right operand
 		 */
-		public static function ne(Data\Bool $x, Data\Type $y) { // !=
-			return Data\Bool::not(Data\Bool::eq($x, $y));
+		public static function ne(Bool\Type $x, Data\Type $y) { // !=
+			return Bool\Module::not(Bool\Module::eq($x, $y));
 		}
 
 		/**
@@ -196,13 +196,13 @@ namespace Saber\Data\Bool {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Bool $x                                      the left operand
+		 * @param Bool\Type $x                                      the left operand
 		 * @param Data\Type $y                                      the right operand
 		 * @return Data\Bool                                        whether the left operand is NOT identical
 		 *                                                          to the right operand
 		 */
-		public static function ni(Data\Bool $x, Data\Type $y) { // !==
-			return Data\Bool::not(Data\Bool::id($x, $y));
+		public static function ni(Bool\Type $x, Data\Type $y) { // !==
+			return Bool\Module::not(Bool\Module::id($x, $y));
 		}
 
 		#endregion
@@ -214,14 +214,14 @@ namespace Saber\Data\Bool {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Bool $x                                      the left operand
-		 * @param Data\Bool $y                                      the right operand
+		 * @param Bool\Type $x                                      the left operand
+		 * @param Bool\Type $y                                      the right operand
 		 * @return Data\Bool                                        whether both operands are "true"
 		 *
 		 * @see http://en.wikipedia.org/wiki/Truth_table#Logical_conjunction
 		 */
-		public static function and_(Data\Bool $x, Data\Bool $y) {
-			return Data\Bool::create($x->unbox() && $y->unbox());
+		public static function and_(Bool\Type $x, Bool\Type $y) {
+			return Bool\Module::create($x->unbox() && $y->unbox());
 		}
 
 		/**
@@ -229,15 +229,15 @@ namespace Saber\Data\Bool {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Bool $x                                      the left operand
-		 * @param Data\Bool $y                                      the right operand
+		 * @param Bool\Type $x                                      the left operand
+		 * @param Bool\Type $y                                      the right operand
 		 * @return Data\Bool                                        whether the left operand implies
 		 *                                                          the right operand
 		 *
 		 * @see http://en.wikipedia.org/wiki/Truth_table#Logical_implication
 		 */
-		public static function impl(Data\Bool $x, Data\Bool $y) {
-			return Data\Bool::create(!$x->unbox() || $y->unbox());
+		public static function impl(Bool\Type $x, Bool\Type $y) {
+			return Bool\Module::create(!$x->unbox() || $y->unbox());
 		}
 
 		/**
@@ -245,14 +245,14 @@ namespace Saber\Data\Bool {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Bool $x                                      the left operand
-		 * @param Data\Bool $y                                      the right operand
+		 * @param Bool\Type $x                                      the left operand
+		 * @param Bool\Type $y                                      the right operand
 		 * @return Data\Bool                                        whether at least one operand is "false"
 		 *
 		 * @see http://en.wikipedia.org/wiki/Truth_table#Logical_NAND
 		 */
-		public static function nand(Data\Bool $x, Data\Bool $y) {
-			return Data\Bool::create(!($x->unbox() && $y->unbox()));
+		public static function nand(Bool\Type $x, Bool\Type $y) {
+			return Bool\Module::create(!($x->unbox() && $y->unbox()));
 		}
 
 		/**
@@ -260,14 +260,14 @@ namespace Saber\Data\Bool {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Bool $x                                      the left operand
-		 * @param Data\Bool $y                                      the right operand
+		 * @param Bool\Type $x                                      the left operand
+		 * @param Bool\Type $y                                      the right operand
 		 * @return Data\Bool                                        whether both operands are "false"
 		 *
 		 * @see http://en.wikipedia.org/wiki/Truth_table#Logical_NOR
 		 */
-		public static function nor(Data\Bool $x, Data\Bool $y) {
-			return Data\Bool::create(!($x->unbox() || $y->unbox()));
+		public static function nor(Bool\Type $x, Bool\Type $y) {
+			return Bool\Module::create(!($x->unbox() || $y->unbox()));
 		}
 
 		/**
@@ -275,13 +275,13 @@ namespace Saber\Data\Bool {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Bool $x                                      the operand
+		 * @param Bool\Type $x                                      the operand
 		 * @return Data\Bool                                        whether the operand is "false"
 		 *
 		 * @see http://en.wikipedia.org/wiki/Truth_table#Logical_negation
 		 */
-		public static function not(Data\Bool $x) {
-			return Data\Bool::create(!$x->unbox());
+		public static function not(Bool\Type $x) {
+			return Bool\Module::create(!$x->unbox());
 		}
 
 		/**
@@ -289,14 +289,14 @@ namespace Saber\Data\Bool {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Bool $x                                      the left operand
-		 * @param Data\Bool $y                                      the right operand
+		 * @param Bool\Type $x                                      the left operand
+		 * @param Bool\Type $y                                      the right operand
 		 * @return Data\Bool                                        whether at least one operand is "true"
 		 *
 		 * @see http://en.wikipedia.org/wiki/Truth_table#Logical_disjunction
 		 */
-		public static function or_(Data\Bool $x, Data\Bool $y) {
-			return Data\Bool::create($x->unbox() || $y->unbox());
+		public static function or_(Bool\Type $x, Bool\Type $y) {
+			return Bool\Module::create($x->unbox() || $y->unbox());
 		}
 
 		/**
@@ -304,15 +304,15 @@ namespace Saber\Data\Bool {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Bool $x                                      the left operand
-		 * @param Data\Bool $y                                      the right operand
+		 * @param Bool\Type $x                                      the left operand
+		 * @param Bool\Type $y                                      the right operand
 		 * @return Data\Bool                                        whether only if both operands are
 		 *                                                          "true" or "false"
 		 *
 		 * @see http://en.wikipedia.org/wiki/Truth_table#Logical_equality
 		 */
-		public static function xnor(Data\Bool $x, Data\Bool $y) {
-			return Data\Bool::create(!($x->unbox() xor $y->unbox()));
+		public static function xnor(Bool\Type $x, Bool\Type $y) {
+			return Bool\Module::create(!($x->unbox() xor $y->unbox()));
 		}
 
 		/**
@@ -320,14 +320,14 @@ namespace Saber\Data\Bool {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Bool $x                                      the left operand
-		 * @param Data\Bool $y                                      the right operand
+		 * @param Bool\Type $x                                      the left operand
+		 * @param Bool\Type $y                                      the right operand
 		 * @return Data\Bool                                        whether only one operand is "true"
 		 *
 		 * @see http://en.wikipedia.org/wiki/Truth_table#Exclusive_disjunction
 		 */
-		public static function xor_(Data\Bool $x, Data\Bool $y) {
-			return Data\Bool::create($x->unbox() xor $y->unbox());
+		public static function xor_(Bool\Type $x, Bool\Type $y) {
+			return Bool\Module::create($x->unbox() xor $y->unbox());
 		}
 
 		#endregion
@@ -339,13 +339,13 @@ namespace Saber\Data\Bool {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Bool $x                                      the left operand
-		 * @param Data\Bool $y                                      the right operand
+		 * @param Bool\Type $x                                      the left operand
+		 * @param Bool\Type $y                                      the right operand
 		 * @return Data\Int32                                       the order as to whether the left
 		 *                                                          operand is less than, equals to,
 		 *                                                          or greater than the right operand
 		 */
-		public static function compare(Data\Bool $x, Data\Bool $y) {
+		public static function compare(Bool\Type $x, Bool\Type $y) {
 			$__x = $x->unbox();
 			$__y = $y->unbox();
 
@@ -365,13 +365,13 @@ namespace Saber\Data\Bool {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Bool $x                                      the left operand
-		 * @param Data\Bool $y                                      the right operand
+		 * @param Bool\Type $x                                      the left operand
+		 * @param Bool\Type $y                                      the right operand
 		 * @return Data\Bool                                        whether the left operand is greater
 		 *                                                          than or equal to the right operand
 		 */
-		public static function ge(Data\Bool $x, Data\Bool $y) { // >=
-			return Data\Bool::create(Data\Bool::compare($x, $y)->unbox() >= 0);
+		public static function ge(Bool\Type $x, Bool\Type $y) { // >=
+			return Bool\Module::create(Bool\Module::compare($x, $y)->unbox() >= 0);
 		}
 
 		/**
@@ -379,13 +379,13 @@ namespace Saber\Data\Bool {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Bool $x                                      the left operand
-		 * @param Data\Bool $y                                      the right operand
+		 * @param Bool\Type $x                                      the left operand
+		 * @param Bool\Type $y                                      the right operand
 		 * @return Data\Bool                                        whether the left operand is greater
 		 *                                                          than the right operand
 		 */
-		public static function gt(Data\Bool $x, Data\Bool $y) { // >
-			return Data\Bool::create(Data\Bool::compare($x, $y)->unbox() > 0);
+		public static function gt(Bool\Type $x, Bool\Type $y) { // >
+			return Bool\Module::create(Bool\Module::compare($x, $y)->unbox() > 0);
 		}
 
 		/**
@@ -393,13 +393,13 @@ namespace Saber\Data\Bool {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Bool $x                                      the left operand
-		 * @param Data\Bool $y                                      the right operand
+		 * @param Bool\Type $x                                      the left operand
+		 * @param Bool\Type $y                                      the right operand
 		 * @return Data\Bool                                        whether the left operand is less than
 		 *                                                          or equal to the right operand
 		 */
-		public static function le(Data\Bool $x, Data\Bool $y) { // <=
-			return Data\Bool::create(Data\Bool::compare($x, $y)->unbox() <= 0);
+		public static function le(Bool\Type $x, Bool\Type $y) { // <=
+			return Bool\Module::create(Bool\Module::compare($x, $y)->unbox() <= 0);
 		}
 
 		/**
@@ -407,13 +407,13 @@ namespace Saber\Data\Bool {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Bool $x                                      the left operand
-		 * @param Data\Bool $y                                      the right operand
+		 * @param Bool\Type $x                                      the left operand
+		 * @param Bool\Type $y                                      the right operand
 		 * @return Data\Bool                                        whether the left operand is less than
 		 *                                                          the right operand
 		 */
-		public static function lt(Data\Bool $x, Data\Bool $y) { // <
-			return Data\Bool::create(Data\Bool::compare($x, $y)->unbox() < 0);
+		public static function lt(Bool\Type $x, Bool\Type $y) { // <
+			return Bool\Module::create(Bool\Module::compare($x, $y)->unbox() < 0);
 		}
 
 		/**
@@ -421,12 +421,12 @@ namespace Saber\Data\Bool {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Bool $x                                      the left operand
-		 * @param Data\Bool $y                                      the right operand
+		 * @param Bool\Type $x                                      the left operand
+		 * @param Bool\Type $y                                      the right operand
 		 * @return Data\Int32                                       the maximum value
 		 */
-		public static function max(Data\Bool $x, Data\Bool $y) {
-			return (Data\Bool::compare($x, $y)->unbox() >= 0) ? $x : $y;
+		public static function max(Bool\Type $x, Bool\Type $y) {
+			return (Bool\Module::compare($x, $y)->unbox() >= 0) ? $x : $y;
 		}
 
 		/**
@@ -434,12 +434,12 @@ namespace Saber\Data\Bool {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Bool $x                                      the left operand
-		 * @param Data\Bool $y                                      the right operand
+		 * @param Bool\Type $x                                      the left operand
+		 * @param Bool\Type $y                                      the right operand
 		 * @return Data\Int32                                       the minimum value
 		 */
-		public static function min(Data\Bool $x, Data\Bool $y) {
-			return (Data\Bool::compare($x, $y)->unbox() <= 0) ? $x : $y;
+		public static function min(Bool\Type $x, Bool\Type $y) {
+			return (Bool\Module::compare($x, $y)->unbox() <= 0) ? $x : $y;
 		}
 
 		#endregion
@@ -451,10 +451,10 @@ namespace Saber\Data\Bool {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Bool $x                                      the object to be evaluated
+		 * @param Bool\Type $x                                      the object to be evaluated
 		 * @return Control\Monad\Choice                             the choice monad
 		 */
-		public static function choice(Data\Bool $x) {
+		public static function choice(Bool\Type $x) {
 			return Control\Monad::choice($x);
 		}
 
@@ -463,11 +463,11 @@ namespace Saber\Data\Bool {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Bool $x                                      the object to be evaluated
+		 * @param Bool\Type $x                                      the object to be evaluated
 		 * @return Data\String                                      the object's hash code
 		 */
-		public static function hashCode(Data\Bool $x) {
-			return Data\String::create($x->__toString());
+		public static function hashCode(Bool\Type $x) {
+			return String\Module::create($x->__toString());
 		}
 
 		#endregion

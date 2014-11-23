@@ -21,7 +21,7 @@ namespace Saber\Data\LinkedList {
 	use \Saber\Data;
 	use \Saber\Throwable;
 
-	abstract class Module extends Data\Collection\Module {
+	abstract class Module extends Collection\Module {
 
 		#region Properties
 
@@ -49,9 +49,9 @@ namespace Saber\Data\LinkedList {
 		 */
 		public static function box($value/*...*/) {
 			if (is_array($value)) {
-				$zs = Data\LinkedList::nil();
+				$zs = LinkedList\Module::nil();
 				for ($i = count($value) - 1; $i >= 0; $i--) {
-					$zs = Data\LinkedList::prepend($zs, $value[$i]);
+					$zs = LinkedList\Module::prepend($zs, $value[$i]);
 				}
 				return $zs;
 			}
@@ -70,10 +70,10 @@ namespace Saber\Data\LinkedList {
 		 * @access public
 		 * @static
 		 * @param Data\Type $head                                    the head to be used
-		 * @param Data\LinkedList $tail                             the tail to be used
+		 * @param LinkedList\Type $tail                             the tail to be used
 		 * @return Data\LinkedList\Cons                             the "cons" object
 		 */
-		public static function cons(Data\Type $head, Data\LinkedList $tail) {
+		public static function cons(Data\Type $head, LinkedList\Type $tail) {
 			return new Data\LinkedList\Cons($head, $tail);
 		}
 
@@ -99,9 +99,9 @@ namespace Saber\Data\LinkedList {
 		 */
 		public static function replicate(Data\Int32 $n, Data\Type $y) {
 			if ($n->unbox() <= 0) {
-				return Data\LinkedList::nil();
+				return LinkedList\Module::nil();
 			}
-			return Data\LinkedList::cons($y, Data\LinkedList::replicate(Data\Int32::decrement($n), $y));
+			return LinkedList\Module::cons($y, LinkedList\Module::replicate(Data\Int32::decrement($n), $y));
 		}
 
 		/**
@@ -114,8 +114,8 @@ namespace Saber\Data\LinkedList {
 		public function unbox($depth = 0) {
 			$buffer = array();
 
-			for ($zs = $this; ! Data\LinkedList::isEmpty($zs)->unbox(); $zs = Data\LinkedList::tail($zs)) {
-				$z = Data\LinkedList::head($zs);
+			for ($zs = $this; ! LinkedList\Module::isEmpty($zs)->unbox(); $zs = LinkedList\Module::tail($zs)) {
+				$z = LinkedList\Module::head($zs);
 				$buffer[] = ($depth > 0)
 					? $z->unbox($depth - 1)
 					: $z;
@@ -134,23 +134,23 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @param callable $predicate                               the predicate function to be used
 		 * @return Data\Bool                                        whether each element passed the
 		 *                                                          truthy test
 		 */
-		public static function all(Data\LinkedList $xs, callable $predicate) {
+		public static function all(LinkedList\Type $xs, callable $predicate) {
 			$i = Data\Int32::zero();
 
-			for ($zs = $xs; ! Data\LinkedList::isEmpty($zs)->unbox(); $zs = Data\LinkedList::tail($zs)) {
-				$z = Data\LinkedList::head($zs, $i);
+			for ($zs = $xs; ! LinkedList\Module::isEmpty($zs)->unbox(); $zs = LinkedList\Module::tail($zs)) {
+				$z = LinkedList\Module::head($zs, $i);
 				if (!$predicate($z, $i)->unbox()) {
-					return Data\Bool::false();
+					return Bool\Module::false();
 				}
 				$i = Data\Int32::increment($i);
 			}
 
-			return Data\Bool::true(); // yes, an empty list returns "true"
+			return Bool\Module::true(); // yes, an empty list returns "true"
 		}
 
 		/**
@@ -159,13 +159,13 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @param callable $predicate                               the predicate function to be used
 		 * @return Data\Bool                                        whether some of the elements
 		 *                                                          passed the truthy test
 		 */
-		public static function any(Data\LinkedList $xs, callable $predicate) {
-			return Data\Option::isDefined(Data\LinkedList::find($xs, $predicate));
+		public static function any(LinkedList\Type $xs, callable $predicate) {
+			return Data\Option::isDefined(LinkedList\Module::find($xs, $predicate));
 		}
 
 		/**
@@ -173,12 +173,12 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @param Data\Type $object                                  the object to be appended
 		 * @return Data\LinkedList                                  the collection
 		 */
-		public static function append(Data\LinkedList $xs, Data\Type $object) {
-			return Data\LinkedList::concat($xs, Data\LinkedList::cons($object, Data\LinkedList::nil()));
+		public static function append(LinkedList\Type $xs, Data\Type $object) {
+			return LinkedList\Module::concat($xs, LinkedList\Module::cons($object, LinkedList\Module::nil()));
 		}
 
 		/**
@@ -186,25 +186,25 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
-		 * @param Data\LinkedList $that                             the object to be compared
+		 * @param LinkedList\Type $xs                               the left operand
+		 * @param LinkedList\Type $that                             the object to be compared
 		 * @return Data\Int32                                       whether the current object is less than,
 		 *                                                          equal to, or greater than the specified
 		 *                                                          object
 		 */
-		public abstract function compare(Data\LinkedList $xs, Data\LinkedList $that);
+		public abstract function compare(LinkedList\Type $xs, LinkedList\Type $that);
 
 		/**
 		 * This method concatenates a collection to this object's collection. Performs in O(n) time.
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
-		 * @param Data\LinkedList $ys                               the collection to be concatenated
+		 * @param LinkedList\Type $xs                               the left operand
+		 * @param LinkedList\Type $ys                               the collection to be concatenated
 		 * @return Data\LinkedList                                  the collection
 		 */
-		public static function concat(Data\LinkedList $xs, Data\LinkedList $ys) {
-			for ($zs = $xs; ! Data\LinkedList::isEmpty($zs)->unbox(); $zs = Data\LinkedList::tail($zs));
+		public static function concat(LinkedList\Type $xs, LinkedList\Type $ys) {
+			for ($zs = $xs; ! LinkedList\Module::isEmpty($zs)->unbox(); $zs = LinkedList\Module::tail($zs));
 			$zs->tail = $ys;
 			return $xs;
 		}
@@ -214,13 +214,13 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @param Data\Type $y                                      the object to find
 		 * @return Data\Bool                                        whether the specified object is
 		 *                                                          contained within the collection
 		 */
-		public static function contains(Data\LinkedList $xs, Data\Type $y) {
-			return Data\LinkedList::any($xs, function(Data\Type $x, Data\Int32 $i) use ($y) {
+		public static function contains(LinkedList\Type $xs, Data\Type $y) {
+			return LinkedList\Module::any($xs, function(Data\Type $x, Data\Int32 $i) use ($y) {
 				return call_user_func_array(array(get_class($x), 'eq'), array($x, $y));
 			});
 		}
@@ -230,19 +230,19 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @param Data\Type $y                                      the object to be removed
 		 * @return Data\LinkedList                                  the collection
 		 */
-		public static function delete(Data\LinkedList $xs, Data\Type $y) {
-			$start = Data\LinkedList::nil();
+		public static function delete(LinkedList\Type $xs, Data\Type $y) {
+			$start = LinkedList\Module::nil();
 			$tail = null;
 
 			$index = Data\Int32::zero();
-			for ($zs = $xs; ! Data\LinkedList::isEmpty($zs)->unbox(); $zs = Data\LinkedList::tail($zs)) {
-				$head = Data\LinkedList::head($zs);
+			for ($zs = $xs; ! LinkedList\Module::isEmpty($zs)->unbox(); $zs = LinkedList\Module::tail($zs)) {
+				$head = LinkedList\Module::head($zs);
 				if (!call_user_func_array(array(get_class($head), 'eq'), array($head, $y))->unbox()) {
-					$cons = Data\LinkedList::cons($head, Data\LinkedList::nil());
+					$cons = LinkedList\Module::cons($head, LinkedList\Module::nil());
 
 					if ($tail !== null) {
 						$tail->tail = $cons;
@@ -254,7 +254,7 @@ namespace Saber\Data\LinkedList {
 					$tail = $cons;
 				}
 				else {
-					$cons = Data\LinkedList::tail($zs);
+					$cons = LinkedList\Module::tail($zs);
 
 					if ($tail !== null) {
 						$tail->tail = $cons;
@@ -276,14 +276,14 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @param Data\Int32 $n                                     the number of elements to drop
 		 * @return Data\LinkedList                                  the collection
 		 */
-		public static function drop(Data\LinkedList $xs, Data\Int32 $n) {
+		public static function drop(LinkedList\Type $xs, Data\Int32 $n) {
 			$i = Data\Int32::zero();
 
-			for ($zs = $xs; ($i->unbox() < $n->unbox()) && ! Data\LinkedList::isEmpty($zs)->unbox(); $zs = Data\LinkedList::tail($zs)) {
+			for ($zs = $xs; ($i->unbox() < $n->unbox()) && ! LinkedList\Module::isEmpty($zs)->unbox(); $zs = LinkedList\Module::tail($zs)) {
 				$i = Data\Int32::increment($i);
 			}
 
@@ -295,14 +295,14 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @param callable $predicate                               the predicate function to be used
 		 * @return Data\LinkedList                                  the collection
 		 */
-		public static function dropWhile(Data\LinkedList $xs, callable $predicate) {
+		public static function dropWhile(LinkedList\Type $xs, callable $predicate) {
 			$i = Data\Int32::zero();
 
-			for ($zs = $xs; ! Data\LinkedList::isEmpty($zs)->unbox() && $predicate(Data\LinkedList::head($zs), $i)->unbox(); $zs = Data\LinkedList::tail($zs)) {
+			for ($zs = $xs; ! LinkedList\Module::isEmpty($zs)->unbox() && $predicate(LinkedList\Module::head($zs), $i)->unbox(); $zs = LinkedList\Module::tail($zs)) {
 				$i = Data\Int32::increment($i);
 			}
 
@@ -314,13 +314,13 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @param callable $predicate                               the predicate function to be used
 		 * @return Data\LinkedList                                  the collection
 		 */
-		public static function dropWhileEnd(Data\LinkedList $xs, callable $predicate) {
-			return Data\LinkedList::dropWhile($xs, function(Data\Type $x, Data\Int32 $i) use ($predicate) {
-				return Data\Bool::not($predicate($x, $i));
+		public static function dropWhileEnd(LinkedList\Type $xs, callable $predicate) {
+			return LinkedList\Module::dropWhile($xs, function(Data\Type $x, Data\Int32 $i) use ($predicate) {
+				return Bool\Module::not($predicate($x, $i));
 			});
 		}
 
@@ -330,14 +330,14 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @param callable $procedure                               the procedure function to be used
 		 */
-		public static function each(Data\LinkedList $xs, callable $procedure) {
+		public static function each(LinkedList\Type $xs, callable $procedure) {
 			$i = Data\Int32::zero();
 
-			for ($zs = $xs; ! Data\LinkedList::isEmpty($zs)->unbox(); $zs = Data\LinkedList::tail($zs)) {
-				$procedure(Data\LinkedList::head($zs), $i);
+			for ($zs = $xs; ! LinkedList\Module::isEmpty($zs)->unbox(); $zs = LinkedList\Module::tail($zs)) {
+				$procedure(LinkedList\Module::head($zs), $i);
 				$i = Data\Int32::increment($i);
 			}
 		}
@@ -347,18 +347,18 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @param Data\Int32 $i                                     the index of the element
 		 * @return Data\Type                                        the element at the specified index
 		 * @throws Throwable\OutOfBounds\Exception                  indicates the specified index
 		 *                                                          cannot be found
 		 */
-		public static function element(Data\LinkedList $xs, Data\Int32 $i) {
+		public static function element(LinkedList\Type $xs, Data\Int32 $i) {
 			$j = Data\Int32::zero();
 
-			for ($zs = $xs; ! Data\LinkedList::isEmpty($zs)->unbox(); $zs = Data\LinkedList::tail($zs)) {
+			for ($zs = $xs; ! LinkedList\Module::isEmpty($zs)->unbox(); $zs = LinkedList\Module::tail($zs)) {
 				if (Data\Int32::eq($i, $j)->unbox()) {
-					return Data\LinkedList::head($zs);
+					return LinkedList\Module::head($zs);
 				}
 				$j = Data\Int32::increment($j);
 			}
@@ -371,19 +371,19 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @param callable $predicate                               the predicate function to be used
 		 * @return Data\LinkedList                                  the collection
 		 */
-		public static function filter(Data\LinkedList $xs, callable $predicate) {
-			$start = Data\LinkedList::nil();
+		public static function filter(LinkedList\Type $xs, callable $predicate) {
+			$start = LinkedList\Module::nil();
 			$tail = null;
 
 			$i = Data\Int32::zero();
-			for ($zs = $xs; ! Data\LinkedList::isEmpty($zs)->unbox(); $zs = Data\LinkedList::tail($zs)) {
-				$z = Data\LinkedList::head($zs);
+			for ($zs = $xs; ! LinkedList\Module::isEmpty($zs)->unbox(); $zs = LinkedList\Module::tail($zs)) {
+				$z = LinkedList\Module::head($zs);
 				if ($predicate($z, $i)->unbox()) {
-					$ys = Data\LinkedList::cons($z, Data\LinkedList::nil());
+					$ys = LinkedList\Module::cons($z, LinkedList\Module::nil());
 
 					if ($tail !== null) {
 						$tail->tail = $ys;
@@ -405,16 +405,16 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @param callable $predicate                               the predicate function to be used
 		 * @return Data\Option                                      an option containing the first object
 		 *                                                          satisfying the predicate, if any
 		 */
-		public static function find(Data\LinkedList $xs, callable $predicate) {
+		public static function find(LinkedList\Type $xs, callable $predicate) {
 			$i = Data\Int32::zero();
 
-			for ($zs = $xs; ! Data\LinkedList::isEmpty($zs)->unbox(); $zs = Data\LinkedList::tail($zs)) {
-				$z = Data\LinkedList::head($zs);
+			for ($zs = $xs; ! LinkedList\Module::isEmpty($zs)->unbox(); $zs = LinkedList\Module::tail($zs)) {
+				$z = LinkedList\Module::head($zs);
 				if ($predicate($z, $i)->unbox()) {
 					return Data\Option::some($z);
 				}
@@ -429,19 +429,19 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @return Data\LinkedList                                  the flattened linked list
 		 */
-		public static function flatten(Data\LinkedList $xs) {
-			$start = Data\LinkedList::nil();
+		public static function flatten(LinkedList\Type $xs) {
+			$start = LinkedList\Module::nil();
 			$tail = null;
 
-			for ($zs = $xs; ! Data\LinkedList::isEmpty($zs)->unbox(); $zs = Data\LinkedList::tail($zs)) {
-				$z = Data\LinkedList::head($zs);
+			for ($zs = $xs; ! LinkedList\Module::isEmpty($zs)->unbox(); $zs = LinkedList\Module::tail($zs)) {
+				$z = LinkedList\Module::head($zs);
 
-				$ys = ($z instanceof Data\Collection)
-					? Data\LinkedList::toList(Data\LinkedList::flatten($z))
-					: Data\LinkedList::cons($z, Data\LinkedList::nil());
+				$ys = ($z instanceof Collection\Type)
+					? LinkedList\Module::toList(LinkedList\Module::flatten($z))
+					: LinkedList\Module::cons($z, LinkedList\Module::nil());
 
 				if ($tail !== null) {
 					$tail->tail = $ys;
@@ -461,16 +461,16 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @param callable $operator                                the operator function to be used
 		 * @param Data\Type $initial                                 the initial value to be used
 		 * @return Data\Type                                         the result
 		 */
-		public static function foldLeft(Data\LinkedList $xs, callable $operator, Data\Type $initial) {
+		public static function foldLeft(LinkedList\Type $xs, callable $operator, Data\Type $initial) {
 			$c = $initial;
 
-			for ($zs = $xs; ! Data\LinkedList::isEmpty($zs)->unbox(); $zs = Data\LinkedList::tail($zs)) {
-				$z = Data\LinkedList::head($zs);
+			for ($zs = $xs; ! LinkedList\Module::isEmpty($zs)->unbox(); $zs = LinkedList\Module::tail($zs)) {
+				$z = LinkedList\Module::head($zs);
 				$c = $operator($c, $z);
 			}
 
@@ -482,19 +482,19 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @param callable $operator                                the operator function to be used
 		 * @param Data\Type $initial                                 the initial value to be used
 		 * @return Data\Type                                         the result
 		 */
-		public static function foldRight(Data\LinkedList $xs, callable $operator, Data\Type $initial) {
+		public static function foldRight(LinkedList\Type $xs, callable $operator, Data\Type $initial) {
 			$z = $initial;
 
-			if (Data\LinkedList::isEmpty($xs)) {
+			if (LinkedList\Module::isEmpty($xs)) {
 				return $z;
 			}
 
-			return $operator(Data\LinkedList::head($xs), Data\LinkedList::foldRight(Data\LinkedList::tail($xs), $operator, $z));
+			return $operator(LinkedList\Module::head($xs), LinkedList\Module::foldRight(LinkedList\Module::tail($xs), $operator, $z));
 		}
 
 		/**
@@ -502,22 +502,22 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @return Data\Type                                         the head object in this linked
 		 *                                                          collection
 		 */
-		public abstract function head(Data\LinkedList $xs);
+		public abstract function head(LinkedList\Type $xs);
 
 		/**
 		 * This method returns an option using the head for the boxed object.
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @return Data\Option                                      the option
 		 */
-		public static function headOption(Data\LinkedList $xs) {
-			return (!Data\LinkedList::isEmpty($xs)->unbox()) ? Data\Option::some(Data\LinkedList::head($xs)) : Data\Option::none();
+		public static function headOption(LinkedList\Type $xs) {
+			return (!LinkedList\Module::isEmpty($xs)->unbox()) ? Data\Option::some(LinkedList\Module::head($xs)) : Data\Option::none();
 		}
 
 		/**
@@ -525,16 +525,16 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @param Data\Type $y                                      the object to be searched for
 		 * @return Data\Int32                                       the index of the first occurrence
 		 *                                                          or otherwise -1
 		 */
-		public static function indexOf(Data\LinkedList $xs, Data\Type $y) {
+		public static function indexOf(LinkedList\Type $xs, Data\Type $y) {
 			$i = Data\Int32::zero();
 
-			for ($zs = $xs; ! Data\LinkedList::isEmpty($zs); $zs = Data\LinkedList::tail($zs)) {
-				$z = Data\LinkedList::head($zs);
+			for ($zs = $xs; ! LinkedList\Module::isEmpty($zs); $zs = LinkedList\Module::tail($zs)) {
+				$z = LinkedList\Module::head($zs);
 				if (call_user_func_array(array(get_class($z), 'eq'), array($z, $y))->unbox()) {
 					return $i;
 				}
@@ -549,16 +549,16 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @return Data\LinkedList                                  the collection, minus the last
 		 *                                                          element
 		 */
-		public static function init(Data\LinkedList $xs) {
-			$start = Data\LinkedList::nil();
+		public static function init(LinkedList\Type $xs) {
+			$start = LinkedList\Module::nil();
 			$tail = null;
 
-			for ($zs = $xs; ! Data\LinkedList::isEmpty($zs)->unbox() && ! Data\LinkedList::isEmpty(Data\LinkedList::tail($zs))->unbox(); $zs = Data\LinkedList::tail($zs)) {
-				$ys = Data\LinkedList::cons(Data\LinkedList::head($zs), Data\LinkedList::nil());
+			for ($zs = $xs; ! LinkedList\Module::isEmpty($zs)->unbox() && ! LinkedList\Module::isEmpty(LinkedList\Module::tail($zs))->unbox(); $zs = LinkedList\Module::tail($zs)) {
+				$ys = LinkedList\Module::cons(LinkedList\Module::head($zs), LinkedList\Module::nil());
 
 				if ($tail !== null) {
 					$tail->tail = $ys;
@@ -578,14 +578,14 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @param Data\Type $y                                      the object to be interspersed
 		 * @return Data\LinkedList                                  the collection
 		 */
-		public static function intersperse(Data\LinkedList $xs, Data\Type $y) {
-			return (Data\LinkedList::isEmpty($xs) || Data\LinkedList::isEmpty(Data\LinkedList::tail($xs))->unbox())
+		public static function intersperse(LinkedList\Type $xs, Data\Type $y) {
+			return (LinkedList\Module::isEmpty($xs) || LinkedList\Module::isEmpty(LinkedList\Module::tail($xs))->unbox())
 				? $xs
-				: Data\LinkedList::cons(Data\LinkedList::head($xs), Data\LinkedList::cons($y, Data\LinkedList::intersperse(Data\LinkedList::tail($xs), $y)));
+				: LinkedList\Module::cons(LinkedList\Module::head($xs), LinkedList\Module::cons($y, LinkedList\Module::intersperse(LinkedList\Module::tail($xs), $y)));
 		}
 
 		/**
@@ -593,11 +593,11 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @return Data\Bool                                        whether the collection is empty
 		 */
-		public static function isEmpty(Data\LinkedList $xs) {
-			return Data\Bool::create($xs instanceof Data\LinkedList\Nil);
+		public static function isEmpty(LinkedList\Type $xs) {
+			return Bool\Module::create($xs instanceof Data\LinkedList\Nil);
 		}
 
 		/**
@@ -605,10 +605,10 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @return Data\LinkedList\Iterator                         an iterator for this collection
 		 */
-		public static function iterator(Data\LinkedList $xs) {
+		public static function iterator(LinkedList\Type $xs) {
 			return new Data\LinkedList\Iterator($xs);
 		}
 
@@ -617,14 +617,14 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @return Data\Type                                        the last element in this collection
 		 */
-		public static function last(Data\LinkedList $xs) {
-			$z = Data\LinkedList::head($xs);
+		public static function last(LinkedList\Type $xs) {
+			$z = LinkedList\Module::head($xs);
 
-			for ($zs = Data\LinkedList::tail($xs); ! Data\LinkedList::isEmpty($zs)->unbox(); $zs = Data\LinkedList::tail($zs)) {
-				$z = Data\LinkedList::head($zs);
+			for ($zs = LinkedList\Module::tail($xs); ! LinkedList\Module::isEmpty($zs)->unbox(); $zs = LinkedList\Module::tail($zs)) {
+				$z = LinkedList\Module::head($zs);
 			}
 
 			return $z;
@@ -635,11 +635,11 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @return Data\Option                                      the option
 		 */
-		public static function lastOption(Data\LinkedList $xs) {
-			return (!Data\LinkedList::isEmpty($xs)->unbox()) ? Data\Option::some(Data\LinkedList::last($xs)) : Data\Option::none();
+		public static function lastOption(LinkedList\Type $xs) {
+			return (!LinkedList\Module::isEmpty($xs)->unbox()) ? Data\Option::some(LinkedList\Module::last($xs)) : Data\Option::none();
 		}
 
 		/**
@@ -647,11 +647,11 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @return Data\Int32                                       the length of this collection
 		 */
-		public static function length(Data\LinkedList $xs) {
-			return Data\LinkedList::foldLeft($xs, function(Data\Int32 $length) {
+		public static function length(LinkedList\Type $xs) {
+			return LinkedList\Module::foldLeft($xs, function(Data\Int32 $length) {
 				return Data\Int32::increment($length);
 			}, Data\Int32::zero());
 		}
@@ -661,17 +661,17 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @param callable $subroutine                              the subroutine function to be used
 		 * @return Data\LinkedList                                  the collection
 		 */
-		public static function map(Data\LinkedList $xs, callable $subroutine) {
-			$start = Data\LinkedList::nil();
+		public static function map(LinkedList\Type $xs, callable $subroutine) {
+			$start = LinkedList\Module::nil();
 			$tail = null;
 
 			$i = Data\Int32::zero();
-			for ($zs = $xs; ! Data\LinkedList::isEmpty($zs)->unbox(); $zs = Data\LinkedList::tail($zs)) {
-				$ys = Data\LinkedList::cons($subroutine(Data\LinkedList::head($zs), $i), Data\LinkedList::nil());
+			for ($zs = $xs; ! LinkedList\Module::isEmpty($zs)->unbox(); $zs = LinkedList\Module::tail($zs)) {
+				$ys = LinkedList\Module::cons($subroutine(LinkedList\Module::head($zs), $i), LinkedList\Module::nil());
 
 				if ($tail !== null) {
 					$tail->tail = $ys;
@@ -693,14 +693,14 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @param callable $predicate                               the predicate function to be used
 		 * @return Data\Bool                                        whether each element passed the
 		 *                                                          falsy test
 		 */
-		public static function none(Data\LinkedList $xs, callable $predicate) {
-			return Data\LinkedList::all($xs, function(Data\Type $x, Data\Int32 $i) use ($predicate) {
-				return Data\Bool::not($predicate($x, $i));
+		public static function none(LinkedList\Type $xs, callable $predicate) {
+			return LinkedList\Module::all($xs, function(Data\Type $x, Data\Int32 $i) use ($predicate) {
+				return Bool\Module::not($predicate($x, $i));
 			});
 		}
 
@@ -709,12 +709,12 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @param Data\Type $y                                      the object to be prepended
 		 * @return Data\LinkedList                                  the collection
 		 */
-		public static function prepend(Data\LinkedList $xs, Data\Type $y) {
-			return Data\LinkedList::cons($y, $xs);
+		public static function prepend(LinkedList\Type $xs, Data\Type $y) {
+			return LinkedList\Module::cons($y, $xs);
 		}
 
 		/**
@@ -722,13 +722,13 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @param Data\Int32 $start                                 the starting index
 		 * @param Data\Int32 $end                                   the ending index
 		 * @return Data\LinkedList                                  the collection
 		 */
-		public static function range(Data\LinkedList $xs, Data\Int32 $start, Data\Int32 $end) {
-			return Data\LinkedList::drop(Data\LinkedList::take($xs, $end), $start);
+		public static function range(LinkedList\Type $xs, Data\Int32 $start, Data\Int32 $end) {
+			return LinkedList\Module::drop(LinkedList\Module::take($xs, $end), $start);
 		}
 
 		/**
@@ -736,13 +736,13 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @param callable $predicate                               the predicate function to be used
 		 * @return Data\LinkedList                                  the collection
 		 */
-		public static function remove(Data\LinkedList $xs, callable $predicate) {
-			return Data\LinkedList::filter($xs, function(Data\Type $x, Data\Int32 $i) use ($predicate) {
-				return Data\Bool::not($predicate($x, $i));
+		public static function remove(LinkedList\Type $xs, callable $predicate) {
+			return LinkedList\Module::filter($xs, function(Data\Type $x, Data\Int32 $i) use ($predicate) {
+				return Bool\Module::not($predicate($x, $i));
 			});
 		}
 
@@ -751,13 +751,13 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @return Data\LinkedList                                  the collection
 		 */
-		public static function reverse(Data\LinkedList $xs) {
-			return Data\LinkedList::foldLeft($xs, function(Data\LinkedList $tail, Data\Type $head) {
-				return Data\LinkedList::cons($head, $tail);
-			}, Data\LinkedList::nil());
+		public static function reverse(LinkedList\Type $xs) {
+			return LinkedList\Module::foldLeft($xs, function(LinkedList\Type $tail, Data\Type $head) {
+				return LinkedList\Module::cons($head, $tail);
+			}, LinkedList\Module::nil());
 		}
 
 		/**
@@ -765,13 +765,13 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @param Data\Int32 $offset                                the starting index
 		 * @param Data\Int32 $length                                the length of the slice
 		 * @return Data\LinkedList                                  the collection
 		 */
-		public static function slice(Data\LinkedList $xs, Data\Int32 $offset, Data\Int32 $length) {
-			return Data\LinkedList::drop(Data\LinkedList::take($xs, Data\Int32::add($length, $offset)), $offset);
+		public static function slice(LinkedList\Type $xs, Data\Int32 $offset, Data\Int32 $length) {
+			return LinkedList\Module::drop(LinkedList\Module::take($xs, Data\Int32::add($length, $offset)), $offset);
 		}
 
 		/**
@@ -779,25 +779,25 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @return Data\LinkedList                                  the tail of this collection
 		 */
-		public abstract function tail(Data\LinkedList $xs);
+		public abstract function tail(LinkedList\Type $xs);
 
 		/**
 		 * This method returns the first "n" elements in the collection.
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @param Data\Int32 $n                                     the number of elements to take
 		 * @return Data\LinkedList                                  the collection
 		 */
-		public static function take(Data\LinkedList $xs, Data\Int32 $n) {
-			if (($n->unbox() <= 0) || Data\LinkedList::isEmpty($xs)->unbox()) {
-				return Data\LinkedList::nil();
+		public static function take(LinkedList\Type $xs, Data\Int32 $n) {
+			if (($n->unbox() <= 0) || LinkedList\Module::isEmpty($xs)->unbox()) {
+				return LinkedList\Module::nil();
 			}
-			return Data\LinkedList::cons(Data\LinkedList::head($xs), Data\LinkedList::take(Data\LinkedList::tail($xs), Data\Int32::decrement($n)));
+			return LinkedList\Module::cons(LinkedList\Module::head($xs), LinkedList\Module::take(LinkedList\Module::tail($xs), Data\Int32::decrement($n)));
 		}
 
 		/**
@@ -805,22 +805,22 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @param callable $predicate                               the predicate function to be used
 		 * @return Data\LinkedList                                  the collection
 		 */
-		public static function takeWhile(Data\LinkedList $xs, callable $predicate) {
-			$start = Data\LinkedList::nil();
+		public static function takeWhile(LinkedList\Type $xs, callable $predicate) {
+			$start = LinkedList\Module::nil();
 			$tail = null;
 
 			$taking = true;
 
 			$i = Data\Int32::zero();
-			for ($zs = $xs; ! Data\LinkedList::isEmpty($zs)->unbox() && $taking; $zs = Data\LinkedList::tail($zs)) {
-				$z = Data\LinkedList::head($zs);
+			for ($zs = $xs; ! LinkedList\Module::isEmpty($zs)->unbox() && $taking; $zs = LinkedList\Module::tail($zs)) {
+				$z = LinkedList\Module::head($zs);
 
 				if ($predicate($z, $i)->unbox()) {
-					$ys = Data\LinkedList::cons($z, Data\LinkedList::nil());
+					$ys = LinkedList\Module::cons($z, LinkedList\Module::nil());
 
 					if ($tail !== null) {
 						$tail->tail = $ys;
@@ -846,13 +846,13 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @param callable $predicate                               the predicate function to be used
 		 * @return Data\LinkedList                                  the collection
 		 */
-		public static function takeWhileEnd(Data\LinkedList $xs, callable $predicate) {
-			return Data\LinkedList::takeWhile($xs, function(Data\Type $x, Data\Int32 $i) use ($predicate) {
-				return Data\Bool::not($predicate($x, $i));
+		public static function takeWhileEnd(LinkedList\Type $xs, callable $predicate) {
+			return LinkedList\Module::takeWhile($xs, function(Data\Type $x, Data\Int32 $i) use ($predicate) {
+				return Bool\Module::not($predicate($x, $i));
 			});
 		}
 
@@ -861,17 +861,17 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @return Data\ArrayList                                   the collection as an array list
 		 */
-		public static function toArray(Data\LinkedList $xs) {
+		public static function toArray(LinkedList\Type $xs) {
 			$buffer = array();
 
-			for ($zs = $xs; ! Data\LinkedList::isEmpty($zs)->unbox(); $zs = Data\LinkedList::tail($zs)) {
-				$buffer[] = Data\LinkedList::head($zs);
+			for ($zs = $xs; ! LinkedList\Module::isEmpty($zs)->unbox(); $zs = LinkedList\Module::tail($zs)) {
+				$buffer[] = LinkedList\Module::head($zs);
 			}
 
-			return Data\ArrayList::create($buffer);
+			return ArrayList\Module::create($buffer);
 		}
 
 		/**
@@ -879,10 +879,10 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @return Data\LinkedList                                  the collection as a linked list
 		 */
-		public static function toList(Data\LinkedList $xs) {
+		public static function toList(LinkedList\Type $xs) {
 			return $xs;
 		}
 
@@ -896,12 +896,12 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @return Data\Bool                                        whether all of the elements of
 		 *                                                          the collection evaluate to true
 		 */
-		public static function and_(Data\LinkedList $xs) {
-			return Data\LinkedList::truthy($xs);
+		public static function and_(LinkedList\Type $xs) {
+			return LinkedList\Module::truthy($xs);
 		}
 
 		/**
@@ -910,14 +910,14 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @return Data\Bool                                        whether all of the elements of
 		 *                                                          the collection evaluate to false
 		 *
 		 * @see http://www.sitepoint.com/javascript-truthy-falsy/
 		 */
-		public static function or_(Data\LinkedList $xs) {
-			return Data\LinkedList::falsy($xs);
+		public static function or_(LinkedList\Type $xs) {
+			return LinkedList\Module::falsy($xs);
 		}
 
 		/**
@@ -926,13 +926,13 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @return Data\Bool                                        whether all of the elements of
 		 *                                                          the collection strictly evaluate
 		 *                                                          to false
 		 */
-		public static function false(Data\LinkedList $xs) {
-			return Data\Bool::not(Data\LinkedList::true($xs));
+		public static function false(LinkedList\Type $xs) {
+			return Bool\Module::not(LinkedList\Module::true($xs));
 		}
 
 		/**
@@ -941,14 +941,14 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @return Data\Bool                                        whether all of the elements of
 		 *                                                          the collection evaluate to false
 		 *
 		 * @see http://www.sitepoint.com/javascript-truthy-falsy/
 		 */
-		public static function falsy(Data\LinkedList $xs) {
-			return Data\Bool::not(Data\LinkedList::truthy($xs));
+		public static function falsy(LinkedList\Type $xs) {
+			return Bool\Module::not(LinkedList\Module::truthy($xs));
 		}
 
 		/**
@@ -957,18 +957,18 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @return Data\Bool                                        whether all of the elements of
 		 *                                                          the collection strictly evaluate
 		 *                                                          to true
 		 */
-		public static function true(Data\LinkedList $xs) {
-			for ($zs = $xs; ! Data\LinkedList::isEmpty($zs)->unbox(); $zs = Data\LinkedList::tail($zs)) {
-				if (Data\LinkedList::head($zs)->unbox() !== true) {
-					return Data\Bool::false();
+		public static function true(LinkedList\Type $xs) {
+			for ($zs = $xs; ! LinkedList\Module::isEmpty($zs)->unbox(); $zs = LinkedList\Module::tail($zs)) {
+				if (LinkedList\Module::head($zs)->unbox() !== true) {
+					return Bool\Module::false();
 				}
 			}
-			return Data\Bool::true();
+			return Bool\Module::true();
 		}
 
 		/**
@@ -977,17 +977,17 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the left operand
 		 * @return Data\Bool                                        whether all of the elements of
 		 *                                                          the collection evaluate to true
 		 */
-		public static function truthy(Data\LinkedList $xs) {
-			for ($zs = $xs; ! Data\LinkedList::isEmpty($zs)->unbox(); $zs = Data\LinkedList::tail($zs)) {
-				if (!Data\LinkedList::head($zs)->unbox()) {
-					return Data\Bool::false();
+		public static function truthy(LinkedList\Type $xs) {
+			for ($zs = $xs; ! LinkedList\Module::isEmpty($zs)->unbox(); $zs = LinkedList\Module::tail($zs)) {
+				if (!LinkedList\Module::head($zs)->unbox()) {
+					return Bool\Module::false();
 				}
 			}
-			return Data\Bool::true();
+			return Bool\Module::true();
 		}
 
 		#endregion
@@ -999,23 +999,23 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
-		 * @return Data\Num                                         the result
+		 * @param LinkedList\Type $xs                               the left operand
+		 * @return Num\Type                                         the result
 		 */
-		public static function average(Data\LinkedList $xs) {
+		public static function average(LinkedList\Type $xs) {
 			$zs = $xs;
 
-			if (Data\LinkedList::isEmpty($zs)->unbox()) {
+			if (LinkedList\Module::isEmpty($zs)->unbox()) {
 				return Data\Int32::zero();
 			}
 
-			$z = Data\LinkedList::head($zs);
+			$z = LinkedList\Module::head($zs);
 
 			$t = $z->__typeOf();
 			$y = $t::zero();
 
-			for ($zs = Data\LinkedList::tail($zs); ! Data\LinkedList::isEmpty($zs)->unbox(); $zs = Data\LinkedList::tail($zs)) {
-				$z = $z->add(Data\LinkedList::head($zs));
+			for ($zs = LinkedList\Module::tail($zs); ! LinkedList\Module::isEmpty($zs)->unbox(); $zs = LinkedList\Module::tail($zs)) {
+				$z = $z->add(LinkedList\Module::head($zs));
 				$y = $y->increment();
 			}
 
@@ -1027,21 +1027,21 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
-		 * @return Data\Num                                         the result
+		 * @param LinkedList\Type $xs                               the left operand
+		 * @return Num\Type                                         the result
 		 */
-		public static function product(Data\LinkedList $xs) {
+		public static function product(LinkedList\Type $xs) {
 			$zs = $xs;
 
-			if (Data\LinkedList::isEmpty($zs)->unbox()) {
+			if (LinkedList\Module::isEmpty($zs)->unbox()) {
 				return Data\Int32::one();
 			}
 
-			$z = Data\LinkedList::head($zs);
+			$z = LinkedList\Module::head($zs);
 			$number = get_class($z);
 
-			for ($zs = Data\LinkedList::tail($zs); ! Data\LinkedList::isEmpty($zs)->unbox(); $zs = Data\LinkedList::tail($zs)) {
-				$z = $number::multiply($z, Data\LinkedList::head($zs));
+			for ($zs = LinkedList\Module::tail($zs); ! LinkedList\Module::isEmpty($zs)->unbox(); $zs = LinkedList\Module::tail($zs)) {
+				$z = $number::multiply($z, LinkedList\Module::head($zs));
 			}
 
 			return $z;
@@ -1052,21 +1052,21 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\LinkedList $xs                               the left operand
-		 * @return Data\Num                                         the result
+		 * @param LinkedList\Type $xs                               the left operand
+		 * @return Num\Type                                         the result
 		 */
-		public static function sum(Data\LinkedList $xs) {
+		public static function sum(LinkedList\Type $xs) {
 			$zs = $xs;
 
-			if (Data\LinkedList::isEmpty($zs)->unbox()) {
+			if (LinkedList\Module::isEmpty($zs)->unbox()) {
 				return Data\Int32::zero();
 			}
 
-			$z = Data\LinkedList::head($zs);
+			$z = LinkedList\Module::head($zs);
 			$number = get_class($z);
 
-			for ($zs = Data\LinkedList::tail($zs); ! Data\LinkedList::isEmpty($zs)->unbox(); $zs = Data\LinkedList::tail($zs)) {
-				$z = $number::add($z, Data\LinkedList::head($zs));
+			for ($zs = LinkedList\Module::tail($zs); ! LinkedList\Module::isEmpty($zs)->unbox(); $zs = LinkedList\Module::tail($zs)) {
+				$z = $number::add($z, LinkedList\Module::head($zs));
 			}
 
 			return $z;

@@ -46,7 +46,7 @@ namespace Saber\Data\Option {
 		 */
 		public function __construct(Option\Type $option) {
 			$this->collection = $option;
-			$this->position = Int32\Type::zero();
+			$this->position = Int32\Module::zero();
 		}
 
 		/**
@@ -106,7 +106,7 @@ namespace Saber\Data\Option {
 		 * @access public
 		 */
 		public function rewind() {
-			$this->position = Int32\Type::zero();
+			$this->position = Int32\Module::zero();
 		}
 
 		/**

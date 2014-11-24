@@ -16,10 +16,15 @@
  * limitations under the License.
  */
 
-namespace Saber\Integer\Type {
+namespace Saber\Data\Integer {
 
 	use \Saber\Control;
 	use \Saber\Data;
+	use \Saber\Data\Bool;
+	use \Saber\Data\Int32;
+	use \Saber\Data\Integer;
+	use \Saber\Data\Integral;
+	use \Saber\Data\String;
 	use \Saber\Throwable;
 
 	/**
@@ -27,42 +32,7 @@ namespace Saber\Integer\Type {
 	 * @see http://verysimple.com/2013/11/05/compile-php-extensions-for-mamp/
 	 * @see http://coder1.com/articles/how-to-install-php-gmp-mac-osx-1037
 	 */
-	class Module extends Integral\Type {
-
-		#region Methods -> Implementation
-
-		/**
-		 * This constructor initializes the class with the specified value.
-		 *
-		 * @access public
-		 * @param string $value                                     the value to be assigned
-		 */
-		public function __construct($value) {
-			$this->value = (string) $value;
-		}
-
-		/**
-		 * This method returns the object as a string.
-		 *
-		 * @access public
-		 * @return string                                           the object as a string
-		 */
-		public function __toString() {
-			return strval($this->value);
-		}
-
-		/**
-		 * This method returns the value contained within the boxed object.
-		 *
-		 * @access public
-		 * @param integer $depth                                    how many levels to unbox
-		 * @return mixed                                            the un-boxed value
-		 */
-		public function unbox($depth = 0) {
-			return $this->value;
-		}
-
-		#endregion
+	class Module extends Integral\Module {
 
 		#region Methods -> Instantiation
 
@@ -366,7 +336,7 @@ namespace Saber\Integer\Type {
 		 *                                                          or greater than the right operand
 		 */
 		public static function compare(Integer\Type $x, Integer\Type $y) {
-			return Int32\Type::create(gmp_cmp($x->unbox(), $y->unbox()));
+			return Int32\Module::create(gmp_cmp($x->unbox(), $y->unbox()));
 		}
 
 		#endregion

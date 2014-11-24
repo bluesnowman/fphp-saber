@@ -46,7 +46,7 @@ namespace Saber\Data\ArrayList {
 		 */
 		public function __construct(ArrayList\Type $arrayList) {
 			$this->collection = $arrayList;
-			$this->position = Int32\Type::zero();
+			$this->position = Int32\Module::zero();
 		}
 
 		/**
@@ -106,7 +106,7 @@ namespace Saber\Data\ArrayList {
 		 * @access public
 		 */
 		public function rewind() {
-			$this->position = Int32\Type::zero();
+			$this->position = Int32\Module::zero();
 		}
 
 		/**

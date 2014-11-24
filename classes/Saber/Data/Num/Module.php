@@ -18,9 +18,8 @@
 
 namespace Saber\Data\Num {
 
-	use \Saber\Core;
 	use \Saber\Data;
 
-	abstract class Type extends Data\Type implements Core\Type\Boxable { }
+	abstract class Module extends Data\Module { }
 
 }

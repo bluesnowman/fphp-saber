@@ -49,7 +49,7 @@ namespace Saber\Data\Object {
 		 *                                                          object
 		 */
 		public function compareTo(Object\Type $that) {
-			return Int32\Type::zero();
+			return Int32\Module::zero();
 		}
 
 		#endregion

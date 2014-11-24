@@ -16,10 +16,13 @@
  * limitations under the License.
  */
 
-namespace Saber\Bool\Type {
+namespace Saber\Data\Bool {
 
 	use \Saber\Control;
 	use \Saber\Data;
+	use \Saber\Data\Bool;
+	use \Saber\Data\Int32;
+	use \Saber\Data\String;
 
 	class Module extends Data\Module {
 
@@ -88,7 +91,7 @@ namespace Saber\Bool\Type {
 		 * @return Int32\Type                                       the value as an Int32
 		 */
 		public static function toInt32(Bool\Type $x) {
-			return Int32\Type::create($x->unbox());
+			return Int32\Module::create($x->unbox());
 		}
 
 		/**
@@ -315,13 +318,13 @@ namespace Saber\Bool\Type {
 			$__y = $y->unbox();
 
 			if (!$__x && $__y) {
-				return Int32\Type::negative();
+				return Int32\Module::negative();
 			}
 			else if ($__x == $__y) {
-				return Int32\Type::zero();
+				return Int32\Module::zero();
 			}
 			else { // ($__x && !$__y)
-				return Int32\Type::one();
+				return Int32\Module::one();
 			}
 		}
 

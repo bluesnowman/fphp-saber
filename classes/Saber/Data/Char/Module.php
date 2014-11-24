@@ -22,6 +22,10 @@ namespace Saber\Data\Char {
 
 	use \Saber\Control;
 	use \Saber\Data;
+	use \Saber\Data\Bool;
+	use \Saber\Data\Char;
+	use \Saber\Data\Int32;
+	use \Saber\Data\String;
 	use \Saber\Throwable;
 
 	/**
@@ -29,54 +33,7 @@ namespace Saber\Data\Char {
 	 * @see http://php.net/manual/en/ref.ctype.php
 	 * @see http://php.net/manual/en/regexp.reference.unicode.php
 	 */
-	class Module extends Data\Type implements Data\Type\Boxable {
-
-		#region Constants
-
-		/**
-		 * This constant stores the string representing a UTF-8 encoding.
-		 *
-		 * @access public
-		 * @const string
-		 */
-		const UTF_8_ENCODING = 'UTF-8';
-
-		#endregion
-
-		#region Methods -> Implementation
-
-		/**
-		 * This constructor initializes the class with the specified value.
-		 *
-		 * @access public
-		 * @param char $value                                       the value to be assigned
-		 */
-		public function __construct($value) {
-			$this->value = (string) $value;
-		}
-
-		/**
-		 * This method returns the object as a string.
-		 *
-		 * @access public
-		 * @return string                                           the object as a string
-		 */
-		public function __toString() {
-			return $this->value;
-		}
-
-		/**
-		 * This method returns the value contained within the boxed object.
-		 *
-		 * @access public
-		 * @param integer $depth                                    how many levels to unbox
-		 * @return mixed                                            the un-boxed value
-		 */
-		public function unbox($depth = 0) {
-			return $this->value;
-		}
-
-		#endregion
+	class Module extends Data\Module {
 
 		#region Methods -> Instantiation
 
@@ -141,7 +98,7 @@ namespace Saber\Data\Char {
 		 * @return Int32\Type                                       the value as an Int32
 		 */
 		public static function toInt32(Char\Type $x) {
-			return Int32\Type::create(ord($x->unbox()));
+			return Int32\Module::create(ord($x->unbox()));
 		}
 
 		/**
@@ -243,13 +200,13 @@ namespace Saber\Data\Char {
 			$__y = $y->unbox();
 
 			if ($__x < $__y) {
-				return Int32\Type::negative();
+				return Int32\Module::negative();
 			}
 			else if ($__x == $__y) {
-				return Int32\Type::zero();
+				return Int32\Module::zero();
 			}
 			else { // ($__x > $__y)
-				return Int32\Type::one();
+				return Int32\Module::one();
 			}
 		}
 

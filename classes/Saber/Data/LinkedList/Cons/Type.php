@@ -78,13 +78,13 @@ namespace Saber\Data\LinkedList\Cons {
 			$y_length = $ys->length();
 
 			if ($x_length < $y_length) {
-				return Int32\Type::negative();
+				return Int32\Module::negative();
 			}
 			else if ($x_length == $y_length) {
-				return Int32\Type::zero();
+				return Int32\Module::zero();
 			}
 			else { // ($x_length > $y_length)
-				return Int32\Type::one();
+				return Int32\Module::one();
 			}
 		}
 

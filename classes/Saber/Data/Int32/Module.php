@@ -133,7 +133,7 @@ namespace Saber\Data\Int32 {
 		 * @return Int32\Type                                       the result
 		 */
 		public static function abs(Int32\Type $x) {
-			return Int32\Type::create(abs($x->unbox()));
+			return Int32\Module::create(abs($x->unbox()));
 		}
 
 		/**
@@ -146,7 +146,7 @@ namespace Saber\Data\Int32 {
 		 * @return Int32\Type                                       the result
 		 */
 		public static function add(Int32\Type $x, Int32\Type $y) {
-			return Int32\Type::create($x->unbox() + $y->unbox());
+			return Int32\Module::create($x->unbox() + $y->unbox());
 		}
 
 		/**
@@ -158,7 +158,7 @@ namespace Saber\Data\Int32 {
 		 * @return Int32\Type                                       the result
 		 */
 		public static function decrement(Int32\Type $x) {
-			return Int32\Type::subtract($x, Int32\Type::one());
+			return Int32\Module::subtract($x, Int32\Module::one());
 		}
 
 		/**
@@ -172,7 +172,7 @@ namespace Saber\Data\Int32 {
 		 * @return Int32\Type                                       the result
 		 */
 		public static function divide(Int32\Type $x, Int32\Type $y) {
-			return Int32\Type::create($x->unbox() / $y->unbox());
+			return Int32\Module::create($x->unbox() / $y->unbox());
 		}
 
 		/**
@@ -185,7 +185,7 @@ namespace Saber\Data\Int32 {
 		 * @return Int32\Type                                       the result
 		 */
 		public static function gcd(Int32\Type $x, Int32\Type $y) {
-			return Int32\Type::create(Int32\Type::_gcd(abs($x->unbox()), abs($y->unbox())));
+			return Int32\Module::create(Int32\Module::_gcd(abs($x->unbox()), abs($y->unbox())));
 		}
 
 		/**
@@ -200,7 +200,7 @@ namespace Saber\Data\Int32 {
 		 * @see http://stackoverflow.com/questions/13828011/look-for-the-gcd-greatest-common-divisor-of-more-than-2-integers
 		 */
 		protected static function _gcd($x, $y) {
-		    return $y ? Int32\Type::_gcd($y, $x % $y) : $x;
+		    return $y ? Int32\Module::_gcd($y, $x % $y) : $x;
 		}
 
 		/**
@@ -212,7 +212,7 @@ namespace Saber\Data\Int32 {
 		 * @return Int32\Type                                       the result
 		 */
 		public static function increment(Int32\Type $x) {
-			return Int32\Type::add($x, Int32\Type::one());
+			return Int32\Module::add($x, Int32\Module::one());
 		}
 
 		/**
@@ -226,7 +226,7 @@ namespace Saber\Data\Int32 {
 		 * @return Int32\Type                                       the result
 		 */
 		public static function modulo(Int32\Type $x, Int32\Type $y) {
-			return Int32\Type::create($x->unbox() % $y->unbox());
+			return Int32\Module::create($x->unbox() % $y->unbox());
 		}
 
 		/**
@@ -240,7 +240,7 @@ namespace Saber\Data\Int32 {
 		 * @return Int32\Type                                       the result
 		 */
 		public static function multiply(Int32\Type $x, Int32\Type $y) {
-			return Int32\Type::create($x->unbox() * $y->unbox());
+			return Int32\Module::create($x->unbox() * $y->unbox());
 		}
 
 		/**
@@ -252,7 +252,7 @@ namespace Saber\Data\Int32 {
 		 * @return Int32\Type                                       the result
 		 */
 		public static function negate(Int32\Type $x) {
-			return Int32\Type::create($x->unbox() * -1);
+			return Int32\Module::create($x->unbox() * -1);
 		}
 
 		/**
@@ -266,7 +266,7 @@ namespace Saber\Data\Int32 {
 		 * @return Int32\Type                                       the result
 		 */
 		public static function subtract(Int32\Type $x, Int32\Type $y) {
-			return Int32\Type::create($x->unbox() - $y->unbox());
+			return Int32\Module::create($x->unbox() - $y->unbox());
 		}
 
 		#endregion
@@ -309,7 +309,7 @@ namespace Saber\Data\Int32 {
 		 * @return Int32\Type                                       the value as an Int32
 		 */
 		public static function toInt32(Int32\Type $x) {
-			return Int32\Type::create($x->unbox());
+			return Int32\Module::create($x->unbox());
 		}
 
 		/**
@@ -387,7 +387,7 @@ namespace Saber\Data\Int32 {
 		 *                                                          to the right operand
 		 */
 		public static function ne(Int32\Type $x, Data\Type $y) { // !=
-			return Bool\Module::not(Int32\Type::eq($x, $y));
+			return Bool\Module::not(Int32\Module::eq($x, $y));
 		}
 
 		/**
@@ -401,7 +401,7 @@ namespace Saber\Data\Int32 {
 		 *                                                          to the right operand
 		 */
 		public static function ni(Int32\Type $x, Data\Type $y) { // !==
-			return Bool\Module::not(Int32\Type::id($x, $y));
+			return Bool\Module::not(Int32\Module::id($x, $y));
 		}
 
 		#endregion
@@ -424,13 +424,13 @@ namespace Saber\Data\Int32 {
 			$__y = $y->unbox();
 
 			if ($__x < $__y) {
-				return Int32\Type::negative();
+				return Int32\Module::negative();
 			}
 			else if ($__x == $__y) {
-				return Int32\Type::zero();
+				return Int32\Module::zero();
 			}
 			else { // ($__x > $__y)
-				return Int32\Type::one();
+				return Int32\Module::one();
 			}
 		}
 
@@ -445,7 +445,7 @@ namespace Saber\Data\Int32 {
 		 *                                                          than or equal to the right operand
 		 */
 		public static function ge(Int32\Type $x, Int32\Type $y) { // >=
-			return Bool\Module::create(Int32\Type::compare($x, $y)->unbox() >= 0);
+			return Bool\Module::create(Int32\Module::compare($x, $y)->unbox() >= 0);
 		}
 
 		/**
@@ -459,7 +459,7 @@ namespace Saber\Data\Int32 {
 		 *                                                          than the right operand
 		 */
 		public static function gt(Int32\Type $x, Int32\Type $y) { // >
-			return Bool\Module::create(Int32\Type::compare($x, $y)->unbox() > 0);
+			return Bool\Module::create(Int32\Module::compare($x, $y)->unbox() > 0);
 		}
 
 		/**
@@ -473,7 +473,7 @@ namespace Saber\Data\Int32 {
 		 *                                                          or equal to the right operand
 		 */
 		public static function le(Int32\Type $x, Int32\Type $y) { // <=
-			return Bool\Module::create(Int32\Type::compare($x, $y)->unbox() <= 0);
+			return Bool\Module::create(Int32\Module::compare($x, $y)->unbox() <= 0);
 		}
 
 		/**
@@ -487,7 +487,7 @@ namespace Saber\Data\Int32 {
 		 *                                                          the right operand
 		 */
 		public static function lt(Int32\Type $x, Int32\Type $y) { // <
-			return Bool\Module::create(Int32\Type::compare($x, $y)->unbox() < 0);
+			return Bool\Module::create(Int32\Module::compare($x, $y)->unbox() < 0);
 		}
 
 		/**
@@ -500,7 +500,7 @@ namespace Saber\Data\Int32 {
 		 * @return Int32\Type                                       the maximum value
 		 */
 		public static function max(Int32\Type $x, Int32\Type $y) {
-			return (Int32\Type::compare($x, $y)->unbox() >= 0) ? $x : $y;
+			return (Int32\Module::compare($x, $y)->unbox() >= 0) ? $x : $y;
 		}
 
 		/**
@@ -513,7 +513,7 @@ namespace Saber\Data\Int32 {
 		 * @return Int32\Type                                       the minimum value
 		 */
 		public static function min(Int32\Type $x, Int32\Type $y) {
-			return (Int32\Type::compare($x, $y)->unbox() <= 0) ? $x : $y;
+			return (Int32\Module::compare($x, $y)->unbox() <= 0) ? $x : $y;
 		}
 
 		#endregion

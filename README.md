@@ -15,7 +15,7 @@ To "box" a PHP typed primitive or object, create an instance of the respective d
 class's `box` method.  This method enforces type safety.
 
 ````
-$object = Int32\Type::box(7);
+$object = Int32\Module::box(7);
 ````
 
 For better performance, type safety can be ignored by using the `create` method to create an instance
@@ -23,7 +23,7 @@ of the respective data type.  (It recommended to use this method instead of call
 directly.)
 
 ````
-$object = Int32\Type::create(7);
+$object = Int32\Module::create(7);
 ````
 
 To "unbox" a boxed object, call the `unbox` method on the respective class to get its value.
@@ -37,7 +37,7 @@ $value = $object->unbox();
 This library generally implements a fluent API; therefore, methods can be chained.
 
 ````
-$object = Int32\Type::box(7)->increment()->decrement();
+$object = Int32\Module::box(7)->increment()->decrement();
 ````
 
 ### Methods
@@ -46,14 +46,14 @@ In general, methods that are NOT preceded by two underscores will return a boxed
 exception to this rule is the `unbox` method.
 
 ````
-$object = Int32\Type::box(7)->increment();
+$object = Int32\Module::box(7)->increment();
 ````
 
 Methods that are preceded by two underscores will return the unboxed value, which is typically
 a PHP typed primitive or object.  This is made possible via PHP's magical `__call` method.
 
 ````
-$value = Int32\Type::box(7)->__increment();
+$value = Int32\Module::box(7)->__increment();
 ````
 
 ### Variables
@@ -104,8 +104,8 @@ Objects can be evaluated against each other using the `when` clause.  A `when` c
 satisfied when both `x` and `y` match (i.e. when `$x->equals($y)` evaluates to `true`).
 
 ````
-$x = Int32\Type::box(8);
-$y = Int32\Type::box(8);
+$x = Int32\Module::box(8);
+$y = Int32\Module::box(8);
 
 Control\Monad::choice($x)
 	->when($y, function(Int32\Type $x) {
@@ -122,8 +122,8 @@ clause is satisfied when both `x` and `y` do NOT match (i.e. when `$x->equals($y
 to `false`).
 
 ````
-$x = Int32\Type::box(8);
-$y = Int32\Type::box(7);
+$x = Int32\Module::box(8);
+$y = Int32\Module::box(7);
 
 Control\Monad::choice($x)
 	->unless($y, function(Int32\Type $x) {

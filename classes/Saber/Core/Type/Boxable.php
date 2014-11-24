@@ -33,7 +33,7 @@ namespace Saber\Core\Type {
 		 * @param mixed $value                                      the value(s) to be boxed
 		 * @return Data\Type                                        the boxed object
 		 */
-		public static function box($value/*...*/);
+		//public static function box($value/*...*/);
 
 		/**
 		 * This method returns a value as a boxed object.  A value is typically a PHP typed
@@ -44,7 +44,7 @@ namespace Saber\Core\Type {
 		 * @param mixed $value                                      the value(s) to be boxed
 		 * @return Data\Type                                        the boxed object
 		 */
-		public static function create($value/*...*/);
+		//public static function create($value/*...*/);
 
 		#endregion
 

@@ -88,7 +88,7 @@ namespace Saber\Data\Option {
 		 *                                                          truthy test
 		 */
 		public static function all(Option\Type $xs, callable $predicate) {
-			return Bool\Module::or_(Bool\Module::not(Option\Type::isDefined($xs)), $predicate($xs->object(), Int32\Type::zero()));
+			return Bool\Module::or_(Bool\Module::not(Option\Type::isDefined($xs)), $predicate($xs->object(), Int32\Module::zero()));
 		}
 
 		/**
@@ -117,7 +117,7 @@ namespace Saber\Data\Option {
 		 */
 		public static function bind(Option\Type $xs, callable $subroutine) {
 			return (Option\Type::isDefined($xs)->unbox())
-				? $subroutine($xs->object(), Int32\Type::zero())
+				? $subroutine($xs->object(), Int32\Module::zero())
 				: Option\Type::none();
 		}
 
@@ -132,7 +132,7 @@ namespace Saber\Data\Option {
 		 */
 		public static function each(Option\Type $xs, callable $procedure) {
 			if (Option\Type::isDefined($xs)->unbox()) {
-				$procedure($xs->object(), Int32\Type::zero());
+				$procedure($xs->object(), Int32\Module::zero());
 			}
 		}
 
@@ -146,7 +146,7 @@ namespace Saber\Data\Option {
 		 * @return Option\Type                                      the option
 		 */
 		public static function filter(Option\Type $xs, callable $predicate) {
-			if (Bool\Module::and_(Option\Type::isDefined($xs), $predicate($xs->object(), Int32\Type::zero()))->unbox()) {
+			if (Bool\Module::and_(Option\Type::isDefined($xs), $predicate($xs->object(), Int32\Module::zero()))->unbox()) {
 				return $xs;
 			}
 			return Option\Type::none();
@@ -163,7 +163,7 @@ namespace Saber\Data\Option {
 		 *                                                          satisfying the predicate, if any
 		 */
 		public static function find(Option\Type $xs, callable $predicate) {
-			if (Bool\Module::and_(Option\Type::isDefined($xs), $predicate($xs->object(), Int32\Type::zero()))->unbox()) {
+			if (Bool\Module::and_(Option\Type::isDefined($xs), $predicate($xs->object(), Int32\Module::zero()))->unbox()) {
 				return $xs;
 			}
 			return Option\Type::none();
@@ -190,7 +190,7 @@ namespace Saber\Data\Option {
 		 * @return Int32\Type                                       the length of this option
 		 */
 		public static function length(Option\Type $xs) {
-			return (Option\Type::isDefined($xs)->unbox()) ? Int32\Type::one() : Int32\Type::zero();
+			return (Option\Type::isDefined($xs)->unbox()) ? Int32\Module::one() : Int32\Module::zero();
 		}
 
 		/**
@@ -400,26 +400,26 @@ namespace Saber\Data\Option {
 			$y = Option\Type::isDefined($ys)->unbox();
 
 			if (!$x && $y) {
-				return Int32\Type::negative();
+				return Int32\Module::negative();
 			}
 			if (!$x && !$y) {
-				return Int32\Type::zero();
+				return Int32\Module::zero();
 			}
 			if ($x && !$y) {
-				return Int32\Type::one();
+				return Int32\Module::one();
 			}
 
 			$x = $xs->object();
 			$y = $ys->object();
 
 			if (($x === null) && ($y !== null)) {
-				return Int32\Type::negative();
+				return Int32\Module::negative();
 			}
 			if (($x === null) && ($y === null)) {
-				return Int32\Type::zero();
+				return Int32\Module::zero();
 			}
 			if (($x !== null) && ($y === null)) {
-				return Int32\Type::one();
+				return Int32\Module::one();
 			}
 
 			$module = get_class($x);

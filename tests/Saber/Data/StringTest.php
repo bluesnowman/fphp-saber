@@ -231,7 +231,7 @@ namespace Saber\Data {
 		 * @dataProvider dataReplicate
 		 */
 		public function testReplicate($provided, $expected) {
-			$p0 = String\Module::replicate(Int32\Type::box($provided[0]), Char\Module::box($provided[1]));
+			$p0 = String\Module::replicate(Int32\Module::box($provided[0]), Char\Module::box($provided[1]));
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\String', $p0);

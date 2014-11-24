@@ -37,9 +37,9 @@ namespace Saber\Data\LinkedList\Nil {
 		 */
 		public function compareTo(LinkedList\Type $that) {
 			if ($that instanceof LinkedList\Type\Nil) {
-				return Int32\Type::zero();
+				return Int32\Module::zero();
 			}
-			return Int32\Type::negative();
+			return Int32\Module::negative();
 		}
 
 		/**

@@ -46,7 +46,7 @@ namespace Saber\Data\String {
 		 */
 		public function __construct(String\Type $string) {
 			$this->collection = $string;
-			$this->position = Int32\Type::zero();
+			$this->position = Int32\Module::zero();
 		}
 
 		/**
@@ -106,7 +106,7 @@ namespace Saber\Data\String {
 		 * @access public
 		 */
 		public function rewind() {
-			$this->position = Int32\Type::zero();
+			$this->position = Int32\Module::zero();
 		}
 
 		/**

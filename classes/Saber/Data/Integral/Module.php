@@ -16,11 +16,10 @@
  * limitations under the License.
  */
 
-namespace Saber\Data\Num {
+namespace Saber\Data\Integral {
 
-	use \Saber\Core;
-	use \Saber\Data;
+	use \Saber\Data\Num;
 
-	abstract class Type extends Data\Type implements Core\Type\Boxable { }
+	abstract class Module extends Num\Module { }
 
 }

@@ -55,7 +55,7 @@ namespace Saber\Data\LinkedList {
 		public function __construct(LinkedList\Type $linkedList) {
 			$this->collection = $linkedList;
 			$this->current = $linkedList;
-			$this->position = Int32\Type::zero();
+			$this->position = Int32\Module::zero();
 		}
 
 		/**
@@ -118,7 +118,7 @@ namespace Saber\Data\LinkedList {
 		 */
 		public function rewind() {
 			$this->current = $this->collection;
-			$this->position = Int32\Type::zero();
+			$this->position = Int32\Module::zero();
 		}
 
 		/**

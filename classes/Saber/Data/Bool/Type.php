@@ -16,9 +16,10 @@
  * limitations under the License.
  */
 
-namespace Saber\Bool\Type {
+namespace Saber\Data\Bool {
 
 	use \Saber\Core;
+	use \Saber\Data;
 
 	class Type extends Data\Type implements Core\Type\Boxable {
 

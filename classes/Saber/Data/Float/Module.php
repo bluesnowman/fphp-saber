@@ -295,7 +295,7 @@ namespace Saber\Data\Float {
 		 * @return Int32\Type                                       the value as an Int32
 		 */
 		public static function toInt32(Float\Type $x) {
-			return Int32\Type::create($x->unbox());
+			return Int32\Module::create($x->unbox());
 		}
 
 		/**
@@ -410,13 +410,13 @@ namespace Saber\Data\Float {
 			$__y = $y->unbox();
 
 			if ($__x < $__y) {
-				return Int32\Type::negative();
+				return Int32\Module::negative();
 			}
 			else if ($__x == $__y) {
-				return Int32\Type::zero();
+				return Int32\Module::zero();
 			}
 			else { // ($__x > $__y)
-				return Int32\Type::one();
+				return Int32\Module::one();
 			}
 		}
 

@@ -111,13 +111,13 @@ namespace Saber\Core\AnyErr {
 			$y = $that->getCode();
 
 			if ($x < $y) {
-				return Int32\Type::negative();
+				return Int32\Module::negative();
 			}
 			else if ($x == $y) {
-				return Int32\Type::zero();
+				return Int32\Module::zero();
 			}
 			else { // ($x > $y)
-				return Int32\Type::one();
+				return Int32\Module::one();
 			}
 		}
 

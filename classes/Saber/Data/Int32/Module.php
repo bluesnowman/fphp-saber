@@ -18,46 +18,16 @@
 
 namespace Saber\Data\Int32 {
 
-	use \Saber\Control;
 	use \Saber\Data;
-	use \Saber\Throwable;
+	use \Saber\Data\Bool;
+	use \Saber\Data\Double;
+	use \Saber\Data\Float;
+	use \Saber\Data\Int32;
+	use \Saber\Data\Integer;
+	use \Saber\Data\Integral;
+	use \Saber\Data\String;
 
-	class Module extends Integral\Type {
-
-		#region Methods -> Implementation
-
-		/**
-		 * This constructor initializes the class with the specified value.
-		 *
-		 * @access public
-		 * @param integer $value                                    the value to be assigned
-		 */
-		public function __construct($value) {
-			$this->value = (int) $value;
-		}
-
-		/**
-		 * This method returns the object as a string.
-		 *
-		 * @access public
-		 * @return string                                           the object as a string
-		 */
-		public function __toString() {
-			return sprintf('%d', $this->value);
-		}
-
-		/**
-		 * This method returns the value contained within the boxed object.
-		 *
-		 * @access public
-		 * @param integer $depth                                    how many levels to unbox
-		 * @return mixed                                            the un-boxed value
-		 */
-		public function unbox($depth = 0) {
-			return $this->value;
-		}
-
-		#endregion
+	class Module extends Integral\Module {
 
 		#region Methods -> Instantiation
 
@@ -68,7 +38,7 @@ namespace Saber\Data\Int32 {
 		 * @access public
 		 * @static
 		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return Data\Type                                        the boxed object
+		 * @return Int32\Type                                       the boxed object
 		 */
 		public static function box($value/*...*/) {
 			return new Int32\Type($value);
@@ -81,7 +51,7 @@ namespace Saber\Data\Int32 {
 		 * @access public
 		 * @static
 		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return Data\Type                                        the boxed object
+		 * @return Int32\Type                                       the boxed object
 		 */
 		public static function create($value/*...*/) {
 			return new Int32\Type($value);
@@ -322,7 +292,7 @@ namespace Saber\Data\Int32 {
 		 * @return Integer\Type                                     the value as an Integer
 		 */
 		public static function toInteger(Int32\Type $x) {
-			return Integer\Type::create($x->unbox());
+			return Integer\Module::create($x->unbox());
 		}
 
 		/**
@@ -514,34 +484,6 @@ namespace Saber\Data\Int32 {
 		 */
 		public static function min(Int32\Type $x, Int32\Type $y) {
 			return (Int32\Module::compare($x, $y)->unbox() <= 0) ? $x : $y;
-		}
-
-		#endregion
-
-		#region Methods -> Other
-
-		/**
-		 * This method returns a choice block.
-		 *
-		 * @access public
-		 * @static
-		 * @param Int32\Type $x                                     the object to be evaluated
-		 * @return Control\Monad\Choice                             the choice monad
-		 */
-		public static function choice(Int32\Type $x) {
-			return Control\Monad::choice($x);
-		}
-
-		/**
-		 * This method returns the object's hash code.
-		 *
-		 * @access public
-		 * @static
-		 * @param Int32\Type $x                                     the object to be evaluated
-		 * @return String\Type                                      the object's hash code
-		 */
-		public static function hashCode(Int32\Type $x) {
-			return String\Module::create($x->__toString());
 		}
 
 		#endregion

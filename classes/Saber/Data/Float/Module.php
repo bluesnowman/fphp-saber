@@ -279,7 +279,7 @@ namespace Saber\Data\Float {
 		 * @return Integer\Type                                     the value as an Integer
 		 */
 		public static function toInteger(Float\Type $x) {
-			return Integer\Type::create($x->unbox());
+			return Integer\Module::create($x->unbox());
 		}
 
 		/**

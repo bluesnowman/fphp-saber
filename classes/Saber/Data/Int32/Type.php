@@ -18,10 +18,44 @@
 
 namespace Saber\Data\Int32 {
 
-	use \Saber\Core;
+	use \Saber\Data\Integral;
 
-	class Type extends Core\Type implements Core\Type\Boxable {
+	class Type extends Integral\Type {
 
+		#region Methods -> Implementation
+
+		/**
+		 * This constructor initializes the class with the specified value.
+		 *
+		 * @access public
+		 * @param integer $value                                    the value to be assigned
+		 */
+		public function __construct($value) {
+			$this->value = (int) $value;
+		}
+
+		/**
+		 * This method returns the object as a string.
+		 *
+		 * @access public
+		 * @return string                                           the object as a string
+		 */
+		public function __toString() {
+			return sprintf('%d', $this->value);
+		}
+
+		/**
+		 * This method returns the value contained within the boxed object.
+		 *
+		 * @access public
+		 * @param integer $depth                                    how many levels to unbox
+		 * @return mixed                                            the un-boxed value
+		 */
+		public function unbox($depth = 0) {
+			return $this->value;
+		}
+
+		#endregion
 	}
 
 }

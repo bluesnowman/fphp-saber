@@ -26,7 +26,7 @@ namespace Saber\Data\String {
 		 * This variable stores a reference to the collection being iterated.
 		 *
 		 * @access protected
-		 * @var Data\String
+		 * @var String\Type
 		 */
 		protected $collection;
 
@@ -34,7 +34,7 @@ namespace Saber\Data\String {
 		 * This variable stores the current position.
 		 *
 		 * @access protected
-		 * @var Data\Int32
+		 * @var Int32\Type
 		 */
 		protected $position;
 
@@ -46,7 +46,7 @@ namespace Saber\Data\String {
 		 */
 		public function __construct(String\Type $string) {
 			$this->collection = $string;
-			$this->position = Data\Int32::zero();
+			$this->position = Int32\Type::zero();
 		}
 
 		/**
@@ -73,7 +73,7 @@ namespace Saber\Data\String {
 		 * This method returns the current object.
 		 *
 		 * @access public
-		 * @return Data\Char                                        the current object
+		 * @return Char\Type                                        the current object
 		 */
 		public function current() {
 			$this->collection->element($this->position);
@@ -83,7 +83,7 @@ namespace Saber\Data\String {
 		 * This method returns the current key.
 		 *
 		 * @access public
-		 * @return Data\Int32                                       the current key
+		 * @return Int32\Type                                       the current key
 		 */
 		public function key() {
 			return $this->position;
@@ -93,7 +93,7 @@ namespace Saber\Data\String {
 		 * This method causes the iterator to advance to the next object.
 		 *
 		 * @access public
-		 * @return Data\Bool                                        whether there are more objects
+		 * @return Bool\Type                                        whether there are more objects
 		 */
 		public function next() {
 			$this->position = $this->position->increment();
@@ -106,7 +106,7 @@ namespace Saber\Data\String {
 		 * @access public
 		 */
 		public function rewind() {
-			$this->position = Data\Int32::zero();
+			$this->position = Int32\Type::zero();
 		}
 
 		/**

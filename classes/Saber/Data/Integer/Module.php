@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-namespace Saber\Data\Integer {
+namespace Saber\Integer\Type {
 
 	use \Saber\Control;
 	use \Saber\Data;
@@ -84,7 +84,7 @@ namespace Saber\Data\Integer {
 			if (!preg_match('/^-?[1-9]?[0-9]+$/', $value)) {
 				throw new Throwable\InvalidArgument\Exception('Unable to box value. Expected an integer, but got ":value".', array(':value' => $value));
 			}
-			return new Data\Integer($value);
+			return new Integer\Type($value);
 		}
 
 		/**
@@ -97,7 +97,7 @@ namespace Saber\Data\Integer {
 		 * @return Data\Type                                        the boxed object
 		 */
 		public static function create($value/*...*/) {
-			return new Data\Integer($value);
+			return new Integer\Type($value);
 		}
 
 		/**
@@ -105,10 +105,10 @@ namespace Saber\Data\Integer {
 		 *
 		 * @access public
 		 * @static
-		 * @return Data\Integer                                     the object
+		 * @return Integer\Type                                     the object
 		 */
 		public static function negative() {
-			return new Data\Integer(-1);
+			return new Integer\Type(-1);
 		}
 
 		/**
@@ -116,10 +116,10 @@ namespace Saber\Data\Integer {
 		 *
 		 * @access public
 		 * @static
-		 * @return Data\Integer                                     the object
+		 * @return Integer\Type                                     the object
 		 */
 		public static function one() {
-			return new Data\Integer(1);
+			return new Integer\Type(1);
 		}
 
 		/**
@@ -127,10 +127,10 @@ namespace Saber\Data\Integer {
 		 *
 		 * @access public
 		 * @static
-		 * @return Data\Integer                                     the object
+		 * @return Integer\Type                                     the object
 		 */
 		public static function zero() {
-			return new Data\Integer(0);
+			return new Integer\Type(0);
 		}
 
 		#endregion
@@ -142,11 +142,11 @@ namespace Saber\Data\Integer {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Integer $x                                   the operand
-		 * @return Data\Integer                                     the result
+		 * @param Integer\Type $x                                   the operand
+		 * @return Integer\Type                                     the result
 		 */
-		public static function abs(Data\Integer $x) {
-			return Data\Integer::create(gmp_strval(gmp_abs($x->unbox())));
+		public static function abs(Integer\Type $x) {
+			return Integer\Type::create(gmp_strval(gmp_abs($x->unbox())));
 		}
 
 		/**
@@ -154,12 +154,12 @@ namespace Saber\Data\Integer {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Integer $x                                   the left operand
-		 * @param Data\Integer $y                                   the right operand
-		 * @return Data\Integer                                     the result
+		 * @param Integer\Type $x                                   the left operand
+		 * @param Integer\Type $y                                   the right operand
+		 * @return Integer\Type                                     the result
 		 */
-		public static function add(Data\Integer $x, Data\Integer $y) {
-			return Data\Integer::create(gmp_strval(gmp_add($x->unbox(), $y->unbox())));
+		public static function add(Integer\Type $x, Integer\Type $y) {
+			return Integer\Type::create(gmp_strval(gmp_add($x->unbox(), $y->unbox())));
 		}
 
 		/**
@@ -167,11 +167,11 @@ namespace Saber\Data\Integer {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Integer $x                                   the operand
-		 * @return Data\Integer                                     the result
+		 * @param Integer\Type $x                                   the operand
+		 * @return Integer\Type                                     the result
 		 */
-		public static function decrement(Data\Integer $x) {
-			return Data\Integer::subtract($x, Data\Integer::one());
+		public static function decrement(Integer\Type $x) {
+			return Integer\Type::subtract($x, Integer\Type::one());
 		}
 
 		/**
@@ -180,12 +180,12 @@ namespace Saber\Data\Integer {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Integer $x                                   the left operand
-		 * @param Data\Integer $y                                   the right operand
-		 * @return Data\Integer                                     the result
+		 * @param Integer\Type $x                                   the left operand
+		 * @param Integer\Type $y                                   the right operand
+		 * @return Integer\Type                                     the result
 		 */
-		public static function divide(Data\Integer $x, Data\Integer $y) {
-			return Data\Integer::create(gmp_strval(gmp_div_q($x->unbox(), $y->unbox())));
+		public static function divide(Integer\Type $x, Integer\Type $y) {
+			return Integer\Type::create(gmp_strval(gmp_div_q($x->unbox(), $y->unbox())));
 		}
 
 		/**
@@ -193,12 +193,12 @@ namespace Saber\Data\Integer {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Integer $x                                   the left operand
-		 * @param Data\Integer $y                                   the right operand
-		 * @return Data\Integer                                     the result
+		 * @param Integer\Type $x                                   the left operand
+		 * @param Integer\Type $y                                   the right operand
+		 * @return Integer\Type                                     the result
 		 */
-		public static function gcd(Data\Integer $x, Data\Integer $y) {
-			return Data\Integer::create(gmp_strval(gmp_gcd($x->unbox(), $y->unbox())));
+		public static function gcd(Integer\Type $x, Integer\Type $y) {
+			return Integer\Type::create(gmp_strval(gmp_gcd($x->unbox(), $y->unbox())));
 		}
 
 		/**
@@ -206,11 +206,11 @@ namespace Saber\Data\Integer {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Integer $x                                   the operand
-		 * @return Data\Integer                                     the result
+		 * @param Integer\Type $x                                   the operand
+		 * @return Integer\Type                                     the result
 		 */
-		public static function increment(Data\Integer $x) {
-			return Data\Integer::add($x, Data\Integer::one());
+		public static function increment(Integer\Type $x) {
+			return Integer\Type::add($x, Integer\Type::one());
 		}
 
 		/**
@@ -219,12 +219,12 @@ namespace Saber\Data\Integer {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Integer $x                                   the left operand
-		 * @param Data\Integer $y                                   the right operand
-		 * @return Data\Integer                                     the result
+		 * @param Integer\Type $x                                   the left operand
+		 * @param Integer\Type $y                                   the right operand
+		 * @return Integer\Type                                     the result
 		 */
-		public static function modulo(Data\Integer $x, Data\Integer $y) {
-			return Data\Integer::create(gmp_strval(gmp_div_r($x->unbox(), $y->unbox())));
+		public static function modulo(Integer\Type $x, Integer\Type $y) {
+			return Integer\Type::create(gmp_strval(gmp_div_r($x->unbox(), $y->unbox())));
 		}
 
 		/**
@@ -233,12 +233,12 @@ namespace Saber\Data\Integer {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Integer $x                                   the left operand
-		 * @param Data\Integer $y                                   the right operand
-		 * @return Data\Integer                                     the result
+		 * @param Integer\Type $x                                   the left operand
+		 * @param Integer\Type $y                                   the right operand
+		 * @return Integer\Type                                     the result
 		 */
-		public static function multiply(Data\Integer $x, Data\Integer $y) {
-			return Data\Integer::create(gmp_strval(gmp_mul($x->unbox(), $y->unbox())));
+		public static function multiply(Integer\Type $x, Integer\Type $y) {
+			return Integer\Type::create(gmp_strval(gmp_mul($x->unbox(), $y->unbox())));
 		}
 
 		/**
@@ -246,11 +246,11 @@ namespace Saber\Data\Integer {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Integer $x                                   the operand
-		 * @return Data\Integer                                     the result
+		 * @param Integer\Type $x                                   the operand
+		 * @return Integer\Type                                     the result
 		 */
-		public static function negate(Data\Integer $x) {
-			return Data\Integer::create(gmp_strval(gmp_neg($x->unbox())));
+		public static function negate(Integer\Type $x) {
+			return Integer\Type::create(gmp_strval(gmp_neg($x->unbox())));
 		}
 
 		/**
@@ -259,12 +259,12 @@ namespace Saber\Data\Integer {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Integer $x                                   the left operand
-		 * @param Data\Integer $y                                   the right operand
-		 * @return Data\Integer                                     the result
+		 * @param Integer\Type $x                                   the left operand
+		 * @param Integer\Type $y                                   the right operand
+		 * @return Integer\Type                                     the result
 		 */
-		public static function subtract(Data\Integer $x, Data\Integer $y) {
-			return Data\Integer::create(gmp_strval(gmp_sub($x->unbox(), $y->unbox())));
+		public static function subtract(Integer\Type $x, Integer\Type $y) {
+			return Integer\Type::create(gmp_strval(gmp_sub($x->unbox(), $y->unbox())));
 		}
 
 		#endregion
@@ -276,10 +276,10 @@ namespace Saber\Data\Integer {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Integer $x                                   the object to be converted
-		 * @return Data\String                                      the value as a String
+		 * @param Integer\Type $x                                   the object to be converted
+		 * @return String\Type                                      the value as a String
 		 */
-		public static function toString(Data\Integer $x) {
+		public static function toString(Integer\Type $x) {
 			return String\Module::create($x->__toString());
 		}
 
@@ -292,12 +292,12 @@ namespace Saber\Data\Integer {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Integer $x                                   the left operand
+		 * @param Integer\Type $x                                   the left operand
 		 * @param Data\Type $y                                      the right operand
-		 * @return Data\Bool                                        whether the left operand is equal
+		 * @return Bool\Type                                        whether the left operand is equal
 		 *                                                          to the right operand
 		 */
-		public static function eq(Data\Integer $x, Data\Type $y) { // ==
+		public static function eq(Integer\Type $x, Data\Type $y) { // ==
 			$class = get_class($x);
 			if ($y instanceof $class) {
 				return Bool\Module::create($x->unbox() == $y->unbox());
@@ -310,12 +310,12 @@ namespace Saber\Data\Integer {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Integer $x                                   the left operand
+		 * @param Integer\Type $x                                   the left operand
 		 * @param Data\Type $y                                      the right operand
-		 * @return Data\Bool                                        whether the left operand is identical
+		 * @return Bool\Type                                        whether the left operand is identical
 		 *                                                          to the right operand
 		 */
-		public static function id(Data\Integer $x, Data\Type $y) { // ===
+		public static function id(Integer\Type $x, Data\Type $y) { // ===
 			if (get_class($x) === get_class($y)) {
 				return Bool\Module::create($x->unbox() === $y->unbox());
 			}
@@ -327,13 +327,13 @@ namespace Saber\Data\Integer {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Integer $x                                   the left operand
+		 * @param Integer\Type $x                                   the left operand
 		 * @param Data\Type $y                                      the right operand
-		 * @return Data\Bool                                        whether the left operand is NOT equal
+		 * @return Bool\Type                                        whether the left operand is NOT equal
 		 *                                                          to the right operand
 		 */
-		public static function ne(Data\Integer $x, Data\Type $y) { // !=
-			return Bool\Module::not(Data\Integer::eq($x, $y));
+		public static function ne(Integer\Type $x, Data\Type $y) { // !=
+			return Bool\Module::not(Integer\Type::eq($x, $y));
 		}
 
 		/**
@@ -341,13 +341,13 @@ namespace Saber\Data\Integer {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Integer $x                                   the left operand
+		 * @param Integer\Type $x                                   the left operand
 		 * @param Data\Type $y                                      the right operand
-		 * @return Data\Bool                                        whether the left operand is NOT identical
+		 * @return Bool\Type                                        whether the left operand is NOT identical
 		 *                                                          to the right operand
 		 */
-		public static function ni(Data\Integer $x, Data\Type $y) { // !==
-			return Bool\Module::not(Data\Integer::id($x, $y));
+		public static function ni(Integer\Type $x, Data\Type $y) { // !==
+			return Bool\Module::not(Integer\Type::id($x, $y));
 		}
 
 		#endregion
@@ -359,14 +359,14 @@ namespace Saber\Data\Integer {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Integer $x                                   the left operand
-		 * @param Data\Integer $y                                   the right operand
-		 * @return Data\Integer                                     the order as to whether the left
+		 * @param Integer\Type $x                                   the left operand
+		 * @param Integer\Type $y                                   the right operand
+		 * @return Integer\Type                                     the order as to whether the left
 		 *                                                          operand is less than, equals to,
 		 *                                                          or greater than the right operand
 		 */
-		public static function compare(Data\Integer $x, Data\Integer $y) {
-			return Data\Int32::create(gmp_cmp($x->unbox(), $y->unbox()));
+		public static function compare(Integer\Type $x, Integer\Type $y) {
+			return Int32\Type::create(gmp_cmp($x->unbox(), $y->unbox()));
 		}
 
 		#endregion
@@ -376,13 +376,13 @@ namespace Saber\Data\Integer {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Integer $x                                   the left operand
-		 * @param Data\Integer $y                                   the right operand
-		 * @return Data\Bool                                        whether the left operand is greater
+		 * @param Integer\Type $x                                   the left operand
+		 * @param Integer\Type $y                                   the right operand
+		 * @return Bool\Type                                        whether the left operand is greater
 		 *                                                          than or equal to the right operand
 		 */
-		public static function ge(Data\Integer $x, Data\Integer $y) { // >=
-			return Bool\Module::create(Data\Integer::compare($x, $y)->unbox() >= 0);
+		public static function ge(Integer\Type $x, Integer\Type $y) { // >=
+			return Bool\Module::create(Integer\Type::compare($x, $y)->unbox() >= 0);
 		}
 
 		/**
@@ -390,13 +390,13 @@ namespace Saber\Data\Integer {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Integer $x                                   the left operand
-		 * @param Data\Integer $y                                   the right operand
-		 * @return Data\Bool                                        whether the left operand is greater
+		 * @param Integer\Type $x                                   the left operand
+		 * @param Integer\Type $y                                   the right operand
+		 * @return Bool\Type                                        whether the left operand is greater
 		 *                                                          than the right operand
 		 */
-		public static function gt(Data\Integer $x, Data\Integer $y) { // >
-			return Bool\Module::create(Data\Integer::compare($x, $y)->unbox() > 0);
+		public static function gt(Integer\Type $x, Integer\Type $y) { // >
+			return Bool\Module::create(Integer\Type::compare($x, $y)->unbox() > 0);
 		}
 
 		/**
@@ -404,13 +404,13 @@ namespace Saber\Data\Integer {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Integer $x                                   the left operand
-		 * @param Data\Integer $y                                   the right operand
-		 * @return Data\Bool                                        whether the left operand is less than
+		 * @param Integer\Type $x                                   the left operand
+		 * @param Integer\Type $y                                   the right operand
+		 * @return Bool\Type                                        whether the left operand is less than
 		 *                                                          or equal to the right operand
 		 */
-		public static function le(Data\Integer $x, Data\Integer $y) { // <=
-			return Bool\Module::create(Data\Integer::compare($x, $y)->unbox() <= 0);
+		public static function le(Integer\Type $x, Integer\Type $y) { // <=
+			return Bool\Module::create(Integer\Type::compare($x, $y)->unbox() <= 0);
 		}
 
 		/**
@@ -418,13 +418,13 @@ namespace Saber\Data\Integer {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Integer $x                                   the left operand
-		 * @param Data\Integer $y                                   the right operand
-		 * @return Data\Bool                                        whether the left operand is less than
+		 * @param Integer\Type $x                                   the left operand
+		 * @param Integer\Type $y                                   the right operand
+		 * @return Bool\Type                                        whether the left operand is less than
 		 *                                                          the right operand
 		 */
-		public static function lt(Data\Integer $x, Data\Integer $y) { // <
-			return Bool\Module::create(Data\Integer::compare($x, $y)->unbox() < 0);
+		public static function lt(Integer\Type $x, Integer\Type $y) { // <
+			return Bool\Module::create(Integer\Type::compare($x, $y)->unbox() < 0);
 		}
 
 		/**
@@ -432,12 +432,12 @@ namespace Saber\Data\Integer {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Integer $x                                   the left operand
-		 * @param Data\Integer $y                                   the right operand
-		 * @return Data\Integer                                     the maximum value
+		 * @param Integer\Type $x                                   the left operand
+		 * @param Integer\Type $y                                   the right operand
+		 * @return Integer\Type                                     the maximum value
 		 */
-		public static function max(Data\Integer $x, Data\Integer $y) {
-			return (Data\Integer::compare($x, $y)->unbox() >= 0) ? $x : $y;
+		public static function max(Integer\Type $x, Integer\Type $y) {
+			return (Integer\Type::compare($x, $y)->unbox() >= 0) ? $x : $y;
 		}
 
 		/**
@@ -445,12 +445,12 @@ namespace Saber\Data\Integer {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Integer $x                                   the left operand
-		 * @param Data\Integer $y                                   the right operand
-		 * @return Data\Integer                                     the minimum value
+		 * @param Integer\Type $x                                   the left operand
+		 * @param Integer\Type $y                                   the right operand
+		 * @return Integer\Type                                     the minimum value
 		 */
-		public static function min(Data\Integer $x, Data\Integer $y) {
-			return (Data\Integer::compare($x, $y)->unbox() <= 0) ? $x : $y;
+		public static function min(Integer\Type $x, Integer\Type $y) {
+			return (Integer\Type::compare($x, $y)->unbox() <= 0) ? $x : $y;
 		}
 
 		#endregion
@@ -462,10 +462,10 @@ namespace Saber\Data\Integer {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Integer $x                                   the object to be evaluated
+		 * @param Integer\Type $x                                   the object to be evaluated
 		 * @return Control\Monad\Choice                             the choice monad
 		 */
-		public static function choice(Data\Integer $x) {
+		public static function choice(Integer\Type $x) {
 			return Control\Monad::choice($x);
 		}
 
@@ -474,10 +474,10 @@ namespace Saber\Data\Integer {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Integer $x                                   the object to be evaluated
-		 * @return Data\String                                      the object's hash code
+		 * @param Integer\Type $x                                   the object to be evaluated
+		 * @return String\Type                                      the object's hash code
 		 */
-		public static function hashCode(Data\Integer $x) {
+		public static function hashCode(Integer\Type $x) {
 			return String\Module::create($x->__toString());
 		}
 
@@ -490,11 +490,11 @@ namespace Saber\Data\Integer {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Integer $x                                   the object to be evaluated
-		 * @return Data\Bool                                        whether the operand is an even
+		 * @param Integer\Type $x                                   the object to be evaluated
+		 * @return Bool\Type                                        whether the operand is an even
 		 *                                                          number
 		 */
-		public static function isEven(Data\Integer $x) {
+		public static function isEven(Integer\Type $x) {
 			return Bool\Module::create(gmp_strval(gmp_div_r($x->unbox(), '2')) == '0');
 		}
 
@@ -503,11 +503,11 @@ namespace Saber\Data\Integer {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Integer $x                                   the object to be evaluated
-		 * @return Data\Bool                                        whether the operand is an odd
+		 * @param Integer\Type $x                                   the object to be evaluated
+		 * @return Bool\Type                                        whether the operand is an odd
 		 *                                                          number
 		 */
-		public static function isOdd(Data\Integer $x) {
+		public static function isOdd(Integer\Type $x) {
 			return Bool\Module::create(gmp_strval(gmp_div_r($x->unbox(), '2')) != '0');
 		}
 
@@ -516,11 +516,11 @@ namespace Saber\Data\Integer {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Integer $x                                   the object to be evaluated
-		 * @return Data\Bool                                        whether the operand is a negative
+		 * @param Integer\Type $x                                   the object to be evaluated
+		 * @return Bool\Type                                        whether the operand is a negative
 		 *                                                          number
 		 */
-		public static function isNegative(Data\Integer $x) {
+		public static function isNegative(Integer\Type $x) {
 			return Bool\Module::create(gmp_sign($x->unbox()) == -1);
 		}
 

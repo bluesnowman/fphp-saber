@@ -16,12 +16,10 @@
  * limitations under the License.
  */
 
-namespace Saber\Integer\Type {
+namespace Saber\Data {
 
 	use \Saber\Core;
 
-	class Type extends Core\Type implements Core\Type\Boxable {
-
-	}
+	class Module extends Core\Module { }
 
 }

@@ -57,12 +57,12 @@ namespace Saber\Data\Unit {
 		 *
 		 * @access public
 		 * @param Unit\Type $that                                   the object to be compared
-		 * @return Data\Int32                                       whether the current object is less than,
+		 * @return Int32\Type                                       whether the current object is less than,
 		 *                                                          equal to, or greater than the specified
 		 *                                                          object
 		 */
 		public function compareTo(Unit\Type $that) {
-			return Data\Int32::zero();
+			return Int32\Type::zero();
 		}
 
 		#endregion

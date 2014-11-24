@@ -100,10 +100,10 @@ namespace Saber\Data\Char {
 				if ($length != 1) {
 					throw new Throwable\InvalidArgument\Exception('Unable to box value. Expected a character, but got "string" of length ":length".', array(':length' => $length));
 				}
-				return new Data\Char($value);
+				return new Char\Type($value);
 			}
 			else if (!is_string($value) && is_numeric($value)) {
-				return new Data\Char(chr((int) $value));
+				return new Char\Type(chr((int) $value));
 			}
 			else {
 				$type = gettype($value);
@@ -124,7 +124,7 @@ namespace Saber\Data\Char {
 		 * @return Data\Type                                        the boxed object
 		 */
 		public static function create($value/*...*/) {
-			return new Data\Char($value);
+			return new Char\Type($value);
 		}
 
 		#endregion
@@ -138,10 +138,10 @@ namespace Saber\Data\Char {
 		 * @access public
 		 * @static
 		 * @param Char\Type $x                                      the object to be converted
-		 * @return Data\Int32                                       the value as an Int32
+		 * @return Int32\Type                                       the value as an Int32
 		 */
 		public static function toInt32(Char\Type $x) {
-			return Data\Int32::create(ord($x->unbox()));
+			return Int32\Type::create(ord($x->unbox()));
 		}
 
 		/**
@@ -150,7 +150,7 @@ namespace Saber\Data\Char {
 		 * @access public
 		 * @static
 		 * @param Char\Type $x                                      the object to be converted
-		 * @return Data\String                                      the value as a String
+		 * @return String\Type                                      the value as a String
 		 */
 		public static function toString(Char\Type $x) {
 			return String\Module::create($x->__toString());
@@ -167,7 +167,7 @@ namespace Saber\Data\Char {
 		 * @static
 		 * @param Char\Type $x                                      the left operand
 		 * @param Data\Type $y                                      the right operand
-		 * @return Data\Bool                                        whether the left operand is equal
+		 * @return Bool\Type                                        whether the left operand is equal
 		 *                                                          to the right operand
 		 */
 		public static function eq(Char\Type $x, Data\Type $y) { // ==
@@ -185,7 +185,7 @@ namespace Saber\Data\Char {
 		 * @static
 		 * @param Char\Type $x                                      the left operand
 		 * @param Data\Type $y                                      the right operand
-		 * @return Data\Bool                                        whether the left operand is identical
+		 * @return Bool\Type                                        whether the left operand is identical
 		 *                                                          to the right operand
 		 */
 		public static function id(Char\Type $x, Data\Type $y) { // ===
@@ -202,7 +202,7 @@ namespace Saber\Data\Char {
 		 * @static
 		 * @param Char\Type $x                                      the left operand
 		 * @param Data\Type $y                                      the right operand
-		 * @return Data\Bool                                        whether the left operand is NOT equal
+		 * @return Bool\Type                                        whether the left operand is NOT equal
 		 *                                                          to the right operand
 		 */
 		public static function ne(Char\Type $x, Data\Type $y) { // !=
@@ -216,7 +216,7 @@ namespace Saber\Data\Char {
 		 * @static
 		 * @param Char\Type $x                                      the left operand
 		 * @param Data\Type $y                                      the right operand
-		 * @return Data\Bool                                        whether the left operand is NOT identical
+		 * @return Bool\Type                                        whether the left operand is NOT identical
 		 *                                                          to the right operand
 		 */
 		public static function ni(Char\Type $x, Data\Type $y) { // !==
@@ -234,7 +234,7 @@ namespace Saber\Data\Char {
 		 * @static
 		 * @param Char\Type $x                                      the left operand
 		 * @param Char\Type $y                                      the right operand
-		 * @return Data\Int32                                       the order as to whether the left
+		 * @return Int32\Type                                       the order as to whether the left
 		 *                                                          operand is less than, equals to,
 		 *                                                          or greater than the right operand
 		 */
@@ -243,13 +243,13 @@ namespace Saber\Data\Char {
 			$__y = $y->unbox();
 
 			if ($__x < $__y) {
-				return Data\Int32::negative();
+				return Int32\Type::negative();
 			}
 			else if ($__x == $__y) {
-				return Data\Int32::zero();
+				return Int32\Type::zero();
 			}
 			else { // ($__x > $__y)
-				return Data\Int32::one();
+				return Int32\Type::one();
 			}
 		}
 
@@ -260,7 +260,7 @@ namespace Saber\Data\Char {
 		 * @static
 		 * @param Char\Type $x                                      the left operand
 		 * @param Char\Type $y                                      the right operand
-		 * @return Data\Bool                                        whether the left operand is greater
+		 * @return Bool\Type                                        whether the left operand is greater
 		 *                                                          than or equal to the right operand
 		 */
 		public static function ge(Char\Type $x, Char\Type $y) { // >=
@@ -274,7 +274,7 @@ namespace Saber\Data\Char {
 		 * @static
 		 * @param Char\Type $x                                      the left operand
 		 * @param Char\Type $y                                      the right operand
-		 * @return Data\Bool                                        whether the left operand is greater
+		 * @return Bool\Type                                        whether the left operand is greater
 		 *                                                          than the right operand
 		 */
 		public static function gt(Char\Type $x, Char\Type $y) { // >
@@ -288,7 +288,7 @@ namespace Saber\Data\Char {
 		 * @static
 		 * @param Char\Type $x                                      the left operand
 		 * @param Char\Type $y                                      the right operand
-		 * @return Data\Bool                                        whether the left operand is less than
+		 * @return Bool\Type                                        whether the left operand is less than
 		 *                                                          or equal to the right operand
 		 */
 		public static function le(Char\Type $x, Char\Type $y) { // <=
@@ -302,7 +302,7 @@ namespace Saber\Data\Char {
 		 * @static
 		 * @param Char\Type $x                                      the left operand
 		 * @param Char\Type $y                                      the right operand
-		 * @return Data\Bool                                        whether the left operand is less than
+		 * @return Bool\Type                                        whether the left operand is less than
 		 *                                                          the right operand
 		 */
 		public static function lt(Char\Type $x, Char\Type $y) { // <
@@ -316,7 +316,7 @@ namespace Saber\Data\Char {
 		 * @static
 		 * @param Char\Type $x                                      the left operand
 		 * @param Char\Type $y                                      the right operand
-		 * @return Data\Int32                                       the maximum value
+		 * @return Int32\Type                                       the maximum value
 		 */
 		public static function max(Char\Type $x, Char\Type $y) {
 			return (Char\Module::compare($x, $y)->unbox() >= 0) ? $x : $y;
@@ -329,7 +329,7 @@ namespace Saber\Data\Char {
 		 * @static
 		 * @param Char\Type $x                                      the left operand
 		 * @param Char\Type $y                                      the right operand
-		 * @return Data\Int32                                       the minimum value
+		 * @return Int32\Type                                       the minimum value
 		 */
 		public static function min(Char\Type $x, Char\Type $y) {
 			return (Char\Module::compare($x, $y)->unbox() <= 0) ? $x : $y;
@@ -361,7 +361,7 @@ namespace Saber\Data\Char {
 		 * @access public
 		 * @static
 		 * @param Char\Type $x                                      the object to be converted
-		 * @return Data\Char                                        the lower case letter
+		 * @return Char\Type                                        the lower case letter
 		 *
 		 * @see http://php.net/manual/en/function.mb-strtolower.php
 		 */
@@ -375,7 +375,7 @@ namespace Saber\Data\Char {
 		 * @access public
 		 * @static
 		 * @param Char\Type $x                                      the object to be converted
-		 * @return Data\Char                                        the upper case letter
+		 * @return Char\Type                                        the upper case letter
 		 *
 		 * @see http://php.net/manual/en/function.mb-strtoupper.php
 		 */
@@ -393,7 +393,7 @@ namespace Saber\Data\Char {
 		 * @access public
 		 * @static
 		 * @param Char\Type $x                                      the character to be evaluated
-		 * @return Data\Bool                                        whether this is an alphabetic
+		 * @return Bool\Type                                        whether this is an alphabetic
 		 *                                                          character
 		 *
 		 * @see http://php.net/manual/en/function.ctype-alpha.php
@@ -408,7 +408,7 @@ namespace Saber\Data\Char {
 		 * @access public
 		 * @static
 		 * @param Char\Type $x                                      the character to be evaluated
-		 * @return Data\Bool                                        whether this is an alphanumeric
+		 * @return Bool\Type                                        whether this is an alphanumeric
 		 *                                                          character
 		 *
 		 * @see http://php.net/manual/en/function.ctype-alnum.php
@@ -423,7 +423,7 @@ namespace Saber\Data\Char {
 		 * @access public
 		 * @static
 		 * @param Char\Type $x                                      the character to be evaluated
-		 * @return Data\Bool                                        whether this is an ASCII
+		 * @return Bool\Type                                        whether this is an ASCII
 		 *                                                          character
 		 */
 		public static function isAscii(Char\Type $x) {
@@ -436,7 +436,7 @@ namespace Saber\Data\Char {
 		 * @access public
 		 * @static
 		 * @param Char\Type $x                                      the character to be evaluated
-		 * @return Data\Bool                                        whether this is a control
+		 * @return Bool\Type                                        whether this is a control
 		 *                                                          character
 		 *
 		 * @see http://php.net/manual/en/function.ctype-cntrl.php
@@ -451,7 +451,7 @@ namespace Saber\Data\Char {
 		 * @access public
 		 * @static
 		 * @param Char\Type $x                                      the character to be evaluated
-		 * @return Data\Bool                                        whether this is a Cyrillic
+		 * @return Bool\Type                                        whether this is a Cyrillic
 		 *                                                          character
 		 *
 		 * @see http://php.net/manual/en/regexp.reference.unicode.php
@@ -466,7 +466,7 @@ namespace Saber\Data\Char {
 		 * @access public
 		 * @static
 		 * @param Char\Type $x                                      the character to be evaluated
-		 * @return Data\Bool                                        whether this is a digit
+		 * @return Bool\Type                                        whether this is a digit
 		 *
 		 * @see http://php.net/manual/en/function.ctype-digit.php
 		 */
@@ -480,7 +480,7 @@ namespace Saber\Data\Char {
 		 * @access public
 		 * @static
 		 * @param Char\Type $x                                      the character to be evaluated
-		 * @return Data\Bool                                        whether this is a hex-digit
+		 * @return Bool\Type                                        whether this is a hex-digit
 		 *
 		 * @see http://php.net/manual/en/function.ctype-xdigit.php
 		 */
@@ -494,7 +494,7 @@ namespace Saber\Data\Char {
 		 * @access public
 		 * @static
 		 * @param Char\Type $x                                      the character to be evaluated
-		 * @return Data\Bool                                        whether this is an Latin-1
+		 * @return Bool\Type                                        whether this is an Latin-1
 		 *                                                          character
 		 *
 		 * @see http://php.net/manual/en/regexp.reference.unicode.php
@@ -509,7 +509,7 @@ namespace Saber\Data\Char {
 		 * @access public
 		 * @static
 		 * @param Char\Type $x                                      the character to be evaluated
-		 * @return Data\Bool                                        whether this is a lower case
+		 * @return Bool\Type                                        whether this is a lower case
 		 *                                                          character
 		 *
 		 * @see http://php.net/manual/en/function.ctype-lower.php
@@ -524,7 +524,7 @@ namespace Saber\Data\Char {
 		 * @access public
 		 * @static
 		 * @param Char\Type $x                                      the character to be evaluated
-		 * @return Data\Bool                                        whether this is a number
+		 * @return Bool\Type                                        whether this is a number
 		 *
 		 * @see http://php.net/manual/en/regexp.reference.unicode.php
 		 */
@@ -538,7 +538,7 @@ namespace Saber\Data\Char {
 		 * @access public
 		 * @static
 		 * @param Char\Type $x                                      the character to be evaluated
-		 * @return Data\Bool                                        whether this is an oct-digit
+		 * @return Bool\Type                                        whether this is an oct-digit
 		 */
 		public static function isOctDigit(Char\Type $x) {
 			return Bool\Module::create(preg_match('/^[0-7]$/', $x->unbox()));
@@ -550,7 +550,7 @@ namespace Saber\Data\Char {
 		 * @access public
 		 * @static
 		 * @param Char\Type $x                                      the character to be evaluated
-		 * @return Data\Bool                                        whether this is a printable
+		 * @return Bool\Type                                        whether this is a printable
 		 *                                                          character
 		 *
 		 * @see http://php.net/manual/en/function.ctype-print.php
@@ -565,7 +565,7 @@ namespace Saber\Data\Char {
 		 * @access public
 		 * @static
 		 * @param Char\Type $x                                      the character to be evaluated
-		 * @return Data\Bool                                        whether this is a punctuation
+		 * @return Bool\Type                                        whether this is a punctuation
 		 *                                                          character
 		 *
 		 * @see http://php.net/manual/en/function.ctype-punct.php
@@ -580,7 +580,7 @@ namespace Saber\Data\Char {
 		 * @access public
 		 * @static
 		 * @param Char\Type $x                                      the character to be evaluated
-		 * @return Data\Bool                                        whether this is a mark
+		 * @return Bool\Type                                        whether this is a mark
 		 *
 		 * @see http://php.net/manual/en/regexp.reference.unicode.php
 		 */
@@ -594,7 +594,7 @@ namespace Saber\Data\Char {
 		 * @access public
 		 * @static
 		 * @param Char\Type $x                                      the character to be evaluated
-		 * @return Data\Bool                                        whether this is a space
+		 * @return Bool\Type                                        whether this is a space
 		 *
 		 * @see http://php.net/manual/en/function.ctype-space.php
 		 */
@@ -608,7 +608,7 @@ namespace Saber\Data\Char {
 		 * @access public
 		 * @static
 		 * @param Char\Type $x                                      the character to be evaluated
-		 * @return Data\Bool                                        whether this is a symbol
+		 * @return Bool\Type                                        whether this is a symbol
 		 *
 		 * @see http://php.net/manual/en/regexp.reference.unicode.php
 		 */
@@ -622,7 +622,7 @@ namespace Saber\Data\Char {
 		 * @access public
 		 * @static
 		 * @param Char\Type $x                                      the character to be evaluated
-		 * @return Data\Bool                                        whether this is an upper case
+		 * @return Bool\Type                                        whether this is an upper case
 		 *                                                          character
 		 *
 		 * @see http://php.net/manual/en/function.ctype-upper.php

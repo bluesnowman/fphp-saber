@@ -53,10 +53,10 @@ namespace Saber\Data\Option {
 		 *
 		 * @access public
 		 * @static
-		 * @return Data\Option\None                                 the "none" option
+		 * @return Option\Type\None                                 the "none" option
 		 */
 		public static function none() {
-			return new Data\Option\None();
+			return new Option\Type\None();
 		}
 
 		/**
@@ -66,10 +66,10 @@ namespace Saber\Data\Option {
 		 * @static
 		 * @param Data\Type $x                                      the boxed object to be made an
 		 *                                                          option
-		 * @return Data\Option\Some                                 the "some" option
+		 * @return Option\Type\Some                                 the "some" option
 		 */
 		public static function some(Data\Type $x) {
-			return new Data\Option\Some($x);
+			return new Option\Type\Some($x);
 		}
 
 		#endregion
@@ -82,13 +82,13 @@ namespace Saber\Data\Option {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Option $xs                                   the left operand
+		 * @param Option\Type $xs                                   the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return Data\Bool                                        whether each element passed the
+		 * @return Bool\Type                                        whether each element passed the
 		 *                                                          truthy test
 		 */
-		public static function all(Data\Option $xs, callable $predicate) {
-			return Bool\Module::or_(Bool\Module::not(Data\Option::isDefined($xs)), $predicate($xs->object(), Data\Int32::zero()));
+		public static function all(Option\Type $xs, callable $predicate) {
+			return Bool\Module::or_(Bool\Module::not(Option\Type::isDefined($xs)), $predicate($xs->object(), Int32\Type::zero()));
 		}
 
 		/**
@@ -97,13 +97,13 @@ namespace Saber\Data\Option {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Option $xs                                   the left operand
+		 * @param Option\Type $xs                                   the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return Data\Bool                                        whether some of the elements
+		 * @return Bool\Type                                        whether some of the elements
 		 *                                                          passed the truthy test
 		 */
-		public static function any(Data\Option $xs, callable $predicate) {
-			return Data\Option::isDefined(Data\Option::find($xs, $predicate));
+		public static function any(Option\Type $xs, callable $predicate) {
+			return Option\Type::isDefined(Option\Type::find($xs, $predicate));
 		}
 
 		/**
@@ -111,14 +111,14 @@ namespace Saber\Data\Option {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Option $xs                                   the left operand
+		 * @param Option\Type $xs                                   the left operand
 		 * @param callable $subroutine                              the subroutine function to be applied
-		 * @return Data\Option                                      the option
+		 * @return Option\Type                                      the option
 		 */
-		public static function bind(Data\Option $xs, callable $subroutine) {
-			return (Data\Option::isDefined($xs)->unbox())
-				? $subroutine($xs->object(), Data\Int32::zero())
-				: Data\Option::none();
+		public static function bind(Option\Type $xs, callable $subroutine) {
+			return (Option\Type::isDefined($xs)->unbox())
+				? $subroutine($xs->object(), Int32\Type::zero())
+				: Option\Type::none();
 		}
 
 		/**
@@ -127,12 +127,12 @@ namespace Saber\Data\Option {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Option $xs                                   the left operand
+		 * @param Option\Type $xs                                   the left operand
 		 * @param callable $procedure                               the procedure function to be used
 		 */
-		public static function each(Data\Option $xs, callable $procedure) {
-			if (Data\Option::isDefined($xs)->unbox()) {
-				$procedure($xs->object(), Data\Int32::zero());
+		public static function each(Option\Type $xs, callable $procedure) {
+			if (Option\Type::isDefined($xs)->unbox()) {
+				$procedure($xs->object(), Int32\Type::zero());
 			}
 		}
 
@@ -141,15 +141,15 @@ namespace Saber\Data\Option {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Option $xs                                   the left operand
+		 * @param Option\Type $xs                                   the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return Data\Option                                      the option
+		 * @return Option\Type                                      the option
 		 */
-		public static function filter(Data\Option $xs, callable $predicate) {
-			if (Bool\Module::and_(Data\Option::isDefined($xs), $predicate($xs->object(), Data\Int32::zero()))->unbox()) {
+		public static function filter(Option\Type $xs, callable $predicate) {
+			if (Bool\Module::and_(Option\Type::isDefined($xs), $predicate($xs->object(), Int32\Type::zero()))->unbox()) {
 				return $xs;
 			}
-			return Data\Option::none();
+			return Option\Type::none();
 		}
 
 		/**
@@ -157,16 +157,16 @@ namespace Saber\Data\Option {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Option $xs                                   the left operand
+		 * @param Option\Type $xs                                   the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return Data\Option                                      an option containing the first object
+		 * @return Option\Type                                      an option containing the first object
 		 *                                                          satisfying the predicate, if any
 		 */
-		public static function find(Data\Option $xs, callable $predicate) {
-			if (Bool\Module::and_(Data\Option::isDefined($xs), $predicate($xs->object(), Data\Int32::zero()))->unbox()) {
+		public static function find(Option\Type $xs, callable $predicate) {
+			if (Bool\Module::and_(Option\Type::isDefined($xs), $predicate($xs->object(), Int32\Type::zero()))->unbox()) {
 				return $xs;
 			}
-			return Data\Option::none();
+			return Option\Type::none();
 		}
 
 		/**
@@ -174,11 +174,11 @@ namespace Saber\Data\Option {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Option $xs                                   the left operand
-		 * @return Data\Option\Iterator                             an iterator for this collection
+		 * @param Option\Type $xs                                   the left operand
+		 * @return Option\Type\Iterator                             an iterator for this collection
 		 */
-		public static function iterator(Data\Option $xs) {
-			return new Data\Option\Iterator($xs);
+		public static function iterator(Option\Type $xs) {
+			return new Option\Type\Iterator($xs);
 		}
 
 		/**
@@ -186,11 +186,11 @@ namespace Saber\Data\Option {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Option $xs                                   the left operand
-		 * @return Data\Int32                                       the length of this option
+		 * @param Option\Type $xs                                   the left operand
+		 * @return Int32\Type                                       the length of this option
 		 */
-		public static function length(Data\Option $xs) {
-			return (Data\Option::isDefined($xs)->unbox()) ? Data\Int32::one() : Data\Int32::zero();
+		public static function length(Option\Type $xs) {
+			return (Option\Type::isDefined($xs)->unbox()) ? Int32\Type::one() : Int32\Type::zero();
 		}
 
 		/**
@@ -198,12 +198,12 @@ namespace Saber\Data\Option {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Option $xs                                   the left operand
+		 * @param Option\Type $xs                                   the left operand
 		 * @param callable $subroutine                              the subroutine function to be used
-		 * @return Data\Option                                      the option
+		 * @return Option\Type                                      the option
 		 */
-		public static function map(Data\Option $xs, callable $subroutine) {
-			return (Data\Option::isDefined($xs)->unbox()) ? Data\Option::some($subroutine($xs->object())) : Data\Option::none();
+		public static function map(Option\Type $xs, callable $subroutine) {
+			return (Option\Type::isDefined($xs)->unbox()) ? Option\Type::some($subroutine($xs->object())) : Option\Type::none();
 		}
 
 		/**
@@ -212,12 +212,12 @@ namespace Saber\Data\Option {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Option $xs                                   the left operand
-		 * @param Data\Option $ys                                   the alternative option
-		 * @return Data\Option                                      the option
+		 * @param Option\Type $xs                                   the left operand
+		 * @param Option\Type $ys                                   the alternative option
+		 * @return Option\Type                                      the option
 		 */
-		public static function orElse(Data\Option $xs, Data\Option $ys) {
-			return (Data\Option::isDefined($xs)->unbox()) ? $xs : $ys;
+		public static function orElse(Option\Type $xs, Option\Type $ys) {
+			return (Option\Type::isDefined($xs)->unbox()) ? $xs : $ys;
 		}
 
 		/**
@@ -226,12 +226,12 @@ namespace Saber\Data\Option {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Option $xs                                   the left operand
+		 * @param Option\Type $xs                                   the left operand
 		 * @param Data\Type $y                                      the alternative object
 		 * @return Data\Type                                        the boxed object
 		 */
-		public static function orSome(Data\Option $xs, Data\Type $y) {
-			return (Data\Option::isDefined($xs)->unbox()) ? $xs->object() : $y;
+		public static function orSome(Option\Type $xs, Data\Type $y) {
+			return (Option\Type::isDefined($xs)->unbox()) ? $xs->object() : $y;
 		}
 
 		/**
@@ -239,13 +239,13 @@ namespace Saber\Data\Option {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Option $xs                                   the operand
-		 * @return Data\ArrayList                                   the collection as an array list
+		 * @param Option\Type $xs                                   the operand
+		 * @return ArrayList\Type                                   the collection as an array list
 		 */
-		public static function toArray(Data\Option $xs) {
+		public static function toArray(Option\Type $xs) {
 			$array = array();
 
-			if (Data\Option::isDefined($xs)->unbox()) {
+			if (Option\Type::isDefined($xs)->unbox()) {
 				$array[] = $xs->object();
 			}
 
@@ -257,11 +257,11 @@ namespace Saber\Data\Option {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Option $xs                                   the operand
-		 * @return Data\LinkedList                                  the option as a linked list
+		 * @param Option\Type $xs                                   the operand
+		 * @return LinkedList\Type                                  the option as a linked list
 		 */
-		public static function toList(Data\Option $xs) {
-			return (Data\Option::isDefined($xs)->unbox())
+		public static function toList(Option\Type $xs) {
+			return (Option\Type::isDefined($xs)->unbox())
 				? LinkedList\Module::cons($xs->object(), LinkedList\Module::nil())
 				: LinkedList\Module::nil();
 		}
@@ -275,12 +275,12 @@ namespace Saber\Data\Option {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Option $xs                                   the operand
-		 * @return Data\Bool                                        whether this instance is a "some"
+		 * @param Option\Type $xs                                   the operand
+		 * @return Bool\Type                                        whether this instance is a "some"
 		 *                                                          option
 		 */
-		public static function isDefined(Data\Option $xs) {
-			return Bool\Module::create($xs instanceof Data\Option\Some);
+		public static function isDefined(Option\Type $xs) {
+			return Bool\Module::create($xs instanceof Option\Type\Some);
 		}
 
 		#endregion
@@ -292,15 +292,15 @@ namespace Saber\Data\Option {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Option $xs                                   the left operand
+		 * @param Option\Type $xs                                   the left operand
 		 * @param Data\Type $ys                                     the object to be evaluated
-		 * @return Data\Bool                                        whether the specified object is equal
+		 * @return Bool\Type                                        whether the specified object is equal
 		 *                                                          to the current object
 		 */
-		public static function eq(Data\Option $xs, Data\Type $ys) {
+		public static function eq(Option\Type $xs, Data\Type $ys) {
 			$class = get_class($xs);
 			if ($ys instanceof $class) {
-				if ($ys instanceof Data\Option\Some) {
+				if ($ys instanceof Option\Type\Some) {
 					$x = $xs->object();
 					$y = $ys->object();
 					if ($x === null) {
@@ -313,7 +313,7 @@ namespace Saber\Data\Option {
 					}
 					return Bool\Module::create(spl_object_hash($x) === spl_object_hash($y));
 				}
-				else if ($ys instanceof Data\Option\None) {
+				else if ($ys instanceof Option\Type\None) {
 					return Bool\Module::true();
 				}
 			}
@@ -325,14 +325,14 @@ namespace Saber\Data\Option {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Option $xs                                   the left operand
+		 * @param Option\Type $xs                                   the left operand
 		 * @param Data\Type $ys                                     the object to be evaluated
-		 * @return Data\Bool                                        whether the specified object is identical
+		 * @return Bool\Type                                        whether the specified object is identical
 		 *                                                          to the current object
 		 */
-		public static function id(Data\Option $xs, Data\Type $ys) {
+		public static function id(Option\Type $xs, Data\Type $ys) {
 			if (get_class($xs) === get_class($ys)) {
-				if ($ys instanceof Data\Option\Some) {
+				if ($ys instanceof Option\Type\Some) {
 					$x = $xs->object();
 					$y = $ys->object();
 					if ($x === null) {
@@ -345,7 +345,7 @@ namespace Saber\Data\Option {
 					}
 					return Bool\Module::create(spl_object_hash($x) === spl_object_hash($y));
 				}
-				else if ($ys instanceof Data\Option\None) {
+				else if ($ys instanceof Option\Type\None) {
 					return Bool\Module::true();
 				}
 			}
@@ -357,13 +357,13 @@ namespace Saber\Data\Option {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Option $xs                                   the left operand
+		 * @param Option\Type $xs                                   the left operand
 		 * @param Data\Type $ys                                     the right operand
-		 * @return Data\Bool                                        whether the left operand is NOT equal
+		 * @return Bool\Type                                        whether the left operand is NOT equal
 		 *                                                          to the right operand
 		 */
-		public static function ne(Data\Option $xs, Data\Type $ys) { // !=
-			return Bool\Module::not(Data\Option::eq($xs, $ys));
+		public static function ne(Option\Type $xs, Data\Type $ys) { // !=
+			return Bool\Module::not(Option\Type::eq($xs, $ys));
 		}
 
 		/**
@@ -371,13 +371,13 @@ namespace Saber\Data\Option {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Option $xs                                   the left operand
+		 * @param Option\Type $xs                                   the left operand
 		 * @param Data\Type $ys                                     the right operand
-		 * @return Data\Bool                                        whether the left operand is NOT identical
+		 * @return Bool\Type                                        whether the left operand is NOT identical
 		 *                                                          to the right operand
 		 */
-		public static function ni(Data\Option $xs, Data\Type $ys) { // !==
-			return Bool\Module::not(Data\Option::id($xs, $ys));
+		public static function ni(Option\Type $xs, Data\Type $ys) { // !==
+			return Bool\Module::not(Option\Type::id($xs, $ys));
 		}
 
 		#endregion
@@ -389,37 +389,37 @@ namespace Saber\Data\Option {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Option $xs                                   the left operand
-		 * @param Data\Option $ys                                   the object to be compared
-		 * @return Data\Int32                                       whether the current object is less than,
+		 * @param Option\Type $xs                                   the left operand
+		 * @param Option\Type $ys                                   the object to be compared
+		 * @return Int32\Type                                       whether the current object is less than,
 		 *                                                          equal to, or greater than the specified
 		 *                                                          object
 		 */
-		public static function compare(Data\Option $xs, Data\Option $ys) {
-			$x = Data\Option::isDefined($xs)->unbox();
-			$y = Data\Option::isDefined($ys)->unbox();
+		public static function compare(Option\Type $xs, Option\Type $ys) {
+			$x = Option\Type::isDefined($xs)->unbox();
+			$y = Option\Type::isDefined($ys)->unbox();
 
 			if (!$x && $y) {
-				return Data\Int32::negative();
+				return Int32\Type::negative();
 			}
 			if (!$x && !$y) {
-				return Data\Int32::zero();
+				return Int32\Type::zero();
 			}
 			if ($x && !$y) {
-				return Data\Int32::one();
+				return Int32\Type::one();
 			}
 
 			$x = $xs->object();
 			$y = $ys->object();
 
 			if (($x === null) && ($y !== null)) {
-				return Data\Int32::negative();
+				return Int32\Type::negative();
 			}
 			if (($x === null) && ($y === null)) {
-				return Data\Int32::zero();
+				return Int32\Type::zero();
 			}
 			if (($x !== null) && ($y === null)) {
-				return Data\Int32::one();
+				return Int32\Type::one();
 			}
 
 			$module = get_class($x);
@@ -435,13 +435,13 @@ namespace Saber\Data\Option {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Option $xs                                   the left operand
-		 * @param Data\Option $ys                                   the right operand
-		 * @return Data\Bool                                        whether the left operand is greater
+		 * @param Option\Type $xs                                   the left operand
+		 * @param Option\Type $ys                                   the right operand
+		 * @return Bool\Type                                        whether the left operand is greater
 		 *                                                          than or equal to the right operand
 		 */
-		public static function ge(Data\Option $xs, Data\Option $ys) { // >=
-			return Bool\Module::create(Data\Option::compare($xs, $ys)->unbox() >= 0);
+		public static function ge(Option\Type $xs, Option\Type $ys) { // >=
+			return Bool\Module::create(Option\Type::compare($xs, $ys)->unbox() >= 0);
 		}
 
 		/**
@@ -449,13 +449,13 @@ namespace Saber\Data\Option {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Option $xs                                   the left operand
-		 * @param Data\Option $ys                                   the right operand
-		 * @return Data\Bool                                        whether the left operand is greater
+		 * @param Option\Type $xs                                   the left operand
+		 * @param Option\Type $ys                                   the right operand
+		 * @return Bool\Type                                        whether the left operand is greater
 		 *                                                          than the right operand
 		 */
-		public static function gt(Data\Option $xs, Data\Option $ys) { // >
-			return Bool\Module::create(Data\Option::compare($xs, $ys)->unbox() > 0);
+		public static function gt(Option\Type $xs, Option\Type $ys) { // >
+			return Bool\Module::create(Option\Type::compare($xs, $ys)->unbox() > 0);
 		}
 
 		/**
@@ -463,13 +463,13 @@ namespace Saber\Data\Option {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Option $xs                                   the left operand
-		 * @param Data\Option $ys                                   the right operand
-		 * @return Data\Bool                                        whether the left operand is less than
+		 * @param Option\Type $xs                                   the left operand
+		 * @param Option\Type $ys                                   the right operand
+		 * @return Bool\Type                                        whether the left operand is less than
 		 *                                                          or equal to the right operand
 		 */
-		public static function le(Data\Option $xs, Data\Option $ys) { // <=
-			return Bool\Module::create(Data\Option::compare($xs, $ys)->unbox() <= 0);
+		public static function le(Option\Type $xs, Option\Type $ys) { // <=
+			return Bool\Module::create(Option\Type::compare($xs, $ys)->unbox() <= 0);
 		}
 
 		/**
@@ -477,13 +477,13 @@ namespace Saber\Data\Option {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Option $xs                                   the left operand
-		 * @param Data\Option $ys                                   the right operand
-		 * @return Data\Bool                                        whether the left operand is less than
+		 * @param Option\Type $xs                                   the left operand
+		 * @param Option\Type $ys                                   the right operand
+		 * @return Bool\Type                                        whether the left operand is less than
 		 *                                                          the right operand
 		 */
-		public static function lt(Data\Option $xs, Data\Option $ys) { // <
-			return Bool\Module::create(Data\Option::compare($xs, $ys)->unbox() < 0);
+		public static function lt(Option\Type $xs, Option\Type $ys) { // <
+			return Bool\Module::create(Option\Type::compare($xs, $ys)->unbox() < 0);
 		}
 
 		/**
@@ -491,12 +491,12 @@ namespace Saber\Data\Option {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Option $xs                                   the left operand
-		 * @param Data\Option $ys                                   the right operand
-		 * @return Data\Int32                                       the maximum value
+		 * @param Option\Type $xs                                   the left operand
+		 * @param Option\Type $ys                                   the right operand
+		 * @return Int32\Type                                       the maximum value
 		 */
-		public static function max(Data\Option $xs, Data\Option $ys) {
-			return (Data\Option::compare($xs, $ys)->unbox() >= 0) ? $xs : $ys;
+		public static function max(Option\Type $xs, Option\Type $ys) {
+			return (Option\Type::compare($xs, $ys)->unbox() >= 0) ? $xs : $ys;
 		}
 
 		/**
@@ -504,12 +504,12 @@ namespace Saber\Data\Option {
 		 *
 		 * @access public
 		 * @static
-		 * @param Data\Option $xs                                   the left operand
-		 * @param Data\Option $ys                                   the right operand
-		 * @return Data\Int32                                       the minimum value
+		 * @param Option\Type $xs                                   the left operand
+		 * @param Option\Type $ys                                   the right operand
+		 * @return Int32\Type                                       the minimum value
 		 */
-		public static function min(Data\Option $xs, Data\Option $ys) {
-			return (Data\Option::compare($xs, $ys)->unbox() <= 0) ? $xs : $ys;
+		public static function min(Option\Type $xs, Option\Type $ys) {
+			return (Option\Type::compare($xs, $ys)->unbox() <= 0) ? $xs : $ys;
 		}
 
 		#endregion

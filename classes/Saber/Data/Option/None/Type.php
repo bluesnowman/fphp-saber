@@ -21,7 +21,7 @@ namespace Saber\Data\Option\None {
 	use \Saber\Data;
 	use \Saber\Throwable;
 
-	class Type extends Data\Option\Type {
+	class Type extends Option\Type\Type {
 
 		#region Methods -> Implementation
 

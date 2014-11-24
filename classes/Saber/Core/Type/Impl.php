@@ -16,11 +16,14 @@
  * limitations under the License.
  */
 
-namespace Saber\Integer\Type {
+namespace Saber\Core\Type {
 
 	use \Saber\Core;
+	use \Saber\Throwable;
 
-	class Type extends Core\Type implements Core\Type\Boxable {
+	trait Impl {
+
+
 
 	}
 

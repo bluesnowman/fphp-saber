@@ -31,33 +31,33 @@ namespace Saber\Control {
 		 * This method tests a set of choices.
 		 */
 		public function testChoice() {
-			$p0 = Data\Int32::box(0);
+			$p0 = Int32\Type::box(0);
 			$e0 = 0;
 
-			$p1 = Data\Int32::box(1);
+			$p1 = Int32\Type::box(1);
 			$e1 = 1;
 
 			Control\Monad::choice($p0)
-				->when($p0, function(Data\Int32 $x) use($e0) {
+				->when($p0, function(Int32\Type $x) use($e0) {
 					$this->assertSame($e0, $x->unbox());
 				})
-				->otherwise(function(Data\Int32 $x) use($e1) {
+				->otherwise(function(Int32\Type $x) use($e1) {
 					$this->assertSame($e1, $x->unbox());
 				})
 			->end();
 			Control\Monad::choice($p0)
-				->when($p1, function(Data\Int32 $x) use($e1) {
+				->when($p1, function(Int32\Type $x) use($e1) {
 					$this->assertSame($e1, $x->unbox());
 				})
-				->when($p0, function(Data\Int32 $x) use($e0) {
+				->when($p0, function(Int32\Type $x) use($e0) {
 					$this->assertSame($e0, $x->unbox());
 				})
 			->end();
 			Control\Monad::choice($p0)
-				->when($p1, function(Data\Int32 $x) use($e1) {
+				->when($p1, function(Int32\Type $x) use($e1) {
 					$this->assertSame($e1, $x->unbox());
 				})
-				->otherwise(function(Data\Int32 $x) use($e0) {
+				->otherwise(function(Int32\Type $x) use($e0) {
 					$this->assertSame($e0, $x->unbox());
 				})
 			->end();

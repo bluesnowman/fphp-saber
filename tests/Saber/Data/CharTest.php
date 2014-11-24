@@ -47,7 +47,7 @@ namespace Saber\Data {
 		 */
 		public function testBox($provided, $expected) {
 			$p0 = Char\Module::box($provided[0]);
-			$e0 = new Data\Char($expected[0], 'UTF-8');
+			$e0 = new Char\Type($expected[0], 'UTF-8');
 
 			$this->assertInstanceOf('\\Saber\\Core\\AnyVal', $p0);
 			$this->assertInstanceOf('\\Saber\\Data\\Char', $p0);

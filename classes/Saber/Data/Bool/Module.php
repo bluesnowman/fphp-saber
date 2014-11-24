@@ -16,47 +16,12 @@
  * limitations under the License.
  */
 
-namespace Saber\Data\Bool {
+namespace Saber\Bool\Type {
 
 	use \Saber\Control;
 	use \Saber\Data;
 
-	class Module extends Data\Type implements Data\Type\Boxable, Data\Val {
-
-		#region Methods -> Implementation
-
-		/**
-		 * This constructor initializes the class with the specified value.
-		 *
-		 * @access public
-		 * @param boolean $value                                    the value to be assigned
-		 */
-		public function __construct($value) {
-			$this->value = (bool) $value;
-		}
-
-		/**
-		 * This method returns the object as a string.
-		 *
-		 * @access public
-		 * @return string                                           the object as a string
-		 */
-		public function __toString() {
-			return ($this->value) ? 'true' : 'false';
-		}
-
-		/**
-		 * This method returns the value contained within the boxed object.
-		 *
-		 * @access public
-		 * @param integer $depth                                    how many levels to unbox
-		 * @return mixed                                            the un-boxed value
-		 */
-		public function unbox($depth = 0) {
-			return $this->value;
-		}
-
-		#endregion
+	class Module extends Data\Module {
 
 		#region Methods -> Instantiation
 
@@ -67,13 +32,13 @@ namespace Saber\Data\Bool {
 		 * @access public
 		 * @static
 		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return Data\Bool                                        the boxed object
+		 * @return Bool\Type                                        the boxed object
 		 */
 		public static function box($value/*...*/) {
 			if ((func_num_args() > 1) && func_get_arg(1) && is_string($value) && in_array(strtolower($value), array('false', 'f', 'no', 'n', '0'))) {
 				$value = false;
 			}
-			return new Data\Bool($value);
+			return new Bool\Type($value);
 		}
 
 		/**
@@ -83,17 +48,17 @@ namespace Saber\Data\Bool {
 		 * @access public
 		 * @static
 		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return Data\Bool                                        the boxed object
+		 * @return Bool\Type                                        the boxed object
 		 */
 		public static function create($value/*...*/) {
-			return new Data\Bool($value);
+			return new Bool\Type($value);
 		}
 
 		/**
 		 * This method returns an object with a "false" value.
 		 *
 		 * @access public
-		 * @return Data\Bool                                        the object
+		 * @return Bool\Type                                        the object
 		 */
 		public static function false() {
 			return Bool\Module::create(false);
@@ -103,7 +68,7 @@ namespace Saber\Data\Bool {
 		 * This method returns an object with a "true" value.
 		 *
 		 * @access public
-		 * @return Data\Bool                                        the object
+		 * @return Bool\Type                                        the object
 		 */
 		public static function true() {
 			return Bool\Module::create(true);
@@ -120,10 +85,10 @@ namespace Saber\Data\Bool {
 		 * @access public
 		 * @static
 		 * @param Bool\Type $x                                      the object to be converted
-		 * @return Data\Int32                                       the value as an Int32
+		 * @return Int32\Type                                       the value as an Int32
 		 */
 		public static function toInt32(Bool\Type $x) {
-			return Data\Int32::create($x->unbox());
+			return Int32\Type::create($x->unbox());
 		}
 
 		/**
@@ -132,7 +97,7 @@ namespace Saber\Data\Bool {
 		 * @access public
 		 * @static
 		 * @param Bool\Type $x                                      the object to be converted
-		 * @return Data\String                                      the value as a String
+		 * @return String\Type                                      the value as a String
 		 */
 		public static function toString(Bool\Type $x) {
 			return String\Module::create($x->__toString());
@@ -149,7 +114,7 @@ namespace Saber\Data\Bool {
 		 * @static
 		 * @param Bool\Type $x                                      the left operand
 		 * @param Data\Type $y                                      the right operand
-		 * @return Data\Bool                                        whether the left operand is equal
+		 * @return Bool\Type                                        whether the left operand is equal
 		 *                                                          to the right operand
 		 */
 		public static function eq(Bool\Type $x, Data\Type $y) { // ==
@@ -167,7 +132,7 @@ namespace Saber\Data\Bool {
 		 * @static
 		 * @param Bool\Type $x                                      the left operand
 		 * @param Data\Type $y                                      the right operand
-		 * @return Data\Bool                                        whether the left operand is identical
+		 * @return Bool\Type                                        whether the left operand is identical
 		 *                                                          to the right operand
 		 */
 		public static function id(Bool\Type $x, Data\Type $y) { // ===
@@ -184,7 +149,7 @@ namespace Saber\Data\Bool {
 		 * @static
 		 * @param Bool\Type $x                                      the left operand
 		 * @param Data\Type $y                                      the right operand
-		 * @return Data\Bool                                        whether the left operand is NOT equal
+		 * @return Bool\Type                                        whether the left operand is NOT equal
 		 *                                                          to the right operand
 		 */
 		public static function ne(Bool\Type $x, Data\Type $y) { // !=
@@ -198,7 +163,7 @@ namespace Saber\Data\Bool {
 		 * @static
 		 * @param Bool\Type $x                                      the left operand
 		 * @param Data\Type $y                                      the right operand
-		 * @return Data\Bool                                        whether the left operand is NOT identical
+		 * @return Bool\Type                                        whether the left operand is NOT identical
 		 *                                                          to the right operand
 		 */
 		public static function ni(Bool\Type $x, Data\Type $y) { // !==
@@ -216,7 +181,7 @@ namespace Saber\Data\Bool {
 		 * @static
 		 * @param Bool\Type $x                                      the left operand
 		 * @param Bool\Type $y                                      the right operand
-		 * @return Data\Bool                                        whether both operands are "true"
+		 * @return Bool\Type                                        whether both operands are "true"
 		 *
 		 * @see http://en.wikipedia.org/wiki/Truth_table#Logical_conjunction
 		 */
@@ -231,7 +196,7 @@ namespace Saber\Data\Bool {
 		 * @static
 		 * @param Bool\Type $x                                      the left operand
 		 * @param Bool\Type $y                                      the right operand
-		 * @return Data\Bool                                        whether the left operand implies
+		 * @return Bool\Type                                        whether the left operand implies
 		 *                                                          the right operand
 		 *
 		 * @see http://en.wikipedia.org/wiki/Truth_table#Logical_implication
@@ -247,7 +212,7 @@ namespace Saber\Data\Bool {
 		 * @static
 		 * @param Bool\Type $x                                      the left operand
 		 * @param Bool\Type $y                                      the right operand
-		 * @return Data\Bool                                        whether at least one operand is "false"
+		 * @return Bool\Type                                        whether at least one operand is "false"
 		 *
 		 * @see http://en.wikipedia.org/wiki/Truth_table#Logical_NAND
 		 */
@@ -262,7 +227,7 @@ namespace Saber\Data\Bool {
 		 * @static
 		 * @param Bool\Type $x                                      the left operand
 		 * @param Bool\Type $y                                      the right operand
-		 * @return Data\Bool                                        whether both operands are "false"
+		 * @return Bool\Type                                        whether both operands are "false"
 		 *
 		 * @see http://en.wikipedia.org/wiki/Truth_table#Logical_NOR
 		 */
@@ -276,7 +241,7 @@ namespace Saber\Data\Bool {
 		 * @access public
 		 * @static
 		 * @param Bool\Type $x                                      the operand
-		 * @return Data\Bool                                        whether the operand is "false"
+		 * @return Bool\Type                                        whether the operand is "false"
 		 *
 		 * @see http://en.wikipedia.org/wiki/Truth_table#Logical_negation
 		 */
@@ -291,7 +256,7 @@ namespace Saber\Data\Bool {
 		 * @static
 		 * @param Bool\Type $x                                      the left operand
 		 * @param Bool\Type $y                                      the right operand
-		 * @return Data\Bool                                        whether at least one operand is "true"
+		 * @return Bool\Type                                        whether at least one operand is "true"
 		 *
 		 * @see http://en.wikipedia.org/wiki/Truth_table#Logical_disjunction
 		 */
@@ -306,7 +271,7 @@ namespace Saber\Data\Bool {
 		 * @static
 		 * @param Bool\Type $x                                      the left operand
 		 * @param Bool\Type $y                                      the right operand
-		 * @return Data\Bool                                        whether only if both operands are
+		 * @return Bool\Type                                        whether only if both operands are
 		 *                                                          "true" or "false"
 		 *
 		 * @see http://en.wikipedia.org/wiki/Truth_table#Logical_equality
@@ -322,7 +287,7 @@ namespace Saber\Data\Bool {
 		 * @static
 		 * @param Bool\Type $x                                      the left operand
 		 * @param Bool\Type $y                                      the right operand
-		 * @return Data\Bool                                        whether only one operand is "true"
+		 * @return Bool\Type                                        whether only one operand is "true"
 		 *
 		 * @see http://en.wikipedia.org/wiki/Truth_table#Exclusive_disjunction
 		 */
@@ -341,7 +306,7 @@ namespace Saber\Data\Bool {
 		 * @static
 		 * @param Bool\Type $x                                      the left operand
 		 * @param Bool\Type $y                                      the right operand
-		 * @return Data\Int32                                       the order as to whether the left
+		 * @return Int32\Type                                       the order as to whether the left
 		 *                                                          operand is less than, equals to,
 		 *                                                          or greater than the right operand
 		 */
@@ -350,13 +315,13 @@ namespace Saber\Data\Bool {
 			$__y = $y->unbox();
 
 			if (!$__x && $__y) {
-				return Data\Int32::negative();
+				return Int32\Type::negative();
 			}
 			else if ($__x == $__y) {
-				return Data\Int32::zero();
+				return Int32\Type::zero();
 			}
 			else { // ($__x && !$__y)
-				return Data\Int32::one();
+				return Int32\Type::one();
 			}
 		}
 
@@ -367,7 +332,7 @@ namespace Saber\Data\Bool {
 		 * @static
 		 * @param Bool\Type $x                                      the left operand
 		 * @param Bool\Type $y                                      the right operand
-		 * @return Data\Bool                                        whether the left operand is greater
+		 * @return Bool\Type                                        whether the left operand is greater
 		 *                                                          than or equal to the right operand
 		 */
 		public static function ge(Bool\Type $x, Bool\Type $y) { // >=
@@ -381,7 +346,7 @@ namespace Saber\Data\Bool {
 		 * @static
 		 * @param Bool\Type $x                                      the left operand
 		 * @param Bool\Type $y                                      the right operand
-		 * @return Data\Bool                                        whether the left operand is greater
+		 * @return Bool\Type                                        whether the left operand is greater
 		 *                                                          than the right operand
 		 */
 		public static function gt(Bool\Type $x, Bool\Type $y) { // >
@@ -395,7 +360,7 @@ namespace Saber\Data\Bool {
 		 * @static
 		 * @param Bool\Type $x                                      the left operand
 		 * @param Bool\Type $y                                      the right operand
-		 * @return Data\Bool                                        whether the left operand is less than
+		 * @return Bool\Type                                        whether the left operand is less than
 		 *                                                          or equal to the right operand
 		 */
 		public static function le(Bool\Type $x, Bool\Type $y) { // <=
@@ -409,7 +374,7 @@ namespace Saber\Data\Bool {
 		 * @static
 		 * @param Bool\Type $x                                      the left operand
 		 * @param Bool\Type $y                                      the right operand
-		 * @return Data\Bool                                        whether the left operand is less than
+		 * @return Bool\Type                                        whether the left operand is less than
 		 *                                                          the right operand
 		 */
 		public static function lt(Bool\Type $x, Bool\Type $y) { // <
@@ -423,7 +388,7 @@ namespace Saber\Data\Bool {
 		 * @static
 		 * @param Bool\Type $x                                      the left operand
 		 * @param Bool\Type $y                                      the right operand
-		 * @return Data\Int32                                       the maximum value
+		 * @return Int32\Type                                       the maximum value
 		 */
 		public static function max(Bool\Type $x, Bool\Type $y) {
 			return (Bool\Module::compare($x, $y)->unbox() >= 0) ? $x : $y;
@@ -436,7 +401,7 @@ namespace Saber\Data\Bool {
 		 * @static
 		 * @param Bool\Type $x                                      the left operand
 		 * @param Bool\Type $y                                      the right operand
-		 * @return Data\Int32                                       the minimum value
+		 * @return Int32\Type                                       the minimum value
 		 */
 		public static function min(Bool\Type $x, Bool\Type $y) {
 			return (Bool\Module::compare($x, $y)->unbox() <= 0) ? $x : $y;
@@ -464,7 +429,7 @@ namespace Saber\Data\Bool {
 		 * @access public
 		 * @static
 		 * @param Bool\Type $x                                      the object to be evaluated
-		 * @return Data\String                                      the object's hash code
+		 * @return String\Type                                      the object's hash code
 		 */
 		public static function hashCode(Bool\Type $x) {
 			return String\Module::create($x->__toString());

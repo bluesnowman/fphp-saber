@@ -20,7 +20,7 @@ namespace Saber\Data\Option\Some {
 
 	use \Saber\Data;
 
-	class Type extends Data\Option\Type {
+	class Type extends Option\Type\Type {
 
 		#region Properties
 

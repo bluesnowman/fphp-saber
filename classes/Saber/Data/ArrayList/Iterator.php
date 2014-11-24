@@ -26,7 +26,7 @@ namespace Saber\Data\ArrayList {
 		 * This variable stores a reference to the collection being iterated.
 		 *
 		 * @access protected
-		 * @var Data\ArrayList
+		 * @var ArrayList\Type
 		 */
 		protected $collection;
 
@@ -34,7 +34,7 @@ namespace Saber\Data\ArrayList {
 		 * This variable stores the current position.
 		 *
 		 * @access protected
-		 * @var Data\Int32
+		 * @var Int32\Type
 		 */
 		protected $position;
 
@@ -46,7 +46,7 @@ namespace Saber\Data\ArrayList {
 		 */
 		public function __construct(ArrayList\Type $arrayList) {
 			$this->collection = $arrayList;
-			$this->position = Data\Int32::zero();
+			$this->position = Int32\Type::zero();
 		}
 
 		/**
@@ -83,7 +83,7 @@ namespace Saber\Data\ArrayList {
 		 * This method returns the current key.
 		 *
 		 * @access public
-		 * @return Data\Int32                                       the current key
+		 * @return Int32\Type                                       the current key
 		 */
 		public function key() {
 			return $this->position;
@@ -93,7 +93,7 @@ namespace Saber\Data\ArrayList {
 		 * This method causes the iterator to advance to the next object.
 		 *
 		 * @access public
-		 * @return Data\Bool                                        whether there are more objects
+		 * @return Bool\Type                                        whether there are more objects
 		 */
 		public function next() {
 			$this->position = $this->position->increment();
@@ -106,7 +106,7 @@ namespace Saber\Data\ArrayList {
 		 * @access public
 		 */
 		public function rewind() {
-			$this->position = Data\Int32::zero();
+			$this->position = Int32\Type::zero();
 		}
 
 		/**

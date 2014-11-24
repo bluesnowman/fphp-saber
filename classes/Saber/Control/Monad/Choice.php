@@ -71,7 +71,7 @@ namespace Saber\Control\Monad {
 		 *
 		 * @access public
 		 * @final
-		 * @return Data\Bool                                        whether a clause has executed
+		 * @return Bool\Type                                        whether a clause has executed
 		 */
 		public final function end() {
 			return Bool\Module::create($this->__end());

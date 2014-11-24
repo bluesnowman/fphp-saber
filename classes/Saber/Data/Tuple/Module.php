@@ -112,12 +112,12 @@ namespace Saber\Data\Tuple {
 		 * This method compares the specified object with the current object for order.
 		 *
 		 * @access public
-		 * @param Data\Tuple $that                                  the object to be compared
-		 * @return Data\Int32                                       whether the current object is less than,
+		 * @param Tuple\Type $that                                  the object to be compared
+		 * @return Int32\Type                                       whether the current object is less than,
 		 *                                                          equal to, or greater than the specified
 		 *                                                          object
 		 */
-		public function compareTo(Data\Tuple $that) {
+		public function compareTo(Tuple\Type $that) {
 			$x_length = $this->length();
 			$y_length = $this->length();
 
@@ -129,13 +129,13 @@ namespace Saber\Data\Tuple {
 			}
 
 			if ($x_length < $y_length) {
-				return Data\Int32::negative();
+				return Int32\Type::negative();
 			}
 			else if ($x_length == $y_length) {
-				return Data\Int32::zero();
+				return Int32\Type::zero();
 			}
 			else { // ($x_length > $y_length)
-				return Data\Int32::one();
+				return Int32\Type::one();
 			}
 		}
 
@@ -143,12 +143,12 @@ namespace Saber\Data\Tuple {
 		 * This method returns the element at the specified index.
 		 *
 		 * @access public
-		 * @param Data\Int32 $index                                 the index of the element
+		 * @param Int32\Type $index                                 the index of the element
 		 * @return Core\Any                                         the element at the specified index
 		 * @throws Throwable\OutOfBounds\Exception                  indicates the specified index
 		 *                                                          cannot be found
 		 */
-		public function element(Data\Int32 $index) {
+		public function element(Int32\Type $index) {
 			$i = $index->unbox();
 
 			if (($i < 0) || ($i >= $this->count)) {
@@ -176,7 +176,7 @@ namespace Saber\Data\Tuple {
 		 * This method returns the length of this array list.
 		 *
 		 * @access public
-		 * @return Data\Int32                                       the length of this array list
+		 * @return Int32\Type                                       the length of this array list
 		 */
 		public function length() {
 			return $this->count;
@@ -207,7 +207,7 @@ namespace Saber\Data\Tuple {
 				return Bool\Module::create($other == $this->length());
 			}, 2);
 
-			return Data\Tuple::create($this->value[1], $this->value[0]);
+			return Tuple\Type::create($this->value[1], $this->value[0]);
 		}
 
 		#endregion

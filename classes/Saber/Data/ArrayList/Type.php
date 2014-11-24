@@ -16,22 +16,24 @@
  * limitations under the License.
  */
 
-namespace Saber\Bool\Type {
+namespace Saber\Data\ArrayList {
 
 	use \Saber\Core;
+	use \Saber\Data;
+	use \Saber\Data\Collection;
+	use \Saber\Throwable;
 
-	class Type extends Data\Type implements Core\Type\Boxable {
-
-		#region Methods -> Implementation
+	class Type extends Collection\Type implements Core\Type\Boxable {
 
 		/**
 		 * This constructor initializes the class with the specified value.
 		 *
 		 * @access public
-		 * @param boolean $value                                    the value to be assigned
+		 * @param array $value                                      the value to be assigned
+		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
-		public function __construct($value) {
-			$this->value = (bool) $value;
+		public function __construct(array $value) {
+			$this->value = $value;
 		}
 
 		/**
@@ -41,7 +43,7 @@ namespace Saber\Bool\Type {
 		 * @return string                                           the object as a string
 		 */
 		public function __toString() {
-			return ($this->value) ? 'true' : 'false';
+			return (string) serialize($this->unbox());
 		}
 
 		/**
@@ -49,13 +51,20 @@ namespace Saber\Bool\Type {
 		 *
 		 * @access public
 		 * @param integer $depth                                    how many levels to unbox
-		 * @return mixed                                            the un-boxed value
+		 * @return array                                            the un-boxed value
 		 */
 		public function unbox($depth = 0) {
+			if ($depth > 0) {
+				$buffer = array();
+
+				foreach ($this->value as $x) {
+					$buffer[] = $x->unbox($depth - 1);
+				}
+
+				return $buffer;
+			}
 			return $this->value;
 		}
-
-		#endregion
 
 	}
 

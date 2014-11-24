@@ -7,7 +7,7 @@ A functional php library.
 
 * PHP 5.4+
 * The [mbstring](http://php.net/manual/en/book.mbstring.php) extension (only if dealing with different character sets).
-* The [gmp](http://php.net/manual/en/book.gmp.php) extension (only if using `Data\Integer`).
+* The [gmp](http://php.net/manual/en/book.gmp.php) extension (only if using `Integer\Type`).
 
 ### [Boxing](http://msdn.microsoft.com/en-us/library/yz2be5wk.aspx)
 
@@ -15,7 +15,7 @@ To "box" a PHP typed primitive or object, create an instance of the respective d
 class's `box` method.  This method enforces type safety.
 
 ````
-$object = Data\Int32::box(7);
+$object = Int32\Type::box(7);
 ````
 
 For better performance, type safety can be ignored by using the `create` method to create an instance
@@ -23,7 +23,7 @@ of the respective data type.  (It recommended to use this method instead of call
 directly.)
 
 ````
-$object = Data\Int32::create(7);
+$object = Int32\Type::create(7);
 ````
 
 To "unbox" a boxed object, call the `unbox` method on the respective class to get its value.
@@ -37,7 +37,7 @@ $value = $object->unbox();
 This library generally implements a fluent API; therefore, methods can be chained.
 
 ````
-$object = Data\Int32::box(7)->increment()->decrement();
+$object = Int32\Type::box(7)->increment()->decrement();
 ````
 
 ### Methods
@@ -46,14 +46,14 @@ In general, methods that are NOT preceded by two underscores will return a boxed
 exception to this rule is the `unbox` method.
 
 ````
-$object = Data\Int32::box(7)->increment();
+$object = Int32\Type::box(7)->increment();
 ````
 
 Methods that are preceded by two underscores will return the unboxed value, which is typically
 a PHP typed primitive or object.  This is made possible via PHP's magical `__call` method.
 
 ````
-$value = Data\Int32::box(7)->__increment();
+$value = Int32\Type::box(7)->__increment();
 ````
 
 ### Variables
@@ -80,22 +80,22 @@ Core\Any function(Core\Any $c, Core\Any $x)
 A `$predicate` function is used to find the result of performing a Boolean evaluation.
 
 ````
-Data\Bool function(Core\Any $x)
-Data\Bool function(Core\Any $x, Data\Int32 $i)
+Bool\Type function(Core\Any $x)
+Bool\Type function(Core\Any $x, Int32\Type $i)
 ````
 
 A `$procedure` function is used to perform an operation that does NOT return a value.
 
 ````
 Data\Unit function(Core\Any $x)
-Data\Unit function(Core\Any $x, Data\Int32 $i)
+Data\Unit function(Core\Any $x, Int32\Type $i)
 ````
 
 A `$subroutine` function is used to perform an operation that does return a value.
 
 ````
 Core\Any function(Core\Any $x)
-Core\Any function(Core\Any $x, Data\Int32 $i)
+Core\Any function(Core\Any $x, Int32\Type $i)
 ````
 
 ### Choices
@@ -104,14 +104,14 @@ Objects can be evaluated against each other using the `when` clause.  A `when` c
 satisfied when both `x` and `y` match (i.e. when `$x->equals($y)` evaluates to `true`).
 
 ````
-$x = Data\Int32::box(8);
-$y = Data\Int32::box(8);
+$x = Int32\Type::box(8);
+$y = Int32\Type::box(8);
 
 Control\Monad::choice($x)
-	->when($y, function(Data\Int32 $x) {
+	->when($y, function(Int32\Type $x) {
 		// passes, do something
 	})
-	->otherwise(function(Data\Int32 $x) {
+	->otherwise(function(Int32\Type $x) {
 		// skipped
 	})
 ->end();
@@ -122,14 +122,14 @@ clause is satisfied when both `x` and `y` do NOT match (i.e. when `$x->equals($y
 to `false`).
 
 ````
-$x = Data\Int32::box(8);
-$y = Data\Int32::box(7);
+$x = Int32\Type::box(8);
+$y = Int32\Type::box(7);
 
 Control\Monad::choice($x)
-	->unless($y, function(Data\Int32 $x) {
+	->unless($y, function(Int32\Type $x) {
 		// passes, do something
 	})
-	->otherwise(function(Data\Int32 $x) {
+	->otherwise(function(Int32\Type $x) {
 		// skipped
 	})
 ->end();
@@ -148,26 +148,26 @@ Control\Monad::choice($x)
         + Throwable\UnexpectedValue\Exception
         + Throwable\UnimplementedMethod\Exception
     + Collection\Type
-      + Data\ArrayList
-        + Data\ArrayList\Iterator
-      + Data\LinkedList
-        + Data\LinkedList\Iterator
-      + Data\Option
-        + Data\Option\Iterator
-      + Data\String
-        + Data\String\Iterator
-    + Data\Tuple
+      + ArrayList\Type
+        + ArrayList\Type\Iterator
+      + LinkedList\Type
+        + LinkedList\Type\Iterator
+      + Option\Type
+        + Option\Type\Iterator
+      + String\Type
+        + String\Type\Iterator
+    + Tuple\Type
     + Data\Wrapper
   + Core\AnyVal
-    + Data\Bool
-    + Data\Char
+    + Bool\Type
+    + Char\Type
     + Num\Type
       + Floating\Type
-        + Data\Double
-        + Data\Float
+        + Double\Type
+        + Float\Type
       + Integral\Type
-        + Data\Int32
-        + Data\Integer
+        + Int32\Type
+        + Integer\Type
     + Data\Unit
 + Core\AnyCtrl
   + Control\Monad

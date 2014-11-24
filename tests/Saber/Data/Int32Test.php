@@ -47,7 +47,7 @@ namespace Saber\Data {
 		 * @dataProvider dataAbs
 		 */
 		public function testAbs($provided, $expected) {
-			$p0 = Data\Int32::box($provided[0])->abs();
+			$p0 = Int32\Type::box($provided[0])->abs();
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
@@ -80,7 +80,7 @@ namespace Saber\Data {
 		 * @dataProvider dataAdd
 		 */
 		public function testAdd($provided, $expected) {
-			$p0 = Data\Int32::box($provided[0])->add(Data\Int32::box($provided[1]));
+			$p0 = Int32\Type::box($provided[0])->add(Int32\Type::box($provided[1]));
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
@@ -107,8 +107,8 @@ namespace Saber\Data {
 		 * @dataProvider dataBox
 		 */
 		public function testBox($provided, $expected) {
-			$p0 = Data\Int32::box($provided[0]);
-			$e0 = new Data\Int32($expected[0]);
+			$p0 = Int32\Type::box($provided[0]);
+			$e0 = new Int32\Type($expected[0]);
 
 			$this->assertInstanceOf('\\Saber\\Core\\AnyVal', $p0);
 			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
@@ -127,18 +127,18 @@ namespace Saber\Data {
 		 * This method tests the ability to make a choice.
 		 */
 		public function testChoice() {
-			$x = Data\Int32::box(3);
+			$x = Int32\Type::box(3);
 
 			$p0 = $x->choice();
 
 			$this->assertInstanceOf('\\Saber\\Control\\Monad\\Choice', $p0);
 
-			$p1 = $x->choice()->when(Data\Int32::box(3), function(Data\Int32 $x) {})->end()->unbox();
+			$p1 = $x->choice()->when(Int32\Type::box(3), function(Int32\Type $x) {})->end()->unbox();
 
 			$this->assertInternalType('boolean', $p1);
 			$this->assertTrue($p1);
 
-			$p2 = $x->choice()->when(Data\Int32::box(-3), function(Data\Int32 $x) {})->end()->unbox();
+			$p2 = $x->choice()->when(Int32\Type::box(-3), function(Int32\Type $x) {})->end()->unbox();
 
 			$this->assertInternalType('boolean', $p2);
 			$this->assertFalse($p2);
@@ -173,7 +173,7 @@ namespace Saber\Data {
 		 * @dataProvider dataCompareTo
 		 */
 		public function testCompareTo($provided, $expected) {
-			$p0 = Data\Int32::box($provided[0])->compareTo(Data\Int32::box($provided[1]));
+			$p0 = Int32\Type::box($provided[0])->compareTo(Int32\Type::box($provided[1]));
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
@@ -203,7 +203,7 @@ namespace Saber\Data {
 		 * @dataProvider dataDecrement
 		 */
 		public function testDecrement($provided, $expected) {
-			$p0 = Data\Int32::box($provided[0])->decrement();
+			$p0 = Int32\Type::box($provided[0])->decrement();
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
@@ -238,7 +238,7 @@ namespace Saber\Data {
 		 * @dataProvider dataDivide
 		 */
 		public function testDivide($provided, $expected) {
-			$p0 = Data\Int32::box($provided[0])->divide(Data\Int32::box($provided[1]));
+			$p0 = Int32\Type::box($provided[0])->divide(Int32\Type::box($provided[1]));
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
@@ -273,7 +273,7 @@ namespace Saber\Data {
 		 * @dataProvider dataEven
 		 */
 		public function testEven($provided, $expected) {
-			$p0 = Data\Int32::box($provided[0])->even();
+			$p0 = Int32\Type::box($provided[0])->even();
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
@@ -299,7 +299,7 @@ namespace Saber\Data {
 		 * @dataProvider dataGCD
 		 */
 		public function testGCD($provided, $expected) {
-			$p0 = Data\Int32::box($provided[0])->gcd(Data\Int32::box($provided[1]));
+			$p0 = Int32\Type::box($provided[0])->gcd(Int32\Type::box($provided[1]));
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
@@ -330,7 +330,7 @@ namespace Saber\Data {
 		 * @dataProvider dataIncrement
 		 */
 		public function testIncrement($provided, $expected) {
-			$p0 = Data\Int32::box($provided[0])->increment();
+			$p0 = Int32\Type::box($provided[0])->increment();
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
@@ -370,7 +370,7 @@ namespace Saber\Data {
 		 * @dataProvider dataModulo
 		 */
 		public function testModulo($provided, $expected) {
-			$p0 = Data\Int32::box($provided[0])->modulo(Data\Int32::box($provided[1]));
+			$p0 = Int32\Type::box($provided[0])->modulo(Int32\Type::box($provided[1]));
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
@@ -428,7 +428,7 @@ namespace Saber\Data {
 		 * @dataProvider dataMultiply
 		 */
 		public function testMultiply($provided, $expected) {
-			$p0 = Data\Int32::box($provided[0])->multiply(Data\Int32::box($provided[1]));
+			$p0 = Int32\Type::box($provided[0])->multiply(Int32\Type::box($provided[1]));
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
@@ -459,7 +459,7 @@ namespace Saber\Data {
 		 * @dataProvider dataNegate
 		 */
 		public function testNegate($provided, $expected) {
-			$p0 = Data\Int32::box($provided[0])->negate();
+			$p0 = Int32\Type::box($provided[0])->negate();
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
@@ -494,7 +494,7 @@ namespace Saber\Data {
 		 * @dataProvider dataOdd
 		 */
 		public function testOdd($provided, $expected) {
-			$p0 = Data\Int32::box($provided[0])->odd();
+			$p0 = Int32\Type::box($provided[0])->odd();
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
@@ -521,7 +521,7 @@ namespace Saber\Data {
 		 * @dataProvider dataShow
 		 */
 		public function testShow($provided, $expected) {
-			$p0 = Data\Int32::box($provided[0]);
+			$p0 = Int32\Type::box($provided[0]);
 			$e0 = $expected[0];
 
 			$this->expectOutputString($e0);
@@ -558,7 +558,7 @@ namespace Saber\Data {
 		 * @dataProvider dataSubtract
 		 */
 		public function testSubtract($provided, $expected) {
-			$p0 = Data\Int32::box($provided[0])->subtract(Data\Int32::box($provided[1]));
+			$p0 = Int32\Type::box($provided[0])->subtract(Int32\Type::box($provided[1]));
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
@@ -587,7 +587,7 @@ namespace Saber\Data {
 		 * @dataProvider dataToString
 		 */
 		public function testToString($provided, $expected) {
-			$p0 = Data\Int32::box($provided[0])->__toString();
+			$p0 = Int32\Type::box($provided[0])->__toString();
 			$e0 = $expected[0];
 
 			$this->assertInternalType('string', $p0);

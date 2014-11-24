@@ -22,7 +22,7 @@ namespace Saber\Data\LinkedList\Nil {
 	use \Saber\Data;
 	use \Saber\Throwable;
 
-	class Type extends Data\LinkedList\Type {
+	class Type extends LinkedList\Type\Type {
 
 		#region Methods -> Object Oriented -> Universal
 
@@ -31,15 +31,15 @@ namespace Saber\Data\LinkedList\Nil {
 		 *
 		 * @access public
 		 * @param LinkedList\Type $that                             the object to be compared
-		 * @return Data\Int32                                       whether the current object is less than,
+		 * @return Int32\Type                                       whether the current object is less than,
 		 *                                                          equal to, or greater than the specified
 		 *                                                          object
 		 */
 		public function compareTo(LinkedList\Type $that) {
-			if ($that instanceof Data\LinkedList\Nil) {
-				return Data\Int32::zero();
+			if ($that instanceof LinkedList\Type\Nil) {
+				return Int32\Type::zero();
 			}
-			return Data\Int32::negative();
+			return Int32\Type::negative();
 		}
 
 		/**
@@ -47,7 +47,7 @@ namespace Saber\Data\LinkedList\Nil {
 		 *
 		 * @access public
 		 * @param Core\Any $that                                    the object to be evaluated
-		 * @return Data\Bool                                        whether the specified object is equal
+		 * @return Bool\Type                                        whether the specified object is equal
 		 *                                                          to the current object
 		 */
 		public function equals(Core\Any $that) {
@@ -69,7 +69,7 @@ namespace Saber\Data\LinkedList\Nil {
 		 *
 		 * @access public
 		 * @param Core\Any $that                                    the object to be evaluated
-		 * @return Data\Bool                                        whether the specified object is identical
+		 * @return Bool\Type                                        whether the specified object is identical
 		 *                                                          to the current object
 		 */
 		public function identical(Core\Any $that) {

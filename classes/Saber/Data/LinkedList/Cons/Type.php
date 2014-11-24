@@ -21,7 +21,7 @@ namespace Saber\Data\LinkedList\Cons {
 	use \Saber\Core;
 	use \Saber\Data;
 
-	class Type extends Data\LinkedList\Type {
+	class Type extends LinkedList\Type\Type {
 
 		#region Properties
 
@@ -29,7 +29,7 @@ namespace Saber\Data\LinkedList\Cons {
 		 * This variable stores the tail of this linked list.
 		 *
 		 * @access protected
-		 * @var Data\LinkedList
+		 * @var LinkedList\Type
 		 */
 		protected $tail;
 
@@ -59,7 +59,7 @@ namespace Saber\Data\LinkedList\Cons {
 		 *
 		 * @access public
 		 * @param LinkedList\Type $that                             the object to be compared
-		 * @return Data\Int32                                       whether the current object is less than,
+		 * @return Int32\Type                                       whether the current object is less than,
 		 *                                                          equal to, or greater than the specified
 		 *                                                          object
 		 */
@@ -78,13 +78,13 @@ namespace Saber\Data\LinkedList\Cons {
 			$y_length = $ys->length();
 
 			if ($x_length < $y_length) {
-				return Data\Int32::negative();
+				return Int32\Type::negative();
 			}
 			else if ($x_length == $y_length) {
-				return Data\Int32::zero();
+				return Int32\Type::zero();
 			}
 			else { // ($x_length > $y_length)
-				return Data\Int32::one();
+				return Int32\Type::one();
 			}
 		}
 
@@ -93,7 +93,7 @@ namespace Saber\Data\LinkedList\Cons {
 		 *
 		 * @access public
 		 * @param Core\Any $that                                    the object to be evaluated
-		 * @return Data\Bool                                        whether the specified object is equal
+		 * @return Bool\Type                                        whether the specified object is equal
 		 *                                                          to the current object
 		 */
 		public function equals(Core\Any $that) {
@@ -119,7 +119,7 @@ namespace Saber\Data\LinkedList\Cons {
 		 *
 		 * @access public
 		 * @param Core\Any $that                                    the object to be evaluated
-		 * @return Data\Bool                                        whether the specified object is identical
+		 * @return Bool\Type                                        whether the specified object is identical
 		 *                                                          to the current object
 		 */
 		public function identical(Core\Any $that) {
@@ -133,7 +133,7 @@ namespace Saber\Data\LinkedList\Cons {
 		 * This method returns the tail of this linked list.
 		 *
 		 * @access public
-		 * @return Data\LinkedList                                  the tail of this linked list
+		 * @return LinkedList\Type                                  the tail of this linked list
 		 */
 		public function tail() {
 			return $this->tail;

@@ -53,7 +53,7 @@ namespace Saber\Data {
 			$x = String\Module::box($provided[0]);
 			$y = Char\Module::box($provided[1]);
 
-			$p0 = $x->all(function(Core\Any $x, Data\Int32 $i) use ($y) {
+			$p0 = $x->all(function(Core\Any $x, Int32\Type $i) use ($y) {
 				return $x->equals($y);
 			});
 			$e0 = $expected[0];
@@ -89,7 +89,7 @@ namespace Saber\Data {
 			$x = String\Module::box($provided[0]);
 			$y = Char\Module::box($provided[1]);
 
-			$p0 = $x->any(function(Core\Any $x, Data\Int32 $i) use ($y) {
+			$p0 = $x->any(function(Core\Any $x, Int32\Type $i) use ($y) {
 				return $x->equals($y);
 			});
 			$e0 = $expected[0];
@@ -144,7 +144,7 @@ namespace Saber\Data {
 		 */
 		public function testBox($provided, $expected) {
 			$p0 = String\Module::box($provided[0]);
-			$e0 = new Data\String($expected[0]);
+			$e0 = new String\Type($expected[0]);
 
 			$this->assertInstanceOf('\\Saber\\Core\\AnyRef', $p0);
 			$this->assertInstanceOf('\\Saber\\Data\\String', $p0);
@@ -231,7 +231,7 @@ namespace Saber\Data {
 		 * @dataProvider dataReplicate
 		 */
 		public function testReplicate($provided, $expected) {
-			$p0 = String\Module::replicate(Data\Int32::box($provided[0]), Char\Module::box($provided[1]));
+			$p0 = String\Module::replicate(Int32\Type::box($provided[0]), Char\Module::box($provided[1]));
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\String', $p0);

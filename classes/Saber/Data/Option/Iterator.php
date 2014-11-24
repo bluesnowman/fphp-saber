@@ -26,7 +26,7 @@ namespace Saber\Data\Option {
 		 * This variable stores a reference to the collection being iterated.
 		 *
 		 * @access protected
-		 * @var Data\Option
+		 * @var Option\Type
 		 */
 		protected $collection;
 
@@ -34,7 +34,7 @@ namespace Saber\Data\Option {
 		 * This variable stores the current position.
 		 *
 		 * @access protected
-		 * @var Data\Int32
+		 * @var Int32\Type
 		 */
 		protected $position;
 
@@ -42,11 +42,11 @@ namespace Saber\Data\Option {
 		 * This constructor initializes this class with the specified collection.
 		 *
 		 * @access public
-		 * @param Data\Option $option                               the collection to be iterated
+		 * @param Option\Type $option                               the collection to be iterated
 		 */
-		public function __construct(Data\Option $option) {
+		public function __construct(Option\Type $option) {
 			$this->collection = $option;
-			$this->position = Data\Int32::zero();
+			$this->position = Int32\Type::zero();
 		}
 
 		/**
@@ -83,7 +83,7 @@ namespace Saber\Data\Option {
 		 * This method returns the current key.
 		 *
 		 * @access public
-		 * @return Data\Int32                                       the current key
+		 * @return Int32\Type                                       the current key
 		 */
 		public function key() {
 			return $this->position;
@@ -93,7 +93,7 @@ namespace Saber\Data\Option {
 		 * This method causes the iterator to advance to the next object.
 		 *
 		 * @access public
-		 * @return Data\Bool                                        whether there are more objects
+		 * @return Bool\Type                                        whether there are more objects
 		 */
 		public function next() {
 			$this->position = $this->position->increment();
@@ -106,7 +106,7 @@ namespace Saber\Data\Option {
 		 * @access public
 		 */
 		public function rewind() {
-			$this->position = Data\Int32::zero();
+			$this->position = Int32\Type::zero();
 		}
 
 		/**

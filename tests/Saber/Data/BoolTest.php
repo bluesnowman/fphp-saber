@@ -87,7 +87,7 @@ namespace Saber\Data {
 		 */
 		public function testBox($provided, $expected) {
 			$p0 = Bool\Module::box($provided[0]);
-			$e0 = new Data\Bool($expected[0]);
+			$e0 = new Bool\Type($expected[0]);
 
 			//$this->assertInstanceOf('\\Saber\\Core\\AnyVal', $p0);
 			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);

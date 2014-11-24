@@ -102,7 +102,7 @@ namespace Saber\Core\AnyErr {
 		 *
 		 * @access public
 		 * @param Core\AnyErr $that                                 the object to be compared
-		 * @return Data\Int32                                       whether the current object is less than,
+		 * @return Int32\Type                                       whether the current object is less than,
 		 *                                                          equal to, or greater than the specified
 		 *                                                          object
 		 */
@@ -111,13 +111,13 @@ namespace Saber\Core\AnyErr {
 			$y = $that->getCode();
 
 			if ($x < $y) {
-				return Data\Int32::negative();
+				return Int32\Type::negative();
 			}
 			else if ($x == $y) {
-				return Data\Int32::zero();
+				return Int32\Type::zero();
 			}
 			else { // ($x > $y)
-				return Data\Int32::one();
+				return Int32\Type::one();
 			}
 		}
 

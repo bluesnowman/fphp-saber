@@ -167,7 +167,7 @@ namespace Saber\Core\Any {
 		 *
 		 * @access public
 		 * @final
-		 * @return Data\String                                      the object's hash code
+		 * @return String\Type                                      the object's hash code
 		 */
 		public final function hashCode() {
 			return String\Module::create($this->__hashCode());
@@ -211,7 +211,7 @@ namespace Saber\Core\Any {
 		 *
 		 * @access public
 		 * @final
-		 * @return Data\String                                      the object as a string
+		 * @return String\Type                                      the object as a string
 		 */
 		public final function toString() {
 			return String\Module::create($this->__toString());
@@ -222,7 +222,7 @@ namespace Saber\Core\Any {
 		 *
 		 * @access public
 		 * @final
-		 * @return Data\String                                      the object's class type
+		 * @return String\Type                                      the object's class type
 		 */
 		public final function typeOf() {
 			return String\Module::create($this->__typeOf());

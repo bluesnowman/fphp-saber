@@ -18,45 +18,16 @@
 
 namespace Saber\Data\Float {
 
-	use \Saber\Control;
 	use \Saber\Data;
+	use \Saber\Data\Bool;
+	use \Saber\Data\Double;
+	use \Saber\Data\Float;
+	use \Saber\Data\Floating;
+	use \Saber\Data\Int32;
+	use \Saber\Data\Integer;
+	use \Saber\Data\String;
 
-	class Module extends Floating\Type {
-
-		#region Methods -> Implementation
-
-		/**
-		 * This constructor initializes the class with the specified value.
-		 *
-		 * @access public
-		 * @param double $value                                     the value to be assigned
-		 */
-		public function __construct($value) {
-			$this->value = (double) $value;
-		}
-
-		/**
-		 * This method returns the object as a string.
-		 *
-		 * @access public
-		 * @return string                                           the object as a string
-		 */
-		public function __toString() {
-			return sprintf('%F', $this->value);
-		}
-
-		/**
-		 * This method returns the value contained within the boxed object.
-		 *
-		 * @access public
-		 * @param integer $depth                                    how many levels to unbox
-		 * @return mixed                                            the un-boxed value
-		 */
-		public function unbox($depth = 0) {
-			return $this->value;
-		}
-
-		#endregion
+	class Module extends Floating\Module {
 
 		#region Methods -> Instantiation
 
@@ -67,7 +38,7 @@ namespace Saber\Data\Float {
 		 * @access public
 		 * @static
 		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return Data\Type                                        the boxed object
+		 * @return Float\Type                                       the boxed object
 		 */
 		public static function box($value/*...*/) {
 			return new Float\Type($value);
@@ -80,7 +51,7 @@ namespace Saber\Data\Float {
 		 * @access public
 		 * @static
 		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return Data\Type                                        the boxed object
+		 * @return Float\Type                                       the boxed object
 		 */
 		public static function create($value/*...*/) {
 			return new Float\Type($value);
@@ -500,34 +471,6 @@ namespace Saber\Data\Float {
 		 */
 		public static function min(Float\Type $x, Float\Type $y) {
 			return (Float\Module::compare($x, $y)->unbox() <= 0) ? $x : $y;
-		}
-
-		#endregion
-
-		#region Methods -> Other
-
-		/**
-		 * This method returns a choice block.
-		 *
-		 * @access public
-		 * @static
-		 * @param Int32\Type $x                                     the object to be evaluated
-		 * @return Control\Monad\Choice                             the choice monad
-		 */
-		public static function choice(Int32\Type $x) {
-			return Control\Monad::choice($x);
-		}
-
-		/**
-		 * This method returns the object's hash code.
-		 *
-		 * @access public
-		 * @static
-		 * @param Float\Type $x                                     the object to be evaluated
-		 * @return String\Type                                      the object's hash code
-		 */
-		public static function hashCode(Float\Type $x) {
-			return String\Module::create($x->__toString());
 		}
 
 		#endregion

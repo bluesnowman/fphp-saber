@@ -18,6 +18,7 @@
 
 namespace Saber\Core {
 
+	use \Saber\Control;
 	use \Saber\Core;
 	use \Saber\Data\String;
 	use \Saber\Throwable;
@@ -58,6 +59,18 @@ namespace Saber\Core {
 		#endregion
 
 		#region Methods -> Interface
+
+		/**
+		 * This method returns a choice block.
+		 *
+		 * @access public
+		 * @static
+		 * @param Core\Type $x                                      the object to be evaluated
+		 * @return Control\Monad\Choice                             the choice monad
+		 */
+		public static function choice(Core\Type $x) {
+			return Control\Monad::choice($x);
+		}
 
 		/**
 		 * This method returns the object's hash code.

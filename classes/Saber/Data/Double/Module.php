@@ -18,7 +18,6 @@
 
 namespace Saber\Data\Double {
 
-	use \Saber\Control;
 	use \Saber\Data;
 	use \Saber\Data\Bool;
 	use \Saber\Data\Double;
@@ -39,7 +38,7 @@ namespace Saber\Data\Double {
 		 * @access public
 		 * @static
 		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return Data\Type                                        the boxed object
+		 * @return Double\Type                                      the boxed object
 		 */
 		public static function box($value/*...*/) {
 			return new Double\Type($value);
@@ -52,7 +51,7 @@ namespace Saber\Data\Double {
 		 * @access public
 		 * @static
 		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return Data\Type                                        the boxed object
+		 * @return Double\Type                                      the boxed object
 		 */
 		public static function create($value/*...*/) {
 			return new Double\Type($value);
@@ -472,34 +471,6 @@ namespace Saber\Data\Double {
 		 */
 		public static function min(Double\Type $x, Double\Type $y) {
 			return (Double\Module::compare($x, $y)->unbox() <= 0) ? $x : $y;
-		}
-
-		#endregion
-
-		#region Methods -> Other
-
-		/**
-		 * This method returns a choice block.
-		 *
-		 * @access public
-		 * @static
-		 * @param Int32\Type $x                                     the object to be evaluated
-		 * @return Control\Monad\Choice                             the choice monad
-		 */
-		public static function choice(Int32\Type $x) {
-			return Control\Monad::choice($x);
-		}
-
-		/**
-		 * This method returns the object's hash code.
-		 *
-		 * @access public
-		 * @static
-		 * @param Double\Type $x                                    the object to be evaluated
-		 * @return String\Type                                      the object's hash code
-		 */
-		public static function hashCode(Double\Type $x) {
-			return String\Module::create($x->__toString());
 		}
 
 		#endregion

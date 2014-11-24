@@ -16,13 +16,19 @@
  * limitations under the License.
  */
 
-namespace Saber\Data {
+namespace Saber\Data\ArrayList {
 
 	use \Saber\Core;
+	use \Saber\Data;
 	use \Saber\Data\ArrayList;
+	use \Saber\Data\Bool;
+	use \Saber\Data\Collection;
+	use \Saber\Data\Int32;
+	use \Saber\Data\LinkedList;
+	use \Saber\Data\Option;
 	use \Saber\Throwable;
 
-	class ArrayList extends Collection\Type {
+	class Module extends Collection\Module {
 
 		#region Methods -> Boxing/Creation
 
@@ -33,7 +39,7 @@ namespace Saber\Data {
 		 * @access public
 		 * @static
 		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return Data\Type                                        the boxed object
+		 * @return ArrayList\Type                                   the boxed object
 		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
 		public static function box($value/*...*/) {
@@ -60,7 +66,7 @@ namespace Saber\Data {
 		 * This method creates a list of "n" length with every element set to the given object.
 		 *
 		 * @access public
-		 * @param Int32 $n                                          the number of times to replicate
+		 * @param Int32\Type $n                                     the number of times to replicate
 		 * @param Data\Type $y                                      the object to be replicated
 		 * @return ArrayList\Type                                   the collection
 		 */

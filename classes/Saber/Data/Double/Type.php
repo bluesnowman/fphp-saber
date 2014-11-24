@@ -18,10 +18,9 @@
 
 namespace Saber\Data\Double {
 
-	use \Saber\Core;
-	use \Saber\Data;
+	use \Saber\Data\Floating;
 
-	class Type extends Data\Type implements Core\Type\Boxable {
+	class Type extends Floating\Type {
 
 		#region Methods -> Implementation
 

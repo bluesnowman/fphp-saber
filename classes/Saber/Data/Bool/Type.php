@@ -107,7 +107,7 @@ namespace Saber\Data\Bool {
 		 * @access public
 		 * @final
 		 * @param integer $depth                                    how many levels to unbox
-		 * @return mixed                                            the un-boxed value
+		 * @return boolean                                          the un-boxed value
 		 */
 		public final function unbox($depth = 0) {
 			return $this->value;

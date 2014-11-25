@@ -117,7 +117,7 @@ namespace Saber\Data\Char {
 		 *
 		 * @access public
 		 * @param integer $depth                                    how many levels to unbox
-		 * @return mixed                                            the un-boxed value
+		 * @return char                                             the un-boxed value
 		 */
 		public function unbox($depth = 0) {
 			return $this->value;

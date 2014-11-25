@@ -105,7 +105,7 @@ namespace Saber\Data\Double {
 		 *
 		 * @access public
 		 * @param integer $depth                                    how many levels to unbox
-		 * @return mixed                                            the un-boxed value
+		 * @return double                                           the un-boxed value
 		 */
 		public function unbox($depth = 0) {
 			return $this->value;

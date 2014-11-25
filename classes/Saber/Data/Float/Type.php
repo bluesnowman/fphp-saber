@@ -105,7 +105,7 @@ namespace Saber\Data\Float {
 		 *
 		 * @access public
 		 * @param integer $depth                                    how many levels to unbox
-		 * @return mixed                                            the un-boxed value
+		 * @return float                                            the un-boxed value
 		 */
 		public function unbox($depth = 0) {
 			return $this->value;

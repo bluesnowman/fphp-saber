@@ -101,18 +101,6 @@ namespace Saber\Data\Char {
 			return Int32\Module::create(ord($x->unbox()));
 		}
 
-		/**
-		 * This method returns the value as a String.
-		 *
-		 * @access public
-		 * @static
-		 * @param Char\Type $x                                      the object to be converted
-		 * @return String\Type                                      the value as a String
-		 */
-		public static function toString(Char\Type $x) {
-			return String\Module::create($x->__toString());
-		}
-
 		#endregion
 
 		#region Methods -> Equality
@@ -128,8 +116,8 @@ namespace Saber\Data\Char {
 		 *                                                          to the right operand
 		 */
 		public static function eq(Char\Type $x, Data\Type $y) { // ==
-			$class = get_class($x);
-			if ($y instanceof $class) {
+			$type = $x->__typeOf();
+			if ($y instanceof $type) {
 				return Bool\Module::create($x->unbox() == $y->unbox());
 			}
 			return Bool\Module::false();
@@ -146,7 +134,7 @@ namespace Saber\Data\Char {
 		 *                                                          to the right operand
 		 */
 		public static function id(Char\Type $x, Data\Type $y) { // ===
-			if (get_class($x) === get_class($y)) {
+			if ($x->__typeOf() === $y->__typeOf()) {
 				return Bool\Module::create($x->unbox() === $y->unbox());
 			}
 			return Bool\Module::false();
@@ -290,22 +278,6 @@ namespace Saber\Data\Char {
 		 */
 		public static function min(Char\Type $x, Char\Type $y) {
 			return (Char\Module::compare($x, $y)->unbox() <= 0) ? $x : $y;
-		}
-
-		#endregion
-
-		#region Methods -> Other
-
-		/**
-		 * This method returns a choice block.
-		 *
-		 * @access public
-		 * @static
-		 * @param Char\Type $x                                      the object to be evaluated
-		 * @return Control\Monad\Choice                             the choice monad
-		 */
-		public static function choice(Char\Type $x) {
-			return Control\Monad::choice($x);
 		}
 
 		#endregion

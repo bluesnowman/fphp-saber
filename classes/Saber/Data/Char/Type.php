@@ -20,8 +20,9 @@ namespace Saber\Data\Char {
 
 	use \Saber\Core;
 	use \Saber\Data;
+	use \Saber\Throwable;
 
-	class Type extends Data\Type implements Core\Type\Boxable {
+	final class Type extends Data\Type implements Core\Type\Boxable {
 
 		#region Constants
 
@@ -35,7 +36,45 @@ namespace Saber\Data\Char {
 
 		#endregion
 
-		#region Methods -> Implementation
+		#region Methods -> Native Oriented
+
+		/**
+		 * This method is called when a method is not defined and will attempt to remap
+		 * the call.  Particularly, this method provides a shortcut means of unboxing a method's
+		 * result when the method name is preceded by a double-underscore.
+		 *
+		 * @access public
+		 * @final
+		 * @param string $method                                    the method being called
+		 * @param array $args                                       the arguments associated with the call
+		 * @return mixed                                            the un-boxed value
+		 * @throws Throwable\UnimplementedMethod\Exception          indicates that the class has not
+		 *                                                          implemented the called method
+		 */
+		public final function __call($method, $args) {
+			$module = '\\Saber\\Data\\Char\\Module';
+			if (preg_match('/^__[a-z_][a-z0-9_]*$/i', $method)) {
+				$method = substr($method, 2);
+				if (!in_array($method, array('choice', 'unbox'))) {
+					if (method_exists($module, $method)) {
+						array_unshift($args, $this);
+						$result = call_user_func_array(array($module, $method), $args);
+						if ($result instanceof Core\Type\Boxable) {
+							return $result->unbox();
+						}
+						return $result;
+					}
+				}
+			}
+			else {
+				if (method_exists($module, $method)) {
+					array_unshift($args, $this);
+					$result = call_user_func_array(array($module, $method), $args);
+					return $result;
+				}
+			}
+			throw new Throwable\UnimplementedMethod\Exception('Unable to call method. No method ":method" exists in module ":module".', array(':module' => $module, ':method' => $method));
+		}
 
 		/**
 		 * This constructor initializes the class with the specified value.
@@ -48,14 +87,30 @@ namespace Saber\Data\Char {
 		}
 
 		/**
+		 * This method returns the object's hash code.
+		 *
+		 * @access public
+		 * @final
+		 * @return string                                           the object's hash code
+		 */
+		public final function __hashCode() {
+			return $this->__toString();
+		}
+
+		/**
 		 * This method returns the object as a string.
 		 *
 		 * @access public
+		 * @final
 		 * @return string                                           the object as a string
 		 */
-		public function __toString() {
+		public final function __toString() {
 			return $this->value;
 		}
+
+		#endregion
+
+		#region Methods -> Object Oriented
 
 		/**
 		 * This method returns the value contained within the boxed object.

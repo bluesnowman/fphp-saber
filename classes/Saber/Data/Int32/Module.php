@@ -378,6 +378,16 @@ namespace Saber\Data\Int32 {
 		 *                                                          or greater than the right operand
 		 */
 		public static function compare(Int32\Type $x, Int32\Type $y) {
+			if (($x === null) && ($y !== null)) {
+				return Int32\Module::negative();
+			}
+			if (($x === null) && ($y === null)) {
+				return Int32\Module::zero();
+			}
+			if (($x !== null) && ($y === null)) {
+				return Int32\Module::one();
+			}
+
 			$__x = $x->unbox();
 			$__y = $y->unbox();
 

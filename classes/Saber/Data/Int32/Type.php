@@ -104,10 +104,11 @@ namespace Saber\Data\Int32 {
 		 * This method returns the value contained within the boxed object.
 		 *
 		 * @access public
+		 * @final
 		 * @param integer $depth                                    how many levels to unbox
 		 * @return integer                                          the un-boxed value
 		 */
-		public function unbox($depth = 0) {
+		public final function unbox($depth = 0) {
 			return $this->value;
 		}
 

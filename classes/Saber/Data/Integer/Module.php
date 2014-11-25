@@ -320,6 +320,16 @@ namespace Saber\Data\Integer {
 		 *                                                          or greater than the right operand
 		 */
 		public static function compare(Integer\Type $x, Integer\Type $y) {
+			if (($x === null) && ($y !== null)) {
+				return Int32\Module::negative();
+			}
+			if (($x === null) && ($y === null)) {
+				return Int32\Module::zero();
+			}
+			if (($x !== null) && ($y === null)) {
+				return Int32\Module::one();
+			}
+
 			return Int32\Module::create(gmp_cmp($x->unbox(), $y->unbox()));
 		}
 

@@ -19,7 +19,6 @@
 namespace Saber\Data\ArrayList {
 
 	use \Saber\Core;
-	use \Saber\Data;
 	use \Saber\Data\ArrayList;
 	use \Saber\Data\Bool;
 	use \Saber\Data\Collection;
@@ -63,14 +62,27 @@ namespace Saber\Data\ArrayList {
 		}
 
 		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered "not" type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param mixed $value                                      the value(s) to be boxed
+		 * @return ArrayList\Type                                   the boxed object
+		 */
+		public static function create($value/*...*/) {
+			return new ArrayList\Type($value);
+		}
+
+		/**
 		 * This method creates a list of "n" length with every element set to the given object.
 		 *
 		 * @access public
 		 * @param Int32\Type $n                                     the number of times to replicate
-		 * @param Data\Type $y                                      the object to be replicated
+		 * @param Core\Type $y                                      the object to be replicated
 		 * @return ArrayList\Type                                   the collection
 		 */
-		public static function replicate(Int32\Type $n, Data\Type $y) {
+		public static function replicate(Int32\Type $n, Core\Type $y) {
 			$buffer = array();
 
 			for ($i = $n->unbox() - 1; $i >= 0; $i--) {
@@ -128,10 +140,10 @@ namespace Saber\Data\ArrayList {
 		 * @access public
 		 * @static
 		 * @param ArrayList\Type $xs                                the left operand
-		 * @param Data\Type $y                                      the object to be appended
+		 * @param Core\Type $y                                      the object to be appended
 		 * @return ArrayList\Type                                   the list
 		 */
-		public static function append(ArrayList\Type $xs, Data\Type $y) {
+		public static function append(ArrayList\Type $xs, Core\Type $y) {
 			$buffer = $xs->unbox();
 			$buffer[] = $y;
 			return new ArrayList\Type($buffer);
@@ -160,12 +172,12 @@ namespace Saber\Data\ArrayList {
 		 * @access public
 		 * @static
 		 * @param ArrayList\Type $xs                                the left operand
-		 * @param Data\Type $y                                      the object to find
+		 * @param Core\Type $y                                      the object to find
 		 * @return Bool\Type                                        whether the specified object is
 		 *                                                          contained within the list
 		 */
-		public static function contains(ArrayList\Type $xs, Data\Type $y) {
-			return ArrayList\Module::any($xs, function(Data\Type $x, Int32\Type $i) use ($y) {
+		public static function contains(ArrayList\Type $xs, Core\Type $y) {
+			return ArrayList\Module::any($xs, function(Core\Type $x, Int32\Type $i) use ($y) {
 				return call_user_func_array(array(get_class($x), 'eq'), array($x, $y));
 			});
 		}
@@ -176,10 +188,10 @@ namespace Saber\Data\ArrayList {
 		 * @access public
 		 * @static
 		 * @param ArrayList\Type $xs                                the left operand
-		 * @param Data\Type $y                                      the object to be removed
+		 * @param Core\Type $y                                      the object to be removed
 		 * @return ArrayList\Type                                   the list
 		 */
-		public static function delete(ArrayList\Type $xs, Data\Type $y) {
+		public static function delete(ArrayList\Type $xs, Core\Type $y) {
 			$buffer = array();
 			$skip = false;
 
@@ -249,7 +261,7 @@ namespace Saber\Data\ArrayList {
 		 * @return ArrayList\Type                                   the list
 		 */
 		public static function dropWhileEnd(ArrayList\Type $xs, callable $predicate) {
-			return ArrayList\Module::dropWhile($xs, function(Data\Type $x, Int32\Type $i) use ($predicate) {
+			return ArrayList\Module::dropWhile($xs, function(Core\Type $x, Int32\Type $i) use ($predicate) {
 				return Bool\Module::not($predicate($x, $i));
 			});
 		}
@@ -278,7 +290,7 @@ namespace Saber\Data\ArrayList {
 		 * @static
 		 * @param ArrayList\Type $xs                                the left operand
 		 * @param Int32\Type $i                                     the index of the element
-		 * @return Data\Type                                        the element at the specified index
+		 * @return Core\Type                                        the element at the specified index
 		 * @throws Throwable\OutOfBounds\Exception                  indicates the specified index
 		 *                                                          cannot be found
 		 */
@@ -368,10 +380,10 @@ namespace Saber\Data\ArrayList {
 		 * @static
 		 * @param ArrayList\Type $xs                                the left operand
 		 * @param callable $operator                                the operator function to be used
-		 * @param Data\Type $initial                                the initial value to be used
-		 * @return Data\Type                                        the result
+		 * @param Core\Type $initial                                the initial value to be used
+		 * @return Core\Type                                        the result
 		 */
-		public static function foldLeft(ArrayList\Type $xs, callable $operator, Data\Type $initial) {
+		public static function foldLeft(ArrayList\Type $xs, callable $operator, Core\Type $initial) {
 			$z = $initial;
 			$length = $xs->length();
 
@@ -389,10 +401,10 @@ namespace Saber\Data\ArrayList {
 		 * @static
 		 * @param ArrayList\Type $xs                                the left operand
 		 * @param callable $operator                                the operator function to be used
-		 * @param Data\Type $initial                                the initial value to be used
-		 * @return Data\Type                                        the result
+		 * @param Core\Type $initial                                the initial value to be used
+		 * @return Core\Type                                        the result
 		 */
-		public static function foldRight(ArrayList\Type $xs, callable $operator, Data\Type $initial) {
+		public static function foldRight(ArrayList\Type $xs, callable $operator, Core\Type $initial) {
 			$z = $initial;
 			$length = $xs->length();
 
@@ -409,7 +421,7 @@ namespace Saber\Data\ArrayList {
 		 * @access public
 		 * @static
 		 * @param ArrayList\Type $xs                                the left operand
-		 * @return Data\Type                                        the head object in this list
+		 * @return Core\Type                                        the head object in this list
 		 */
 		public static function head(ArrayList\Type $xs) {
 			return $xs->element(Int32\Module::zero());
@@ -433,11 +445,11 @@ namespace Saber\Data\ArrayList {
 		 * @access public
 		 * @static
 		 * @param ArrayList\Type $xs                                the left operand
-		 * @param Data\Type $y                                      the object to be searched for
+		 * @param Core\Type $y                                      the object to be searched for
 		 * @return Int32\Type                                       the index of the first occurrence
 		 *                                                          or otherwise -1
 		 */
-		public static function indexOf(ArrayList\Type $xs, Data\Type $y) {
+		public static function indexOf(ArrayList\Type $xs, Core\Type $y) {
 			$length = $xs->length();
 
 			for ($i = Int32\Module::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
@@ -476,11 +488,11 @@ namespace Saber\Data\ArrayList {
 		 * @access public
 		 * @static
 		 * @param ArrayList\Type $xs                                the left operand
-		 * @param Data\Type $y                                      the object to be interspersed
+		 * @param Core\Type $y                                      the object to be interspersed
 		 * @return ArrayList\Type                                   the list
 		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
-		public static function intersperse(ArrayList\Type $xs, Data\Type $y) {
+		public static function intersperse(ArrayList\Type $xs, Core\Type $y) {
 			$buffer = array();
 			$length = $xs->length();
 
@@ -525,7 +537,7 @@ namespace Saber\Data\ArrayList {
 		 * @access public
 		 * @static
 		 * @param ArrayList\Type $xs                                the left operand
-		 * @return Data\Type                                        the last element in this linked
+		 * @return mixed                                            the last element in this linked
 		 *                                                          list
 		 */
 		public static function last(ArrayList\Type $xs) {
@@ -588,7 +600,7 @@ namespace Saber\Data\ArrayList {
 		 *                                                          falsy test
 		 */
 		public static function none(ArrayList\Type $xs, callable $predicate) {
-			return ArrayList\Module::all($xs, function(Data\Type $x, Int32\Type $i) use ($predicate) {
+			return ArrayList\Module::all($xs, function(Core\Type $x, Int32\Type $i) use ($predicate) {
 				return Bool\Module::not($predicate($x, $i));
 			});
 		}
@@ -599,10 +611,10 @@ namespace Saber\Data\ArrayList {
 		 * @access public
 		 * @static
 		 * @param ArrayList\Type $xs                                the left operand
-		 * @param Data\Type $y                                      the object to be prepended
+		 * @param Core\Type $y                                      the object to be prepended
 		 * @return ArrayList\Type                                   the list
 		 */
-		public static function prepend(ArrayList\Type $xs, Data\Type $y) {
+		public static function prepend(ArrayList\Type $xs, Core\Type $y) {
 			$buffer = $xs->unbox();
 			array_unshift($buffer, $y);
 			return new ArrayList\Type($buffer);
@@ -632,7 +644,7 @@ namespace Saber\Data\ArrayList {
 		 * @return ArrayList\Type                                   the list
 		 */
 		public static function remove(ArrayList\Type $xs, callable $predicate) {
-			return ArrayList\Module::filter($xs, function(Data\Type $x, Int32\Type $i) use ($predicate) {
+			return ArrayList\Module::filter($xs, function(Core\Type $x, Int32\Type $i) use ($predicate) {
 				return Bool\Module::not($predicate($x, $i));
 			});
 		}
@@ -729,7 +741,7 @@ namespace Saber\Data\ArrayList {
 		 * @return ArrayList\Type                                   the list
 		 */
 		public static function takeWhileEnd(ArrayList\Type $xs, callable $predicate) {
-			return ArrayList\Module::takeWhile($xs, function(Data\Type $x, Int32\Type $i) use ($predicate) {
+			return ArrayList\Module::takeWhile($xs, function(Core\Type $x, Int32\Type $i) use ($predicate) {
 				return Bool\Module::not($predicate($x, $i));
 			});
 		}

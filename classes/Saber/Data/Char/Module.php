@@ -21,6 +21,7 @@ namespace Saber\Data\Char {
 	include_once(implode(DIRECTORY_SEPARATOR, array(dirname(__FILE__), '..', 'Ext', 'mbstring.php')));
 
 	use \Saber\Control;
+	use \Saber\Core;
 	use \Saber\Data;
 	use \Saber\Data\Bool;
 	use \Saber\Data\Char;
@@ -44,7 +45,7 @@ namespace Saber\Data\Char {
 		 * @access public
 		 * @static
 		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return Data\Type                                        the boxed object
+		 * @return Char\Type                                        the boxed object
 		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
 		public static function box($value/*...*/) {
@@ -78,7 +79,7 @@ namespace Saber\Data\Char {
 		 * @access public
 		 * @static
 		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return Data\Type                                        the boxed object
+		 * @return Char\Type                                        the boxed object
 		 */
 		public static function create($value/*...*/) {
 			return new Char\Type($value);
@@ -111,11 +112,11 @@ namespace Saber\Data\Char {
 		 * @access public
 		 * @static
 		 * @param Char\Type $x                                      the left operand
-		 * @param Data\Type $y                                      the right operand
+		 * @param Core\Type $y                                      the right operand
 		 * @return Bool\Type                                        whether the left operand is equal
 		 *                                                          to the right operand
 		 */
-		public static function eq(Char\Type $x, Data\Type $y) { // ==
+		public static function eq(Char\Type $x, Core\Type $y) { // ==
 			$type = $x->__typeOf();
 			if ($y instanceof $type) {
 				return Bool\Module::create($x->unbox() == $y->unbox());
@@ -129,11 +130,11 @@ namespace Saber\Data\Char {
 		 * @access public
 		 * @static
 		 * @param Char\Type $x                                      the left operand
-		 * @param Data\Type $y                                      the right operand
+		 * @param Core\Type $y                                      the right operand
 		 * @return Bool\Type                                        whether the left operand is identical
 		 *                                                          to the right operand
 		 */
-		public static function id(Char\Type $x, Data\Type $y) { // ===
+		public static function id(Char\Type $x, Core\Type $y) { // ===
 			if ($x->__typeOf() === $y->__typeOf()) {
 				return Bool\Module::create($x->unbox() === $y->unbox());
 			}
@@ -146,11 +147,11 @@ namespace Saber\Data\Char {
 		 * @access public
 		 * @static
 		 * @param Char\Type $x                                      the left operand
-		 * @param Data\Type $y                                      the right operand
+		 * @param Core\Type $y                                      the right operand
 		 * @return Bool\Type                                        whether the left operand is NOT equal
 		 *                                                          to the right operand
 		 */
-		public static function ne(Char\Type $x, Data\Type $y) { // !=
+		public static function ne(Char\Type $x, Core\Type $y) { // !=
 			return Bool\Module::not(Char\Module::eq($x, $y));
 		}
 
@@ -160,11 +161,11 @@ namespace Saber\Data\Char {
 		 * @access public
 		 * @static
 		 * @param Char\Type $x                                      the left operand
-		 * @param Data\Type $y                                      the right operand
+		 * @param Core\Type $y                                      the right operand
 		 * @return Bool\Type                                        whether the left operand is NOT identical
 		 *                                                          to the right operand
 		 */
-		public static function ni(Char\Type $x, Data\Type $y) { // !==
+		public static function ni(Char\Type $x, Core\Type $y) { // !==
 			return Bool\Module::not(Char\Module::id($x, $y));
 		}
 

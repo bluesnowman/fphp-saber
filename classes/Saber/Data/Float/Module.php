@@ -18,7 +18,7 @@
 
 namespace Saber\Data\Float {
 
-	use \Saber\Data;
+	use \Saber\Core;
 	use \Saber\Data\Bool;
 	use \Saber\Data\Double;
 	use \Saber\Data\Float;
@@ -282,18 +282,6 @@ namespace Saber\Data\Float {
 			return Integer\Module::create($x->unbox());
 		}
 
-		/**
-		 * This method returns the value as a String.
-		 *
-		 * @access public
-		 * @static
-		 * @param Float\Type $x                                     the object to be converted
-		 * @return String\Type                                      the value as a String
-		 */
-		public static function toString(Float\Type $x) {
-			return String\Module::create($x->__toString());
-		}
-
 		#endregion
 
 		#region Methods -> Equality
@@ -304,13 +292,13 @@ namespace Saber\Data\Float {
 		 * @access public
 		 * @static
 		 * @param Float\Type $x                                     the left operand
-		 * @param Data\Type $y                                      the right operand
+		 * @param Core\Type $y                                      the right operand
 		 * @return Bool\Type                                        whether the left operand is equal
 		 *                                                          to the right operand
 		 */
-		public static function eq(Float\Type $x, Data\Type $y) { // ==
-			$class = get_class($x);
-			if ($y instanceof $class) {
+		public static function eq(Float\Type $x, Core\Type $y) { // ==
+			$type = $x->__typeOf();
+			if ($y instanceof $type) {
 				return Bool\Module::create($x->unbox() == $y->unbox());
 			}
 			return Bool\Module::false();
@@ -322,12 +310,12 @@ namespace Saber\Data\Float {
 		 * @access public
 		 * @static
 		 * @param Float\Type $x                                     the left operand
-		 * @param Data\Type $y                                      the right operand
+		 * @param Core\Type $y                                      the right operand
 		 * @return Bool\Type                                        whether the left operand is identical
 		 *                                                          to the right operand
 		 */
-		public static function id(Float\Type $x, Data\Type $y) { // ===
-			if (get_class($x) === get_class($y)) {
+		public static function id(Float\Type $x, Core\Type $y) { // ===
+			if ($x->__typeOf() === $y->typeOf()) {
 				return Bool\Module::create($x->unbox() === $y->unbox());
 			}
 			return Bool\Module::false();
@@ -339,11 +327,11 @@ namespace Saber\Data\Float {
 		 * @access public
 		 * @static
 		 * @param Float\Type $x                                     the left operand
-		 * @param Data\Type $y                                      the right operand
+		 * @param Core\Type $y                                      the right operand
 		 * @return Bool\Type                                        whether the left operand is NOT equal
 		 *                                                          to the right operand
 		 */
-		public static function ne(Float\Type $x, Data\Type $y) { // !=
+		public static function ne(Float\Type $x, Core\Type $y) { // !=
 			return Bool\Module::not(Float\Module::eq($x, $y));
 		}
 
@@ -353,11 +341,11 @@ namespace Saber\Data\Float {
 		 * @access public
 		 * @static
 		 * @param Float\Type $x                                     the left operand
-		 * @param Data\Type $y                                      the right operand
+		 * @param Core\Type $y                                      the right operand
 		 * @return Bool\Type                                        whether the left operand is NOT identical
 		 *                                                          to the right operand
 		 */
-		public static function ni(Float\Type $x, Data\Type $y) { // !==
+		public static function ni(Float\Type $x, Core\Type $y) { // !==
 			return Bool\Module::not(Float\Module::id($x, $y));
 		}
 

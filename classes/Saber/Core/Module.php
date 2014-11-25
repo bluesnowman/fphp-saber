@@ -25,7 +25,7 @@ namespace Saber\Core {
 
 	abstract class Module {
 
-		#region Methods -> Implementation
+		#region Methods -> Native Oriented
 
 		/**
 		 * This method is called when a method is not defined and will attempt to remap
@@ -58,7 +58,7 @@ namespace Saber\Core {
 
 		#endregion
 
-		#region Methods -> Interface
+		#region Methods -> Object Oriented
 
 		/**
 		 * This method returns a choice block.

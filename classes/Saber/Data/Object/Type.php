@@ -19,8 +19,59 @@
 namespace Saber\Data\Object {
 
 	use \Saber\Core;
+	use \Saber\Data;
+	use \Saber\Throwable;
 
-	class Type extends Core\Type implements Core\Type\Boxable {
+	class Type extends Data\Type implements Core\Type\Boxable {
+
+		#region Methods -> Implementation
+
+		/**
+		 * This constructor initializes the class with the specified value.
+		 *
+		 * @access public
+		 * @param mixed $value                                      the value to be assigned
+		 */
+		public function __construct($value) {
+			$this->value = $value;
+		}
+
+		/**
+		 * This method returns the object as a string.
+		 *
+		 * @access public
+		 * @return string                                           the object as a string
+		 */
+		public function __toString() {
+			$type = gettype($this->value);
+			switch ($type) {
+				case 'boolean':
+					return ($this->value) ? 'true' : 'false';
+				case 'double':
+					return sprintf('%F', $this->value);
+				case 'integer':
+					return sprintf('%d', $this->value);
+				case 'object':
+					return $this->value->__toString();
+				case 'string':
+					return $this->value;
+				default:
+					throw new Throwable\Parse\Exception('Invalid cast. Could not convert value of ":type" to a string.', array(':type' => $type));
+			}
+		}
+
+		/**
+		 * This method returns the value contained within the boxed object.
+		 *
+		 * @access public
+		 * @param integer $depth                                    how many levels to unbox
+		 * @return mixed                                            the un-boxed value
+		 */
+		public function unbox($depth = 0) {
+			return $this->value;
+		}
+
+		#endregion
 
 	}
 

@@ -18,7 +18,9 @@
 
 namespace Saber\Data\ArrayList {
 
-	use \Saber\Data;
+	use \Saber\Data\ArrayList;
+	use \Saber\Data\Bool;
+	use \Saber\Data\Int32;
 
 	class Iterator implements \Countable, \Iterator {
 
@@ -96,7 +98,7 @@ namespace Saber\Data\ArrayList {
 		 * @return Bool\Type                                        whether there are more objects
 		 */
 		public function next() {
-			$this->position = $this->position->increment();
+			$this->position = Int32\Module::increment($this->position);
 			return Bool\Module::create($this->valid());
 		}
 

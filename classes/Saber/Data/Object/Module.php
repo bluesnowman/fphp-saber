@@ -20,35 +20,25 @@ namespace Saber\Data\Object {
 
 	use \Saber\Core;
 	use \Saber\Data;
+	use \Saber\Data\Int32;
+	use \Saber\Data\Object;
 
 	class Module {
 
-		#region Methods -> Boxing/Creation
+		#region Methods -> Ordering
 
 		/**
-		 * This constructor initializes the class with the specified value.
+		 * This method compares the operands for order.
 		 *
 		 * @access public
-		 * @param mixed $value                                      the value to be assigned
-		 */
-		public function __construct($value) {
-			$this->value = $value;
-		}
-
-		#endregion
-
-		#region Methods -> Object Oriented -> Universal
-
-		/**
-		 * This method compares the specified object with the current object for order.
-		 *
-		 * @access public
-		 * @param Object\Type $that                                the object to be compared
+		 * @static
+		 * @param Object\Type $x                                    the left operand
+		 * @param Object\Type $y                                    the right operand
 		 * @return Int32\Type                                       whether the current object is less than,
 		 *                                                          equal to, or greater than the specified
 		 *                                                          object
 		 */
-		public function compareTo(Object\Type $that) {
+		public static function compare(Object\Type $x, Object\Type $y) {
 			return Int32\Module::zero();
 		}
 

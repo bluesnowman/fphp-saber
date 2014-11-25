@@ -18,7 +18,11 @@
 
 namespace Saber\Data\LinkedList {
 
-	use \Saber\Data;
+	use \Saber\Data\Bool;
+	use \Saber\Data\Collection;
+	use \Saber\Data\Int32;
+	use \Saber\Data\LinkedList;
+	use \Saber\Data\Option;
 	use \Saber\Throwable;
 
 	abstract class Module extends Collection\Module {
@@ -988,88 +992,6 @@ namespace Saber\Data\LinkedList {
 				}
 			}
 			return Bool\Module::true();
-		}
-
-		#endregion
-
-		#region Methods -> Object Oriented -> Numeric Operations
-
-		/**
-		 * This method returns the average of all elements in the collection.
-		 *
-		 * @access public
-		 * @static
-		 * @param LinkedList\Type $xs                               the left operand
-		 * @return Num\Type                                         the result
-		 */
-		public static function average(LinkedList\Type $xs) {
-			$zs = $xs;
-
-			if (LinkedList\Module::isEmpty($zs)->unbox()) {
-				return Int32\Module::zero();
-			}
-
-			$z = LinkedList\Module::head($zs);
-
-			$t = $z->__typeOf();
-			$y = $t::zero();
-
-			for ($zs = LinkedList\Module::tail($zs); ! LinkedList\Module::isEmpty($zs)->unbox(); $zs = LinkedList\Module::tail($zs)) {
-				$z = $z->add(LinkedList\Module::head($zs));
-				$y = $y->increment();
-			}
-
-			return $z->divide($y);
-		}
-
-		/**
-		 * This method returns the product of all elements in the collection.
-		 *
-		 * @access public
-		 * @static
-		 * @param LinkedList\Type $xs                               the left operand
-		 * @return Num\Type                                         the result
-		 */
-		public static function product(LinkedList\Type $xs) {
-			$zs = $xs;
-
-			if (LinkedList\Module::isEmpty($zs)->unbox()) {
-				return Int32\Module::one();
-			}
-
-			$z = LinkedList\Module::head($zs);
-			$number = get_class($z);
-
-			for ($zs = LinkedList\Module::tail($zs); ! LinkedList\Module::isEmpty($zs)->unbox(); $zs = LinkedList\Module::tail($zs)) {
-				$z = $number::multiply($z, LinkedList\Module::head($zs));
-			}
-
-			return $z;
-		}
-
-		/**
-		 * This method returns the sum of all elements in the collection.
-		 *
-		 * @access public
-		 * @static
-		 * @param LinkedList\Type $xs                               the left operand
-		 * @return Num\Type                                         the result
-		 */
-		public static function sum(LinkedList\Type $xs) {
-			$zs = $xs;
-
-			if (LinkedList\Module::isEmpty($zs)->unbox()) {
-				return Int32\Module::zero();
-			}
-
-			$z = LinkedList\Module::head($zs);
-			$number = get_class($z);
-
-			for ($zs = LinkedList\Module::tail($zs); ! LinkedList\Module::isEmpty($zs)->unbox(); $zs = LinkedList\Module::tail($zs)) {
-				$z = $number::add($z, LinkedList\Module::head($zs));
-			}
-
-			return $z;
 		}
 
 		#endregion

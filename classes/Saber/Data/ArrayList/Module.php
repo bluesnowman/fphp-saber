@@ -96,10 +96,10 @@ namespace Saber\Data\ArrayList {
 		 *                                                          truthy test
 		 */
 		public static function all(ArrayList\Type $xs, callable $predicate) {
-			$length = ArrayList\Module::length($xs);
+			$length = $xs->length();
 
 			for ($i = Int32\Module::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				if (!$predicate(ArrayList\Module::element($xs, $i), $i)->unbox()) {
+				if (!$predicate($xs->element($i), $i)->unbox()) {
 					return Bool\Module::false();
 				}
 			}
@@ -205,10 +205,10 @@ namespace Saber\Data\ArrayList {
 		 */
 		public static function drop(ArrayList\Type $xs, Int32\Type $n) {
 			$buffer = array();
-			$length = ArrayList\Module::length($xs);
+			$length = $xs->length();
 
 			for ($i = $n; Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$buffer[] = ArrayList\Module::element($xs, $i);
+				$buffer[] = $xs->element($i);
 			}
 
 			return new ArrayList\Type($buffer);
@@ -225,11 +225,11 @@ namespace Saber\Data\ArrayList {
 		 */
 		public static function dropWhile(ArrayList\Type $xs, callable $predicate) {
 			$buffer = array();
-			$length = ArrayList\Module::length($xs);
+			$length = $xs->length();
 
 			$failed = false;
 			for ($i = Int32\Module::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$x = ArrayList\Module::element($xs, $i);
+				$x = $xs->element($i);
 				if (!$predicate($x, $i)->unbox() || $failed) {
 					$buffer[] = $x;
 					$failed = true;
@@ -264,10 +264,10 @@ namespace Saber\Data\ArrayList {
 		 * @param callable $procedure                               the procedure function to be used
 		 */
 		public static function each(ArrayList\Type $xs, callable $procedure) {
-			$length = ArrayList\Module::length($xs);
+			$length = $xs->length();
 
 			for ($i = Int32\Module::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$procedure(ArrayList\Module::element($xs, $i), $i);
+				$procedure($xs->element($i), $i);
 			}
 		}
 
@@ -283,7 +283,7 @@ namespace Saber\Data\ArrayList {
 		 *                                                          cannot be found
 		 */
 		public static function element(ArrayList\Type $xs, Int32\Type $i) {
-			return $xs->value[$i->unbox()];
+			return $xs->element($i);
 		}
 
 		/**
@@ -297,10 +297,10 @@ namespace Saber\Data\ArrayList {
 		 */
 		public static function filter(ArrayList\Type $xs, callable $predicate) {
 			$buffer = array();
-			$length = ArrayList\Module::length($xs);
+			$length = $xs->length();
 
 			for ($i = Int32\Module::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$x = ArrayList\Module::element($xs, $i);
+				$x = $xs->element($i);
 				if ($predicate($x, $i)->unbox()) {
 					$buffer[] = $x;
 				}
@@ -320,10 +320,10 @@ namespace Saber\Data\ArrayList {
 		 *                                                          satisfying the predicate, if any
 		 */
 		public static function find(ArrayList\Type $xs, callable $predicate) {
-			$length = ArrayList\Module::length($xs);
+			$length = $xs->length();
 
 			for ($i = Int32\Module::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$x = ArrayList\Module::element($xs, $i);
+				$x = $xs->element($i);
 				if ($predicate($x, $i)->unbox()) {
 					return Option\Type::some($x);
 				}
@@ -342,15 +342,15 @@ namespace Saber\Data\ArrayList {
 		 */
 		public static function flatten(ArrayList\Type $xs) {
 			$buffer = array();
-			$x_length = ArrayList\Module::length($xs);
+			$x_length = $xs->length();
 
 			for ($i = Int32\Module::zero(); Int32\Module::lt($i, $x_length)->unbox(); $i = Int32\Module::increment($i)) {
-				$x = ArrayList\Module::element($xs, $i);
+				$x = $xs->element($i);
 				if ($x instanceof ArrayList\Type) {
 					$ys = ArrayList\Module::flatten($x);
-					$y_length = ArrayList\Module::length($ys);
+					$y_length = $ys->length();
 					for ($j = Int32\Module::zero(); Int32\Module::lt($j, $y_length)->unbox(); $j = Int32\Module::increment($j)) {
-						$buffer[] = ArrayList\Module::element($ys, $j);
+						$buffer[] = $ys->element($j);
 					}
 				}
 				else {
@@ -373,10 +373,10 @@ namespace Saber\Data\ArrayList {
 		 */
 		public static function foldLeft(ArrayList\Type $xs, callable $operator, Data\Type $initial) {
 			$z = $initial;
-			$length = ArrayList\Module::length($xs);
+			$length = $xs->length();
 
 			for ($i = Int32\Module::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$z = $operator($z, ArrayList\Module::element($xs, $i));
+				$z = $operator($z, $xs->element($i));
 			}
 
 			return $z;
@@ -394,10 +394,10 @@ namespace Saber\Data\ArrayList {
 		 */
 		public static function foldRight(ArrayList\Type $xs, callable $operator, Data\Type $initial) {
 			$z = $initial;
-			$length = ArrayList\Module::length($xs);
+			$length = $xs->length();
 
 			for ($i = Int32\Module::decrement($length); Int32\Module::ge($i, Int32\Module::zero())->unbox(); $i = Int32\Module::decrement($length)) {
-				$z = $operator($z, ArrayList\Module::element($xs, $i));
+				$z = $operator($z, $xs->element($i));
 			}
 
 			return $z;
@@ -412,7 +412,7 @@ namespace Saber\Data\ArrayList {
 		 * @return Data\Type                                        the head object in this list
 		 */
 		public static function head(ArrayList\Type $xs) {
-			return ArrayList\Module::element($xs, Int32\Module::zero());
+			return $xs->element(Int32\Module::zero());
 		}
 
 		/**
@@ -424,7 +424,7 @@ namespace Saber\Data\ArrayList {
 		 * @return Option\Type                                      the option
 		 */
 		public static function headOption(ArrayList\Type $xs) {
-			return (!ArrayList\Module::isEmpty($xs)->unbox()) ? Option\Type::some(ArrayList\Module::head($xs)) : Option\Type::none();
+			return (!$xs->__isEmpty()) ? Option\Type::some($xs->head()) : Option\Type::none();
 		}
 
 		/**
@@ -438,10 +438,10 @@ namespace Saber\Data\ArrayList {
 		 *                                                          or otherwise -1
 		 */
 		public static function indexOf(ArrayList\Type $xs, Data\Type $y) {
-			$length = ArrayList\Module::length($xs);
+			$length = $xs->length();
 
 			for ($i = Int32\Module::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$x = ArrayList\Module::element($xs, $i);
+				$x = $xs->element($i);
 				if (call_user_func_array(array(get_class($x), 'eq'), array($x, $y))->unbox()) {
 					return $i;
 				}
@@ -461,10 +461,10 @@ namespace Saber\Data\ArrayList {
 		 */
 		public static function init(ArrayList\Type $xs) {
 			$buffer = array();
-			$length = Int32\Module::decrement(ArrayList\Module::length($xs));
+			$length = Int32\Module::decrement($xs->length());
 
 			for ($i = Int32\Module::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$buffer[] = ArrayList\Module::element($xs, $i);
+				$buffer[] = $xs->element($i);
 			}
 
 			return new ArrayList\Type($buffer);
@@ -482,13 +482,13 @@ namespace Saber\Data\ArrayList {
 		 */
 		public static function intersperse(ArrayList\Type $xs, Data\Type $y) {
 			$buffer = array();
-			$length = ArrayList\Module::length($xs);
+			$length = $xs->length();
 
 			if ($length > 0) {
-				$buffer[] = ArrayList\Module::element($xs, Int32\Module::zero());
+				$buffer[] = $xs->element(Int32\Module::zero());
 				for ($i = Int32\Module::one(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
 					$buffer[] = $y;
-					$buffer[] = ArrayList\Module::element($xs, $i);
+					$buffer[] = $xs->element($i);
 				}
 			}
 
@@ -504,7 +504,7 @@ namespace Saber\Data\ArrayList {
 		 * @return Bool\Type                                        whether the list is empty
 		 */
 		public static function isEmpty(ArrayList\Type $xs) {
-			return Int32\Module::eq(ArrayList\Module::length($xs), Int32\Module::zero());
+			return $xs->isEmpty();
 		}
 
 		/**
@@ -513,10 +513,10 @@ namespace Saber\Data\ArrayList {
 		 * @access public
 		 * @static
 		 * @param ArrayList\Type $xs                                the left operand
-		 * @return ArrayList\Type\Iterator                          an iterator for this collection
+		 * @return ArrayList\Iterator                               an iterator for this collection
 		 */
 		public static function iterator(ArrayList\Type $xs) {
-			return new ArrayList\Type\Iterator($xs);
+			return new ArrayList\Iterator($xs);
 		}
 
 		/**
@@ -529,7 +529,7 @@ namespace Saber\Data\ArrayList {
 		 *                                                          list
 		 */
 		public static function last(ArrayList\Type $xs) {
-			return ArrayList\Module::element($xs, Int32\Module::decrement(ArrayList\Module::length($xs)));
+			return $xs->element(Int32\Module::decrement($xs->length()));
 		}
 
 		/**
@@ -541,7 +541,7 @@ namespace Saber\Data\ArrayList {
 		 * @return Option\Type                                      the option
 		 */
 		public static function lastOption(ArrayList\Type $xs) {
-			return (!ArrayList\Module::isEmpty($xs)->unbox()) ? Option\Type::some(ArrayList\Module::last($xs)) : Option\Type::none();
+			return (!$xs->__isEmpty()) ? Option\Type::some(ArrayList\Module::last($xs)) : Option\Type::none();
 		}
 
 		/**
@@ -553,7 +553,7 @@ namespace Saber\Data\ArrayList {
 		 * @return Int32\Type                                       the length of this array list
 		 */
 		public static function length(ArrayList\Type $xs) {
-			return Int32\Module::create(count($xs->unbox()));
+			return $xs->length();
 		}
 
 		/**
@@ -567,10 +567,10 @@ namespace Saber\Data\ArrayList {
 		 */
 		public static function map(ArrayList\Type $xs, callable $subroutine) {
 			$buffer = array();
-			$length = ArrayList\Module::length($xs);
+			$length = $xs->length();
 
 			for ($i = Int32\Module::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$buffer[] = $subroutine(ArrayList\Module::element($xs, $i), $i);
+				$buffer[] = $subroutine($xs->element($i), $i);
 			}
 
 			return new ArrayList\Type($buffer);
@@ -672,14 +672,7 @@ namespace Saber\Data\ArrayList {
 		 * @return ArrayList\Type                                   the tail of this list
 		 */
 		public static function tail(ArrayList\Type $xs) {
-			$buffer = array();
-			$length = ArrayList\Module::length($xs);
-
-			for ($i = Int32\Module::one(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$buffer[] = ArrayList\Module::element($xs, $i);
-			}
-
-			return new ArrayList\Type($buffer);
+			return $xs->tail();
 		}
 
 		/**
@@ -693,10 +686,10 @@ namespace Saber\Data\ArrayList {
 		 */
 		public static function take(ArrayList\Type $xs, Int32\Type $n) {
 			$buffer = array();
-			$length = Int32\Module::min($n, ArrayList\Module::length($xs));
+			$length = Int32\Module::min($n, $xs->length());
 
 			for ($i = Int32\Module::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$buffer[] = ArrayList\Module::element($xs, $i);
+				$buffer[] = $xs->element($i);
 			}
 
 			return new ArrayList\Type($buffer);
@@ -713,10 +706,10 @@ namespace Saber\Data\ArrayList {
 		 */
 		public static function takeWhile(ArrayList\Type $xs, callable $predicate) {
 			$buffer = array();
-			$length = ArrayList\Module::length($xs);
+			$length = $xs->length();
 
 			for ($i = Int32\Module::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$x = ArrayList\Module::element($xs, $i);
+				$x = $xs->element($i);
 				if (!$predicate($x, $i)->unbox()) {
 					break;
 				}
@@ -762,10 +755,10 @@ namespace Saber\Data\ArrayList {
 		 * @return LinkedList\Type                                  the collection as a linked list
 		 */
 		public static function toList(ArrayList\Type $xs) {
-			$length = ArrayList\Module::length($xs);
+			$length = $xs->length();
 			$zs = LinkedList\Module::nil();
 			for ($i = Int32\Module::decrement($length); Int32\Module::ge($i, Int32\Module::zero())->unbox(); $i = Int32\Module::decrement($i)) {
-				$zs = LinkedList\Module::prepend($zs, ArrayList\Module::element($xs, $i));
+				$zs = LinkedList\Module::prepend($zs, $xs->element($i));
 			}
 			return $zs;
 		}
@@ -794,8 +787,8 @@ namespace Saber\Data\ArrayList {
 				return Int32\Module::one();
 			}
 
-			$x_length = ArrayList\Module::length($xs);
-			$y_length = ArrayList\Module::length($ys);
+			$x_length = $xs->length();
+			$y_length = $ys->length();
 
 			if ($x_length < $y_length) {
 				return Int32\Module::negative();
@@ -805,8 +798,8 @@ namespace Saber\Data\ArrayList {
 			}
 			else { // ($x_length == $y_length)
 				for ($i = Int32\Module::zero(); Int32\Module::lt($i, $x_length)->unbox(); $i = Int32\Module::increment($i)) {
-					$x = ArrayList\Module::element($xs, $i);
-					$y = ArrayList\Module::element($ys, $i);
+					$x = $xs->element($i);
+					$y = $ys->element($i);
 					$r = call_user_func_array(array(get_class($x), 'compare'), array($x, $y));
 					if ($r->unbox() != 0) {
 						return $r;
@@ -891,10 +884,10 @@ namespace Saber\Data\ArrayList {
 		 *                                                          to true
 		 */
 		public static function true(ArrayList\Type $xs) {
-			$length = ArrayList\Module::length($xs);
+			$length = $xs->length();
 
 			for ($i = Int32\Module::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				if (Bool\Module::ni(Bool\Module::true(), ArrayList\Module::element($xs, $i))->unbox()) {
+				if (Bool\Module::ni(Bool\Module::true(), $xs->element($i))->unbox()) {
 					return Bool\Module::false();
 				}
 			}
@@ -913,95 +906,15 @@ namespace Saber\Data\ArrayList {
 		 *                                                          the list evaluate to true
 		 */
 		public static function truthy(ArrayList\Type $xs) {
-			$length = ArrayList\Module::length($xs);
+			$length = $xs->length();
 
 			for ($i = Int32\Module::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				if (!ArrayList\Module::element($xs, $i)->unbox()) {
+				if (!$xs->__element($i)) {
 					return Bool\Module::false();
 				}
 			}
 
 			return Bool\Module::true();
-		}
-
-		#endregion
-
-		#region Methods -> Object Oriented -> Numeric Operations
-
-		/**
-		 * This method returns the average of all elements in the list.
-		 *
-		 * @access public
-		 * @static
-		 * @param ArrayList\Type $xs                                the left operand
-		 * @return Num\Type                                         the result
-		 */
-		public static function average(ArrayList\Type $xs) {
-			if (ArrayList\Module::isEmpty($xs)->unbox()) {
-				return Int32\Module::zero();
-			}
-
-			$length = ArrayList\Module::length($xs);
-			$x = ArrayList\Module::element($xs, Int32\Module::zero());
-			$t = Data\Type::typeOf($x);
-			$y = $t::zero();
-
-			for ($i = Int32\Module::one(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$x = $x->add(ArrayList\Module::element($xs, $i));
-				$y = $y->increment();
-			}
-
-			return $x->divide($y);
-		}
-
-		/**
-		 * This method returns the product of all elements in the list.
-		 *
-		 * @access public
-		 * @static
-		 * @param ArrayList\Type $xs                                the left operand
-		 * @return Num\Type                                         the result
-		 */
-		public static function product(ArrayList\Type $xs) {
-			if (ArrayList\Module::isEmpty($xs)->unbox()) {
-				return Int32\Module::one();
-			}
-
-			$length = ArrayList\Module::length($xs);
-
-			$x = ArrayList\Module::element($xs, Int32\Module::zero());
-			$number = get_class($x);
-
-			for ($i = Int32\Module::one(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$x = $number::multiply($x, ArrayList\Module::element($xs, $i));
-			}
-
-			return $x;
-		}
-
-		/**
-		 * This method returns the sum of all elements in the list.
-		 *
-		 * @access public
-		 * @static
-		 * @param ArrayList\Type $xs                                the left operand
-		 * @return Num\Type                                         the result
-		 */
-		public static function sum(ArrayList\Type $xs) {
-			if (ArrayList\Module::isEmpty($xs)->unbox()) {
-				return Int32\Module::zero();
-			}
-
-			$length = ArrayList\Module::length($xs);
-
-			$x = ArrayList\Module::element($xs, Int32\Module::zero());
-			$number = get_class($x);
-
-			for ($i = Int32\Module::one(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$x = $number::add($x, ArrayList\Module::element($xs, $i));
-			}
-
-			return $x;
 		}
 
 		#endregion

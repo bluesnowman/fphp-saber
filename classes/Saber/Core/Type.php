@@ -18,9 +18,11 @@
 
 namespace Saber\Core {
 
+	use \Saber\Data\String;
+
 	interface Type {
 
-		#region Methods -> Interface
+		#region Methods -> Native Oriented
 
 		/**
 		 * This method returns the object's hash code.
@@ -45,6 +47,35 @@ namespace Saber\Core {
 		 * @return string                                           the object's class type
 		 */
 		public function __typeOf();
+
+		#endregion
+
+		#region Methods -> Object Oriented
+
+		/**
+		 * This method returns the object's hash code.
+		 *
+		 * @access public
+		 * @return String\Type                                      the object's hash code
+		 */
+		public function hashCode();
+
+		/**
+		 * This method returns the object as a string.
+		 *
+		 * @access public
+		 * @final
+		 * @return String\Type                                      the object as a string
+		 */
+		public function toString();
+
+		/**
+		 * This method returns the object's class type.
+		 *
+		 * @access public
+		 * @return String\Type                                      the object's class type
+		 */
+		public function typeOf();
 
 		#endregion
 

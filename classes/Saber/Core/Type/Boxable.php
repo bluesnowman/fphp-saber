@@ -22,32 +22,6 @@ namespace Saber\Core\Type {
 
 	interface Boxable {
 
-		#region Methods -> Instantiation
-
-		/**
-		 * This method returns a value as a boxed object.  A value is typically a PHP typed
-		 * primitive or object.  It is considered type-safe.
-		 *
-		 * @access public
-		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return Data\Type                                        the boxed object
-		 */
-		//public static function box($value/*...*/);
-
-		/**
-		 * This method returns a value as a boxed object.  A value is typically a PHP typed
-		 * primitive or object.  It is considered "not" type-safe.
-		 *
-		 * @access public
-		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return Data\Type                                        the boxed object
-		 */
-		//public static function create($value/*...*/);
-
-		#endregion
-
 		#region Methods -> Implementation
 
 		/**

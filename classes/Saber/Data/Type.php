@@ -112,10 +112,48 @@ namespace Saber\Data {
 		 * This method returns the object's class type.
 		 *
 		 * @access public
+		 * @final
 		 * @return string                                           the object's class type
 		 */
-		public function __typeOf() {
+		public final function __typeOf() {
 			return get_class($this);
+		}
+
+		#endregion
+
+		#region Methods -> Object Oriented
+
+		/**
+		 * This method returns the object's hash code.
+		 *
+		 * @access public
+		 * @final
+		 * @return String\Type                                      the object's hash code
+		 */
+		public final function hashCode() {
+			return String\Module::create($this->__hashCode());
+		}
+
+		/**
+		 * This method returns the object as a string.
+		 *
+		 * @access public
+		 * @final
+		 * @return String\Type                                      the object as a string
+		 */
+		public final function toString() {
+			return String\Module::create($this->__toString());
+		}
+
+		/**
+		 * This method returns the object's class type.
+		 *
+		 * @access public
+		 * @final
+		 * @return String\Type                                      the object's class type
+		 */
+		public final function typeOf() {
+			return String\Module::create($this->__typeOf());
 		}
 
 		#endregion

@@ -19,6 +19,7 @@
 namespace Saber\Data\Bool {
 
 	use \Saber\Control;
+	use \Saber\Core;
 	use \Saber\Data;
 	use \Saber\Data\Bool;
 	use \Saber\Data\Int32;
@@ -94,18 +95,6 @@ namespace Saber\Data\Bool {
 			return Int32\Module::create($x->unbox());
 		}
 
-		/**
-		 * This method returns the value as a String.
-		 *
-		 * @access public
-		 * @static
-		 * @param Bool\Type $x                                      the object to be converted
-		 * @return String\Type                                      the value as a String
-		 */
-		public static function toString(Bool\Type $x) {
-			return String\Module::create($x->__toString());
-		}
-
 		#endregion
 
 		#region Methods -> Equality
@@ -116,13 +105,13 @@ namespace Saber\Data\Bool {
 		 * @access public
 		 * @static
 		 * @param Bool\Type $x                                      the left operand
-		 * @param Data\Type $y                                      the right operand
+		 * @param Core\Type $y                                      the right operand
 		 * @return Bool\Type                                        whether the left operand is equal
 		 *                                                          to the right operand
 		 */
-		public static function eq(Bool\Type $x, Data\Type $y) { // ==
-			$class = get_class($x);
-			if ($y instanceof $class) {
+		public static function eq(Bool\Type $x, Core\Type $y) { // ==
+			$type = $x->__typeOf();
+			if ($y instanceof $type) {
 				return Bool\Module::create($x->unbox() == $y->unbox());
 			}
 			return Bool\Module::false();
@@ -134,12 +123,12 @@ namespace Saber\Data\Bool {
 		 * @access public
 		 * @static
 		 * @param Bool\Type $x                                      the left operand
-		 * @param Data\Type $y                                      the right operand
+		 * @param Core\Type $y                                      the right operand
 		 * @return Bool\Type                                        whether the left operand is identical
 		 *                                                          to the right operand
 		 */
-		public static function id(Bool\Type $x, Data\Type $y) { // ===
-			if (get_class($x) === get_class($y)) {
+		public static function id(Bool\Type $x, Core\Type $y) { // ===
+			if ($x->__typeOf() === $y->__typeOf()) {
 				return Bool\Module::create($x->unbox() === $y->unbox());
 			}
 			return Bool\Module::false();
@@ -151,11 +140,11 @@ namespace Saber\Data\Bool {
 		 * @access public
 		 * @static
 		 * @param Bool\Type $x                                      the left operand
-		 * @param Data\Type $y                                      the right operand
+		 * @param Core\Type $y                                      the right operand
 		 * @return Bool\Type                                        whether the left operand is NOT equal
 		 *                                                          to the right operand
 		 */
-		public static function ne(Bool\Type $x, Data\Type $y) { // !=
+		public static function ne(Bool\Type $x, Core\Type $y) { // !=
 			return Bool\Module::not(Bool\Module::eq($x, $y));
 		}
 
@@ -165,11 +154,11 @@ namespace Saber\Data\Bool {
 		 * @access public
 		 * @static
 		 * @param Bool\Type $x                                      the left operand
-		 * @param Data\Type $y                                      the right operand
+		 * @param Core\Type $y                                      the right operand
 		 * @return Bool\Type                                        whether the left operand is NOT identical
 		 *                                                          to the right operand
 		 */
-		public static function ni(Bool\Type $x, Data\Type $y) { // !==
+		public static function ni(Bool\Type $x, Core\Type $y) { // !==
 			return Bool\Module::not(Bool\Module::id($x, $y));
 		}
 
@@ -408,34 +397,6 @@ namespace Saber\Data\Bool {
 		 */
 		public static function min(Bool\Type $x, Bool\Type $y) {
 			return (Bool\Module::compare($x, $y)->unbox() <= 0) ? $x : $y;
-		}
-
-		#endregion
-
-		#region Methods -> Other
-
-		/**
-		 * This method returns a choice block.
-		 *
-		 * @access public
-		 * @static
-		 * @param Bool\Type $x                                      the object to be evaluated
-		 * @return Control\Monad\Choice                             the choice monad
-		 */
-		public static function choice(Bool\Type $x) {
-			return Control\Monad::choice($x);
-		}
-
-		/**
-		 * This method returns the object's hash code.
-		 *
-		 * @access public
-		 * @static
-		 * @param Bool\Type $x                                      the object to be evaluated
-		 * @return String\Type                                      the object's hash code
-		 */
-		public static function hashCode(Bool\Type $x) {
-			return String\Module::create($x->__toString());
 		}
 
 		#endregion

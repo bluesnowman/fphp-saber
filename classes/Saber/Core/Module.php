@@ -81,7 +81,7 @@ namespace Saber\Core {
 		 * @return String\Type                                      the object's hash code
 		 */
 		public static function hashCode(Core\Type $x) {
-			return String\Module::create($x->__hashCode());
+			return $x->hashCode();
 		}
 
 		/**
@@ -93,7 +93,7 @@ namespace Saber\Core {
 		 * @return String\Type                                      the value as a String
 		 */
 		public static function toString(Core\Type $x) {
-			return String\Module::create($x->__toString());
+			return $x->toString();
 		}
 
 		/**
@@ -105,7 +105,7 @@ namespace Saber\Core {
 		 * @return String\Type                                      the object's class type
 		 */
 		public static function typeOf(Core\Type $x) {
-			return String\Module::create($x->__typeOf());
+			return $x->typeOf();
 		}
 
 		#endregion

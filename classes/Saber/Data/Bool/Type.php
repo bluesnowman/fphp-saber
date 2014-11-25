@@ -20,10 +20,11 @@ namespace Saber\Data\Bool {
 
 	use \Saber\Core;
 	use \Saber\Data;
+	use \Saber\Data\String;
 
-	class Type extends Data\Type implements Core\Type\Boxable {
+	final class Type extends Data\Type implements Core\Type\Boxable {
 
-		#region Methods -> Implementation
+		#region Methods -> Native Oriented
 
 		/**
 		 * This constructor initializes the class with the specified value.
@@ -36,23 +37,40 @@ namespace Saber\Data\Bool {
 		}
 
 		/**
+		 * This method returns the object's hash code.
+		 *
+		 * @access public
+		 * @final
+		 * @return string                                           the object's hash code
+		 */
+		public final function __hashCode() {
+			return $this->__toString();
+		}
+
+		/**
 		 * This method returns the object as a string.
 		 *
 		 * @access public
+		 * @final
 		 * @return string                                           the object as a string
 		 */
-		public function __toString() {
+		public final function __toString() {
 			return ($this->value) ? 'true' : 'false';
 		}
+
+		#endregion
+
+		#region Methods -> Object Oriented
 
 		/**
 		 * This method returns the value contained within the boxed object.
 		 *
 		 * @access public
+		 * @final
 		 * @param integer $depth                                    how many levels to unbox
 		 * @return mixed                                            the un-boxed value
 		 */
-		public function unbox($depth = 0) {
+		public final function unbox($depth = 0) {
 			return $this->value;
 		}
 

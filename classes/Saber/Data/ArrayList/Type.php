@@ -37,13 +37,14 @@ namespace Saber\Data\ArrayList {
 		 * result when the method name is preceded by a double-underscore.
 		 *
 		 * @access public
+		 * @final
 		 * @param string $method                                    the method being called
 		 * @param array $args                                       the arguments associated with the call
 		 * @return mixed                                            the un-boxed value
 		 * @throws Throwable\UnimplementedMethod\Exception          indicates that the class has not
 		 *                                                          implemented the called method
 		 */
-		public function __call($method, $args) {
+		public final function __call($method, $args) {
 			$module = '\\Saber\\Data\\ArrayList\\Module';
 			if (preg_match('/^__[a-z_][a-z0-9_]*$/i', $method)) {
 				$method = substr($method, 2);
@@ -192,17 +193,6 @@ namespace Saber\Data\ArrayList {
 		 */
 		public final function tail() {
 			return new ArrayList\Type(array_slice($this->value, 1));
-		}
-
-		/**
-		 * This method returns the object as a string.
-		 *
-		 * @access public
-		 * @final
-		 * @return String\Type                                      the object as a string
-		 */
-		public final function toString() {
-			return String\Module::create($this->__toString());
 		}
 
 		/**

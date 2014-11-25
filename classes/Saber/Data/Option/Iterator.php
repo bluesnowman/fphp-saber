@@ -18,7 +18,9 @@
 
 namespace Saber\Data\Option {
 
-	use \Saber\Data;
+	use \Saber\Data\Bool;
+	use \Saber\Data\Int32;
+	use \Saber\Data\Option;
 
 	class Iterator implements \Countable, \Iterator {
 
@@ -42,10 +44,10 @@ namespace Saber\Data\Option {
 		 * This constructor initializes this class with the specified collection.
 		 *
 		 * @access public
-		 * @param Option\Type $option                               the collection to be iterated
+		 * @param Option\Type $xs                                   the collection to be iterated
 		 */
-		public function __construct(Option\Type $option) {
-			$this->collection = $option;
+		public function __construct(Option\Type $xs) {
+			$this->collection = $xs;
 			$this->position = Int32\Module::zero();
 		}
 
@@ -96,7 +98,7 @@ namespace Saber\Data\Option {
 		 * @return Bool\Type                                        whether there are more objects
 		 */
 		public function next() {
-			$this->position = $this->position->increment();
+			$this->position = Int32\Module::increment($this->position);
 			return Bool\Module::create($this->valid());
 		}
 

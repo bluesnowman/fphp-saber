@@ -18,6 +18,8 @@
 
 namespace Saber\Data\Char {
 
+	include_once(implode(DIRECTORY_SEPARATOR, array(dirname(__FILE__), '..', '..', 'Ext', 'mbstring.php')));
+
 	use \Saber\Core;
 	use \Saber\Data;
 	use \Saber\Throwable;
@@ -80,7 +82,7 @@ namespace Saber\Data\Char {
 		 * This constructor initializes the class with the specified value.
 		 *
 		 * @access public
-		 * @param char $value                                       the value to be assigned
+		 * @param string $value                                     the value to be assigned
 		 */
 		public function __construct($value) {
 			$this->value = (string) $value;
@@ -118,7 +120,7 @@ namespace Saber\Data\Char {
 		 * @access public
 		 * @final
 		 * @param integer $depth                                    how many levels to unbox
-		 * @return char                                             the un-boxed value
+		 * @return string                                           the un-boxed value
 		 */
 		public final function unbox($depth = 0) {
 			return $this->value;

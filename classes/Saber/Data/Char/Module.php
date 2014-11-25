@@ -18,7 +18,7 @@
 
 namespace Saber\Data\Char {
 
-	include_once(implode(DIRECTORY_SEPARATOR, array(dirname(__FILE__), '..', 'Ext', 'mbstring.php')));
+	include_once(implode(DIRECTORY_SEPARATOR, array(dirname(__FILE__), '..', '..', 'Ext', 'mbstring.php')));
 
 	use \Saber\Control;
 	use \Saber\Core;

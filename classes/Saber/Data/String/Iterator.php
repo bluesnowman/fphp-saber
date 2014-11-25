@@ -18,7 +18,10 @@
 
 namespace Saber\Data\String {
 
-	use \Saber\Data;
+	use \Saber\Data\Bool;
+	use \Saber\Data\Char;
+	use \Saber\Data\Int32;
+	use \Saber\Data\String;
 
 	class Iterator implements \Countable, \Iterator {
 
@@ -42,10 +45,10 @@ namespace Saber\Data\String {
 		 * This constructor initializes this class with the specified collection.
 		 *
 		 * @access public
-		 * @param String\Type $string                               the collection to be iterated
+		 * @param String\Type $xs                                   the collection to be iterated
 		 */
-		public function __construct(String\Type $string) {
-			$this->collection = $string;
+		public function __construct(String\Type $xs) {
+			$this->collection = $xs;
 			$this->position = Int32\Module::zero();
 		}
 
@@ -96,7 +99,7 @@ namespace Saber\Data\String {
 		 * @return Bool\Type                                        whether there are more objects
 		 */
 		public function next() {
-			$this->position = $this->position->increment();
+			$this->position = Int32\Module::increment($this->position);
 			return Bool\Module::create($this->valid());
 		}
 

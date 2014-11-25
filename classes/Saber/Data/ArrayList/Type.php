@@ -135,6 +135,17 @@ namespace Saber\Data\ArrayList {
 			return (string) serialize($this->unbox());
 		}
 
+		/**
+		 * This method returns the tail of this list.
+		 *
+		 * @access public
+		 * @final
+		 * @return array                                            the tail of this list
+		 */
+		public final function __tail() {
+			return array_slice($this->value, 1);
+		}
+
 		#endregion
 
 		#region Methods -> Object Oriented
@@ -192,7 +203,7 @@ namespace Saber\Data\ArrayList {
 		 * @return ArrayList\Type                                   the tail of this list
 		 */
 		public final function tail() {
-			return new ArrayList\Type(array_slice($this->value, 1));
+			return new ArrayList\Type($this->__tail());
 		}
 
 		/**

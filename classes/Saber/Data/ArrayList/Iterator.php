@@ -44,10 +44,10 @@ namespace Saber\Data\ArrayList {
 		 * This constructor initializes this class with the specified collection.
 		 *
 		 * @access public
-		 * @param ArrayList\Type $arrayList                         the collection to be iterated
+		 * @param ArrayList\Type $xs                                the collection to be iterated
 		 */
-		public function __construct(ArrayList\Type $arrayList) {
-			$this->collection = $arrayList;
+		public function __construct(ArrayList\Type $xs) {
+			$this->collection = $xs;
 			$this->position = Int32\Module::zero();
 		}
 

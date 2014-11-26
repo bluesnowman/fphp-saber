@@ -19,9 +19,11 @@
 namespace Saber\Data\LinkedList\Cons {
 
 	use \Saber\Core;
-	use \Saber\Data;
+	use \Saber\Data\Bool;
+	use \Saber\Data\Int32;
+	use \Saber\Data\LinkedList;
 
-	class Type extends LinkedList\Type\Type {
+	final class Type extends LinkedList\Type {
 
 		#region Properties
 
@@ -41,11 +43,11 @@ namespace Saber\Data\LinkedList\Cons {
 		 * This constructor initializes the class with the specified values.
 		 *
 		 * @access public
-		 * @param Core\Any $head                                    the object to be assigned
+		 * @param Core\Type $head                                   the object to be assigned
 		 *                                                          to the head
 		 * @param LinkedList\Type $tail                             the tail to be linked
 		 */
-		public function __construct(Core\Any $head, LinkedList\Type $tail) {
+		public function __construct(Core\Type $head, LinkedList\Type $tail) {
 			$this->value = $head;
 			$this->tail = $tail;
 		}
@@ -92,11 +94,11 @@ namespace Saber\Data\LinkedList\Cons {
 		 * This method evaluates whether the specified object is equal to the current object.
 		 *
 		 * @access public
-		 * @param Core\Any $that                                    the object to be evaluated
+		 * @param Core\Type $that                                   the object to be evaluated
 		 * @return Bool\Type                                        whether the specified object is equal
 		 *                                                          to the current object
 		 */
-		public function equals(Core\Any $that) {
+		public function equals(Core\Type $that) {
 			if (($that === null) || ($this->__typeOf() != $that->__typeOf())) {
 				return Bool\Module::false();
 			}
@@ -107,7 +109,7 @@ namespace Saber\Data\LinkedList\Cons {
 		 * This method returns the head object in this linked list.
 		 *
 		 * @access public
-		 * @return Core\Any                                         the head object in this linked
+		 * @return Core\Type                                        the head object in this linked
 		 *                                                          list
 		 */
 		public function head() {
@@ -118,11 +120,11 @@ namespace Saber\Data\LinkedList\Cons {
 		 * This method evaluates whether the specified object is identical to the current object.
 		 *
 		 * @access public
-		 * @param Core\Any $that                                    the object to be evaluated
+		 * @param Core\Type $that                                   the object to be evaluated
 		 * @return Bool\Type                                        whether the specified object is identical
 		 *                                                          to the current object
 		 */
-		public function identical(Core\Any $that) {
+		public function identical(Core\Type $that) {
 			if (($that === null) || ($this->__typeOf() != $that->__typeOf())) {
 				return Bool\Module::false();
 			}

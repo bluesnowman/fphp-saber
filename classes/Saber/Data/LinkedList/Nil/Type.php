@@ -19,10 +19,12 @@
 namespace Saber\Data\LinkedList\Nil {
 
 	use \Saber\Core;
-	use \Saber\Data;
+	use \Saber\Data\Bool;
+	use \Saber\Data\Int32;
+	use \Saber\Data\LinkedList;
 	use \Saber\Throwable;
 
-	class Type extends LinkedList\Type\Type {
+	final class Type extends LinkedList\Type {
 
 		#region Methods -> Object Oriented -> Universal
 
@@ -36,7 +38,7 @@ namespace Saber\Data\LinkedList\Nil {
 		 *                                                          object
 		 */
 		public function compareTo(LinkedList\Type $that) {
-			if ($that instanceof LinkedList\Type\Nil) {
+			if ($that instanceof LinkedList\Nil\Type) {
 				return Int32\Module::zero();
 			}
 			return Int32\Module::negative();

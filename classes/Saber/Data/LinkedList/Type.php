@@ -19,8 +19,213 @@
 namespace Saber\Data\LinkedList {
 
 	use \Saber\Core;
+	use \Saber\Data\Bool;
+	use \Saber\Data\Collection;
+	use \Saber\Data\Int32;
+	use \Saber\Data\LinkedList;
+	use \Saber\Throwable;
 
-	class Type extends Core\Type implements Core\Type\Boxable {
+	abstract class Type extends Collection\Type implements Core\Type\Boxable {
+
+		#region Methods -> Native Oriented
+
+		/**
+		 * This method is called when a method is not defined and will attempt to remap
+		 * the call.  Particularly, this method provides a shortcut means of unboxing a method's
+		 * result when the method name is preceded by a double-underscore.
+		 *
+		 * @access public
+		 * @final
+		 * @param string $method                                    the method being called
+		 * @param array $args                                       the arguments associated with the call
+		 * @return mixed                                            the un-boxed value
+		 * @throws Throwable\UnimplementedMethod\Exception          indicates that the class has not
+		 *                                                          implemented the called method
+		 */
+		public final function __call($method, $args) {
+			$module = '\\Saber\\Data\\LinkedList\\Module';
+			if (preg_match('/^__[a-z_][a-z0-9_]*$/i', $method)) {
+				$method = substr($method, 2);
+				if (!in_array($method, array('choice', 'unbox'))) {
+					if (method_exists($module, $method)) {
+						array_unshift($args, $this);
+						$result = call_user_func_array(array($module, $method), $args);
+						if ($result instanceof Core\Type\Boxable) {
+							return $result->unbox();
+						}
+						return $result;
+					}
+				}
+			}
+			else {
+				if (method_exists($module, $method)) {
+					array_unshift($args, $this);
+					$result = call_user_func_array(array($module, $method), $args);
+					return $result;
+				}
+			}
+			throw new Throwable\UnimplementedMethod\Exception('Unable to call method. No method ":method" exists in module ":module".', array(':module' => $module, ':method' => $method));
+		}
+
+		/**
+		 * This method returns the element at the specified index.
+		 *
+		 * @access public
+		 * @final
+		 * @param Int32\Type $i                                     the index of the element
+		 * @return mixed                                            the element at the specified index
+		 */
+		public final function __element(Int32\Type $i) {
+			return $this->element($i)->unbox();
+		}
+
+		/**
+		 * This method returns the head object in this linked list.
+		 *
+		 * @access public
+		 * @final
+		 * @return mixed                                            the head object in this linked list
+		 */
+		public final function __head() {
+			return $this->head()->unbox();
+		}
+
+		/**
+		 * This method (aka "null") returns whether this linked list is empty.
+		 *
+		 * @access public
+		 * @final
+		 * @return boolean                                          whether the linked list is empty
+		 */
+		public final function __isEmpty() {
+			return ($this->value instanceof LinkedList\Nil\Type);
+		}
+
+		/**
+		 * This method returns the length of this linked list.
+		 *
+		 * @access public
+		 * @final
+		 * @return integer                                          the length of this linked list
+		 */
+		public final function __length() {
+			return $this->length()->unbox();
+		}
+
+		/**
+		 * This method returns the object as a string.
+		 *
+		 * @access public
+		 * @final
+		 * @return string                                           the object as a string
+		 */
+		public final function __toString() {
+			return (string) serialize($this->unbox());
+		}
+
+		/**
+		 * This method returns the tail of this linked list.
+		 *
+		 * @access public
+		 * @final
+		 * @return array                                            the tail of this linked list
+		 */
+		public final function __tail() {
+			return $this->tail()->unbox();
+		}
+
+		#endregion
+
+		#region Methods -> Object Oriented
+
+		/**
+		 * This method returns the element at the specified index.
+		 *
+		 * @access public
+		 * @final
+		 * @param Int32\Type $i                                     the index of the element
+		 * @return mixed                                            the element at the specified index
+		 */
+		public final function element(Int32\Type $i) {
+			$j = Int32\Module::zero();
+
+			for ($zs = $this; ! $zs->__isEmpty(); $zs = $zs->tail()) {
+				if (Int32\Module::eq($i, $j)->unbox()) {
+					return $zs->head();
+				}
+				$j = Int32\Module::increment($j);
+			}
+
+			throw new Throwable\OutOfBounds\Exception('Unable to return element at index :index.', array(':index' => $i->unbox()));
+		}
+
+		/**
+		 * This method returns the head object in this linked list.
+		 *
+		 * @access public
+		 * @abstract
+		 * @return mixed                                            the head object in this linked list
+		 */
+		public abstract function head();
+
+		/**
+		 * This method (aka "null") returns whether this linked list is empty.
+		 *
+		 * @access public
+		 * @final
+		 * @return Bool\Type                                        whether the linked list is empty
+		 */
+		public final function isEmpty() {
+			return Bool\Module::create($this->__isEmpty());
+		}
+
+		/**
+		 * This method returns the length of this linked list.
+		 *
+		 * @access public
+		 * @final
+		 * @return Int32\Type                                       the length of this linked list
+		 */
+		public final function length() {
+			$c = Int32\Module::zero();
+			for ($zs = $this; ! $zs->__isEmpty(); $zs = $zs->tail()) {
+				$c = Int32\Module::increment($c);
+			}
+			return $c;
+		}
+
+		/**
+		 * This method returns the tail of this linked list.
+		 *
+		 * @access public
+		 * @abstract
+		 * @return LinkedList\Type                                  the tail of this linked list
+		 */
+		public abstract function tail();
+
+		/**
+		 * This method returns the value contained within the boxed object.
+		 *
+		 * @access public
+		 * @final
+		 * @param integer $depth                                    how many levels to unbox
+		 * @return array                                            the un-boxed value
+		 */
+		public final function unbox($depth = 0) {
+			if ($depth > 0) {
+				$buffer = array();
+				for ($zs = $this; ! $zs->__isEmpty(); $zs = $zs->tail()) {
+					$z = $zs->head();
+					$buffer[] = ($z instanceof Core\Type\Boxable)
+						? $z->unbox($depth - 1)
+						: $z;
+				}
+				return $buffer;
+			}
+			return $this->value;
+		}
+
+		#endregion
 
 	}
 

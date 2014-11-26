@@ -18,43 +18,34 @@
 
 namespace Saber\Data\Option\Some {
 
-	use \Saber\Data;
+	use \Saber\Core;
+	use \Saber\Data\Option;
 
-	class Type extends Option\Type\Type {
+	class Type extends Option\Type {
 
-		#region Properties
-
-		/**
-		 * This variable stores the boxed object for this option.
-		 *
-		 * @access protected
-		 * @var Data\Type
-		 */
-		protected $object;
-
-		#endregion
-
-		#region Methods -> Implementation
+		#region Methods -> Native Oriented
 
 		/**
 		 * This constructor initializes the class with the specified object.
 		 *
 		 * @access public
-		 * @param Data\Type $object                                 the boxed object to be made an
+		 * @param Core\Type $object                                 the boxed object to be made an
 		 *                                                          option
 		 */
-		public function __construct(Data\Type $object) {
-			$this->object = $object;
+		public function __construct(Core\Type $object) {
+			$this->value = $object;
 		}
+
+		#region Methods -> Object Oriented
 
 		/**
 		 * This method returns the object stored within the option.
 		 *
 		 * @access public
-		 * @return Data\Type                                        the stored object
+		 * @return Core\Type                                        the stored object
 		 */
 		public function object() {
-			return $this->object;
+			return $this->value;
 		}
 
 		#endregion

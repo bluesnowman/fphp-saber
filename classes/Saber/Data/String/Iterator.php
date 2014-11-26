@@ -23,7 +23,7 @@ namespace Saber\Data\String {
 	use \Saber\Data\Int32;
 	use \Saber\Data\String;
 
-	class Iterator implements \Countable, \Iterator {
+	final class Iterator implements \Countable, \Iterator {
 
 		/**
 		 * This variable stores a reference to the collection being iterated.
@@ -31,7 +31,7 @@ namespace Saber\Data\String {
 		 * @access protected
 		 * @var String\Type
 		 */
-		protected $collection;
+		protected $xs;
 
 		/**
 		 * This variable stores the current position.
@@ -39,7 +39,7 @@ namespace Saber\Data\String {
 		 * @access protected
 		 * @var Int32\Type
 		 */
-		protected $position;
+		protected $i;
 
 		/**
 		 * This constructor initializes this class with the specified collection.
@@ -48,8 +48,8 @@ namespace Saber\Data\String {
 		 * @param String\Type $xs                                   the collection to be iterated
 		 */
 		public function __construct(String\Type $xs) {
-			$this->collection = $xs;
-			$this->position = Int32\Module::zero();
+			$this->xs = $xs;
+			$this->i = Int32\Module::zero();
 		}
 
 		/**
@@ -58,8 +58,8 @@ namespace Saber\Data\String {
 		 * @access public
 		 */
 		public function __destruct() {
-			$this->collection = null;
-			$this->position = null;
+			$this->xs = null;
+			$this->i = null;
 		}
 
 		/**
@@ -69,7 +69,7 @@ namespace Saber\Data\String {
 		 * @return integer                                          the length of the collection
 		 */
 		public function count() {
-			return $this->collection->__length();
+			return $this->xs->__length();
 		}
 
 		/**
@@ -79,7 +79,7 @@ namespace Saber\Data\String {
 		 * @return Char\Type                                        the current object
 		 */
 		public function current() {
-			$this->collection->element($this->position);
+			$this->xs->element($this->i);
 		}
 
 		/**
@@ -89,7 +89,7 @@ namespace Saber\Data\String {
 		 * @return Int32\Type                                       the current key
 		 */
 		public function key() {
-			return $this->position;
+			return $this->i;
 		}
 
 		/**
@@ -99,7 +99,7 @@ namespace Saber\Data\String {
 		 * @return Bool\Type                                        whether there are more objects
 		 */
 		public function next() {
-			$this->position = Int32\Module::increment($this->position);
+			$this->i = Int32\Module::increment($this->i);
 			return Bool\Module::create($this->valid());
 		}
 
@@ -109,7 +109,7 @@ namespace Saber\Data\String {
 		 * @access public
 		 */
 		public function rewind() {
-			$this->position = Int32\Module::zero();
+			$this->i = Int32\Module::zero();
 		}
 
 		/**
@@ -119,7 +119,7 @@ namespace Saber\Data\String {
 		 * @return boolean                                          whether there are more objects
 		 */
 		public function valid() {
-			return ($this->position->unbox() < $this->collection->__length());
+			return ($this->i->unbox() < $this->xs->__length());
 		}
 
 	}

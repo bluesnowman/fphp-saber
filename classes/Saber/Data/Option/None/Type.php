@@ -18,18 +18,19 @@
 
 namespace Saber\Data\Option\None {
 
-	use \Saber\Data;
+	use \Saber\Core;
+	use \Saber\Data\Option;
 	use \Saber\Throwable;
 
-	class Type extends Option\Type\Type {
+	class Type extends Option\Type {
 
-		#region Methods -> Implementation
+		#region Methods -> Object Oriented
 
 		/**
 		 * This method returns the object stored within the option.
 		 *
 		 * @access public
-		 * @return Data\Type                                        the stored object
+		 * @return Core\Type                                        the stored object
 		 * @throws Throwable\UnimplementedMethod\Exception          indicates that this method cannot
 		 *                                                          be called
 		 */

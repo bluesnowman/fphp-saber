@@ -18,44 +18,46 @@
 
 namespace Saber\Data\LinkedList {
 
-	use \Saber\Data;
+	use \Saber\Data\Bool;
+	use \Saber\Data\Int32;
+	use \Saber\Data\LinkedList;
 
-	class Iterator implements \Countable, \Iterator {
+	final class Iterator implements \Countable, \Iterator {
 
 		/**
 		 * This variable stores a reference to the first node in the collection.
 		 *
 		 * @access protected
-		 * @var Data\LinkedList
+		 * @var LinkedList\Type
 		 */
-		protected $collection;
+		protected $xs;
 
 		/**
 		 * This variable stores a reference to the current node in the collection.
 		 *
 		 * @access protected
-		 * @var Data\LinkedList
+		 * @var LinkedList\Type
 		 */
-		protected $current;
+		protected $ys;
 
 		/**
 		 * This variable stores the current position.
 		 *
 		 * @access protected
-		 * @var Data\Int32
+		 * @var Int32\Type
 		 */
-		protected $position;
+		protected $i;
 
 		/**
 		 * This constructor initializes this class with the specified collection.
 		 *
 		 * @access public
-		 * @param Data\LinkedList $linkedList                       the collection to be iterated
+		 * @param LinkedList\Type $linkedList                       the collection to be iterated
 		 */
-		public function __construct(Data\LinkedList $linkedList) {
-			$this->collection = $linkedList;
-			$this->current = $linkedList;
-			$this->position = Data\Int32::zero();
+		public function __construct(LinkedList\Type $linkedList) {
+			$this->xs = $linkedList;
+			$this->ys = $linkedList;
+			$this->i = Int32\Type::zero();
 		}
 
 		/**
@@ -64,9 +66,9 @@ namespace Saber\Data\LinkedList {
 		 * @access public
 		 */
 		public function __destruct() {
-			$this->collection = null;
-			$this->current = null;
-			$this->position = null;
+			$this->xs = null;
+			$this->ys = null;
+			$this->i = null;
 		}
 
 		/**
@@ -76,39 +78,39 @@ namespace Saber\Data\LinkedList {
 		 * @return integer                                          the length of the collection
 		 */
 		public function count() {
-			return $this->collection->__length();
+			return $this->xs->__length();
 		}
 
 		/**
 		 * This method returns the current object.
 		 *
 		 * @access public
-		 * @return Data\LinkedList                                  the current object
+		 * @return LinkedList\Type                                  the current object
 		 */
 		public function current() {
-			$this->current->head();
+			$this->ys->head();
 		}
 
 		/**
 		 * This method returns the current key.
 		 *
 		 * @access public
-		 * @return Data\Int32                                       the current key
+		 * @return Int32\Type                                       the current key
 		 */
 		public function key() {
-			return $this->position;
+			return $this->i;
 		}
 
 		/**
 		 * This method causes the iterator to advance to the next object.
 		 *
 		 * @access public
-		 * @return Data\Bool                                        whether there are more objects
+		 * @return Bool\Type                                        whether there are more objects
 		 */
 		public function next() {
-			$this->current = $this->current->tail();
-			$this->position = $this->position->increment();
-			return Data\Bool::create($this->valid());
+			$this->ys = $this->ys->tail();
+			$this->i = Int32\Module::increment($this->i);
+			return Bool\Type::box($this->valid());
 		}
 
 		/**
@@ -117,8 +119,8 @@ namespace Saber\Data\LinkedList {
 		 * @access public
 		 */
 		public function rewind() {
-			$this->current = $this->collection;
-			$this->position = Data\Int32::zero();
+			$this->ys = $this->xs;
+			$this->i = Int32\Type::zero();
 		}
 
 		/**
@@ -128,7 +130,7 @@ namespace Saber\Data\LinkedList {
 		 * @return boolean                                          whether there are more objects
 		 */
 		public function valid() {
-			return !$this->current->__isEmpty();
+			return !$this->ys->__isEmpty();
 		}
 
 	}

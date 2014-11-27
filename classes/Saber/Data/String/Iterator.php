@@ -18,35 +18,38 @@
 
 namespace Saber\Data\String {
 
-	use \Saber\Data;
+	use \Saber\Data\Bool;
+	use \Saber\Data\Char;
+	use \Saber\Data\Int32;
+	use \Saber\Data\String;
 
-	class Iterator implements \Countable, \Iterator {
+	final class Iterator implements \Countable, \Iterator {
 
 		/**
 		 * This variable stores a reference to the collection being iterated.
 		 *
 		 * @access protected
-		 * @var Data\String
+		 * @var String\Type
 		 */
-		protected $collection;
+		protected $xs;
 
 		/**
 		 * This variable stores the current position.
 		 *
 		 * @access protected
-		 * @var Data\Int32
+		 * @var Int32\Type
 		 */
-		protected $position;
+		protected $i;
 
 		/**
 		 * This constructor initializes this class with the specified collection.
 		 *
 		 * @access public
-		 * @param Data\String $string                               the collection to be iterated
+		 * @param String\Type $xs                                   the collection to be iterated
 		 */
-		public function __construct(Data\String $string) {
-			$this->collection = $string;
-			$this->position = Data\Int32::zero();
+		public function __construct(String\Type $xs) {
+			$this->xs = $xs;
+			$this->i = Int32\Type::zero();
 		}
 
 		/**
@@ -55,8 +58,8 @@ namespace Saber\Data\String {
 		 * @access public
 		 */
 		public function __destruct() {
-			$this->collection = null;
-			$this->position = null;
+			$this->xs = null;
+			$this->i = null;
 		}
 
 		/**
@@ -66,38 +69,38 @@ namespace Saber\Data\String {
 		 * @return integer                                          the length of the collection
 		 */
 		public function count() {
-			return $this->collection->__length();
+			return $this->xs->__length();
 		}
 
 		/**
 		 * This method returns the current object.
 		 *
 		 * @access public
-		 * @return Data\Char                                        the current object
+		 * @return Char\Type                                        the current object
 		 */
 		public function current() {
-			$this->collection->element($this->position);
+			$this->xs->element($this->i);
 		}
 
 		/**
 		 * This method returns the current key.
 		 *
 		 * @access public
-		 * @return Data\Int32                                       the current key
+		 * @return Int32\Type                                       the current key
 		 */
 		public function key() {
-			return $this->position;
+			return $this->i;
 		}
 
 		/**
 		 * This method causes the iterator to advance to the next object.
 		 *
 		 * @access public
-		 * @return Data\Bool                                        whether there are more objects
+		 * @return Bool\Type                                        whether there are more objects
 		 */
 		public function next() {
-			$this->position = $this->position->increment();
-			return Data\Bool::create($this->valid());
+			$this->i = Int32\Module::increment($this->i);
+			return Bool\Type::box($this->valid());
 		}
 
 		/**
@@ -106,7 +109,7 @@ namespace Saber\Data\String {
 		 * @access public
 		 */
 		public function rewind() {
-			$this->position = Data\Int32::zero();
+			$this->i = Int32\Type::zero();
 		}
 
 		/**
@@ -116,7 +119,7 @@ namespace Saber\Data\String {
 		 * @return boolean                                          whether there are more objects
 		 */
 		public function valid() {
-			return ($this->position->unbox() < $this->collection->__length());
+			return ($this->i->unbox() < $this->xs->__length());
 		}
 
 	}

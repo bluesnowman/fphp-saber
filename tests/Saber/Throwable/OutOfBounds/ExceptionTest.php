@@ -22,9 +22,9 @@ namespace Saber\Throwable\OutOfBounds {
 	use \Saber\Throwable;
 
 	/**
-	 * @group AnyErr
+	 * @group ExceptionTest
 	 */
-	class ExceptionTest extends Core\AnyTest {
+	class ExceptionTest extends Core\Test {
 
 		/**
 		 * This method provides the data for testing the boxing of a value.
@@ -44,19 +44,15 @@ namespace Saber\Throwable\OutOfBounds {
 		 * @dataProvider dataBox
 		 */
 		public function testBox($provided, $expected) {
-			$p0 = Throwable\OutOfBounds\Exception::box($provided[0], $provided[1], $provided[2]);
+			$p0 = Throwable\OutOfBounds\Exception::make($provided[0], $provided[1], $provided[2]);
 			$e0 = new Throwable\OutOfBounds\Exception($expected[0], $expected[1], $expected[2]);
 
-			$this->assertInstanceOf('\\Saber\\Core\\AnyErr', $p0);
+			$this->assertInstanceOf('\\OutOfBoundsException', $p0);
+			$this->assertInstanceOf('\\Saber\\Core\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Throwable\\Runtime\\Exception', $p0);
 			$this->assertInstanceOf('\\Saber\\Throwable\\OutOfBounds\\Exception', $p0);
 			$this->assertEquals($e0, $p0);
-			$this->assertTrue($e0->__equals($p0));
-
-			$p1 = $p0->unbox();
-			$e1 = $expected[1];
-
-			$this->assertInternalType('array', $p1);
-			$this->assertEmpty(array_diff($p1, $e1));
+			$this->assertTrue($e0->__eq($p0));
 
 			$p2 = $p0->getCode();
 			$e2 = $expected[2];
@@ -70,7 +66,7 @@ namespace Saber\Throwable\OutOfBounds {
 		 *
 		 * @return array
 		 */
-		public function dataCompareTo() {
+		public function dataCompare() {
 			$data = array(
 				array(array(array('', array(), 0), array('', array(), 0)), array(0)),
 			);
@@ -80,13 +76,13 @@ namespace Saber\Throwable\OutOfBounds {
 		/**
 		 * This method tests the evaluation of one value compared to another.
 		 *
-		 * @dataProvider dataCompareTo
+		 * @dataProvider dataCompare
 		 */
-		public function testCompareTo($provided, $expected) {
-			$p0 = Throwable\OutOfBounds\Exception::box($provided[0][0], $provided[0][1], $provided[0][2])->compareTo(Throwable\OutOfBounds\Exception::box($provided[1][0], $provided[1][1], $provided[1][2]));
+		public function testCompare($provided, $expected) {
+			$p0 = Throwable\OutOfBounds\Exception::make($provided[0][0], $provided[0][1], $provided[0][2])->compare(Throwable\OutOfBounds\Exception::make($provided[1][0], $provided[1][1], $provided[1][2]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Int32\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -108,7 +104,7 @@ namespace Saber\Throwable\OutOfBounds {
 		 * @dataProvider dataToString
 		 */
 		public function testToString($provided, $expected) {
-			$p0 = Throwable\OutOfBounds\Exception::box($provided[0], $provided[1], $provided[2])->__toString();
+			$p0 = Throwable\OutOfBounds\Exception::make($provided[0], $provided[1], $provided[2])->__toString();
 			$e0 = $expected[0];
 
 			$this->assertInternalType('string', $p0);

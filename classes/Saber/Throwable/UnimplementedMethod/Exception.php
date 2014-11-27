@@ -18,18 +18,17 @@
 
 namespace Saber\Throwable\UnimplementedMethod {
 
-	use \Saber\Core;
 	use \Saber\Throwable;
 
 	class Exception extends \BadMethodCallException implements Throwable\Runtime\Exception {
 
 		#region Traits
 
-		use Core\AnyErr\Impl;
+		use Throwable\Runtime\Exception\Impl;
 
 		#endregion
 
-		#region Methods -> Boxing/Creation
+		#region Methods -> Initialization
 
 		/**
 		 * This constructor creates a new runtime exception.

@@ -39,13 +39,8 @@ namespace Saber\Data\Unit {
 		 *                                                          to the right operand
 		 */
 		public static function eq(Unit\Type $x, Core\Type $y) { // ==
-			$type = $x->__typeOf();
-			if ($y !== null) {
-				if ($y instanceof $type) {
-					return Bool\Type::true();
-				}
-			}
-			return Bool\Type::false();
+			$type = ($x === null) ? '\\Saber\\Data\\Unit\\Type' : $x->__typeOf();
+			return Bool\Type::box(($y === null) || ($y instanceof $type));
 		}
 
 		/**
@@ -59,12 +54,8 @@ namespace Saber\Data\Unit {
 		 *                                                          to the right operand
 		 */
 		public static function id(Unit\Type $x, Core\Type $y) { // ===
-			if ($y !== null) {
-				if ($x->__typeOf() === $y->__typeOf()) {
-					return Bool\Type::box($x->__hashCode() === $y->__hashCode());
-				}
-			}
-			return Bool\Type::false();
+			$type = ($x === null) ? '\\Saber\\Data\\Unit\\Type' : $x->__typeOf();
+			return Bool\Type::box(($y === null) || ($type === $y->__typeOf()));
 		}
 
 		/**
@@ -111,26 +102,20 @@ namespace Saber\Data\Unit {
 		 *                                                          or greater than the right operand
 		 */
 		public static function compare(Unit\Type $x, Unit\Type $y) {
-			if (($x === null) && ($y !== null)) {
-				return Int32\Type::negative();
-			}
-			if (($x === null) && ($y === null)) {
+			if (Unit\Module::eq($x, $y)->unbox()) {
 				return Int32\Type::zero();
 			}
-			if (($x !== null) && ($y === null)) {
-				return Int32\Type::one();
-			}
 
-			$r = strcmp($x->__hashCode(), $y->__hashCode());
+			$r = strcmp($x->__typeOf(), $y->__typeOf());
 
 			if ($r < 0) {
 				return Int32\Type::negative();
 			}
-			else if ($r == 0) {
-				return Int32\Type::zero();
+			else if ($r > 0) {
+				return Int32\Type::one();
 			}
 			else {
-				return Int32\Type::one();
+				return Int32\Type::zero();
 			}
 		}
 

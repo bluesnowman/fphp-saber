@@ -20,24 +20,26 @@ namespace Saber\Control {
 
 	use \Saber\Control;
 	use \Saber\Core;
-	use \Saber\Data;
+	use \Saber\Data\Int32;
 
 	/**
-	 * @group AnyCtrl
+	 * @group TypeTest
 	 */
-	class MonadTest extends Core\Test {
+	class TypeTest extends Core\Test {
 
 		/**
 		 * This method tests a set of choices.
 		 */
 		public function testChoice() {
+			//$this->markTestIncomplete();
+
 			$p0 = Int32\Type::make(0);
 			$e0 = 0;
 
 			$p1 = Int32\Type::make(1);
 			$e1 = 1;
 
-			Control\Monad::choice($p0)
+			Control\Type::choice($p0)
 				->when($p0, function(Int32\Type $x) use($e0) {
 					$this->assertSame($e0, $x->unbox());
 				})
@@ -45,7 +47,7 @@ namespace Saber\Control {
 					$this->assertSame($e1, $x->unbox());
 				})
 			->end();
-			Control\Monad::choice($p0)
+			Control\Type::choice($p0)
 				->when($p1, function(Int32\Type $x) use($e1) {
 					$this->assertSame($e1, $x->unbox());
 				})
@@ -53,7 +55,7 @@ namespace Saber\Control {
 					$this->assertSame($e0, $x->unbox());
 				})
 			->end();
-			Control\Monad::choice($p0)
+			Control\Type::choice($p0)
 				->when($p1, function(Int32\Type $x) use($e1) {
 					$this->assertSame($e1, $x->unbox());
 				})

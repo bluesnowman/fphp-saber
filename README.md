@@ -209,7 +209,7 @@ make execute
 To run just a specific group of unit tests, for example:
 
 ````
-make execute GROUP=AnyVal
+make execute GROUP=TypeTest
 ````
 
 For more information, see the [documentation](https://github.com/bluesnowman/fphp-saber/blob/master/Makefile)

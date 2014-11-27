@@ -20,6 +20,6 @@ namespace Saber\Throwable\Runtime {
 
 	use \Saber\Core;
 
-	interface Exception extends Core\AnyErr { }
+	interface Exception extends Core\Type { }
 
 }

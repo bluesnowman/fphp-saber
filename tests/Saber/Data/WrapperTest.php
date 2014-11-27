@@ -47,7 +47,7 @@ namespace Saber\Data {
 		 * @dataProvider dataBox
 		 */
 		public function testBox($provided, $expected) {
-			$p0 = Object\Type::box($provided[0]);
+			$p0 = Object\Type::make($provided[0]);
 			$e0 = new Data\Object($expected[0]);
 
 			$this->assertInstanceOf('\\Saber\\Core\\AnyRef', $p0);
@@ -72,18 +72,18 @@ namespace Saber\Data {
 		 * This method tests the ability to make a choice.
 		 */
 		public function testChoice() {
-			$x = Object\Type::box(null);
+			$x = Object\Type::make(null);
 
 			$p0 = $x->choice();
 
 			$this->assertInstanceOf('\\Saber\\Control\\Monad\\Choice', $p0);
 
-			$p1 = $x->choice()->when(Object\Type::box(null), function(Object\Type $x) {})->end()->unbox();
+			$p1 = $x->choice()->when(Object\Type::make(null), function(Object\Type $x) {})->end()->unbox();
 
 			$this->assertInternalType('boolean', $p1);
 			$this->assertTrue($p1);
 
-			$p2 = $x->choice()->when(Object\Type::box(1), function(Object\Type $x) {})->end()->unbox();
+			$p2 = $x->choice()->when(Object\Type::make(1), function(Object\Type $x) {})->end()->unbox();
 
 			$this->assertInternalType('boolean', $p2);
 			$this->assertFalse($p2);
@@ -109,7 +109,7 @@ namespace Saber\Data {
 		 * @dataProvider dataCompareTo
 		 */
 		public function testCompareTo($provided, $expected) {
-			$p0 = Object\Type::box($provided[0])->compareTo(Object\Type::box($provided[1]));
+			$p0 = Object\Type::make($provided[0])->compareTo(Object\Type::make($provided[1]));
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
@@ -137,7 +137,7 @@ namespace Saber\Data {
 		 * @dataProvider dataShow
 		 */
 		public function testShow($provided, $expected) {
-			$p0 = Object\Type::box($provided[0]);
+			$p0 = Object\Type::make($provided[0]);
 			$e0 = $expected[0];
 
 			$this->expectOutputString($e0);
@@ -167,7 +167,7 @@ namespace Saber\Data {
 		 * @dataProvider dataToString
 		 */
 		public function testToString($provided, $expected) {
-			$p0 = Object\Type::box($provided[0])->__toString();
+			$p0 = Object\Type::make($provided[0])->__toString();
 			$e0 = $expected[0];
 
 			$this->assertInternalType('string', $p0);

@@ -46,7 +46,7 @@ namespace Saber\Data {
 		 * @dataProvider dataBox
 		 */
 		public function testBox($provided, $expected) {
-			$p0 = Char\Module::box($provided[0]);
+			$p0 = Char\Type::make($provided[0]);
 			$e0 = new Char\Type($expected[0], 'UTF-8');
 
 			$this->assertInstanceOf('\\Saber\\Core\\AnyVal', $p0);
@@ -66,18 +66,18 @@ namespace Saber\Data {
 		 * This method tests the ability to make a choice.
 		 */
 		public function testChoice() {
-			$x = Char\Module::box('m');
+			$x = Char\Type::make('m');
 
 			$p0 = $x->choice();
 
 			$this->assertInstanceOf('\\Saber\\Control\\Monad\\Choice', $p0);
 
-			$p1 = $x->choice()->when(Char\Module::box('m'), function(Char\Type $x) {})->end()->unbox();
+			$p1 = $x->choice()->when(Char\Type::make('m'), function(Char\Type $x) {})->end()->unbox();
 
 			$this->assertInternalType('boolean', $p1);
 			$this->assertTrue($p1);
 
-			$p2 = $x->choice()->when(Char\Module::box('z'), function(Char\Type $x) {})->end()->unbox();
+			$p2 = $x->choice()->when(Char\Type::make('z'), function(Char\Type $x) {})->end()->unbox();
 
 			$this->assertInternalType('boolean', $p2);
 			$this->assertFalse($p2);
@@ -103,7 +103,7 @@ namespace Saber\Data {
 		 * @dataProvider dataCompareTo
 		 */
 		public function testCompareTo($provided, $expected) {
-			$p0 = Char\Module::box($provided[0])->compareTo(Char\Module::box($provided[1]));
+			$p0 = Char\Type::make($provided[0])->compareTo(Char\Type::make($provided[1]));
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
@@ -134,7 +134,7 @@ namespace Saber\Data {
 		 * @dataProvider dataIsAlpha
 		 */
 		public function testIsAlpha($provided, $expected) {
-			$p0 = Char\Module::box($provided[0])->isAlpha();
+			$p0 = Char\Type::make($provided[0])->isAlpha();
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
@@ -166,7 +166,7 @@ namespace Saber\Data {
 		 * @dataProvider dataIsAlphaNum
 		 */
 		public function testIsAlphaNum($provided, $expected) {
-			$p0 = Char\Module::box($provided[0])->isAlphaNum();
+			$p0 = Char\Type::make($provided[0])->isAlphaNum();
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
@@ -198,7 +198,7 @@ namespace Saber\Data {
 		 * @dataProvider dataIsAscii
 		 */
 		public function testIsAscii($provided, $expected) {
-			$p0 = Char\Module::box($provided[0])->isAscii();
+			$p0 = Char\Type::make($provided[0])->isAscii();
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
@@ -225,7 +225,7 @@ namespace Saber\Data {
 		 * @dataProvider dataIsControl
 		 */
 		public function testIsControl($provided, $expected) {
-			$p0 = Char\Module::box($provided[0])->isControl();
+			$p0 = Char\Type::make($provided[0])->isControl();
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
@@ -253,7 +253,7 @@ namespace Saber\Data {
 		 * @dataProvider dataIsCyrillic
 		 */
 		public function testIsCyrillic($provided, $expected) {
-			$p0 = Char\Module::box($provided[0])->isCyrillic();
+			$p0 = Char\Type::make($provided[0])->isCyrillic();
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
@@ -290,7 +290,7 @@ namespace Saber\Data {
 		 * @dataProvider dataIsDigit
 		 */
 		public function testIsHexadecimal($provided, $expected) {
-			$p0 = Char\Module::box($provided[0])->isDigit();
+			$p0 = Char\Type::make($provided[0])->isDigit();
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
@@ -339,7 +339,7 @@ namespace Saber\Data {
 		 * @dataProvider dataIsHexDigit
 		 */
 		public function testIsHexDigit($provided, $expected) {
-			$p0 = Char\Module::box($provided[0])->isHexDigit();
+			$p0 = Char\Type::make($provided[0])->isHexDigit();
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
@@ -368,7 +368,7 @@ namespace Saber\Data {
 		 * @dataProvider dataIsLatin1
 		 */
 		public function testIsLatin1($provided, $expected) {
-			$p0 = Char\Module::box($provided[0])->isLatin1();
+			$p0 = Char\Type::make($provided[0])->isLatin1();
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
@@ -400,7 +400,7 @@ namespace Saber\Data {
 		 * @dataProvider dataIsLowerCase
 		 */
 		public function testIsLowerCase($provided, $expected) {
-			$p0 = Char\Module::box($provided[0])->isLowerCase();
+			$p0 = Char\Type::make($provided[0])->isLowerCase();
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
@@ -429,7 +429,7 @@ namespace Saber\Data {
 		 * @dataProvider dataIsNumber
 		 */
 		public function testIsNumber($provided, $expected) {
-			$p0 = Char\Module::box($provided[0])->isNumber();
+			$p0 = Char\Type::make($provided[0])->isNumber();
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
@@ -465,7 +465,7 @@ namespace Saber\Data {
 		 * @dataProvider dataIsOctDigit
 		 */
 		public function testIsOctDigit($provided, $expected) {
-			$p0 = Char\Module::box($provided[0])->isOctDigit();
+			$p0 = Char\Type::make($provided[0])->isOctDigit();
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
@@ -492,7 +492,7 @@ namespace Saber\Data {
 		 * @dataProvider dataIsPrintable
 		 */
 		public function testIsPrintable($provided, $expected) {
-			$p0 = Char\Module::box($provided[0])->isPrintable();
+			$p0 = Char\Type::make($provided[0])->isPrintable();
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
@@ -520,7 +520,7 @@ namespace Saber\Data {
 		 * @dataProvider dataIsPunctuation
 		 */
 		public function testIsPunctuation($provided, $expected) {
-			$p0 = Char\Module::box($provided[0])->isPunctuation();
+			$p0 = Char\Type::make($provided[0])->isPunctuation();
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
@@ -548,7 +548,7 @@ namespace Saber\Data {
 		 * @dataProvider dataIsSeparator
 		 */
 		public function testIsSeparator($provided, $expected) {
-			$p0 = Char\Module::box($provided[0])->isSeparator();
+			$p0 = Char\Type::make($provided[0])->isSeparator();
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
@@ -576,7 +576,7 @@ namespace Saber\Data {
 		 * @dataProvider dataIsSpace
 		 */
 		public function testIsSpace($provided, $expected) {
-			$p0 = Char\Module::box($provided[0])->isSpace();
+			$p0 = Char\Type::make($provided[0])->isSpace();
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
@@ -605,7 +605,7 @@ namespace Saber\Data {
 		 * @dataProvider dataIsSymbol
 		 */
 		public function testIsSymbol($provided, $expected) {
-			$p0 = Char\Module::box($provided[0])->isSymbol();
+			$p0 = Char\Type::make($provided[0])->isSymbol();
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
@@ -637,7 +637,7 @@ namespace Saber\Data {
 		 * @dataProvider dataIsUpperCase
 		 */
 		public function testIsUpperCase($provided, $expected) {
-			$p0 = Char\Module::box($provided[0])->isUpperCase();
+			$p0 = Char\Type::make($provided[0])->isUpperCase();
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
@@ -662,7 +662,7 @@ namespace Saber\Data {
 		 * @dataProvider dataShow
 		 */
 		public function testShow($provided, $expected) {
-			$p0 = Char\Module::box($provided[0]);
+			$p0 = Char\Type::make($provided[0]);
 			$e0 = $expected[0];
 
 			$this->expectOutputString($e0);
@@ -690,7 +690,7 @@ namespace Saber\Data {
 		 * @dataProvider dataToInt32
 		 */
 		public function testToInt32($provided, $expected) {
-			$p0 = Char\Module::box($provided[0])->toInt32();
+			$p0 = Char\Type::make($provided[0])->toInt32();
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
@@ -716,7 +716,7 @@ namespace Saber\Data {
 		 * @dataProvider dataToLowerCase
 		 */
 		public function testToLowerCase($provided, $expected) {
-			$p0 = Char\Module::box($provided[0])->toLowerCase();
+			$p0 = Char\Type::make($provided[0])->toLowerCase();
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Char', $p0);
@@ -743,7 +743,7 @@ namespace Saber\Data {
 		 * @dataProvider dataToString
 		 */
 		public function testToString($provided, $expected) {
-			$p0 = Char\Module::box($provided[0])->__toString();
+			$p0 = Char\Type::make($provided[0])->__toString();
 			$e0 = $expected[0];
 
 			$this->assertInternalType('string', $p0);
@@ -769,7 +769,7 @@ namespace Saber\Data {
 		 * @dataProvider dataToUpperCase
 		 */
 		public function testToUpperCase($provided, $expected) {
-			$p0 = Char\Module::box($provided[0])->toUpperCase();
+			$p0 = Char\Type::make($provided[0])->toUpperCase();
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Char', $p0);

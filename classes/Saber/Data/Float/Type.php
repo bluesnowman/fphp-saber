@@ -19,10 +19,74 @@
 namespace Saber\Data\Float {
 
 	use \Saber\Core;
+	use \Saber\Data\Float;
 	use \Saber\Data\Floating;
 	use \Saber\Throwable;
 
 	final class Type extends Floating\Type {
+
+		#region Methods -> Initialization
+
+		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered "not" type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param mixed $value                                      the value(s) to be boxed
+		 * @return Float\Type                                       the boxed object
+		 */
+		public static function box($value/*...*/) {
+			return new Float\Type($value);
+		}
+
+		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param mixed $value                                      the value(s) to be boxed
+		 * @return Float\Type                                       the boxed object
+		 */
+		public static function make($value/*...*/) {
+			return new Float\Type($value);
+		}
+
+		/**
+		 * This method returns an object with a "-1" value.
+		 *
+		 * @access public
+		 * @static
+		 * @return Float\Type                                       the object
+		 */
+		public static function negative() {
+			return new Float\Type(-1.0);
+		}
+
+		/**
+		 * This method returns an object with a "1" value.
+		 *
+		 * @access public
+		 * @static
+		 * @return Float\Type                                       the object
+		 */
+		public static function one() {
+			return new Float\Type(1.0);
+		}
+
+		/**
+		 * This method returns an object with a "0" value.
+		 *
+		 * @access public
+		 * @static
+		 * @return Float\Type                                       the object
+		 */
+		public static function zero() {
+			return new Float\Type(0.0);
+		}
+
+		#endregion
 
 		#region Methods -> Native Oriented
 
@@ -43,11 +107,11 @@ namespace Saber\Data\Float {
 			$module = '\\Saber\\Data\\Float\\Module';
 			if (preg_match('/^__[a-z_][a-z0-9_]*$/i', $method)) {
 				$method = substr($method, 2);
-				if (!in_array($method, array('choice', 'unbox'))) {
+				if (!in_array($method, array('call', 'choice', 'iterator', 'unbox'))) {
 					if (method_exists($module, $method)) {
 						array_unshift($args, $this);
 						$result = call_user_func_array(array($module, $method), $args);
-						if ($result instanceof Core\Type\Boxable) {
+						if ($result instanceof Core\Boxable\Type) {
 							return $result->unbox();
 						}
 						return $result;

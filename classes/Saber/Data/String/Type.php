@@ -28,7 +28,69 @@ namespace Saber\Data\String {
 	use \Saber\Data\String;
 	use \Saber\Throwable;
 
-	class Type extends Data\Type implements Core\Type\Boxable {
+	class Type extends Data\Type implements Core\Boxable\Type {
+
+		#region Methods -> Initialization
+
+		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered "not" type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param mixed $value                                      the value(s) to be boxed
+		 * @return String\Type                                      the boxed object
+		 */
+		public static function box($value/*...*/) {
+			return new static($value);
+		}
+
+		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param mixed $value                                      the value(s) to be boxed
+		 * @return String\Type                                      the boxed object
+		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
+		 */
+		public static function make($value/*...*/) {
+			if (!is_string($value)) {
+				$type = gettype($value);
+				if ($type == 'object') {
+					$type = get_class($value);
+				}
+				throw new Throwable\InvalidArgument\Exception('Unable to box value. Expected a string, but got ":type".', array(':type' => $type));
+			}
+			if (func_num_args() > 1) {
+				$encoding = func_get_arg(1);
+				$value = mb_convert_encoding($value, Char\Type::UTF_8_ENCODING, $encoding);
+			}
+			return new static($value);
+		}
+
+		/**
+		 * This method creates a string of "n" length with every element set to the given object.
+		 *
+		 * @access public
+		 * @static
+		 * @param Int32\Type $n                                     the number of times to replicate
+		 * @param Char\Type $y                                      the object to be replicated
+		 * @return String\Type                                      the string
+		 */
+		public static function replicate(Int32\Type $n, Char\Type $y) {
+			$buffer = '';
+			$length = $n->unbox();
+
+			for ($i = 0; $i < $length; $i++) {
+				$buffer .= $y->__toString();
+			}
+
+			return String\Type::box($buffer);
+		}
+
+		#endregion
 
 		#region Methods -> Native Oriented
 
@@ -49,11 +111,11 @@ namespace Saber\Data\String {
 			$module = '\\Saber\\Data\\String\\Module';
 			if (preg_match('/^__[a-z_][a-z0-9_]*$/i', $method)) {
 				$method = substr($method, 2);
-				if (!in_array($method, array('choice', 'unbox'))) {
+				if (!in_array($method, array('call', 'choice', 'iterator', 'unbox'))) {
 					if (method_exists($module, $method)) {
 						array_unshift($args, $this);
 						$result = call_user_func_array(array($module, $method), $args);
-						if ($result instanceof Core\Type\Boxable) {
+						if ($result instanceof Core\Boxable\Type) {
 							return $result->unbox();
 						}
 						return $result;
@@ -160,7 +222,7 @@ namespace Saber\Data\String {
 		 * @return Char\Type                                        the element at the specified index
 		 */
 		public final function element(Int32\Type $i) {
-			return Char\Module::create($this->__element($i));
+			return Char\Type::box($this->__element($i));
 		}
 
 		/**
@@ -171,7 +233,7 @@ namespace Saber\Data\String {
 		 * @return Char\Type                                        the head char in this string
 		 */
 		public final function head() {
-			return Char\Module::create($this->__head());
+			return Char\Type::box($this->__head());
 		}
 
 		/**
@@ -182,7 +244,7 @@ namespace Saber\Data\String {
 		 * @return Bool\Type                                        whether the string is empty
 		 */
 		public final function isEmpty() {
-			return Bool\Module::create($this->__isEmpty());
+			return Bool\Type::box($this->__isEmpty());
 		}
 
 		/**
@@ -193,7 +255,7 @@ namespace Saber\Data\String {
 		 * @return Int32\Type                                       the length of this string
 		 */
 		public final function length() {
-			return Int32\Module::create($this->__length());
+			return Int32\Type::box($this->__length());
 		}
 
 		/**

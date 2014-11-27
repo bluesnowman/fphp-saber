@@ -20,10 +20,64 @@ namespace Saber\Data\Bool {
 
 	use \Saber\Core;
 	use \Saber\Data;
+	use \Saber\Data\Bool;
 	use \Saber\Data\String;
 	use \Saber\Throwable;
 
-	final class Type extends Data\Type implements Core\Type\Boxable {
+	final class Type extends Data\Type implements Core\Boxable\Type {
+
+		#region Methods -> Initialization
+
+		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered "not" type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param mixed $value                                      the value(s) to be boxed
+		 * @return Bool\Type                                        the boxed object
+		 */
+		public static function box($value/*...*/) {
+			return new Bool\Type($value);
+		}
+
+		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param mixed $value                                      the value(s) to be boxed
+		 * @return Bool\Type                                        the boxed object
+		 */
+		public static function make($value/*...*/) {
+			if ((func_num_args() > 1) && func_get_arg(1) && is_string($value) && in_array(strtolower($value), array('false', 'f', 'no', 'n', '0'))) {
+				$value = false;
+			}
+			return new Bool\Type($value);
+		}
+
+		/**
+		 * This method returns an object with a "false" value.
+		 *
+		 * @access public
+		 * @return Bool\Type                                        the object
+		 */
+		public static function false() {
+			return Bool\Type::box(false);
+		}
+
+		/**
+		 * This method returns an object with a "true" value.
+		 *
+		 * @access public
+		 * @return Bool\Type                                        the object
+		 */
+		public static function true() {
+			return Bool\Type::box(true);
+		}
+
+		#endregion
 
 		#region Methods -> Native Oriented
 
@@ -44,11 +98,11 @@ namespace Saber\Data\Bool {
 			$module = '\\Saber\\Data\\Bool\\Module';
 			if (preg_match('/^__[a-z_][a-z0-9_]*$/i', $method)) {
 				$method = substr($method, 2);
-				if (!in_array($method, array('choice', 'unbox'))) {
+				if (!in_array($method, array('call', 'choice', 'iterator', 'unbox'))) {
 					if (method_exists($module, $method)) {
 						array_unshift($args, $this);
 						$result = call_user_func_array(array($module, $method), $args);
-						if ($result instanceof Core\Type\Boxable) {
+						if ($result instanceof Core\Boxable\Type) {
 							return $result->unbox();
 						}
 						return $result;

@@ -53,7 +53,7 @@ namespace Saber\Data {
 		 * @dataProvider dataAdd
 		 */
 		public function testAdd($provided, $expected) {
-			$p0 = Integer\Type::box($provided[0])->add(Integer\Type::box($provided[1]));
+			$p0 = Integer\Type::make($provided[0])->add(Integer\Type::make($provided[1]));
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Integer', $p0);

@@ -16,14 +16,25 @@
  * limitations under the License.
  */
 
-namespace Saber\Data\Double {
+namespace Saber\Throwable\Runtime\Exception {
 
 	use \Saber\Core;
-	use \Saber\Data\Double;
-	use \Saber\Data\Floating;
+	use \Saber\Data\String;
 	use \Saber\Throwable;
 
-	final class Type extends Floating\Type {
+	trait Impl {
+
+		#region Properties
+
+		/**
+		 * This variable stores the code associated with the exception.
+		 *
+		 * @access protected
+		 * @var integer
+		 */
+		protected $code;
+
+		#endregion
 
 		#region Methods -> Initialization
 
@@ -34,10 +45,14 @@ namespace Saber\Data\Double {
 		 * @access public
 		 * @static
 		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return Double\Type                                      the boxed object
+		 * @return Throwable\Runtime\Exception                      the boxed object
 		 */
 		public static function box($value/*...*/) {
-			return new Double\Type($value);
+			$class = get_called_class();
+			$reflection = new \ReflectionClass($class);
+			$args = func_get_args();
+			$object = $reflection->newInstanceArgs($args);
+			return $object;
 		}
 
 		/**
@@ -47,43 +62,15 @@ namespace Saber\Data\Double {
 		 * @access public
 		 * @static
 		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return Double\Type                                      the boxed object
+		 * @return Throwable\Runtime\Exception                      the boxed object
+		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
 		public static function make($value/*...*/) {
-			return new Double\Type($value);
-		}
-
-		/**
-		 * This method returns an object with a "-1" value.
-		 *
-		 * @access public
-		 * @static
-		 * @return Double\Type                                      the object
-		 */
-		public static function negative() {
-			return new Double\Type(-1.0);
-		}
-
-		/**
-		 * This method returns an object with a "1" value.
-		 *
-		 * @access public
-		 * @static
-		 * @return Double\Type                                      the object
-		 */
-		public static function one() {
-			return new Double\Type(1.0);
-		}
-
-		/**
-		 * This method returns an object with a "0" value.
-		 *
-		 * @access public
-		 * @static
-		 * @return Double\Type                                      the object
-		 */
-		public static function zero() {
-			return new Double\Type(0.0);
+			$class = get_called_class();
+			$reflection = new \ReflectionClass($class);
+			$args = func_get_args();
+			$object = $reflection->newInstanceArgs($args);
+			return $object;
 		}
 
 		#endregion
@@ -104,7 +91,7 @@ namespace Saber\Data\Double {
 		 *                                                          implemented the called method
 		 */
 		public final function __call($method, $args) {
-			$module = '\\Saber\\Data\\Double\\Module';
+			$module = '\\Saber\\Throwable\\Runtime\\Exception\\Module';
 			if (preg_match('/^__[a-z_][a-z0-9_]*$/i', $method)) {
 				$method = substr($method, 2);
 				if (!in_array($method, array('call', 'choice', 'iterator', 'unbox'))) {
@@ -129,35 +116,41 @@ namespace Saber\Data\Double {
 		}
 
 		/**
-		 * This constructor initializes the class with the specified value.
-		 *
-		 * @access public
-		 * @param double $value                                     the value to be assigned
-		 */
-		public function __construct($value) {
-			$this->value = (double) $value;
-		}
-
-		/**
 		 * This method returns the object's hash code.
 		 *
 		 * @access public
-		 * @final
 		 * @return string                                           the object's hash code
 		 */
-		public final function __hashCode() {
-			return $this->__toString();
+		public function __hashCode() {
+			return spl_object_hash($this);
 		}
 
 		/**
 		 * This method returns the object as a string.
 		 *
 		 * @access public
-		 * @final
 		 * @return string                                           the object as a string
 		 */
-		public final function __toString() {
-			return sprintf('%F', $this->value);
+		public function __toString() {
+			return sprintf(
+				'%s [ %s ]: %s ~ %s [ %d ]',
+				$this->__typeOf(),
+				$this->getCode(),
+				strip_tags($this->getMessage()),
+				$this->getFile(),
+				$this->getLine()
+			);
+		}
+
+		/**
+		 * This method returns the object's class type.
+		 *
+		 * @access public
+		 * @final
+		 * @return string                                           the object's class type
+		 */
+		public final function __typeOf() {
+			return get_class($this);
 		}
 
 		#endregion
@@ -165,15 +158,36 @@ namespace Saber\Data\Double {
 		#region Methods -> Object Oriented
 
 		/**
-		 * This method returns the value contained within the boxed object.
+		 * This method returns the object's hash code.
 		 *
 		 * @access public
 		 * @final
-		 * @param integer $depth                                    how many levels to unbox
-		 * @return double                                           the un-boxed value
+		 * @return String\Type                                      the object's hash code
 		 */
-		public final function unbox($depth = 0) {
-			return $this->value;
+		public final function hashCode() {
+			return String\Type::box($this->__hashCode());
+		}
+
+		/**
+		 * This method returns the object as a string.
+		 *
+		 * @access public
+		 * @final
+		 * @return String\Type                                      the object as a string
+		 */
+		public final function toString() {
+			return String\Type::box($this->__toString());
+		}
+
+		/**
+		 * This method returns the object's class type.
+		 *
+		 * @access public
+		 * @final
+		 * @return String\Type                                      the object's class type
+		 */
+		public final function typeOf() {
+			return String\Type::box($this->__typeOf());
 		}
 
 		#endregion

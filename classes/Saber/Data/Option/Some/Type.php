@@ -29,11 +29,10 @@ namespace Saber\Data\Option\Some {
 		 * This constructor initializes the class with the specified object.
 		 *
 		 * @access public
-		 * @param Core\Type $object                                 the boxed object to be made an
-		 *                                                          option
+		 * @param Core\Type $x                                      the object to be wrapped
 		 */
-		public function __construct(Core\Type $object) {
-			$this->value = $object;
+		public function __construct(Core\Type $x) {
+			$this->value = $x;
 		}
 
 		#region Methods -> Object Oriented

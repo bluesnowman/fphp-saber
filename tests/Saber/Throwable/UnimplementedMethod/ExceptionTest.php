@@ -44,7 +44,7 @@ namespace Saber\Throwable\UnimplementedMethod {
 		 * @dataProvider dataBox
 		 */
 		public function testBox($provided, $expected) {
-			$p0 = Throwable\UnimplementedMethod\Exception::box($provided[0], $provided[1], $provided[2]);
+			$p0 = Throwable\UnimplementedMethod\Exception::make($provided[0], $provided[1], $provided[2]);
 			$e0 = new Throwable\UnimplementedMethod\Exception($expected[0], $expected[1], $expected[2]);
 
 			$this->assertInstanceOf('\\Saber\\Core\\AnyErr', $p0);
@@ -83,7 +83,7 @@ namespace Saber\Throwable\UnimplementedMethod {
 		 * @dataProvider dataCompareTo
 		 */
 		public function testCompareTo($provided, $expected) {
-			$p0 = Throwable\UnimplementedMethod\Exception::box($provided[0][0], $provided[0][1], $provided[0][2])->compareTo(Throwable\UnimplementedMethod\Exception::box($provided[1][0], $provided[1][1], $provided[1][2]));
+			$p0 = Throwable\UnimplementedMethod\Exception::make($provided[0][0], $provided[0][1], $provided[0][2])->compareTo(Throwable\UnimplementedMethod\Exception::make($provided[1][0], $provided[1][1], $provided[1][2]));
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
@@ -108,7 +108,7 @@ namespace Saber\Throwable\UnimplementedMethod {
 		 * @dataProvider dataToString
 		 */
 		public function testToString($provided, $expected) {
-			$p0 = Throwable\UnimplementedMethod\Exception::box($provided[0], $provided[1], $provided[2])->__toString();
+			$p0 = Throwable\UnimplementedMethod\Exception::make($provided[0], $provided[1], $provided[2])->__toString();
 			$e0 = $expected[0];
 
 			$this->assertInternalType('string', $p0);

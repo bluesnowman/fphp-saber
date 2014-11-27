@@ -16,73 +16,26 @@
  * limitations under the License.
  */
 
-namespace Saber\Data {
+namespace Saber\Control {
 
+	use \Saber\Control;
 	use \Saber\Core;
-	use \Saber\Throwable;
+	use \Saber\Data\String;
 
-	abstract class Type implements Core\Type, Core\Comparable\Type, Core\Equality\Type {
+	abstract class Type implements Core\Type {
 
-		#region Properties
-
-		/**
-		 * This variable stores the value for the boxed object.
-		 *
-		 * @access protected
-		 * @var mixed
-		 */
-		protected $value;
-
-		#endregion
-
-		#region Methods -> Implementation
+		#region Methods -> Initialization
 
 		/**
-		 * This method is called when a method is not defined and will attempt to remap
-		 * the call.  Particularly, this method provides a shortcut means of unboxing a method's
-		 * result when the method name is preceded by a double-underscore.
+		 * This method returns a choice monad for evaluating an object.
 		 *
 		 * @access public
-		 * @param string $method                                    the method being called
-		 * @param array $args                                       the arguments associated with the call
-		 * @return mixed                                            the un-boxed value
-		 * @throws Throwable\UnimplementedMethod\Exception          indicates that the class has not
-		 *                                                          implemented the called method
+		 * @static
+		 * @param Core\Equality\Type $x                             the object to be evaluated
+		 * @return Control\Choice\Type                              the choice monad
 		 */
-		public function __call($method, $args) {
-			$class = get_class($this);
-			if (preg_match('/^__[a-z_][a-z0-9_]*$/i', $method)) {
-				$method = substr($method, 2);
-				if (!in_array($method, array('call', 'choice', 'iterator', 'unbox'))) {
-					if (method_exists($class, $method)) {
-						array_unshift($args, $this);
-						$result = call_user_func_array(array($class, $method), $args);
-						if ($result instanceof Core\Boxable\Type) {
-							return $result->unbox();
-						}
-						return $result;
-					}
-				}
-			}
-			else {
-				if (!in_array($method, array('object'))) {
-					if (method_exists($class, $method)) {
-						array_unshift($args, $this);
-						$result = call_user_func_array(array($class, $method), $args);
-						return $result;
-					}
-				}
-			}
-			throw new Throwable\UnimplementedMethod\Exception('Unable to call method. No method ":method" exists in class ":class".', array(':class' => $class, ':method' => $method));
-		}
-
-		/**
-		 * This method releases any internal references to an object.
-		 *
-		 * @access public
-		 */
-		public function __destruct() {
-			$this->value = null;
+		public static function choice(Core\Equality\Type $x) {
+			return Control\Choice\Type::cons($x, Control\Choice\Type::nil());
 		}
 
 		#endregion
@@ -93,9 +46,10 @@ namespace Saber\Data {
 		 * This method returns the object's hash code.
 		 *
 		 * @access public
+		 * @final
 		 * @return string                                           the object's hash code
 		 */
-		public function __hashCode() {
+		public final function __hashCode() {
 			return spl_object_hash($this);
 		}
 
@@ -103,10 +57,12 @@ namespace Saber\Data {
 		 * This method returns the object as a string.
 		 *
 		 * @access public
-		 * @abstract
+		 * @final
 		 * @return string                                           the object as a string
 		 */
-		public abstract function __toString();
+		public final function __toString() {
+			return $this->__hashCode();
+		}
 
 		/**
 		 * This method returns the object's class type.

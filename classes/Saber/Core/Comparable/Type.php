@@ -16,25 +16,8 @@
  * limitations under the License.
  */
 
-namespace Saber\Control {
+namespace Saber\Core\Comparable {
 
-	use \Saber\Control;
-	use \Saber\Data;
-
-	class Monad {
-
-		/**
-		 * This method returns a choice monad for evaluating an object.
-		 *
-		 * @access public
-		 * @static
-		 * @param Data\Type $x                                      the object to be evaluated
-		 * @return Control\Monad\Choice                             the choice monad
-		 */
-		public static function choice(Data\Type $x) {
-			return Control\Monad\Choice::cons($x, Control\Monad\Choice::nil());
-		}
-
-	}
+	interface Type { }
 
 }

@@ -25,7 +25,95 @@ namespace Saber\Data\LinkedList {
 	use \Saber\Data\LinkedList;
 	use \Saber\Throwable;
 
-	abstract class Type extends Collection\Type implements Core\Type\Boxable {
+	abstract class Type extends Collection\Type implements Core\Boxable\Type {
+
+		#region Methods -> Initialization
+
+		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param mixed $value                                      the value(s) to be boxed
+		 * @return Core\Type                                        the boxed object
+		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
+		 */
+		public static function make($value/*...*/) {
+			if (is_array($value)) {
+				$zs = LinkedList\Type::nil();
+				for ($i = count($value) - 1; $i >= 0; $i--) {
+					$zs = LinkedList\Module::prepend($zs, $value[$i]);
+				}
+				return $zs;
+			}
+			else {
+				$type = gettype($value);
+				if ($type == 'object') {
+					$type = get_class($value);
+				}
+				throw new Throwable\InvalidArgument\Exception('Unable to box value. Expected an array, but got ":type".', array(':type' => $type));
+			}
+		}
+
+		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered "not" type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param mixed $value                                      the value(s) to be boxed
+		 * @return LinkedList\Type                                  the boxed object
+		 */
+		public static function box($value/*...*/) {
+			$zs = LinkedList\Type::nil();
+			for ($i = count($value) - 1; $i >= 0; $i--) {
+				$zs = LinkedList\Module::prepend($zs, $value[$i]);
+			}
+			return $zs;
+		}
+
+		/**
+		 * This method returns a "cons" object for a collection.
+		 *
+		 * @access public
+		 * @static
+		 * @param Core\Type $head                                   the head to be used
+		 * @param LinkedList\Type $tail                             the tail to be used
+		 * @return LinkedList\Cons\Type                             the "cons" object
+		 */
+		public static function cons(Core\Type $head, LinkedList\Type $tail) {
+			return new LinkedList\Cons\Type($head, $tail);
+		}
+
+		/**
+		 * This method returns a "nil" object for a collection.
+		 *
+		 * @access public
+		 * @static
+		 * @return LinkedList\Nil\Type                              the "nil" object
+		 */
+		public static function nil() {
+			return new LinkedList\Nil\Type();
+		}
+
+		/**
+		 * This method creates a list of "n" length with every element set to the given object.
+		 *
+		 * @access public
+		 * @static
+		 * @param Int32\Type $n                                     the number of times to replicate
+		 * @param Core\Type $y                                      the object to be replicated
+		 * @return LinkedList\Type                                  the collection
+		 */
+		public static function replicate(Int32\Type $n, Core\Type $y) {
+			if ($n->unbox() <= 0) {
+				return LinkedList\Type::nil();
+			}
+			return LinkedList\Type::cons($y, LinkedList\Type::replicate(Int32\Module::decrement($n), $y));
+		}
+
+		#endregion
 
 		#region Methods -> Native Oriented
 
@@ -46,11 +134,11 @@ namespace Saber\Data\LinkedList {
 			$module = '\\Saber\\Data\\LinkedList\\Module';
 			if (preg_match('/^__[a-z_][a-z0-9_]*$/i', $method)) {
 				$method = substr($method, 2);
-				if (!in_array($method, array('choice', 'unbox'))) {
+				if (!in_array($method, array('call', 'choice', 'iterator', 'unbox'))) {
 					if (method_exists($module, $method)) {
 						array_unshift($args, $this);
 						$result = call_user_func_array(array($module, $method), $args);
-						if ($result instanceof Core\Type\Boxable) {
+						if ($result instanceof Core\Boxable\Type) {
 							return $result->unbox();
 						}
 						return $result;
@@ -147,7 +235,7 @@ namespace Saber\Data\LinkedList {
 		 * @return mixed                                            the element at the specified index
 		 */
 		public final function element(Int32\Type $i) {
-			$j = Int32\Module::zero();
+			$j = Int32\Type::zero();
 
 			for ($zs = $this; ! $zs->__isEmpty(); $zs = $zs->tail()) {
 				if (Int32\Module::eq($i, $j)->unbox()) {
@@ -176,7 +264,7 @@ namespace Saber\Data\LinkedList {
 		 * @return Bool\Type                                        whether the linked list is empty
 		 */
 		public final function isEmpty() {
-			return Bool\Module::create($this->__isEmpty());
+			return Bool\Type::box($this->__isEmpty());
 		}
 
 		/**
@@ -187,7 +275,7 @@ namespace Saber\Data\LinkedList {
 		 * @return Int32\Type                                       the length of this linked list
 		 */
 		public final function length() {
-			$c = Int32\Module::zero();
+			$c = Int32\Type::zero();
 			for ($zs = $this; ! $zs->__isEmpty(); $zs = $zs->tail()) {
 				$c = Int32\Module::increment($c);
 			}
@@ -207,23 +295,11 @@ namespace Saber\Data\LinkedList {
 		 * This method returns the value contained within the boxed object.
 		 *
 		 * @access public
-		 * @final
+		 * @abstract
 		 * @param integer $depth                                    how many levels to unbox
 		 * @return array                                            the un-boxed value
 		 */
-		public final function unbox($depth = 0) {
-			if ($depth > 0) {
-				$buffer = array();
-				for ($zs = $this; ! $zs->__isEmpty(); $zs = $zs->tail()) {
-					$z = $zs->head();
-					$buffer[] = ($z instanceof Core\Type\Boxable)
-						? $z->unbox($depth - 1)
-						: $z;
-				}
-				return $buffer;
-			}
-			return $this->value;
-		}
+		public abstract function unbox($depth = 0);
 
 		#endregion
 

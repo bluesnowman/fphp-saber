@@ -50,8 +50,8 @@ namespace Saber\Data {
 		 * @dataProvider dataAll
 		 */
 		public function testAll($provided, $expected) {
-			$x = String\Module::box($provided[0]);
-			$y = Char\Module::box($provided[1]);
+			$x = String\Type::make($provided[0]);
+			$y = Char\Type::make($provided[1]);
 
 			$p0 = $x->all(function(Core\Any $x, Int32\Type $i) use ($y) {
 				return $x->equals($y);
@@ -86,8 +86,8 @@ namespace Saber\Data {
 		 * @dataProvider dataAny
 		 */
 		public function testAny($provided, $expected) {
-			$x = String\Module::box($provided[0]);
-			$y = Char\Module::box($provided[1]);
+			$x = String\Type::make($provided[0]);
+			$y = Char\Type::make($provided[1]);
 
 			$p0 = $x->any(function(Core\Any $x, Int32\Type $i) use ($y) {
 				return $x->equals($y);
@@ -118,7 +118,7 @@ namespace Saber\Data {
 		 * @dataProvider dataAppend
 		 */
 		public function testAppend($provided, $expected) {
-			$p0 = String\Module::box($provided[0])->append(Char\Module::box($provided[1]));
+			$p0 = String\Type::make($provided[0])->append(Char\Type::make($provided[1]));
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\String', $p0);
@@ -143,7 +143,7 @@ namespace Saber\Data {
 		 * @dataProvider dataBox
 		 */
 		public function testBox($provided, $expected) {
-			$p0 = String\Module::box($provided[0]);
+			$p0 = String\Type::make($provided[0]);
 			$e0 = new String\Type($expected[0]);
 
 			$this->assertInstanceOf('\\Saber\\Core\\AnyRef', $p0);
@@ -178,7 +178,7 @@ namespace Saber\Data {
 		 * @dataProvider dataIsEmpty
 		 */
 		public function testIsEmpty($provided, $expected) {
-			$p0 = String\Module::box($provided[0])->isEmpty();
+			$p0 = String\Type::make($provided[0])->isEmpty();
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
@@ -205,7 +205,7 @@ namespace Saber\Data {
 		 * @dataProvider dataLength
 		 */
 		public function testLength($provided, $expected) {
-			$p0 = String\Module::box($provided[0])->length();
+			$p0 = String\Type::make($provided[0])->length();
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
@@ -231,7 +231,7 @@ namespace Saber\Data {
 		 * @dataProvider dataReplicate
 		 */
 		public function testReplicate($provided, $expected) {
-			$p0 = String\Module::replicate(Int32\Module::box($provided[0]), Char\Module::box($provided[1]));
+			$p0 = String\Type::replicate(Int32\Type::make($provided[0]), Char\Type::make($provided[1]));
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\String', $p0);
@@ -256,7 +256,7 @@ namespace Saber\Data {
 		 * @dataProvider dataReverse
 		 */
 		public function testReverse($provided, $expected) {
-			$p0 = String\Module::box($provided[0])->reverse();
+			$p0 = String\Type::make($provided[0])->reverse();
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\String', $p0);

@@ -16,15 +16,14 @@
  * limitations under the License.
  */
 
-namespace Saber\Data\Unit {
+namespace Saber\Throwable\Runtime\Exception {
 
 	use \Saber\Core;
-	use \Saber\Data;
 	use \Saber\Data\Bool;
 	use \Saber\Data\Int32;
-	use \Saber\Data\Unit;
+	use \Saber\Throwable;
 
-	class Module extends Data\Module {
+	class Module extends Core\Module {
 
 		#region Methods -> Equality
 
@@ -33,16 +32,16 @@ namespace Saber\Data\Unit {
 		 *
 		 * @access public
 		 * @static
-		 * @param Unit\Type $x                                      the left operand
+		 * @param Throwable\Runtime\Exception $x                    the left operand
 		 * @param Core\Type $y                                      the right operand
 		 * @return Bool\Type                                        whether the left operand is equal
 		 *                                                          to the right operand
 		 */
-		public static function eq(Unit\Type $x, Core\Type $y) { // ==
+		public static function eq(Throwable\Runtime\Exception $x, Core\Type $y) { // ==
 			$type = $x->__typeOf();
 			if ($y !== null) {
 				if ($y instanceof $type) {
-					return Bool\Type::true();
+					return Bool\Type::box($x->__hashCode() === $y->__hashCode());
 				}
 			}
 			return Bool\Type::false();
@@ -53,12 +52,12 @@ namespace Saber\Data\Unit {
 		 *
 		 * @access public
 		 * @static
-		 * @param Unit\Type $x                                      the left operand
+		 * @param Throwable\Runtime\Exception $x                    the left operand
 		 * @param Core\Type $y                                      the right operand
 		 * @return Bool\Type                                        whether the left operand is identical
 		 *                                                          to the right operand
 		 */
-		public static function id(Unit\Type $x, Core\Type $y) { // ===
+		public static function id(Throwable\Runtime\Exception $x, Core\Type $y) { // ===
 			if ($y !== null) {
 				if ($x->__typeOf() === $y->__typeOf()) {
 					return Bool\Type::box($x->__hashCode() === $y->__hashCode());
@@ -72,13 +71,13 @@ namespace Saber\Data\Unit {
 		 *
 		 * @access public
 		 * @static
-		 * @param Unit\Type $x                                      the left operand
+		 * @param Throwable\Runtime\Exception $x                    the left operand
 		 * @param Core\Type $y                                      the right operand
 		 * @return Bool\Type                                        whether the left operand is NOT equal
 		 *                                                          to the right operand
 		 */
-		public static function ne(Unit\Type $x, Core\Type $y) { // !=
-			return Bool\Module::not(Unit\Module::eq($x, $y));
+		public static function ne(Throwable\Runtime\Exception $x, Core\Type $y) { // !=
+			return Bool\Module::not(Throwable\Runtime\Exception\Module::eq($x, $y));
 		}
 
 		/**
@@ -86,13 +85,13 @@ namespace Saber\Data\Unit {
 		 *
 		 * @access public
 		 * @static
-		 * @param Unit\Type $x                                      the left operand
+		 * @param Throwable\Runtime\Exception $x                    the left operand
 		 * @param Core\Type $y                                      the right operand
 		 * @return Bool\Type                                        whether the left operand is NOT identical
 		 *                                                          to the right operand
 		 */
-		public static function ni(Unit\Type $x, Core\Type $y) { // !==
-			return Bool\Module::not(Unit\Module::id($x, $y));
+		public static function ni(Throwable\Runtime\Exception $x, Core\Type $y) { // !==
+			return Bool\Module::not(Throwable\Runtime\Exception\Module::id($x, $y));
 		}
 
 		#endregion
@@ -104,13 +103,13 @@ namespace Saber\Data\Unit {
 		 *
 		 * @access public
 		 * @static
-		 * @param Unit\Type $x                                      the left operand
-		 * @param Unit\Type $y                                      the right operand
+		 * @param Throwable\Runtime\Exception $x                    the left operand
+		 * @param Throwable\Runtime\Exception $y                    the right operand
 		 * @return Int32\Type                                       the order as to whether the left
 		 *                                                          operand is less than, equals to,
 		 *                                                          or greater than the right operand
 		 */
-		public static function compare(Unit\Type $x, Unit\Type $y) {
+		public static function compare(Throwable\Runtime\Exception $x, Throwable\Runtime\Exception $y) {
 			if (($x === null) && ($y !== null)) {
 				return Int32\Type::negative();
 			}
@@ -121,15 +120,16 @@ namespace Saber\Data\Unit {
 				return Int32\Type::one();
 			}
 
-			$r = strcmp($x->__hashCode(), $y->__hashCode());
+			$x = $x->getCode();
+			$y = $y->getCode();
 
-			if ($r < 0) {
+			if ($x < $y) {
 				return Int32\Type::negative();
 			}
-			else if ($r == 0) {
+			else if ($x == $y) {
 				return Int32\Type::zero();
 			}
-			else {
+			else { // ($x > $y)
 				return Int32\Type::one();
 			}
 		}
@@ -139,13 +139,13 @@ namespace Saber\Data\Unit {
 		 *
 		 * @access public
 		 * @static
-		 * @param Unit\Type $x                                      the left operand
-		 * @param Unit\Type $y                                      the right operand
+		 * @param Throwable\Runtime\Exception $x                    the left operand
+		 * @param Throwable\Runtime\Exception $y                    the right operand
 		 * @return Bool\Type                                        whether the left operand is greater
 		 *                                                          than or equal to the right operand
 		 */
-		public static function ge(Unit\Type $x, Unit\Type $y) { // >=
-			return Bool\Type::box(Unit\Module::compare($x, $y)->unbox() >= 0);
+		public static function ge(Throwable\Runtime\Exception $x, Throwable\Runtime\Exception $y) { // >=
+			return Bool\Type::box(Throwable\Runtime\Exception\Module::compare($x, $y)->unbox() >= 0);
 		}
 
 		/**
@@ -153,13 +153,13 @@ namespace Saber\Data\Unit {
 		 *
 		 * @access public
 		 * @static
-		 * @param Unit\Type $x                                      the left operand
-		 * @param Unit\Type $y                                      the right operand
+		 * @param Throwable\Runtime\Exception $x                    the left operand
+		 * @param Throwable\Runtime\Exception $y                    the right operand
 		 * @return Bool\Type                                        whether the left operand is greater
 		 *                                                          than the right operand
 		 */
-		public static function gt(Unit\Type $x, Unit\Type $y) { // >
-			return Bool\Type::box(Unit\Module::compare($x, $y)->unbox() > 0);
+		public static function gt(Throwable\Runtime\Exception $x, Throwable\Runtime\Exception $y) { // >
+			return Bool\Type::box(Throwable\Runtime\Exception\Module::compare($x, $y)->unbox() > 0);
 		}
 
 		/**
@@ -167,13 +167,13 @@ namespace Saber\Data\Unit {
 		 *
 		 * @access public
 		 * @static
-		 * @param Unit\Type $x                                      the left operand
-		 * @param Unit\Type $y                                      the right operand
+		 * @param Throwable\Runtime\Exception $x                    the left operand
+		 * @param Throwable\Runtime\Exception $y                    the right operand
 		 * @return Bool\Type                                        whether the left operand is less than
 		 *                                                          or equal to the right operand
 		 */
-		public static function le(Unit\Type $x, Unit\Type $y) { // <=
-			return Bool\Type::box(Unit\Module::compare($x, $y)->unbox() <= 0);
+		public static function le(Throwable\Runtime\Exception $x, Throwable\Runtime\Exception $y) { // <=
+			return Bool\Type::box(Throwable\Runtime\Exception\Module::compare($x, $y)->unbox() <= 0);
 		}
 
 		/**
@@ -181,13 +181,13 @@ namespace Saber\Data\Unit {
 		 *
 		 * @access public
 		 * @static
-		 * @param Unit\Type $x                                      the left operand
-		 * @param Unit\Type $y                                      the right operand
+		 * @param Throwable\Runtime\Exception $x                    the left operand
+		 * @param Throwable\Runtime\Exception $y                    the right operand
 		 * @return Bool\Type                                        whether the left operand is less than
 		 *                                                          the right operand
 		 */
-		public static function lt(Unit\Type $x, Unit\Type $y) { // <
-			return Bool\Type::box(Unit\Module::compare($x, $y)->unbox() < 0);
+		public static function lt(Throwable\Runtime\Exception $x, Throwable\Runtime\Exception $y) { // <
+			return Bool\Type::box(Throwable\Runtime\Exception\Module::compare($x, $y)->unbox() < 0);
 		}
 
 		/**
@@ -195,12 +195,12 @@ namespace Saber\Data\Unit {
 		 *
 		 * @access public
 		 * @static
-		 * @param Unit\Type $x                                      the left operand
-		 * @param Unit\Type $y                                      the right operand
-		 * @return Unit\Type                                        the maximum value
+		 * @param Throwable\Runtime\Exception $x                    the left operand
+		 * @param Throwable\Runtime\Exception $y                    the right operand
+		 * @return Throwable\Runtime\Exception                      the maximum value
 		 */
-		public static function max(Unit\Type $x, Unit\Type $y) {
-			return (Unit\Module::compare($x, $y)->unbox() >= 0) ? $x : $y;
+		public static function max(Throwable\Runtime\Exception $x, Throwable\Runtime\Exception $y) {
+			return (Throwable\Runtime\Exception\Module::compare($x, $y)->unbox() >= 0) ? $x : $y;
 		}
 
 		/**
@@ -208,12 +208,12 @@ namespace Saber\Data\Unit {
 		 *
 		 * @access public
 		 * @static
-		 * @param Unit\Type $x                                      the left operand
-		 * @param Unit\Type $y                                      the right operand
-		 * @return Unit\Type                                        the minimum value
+		 * @param Throwable\Runtime\Exception $x                    the left operand
+		 * @param Throwable\Runtime\Exception $y                    the right operand
+		 * @return Throwable\Runtime\Exception                      the minimum value
 		 */
-		public static function min(Unit\Type $x, Unit\Type $y) {
-			return (Unit\Module::compare($x, $y)->unbox() <= 0) ? $x : $y;
+		public static function min(Throwable\Runtime\Exception $x, Throwable\Runtime\Exception $y) {
+			return (Throwable\Runtime\Exception\Module::compare($x, $y)->unbox() <= 0) ? $x : $y;
 		}
 
 		#endregion

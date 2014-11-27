@@ -48,7 +48,7 @@ namespace Saber\Data\Option {
 		 */
 		public function __construct(Option\Type $xs) {
 			$this->xs = $xs;
-			$this->i = Int32\Module::zero();
+			$this->i = Int32\Type::zero();
 		}
 
 		/**
@@ -99,7 +99,7 @@ namespace Saber\Data\Option {
 		 */
 		public function next() {
 			$this->i = Int32\Module::increment($this->i);
-			return Bool\Module::create($this->valid());
+			return Bool\Type::box($this->valid());
 		}
 
 		/**
@@ -108,7 +108,7 @@ namespace Saber\Data\Option {
 		 * @access public
 		 */
 		public function rewind() {
-			$this->i = Int32\Module::zero();
+			$this->i = Int32\Type::zero();
 		}
 
 		/**

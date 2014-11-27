@@ -57,7 +57,7 @@ namespace Saber\Data\LinkedList {
 		public function __construct(LinkedList\Type $linkedList) {
 			$this->xs = $linkedList;
 			$this->ys = $linkedList;
-			$this->i = Int32\Module::zero();
+			$this->i = Int32\Type::zero();
 		}
 
 		/**
@@ -110,7 +110,7 @@ namespace Saber\Data\LinkedList {
 		public function next() {
 			$this->ys = $this->ys->tail();
 			$this->i = Int32\Module::increment($this->i);
-			return Bool\Module::create($this->valid());
+			return Bool\Type::box($this->valid());
 		}
 
 		/**
@@ -120,7 +120,7 @@ namespace Saber\Data\LinkedList {
 		 */
 		public function rewind() {
 			$this->ys = $this->xs;
-			$this->i = Int32\Module::zero();
+			$this->i = Int32\Type::zero();
 		}
 
 		/**

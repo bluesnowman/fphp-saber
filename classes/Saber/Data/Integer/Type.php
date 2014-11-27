@@ -19,10 +19,82 @@
 namespace Saber\Data\Integer {
 
 	use \Saber\Core;
+	use \Saber\Data\Integer;
 	use \Saber\Data\Integral;
 	use \Saber\Throwable;
 
 	final class Type extends Integral\Type {
+
+		#region Methods -> Initialization
+
+		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param mixed $value                                      the value(s) to be boxed
+		 * @return Core\Type                                        the boxed object
+		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
+		 */
+		public static function make($value/*...*/) {
+			if (is_numeric($value)) {
+				settype($value, 'integer');
+			}
+			$value = '' . $value;
+			if (!preg_match('/^-?[1-9]?[0-9]+$/', $value)) {
+				throw new Throwable\InvalidArgument\Exception('Unable to box value. Expected an integer, but got ":value".', array(':value' => $value));
+			}
+			return new Integer\Type($value);
+		}
+
+		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered "not" type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param mixed $value                                      the value(s) to be boxed
+		 * @return Integer\Type                                     the boxed object
+		 */
+		public static function box($value/*...*/) {
+			return new Integer\Type($value);
+		}
+
+		/**
+		 * This method returns an object with a "-1" value.
+		 *
+		 * @access public
+		 * @static
+		 * @return Integer\Type                                     the object
+		 */
+		public static function negative() {
+			return new Integer\Type(-1);
+		}
+
+		/**
+		 * This method returns an object with a "1" value.
+		 *
+		 * @access public
+		 * @static
+		 * @return Integer\Type                                     the object
+		 */
+		public static function one() {
+			return new Integer\Type(1);
+		}
+
+		/**
+		 * This method returns an object with a "0" value.
+		 *
+		 * @access public
+		 * @static
+		 * @return Integer\Type                                     the object
+		 */
+		public static function zero() {
+			return new Integer\Type(0);
+		}
+
+		#endregion
 
 		#region Methods -> Native Oriented
 
@@ -43,11 +115,11 @@ namespace Saber\Data\Integer {
 			$module = '\\Saber\\Data\\Integer\\Module';
 			if (preg_match('/^__[a-z_][a-z0-9_]*$/i', $method)) {
 				$method = substr($method, 2);
-				if (!in_array($method, array('choice', 'unbox'))) {
+				if (!in_array($method, array('call', 'choice', 'iterator', 'unbox'))) {
 					if (method_exists($module, $method)) {
 						array_unshift($args, $this);
 						$result = call_user_func_array(array($module, $method), $args);
-						if ($result instanceof Core\Type\Boxable) {
+						if ($result instanceof Core\Boxable\Type) {
 							return $result->unbox();
 						}
 						return $result;

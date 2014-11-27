@@ -30,34 +30,6 @@ namespace Saber\Data\Option {
 
 	abstract class Module extends Collection\Module {
 
-		#region Methods -> Instantiation
-
-		/**
-		 * This method returns a "none" option.
-		 *
-		 * @access public
-		 * @static
-		 * @return Option\None\Type                                 the "none" option
-		 */
-		public static function none() {
-			return new Option\None\Type();
-		}
-
-		/**
-		 * This method returns a "some" option.
-		 *
-		 * @access public
-		 * @static
-		 * @param Core\Type $x                                      the boxed object to be made an
-		 *                                                          option
-		 * @return Option\Some\Type                                 the "some" option
-		 */
-		public static function some(Core\Type $x) {
-			return new Option\Some\Type($x);
-		}
-
-		#endregion
-
 		#region Methods -> Basic Operations
 
 		/**
@@ -72,7 +44,7 @@ namespace Saber\Data\Option {
 		 *                                                          truthy test
 		 */
 		public static function all(Option\Type $xs, callable $predicate) {
-			return Bool\Module::or_(Bool\Module::not($xs->isDefined()), $predicate($xs->object(), Int32\Module::zero()));
+			return Bool\Module::or_(Bool\Module::not($xs->isDefined()), $predicate($xs->object(), Int32\Type::zero()));
 		}
 
 		/**
@@ -101,8 +73,8 @@ namespace Saber\Data\Option {
 		 */
 		public static function bind(Option\Type $xs, callable $subroutine) {
 			return ($xs->__isDefined())
-				? $subroutine($xs->object(), Int32\Module::zero())
-				: Option\Module::none();
+				? $subroutine($xs->object(), Int32\Type::zero())
+				: Option\Type::none();
 		}
 
 		/**
@@ -116,7 +88,7 @@ namespace Saber\Data\Option {
 		 */
 		public static function each(Option\Type $xs, callable $procedure) {
 			if ($xs->__isDefined()) {
-				$procedure($xs->object(), Int32\Module::zero());
+				$procedure($xs->object(), Int32\Type::zero());
 			}
 		}
 
@@ -130,10 +102,10 @@ namespace Saber\Data\Option {
 		 * @return Option\Type                                      the option
 		 */
 		public static function filter(Option\Type $xs, callable $predicate) {
-			if (Bool\Module::and_($xs->isDefined(), $predicate($xs->object(), Int32\Module::zero()))->unbox()) {
+			if (Bool\Module::and_($xs->isDefined(), $predicate($xs->object(), Int32\Type::zero()))->unbox()) {
 				return $xs;
 			}
-			return Option\Module::none();
+			return Option\Type::none();
 		}
 
 		/**
@@ -147,10 +119,10 @@ namespace Saber\Data\Option {
 		 *                                                          satisfying the predicate, if any
 		 */
 		public static function find(Option\Type $xs, callable $predicate) {
-			if (Bool\Module::and_($xs->isDefined(), $predicate($xs->object(), Int32\Module::zero()))->unbox()) {
+			if (Bool\Module::and_($xs->isDefined(), $predicate($xs->object(), Int32\Type::zero()))->unbox()) {
 				return $xs;
 			}
-			return Option\Module::none();
+			return Option\Type::none();
 		}
 
 		/**
@@ -187,7 +159,7 @@ namespace Saber\Data\Option {
 		 * @return Option\Type                                      the option
 		 */
 		public static function map(Option\Type $xs, callable $subroutine) {
-			return ($xs->__isDefined()) ? Option\Module::some($subroutine($xs->object())) : Option\Module::none();
+			return ($xs->__isDefined()) ? Option\Type::some($subroutine($xs->object())) : Option\Type::none();
 		}
 
 		/**
@@ -245,7 +217,7 @@ namespace Saber\Data\Option {
 				$array[] = $xs->object();
 			}
 
-			return ArrayList\Module::create($array);
+			return ArrayList\Type::box($array);
 		}
 
 		/**
@@ -258,8 +230,8 @@ namespace Saber\Data\Option {
 		 */
 		public static function toList(Option\Type $xs) {
 			return ($xs->__isDefined())
-				? LinkedList\Module::cons($xs->object(), LinkedList\Module::nil())
-				: LinkedList\Module::nil();
+				? LinkedList\Type::cons($xs->object(), LinkedList\Type::nil())
+				: LinkedList\Type::nil();
 		}
 
 		#endregion
@@ -294,26 +266,30 @@ namespace Saber\Data\Option {
 		 *                                                          to the current object
 		 */
 		public static function eq(Option\Type $xs, Core\Type $ys) {
-			$type = $xs->__typeOf();
-			if ($ys instanceof $type) {
-				if ($ys instanceof Option\Some\Type) {
-					$x = $xs->object();
-					$y = $ys->object();
-					if ($x === null) {
-						return Bool\Module::create($y === null);
+			if ($ys !== null) {
+				$type = $xs->__typeOf();
+				if ($ys instanceof $type) {
+					if ($ys instanceof Option\Some\Type) {
+						$x = $xs->object();
+						$y = $ys->object();
+						if ($x === null) {
+							return Bool\Type::box($y === null);
+						}
+						$module = $x->__typeOf();
+						$method = 'eq';
+						if (method_exists($module, $method)) {
+							return call_user_func_array(array($module, $method), array($x, $y));
+						}
+						return Bool\Type::box(spl_object_hash($x) === spl_object_hash($y));
 					}
-					$module = $x->__typeOf();
-					$method = 'eq';
-					if (method_exists($module, $method)) {
-						return call_user_func_array(array($module, $method), array($x, $y));
+					else {
+						if ($ys instanceof Option\None\Type) {
+							return Bool\Type::true();
+						}
 					}
-					return Bool\Module::create(spl_object_hash($x) === spl_object_hash($y));
-				}
-				else if ($ys instanceof Option\None\Type) {
-					return Bool\Module::true();
 				}
 			}
-			return Bool\Module::false();
+			return Bool\Type::false();
 		}
 
 		/**
@@ -327,25 +303,29 @@ namespace Saber\Data\Option {
 		 *                                                          to the current object
 		 */
 		public static function id(Option\Type $xs, Core\Type $ys) {
-			if ($xs->__typeOf() === $ys->__typeOf()) {
-				if ($ys instanceof Option\Some\Type) {
-					$x = $xs->object();
-					$y = $ys->object();
-					if ($x === null) {
-						return Bool\Module::create($y === null);
+			if ($ys !== null) {
+				if ($xs->__typeOf() === $ys->__typeOf()) {
+					if ($ys instanceof Option\Some\Type) {
+						$x = $xs->object();
+						$y = $ys->object();
+						if ($x === null) {
+							return Bool\Type::box($y === null);
+						}
+						$module = $x->__typeOf();
+						$method = 'id';
+						if (method_exists($module, $method)) {
+							return call_user_func_array(array($module, $method), array($x, $y));
+						}
+						return Bool\Type::box(spl_object_hash($x) === spl_object_hash($y));
 					}
-					$module = $x->__typeOf();
-					$method = 'id';
-					if (method_exists($module, $method)) {
-						return call_user_func_array(array($module, $method), array($x, $y));
+					else {
+						if ($ys instanceof Option\None\Type) {
+							return Bool\Type::true();
+						}
 					}
-					return Bool\Module::create(spl_object_hash($x) === spl_object_hash($y));
-				}
-				else if ($ys instanceof Option\None\Type) {
-					return Bool\Module::true();
 				}
 			}
-			return Bool\Module::false();
+			return Bool\Type::false();
 		}
 
 		/**
@@ -392,38 +372,47 @@ namespace Saber\Data\Option {
 		 *                                                          object
 		 */
 		public static function compare(Option\Type $xs, Option\Type $ys) {
+			if (($xs === null) && ($ys !== null)) {
+				return Int32\Type::negative();
+			}
+			if (($xs === null) && ($ys === null)) {
+				return Int32\Type::zero();
+			}
+			if (($xs !== null) && ($ys === null)) {
+				return Int32\Type::one();
+			}
+
 			$x = $xs->__isDefined();
 			$y = $ys->__isDefined();
 
 			if (!$x && $y) {
-				return Int32\Module::negative();
+				return Int32\Type::negative();
 			}
 			if (!$x && !$y) {
-				return Int32\Module::zero();
+				return Int32\Type::zero();
 			}
 			if ($x && !$y) {
-				return Int32\Module::one();
+				return Int32\Type::one();
 			}
 
 			$x = $xs->object();
 			$y = $ys->object();
 
 			if (($x === null) && ($y !== null)) {
-				return Int32\Module::negative();
+				return Int32\Type::negative();
 			}
 			if (($x === null) && ($y === null)) {
-				return Int32\Module::zero();
+				return Int32\Type::zero();
 			}
 			if (($x !== null) && ($y === null)) {
-				return Int32\Module::one();
+				return Int32\Type::one();
 			}
 
-			$module = $x->__typeOf();
-			$method = 'compare';
-			if (method_exists($module, $method)) {
-				return call_user_func_array(array($module, $method), array($x, $y));
+			if ($x instanceof Core\Comparable\Type) {
+				return call_user_func_array(array($x, 'compare'), array($y));
 			}
-			return String\Module::compare(String\Module::create(spl_object_hash($x)), String\Module::create(spl_object_hash($y)));
+
+			return String\Module::compare(Core\Module::hashCode($x), Core\Module::hashCode($y));
 		}
 
 		/**
@@ -437,7 +426,7 @@ namespace Saber\Data\Option {
 		 *                                                          than or equal to the right operand
 		 */
 		public static function ge(Option\Type $xs, Option\Type $ys) { // >=
-			return Bool\Module::create(Option\Module::compare($xs, $ys)->unbox() >= 0);
+			return Bool\Type::box(Option\Module::compare($xs, $ys)->unbox() >= 0);
 		}
 
 		/**
@@ -451,7 +440,7 @@ namespace Saber\Data\Option {
 		 *                                                          than the right operand
 		 */
 		public static function gt(Option\Type $xs, Option\Type $ys) { // >
-			return Bool\Module::create(Option\Module::compare($xs, $ys)->unbox() > 0);
+			return Bool\Type::box(Option\Module::compare($xs, $ys)->unbox() > 0);
 		}
 
 		/**
@@ -465,7 +454,7 @@ namespace Saber\Data\Option {
 		 *                                                          or equal to the right operand
 		 */
 		public static function le(Option\Type $xs, Option\Type $ys) { // <=
-			return Bool\Module::create(Option\Module::compare($xs, $ys)->unbox() <= 0);
+			return Bool\Type::box(Option\Module::compare($xs, $ys)->unbox() <= 0);
 		}
 
 		/**
@@ -479,7 +468,7 @@ namespace Saber\Data\Option {
 		 *                                                          the right operand
 		 */
 		public static function lt(Option\Type $xs, Option\Type $ys) { // <
-			return Bool\Module::create(Option\Module::compare($xs, $ys)->unbox() < 0);
+			return Bool\Type::box(Option\Module::compare($xs, $ys)->unbox() < 0);
 		}
 
 		/**

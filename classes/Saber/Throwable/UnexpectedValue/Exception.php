@@ -18,14 +18,13 @@
 
 namespace Saber\Throwable\UnexpectedValue {
 
-	use \Saber\Core;
 	use \Saber\Throwable;
 
 	class Exception extends \UnexpectedValueException implements Throwable\Runtime\Exception {
 
 		#region Traits
 
-		use Core\AnyErr\Impl;
+		use Throwable\Runtime\Exception\Impl;
 
 		#endregion
 

@@ -19,42 +19,25 @@
 namespace Saber\Data\LinkedList\Nil {
 
 	use \Saber\Core;
-	use \Saber\Data\Bool;
-	use \Saber\Data\Int32;
 	use \Saber\Data\LinkedList;
 	use \Saber\Throwable;
 
 	final class Type extends LinkedList\Type {
 
-		#region Methods -> Object Oriented -> Universal
+		#region Methods -> Native Oriented
 
 		/**
-		 * This method compares the specified object with the current object for order.
+		 * This constructor initializes the class.
 		 *
 		 * @access public
-		 * @param LinkedList\Type $that                             the object to be compared
-		 * @return Int32\Type                                       whether the current object is less than,
-		 *                                                          equal to, or greater than the specified
-		 *                                                          object
 		 */
-		public function compareTo(LinkedList\Type $that) {
-			if ($that instanceof LinkedList\Nil\Type) {
-				return Int32\Module::zero();
-			}
-			return Int32\Module::negative();
+		public function __construct() {
+			$this->value = null;
 		}
 
-		/**
-		 * This method evaluates whether the specified object is equal to the current object.
-		 *
-		 * @access public
-		 * @param Core\Any $that                                    the object to be evaluated
-		 * @return Bool\Type                                        whether the specified object is equal
-		 *                                                          to the current object
-		 */
-		public function equals(Core\Any $that) {
-			return Bool\Module::create(($that !== null) && ($that instanceof static));
-		}
+		#endregion
+
+		#region Methods -> Object Oriented
 
 		/**
 		 * This method returns the head object in this linked list.
@@ -62,20 +45,8 @@ namespace Saber\Data\LinkedList\Nil {
 		 * @access public
 		 * @throws Throwable\EmptyCollection\Exception              indicates that the collection is empty
 		 */
-		public function head() {
+		public final function head() {
 			throw new Throwable\EmptyCollection\Exception('Unable to return head object. Linked list is empty.');
-		}
-
-		/**
-		 * This method evaluates whether the specified object is identical to the current object.
-		 *
-		 * @access public
-		 * @param Core\Any $that                                    the object to be evaluated
-		 * @return Bool\Type                                        whether the specified object is identical
-		 *                                                          to the current object
-		 */
-		public function identical(Core\Any $that) {
-			return Bool\Module::create(($that !== null) && ($that instanceof static));
 		}
 
 		/**
@@ -84,8 +55,20 @@ namespace Saber\Data\LinkedList\Nil {
 		 * @access public
 		 * @throws Throwable\EmptyCollection\Exception              indicates that the collection is empty
 		 */
-		public function tail() {
+		public final function tail() {
 			throw new Throwable\EmptyCollection\Exception('Unable to return tail. Linked list is empty.');
+		}
+
+		/**
+		 * This method returns the value contained within the boxed object.
+		 *
+		 * @access public
+		 * @final
+		 * @param integer $depth                                    how many levels to unbox
+		 * @return null                                             the un-boxed value
+		 */
+		public final function unbox($depth = 0) {
+			return $this->value;
 		}
 
 		#endregion

@@ -29,107 +29,7 @@ namespace Saber\Data\LinkedList {
 
 	abstract class Module extends Collection\Module {
 
-		#region Properties
-
-		/**
-		 * This variable stores a reference to a list's tail.
-		 *
-		 * @access protected
-		 * @var LinkedList\Type
-		 */
-		protected $tail;
-
-		#endregion
-
-		#region Methods -> Boxing/Creation
-
-		/**
-		 * This method returns a value as a boxed object.  A value is typically a PHP typed
-		 * primitive or object.  It is considered type-safe.
-		 *
-		 * @access public
-		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return Core\Type                                        the boxed object
-		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
-		 */
-		public static function box($value/*...*/) {
-			if (is_array($value)) {
-				$zs = LinkedList\Module::nil();
-				for ($i = count($value) - 1; $i >= 0; $i--) {
-					$zs = LinkedList\Module::prepend($zs, $value[$i]);
-				}
-				return $zs;
-			}
-			else {
-				$type = gettype($value);
-				if ($type == 'object') {
-					$type = get_class($value);
-				}
-				throw new Throwable\InvalidArgument\Exception('Unable to box value. Expected an array, but got ":type".', array(':type' => $type));
-			}
-		}
-
-		/**
-		 * This method returns a value as a boxed object.  A value is typically a PHP typed
-		 * primitive or object.  It is considered "not" type-safe.
-		 *
-		 * @access public
-		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return ArrayList\Type                                   the boxed object
-		 */
-		public static function create($value/*...*/) {
-			$zs = LinkedList\Module::nil();
-			for ($i = count($value) - 1; $i >= 0; $i--) {
-				$zs = LinkedList\Module::prepend($zs, $value[$i]);
-			}
-			return $zs;
-		}
-
-		/**
-		 * This method returns a "cons" object for a collection.
-		 *
-		 * @access public
-		 * @static
-		 * @param Core\Type $head                                   the head to be used
-		 * @param LinkedList\Type $tail                             the tail to be used
-		 * @return LinkedList\Cons\Type                             the "cons" object
-		 */
-		public static function cons(Core\Type $head, LinkedList\Type $tail) {
-			return new LinkedList\Cons\Type($head, $tail);
-		}
-
-		/**
-		 * This method returns a "nil" object for a collection.
-		 *
-		 * @access public
-		 * @static
-		 * @return LinkedList\Nil\Type                              the "nil" object
-		 */
-		public static function nil() {
-			return new LinkedList\Nil\Type();
-		}
-
-		/**
-		 * This method creates a list of "n" length with every element set to the given object.
-		 *
-		 * @access public
-		 * @static
-		 * @param Int32\Type $n                                     the number of times to replicate
-		 * @param Core\Type $y                                      the object to be replicated
-		 * @return LinkedList\Type                                  the collection
-		 */
-		public static function replicate(Int32\Type $n, Core\Type $y) {
-			if ($n->unbox() <= 0) {
-				return LinkedList\Module::nil();
-			}
-			return LinkedList\Module::cons($y, LinkedList\Module::replicate(Int32\Module::decrement($n), $y));
-		}
-
-		#endregion
-
-		#region Methods -> Object Oriented -> Universal
+		#region Methods -> Basic Operations
 
 		/**
 		 * This method (aka "every" or "forall") iterates over the elements in the collection, yielding each
@@ -143,17 +43,17 @@ namespace Saber\Data\LinkedList {
 		 *                                                          truthy test
 		 */
 		public static function all(LinkedList\Type $xs, callable $predicate) {
-			$i = Int32\Module::zero();
+			$i = Int32\Type::zero();
 
 			for ($zs = $xs; !$zs->__isEmpty(); $zs = $zs->tail()) {
 				$z = LinkedList\Module::head($zs, $i);
 				if (!$predicate($z, $i)->unbox()) {
-					return Bool\Module::false();
+					return Bool\Type::false();
 				}
 				$i = Int32\Module::increment($i);
 			}
 
-			return Bool\Module::true(); // yes, an empty list returns "true"
+			return Bool\Type::true(); // yes, an empty list returns "true"
 		}
 
 		/**
@@ -181,21 +81,8 @@ namespace Saber\Data\LinkedList {
 		 * @return LinkedList\Type                                  the collection
 		 */
 		public static function append(LinkedList\Type $xs, Core\Type $y) {
-			return LinkedList\Module::concat($xs, LinkedList\Module::cons($y, LinkedList\Module::nil()));
+			return LinkedList\Module::concat($xs, LinkedList\Type::cons($y, LinkedList\Type::nil()));
 		}
-
-		/**
-		 * This method compares the specified object with the current object for order.
-		 *
-		 * @access public
-		 * @static
-		 * @param LinkedList\Type $xs                               the left operand
-		 * @param LinkedList\Type $that                             the object to be compared
-		 * @return Int32\Type                                       whether the current object is less than,
-		 *                                                          equal to, or greater than the specified
-		 *                                                          object
-		 */
-		public abstract function compare(LinkedList\Type $xs, LinkedList\Type $that);
 
 		/**
 		 * This method concatenates a collection to this object's collection. Performs in O(n) time.
@@ -238,14 +125,14 @@ namespace Saber\Data\LinkedList {
 		 * @return LinkedList\Type                                  the collection
 		 */
 		public static function delete(LinkedList\Type $xs, Core\Type $y) {
-			$start = LinkedList\Module::nil();
+			$start = LinkedList\Type::nil();
 			$tail = null;
 
-			$index = Int32\Module::zero();
+			$index = Int32\Type::zero();
 			for ($zs = $xs; !$zs->__isEmpty(); $zs = $zs->tail()) {
 				$head = $zs->head();
 				if (!call_user_func_array(array(get_class($head), 'eq'), array($head, $y))->unbox()) {
-					$cons = LinkedList\Module::cons($head, LinkedList\Module::nil());
+					$cons = LinkedList\Type::cons($head, LinkedList\Type::nil());
 
 					if ($tail !== null) {
 						$tail->tail = $cons;
@@ -284,7 +171,7 @@ namespace Saber\Data\LinkedList {
 		 * @return LinkedList\Type                                  the collection
 		 */
 		public static function drop(LinkedList\Type $xs, Int32\Type $n) {
-			$i = Int32\Module::zero();
+			$i = Int32\Type::zero();
 
 			for ($zs = $xs; ($i->unbox() < $n->unbox()) && !$zs->__isEmpty(); $zs = $zs->tail()) {
 				$i = Int32\Module::increment($i);
@@ -303,7 +190,7 @@ namespace Saber\Data\LinkedList {
 		 * @return LinkedList\Type                                  the collection
 		 */
 		public static function dropWhile(LinkedList\Type $xs, callable $predicate) {
-			$i = Int32\Module::zero();
+			$i = Int32\Type::zero();
 
 			for ($zs = $xs; !$zs->__isEmpty() && $predicate($zs->head(), $i)->unbox(); $zs = $zs->tail()) {
 				$i = Int32\Module::increment($i);
@@ -337,7 +224,7 @@ namespace Saber\Data\LinkedList {
 		 * @param callable $procedure                               the procedure function to be used
 		 */
 		public static function each(LinkedList\Type $xs, callable $procedure) {
-			$i = Int32\Module::zero();
+			$i = Int32\Type::zero();
 
 			for ($zs = $xs; !$zs->__isEmpty(); $zs = $zs->tail()) {
 				$procedure($zs->head(), $i);
@@ -370,14 +257,14 @@ namespace Saber\Data\LinkedList {
 		 * @return LinkedList\Type                                  the collection
 		 */
 		public static function filter(LinkedList\Type $xs, callable $predicate) {
-			$start = LinkedList\Module::nil();
+			$start = LinkedList\Type::nil();
 			$tail = null;
 
-			$i = Int32\Module::zero();
+			$i = Int32\Type::zero();
 			for ($zs = $xs; !$zs->__isEmpty(); $zs = $zs->tail()) {
 				$z = $zs->head();
 				if ($predicate($z, $i)->unbox()) {
-					$ys = LinkedList\Module::cons($z, LinkedList\Module::nil());
+					$ys = LinkedList\Type::cons($z, LinkedList\Type::nil());
 
 					if ($tail !== null) {
 						$tail->tail = $ys;
@@ -405,17 +292,17 @@ namespace Saber\Data\LinkedList {
 		 *                                                          satisfying the predicate, if any
 		 */
 		public static function find(LinkedList\Type $xs, callable $predicate) {
-			$i = Int32\Module::zero();
+			$i = Int32\Type::zero();
 
 			for ($zs = $xs; !$zs->__isEmpty(); $zs = $zs->tail()) {
 				$z = $zs->head();
 				if ($predicate($z, $i)->unbox()) {
-					return Option\Module::some($z);
+					return Option\Type::some($z);
 				}
 				$i = Int32\Module::increment($i);
 			}
 
-			return Option\Module::none();
+			return Option\Type::none();
 		}
 
 		/**
@@ -427,7 +314,7 @@ namespace Saber\Data\LinkedList {
 		 * @return LinkedList\Type                                  the flattened linked list
 		 */
 		public static function flatten(LinkedList\Type $xs) {
-			$start = LinkedList\Module::nil();
+			$start = LinkedList\Type::nil();
 			$tail = null;
 
 			for ($zs = $xs; !$zs->__isEmpty(); $zs = $zs->tail()) {
@@ -435,7 +322,7 @@ namespace Saber\Data\LinkedList {
 
 				$ys = ($z instanceof Collection\Type)
 					? LinkedList\Module::toList(LinkedList\Module::flatten($z))
-					: LinkedList\Module::cons($z, LinkedList\Module::nil());
+					: LinkedList\Type::cons($z, LinkedList\Type::nil());
 
 				if ($tail !== null) {
 					$tail->tail = $ys;
@@ -513,7 +400,7 @@ namespace Saber\Data\LinkedList {
 		 * @return Option\Type                                      the option
 		 */
 		public static function headOption(LinkedList\Type $xs) {
-			return (!$xs->__isEmpty()) ? Option\Module::some($xs->head()) : Option\Module::none();
+			return (!$xs->__isEmpty()) ? Option\Type::some($xs->head()) : Option\Type::none();
 		}
 
 		/**
@@ -527,7 +414,7 @@ namespace Saber\Data\LinkedList {
 		 *                                                          or otherwise -1
 		 */
 		public static function indexOf(LinkedList\Type $xs, Core\Type $y) {
-			$i = Int32\Module::zero();
+			$i = Int32\Type::zero();
 
 			for ($zs = $xs; !$zs->__isEmpty(); $zs = $zs->tail()) {
 				$z = $zs->head();
@@ -537,7 +424,7 @@ namespace Saber\Data\LinkedList {
 				$i = Int32\Module::increment($i);
 			}
 
-			return Int32\Module::negative();
+			return Int32\Type::negative();
 		}
 
 		/**
@@ -550,11 +437,11 @@ namespace Saber\Data\LinkedList {
 		 *                                                          element
 		 */
 		public static function init(LinkedList\Type $xs) {
-			$start = LinkedList\Module::nil();
+			$start = LinkedList\Type::nil();
 			$tail = null;
 
 			for ($zs = $xs; !$zs->__isEmpty() && !$zs->tail()->__isEmpty(); $zs = $zs->tail()) {
-				$ys = LinkedList\Module::cons($zs->head(), LinkedList\Module::nil());
+				$ys = LinkedList\Type::cons($zs->head(), LinkedList\Type::nil());
 
 				if ($tail !== null) {
 					$tail->tail = $ys;
@@ -581,7 +468,7 @@ namespace Saber\Data\LinkedList {
 		public static function intersperse(LinkedList\Type $xs, Core\Type $y) {
 			return ($xs->__isEmpty() || $xs->tail()->__isEmpty())
 				? $xs
-				: LinkedList\Module::cons($xs->head(), LinkedList\Module::cons($y, LinkedList\Module::intersperse($xs->tail(), $y)));
+				: LinkedList\Type::cons($xs->head(), LinkedList\Type::cons($y, LinkedList\Module::intersperse($xs->tail(), $y)));
 		}
 
 		/**
@@ -633,7 +520,7 @@ namespace Saber\Data\LinkedList {
 		 * @return Option\Type                                      the option
 		 */
 		public static function lastOption(LinkedList\Type $xs) {
-			return (!$xs->__isEmpty()) ? Option\Module::some(LinkedList\Module::last($xs)) : Option\Module::none();
+			return (!$xs->__isEmpty()) ? Option\Type::some(LinkedList\Module::last($xs)) : Option\Type::none();
 		}
 
 		/**
@@ -658,12 +545,12 @@ namespace Saber\Data\LinkedList {
 		 * @return LinkedList\Type                                  the collection
 		 */
 		public static function map(LinkedList\Type $xs, callable $subroutine) {
-			$start = LinkedList\Module::nil();
+			$start = LinkedList\Type::nil();
 			$tail = null;
 
-			$i = Int32\Module::zero();
+			$i = Int32\Type::zero();
 			for ($zs = $xs; !$zs->__isEmpty(); $zs = $zs->tail()) {
-				$ys = LinkedList\Module::cons($subroutine($zs->head(), $i), LinkedList\Module::nil());
+				$ys = LinkedList\Type::cons($subroutine($zs->head(), $i), LinkedList\Type::nil());
 
 				if ($tail !== null) {
 					$tail->tail = $ys;
@@ -706,7 +593,7 @@ namespace Saber\Data\LinkedList {
 		 * @return LinkedList\Type                                  the collection
 		 */
 		public static function prepend(LinkedList\Type $xs, Core\Type $y) {
-			return LinkedList\Module::cons($y, $xs);
+			return LinkedList\Type::cons($y, $xs);
 		}
 
 		/**
@@ -748,8 +635,8 @@ namespace Saber\Data\LinkedList {
 		 */
 		public static function reverse(LinkedList\Type $xs) {
 			return LinkedList\Module::foldLeft($xs, function(LinkedList\Type $tail, Core\Type $head) {
-				return LinkedList\Module::cons($head, $tail);
-			}, LinkedList\Module::nil());
+				return LinkedList\Type::cons($head, $tail);
+			}, LinkedList\Type::nil());
 		}
 
 		/**
@@ -789,9 +676,9 @@ namespace Saber\Data\LinkedList {
 		 */
 		public static function take(LinkedList\Type $xs, Int32\Type $n) {
 			if (($n->unbox() <= 0) || $xs->__isEmpty()) {
-				return LinkedList\Module::nil();
+				return LinkedList\Type::nil();
 			}
-			return LinkedList\Module::cons($xs->head(), LinkedList\Module::take($xs->tail(), Int32\Module::decrement($n)));
+			return LinkedList\Type::cons($xs->head(), LinkedList\Module::take($xs->tail(), Int32\Module::decrement($n)));
 		}
 
 		/**
@@ -804,17 +691,17 @@ namespace Saber\Data\LinkedList {
 		 * @return LinkedList\Type                                  the collection
 		 */
 		public static function takeWhile(LinkedList\Type $xs, callable $predicate) {
-			$start = LinkedList\Module::nil();
+			$start = LinkedList\Type::nil();
 			$tail = null;
 
 			$taking = true;
 
-			$i = Int32\Module::zero();
+			$i = Int32\Type::zero();
 			for ($zs = $xs; !$zs->__isEmpty() && $taking; $zs = $zs->tail()) {
 				$z = $zs->head();
 
 				if ($predicate($z, $i)->unbox()) {
-					$ys = LinkedList\Module::cons($z, LinkedList\Module::nil());
+					$ys = LinkedList\Type::cons($z, LinkedList\Type::nil());
 
 					if ($tail !== null) {
 						$tail->tail = $ys;
@@ -865,7 +752,7 @@ namespace Saber\Data\LinkedList {
 				$buffer[] = $zs->head();
 			}
 
-			return ArrayList\Module::create($buffer);
+			return ArrayList\Type::box($buffer);
 		}
 
 		/**
@@ -882,7 +769,256 @@ namespace Saber\Data\LinkedList {
 
 		#endregion
 
-		#region Methods -> Object Oriented -> Boolean Operations
+		#region Methods -> Equality
+
+		/**
+		 * This method evaluates whether the left operand is equal to the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param LinkedList\Type $xs                               the left operand
+		 * @param Core\Type $ys                                     the right operand
+		 * @return Bool\Type                                        whether the left operand is equal
+		 *                                                          to the right operand
+		 */
+		public static function eq(LinkedList\Type $xs, Core\Type $ys) { // ==
+			if ($ys !== null) {
+				$x = ($xs instanceof LinkedList\Nil\Type);
+				$y = ($ys instanceof LinkedList\Nil\Type);
+
+				if (($x && !$y) || (!$x && $y)) {
+					return Bool\Type::false();
+				}
+				if ($x && $y) {
+					return Bool\Type::true();
+				}
+
+				for ($as = $xs, $bs = $ys; !$as->__isEmpty() && !$bs->__isEmpty(); $as = $as->tail(), $bs = $bs->tail()) {
+					$r = $as->head()->eq($bs->head());
+					if (!$r->unbox()) {
+						return $r;
+					}
+				}
+
+				$x_length = $xs->__length();
+				$y_length = $ys->__length();
+
+				if ($x_length < $y_length) {
+					return Bool\Type::false();
+				}
+				else if ($x_length == $y_length) {
+					return Bool\Type::true();
+				}
+			}
+			return Bool\Type::false();
+		}
+
+		/**
+		 * This method evaluates whether the left operand is identical to the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param LinkedList\Type $xs                               the left operand
+		 * @param Core\Type $ys                                     the right operand
+		 * @return Bool\Type                                        whether the left operand is identical
+		 *                                                          to the right operand
+		 */
+		public static function id(LinkedList\Type $xs, Core\Type $ys) { // ===
+			if ($ys !== null) {
+				if ($xs->__typeOf() !== $ys->typeOf()) {
+					return Bool\Type::false();
+				}
+
+				for ($as = $xs, $bs = $ys; !$as->__isEmpty() && !$bs->__isEmpty(); $as = $as->tail(), $bs = $bs->tail()) {
+					$r = $as->head()->id($bs->head());
+					if (!$r->unbox()) {
+						return $r;
+					}
+				}
+
+				$x_length = $xs->__length();
+				$y_length = $ys->__length();
+
+				if ($x_length < $y_length) {
+					return Bool\Type::false();
+				}
+				else if ($x_length == $y_length) {
+					return Bool\Type::true();
+				}
+			}
+			return Bool\Type::false();
+		}
+
+		/**
+		 * This method evaluates whether the left operand is NOT equal to the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param LinkedList\Type $xs                               the left operand
+		 * @param Core\Type $ys                                     the right operand
+		 * @return Bool\Type                                        whether the left operand is NOT equal
+		 *                                                          to the right operand
+		 */
+		public static function ne(LinkedList\Type $xs, Core\Type $ys) { // !=
+			return Bool\Module::not(LinkedList\Module::eq($xs, $ys));
+		}
+
+		/**
+		 * This method evaluates whether the left operand is NOT identical to the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param LinkedList\Type $xs                               the left operand
+		 * @param Core\Type $ys                                     the right operand
+		 * @return Bool\Type                                        whether the left operand is NOT identical
+		 *                                                          to the right operand
+		 */
+		public static function ni(LinkedList\Type $xs, Core\Type $ys) { // !==
+			return Bool\Module::not(LinkedList\Module::id($xs, $ys));
+		}
+
+		#endregion
+
+		#region Methods -> Ordering
+
+		/**
+		 * This method compares the operands for order.
+		 *
+		 * @access public
+		 * @static
+		 * @param LinkedList\Type $xs                               the left operand
+		 * @param LinkedList\Type $ys                               the right operand
+		 * @return Int32\Type                                       the order as to whether the left
+		 *                                                          operand is less than, equals to,
+		 *                                                          or greater than the right operand
+		 */
+		public static function compare(LinkedList\Type $xs, LinkedList\Type $ys) {
+			if (($xs === null) && ($ys !== null)) {
+				return Int32\Type::negative();
+			}
+			if (($xs === null) && ($ys === null)) {
+				return Int32\Type::zero();
+			}
+			if (($xs !== null) && ($ys === null)) {
+				return Int32\Type::one();
+			}
+
+			$x = ($xs instanceof LinkedList\Nil\Type);
+			$y = ($ys instanceof LinkedList\Nil\Type);
+
+			if (($x && !$y) || (!$x && $y)) {
+				return Bool\Type::false();
+			}
+			if ($x && $y) {
+				return Bool\Type::true();
+			}
+
+			for ($as = $xs, $bs = $ys; !$as->__isEmpty() && !$bs->__isEmpty(); $as = $as->tail(), $bs = $bs->tail()) {
+				$r = $as->head()->compare($bs->head());
+				if ($r->unbox() != 0) {
+					return $r;
+				}
+			}
+
+			$x_length = $xs->__length();
+			$y_length = $ys->__length();
+
+			if ($x_length < $y_length) {
+				return Int32\Type::negative();
+			}
+			else if ($x_length == $y_length) {
+				return Int32\Type::zero();
+			}
+			else { // ($x_length > $y_length)
+				return Int32\Type::one();
+			}
+		}
+
+		/**
+		 * This method evaluates whether the left operand is greater than or equal to the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param LinkedList\Type $xs                               the left operand
+		 * @param LinkedList\Type $ys                               the right operand
+		 * @return Bool\Type                                        whether the left operand is greater
+		 *                                                          than or equal to the right operand
+		 */
+		public static function ge(LinkedList\Type $xs, LinkedList\Type $ys) { // >=
+			return Bool\Type::box(LinkedList\Module::compare($xs, $ys)->unbox() >= 0);
+		}
+
+		/**
+		 * This method evaluates whether the left operand is greater than the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param LinkedList\Type $xs                               the left operand
+		 * @param LinkedList\Type $ys                               the right operand
+		 * @return Bool\Type                                        whether the left operand is greater
+		 *                                                          than the right operand
+		 */
+		public static function gt(LinkedList\Type $xs, LinkedList\Type $ys) { // >
+			return Bool\Type::box(LinkedList\Module::compare($xs, $ys)->unbox() > 0);
+		}
+
+		/**
+		 * This method evaluates whether the left operand is less than or equal to the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param LinkedList\Type $xs                               the left operand
+		 * @param LinkedList\Type $ys                               the right operand
+		 * @return Bool\Type                                        whether the left operand is less than
+		 *                                                          or equal to the right operand
+		 */
+		public static function le(LinkedList\Type $xs, LinkedList\Type $ys) { // <=
+			return Bool\Type::box(LinkedList\Module::compare($xs, $ys)->unbox() <= 0);
+		}
+
+		/**
+		 * This method evaluates whether the left operand is less than the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param LinkedList\Type $xs                               the left operand
+		 * @param LinkedList\Type $ys                               the right operand
+		 * @return Bool\Type                                        whether the left operand is less than
+		 *                                                          the right operand
+		 */
+		public static function lt(LinkedList\Type $xs, LinkedList\Type $ys) { // <
+			return Bool\Type::box(LinkedList\Module::compare($xs, $ys)->unbox() < 0);
+		}
+
+		/**
+		 * This method returns the numerically highest value.
+		 *
+		 * @access public
+		 * @static
+		 * @param LinkedList\Type $xs                               the left operand
+		 * @param LinkedList\Type $ys                               the right operand
+		 * @return Int32\Type                                       the maximum value
+		 */
+		public static function max(LinkedList\Type $xs, LinkedList\Type $ys) {
+			return (LinkedList\Module::compare($xs, $ys)->unbox() >= 0) ? $xs : $ys;
+		}
+
+		/**
+		 * This method returns the numerically lowest value.
+		 *
+		 * @access public
+		 * @static
+		 * @param LinkedList\Type $xs                               the left operand
+		 * @param LinkedList\Type $ys                               the right operand
+		 * @return Int32\Type                                       the minimum value
+		 */
+		public static function min(LinkedList\Type $xs, LinkedList\Type $ys) {
+			return (LinkedList\Module::compare($xs, $ys)->unbox() <= 0) ? $xs : $ys;
+		}
+
+		#endregion
+
+		#region Methods -> Boolean Operations
 
 		/**
 		 * This method (aka "truthy") returns whether all of the elements of the collection evaluate
@@ -926,7 +1062,7 @@ namespace Saber\Data\LinkedList {
 		 *                                                          to false
 		 */
 		public static function false(LinkedList\Type $xs) {
-			return Bool\Module::not(LinkedList\Module::true($xs));
+			return Bool\Module::not(LinkedList\Type::true($xs));
 		}
 
 		/**
@@ -959,10 +1095,10 @@ namespace Saber\Data\LinkedList {
 		public static function true(LinkedList\Type $xs) {
 			for ($zs = $xs; !$zs->__isEmpty(); $zs = $zs->tail()) {
 				if ($zs->__head() !== true) {
-					return Bool\Module::false();
+					return Bool\Type::false();
 				}
 			}
-			return Bool\Module::true();
+			return Bool\Type::true();
 		}
 
 		/**
@@ -978,10 +1114,10 @@ namespace Saber\Data\LinkedList {
 		public static function truthy(LinkedList\Type $xs) {
 			for ($zs = $xs; !$zs->__isEmpty(); $zs = $zs->tail()) {
 				if (!$zs->__head()) {
-					return Bool\Module::false();
+					return Bool\Type::false();
 				}
 			}
-			return Bool\Module::true();
+			return Bool\Type::true();
 		}
 
 		#endregion

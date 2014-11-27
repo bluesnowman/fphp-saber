@@ -43,10 +43,10 @@ namespace Saber\Core {
 			$class = get_called_class();
 			if (preg_match('/^__[a-z_][a-z0-9_]*$/i', $method)) {
 				$method = substr($method, 2);
-				if (!in_array($method, array('choice', 'unbox'))) {
+				if (!in_array($method, array('call', 'choice', 'iterator', 'unbox'))) {
 					if (method_exists($class, $method)) {
 						$result = call_user_func_array(array($class, $method), $args);
-						if ($result instanceof Core\Type\Boxable) {
+						if ($result instanceof Core\Boxable\Type) {
 							return $result->unbox();
 						}
 						return $result;
@@ -61,15 +61,33 @@ namespace Saber\Core {
 		#region Methods -> Object Oriented
 
 		/**
-		 * This method returns a choice block.
+		 * This method throws an exception should the predicate return fails.
 		 *
 		 * @access public
 		 * @static
 		 * @param Core\Type $x                                      the object to be evaluated
-		 * @return Control\Monad\Choice                             the choice monad
+		 * @param callable $predicate                               the predicate function to be used
+		 * @param mixed $z                                          the input aiding the assertion
+		 * @return Core\Type                                        a reference to this object
+		 * @throws Throwable\UnexpectedValue\Exception              indicates that the test failed
 		 */
-		public static function choice(Core\Type $x) {
-			return Control\Monad::choice($x);
+		public static function assert(Core\Type $x, callable $predicate, $z = null) {
+			if (!$predicate($x, $z)->unbox()) {
+				throw new Throwable\UnexpectedValue\Exception('Failed assertion in class ":type".', array(':type' => $x->__typeOf()));
+			}
+			return $x;
+		}
+
+		/**
+		 * This method returns a choice block.
+		 *
+		 * @access public
+		 * @static
+		 * @param Core\Equality\Type $x                             the object to be evaluated
+		 * @return Control\Choice\Type                              the choice monad
+		 */
+		public static function choice(Core\Equality\Type $x) {
+			return Control\Type::choice($x);
 		}
 
 		/**

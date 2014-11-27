@@ -21,6 +21,6 @@ namespace Saber\Data\Num {
 	use \Saber\Core;
 	use \Saber\Data;
 
-	abstract class Type extends Data\Type implements Core\Type\Boxable { }
+	abstract class Type extends Data\Type implements Core\Boxable\Type { }
 
 }

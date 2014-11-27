@@ -29,72 +29,7 @@ namespace Saber\Data\ArrayList {
 
 	class Module extends Collection\Module {
 
-		#region Methods -> Boxing/Creation
-
-		/**
-		 * This method returns a value as a boxed object.  A value is typically a PHP typed
-		 * primitive or object.  It is considered type-safe.
-		 *
-		 * @access public
-		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return ArrayList\Type                                   the boxed object
-		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
-		 */
-		public static function box($value/*...*/) {
-			if (($value === null) || !is_array($value)) {
-				$type = gettype($value);
-				if ($type == 'object') {
-					$type = get_class($value);
-				}
-				throw new Throwable\InvalidArgument\Exception('Unable to create array list. Expected an array, but got ":type".', array(':type' => $type));
-			}
-			foreach ($value as $object) {
-				if (!(is_object($object) && ($object instanceof Core\Type))) {
-					$type = gettype($value);
-					if ($type == 'object') {
-						$type = get_class($value);
-					}
-					throw new Throwable\InvalidArgument\Exception('Unable to create array list. Expected a boxed value, but got ":type".', array(':type' => $type));
-				}
-			}
-			return new ArrayList\Type($value);
-		}
-
-		/**
-		 * This method returns a value as a boxed object.  A value is typically a PHP typed
-		 * primitive or object.  It is considered "not" type-safe.
-		 *
-		 * @access public
-		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return ArrayList\Type                                   the boxed object
-		 */
-		public static function create($value/*...*/) {
-			return new ArrayList\Type($value);
-		}
-
-		/**
-		 * This method creates a list of "n" length with every element set to the given object.
-		 *
-		 * @access public
-		 * @param Int32\Type $n                                     the number of times to replicate
-		 * @param Core\Type $y                                      the object to be replicated
-		 * @return ArrayList\Type                                   the collection
-		 */
-		public static function replicate(Int32\Type $n, Core\Type $y) {
-			$buffer = array();
-
-			for ($i = $n->unbox() - 1; $i >= 0; $i--) {
-				$buffer[] = $y;
-			}
-
-			return new ArrayList\Type($buffer);
-		}
-
-		#endregion
-
-		#region Methods -> Object Oriented -> Universal
+		#region Methods -> Basic Operations
 
 		/**
 		 * This method (aka "every" or "forall") iterates over the elements in the list, yielding each
@@ -110,13 +45,13 @@ namespace Saber\Data\ArrayList {
 		public static function all(ArrayList\Type $xs, callable $predicate) {
 			$length = $xs->length();
 
-			for ($i = Int32\Module::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
+			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
 				if (!$predicate($xs->element($i), $i)->unbox()) {
-					return Bool\Module::false();
+					return Bool\Type::false();
 				}
 			}
 
-			return Bool\Module::true(); // yes, an empty array returns "true"
+			return Bool\Type::true(); // yes, an empty array returns "true"
 		}
 
 		/**
@@ -131,7 +66,7 @@ namespace Saber\Data\ArrayList {
 		 *                                                          passed the truthy test
 		 */
 		public static function any(ArrayList\Type $xs, callable $predicate) {
-			return Option\Type::isDefined(ArrayList\Module::find($xs, $predicate));
+			return Option\Module::isDefined(ArrayList\Module::find($xs, $predicate));
 		}
 
 		/**
@@ -240,7 +175,7 @@ namespace Saber\Data\ArrayList {
 			$length = $xs->length();
 
 			$failed = false;
-			for ($i = Int32\Module::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
+			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
 				$x = $xs->element($i);
 				if (!$predicate($x, $i)->unbox() || $failed) {
 					$buffer[] = $x;
@@ -278,7 +213,7 @@ namespace Saber\Data\ArrayList {
 		public static function each(ArrayList\Type $xs, callable $procedure) {
 			$length = $xs->length();
 
-			for ($i = Int32\Module::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
+			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
 				$procedure($xs->element($i), $i);
 			}
 		}
@@ -311,7 +246,7 @@ namespace Saber\Data\ArrayList {
 			$buffer = array();
 			$length = $xs->length();
 
-			for ($i = Int32\Module::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
+			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
 				$x = $xs->element($i);
 				if ($predicate($x, $i)->unbox()) {
 					$buffer[] = $x;
@@ -334,7 +269,7 @@ namespace Saber\Data\ArrayList {
 		public static function find(ArrayList\Type $xs, callable $predicate) {
 			$length = $xs->length();
 
-			for ($i = Int32\Module::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
+			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
 				$x = $xs->element($i);
 				if ($predicate($x, $i)->unbox()) {
 					return Option\Type::some($x);
@@ -356,12 +291,12 @@ namespace Saber\Data\ArrayList {
 			$buffer = array();
 			$x_length = $xs->length();
 
-			for ($i = Int32\Module::zero(); Int32\Module::lt($i, $x_length)->unbox(); $i = Int32\Module::increment($i)) {
+			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $x_length)->unbox(); $i = Int32\Module::increment($i)) {
 				$x = $xs->element($i);
 				if ($x instanceof ArrayList\Type) {
 					$ys = ArrayList\Module::flatten($x);
 					$y_length = $ys->length();
-					for ($j = Int32\Module::zero(); Int32\Module::lt($j, $y_length)->unbox(); $j = Int32\Module::increment($j)) {
+					for ($j = Int32\Type::zero(); Int32\Module::lt($j, $y_length)->unbox(); $j = Int32\Module::increment($j)) {
 						$buffer[] = $ys->element($j);
 					}
 				}
@@ -387,7 +322,7 @@ namespace Saber\Data\ArrayList {
 			$z = $initial;
 			$length = $xs->length();
 
-			for ($i = Int32\Module::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
+			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
 				$z = $operator($z, $xs->element($i));
 			}
 
@@ -408,7 +343,7 @@ namespace Saber\Data\ArrayList {
 			$z = $initial;
 			$length = $xs->length();
 
-			for ($i = Int32\Module::decrement($length); Int32\Module::ge($i, Int32\Module::zero())->unbox(); $i = Int32\Module::decrement($length)) {
+			for ($i = Int32\Module::decrement($length); Int32\Module::ge($i, Int32\Type::zero())->unbox(); $i = Int32\Module::decrement($length)) {
 				$z = $operator($z, $xs->element($i));
 			}
 
@@ -424,7 +359,7 @@ namespace Saber\Data\ArrayList {
 		 * @return Core\Type                                        the head object in this list
 		 */
 		public static function head(ArrayList\Type $xs) {
-			return $xs->element(Int32\Module::zero());
+			return $xs->element(Int32\Type::zero());
 		}
 
 		/**
@@ -452,14 +387,14 @@ namespace Saber\Data\ArrayList {
 		public static function indexOf(ArrayList\Type $xs, Core\Type $y) {
 			$length = $xs->length();
 
-			for ($i = Int32\Module::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
+			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
 				$x = $xs->element($i);
 				if (call_user_func_array(array(get_class($x), 'eq'), array($x, $y))->unbox()) {
 					return $i;
 				}
 			}
 
-			return Int32\Module::negative();
+			return Int32\Type::negative();
 		}
 
 		/**
@@ -475,7 +410,7 @@ namespace Saber\Data\ArrayList {
 			$buffer = array();
 			$length = Int32\Module::decrement($xs->length());
 
-			for ($i = Int32\Module::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
+			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
 				$buffer[] = $xs->element($i);
 			}
 
@@ -497,8 +432,8 @@ namespace Saber\Data\ArrayList {
 			$length = $xs->length();
 
 			if ($length > 0) {
-				$buffer[] = $xs->element(Int32\Module::zero());
-				for ($i = Int32\Module::one(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
+				$buffer[] = $xs->element(Int32\Type::zero());
+				for ($i = Int32\Type::one(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
 					$buffer[] = $y;
 					$buffer[] = $xs->element($i);
 				}
@@ -581,7 +516,7 @@ namespace Saber\Data\ArrayList {
 			$buffer = array();
 			$length = $xs->length();
 
-			for ($i = Int32\Module::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
+			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
 				$buffer[] = $subroutine($xs->element($i), $i);
 			}
 
@@ -700,7 +635,7 @@ namespace Saber\Data\ArrayList {
 			$buffer = array();
 			$length = Int32\Module::min($n, $xs->length());
 
-			for ($i = Int32\Module::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
+			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
 				$buffer[] = $xs->element($i);
 			}
 
@@ -720,7 +655,7 @@ namespace Saber\Data\ArrayList {
 			$buffer = array();
 			$length = $xs->length();
 
-			for ($i = Int32\Module::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
+			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
 				$x = $xs->element($i);
 				if (!$predicate($x, $i)->unbox()) {
 					break;
@@ -768,8 +703,8 @@ namespace Saber\Data\ArrayList {
 		 */
 		public static function toList(ArrayList\Type $xs) {
 			$length = $xs->length();
-			$zs = LinkedList\Module::nil();
-			for ($i = Int32\Module::decrement($length); Int32\Module::ge($i, Int32\Module::zero())->unbox(); $i = Int32\Module::decrement($i)) {
+			$zs = LinkedList\Type::nil();
+			for ($i = Int32\Module::decrement($length); Int32\Module::ge($i, Int32\Type::zero())->unbox(); $i = Int32\Module::decrement($i)) {
 				$zs = LinkedList\Module::prepend($zs, $xs->element($i));
 			}
 			return $zs;
@@ -777,51 +712,230 @@ namespace Saber\Data\ArrayList {
 
 		#endregion
 
+		#region Methods -> Equality
+
+		/**
+		 * This method evaluates whether the left operand is equal to the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param ArrayList\Type $xs                                the left operand
+		 * @param Core\Type $ys                                     the right operand
+		 * @return Bool\Type                                        whether the left operand is equal
+		 *                                                          to the right operand
+		 */
+		public static function eq(ArrayList\Type $xs, Core\Type $ys) { // ==
+			$type = $xs->__typeOf();
+			if ($ys !== null) {
+				if ($ys instanceof $type) {
+					$x_length = $xs->__length();
+					$y_length = $ys->__length();
+
+					for ($i = 0; ($i < $x_length) && ($i < $y_length); $i++) {
+						$p = Int32\Type::box($i);
+						$r = $xs->element($p)->eq($ys->element($p));
+						if (!$r->unbox()) {
+							return $r;
+						}
+					}
+
+					return Bool\Type::box($x_length == $y_length);
+				}
+			}
+			return Bool\Type::false();
+		}
+
+		/**
+		 * This method evaluates whether the left operand is identical to the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param ArrayList\Type $xs                                the left operand
+		 * @param Core\Type $ys                                     the right operand
+		 * @return Bool\Type                                        whether the left operand is identical
+		 *                                                          to the right operand
+		 */
+		public static function id(ArrayList\Type $xs, Core\Type $ys) { // ===
+			if ($ys !== null) {
+				if ($xs->__typeOf() === $ys->__typeOf()) {
+					$x_length = $xs->__length();
+					$y_length = $ys->__length();
+
+					for ($i = 0; ($i < $x_length) && ($i < $y_length); $i++) {
+						$p = Int32\Type::box($i);
+						$r = $xs->element($p)->id($ys->element($p));
+						if (!$r->unbox()) {
+							return $r;
+						}
+					}
+
+					return Bool\Type::box($x_length == $y_length);
+				}
+			}
+			return Bool\Type::false();
+		}
+
+		/**
+		 * This method evaluates whether the left operand is NOT equal to the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param ArrayList\Type $xs                                the left operand
+		 * @param Core\Type $ys                                     the right operand
+		 * @return Bool\Type                                        whether the left operand is NOT equal
+		 *                                                          to the right operand
+		 */
+		public static function ne(ArrayList\Type $xs, Core\Type $ys) { // !=
+			return Bool\Module::not(ArrayList\Module::eq($xs, $ys));
+		}
+
+		/**
+		 * This method evaluates whether the left operand is NOT identical to the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param ArrayList\Type $xs                                the left operand
+		 * @param Core\Type $ys                                     the right operand
+		 * @return Bool\Type                                        whether the left operand is NOT identical
+		 *                                                          to the right operand
+		 */
+		public static function ni(ArrayList\Type $xs, Core\Type $ys) { // !==
+			return Bool\Module::not(ArrayList\Module::id($xs, $ys));
+		}
+
+		#endregion
+
+		#region Methods -> Ordering
+
 		/**
 		 * This method compares the specified object with the current object for order.
 		 *
 		 * @access public
 		 * @static
 		 * @param ArrayList\Type $xs                                the left operand
-		 * @param ArrayList\Type $ys                              the object to be compared
+		 * @param ArrayList\Type $ys                                the object to be compared
 		 * @return Int32\Type                                       whether the current object is less than,
 		 *                                                          equal to, or greater than the specified
 		 *                                                          object
 		 */
 		public static function compare(ArrayList\Type $xs, ArrayList\Type $ys) {
 			if (($xs === null) && ($ys !== null)) {
-				return Int32\Module::negative();
+				return Int32\Type::negative();
 			}
 			if (($xs === null) && ($ys === null)) {
-				return Int32\Module::zero();
+				return Int32\Type::zero();
 			}
 			if (($xs !== null) && ($ys === null)) {
-				return Int32\Module::one();
+				return Int32\Type::one();
 			}
 
-			$x_length = $xs->length();
-			$y_length = $ys->length();
+			$x_length = $xs->__length();
+			$y_length = $ys->__length();
+
+			for ($i = 0; ($i < $x_length) && ($i < $y_length); $i++) {
+				$p = Int32\Type::box($i);
+				$r = $xs->element($p)->compare($ys->element($p));
+				if ($r->unbox() != 0) {
+					return $r;
+				}
+			}
 
 			if ($x_length < $y_length) {
-				return Int32\Module::negative();
+				return Int32\Type::negative();
 			}
-			else if ($x_length > $y_length) {
-				return Int32\Module::one();
+			else if ($x_length == $y_length) {
+				return Int32\Type::zero();
 			}
-			else { // ($x_length == $y_length)
-				for ($i = Int32\Module::zero(); Int32\Module::lt($i, $x_length)->unbox(); $i = Int32\Module::increment($i)) {
-					$x = $xs->element($i);
-					$y = $ys->element($i);
-					$r = call_user_func_array(array(get_class($x), 'compare'), array($x, $y));
-					if ($r->unbox() != 0) {
-						return $r;
-					}
-				}
-				return Int32\Module::one();
+			else { // ($x_length > $y_length)
+				return Int32\Type::one();
 			}
 		}
 
-		#region Methods -> Object Oriented -> Boolean Operations
+		/**
+		 * This method evaluates whether the left operand is greater than or equal to the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param ArrayList\Type $xs                                the left operand
+		 * @param ArrayList\Type $ys                                the right operand
+		 * @return Bool\Type                                        whether the left operand is greater
+		 *                                                          than or equal to the right operand
+		 */
+		public static function ge(ArrayList\Type $xs, ArrayList\Type $ys) { // >=
+			return Bool\Type::box(ArrayList\Module::compare($xs, $ys)->unbox() >= 0);
+		}
+
+		/**
+		 * This method evaluates whether the left operand is greater than the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param ArrayList\Type $xs                                the left operand
+		 * @param ArrayList\Type $ys                                the right operand
+		 * @return Bool\Type                                        whether the left operand is greater
+		 *                                                          than the right operand
+		 */
+		public static function gt(ArrayList\Type $xs, ArrayList\Type $ys) { // >
+			return Bool\Type::box(ArrayList\Module::compare($xs, $ys)->unbox() > 0);
+		}
+
+		/**
+		 * This method evaluates whether the left operand is less than or equal to the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param ArrayList\Type $xs                                the left operand
+		 * @param ArrayList\Type $ys                                the right operand
+		 * @return Bool\Type                                        whether the left operand is less than
+		 *                                                          or equal to the right operand
+		 */
+		public static function le(ArrayList\Type $xs, ArrayList\Type $ys) { // <=
+			return Bool\Type::box(ArrayList\Module::compare($xs, $ys)->unbox() <= 0);
+		}
+
+		/**
+		 * This method evaluates whether the left operand is less than the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param ArrayList\Type $xs                                the left operand
+		 * @param ArrayList\Type $ys                                the right operand
+		 * @return Bool\Type                                        whether the left operand is less than
+		 *                                                          the right operand
+		 */
+		public static function lt(ArrayList\Type $xs, ArrayList\Type $ys) { // <
+			return Bool\Type::box(ArrayList\Module::compare($xs, $ys)->unbox() < 0);
+		}
+
+		/**
+		 * This method returns the numerically highest value.
+		 *
+		 * @access public
+		 * @static
+		 * @param ArrayList\Type $xs                                the left operand
+		 * @param ArrayList\Type $ys                                the right operand
+		 * @return Int32\Type                                       the maximum value
+		 */
+		public static function max(ArrayList\Type $xs, ArrayList\Type $ys) {
+			return (ArrayList\Module::compare($xs, $ys)->unbox() >= 0) ? $xs : $ys;
+		}
+
+		/**
+		 * This method returns the numerically lowest value.
+		 *
+		 * @access public
+		 * @static
+		 * @param ArrayList\Type $xs                                the left operand
+		 * @param ArrayList\Type $ys                                the right operand
+		 * @return Int32\Type                                       the minimum value
+		 */
+		public static function min(ArrayList\Type $xs, ArrayList\Type $ys) {
+			return (ArrayList\Module::compare($xs, $ys)->unbox() <= 0) ? $xs : $ys;
+		}
+
+		#endregion
+
+		#region Methods -> Boolean Operations
 
 		/**
 		 * This method (aka "truthy") returns whether all of the elements of the list evaluate
@@ -865,7 +979,7 @@ namespace Saber\Data\ArrayList {
 		 *                                                          to false
 		 */
 		public static function false(ArrayList\Type $xs) {
-			return Bool\Module::not(ArrayList\Module::true($xs));
+			return Bool\Module::not(ArrayList\Type::true($xs));
 		}
 
 		/**
@@ -898,13 +1012,13 @@ namespace Saber\Data\ArrayList {
 		public static function true(ArrayList\Type $xs) {
 			$length = $xs->length();
 
-			for ($i = Int32\Module::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				if (Bool\Module::ni(Bool\Module::true(), $xs->element($i))->unbox()) {
-					return Bool\Module::false();
+			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
+				if (Bool\Module::ni(Bool\Type::true(), $xs->element($i))->unbox()) {
+					return Bool\Type::false();
 				}
 			}
 
-			return Bool\Module::true();
+			return Bool\Type::true();
 		}
 
 		/**
@@ -920,13 +1034,13 @@ namespace Saber\Data\ArrayList {
 		public static function truthy(ArrayList\Type $xs) {
 			$length = $xs->length();
 
-			for ($i = Int32\Module::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
+			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
 				if (!$xs->__element($i)) {
-					return Bool\Module::false();
+					return Bool\Type::false();
 				}
 			}
 
-			return Bool\Module::true();
+			return Bool\Type::true();
 		}
 
 		#endregion

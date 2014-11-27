@@ -22,9 +22,10 @@ namespace Saber\Data\Char {
 
 	use \Saber\Core;
 	use \Saber\Data;
+	use \Saber\Data\Char;
 	use \Saber\Throwable;
 
-	final class Type extends Data\Type implements Core\Type\Boxable {
+	final class Type extends Data\Type implements Core\Boxable\Type {
 
 		#region Constants
 
@@ -35,6 +36,57 @@ namespace Saber\Data\Char {
 		 * @const string
 		 */
 		const UTF_8_ENCODING = 'UTF-8';
+
+		#endregion
+
+		#region Methods -> Initialization
+
+		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered "not" type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param mixed $value                                      the value(s) to be boxed
+		 * @return Char\Type                                        the boxed object
+		 */
+		public static function box($value/*...*/) {
+			return new Char\Type($value);
+		}
+
+		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param mixed $value                                      the value(s) to be boxed
+		 * @return Char\Type                                        the boxed object
+		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
+		 */
+		public static function make($value/*...*/) {
+			if (is_string($value)) {
+				if (func_num_args() > 1) {
+					$encoding = func_get_arg(1);
+					$value = mb_convert_encoding($value, Char\Type::UTF_8_ENCODING, $encoding);
+				}
+				$length = mb_strlen($value, Char\Type::UTF_8_ENCODING);
+				if ($length != 1) {
+					throw new Throwable\InvalidArgument\Exception('Unable to box value. Expected a character, but got "string" of length ":length".', array(':length' => $length));
+				}
+				return new Char\Type($value);
+			}
+			else if (!is_string($value) && is_numeric($value)) {
+				return new Char\Type(chr((int) $value));
+			}
+			else {
+				$type = gettype($value);
+				if ($type == 'object') {
+					$type = get_class($value);
+				}
+				throw new Throwable\InvalidArgument\Exception('Unable to box value. Expected a character, but got ":type".', array(':type' => $type));
+			}
+		}
 
 		#endregion
 
@@ -57,11 +109,11 @@ namespace Saber\Data\Char {
 			$module = '\\Saber\\Data\\Char\\Module';
 			if (preg_match('/^__[a-z_][a-z0-9_]*$/i', $method)) {
 				$method = substr($method, 2);
-				if (!in_array($method, array('choice', 'unbox'))) {
+				if (!in_array($method, array('call', 'choice', 'iterator', 'unbox'))) {
 					if (method_exists($module, $method)) {
 						array_unshift($args, $this);
 						$result = call_user_func_array(array($module, $method), $args);
-						if ($result instanceof Core\Type\Boxable) {
+						if ($result instanceof Core\Boxable\Type) {
 							return $result->unbox();
 						}
 						return $result;

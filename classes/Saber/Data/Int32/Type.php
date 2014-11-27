@@ -19,10 +19,74 @@
 namespace Saber\Data\Int32 {
 
 	use \Saber\Core;
+	use \Saber\Data\Int32;
 	use \Saber\Data\Integral;
 	use \Saber\Throwable;
 
 	final class Type extends Integral\Type {
+
+		#region Methods -> Initialization
+
+		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered "not" type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param mixed $value                                      the value(s) to be boxed
+		 * @return Int32\Type                                       the boxed object
+		 */
+		public static function box($value/*...*/) {
+			return new Int32\Type($value);
+		}
+
+		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param mixed $value                                      the value(s) to be boxed
+		 * @return Int32\Type                                       the boxed object
+		 */
+		public static function make($value/*...*/) {
+			return new Int32\Type($value);
+		}
+
+		/**
+		 * This method returns an object with a "-1" value.
+		 *
+		 * @access public
+		 * @static
+		 * @return Int32\Type                                       the object
+		 */
+		public static function negative() {
+			return new Int32\Type(-1);
+		}
+
+		/**
+		 * This method returns an object with a "1" value.
+		 *
+		 * @access public
+		 * @static
+		 * @return Int32\Type                                       the object
+		 */
+		public static function one() {
+			return new Int32\Type(1);
+		}
+
+		/**
+		 * This method returns an object with a "0" value.
+		 *
+		 * @access public
+		 * @static
+		 * @return Int32\Type                                       the object
+		 */
+		public static function zero() {
+			return new Int32\Type(0);
+		}
+
+		#endregion
 
 		#region Methods -> Native Oriented
 
@@ -43,11 +107,11 @@ namespace Saber\Data\Int32 {
 			$module = '\\Saber\\Data\\Int32\\Module';
 			if (preg_match('/^__[a-z_][a-z0-9_]*$/i', $method)) {
 				$method = substr($method, 2);
-				if (!in_array($method, array('choice', 'unbox'))) {
+				if (!in_array($method, array('call', 'choice', 'iterator', 'unbox'))) {
 					if (method_exists($module, $method)) {
 						array_unshift($args, $this);
 						$result = call_user_func_array(array($module, $method), $args);
-						if ($result instanceof Core\Type\Boxable) {
+						if ($result instanceof Core\Boxable\Type) {
 							return $result->unbox();
 						}
 						return $result;

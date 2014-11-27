@@ -36,58 +36,7 @@ namespace Saber\Data\Char {
 	 */
 	class Module extends Data\Module {
 
-		#region Methods -> Instantiation
-
-		/**
-		 * This method returns a value as a boxed object.  A value is typically a PHP typed
-		 * primitive or object.  It is considered type-safe.
-		 *
-		 * @access public
-		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return Char\Type                                        the boxed object
-		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
-		 */
-		public static function box($value/*...*/) {
-			if (is_string($value)) {
-				if (func_num_args() > 1) {
-					$encoding = func_get_arg(1);
-					$value = mb_convert_encoding($value, Char\Type::UTF_8_ENCODING, $encoding);
-				}
-				$length = mb_strlen($value, Char\Type::UTF_8_ENCODING);
-				if ($length != 1) {
-					throw new Throwable\InvalidArgument\Exception('Unable to box value. Expected a character, but got "string" of length ":length".', array(':length' => $length));
-				}
-				return new Char\Type($value);
-			}
-			else if (!is_string($value) && is_numeric($value)) {
-				return new Char\Type(chr((int) $value));
-			}
-			else {
-				$type = gettype($value);
-				if ($type == 'object') {
-					$type = get_class($value);
-				}
-				throw new Throwable\InvalidArgument\Exception('Unable to box value. Expected a character, but got ":type".', array(':type' => $type));
-			}
-		}
-
-		/**
-		 * This method returns a value as a boxed object.  A value is typically a PHP typed
-		 * primitive or object.  It is considered "not" type-safe.
-		 *
-		 * @access public
-		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return Char\Type                                        the boxed object
-		 */
-		public static function create($value/*...*/) {
-			return new Char\Type($value);
-		}
-
-		#endregion
-
-		#region Methods -> Data Typing
+		#region Methods -> Conversion
 
 		/**
 		 * This method return the value as an Int32. Note: Using this method may result in
@@ -99,7 +48,7 @@ namespace Saber\Data\Char {
 		 * @return Int32\Type                                       the value as an Int32
 		 */
 		public static function toInt32(Char\Type $x) {
-			return Int32\Module::create(ord($x->unbox()));
+			return Int32\Type::box(ord($x->unbox()));
 		}
 
 		#endregion
@@ -118,10 +67,12 @@ namespace Saber\Data\Char {
 		 */
 		public static function eq(Char\Type $x, Core\Type $y) { // ==
 			$type = $x->__typeOf();
-			if ($y instanceof $type) {
-				return Bool\Module::create($x->unbox() == $y->unbox());
+			if ($y !== null) {
+				if ($y instanceof $type) {
+					return Bool\Type::box($x->unbox() == $y->unbox());
+				}
 			}
-			return Bool\Module::false();
+			return Bool\Type::false();
 		}
 
 		/**
@@ -135,10 +86,12 @@ namespace Saber\Data\Char {
 		 *                                                          to the right operand
 		 */
 		public static function id(Char\Type $x, Core\Type $y) { // ===
-			if ($x->__typeOf() === $y->__typeOf()) {
-				return Bool\Module::create($x->unbox() === $y->unbox());
+			if ($y !== null) {
+				if ($x->__typeOf() === $y->__typeOf()) {
+					return Bool\Type::box($x->unbox() === $y->unbox());
+				}
 			}
-			return Bool\Module::false();
+			return Bool\Type::false();
 		}
 
 		/**
@@ -186,26 +139,26 @@ namespace Saber\Data\Char {
 		 */
 		public static function compare(Char\Type $x, Char\Type $y) {
 			if (($x === null) && ($y !== null)) {
-				return Int32\Module::negative();
+				return Int32\Type::negative();
 			}
 			if (($x === null) && ($y === null)) {
-				return Int32\Module::zero();
+				return Int32\Type::zero();
 			}
 			if (($x !== null) && ($y === null)) {
-				return Int32\Module::one();
+				return Int32\Type::one();
 			}
 
 			$__x = $x->unbox();
 			$__y = $y->unbox();
 
 			if ($__x < $__y) {
-				return Int32\Module::negative();
+				return Int32\Type::negative();
 			}
 			else if ($__x == $__y) {
-				return Int32\Module::zero();
+				return Int32\Type::zero();
 			}
 			else { // ($__x > $__y)
-				return Int32\Module::one();
+				return Int32\Type::one();
 			}
 		}
 
@@ -220,7 +173,7 @@ namespace Saber\Data\Char {
 		 *                                                          than or equal to the right operand
 		 */
 		public static function ge(Char\Type $x, Char\Type $y) { // >=
-			return Bool\Module::create(Char\Module::compare($x, $y)->unbox() >= 0);
+			return Bool\Type::box(Char\Module::compare($x, $y)->unbox() >= 0);
 		}
 
 		/**
@@ -234,7 +187,7 @@ namespace Saber\Data\Char {
 		 *                                                          than the right operand
 		 */
 		public static function gt(Char\Type $x, Char\Type $y) { // >
-			return Bool\Module::create(Char\Module::compare($x, $y)->unbox() > 0);
+			return Bool\Type::box(Char\Module::compare($x, $y)->unbox() > 0);
 		}
 
 		/**
@@ -248,7 +201,7 @@ namespace Saber\Data\Char {
 		 *                                                          or equal to the right operand
 		 */
 		public static function le(Char\Type $x, Char\Type $y) { // <=
-			return Bool\Module::create(Char\Module::compare($x, $y)->unbox() <= 0);
+			return Bool\Type::box(Char\Module::compare($x, $y)->unbox() <= 0);
 		}
 
 		/**
@@ -262,7 +215,7 @@ namespace Saber\Data\Char {
 		 *                                                          the right operand
 		 */
 		public static function lt(Char\Type $x, Char\Type $y) { // <
-			return Bool\Module::create(Char\Module::compare($x, $y)->unbox() < 0);
+			return Bool\Type::box(Char\Module::compare($x, $y)->unbox() < 0);
 		}
 
 		/**
@@ -306,7 +259,7 @@ namespace Saber\Data\Char {
 		 * @see http://php.net/manual/en/function.mb-strtolower.php
 		 */
 		public static function toLowerCase(Char\Type $x) {
-			return Char\Module::create(mb_strtolower($x->unbox(), Char\Type::UTF_8_ENCODING));
+			return Char\Type::box(mb_strtolower($x->unbox(), Char\Type::UTF_8_ENCODING));
 		}
 
 		/**
@@ -320,7 +273,7 @@ namespace Saber\Data\Char {
 		 * @see http://php.net/manual/en/function.mb-strtoupper.php
 		 */
 		public static function toUpperCase(Char\Type $x) {
-			return Char\Module::create(mb_strtoupper($x->unbox(), Char\Type::UTF_8_ENCODING));
+			return Char\Type::box(mb_strtoupper($x->unbox(), Char\Type::UTF_8_ENCODING));
 		}
 
 		#endregion
@@ -339,7 +292,7 @@ namespace Saber\Data\Char {
 		 * @see http://php.net/manual/en/function.ctype-alpha.php
 		 */
 		public static function isAlpha(Char\Type $x) {
-			return Bool\Module::create(ctype_alpha($x->unbox()));
+			return Bool\Type::box(ctype_alpha($x->unbox()));
 		}
 
 		/**
@@ -354,7 +307,7 @@ namespace Saber\Data\Char {
 		 * @see http://php.net/manual/en/function.ctype-alnum.php
 		 */
 		public static function isAlphaNum(Char\Type $x) {
-			return Bool\Module::create(ctype_alnum($x->unbox()));
+			return Bool\Type::box(ctype_alnum($x->unbox()));
 		}
 
 		/**
@@ -367,7 +320,7 @@ namespace Saber\Data\Char {
 		 *                                                          character
 		 */
 		public static function isAscii(Char\Type $x) {
-			return Bool\Module::create(preg_match('/^[\x20-\x7f]$/', $x->unbox()));
+			return Bool\Type::box(preg_match('/^[\x20-\x7f]$/', $x->unbox()));
 		}
 
 		/**
@@ -382,7 +335,7 @@ namespace Saber\Data\Char {
 		 * @see http://php.net/manual/en/function.ctype-cntrl.php
 		 */
 		public static function isControl(Char\Type $x) {
-			return Bool\Module::create(ctype_cntrl($x->unbox()));
+			return Bool\Type::box(ctype_cntrl($x->unbox()));
 		}
 
 		/**
@@ -397,7 +350,7 @@ namespace Saber\Data\Char {
 		 * @see http://php.net/manual/en/regexp.reference.unicode.php
 		 */
 		public static function isCyrillic(Char\Type $x) {
-			return Bool\Module::create(preg_match('/^\p{Cyrillic}$/u', $x->unbox()));
+			return Bool\Type::box(preg_match('/^\p{Cyrillic}$/u', $x->unbox()));
 		}
 
 		/**
@@ -411,7 +364,7 @@ namespace Saber\Data\Char {
 		 * @see http://php.net/manual/en/function.ctype-digit.php
 		 */
 		public static function isDigit(Char\Type $x) {
-			return Bool\Module::create(ctype_digit($x->unbox()));
+			return Bool\Type::box(ctype_digit($x->unbox()));
 		}
 
 		/**
@@ -425,7 +378,7 @@ namespace Saber\Data\Char {
 		 * @see http://php.net/manual/en/function.ctype-xdigit.php
 		 */
 		public static function isHexDigit(Char\Type $x) {
-			return Bool\Module::create(ctype_xdigit($x->unbox()));
+			return Bool\Type::box(ctype_xdigit($x->unbox()));
 		}
 
 		/**
@@ -440,7 +393,7 @@ namespace Saber\Data\Char {
 		 * @see http://php.net/manual/en/regexp.reference.unicode.php
 		 */
 		public static function isLatin1(Char\Type $x) {
-			return Bool\Module::create(preg_match('/^\p{Latin}$/', $x->unbox()));
+			return Bool\Type::box(preg_match('/^\p{Latin}$/', $x->unbox()));
 		}
 
 		/**
@@ -455,7 +408,7 @@ namespace Saber\Data\Char {
 		 * @see http://php.net/manual/en/function.ctype-lower.php
 		 */
 		public static function isLowerCase(Char\Type $x) {
-			return Bool\Module::create(ctype_lower($x->unbox()));
+			return Bool\Type::box(ctype_lower($x->unbox()));
 		}
 
 		/**
@@ -469,7 +422,7 @@ namespace Saber\Data\Char {
 		 * @see http://php.net/manual/en/regexp.reference.unicode.php
 		 */
 		public static function isNumber(Char\Type $x) {
-			return Bool\Module::create(preg_match('/^\p{N}$/', $x->unbox()));
+			return Bool\Type::box(preg_match('/^\p{N}$/', $x->unbox()));
 		}
 
 		/**
@@ -481,7 +434,7 @@ namespace Saber\Data\Char {
 		 * @return Bool\Type                                        whether this is an oct-digit
 		 */
 		public static function isOctDigit(Char\Type $x) {
-			return Bool\Module::create(preg_match('/^[0-7]$/', $x->unbox()));
+			return Bool\Type::box(preg_match('/^[0-7]$/', $x->unbox()));
 		}
 
 		/**
@@ -496,7 +449,7 @@ namespace Saber\Data\Char {
 		 * @see http://php.net/manual/en/function.ctype-print.php
 		 */
 		public static function isPrintable(Char\Type $x) {
-			return Bool\Module::create(ctype_print($x->unbox()));
+			return Bool\Type::box(ctype_print($x->unbox()));
 		}
 
 		/**
@@ -511,7 +464,7 @@ namespace Saber\Data\Char {
 		 * @see http://php.net/manual/en/function.ctype-punct.php
 		 */
 		public static function isPunctuation(Char\Type $x) {
-			return Bool\Module::create(ctype_punct($x->unbox()));
+			return Bool\Type::box(ctype_punct($x->unbox()));
 		}
 
 		/**
@@ -525,7 +478,7 @@ namespace Saber\Data\Char {
 		 * @see http://php.net/manual/en/regexp.reference.unicode.php
 		 */
 		public static function isSeparator(Char\Type $x) {
-			return Bool\Module::create(preg_match('/^\p{Z}$/', $x->unbox()));
+			return Bool\Type::box(preg_match('/^\p{Z}$/', $x->unbox()));
 		}
 
 		/**
@@ -539,7 +492,7 @@ namespace Saber\Data\Char {
 		 * @see http://php.net/manual/en/function.ctype-space.php
 		 */
 		public static function isSpace(Char\Type $x) {
-			return Bool\Module::create(ctype_space($x->unbox()));
+			return Bool\Type::box(ctype_space($x->unbox()));
 		}
 
 		/**
@@ -553,7 +506,7 @@ namespace Saber\Data\Char {
 		 * @see http://php.net/manual/en/regexp.reference.unicode.php
 		 */
 		public static function isSymbol(Char\Type $x) {
-			return Bool\Module::create(preg_match('/^\p{S}$/', $x->unbox()));
+			return Bool\Type::box(preg_match('/^\p{S}$/', $x->unbox()));
 		}
 
 		/**
@@ -568,7 +521,7 @@ namespace Saber\Data\Char {
 		 * @see http://php.net/manual/en/function.ctype-upper.php
 		 */
 		public static function isUpperCase(Char\Type $x) {
-			return Bool\Module::create(ctype_upper($x->unbox()));
+			return Bool\Type::box(ctype_upper($x->unbox()));
 		}
 
 		#endregion

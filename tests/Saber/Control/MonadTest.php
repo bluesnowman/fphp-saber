@@ -31,10 +31,10 @@ namespace Saber\Control {
 		 * This method tests a set of choices.
 		 */
 		public function testChoice() {
-			$p0 = Int32\Module::box(0);
+			$p0 = Int32\Type::make(0);
 			$e0 = 0;
 
-			$p1 = Int32\Module::box(1);
+			$p1 = Int32\Type::make(1);
 			$e1 = 1;
 
 			Control\Monad::choice($p0)

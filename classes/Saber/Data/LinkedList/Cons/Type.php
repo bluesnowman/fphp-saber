@@ -37,7 +37,7 @@ namespace Saber\Data\LinkedList\Cons {
 
 		#endregion
 
-		#region Methods -> Boxing/Creation
+		#region Methods -> Native Oriented
 
 		/**
 		 * This constructor initializes the class with the specified values.
@@ -54,91 +54,51 @@ namespace Saber\Data\LinkedList\Cons {
 
 		#endregion
 
-		#region Methods -> Object Oriented -> Universal
-
-		/**
-		 * This method compares the specified object with the current object for order.
-		 *
-		 * @access public
-		 * @param LinkedList\Type $that                             the object to be compared
-		 * @return Int32\Type                                       whether the current object is less than,
-		 *                                                          equal to, or greater than the specified
-		 *                                                          object
-		 */
-		public function compareTo(LinkedList\Type $that) {
-			$xs = $this;
-			$ys = $that;
-
-			for (; ! $xs->__isEmpty() && ! $ys->__isEmpty(); $xs = $xs->tail(), $ys = $ys->tail()) {
-				$r = $xs->head()->compareTo($ys->head());
-				if ($r->unbox() != 0) {
-					return $r;
-				}
-			}
-
-			$x_length = $xs->length();
-			$y_length = $ys->length();
-
-			if ($x_length < $y_length) {
-				return Int32\Module::negative();
-			}
-			else if ($x_length == $y_length) {
-				return Int32\Module::zero();
-			}
-			else { // ($x_length > $y_length)
-				return Int32\Module::one();
-			}
-		}
-
-		/**
-		 * This method evaluates whether the specified object is equal to the current object.
-		 *
-		 * @access public
-		 * @param Core\Type $that                                   the object to be evaluated
-		 * @return Bool\Type                                        whether the specified object is equal
-		 *                                                          to the current object
-		 */
-		public function equals(Core\Type $that) {
-			if (($that === null) || ($this->__typeOf() != $that->__typeOf())) {
-				return Bool\Module::false();
-			}
-			return Bool\Module::create($this->head()->__equals($that->head()) && $this->tail()->__equals($that->tail()));
-		}
+		#region Methods -> Object Oriented
 
 		/**
 		 * This method returns the head object in this linked list.
 		 *
 		 * @access public
+		 * @final
 		 * @return Core\Type                                        the head object in this linked
 		 *                                                          list
 		 */
-		public function head() {
+		public final function head() {
 			return $this->value;
-		}
-
-		/**
-		 * This method evaluates whether the specified object is identical to the current object.
-		 *
-		 * @access public
-		 * @param Core\Type $that                                   the object to be evaluated
-		 * @return Bool\Type                                        whether the specified object is identical
-		 *                                                          to the current object
-		 */
-		public function identical(Core\Type $that) {
-			if (($that === null) || ($this->__typeOf() != $that->__typeOf())) {
-				return Bool\Module::false();
-			}
-			return Bool\Module::create($this->head()->__identical($that->head()) && $this->tail()->__identical($that->tail()));
 		}
 
 		/**
 		 * This method returns the tail of this linked list.
 		 *
 		 * @access public
+		 * @final
 		 * @return LinkedList\Type                                  the tail of this linked list
 		 */
-		public function tail() {
+		public final function tail() {
 			return $this->tail;
+		}
+
+		/**
+		 * This method returns the value contained within the boxed object.
+		 *
+		 * @access public
+		 * @final
+		 * @param integer $depth                                    how many levels to unbox
+		 * @return array                                            the un-boxed value
+		 */
+		public final function unbox($depth = 0) {
+			if ($depth > 0) {
+				$buffer = array();
+				for ($zs = $this; ! $zs->__isEmpty(); $zs = $zs->tail()) {
+					$z = $zs->head();
+					$buffer[] = ($z instanceof Core\Boxable\Type)
+						? $z->unbox($depth - 1)
+						: $z;
+				}
+				return $buffer;
+			}
+			return $this->value;
 		}
 
 		#endregion

@@ -27,7 +27,72 @@ namespace Saber\Data\ArrayList {
 	use \Saber\Data\String;
 	use \Saber\Throwable;
 
-	final class Type extends Collection\Type implements Core\Type\Boxable {
+	final class Type extends Collection\Type implements Core\Boxable\Type {
+
+		#region Methods -> Initialization
+
+		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered "not" type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param mixed $value                                      the value(s) to be boxed
+		 * @return ArrayList\Type                                   the boxed object
+		 */
+		public static function box($value/*...*/) {
+			return new ArrayList\Type($value);
+		}
+
+		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param mixed $value                                      the value(s) to be boxed
+		 * @return ArrayList\Type                                   the boxed object
+		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
+		 */
+		public static function make($value/*...*/) {
+			if (($value === null) || !is_array($value)) {
+				$type = gettype($value);
+				if ($type == 'object') {
+					$type = get_class($value);
+				}
+				throw new Throwable\InvalidArgument\Exception('Unable to create array list. Expected an array, but got ":type".', array(':type' => $type));
+			}
+			foreach ($value as $object) {
+				if (!(is_object($object) && ($object instanceof Core\Type))) {
+					$type = gettype($value);
+					if ($type == 'object') {
+						$type = get_class($value);
+					}
+					throw new Throwable\InvalidArgument\Exception('Unable to create array list. Expected a boxed value, but got ":type".', array(':type' => $type));
+				}
+			}
+			return new ArrayList\Type($value);
+		}
+
+		/**
+		 * This method creates a list of "n" length with every element set to the given object.
+		 *
+		 * @access public
+		 * @param Int32\Type $n                                     the number of times to replicate
+		 * @param Core\Type $y                                      the object to be replicated
+		 * @return ArrayList\Type                                   the collection
+		 */
+		public static function replicate(Int32\Type $n, Core\Type $y) {
+			$buffer = array();
+
+			for ($i = $n->unbox() - 1; $i >= 0; $i--) {
+				$buffer[] = $y;
+			}
+
+			return new ArrayList\Type($buffer);
+		}
+
+		#endregion
 
 		#region Methods -> Native Oriented
 
@@ -48,11 +113,11 @@ namespace Saber\Data\ArrayList {
 			$module = '\\Saber\\Data\\ArrayList\\Module';
 			if (preg_match('/^__[a-z_][a-z0-9_]*$/i', $method)) {
 				$method = substr($method, 2);
-				if (!in_array($method, array('choice', 'unbox'))) {
+				if (!in_array($method, array('call', 'choice', 'iterator', 'unbox'))) {
 					if (method_exists($module, $method)) {
 						array_unshift($args, $this);
 						$result = call_user_func_array(array($module, $method), $args);
-						if ($result instanceof Core\Type\Boxable) {
+						if ($result instanceof Core\Boxable\Type) {
 							return $result->unbox();
 						}
 						return $result;
@@ -181,7 +246,7 @@ namespace Saber\Data\ArrayList {
 		 * @return Bool\Type                                        whether the list is empty
 		 */
 		public final function isEmpty() {
-			return Bool\Module::create($this->__isEmpty());
+			return Bool\Type::box($this->__isEmpty());
 		}
 
 		/**
@@ -192,7 +257,7 @@ namespace Saber\Data\ArrayList {
 		 * @return Int32\Type                                       the length of this array list
 		 */
 		public final function length() {
-			return Int32\Module::create($this->__length());
+			return Int32\Type::box($this->__length());
 		}
 
 		/**
@@ -218,7 +283,7 @@ namespace Saber\Data\ArrayList {
 			if ($depth > 0) {
 				$buffer = array();
 				foreach ($this->value as $item) {
-					$buffer[] = ($item instanceof Core\Type\Boxable)
+					$buffer[] = ($item instanceof Core\Boxable\Type)
 						? $item->unbox($depth - 1)
 						: $item;
 				}

@@ -20,9 +20,40 @@ namespace Saber\Data\Object {
 
 	use \Saber\Core;
 	use \Saber\Data;
+	use \Saber\Data\Object;
 	use \Saber\Throwable;
 
-	final class Type extends Data\Type implements Core\Type\Boxable {
+	final class Type extends Data\Type implements Core\Boxable\Type {
+
+		#region Methods -> Initialization
+
+		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered "not" type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param mixed $value                                      the value(s) to be boxed
+		 * @return Object\Type                                      the boxed object
+		 */
+		public static function box($value/*...*/) {
+			return new Object\Type($value);
+		}
+
+		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param mixed $value                                      the value(s) to be boxed
+		 * @return Object\Type                                      the boxed object
+		 */
+		public static function make($value/*...*/) {
+			return new Object\Type($value);
+		}
+
+		#endregion
 
 		#region Methods -> Native Oriented
 
@@ -43,11 +74,11 @@ namespace Saber\Data\Object {
 			$module = '\\Saber\\Data\\Object\\Module';
 			if (preg_match('/^__[a-z_][a-z0-9_]*$/i', $method)) {
 				$method = substr($method, 2);
-				if (!in_array($method, array('choice', 'unbox'))) {
+				if (!in_array($method, array('call', 'choice', 'iterator', 'unbox'))) {
 					if (method_exists($module, $method)) {
 						array_unshift($args, $this);
 						$result = call_user_func_array(array($module, $method), $args);
-						if ($result instanceof Core\Type\Boxable) {
+						if ($result instanceof Core\Boxable\Type) {
 							return $result->unbox();
 						}
 						return $result;

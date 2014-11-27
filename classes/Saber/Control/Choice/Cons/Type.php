@@ -16,12 +16,12 @@
  * limitations under the License.
  */
  
-namespace Saber\Control\Monad\Choice {
+namespace Saber\Control\Choice\Cons {
 
 	use \Saber\Control;
-	use \Saber\Data;
- 
-	class Cons extends Control\Monad\Choice {
+	use \Saber\Core;
+
+	class Type extends Control\Choice\Type {
 
 		/**
 		 * This variable stores the function to be executed when condition is
@@ -36,7 +36,7 @@ namespace Saber\Control\Monad\Choice {
 		 * This variable stores the object to be evaluated.
 		 *
 		 * @access protected
-		 * @var Data\Type
+		 * @var Core\Equality\Type
 		 */
 		protected $x;
 
@@ -44,7 +44,7 @@ namespace Saber\Control\Monad\Choice {
 		 * This variable stores the tail.
 		 *
 		 * @access protected
-		 * @var Control\Monad\Choice
+		 * @var Control\Choice\Type
 		 */
 		protected $xs;
 
@@ -52,10 +52,10 @@ namespace Saber\Control\Monad\Choice {
 		 * This constructor initializes the class with the specified object and tail.
 		 *
 		 * @access public
-		 * @param Data\Type $x                                      the object to be evaluated
-		 * @param Control\Monad\Choice $xs                          the tail
+		 * @param Core\Equality\Type $x                             the object to be evaluated
+		 * @param Control\Choice\Type $xs                           the tail
 		 */
-		public function __construct(Data\Type $x, Control\Monad\Choice $xs) {
+		public function __construct(Core\Equality\Type $x, Control\Choice\Type $xs) {
 			$this->f = null;
 			$this->x = $x;
 			$this->xs = $xs;
@@ -95,7 +95,7 @@ namespace Saber\Control\Monad\Choice {
 		 *
 		 * @access public
 		 * @param callable $procedure                               the procedure to be executed
-		 * @return Control\Monad\Choice                             a reference to the next choice
+		 * @return Control\Choice\Type                              a reference to the next choice
 		 *                                                          monad node
 		 */
 		public function otherwise(callable $procedure) {
@@ -103,49 +103,49 @@ namespace Saber\Control\Monad\Choice {
 				$procedure($x);
 				return true;
 			};
-			return Control\Monad\Choice::cons($this->x, $this);
+			return Control\Choice\Type::cons($this->x, $this);
 		}
 
 		/**
 		 * This method sets the procedure that will be executed should "y" not equal "x".
 		 *
 		 * @access public
-		 * @param Data\Type $y                                      the object to be evaluated
+		 * @param Core\Equality\Type $y                             the object to be evaluated
 		 *                                                          against
 		 * @param callable $procedure                               the procedure to be executed
-		 * @return Control\Monad\Choice                             a reference to the next choice
+		 * @return Control\Choice\Type                              a reference to the next choice
 		 *                                                          monad node
 		 */
-		public function unless(Data\Type $y, callable $procedure) {
+		public function unless(Core\Equality\Type $y, callable $procedure) {
 			$this->f = function($x) use ($y, $procedure) {
-				if (!$y->__equals($x)) {
+				if (!$y->__eq($x)) {
 					$procedure($x);
 					return true;
 				}
 				return false;
 			};
-			return Control\Monad\Choice::cons($this->x, $this);
+			return Control\Choice\Type::cons($this->x, $this);
 		}
 
 		/**
 		 * This method sets the procedure that will be executed should "y" equal "x".
 		 *
 		 * @access public
-		 * @param Data\Type $y                                      the object to be evaluated
+		 * @param Core\Equality\Type $y                             the object to be evaluated
 		 *                                                          against
 		 * @param callable $procedure                               the procedure to be executed
-		 * @return Control\Monad\Choice                             a reference to the next choice
+		 * @return Control\Choice\Type                              a reference to the next choice
 		 *                                                          monad node
 		 */
-		public function when(Data\Type $y, callable $procedure) {
+		public function when(Core\Equality\Type $y, callable $procedure) {
 			$this->f = function($x) use ($y, $procedure) {
-				if ($y->__equals($x)) {
+				if ($y->__eq($x)) {
 					$procedure($x);
 					return true;
 				}
 				return false;
 			};
-			return Control\Monad\Choice::cons($this->x, $this);
+			return Control\Choice\Type::cons($this->x, $this);
 		}
 
 	}

@@ -29,69 +29,6 @@ namespace Saber\Data\Int32 {
 
 	class Module extends Integral\Module {
 
-		#region Methods -> Instantiation
-
-		/**
-		 * This method returns a value as a boxed object.  A value is typically a PHP typed
-		 * primitive or object.  It is considered type-safe.
-		 *
-		 * @access public
-		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return Int32\Type                                       the boxed object
-		 */
-		public static function box($value/*...*/) {
-			return new Int32\Type($value);
-		}
-
-		/**
-		 * This method returns a value as a boxed object.  A value is typically a PHP typed
-		 * primitive or object.  It is considered "not" type-safe.
-		 *
-		 * @access public
-		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return Int32\Type                                       the boxed object
-		 */
-		public static function create($value/*...*/) {
-			return new Int32\Type($value);
-		}
-
-		/**
-		 * This method returns an object with a "-1" value.
-		 *
-		 * @access public
-		 * @static
-		 * @return Int32\Type                                       the object
-		 */
-		public static function negative() {
-			return new Int32\Type(-1);
-		}
-
-		/**
-		 * This method returns an object with a "1" value.
-		 *
-		 * @access public
-		 * @static
-		 * @return Int32\Type                                       the object
-		 */
-		public static function one() {
-			return new Int32\Type(1);
-		}
-
-		/**
-		 * This method returns an object with a "0" value.
-		 *
-		 * @access public
-		 * @static
-		 * @return Int32\Type                                       the object
-		 */
-		public static function zero() {
-			return new Int32\Type(0);
-		}
-
-		#endregion
-
 		#region Methods -> Arithmetic
 
 		/**
@@ -103,7 +40,7 @@ namespace Saber\Data\Int32 {
 		 * @return Int32\Type                                       the result
 		 */
 		public static function abs(Int32\Type $x) {
-			return Int32\Module::create(abs($x->unbox()));
+			return Int32\Type::box(abs($x->unbox()));
 		}
 
 		/**
@@ -116,7 +53,7 @@ namespace Saber\Data\Int32 {
 		 * @return Int32\Type                                       the result
 		 */
 		public static function add(Int32\Type $x, Int32\Type $y) {
-			return Int32\Module::create($x->unbox() + $y->unbox());
+			return Int32\Type::box($x->unbox() + $y->unbox());
 		}
 
 		/**
@@ -128,7 +65,7 @@ namespace Saber\Data\Int32 {
 		 * @return Int32\Type                                       the result
 		 */
 		public static function decrement(Int32\Type $x) {
-			return Int32\Module::subtract($x, Int32\Module::one());
+			return Int32\Module::subtract($x, Int32\Type::one());
 		}
 
 		/**
@@ -142,7 +79,7 @@ namespace Saber\Data\Int32 {
 		 * @return Int32\Type                                       the result
 		 */
 		public static function divide(Int32\Type $x, Int32\Type $y) {
-			return Int32\Module::create($x->unbox() / $y->unbox());
+			return Int32\Type::box($x->unbox() / $y->unbox());
 		}
 
 		/**
@@ -155,7 +92,7 @@ namespace Saber\Data\Int32 {
 		 * @return Int32\Type                                       the result
 		 */
 		public static function gcd(Int32\Type $x, Int32\Type $y) {
-			return Int32\Module::create(Int32\Module::_gcd(abs($x->unbox()), abs($y->unbox())));
+			return Int32\Type::box(Int32\Module::_gcd(abs($x->unbox()), abs($y->unbox())));
 		}
 
 		/**
@@ -182,7 +119,7 @@ namespace Saber\Data\Int32 {
 		 * @return Int32\Type                                       the result
 		 */
 		public static function increment(Int32\Type $x) {
-			return Int32\Module::add($x, Int32\Module::one());
+			return Int32\Module::add($x, Int32\Type::one());
 		}
 
 		/**
@@ -196,7 +133,7 @@ namespace Saber\Data\Int32 {
 		 * @return Int32\Type                                       the result
 		 */
 		public static function modulo(Int32\Type $x, Int32\Type $y) {
-			return Int32\Module::create($x->unbox() % $y->unbox());
+			return Int32\Type::box($x->unbox() % $y->unbox());
 		}
 
 		/**
@@ -210,7 +147,7 @@ namespace Saber\Data\Int32 {
 		 * @return Int32\Type                                       the result
 		 */
 		public static function multiply(Int32\Type $x, Int32\Type $y) {
-			return Int32\Module::create($x->unbox() * $y->unbox());
+			return Int32\Type::box($x->unbox() * $y->unbox());
 		}
 
 		/**
@@ -222,7 +159,7 @@ namespace Saber\Data\Int32 {
 		 * @return Int32\Type                                       the result
 		 */
 		public static function negate(Int32\Type $x) {
-			return Int32\Module::create($x->unbox() * -1);
+			return Int32\Type::box($x->unbox() * -1);
 		}
 
 		/**
@@ -236,7 +173,7 @@ namespace Saber\Data\Int32 {
 		 * @return Int32\Type                                       the result
 		 */
 		public static function subtract(Int32\Type $x, Int32\Type $y) {
-			return Int32\Module::create($x->unbox() - $y->unbox());
+			return Int32\Type::box($x->unbox() - $y->unbox());
 		}
 
 		#endregion
@@ -253,7 +190,7 @@ namespace Saber\Data\Int32 {
 		 * @return Double\Type                                      the value as a Double
 		 */
 		public static function toDouble(Int32\Type $x) {
-			return Double\Module::create($x->unbox());
+			return Double\Type::box($x->unbox());
 		}
 
 		/**
@@ -266,7 +203,7 @@ namespace Saber\Data\Int32 {
 		 * @return Float\Type                                       the value as a Float
 		 */
 		public static function toFloat(Int32\Type $x) {
-			return Float\Module::create($x->unbox());
+			return Float\Type::box($x->unbox());
 		}
 
 		/**
@@ -279,7 +216,7 @@ namespace Saber\Data\Int32 {
 		 * @return Int32\Type                                       the value as an Int32
 		 */
 		public static function toInt32(Int32\Type $x) {
-			return Int32\Module::create($x->unbox());
+			return Int32\Type::box($x->unbox());
 		}
 
 		/**
@@ -292,7 +229,7 @@ namespace Saber\Data\Int32 {
 		 * @return Integer\Type                                     the value as an Integer
 		 */
 		public static function toInteger(Int32\Type $x) {
-			return Integer\Module::create($x->unbox());
+			return Integer\Type::box($x->unbox());
 		}
 
 		#endregion
@@ -311,10 +248,12 @@ namespace Saber\Data\Int32 {
 		 */
 		public static function eq(Int32\Type $x, Core\Type $y) { // ==
 			$type = $x->__typeOf();
-			if ($y instanceof $type) {
-				return Bool\Module::create($x->unbox() == $y->unbox());
+			if ($y !== null) {
+				if ($y instanceof $type) {
+					return Bool\Type::box($x->unbox() == $y->unbox());
+				}
 			}
-			return Bool\Module::false();
+			return Bool\Type::false();
 		}
 
 		/**
@@ -328,10 +267,12 @@ namespace Saber\Data\Int32 {
 		 *                                                          to the right operand
 		 */
 		public static function id(Int32\Type $x, Core\Type $y) { // ===
-			if ($x->__typeOf() === $y->__typeOf()) {
-				return Bool\Module::create($x->unbox() === $y->unbox());
+			if ($y !== null) {
+				if ($x->__typeOf() === $y->__typeOf()) {
+					return Bool\Type::box($x->unbox() === $y->unbox());
+				}
 			}
-			return Bool\Module::false();
+			return Bool\Type::false();
 		}
 
 		/**
@@ -379,26 +320,26 @@ namespace Saber\Data\Int32 {
 		 */
 		public static function compare(Int32\Type $x, Int32\Type $y) {
 			if (($x === null) && ($y !== null)) {
-				return Int32\Module::negative();
+				return Int32\Type::negative();
 			}
 			if (($x === null) && ($y === null)) {
-				return Int32\Module::zero();
+				return Int32\Type::zero();
 			}
 			if (($x !== null) && ($y === null)) {
-				return Int32\Module::one();
+				return Int32\Type::one();
 			}
 
 			$__x = $x->unbox();
 			$__y = $y->unbox();
 
 			if ($__x < $__y) {
-				return Int32\Module::negative();
+				return Int32\Type::negative();
 			}
 			else if ($__x == $__y) {
-				return Int32\Module::zero();
+				return Int32\Type::zero();
 			}
 			else { // ($__x > $__y)
-				return Int32\Module::one();
+				return Int32\Type::one();
 			}
 		}
 
@@ -413,7 +354,7 @@ namespace Saber\Data\Int32 {
 		 *                                                          than or equal to the right operand
 		 */
 		public static function ge(Int32\Type $x, Int32\Type $y) { // >=
-			return Bool\Module::create(Int32\Module::compare($x, $y)->unbox() >= 0);
+			return Bool\Type::box(Int32\Module::compare($x, $y)->unbox() >= 0);
 		}
 
 		/**
@@ -427,7 +368,7 @@ namespace Saber\Data\Int32 {
 		 *                                                          than the right operand
 		 */
 		public static function gt(Int32\Type $x, Int32\Type $y) { // >
-			return Bool\Module::create(Int32\Module::compare($x, $y)->unbox() > 0);
+			return Bool\Type::box(Int32\Module::compare($x, $y)->unbox() > 0);
 		}
 
 		/**
@@ -441,7 +382,7 @@ namespace Saber\Data\Int32 {
 		 *                                                          or equal to the right operand
 		 */
 		public static function le(Int32\Type $x, Int32\Type $y) { // <=
-			return Bool\Module::create(Int32\Module::compare($x, $y)->unbox() <= 0);
+			return Bool\Type::box(Int32\Module::compare($x, $y)->unbox() <= 0);
 		}
 
 		/**
@@ -455,7 +396,7 @@ namespace Saber\Data\Int32 {
 		 *                                                          the right operand
 		 */
 		public static function lt(Int32\Type $x, Int32\Type $y) { // <
-			return Bool\Module::create(Int32\Module::compare($x, $y)->unbox() < 0);
+			return Bool\Type::box(Int32\Module::compare($x, $y)->unbox() < 0);
 		}
 
 		/**
@@ -498,7 +439,7 @@ namespace Saber\Data\Int32 {
 		 *                                                          number
 		 */
 		public static function isEven(Int32\Type $x) {
-			return Bool\Module::create(($x->unbox() % 2) == 0);
+			return Bool\Type::box(($x->unbox() % 2) == 0);
 		}
 
 		/**
@@ -511,7 +452,7 @@ namespace Saber\Data\Int32 {
 		 *                                                          number
 		 */
 		public static function isOdd(Int32\Type $x) {
-			return Bool\Module::create(($x->unbox() % 2) != 0);
+			return Bool\Type::box(($x->unbox() % 2) != 0);
 		}
 
 		/**
@@ -524,7 +465,7 @@ namespace Saber\Data\Int32 {
 		 *                                                          number
 		 */
 		public static function isNegative(Int32\Type $x) {
-			return Bool\Module::create($x->unbox() < 0);
+			return Bool\Type::box($x->unbox() < 0);
 		}
 
 		#endregion

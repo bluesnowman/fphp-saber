@@ -31,68 +31,6 @@ namespace Saber\Data\String {
 
 	class Module extends Collection\Module {
 
-		#region Methods -> Instantiation
-
-		/**
-		 * This method returns a value as a boxed object.  A value is typically a PHP typed
-		 * primitive or object.  It is considered type-safe.
-		 *
-		 * @access public
-		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return String\Type                                      the boxed object
-		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
-		 */
-		public static function box($value/*...*/) {
-			if (!is_string($value)) {
-				$type = gettype($value);
-				if ($type == 'object') {
-					$type = get_class($value);
-				}
-				throw new Throwable\InvalidArgument\Exception('Unable to box value. Expected a string, but got ":type".', array(':type' => $type));
-			}
-			if (func_num_args() > 1) {
-				$encoding = func_get_arg(1);
-				$value = mb_convert_encoding($value, Char\Type::UTF_8_ENCODING, $encoding);
-			}
-			return new static($value);
-		}
-
-		/**
-		 * This method returns a value as a boxed object.  A value is typically a PHP typed
-		 * primitive or object.  It is considered "not" type-safe.
-		 *
-		 * @access public
-		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return String\Type                                      the boxed object
-		 */
-		public static function create($value/*...*/) {
-			return new static($value);
-		}
-
-		/**
-		 * This method creates a string of "n" length with every element set to the given object.
-		 *
-		 * @access public
-		 * @static
-		 * @param Int32\Type $n                                     the number of times to replicate
-		 * @param Char\Type $y                                      the object to be replicated
-		 * @return String\Type                                      the string
-		 */
-		public static function replicate(Int32\Type $n, Char\Type $y) {
-			$buffer = '';
-			$length = $n->unbox();
-
-			for ($i = 0; $i < $length; $i++) {
-				$buffer .= $y->__toString();
-			}
-
-			return String\Module::create($buffer);
-		}
-
-		#endregion
-
 		#region Methods -> Basic Operations
 
 		/**
@@ -109,14 +47,14 @@ namespace Saber\Data\String {
 		public static function all(String\Type $xs, callable $predicate) {
 			$length = $xs->length();
 
-			for ($i = Int32\Module::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
+			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
 				$x = String\Module::element($xs, $i);
 				if (!$predicate($x, $i)->unbox()) {
-					return Bool\Module::false();
+					return Bool\Type::false();
 				}
 			}
 
-			return Bool\Module::true(); // yes, an empty string returns "true"
+			return Bool\Type::true(); // yes, an empty string returns "true"
 		}
 
 		/**
@@ -131,7 +69,7 @@ namespace Saber\Data\String {
 		 *                                                          passed the truthy test
 		 */
 		public static function any(String\Type $xs, callable $predicate) {
-			return Option\Type::isDefined(String\Module::find($xs, $predicate));
+			return Option\Module::isDefined(String\Module::find($xs, $predicate));
 		}
 
 		/**
@@ -144,7 +82,7 @@ namespace Saber\Data\String {
 		 * @return String\Type                                      the string
 		 */
 		public static function append(String\Type $xs, Char\Type $y) {
-			return String\Module::create($xs->unbox() . $y->unbox());
+			return String\Type::box($xs->unbox() . $y->unbox());
 		}
 
 		/**
@@ -157,7 +95,7 @@ namespace Saber\Data\String {
 		 * @return String\Type                                      the string
 		 */
 		public static function concat(String\Type $xs, String\Type $ys) {
-			return String\Module::create($xs->unbox() . $ys->unbox());
+			return String\Type::box($xs->unbox() . $ys->unbox());
 		}
 
 		/**
@@ -190,7 +128,7 @@ namespace Saber\Data\String {
 			$length = $xs->length();
 			$skip = false;
 
-			for ($i = Int32\Module::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
+			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
 				$x = String\Module::element($xs, $i);
 				if (Char\Module::eq($x, $y)->unbox() && !$skip) {
 					$skip = true;
@@ -199,7 +137,7 @@ namespace Saber\Data\String {
 				$buffer .= $x->unbox();
 			}
 
-			return String\Module::create($buffer);
+			return String\Type::box($buffer);
 		}
 
 		/**
@@ -219,7 +157,7 @@ namespace Saber\Data\String {
 				$buffer .= String\Module::element($xs, $i);
 			}
 
-			return String\Module::create($buffer);
+			return String\Type::box($buffer);
 		}
 
 		/**
@@ -236,7 +174,7 @@ namespace Saber\Data\String {
 			$length = $xs->length();
 
 			$failed = false;
-			for ($i = Int32\Module::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
+			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
 				$x = String\Module::element($xs, $i);
 				if (!$predicate($x, $i)->unbox() || $failed) {
 					$buffer .= $x->unbox();
@@ -244,7 +182,7 @@ namespace Saber\Data\String {
 				}
 			}
 
-			return String\Module::create($buffer);
+			return String\Type::box($buffer);
 		}
 
 		/**
@@ -274,7 +212,7 @@ namespace Saber\Data\String {
 		public static function each(String\Type $xs, callable $procedure) {
 			$length = $xs->length();
 
-			for ($i = Int32\Module::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
+			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
 				$procedure(String\Module::element($xs, $i), $i);
 			}
 		}
@@ -307,14 +245,14 @@ namespace Saber\Data\String {
 			$buffer = '';
 			$length = $xs->length();
 
-			for ($i = Int32\Module::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
+			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
 				$x = $xs->element($i);
 				if ($predicate($x, $i)->unbox()) {
 					$buffer .= $x->unbox();
 				}
 			}
 
-			return String\Module::create($buffer);
+			return String\Type::box($buffer);
 		}
 
 		/**
@@ -330,7 +268,7 @@ namespace Saber\Data\String {
 		public static function find(String\Type $xs, callable $predicate) {
 			$length = $xs->length();
 
-			for ($i = Int32\Module::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
+			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
 				$x = $xs->element($i);
 				if ($predicate($x, $i)->unbox()) {
 					return Option\Type::some($x);
@@ -366,7 +304,7 @@ namespace Saber\Data\String {
 			$z = $initial;
 			$length = $xs->length();
 
-			for ($i = Int32\Module::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
+			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
 				$z = $operator($z, $xs->element($i));
 			}
 
@@ -387,7 +325,7 @@ namespace Saber\Data\String {
 			$z = $initial;
 			$length = $xs->length();
 
-			for ($i = Int32\Module::decrement($length); Int32\Module::ge($i, Int32\Module::zero())->unbox(); $i = Int32\Module::decrement($i)) {
+			for ($i = Int32\Module::decrement($length); Int32\Module::ge($i, Int32\Type::zero())->unbox(); $i = Int32\Module::decrement($i)) {
 				$z = $operator($z, $xs->element($i));
 			}
 
@@ -431,14 +369,14 @@ namespace Saber\Data\String {
 		public static function indexOf(String\Type $xs, Core\Type $object) {
 			$length = $xs->length();
 
-			for ($i = Int32\Module::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
+			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
 				$x = $xs->element($i);
 				if (Char\Module::eq($x, $object)->unbox()) {
 					return $i;
 				}
 			}
 
-			return Int32\Module::negative();
+			return Int32\Type::negative();
 		}
 
 		/**
@@ -454,11 +392,11 @@ namespace Saber\Data\String {
 			$buffer = '';
 			$length = Int32\Module::decrement($xs->length());
 
-			for ($i = Int32\Module::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
+			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
 				$buffer .= $xs->__element($i);
 			}
 
-			return String\Module::create($buffer);
+			return String\Type::box($buffer);
 		}
 
 		/**
@@ -476,14 +414,14 @@ namespace Saber\Data\String {
 			$length = $xs->length();
 
 			if ($length->unbox() > 0) {
-				$buffer .= String\Module::element($xs, Int32\Module::zero())->unbox();
-				for ($i = Int32\Module::one(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
+				$buffer .= String\Module::element($xs, Int32\Type::zero())->unbox();
+				for ($i = Int32\Type::one(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
 					$buffer .= $y->__toString();
 					$buffer .= $xs->__element($i);
 				}
 			}
 
-			return String\Module::create($buffer);
+			return String\Type::box($buffer);
 		}
 
 		/**
@@ -560,11 +498,11 @@ namespace Saber\Data\String {
 			$buffer = '';
 			$length = $xs->length();
 
-			for ($i = Int32\Module::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
+			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
 				$buffer .= $subroutine($xs->element($i), $i)->unbox();
 			}
 
-			return String\Module::create($buffer);
+			return String\Type::box($buffer);
 		}
 
 		/**
@@ -594,7 +532,7 @@ namespace Saber\Data\String {
 		 * @return String\Type                                      the string
 		 */
 		public static function prepend(String\Type $xs, Core\Type $object) {
-			return String\Module::create($object->__toString() . $xs->__toString());
+			return String\Type::box($object->__toString() . $xs->__toString());
 		}
 
 		/**
@@ -638,11 +576,11 @@ namespace Saber\Data\String {
 			$buffer = '';
 			$length = $xs->length();
 
-			for ($i = Int32\Module::decrement($length); Int32\Module::ge($i, Int32\Module::zero())->unbox(); $i = Int32\Module::decrement($length)) {
+			for ($i = Int32\Module::decrement($length); Int32\Module::ge($i, Int32\Type::zero())->unbox(); $i = Int32\Module::decrement($length)) {
 				$buffer .= $xs->__element($i);
 			}
 
-			return String\Module::create($buffer);
+			return String\Type::box($buffer);
 		}
 
 		/**
@@ -656,7 +594,7 @@ namespace Saber\Data\String {
 		 * @return String\Type                                      the string
 		 */
 		public static function slice(String\Type $xs, Int32\Type $offset, Int32\Type $length) {
-			return String\Module::create(mb_substr($xs->unbox(), $offset->unbox(), $length->unbox(), Char\Type::UTF_8_ENCODING));
+			return String\Type::box(mb_substr($xs->unbox(), $offset->unbox(), $length->unbox(), Char\Type::UTF_8_ENCODING));
 		}
 
 		/**
@@ -684,11 +622,11 @@ namespace Saber\Data\String {
 			$buffer = '';
 			$length = Int32\Module::min($n, $xs->length());
 
-			for ($i = Int32\Module::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
+			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
 				$buffer .= $xs->__element($i);
 			}
 
-			return String\Module::create($buffer);
+			return String\Type::box($buffer);
 		}
 
 		/**
@@ -704,7 +642,7 @@ namespace Saber\Data\String {
 			$buffer = '';
 			$length = $xs->length();
 
-			for ($i = Int32\Module::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
+			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
 				$x = $xs->element($i);
 				if (!$predicate($x, $i)->unbox()) {
 					break;
@@ -712,7 +650,7 @@ namespace Saber\Data\String {
 				$buffer .= $x->unbox();
 			}
 
-			return String\Module::create($buffer);
+			return String\Type::box($buffer);
 		}
 
 		/**
@@ -746,10 +684,12 @@ namespace Saber\Data\String {
 		 */
 		public static function eq(String\Type $xs, Core\Type $ys) {
 			$type = $xs->__typeOf();
-			if ($ys instanceof $type) {
-				return Bool\Module::create($xs->unbox() == $ys->unbox());
+			if ($ys !== null) {
+				if ($ys instanceof $type) {
+					return Bool\Type::box($xs->unbox() == $ys->unbox());
+				}
 			}
-			return Bool\Module::false();
+			return Bool\Type::false();
 		}
 
 		/**
@@ -763,10 +703,12 @@ namespace Saber\Data\String {
 		 *                                                          to the current object
 		 */
 		public static function id(String\Type $xs, Core\Type $ys) {
-			if ($xs->__typeOf() === $ys->__typeOf()) {
-				return Bool\Module::create($xs->unbox() === $ys->unbox());
+			if ($ys !== null) {
+				if ($xs->__typeOf() === $ys->__typeOf()) {
+					return Bool\Type::box($xs->unbox() === $ys->unbox());
+				}
 			}
-			return Bool\Module::false();
+			return Bool\Type::false();
 		}
 
 		/**
@@ -814,25 +756,25 @@ namespace Saber\Data\String {
 		 */
 		public static function compare(String\Type $xs, String\Type $ys) {
 			if (($xs === null) && ($ys !== null)) {
-				return Int32\Module::negative();
+				return Int32\Type::negative();
 			}
 			if (($xs === null) && ($ys === null)) {
-				return Int32\Module::zero();
+				return Int32\Type::zero();
 			}
 			if (($xs !== null) && ($ys === null)) {
-				return Int32\Module::one();
+				return Int32\Type::one();
 			}
 
 			$r = strcmp($xs->unbox(), $ys->unbox());
 
 			if ($r < 0) {
-				return Int32\Module::negative();
+				return Int32\Type::negative();
 			}
 			else if ($r == 0) {
-				return Int32\Module::zero();
+				return Int32\Type::zero();
 			}
 			else {
-				return Int32\Module::one();
+				return Int32\Type::one();
 			}
 		}
 
@@ -847,7 +789,7 @@ namespace Saber\Data\String {
 		 *                                                          than or equal to the right operand
 		 */
 		public static function ge(String\Type $xs, String\Type $ys) { // >=
-			return Bool\Module::create(String\Module::compare($xs, $ys)->unbox() >= 0);
+			return Bool\Type::box(String\Module::compare($xs, $ys)->unbox() >= 0);
 		}
 
 		/**
@@ -861,7 +803,7 @@ namespace Saber\Data\String {
 		 *                                                          than the right operand
 		 */
 		public static function gt(String\Type $xs, String\Type $ys) { // >
-			return Bool\Module::create(String\Module::compare($xs, $ys)->unbox() > 0);
+			return Bool\Type::box(String\Module::compare($xs, $ys)->unbox() > 0);
 		}
 
 		/**
@@ -875,7 +817,7 @@ namespace Saber\Data\String {
 		 *                                                          or equal to the right operand
 		 */
 		public static function le(String\Type $xs, String\Type $ys) { // <=
-			return Bool\Module::create(String\Module::compare($xs, $ys)->unbox() <= 0);
+			return Bool\Type::box(String\Module::compare($xs, $ys)->unbox() <= 0);
 		}
 
 		/**
@@ -889,7 +831,7 @@ namespace Saber\Data\String {
 		 *                                                          the right operand
 		 */
 		public static function lt(String\Type $xs, String\Type $ys) { // <
-			return Bool\Module::create(String\Module::compare($xs, $ys)->unbox() < 0);
+			return Bool\Type::box(String\Module::compare($xs, $ys)->unbox() < 0);
 		}
 
 		/**

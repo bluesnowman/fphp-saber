@@ -49,7 +49,7 @@ namespace Saber\Data\String {
 		 */
 		public function __construct(String\Type $xs) {
 			$this->xs = $xs;
-			$this->i = Int32\Module::zero();
+			$this->i = Int32\Type::zero();
 		}
 
 		/**
@@ -100,7 +100,7 @@ namespace Saber\Data\String {
 		 */
 		public function next() {
 			$this->i = Int32\Module::increment($this->i);
-			return Bool\Module::create($this->valid());
+			return Bool\Type::box($this->valid());
 		}
 
 		/**
@@ -109,7 +109,7 @@ namespace Saber\Data\String {
 		 * @access public
 		 */
 		public function rewind() {
-			$this->i = Int32\Module::zero();
+			$this->i = Int32\Type::zero();
 		}
 
 		/**

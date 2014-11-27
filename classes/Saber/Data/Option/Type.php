@@ -28,6 +28,33 @@ namespace Saber\Data\Option {
 
 	abstract class Type extends Data\Type {
 
+		#region Methods -> Initialization
+
+		/**
+		 * This method returns a "none" option.
+		 *
+		 * @access public
+		 * @static
+		 * @return Option\None\Type                                 the "none" option
+		 */
+		public static function none() {
+			return new Option\None\Type();
+		}
+
+		/**
+		 * This method returns a "some" option.
+		 *
+		 * @access public
+		 * @static
+		 * @param Core\Type $x                                      the object to be wrapped
+		 * @return Option\Some\Type                                 the "some" option
+		 */
+		public static function some(Core\Type $x) {
+			return new Option\Some\Type($x);
+		}
+
+		#endregion
+
 		#region Methods -> Native Oriented
 
 		/**
@@ -47,11 +74,11 @@ namespace Saber\Data\Option {
 			$module = '\\Saber\\Data\\Option\\Module';
 			if (preg_match('/^__[a-z_][a-z0-9_]*$/i', $method)) {
 				$method = substr($method, 2);
-				if (!in_array($method, array('choice', 'unbox'))) {
+				if (!in_array($method, array('call', 'choice', 'iterator', 'unbox'))) {
 					if (method_exists($module, $method)) {
 						array_unshift($args, $this);
 						$result = call_user_func_array(array($module, $method), $args);
-						if ($result instanceof Core\Type\Boxable) {
+						if ($result instanceof Core\Boxable\Type) {
 							return $result->unbox();
 						}
 						return $result;
@@ -137,7 +164,7 @@ namespace Saber\Data\Option {
 		 *                                                          option
 		 */
 		public final function isDefined() {
-			return Bool\Module::create($this->__isDefined());
+			return Bool\Type::box($this->__isDefined());
 		}
 
 		/**
@@ -148,7 +175,7 @@ namespace Saber\Data\Option {
 		 * @return Int32\Type                                       the length of this option
 		 */
 		public final function length() {
-			return Int32\Module::create($this->__length());
+			return Int32\Type::box($this->__length());
 		}
 
 		/**

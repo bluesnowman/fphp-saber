@@ -29,69 +29,6 @@ namespace Saber\Data\Double {
 
 	class Module extends Floating\Module {
 
-		#region Methods -> Instantiation
-
-		/**
-		 * This method returns a value as a boxed object.  A value is typically a PHP typed
-		 * primitive or object.  It is considered type-safe.
-		 *
-		 * @access public
-		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return Double\Type                                      the boxed object
-		 */
-		public static function box($value/*...*/) {
-			return new Double\Type($value);
-		}
-
-		/**
-		 * This method returns a value as a boxed object.  A value is typically a PHP typed
-		 * primitive or object.  It is considered "not" type-safe.
-		 *
-		 * @access public
-		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return Double\Type                                      the boxed object
-		 */
-		public static function create($value/*...*/) {
-			return new Double\Type($value);
-		}
-
-		/**
-		 * This method returns an object with a "-1" value.
-		 *
-		 * @access public
-		 * @static
-		 * @return Double\Type                                      the object
-		 */
-		public static function negative() {
-			return new Double\Type(-1.0);
-		}
-
-		/**
-		 * This method returns an object with a "1" value.
-		 *
-		 * @access public
-		 * @static
-		 * @return Double\Type                                      the object
-		 */
-		public static function one() {
-			return new Double\Type(1.0);
-		}
-
-		/**
-		 * This method returns an object with a "0" value.
-		 *
-		 * @access public
-		 * @static
-		 * @return Double\Type                                      the object
-		 */
-		public static function zero() {
-			return new Double\Type(0.0);
-		}
-
-		#endregion
-
 		#region Methods -> Arithmetic
 
 		/**
@@ -103,7 +40,7 @@ namespace Saber\Data\Double {
 		 * @return Double\Type                                      the result
 		 */
 		public static function abs(Double\Type $x) {
-			return Double\Module::create(abs($x->unbox()));
+			return Double\Type::box(abs($x->unbox()));
 		}
 
 		/**
@@ -116,7 +53,7 @@ namespace Saber\Data\Double {
 		 * @return Double\Type                                      the result
 		 */
 		public static function add(Double\Type $x, Double\Type $y) {
-			return Double\Module::create($x->unbox() + $y->unbox());
+			return Double\Type::box($x->unbox() + $y->unbox());
 		}
 
 		/**
@@ -128,7 +65,7 @@ namespace Saber\Data\Double {
 		 * @return Double\Type                                      the result
 		 */
 		public static function decrement(Double\Type $x) {
-			return Double\Module::subtract($x, Double\Module::one());
+			return Double\Module::subtract($x, Double\Type::one());
 		}
 
 		/**
@@ -142,7 +79,7 @@ namespace Saber\Data\Double {
 		 * @return Double\Type                                      the result
 		 */
 		public static function divide(Double\Type $x, Double\Type $y) {
-			return Double\Module::create($x->unbox() / $y->unbox());
+			return Double\Type::box($x->unbox() / $y->unbox());
 		}
 
 		/**
@@ -169,7 +106,7 @@ namespace Saber\Data\Double {
 		 * @return Double\Type                                      the result
 		 */
 		public static function increment(Double\Type $x) {
-			return Double\Module::add($x, Double\Module::one());
+			return Double\Module::add($x, Double\Type::one());
 		}
 
 		/**
@@ -183,7 +120,7 @@ namespace Saber\Data\Double {
 		 * @return Double\Type                                      the result
 		 */
 		public static function modulo(Double\Type $x, Double\Type $y) {
-			return Double\Module::create(fmod($x->unbox(), $y->unbox()));
+			return Double\Type::box(fmod($x->unbox(), $y->unbox()));
 		}
 
 		/**
@@ -197,7 +134,7 @@ namespace Saber\Data\Double {
 		 * @return Double\Type                                      the result
 		 */
 		public static function multiply(Double\Type $x, Double\Type $y) {
-			return Double\Module::create($x->unbox() * $y->unbox());
+			return Double\Type::box($x->unbox() * $y->unbox());
 		}
 
 		/**
@@ -209,7 +146,7 @@ namespace Saber\Data\Double {
 		 * @return Double\Type                                      the result
 		 */
 		public static function negate(Double\Type $x) {
-			return Double\Module::create($x->unbox() * -1.0);
+			return Double\Type::box($x->unbox() * -1.0);
 		}
 
 		/**
@@ -223,12 +160,12 @@ namespace Saber\Data\Double {
 		 * @return Double\Type                                      the result
 		 */
 		public static function subtract(Double\Type $x, Double\Type $y) {
-			return Double\Module::create($x->unbox() - $y->unbox());
+			return Double\Type::box($x->unbox() - $y->unbox());
 		}
 
 		#endregion
 
-		#region Methods -> Data Typing
+		#region Methods -> Conversion
 
 		/**
 		 * This method return the value as a Double. Note: Using this method may result in
@@ -240,7 +177,7 @@ namespace Saber\Data\Double {
 		 * @return Double\Type                                      the value as a Double
 		 */
 		public static function toDouble(Double\Type $x) {
-			return Double\Module::create($x->unbox());
+			return Double\Type::box($x->unbox());
 		}
 
 		/**
@@ -253,7 +190,7 @@ namespace Saber\Data\Double {
 		 * @return Float\Type                                       the value as a Float
 		 */
 		public static function toFloat(Double\Type $x) {
-			return Float\Module::create($x->unbox());
+			return Float\Type::box($x->unbox());
 		}
 
 		/**
@@ -266,7 +203,7 @@ namespace Saber\Data\Double {
 		 * @return Int32\Type                                       the value as an Int32
 		 */
 		public static function toInt32(Double\Type $x) {
-			return Int32\Module::create($x->unbox());
+			return Int32\Type::box($x->unbox());
 		}
 
 		/**
@@ -279,7 +216,7 @@ namespace Saber\Data\Double {
 		 * @return Integer\Type                                     the value as an Integer
 		 */
 		public static function toInteger(Double\Type $x) {
-			return Integer\Module::create($x->unbox());
+			return Integer\Type::box($x->unbox());
 		}
 
 		#endregion
@@ -298,10 +235,12 @@ namespace Saber\Data\Double {
 		 */
 		public static function eq(Double\Type $x, Core\Type $y) { // ==
 			$type = $x->__typeOf();
-			if ($y instanceof $type) {
-				return Bool\Module::create($x->unbox() == $y->unbox());
+			if ($y !== null) {
+				if ($y instanceof $type) {
+					return Bool\Type::box($x->unbox() == $y->unbox());
+				}
 			}
-			return Bool\Module::false();
+			return Bool\Type::false();
 		}
 
 		/**
@@ -315,10 +254,12 @@ namespace Saber\Data\Double {
 		 *                                                          to the right operand
 		 */
 		public static function id(Double\Type $x, Core\Type $y) { // ===
-			if ($x->__typeOf() === $y->__typeOf()) {
-				return Bool\Module::create($x->unbox() === $y->unbox());
+			if ($y !== null) {
+				if ($x->__typeOf() === $y->__typeOf()) {
+					return Bool\Type::box($x->unbox() === $y->unbox());
+				}
 			}
-			return Bool\Module::false();
+			return Bool\Type::false();
 		}
 
 		/**
@@ -366,26 +307,26 @@ namespace Saber\Data\Double {
 		 */
 		public static function compare(Double\Type $x, Double\Type $y) {
 			if (($x === null) && ($y !== null)) {
-				return Int32\Module::negative();
+				return Int32\Type::negative();
 			}
 			if (($x === null) && ($y === null)) {
-				return Int32\Module::zero();
+				return Int32\Type::zero();
 			}
 			if (($x !== null) && ($y === null)) {
-				return Int32\Module::one();
+				return Int32\Type::one();
 			}
 
 			$__x = $x->unbox();
 			$__y = $y->unbox();
 
 			if ($__x < $__y) {
-				return Int32\Module::negative();
+				return Int32\Type::negative();
 			}
 			else if ($__x == $__y) {
-				return Int32\Module::zero();
+				return Int32\Type::zero();
 			}
 			else { // ($__x > $__y)
-				return Int32\Module::one();
+				return Int32\Type::one();
 			}
 		}
 
@@ -400,7 +341,7 @@ namespace Saber\Data\Double {
 		 *                                                          than or equal to the right operand
 		 */
 		public static function ge(Double\Type $x, Double\Type $y) { // >=
-			return Bool\Module::create(Double\Module::compare($x, $y)->unbox() >= 0);
+			return Bool\Type::box(Double\Module::compare($x, $y)->unbox() >= 0);
 		}
 
 		/**
@@ -414,7 +355,7 @@ namespace Saber\Data\Double {
 		 *                                                          than the right operand
 		 */
 		public static function gt(Double\Type $x, Double\Type $y) { // >
-			return Bool\Module::create(Double\Module::compare($x, $y)->unbox() > 0);
+			return Bool\Type::box(Double\Module::compare($x, $y)->unbox() > 0);
 		}
 
 		/**
@@ -428,7 +369,7 @@ namespace Saber\Data\Double {
 		 *                                                          or equal to the right operand
 		 */
 		public static function le(Double\Type $x, Double\Type $y) { // <=
-			return Bool\Module::create(Double\Module::compare($x, $y)->unbox() <= 0);
+			return Bool\Type::box(Double\Module::compare($x, $y)->unbox() <= 0);
 		}
 
 		/**
@@ -442,7 +383,7 @@ namespace Saber\Data\Double {
 		 *                                                          the right operand
 		 */
 		public static function lt(Double\Type $x, Double\Type $y) { // <
-			return Bool\Module::create(Double\Module::compare($x, $y)->unbox() < 0);
+			return Bool\Type::box(Double\Module::compare($x, $y)->unbox() < 0);
 		}
 
 		/**
@@ -485,7 +426,7 @@ namespace Saber\Data\Double {
 		 *                                                          number
 		 */
 		public static function isNegative(Double\Type $x) {
-			return Bool\Module::create($x->unbox() < 0);
+			return Bool\Type::box($x->unbox() < 0);
 		}
 
 		#endregion

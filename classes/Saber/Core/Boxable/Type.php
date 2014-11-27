@@ -16,8 +16,23 @@
  * limitations under the License.
  */
 
-namespace Saber\Core {
+namespace Saber\Core\Boxable {
 
-	interface Equality { }
+	interface Type {
+
+		#region Methods -> Implementation
+
+		/**
+		 * This method returns the value contained within the boxed object.
+		 *
+		 * @access public
+		 * @param integer $depth                                    how many levels to unbox
+		 * @return mixed                                            the un-boxed value
+		 */
+		public function unbox($depth = 0);
+
+		#endregion
+
+	}
 
 }

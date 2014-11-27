@@ -13,7 +13,7 @@ A functional php library.
 
 Most classes implement the boxing interface.  Classes that implement this interface will have three method: `make`, `box`, and `unbox`.
 
-To "box" a PHP typed primitive or object, create an instance of the respective data type using the  class's `make` method.  This method enforces type safety by converting the value to correct type.  If the value cannot be converted to the correct data type, an exception will be thrown.
+To "box" a PHP typed primitive or object, create an instance of the respective data type using the  class's `make` method.  This method enforces the type by converting the value to the correct data type.  If the value cannot be converted to the correct data type, an exception will be thrown.
 
 ````
 $object = Int32\Type::make(7);
@@ -24,7 +24,7 @@ For better performance, use the `box` method to avoid type conversion.
 ````
 $object = Int32\Type::box(7);
 ````
-It is recommend that you use either the `make` method or the `box` instead of using the constructor when initializing a data type.
+It is recommend that you use either the `make` method or the `box` method instead of using the constructor when initializing a data type.
 
 To "unbox" a boxed object, call the `unbox` method on the respective class to get its value.
 
@@ -71,8 +71,7 @@ This library has adopted the following naming conventions for certain variables:
 `$c` usually represents a carry.<br />
 `$i`, `$j`, and `$k` usually represent an index.<br />
 `$n` usually represents a count.<br />
-
-`$f` usually represents a function (i.e. a callable); however, it is preferred to use one of the naming conventions in the next section.<br />
+`$p` usually represents a position.<br />
 
 ### Callables
 
@@ -125,8 +124,8 @@ Control\Monad::choice($x)
 Objects can also be evaluated against each other using the `unless` clause.  An `unless`  clause is satisfied when both `x` and `y` do NOT match (i.e. when `$x->__eq($y)` evaluates to `false`).  If the result of the match is false, the clause will cause the `$procedure` to be executed.
 
 ````
-$x = Int32\Type::make(8);
-$y = Int32\Type::make(7);
+$x = Int32\Type::box(8);
+$y = Int32\Type::box(7);
 
 Control\Monad::choice($x)
 	->unless($y, function(Int32\Type $x) {

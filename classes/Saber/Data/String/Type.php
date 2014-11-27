@@ -42,7 +42,7 @@ namespace Saber\Data\String {
 		 * @return String\Type                                      the boxed object
 		 */
 		public static function box($value/*...*/) {
-			return new static($value);
+			return new String\Type($value);
 		}
 
 		/**
@@ -67,7 +67,18 @@ namespace Saber\Data\String {
 				$encoding = func_get_arg(1);
 				$value = mb_convert_encoding($value, Char\Type::UTF_8_ENCODING, $encoding);
 			}
-			return new static($value);
+			return new String\Type($value);
+		}
+
+		/**
+		 * This method returns an empty instance.
+		 *
+		 * @access public
+		 * @static
+		 * @return String\Type                                      the string
+		 */
+		public static function empty_() {
+			return new String\Type('');
 		}
 
 		/**

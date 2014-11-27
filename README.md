@@ -89,7 +89,7 @@ Bool\Type function(Core\Type $x)
 Bool\Type function(Core\Type $x, Int32\Type $i)
 ````
 
-A `$procedure` function is used to perform an operation that does NOT return a value.
+A `$procedure` function is used to perform an operation that does NOT return a value (i.e. either a `null` value or a `Unit\Type` object).
 
 ````
 null function(Core\Type $x)

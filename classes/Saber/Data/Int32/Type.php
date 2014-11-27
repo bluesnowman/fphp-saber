@@ -132,9 +132,10 @@ namespace Saber\Data\Int32 {
 		 * This constructor initializes the class with the specified value.
 		 *
 		 * @access public
+		 * @final
 		 * @param integer $value                                    the value to be assigned
 		 */
-		public function __construct($value) {
+		public final function __construct($value) {
 			$this->value = (int) $value;
 		}
 

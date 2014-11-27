@@ -21,7 +21,7 @@ namespace Saber\Control\Choice\Cons {
 	use \Saber\Control;
 	use \Saber\Core;
 
-	class Type extends Control\Choice\Type {
+	final class Type extends Control\Choice\Type {
 
 		/**
 		 * This variable stores the procedure to be executed when condition is
@@ -52,10 +52,11 @@ namespace Saber\Control\Choice\Cons {
 		 * This constructor initializes the class with the specified object and tail.
 		 *
 		 * @access public
+		 * @final
 		 * @param Core\Equality\Type $x                             the object to be evaluated
 		 * @param Control\Choice\Type $xs                           the tail
 		 */
-		public function __construct(Core\Equality\Type $x, Control\Choice\Type $xs) {
+		public final function __construct(Core\Equality\Type $x, Control\Choice\Type $xs) {
 			$this->procedure = null;
 			$this->x = $x;
 			$this->xs = $xs;
@@ -65,8 +66,9 @@ namespace Saber\Control\Choice\Cons {
 		 * This method releases any internal references to an object.
 		 *
 		 * @access public
+		 * @final
 		 */
-		public function __destruct() {
+		public final function __destruct() {
 			$this->procedure = null;
 			$this->x = null;
 			$this->xs = null;
@@ -76,9 +78,10 @@ namespace Saber\Control\Choice\Cons {
 		 * This method causes the choice block to be closed and executed.
 		 *
 		 * @access public
+		 * @final
 		 * @return boolean                                          whether a clause has executed
 		 */
-		public function __end() {
+		public final function __end() {
 			if (!$this->xs->__end()) {
 				$procedure = $this->procedure;
 				if (($procedure !== null) && is_callable($procedure)) {
@@ -94,11 +97,12 @@ namespace Saber\Control\Choice\Cons {
 		 * be satisfied.
 		 *
 		 * @access public
+		 * @final
 		 * @param callable $procedure                               the procedure to be executed
 		 * @return Control\Choice\Type                              a reference to the next choice
 		 *                                                          monad node
 		 */
-		public function otherwise(callable $procedure) {
+		public final function otherwise(callable $procedure) {
 			$this->procedure = function($x) use ($procedure) {
 				$procedure($x);
 				return true;
@@ -110,13 +114,14 @@ namespace Saber\Control\Choice\Cons {
 		 * This method sets the procedure that will be executed should "y" not equal "x".
 		 *
 		 * @access public
+		 * @final
 		 * @param Core\Equality\Type $y                             the object to be evaluated
 		 *                                                          against
 		 * @param callable $procedure                               the procedure to be executed
 		 * @return Control\Choice\Type                              a reference to the next choice
 		 *                                                          monad node
 		 */
-		public function unless(Core\Equality\Type $y, callable $procedure) {
+		public final function unless(Core\Equality\Type $y, callable $procedure) {
 			$this->procedure = function($x) use ($y, $procedure) {
 				if (!$y->__eq($x)) {
 					$procedure($x);
@@ -131,13 +136,14 @@ namespace Saber\Control\Choice\Cons {
 		 * This method sets the procedure that will be executed should "y" equal "x".
 		 *
 		 * @access public
+		 * @final
 		 * @param Core\Equality\Type $y                             the object to be evaluated
 		 *                                                          against
 		 * @param callable $procedure                               the procedure to be executed
 		 * @return Control\Choice\Type                              a reference to the next choice
 		 *                                                          monad node
 		 */
-		public function when(Core\Equality\Type $y, callable $procedure) {
+		public final function when(Core\Equality\Type $y, callable $procedure) {
 			$this->procedure = function($x) use ($y, $procedure) {
 				if ($y->__eq($x)) {
 					$procedure($x);

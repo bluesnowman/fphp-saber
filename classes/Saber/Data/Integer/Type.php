@@ -29,6 +29,19 @@ namespace Saber\Data\Integer {
 
 		/**
 		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered "not" type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param mixed $value                                      the value(s) to be boxed
+		 * @return Integer\Type                                     the boxed object
+		 */
+		public static function box($value/*...*/) {
+			return new Integer\Type($value);
+		}
+
+		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
 		 * primitive or object.  It is considered type-safe.
 		 *
 		 * @access public
@@ -45,19 +58,6 @@ namespace Saber\Data\Integer {
 			if (!preg_match('/^-?[1-9]?[0-9]+$/', $value)) {
 				throw new Throwable\InvalidArgument\Exception('Unable to box value. Expected an integer, but got ":value".', array(':value' => $value));
 			}
-			return new Integer\Type($value);
-		}
-
-		/**
-		 * This method returns a value as a boxed object.  A value is typically a PHP typed
-		 * primitive or object.  It is considered "not" type-safe.
-		 *
-		 * @access public
-		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return Integer\Type                                     the boxed object
-		 */
-		public static function box($value/*...*/) {
 			return new Integer\Type($value);
 		}
 
@@ -140,9 +140,10 @@ namespace Saber\Data\Integer {
 		 * This constructor initializes the class with the specified value.
 		 *
 		 * @access public
+		 * @final
 		 * @param string $value                                     the value to be assigned
 		 */
-		public function __construct($value) {
+		public final function __construct($value) {
 			$this->value = (string) $value;
 		}
 

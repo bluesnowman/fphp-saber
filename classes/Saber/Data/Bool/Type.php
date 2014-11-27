@@ -123,9 +123,10 @@ namespace Saber\Data\Bool {
 		 * This constructor initializes the class with the specified value.
 		 *
 		 * @access public
+		 * @final
 		 * @param boolean $value                                    the value to be assigned
 		 */
-		public function __construct($value) {
+		public final function __construct($value) {
 			$this->value = (bool) $value;
 		}
 

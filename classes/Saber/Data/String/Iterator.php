@@ -45,9 +45,10 @@ namespace Saber\Data\String {
 		 * This constructor initializes this class with the specified collection.
 		 *
 		 * @access public
+		 * @final
 		 * @param String\Type $xs                                   the collection to be iterated
 		 */
-		public function __construct(String\Type $xs) {
+		public final function __construct(String\Type $xs) {
 			$this->xs = $xs;
 			$this->i = Int32\Type::zero();
 		}
@@ -56,8 +57,9 @@ namespace Saber\Data\String {
 		 * This method releases any internal references to an object.
 		 *
 		 * @access public
+		 * @final
 		 */
-		public function __destruct() {
+		public final function __destruct() {
 			$this->xs = null;
 			$this->i = null;
 		}
@@ -66,9 +68,10 @@ namespace Saber\Data\String {
 		 * This method returns the length of the collection.
 		 *
 		 * @access public
+		 * @final
 		 * @return integer                                          the length of the collection
 		 */
-		public function count() {
+		public final function count() {
 			return $this->xs->__length();
 		}
 
@@ -76,9 +79,10 @@ namespace Saber\Data\String {
 		 * This method returns the current object.
 		 *
 		 * @access public
+		 * @final
 		 * @return Char\Type                                        the current object
 		 */
-		public function current() {
+		public final function current() {
 			$this->xs->element($this->i);
 		}
 
@@ -86,9 +90,10 @@ namespace Saber\Data\String {
 		 * This method returns the current key.
 		 *
 		 * @access public
+		 * @final
 		 * @return Int32\Type                                       the current key
 		 */
-		public function key() {
+		public final function key() {
 			return $this->i;
 		}
 
@@ -96,9 +101,10 @@ namespace Saber\Data\String {
 		 * This method causes the iterator to advance to the next object.
 		 *
 		 * @access public
+		 * @final
 		 * @return Bool\Type                                        whether there are more objects
 		 */
-		public function next() {
+		public final function next() {
 			$this->i = Int32\Module::increment($this->i);
 			return Bool\Type::box($this->valid());
 		}
@@ -107,8 +113,9 @@ namespace Saber\Data\String {
 		 * This method rewinds the iterator.
 		 *
 		 * @access public
+		 * @final
 		 */
-		public function rewind() {
+		public final function rewind() {
 			$this->i = Int32\Type::zero();
 		}
 
@@ -116,9 +123,10 @@ namespace Saber\Data\String {
 		 * This method returns whether the iterator is still valid.
 		 *
 		 * @access public
+		 * @final
 		 * @return boolean                                          whether there are more objects
 		 */
-		public function valid() {
+		public final function valid() {
 			return ($this->i->unbox() < $this->xs->__length());
 		}
 

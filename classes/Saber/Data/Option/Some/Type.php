@@ -21,7 +21,7 @@ namespace Saber\Data\Option\Some {
 	use \Saber\Core;
 	use \Saber\Data\Option;
 
-	class Type extends Option\Type {
+	final class Type extends Option\Type {
 
 		#region Methods -> Native Oriented
 
@@ -29,9 +29,10 @@ namespace Saber\Data\Option\Some {
 		 * This constructor initializes the class with the specified object.
 		 *
 		 * @access public
+		 * @final
 		 * @param Core\Type $x                                      the object to be wrapped
 		 */
-		public function __construct(Core\Type $x) {
+		public final function __construct(Core\Type $x) {
 			$this->value = $x;
 		}
 
@@ -41,9 +42,10 @@ namespace Saber\Data\Option\Some {
 		 * This method returns the object stored within the option.
 		 *
 		 * @access public
+		 * @final
 		 * @return Core\Type                                        the stored object
 		 */
-		public function object() {
+		public final function object() {
 			return $this->value;
 		}
 

@@ -24,7 +24,7 @@ namespace Saber\Data\Int32 {
 	/**
 	 * @group TypeTest
 	 */
-	class TypeTest extends Core\Test {
+	final class TypeTest extends Core\Test {
 
 		/**
 		 * This method provides the data for testing the computation of a value's absolute value.

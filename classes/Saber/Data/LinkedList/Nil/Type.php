@@ -30,8 +30,9 @@ namespace Saber\Data\LinkedList\Nil {
 		 * This constructor initializes the class.
 		 *
 		 * @access public
+		 * @final
 		 */
-		public function __construct() {
+		public final function __construct() {
 			$this->value = null;
 		}
 

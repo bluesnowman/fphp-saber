@@ -26,7 +26,7 @@ namespace Saber\Data\String {
 	/**
 	 * @group TypeTestx
 	 */
-	class TypeTest extends Core\Test {
+	final class TypeTest extends Core\Test {
 
 		/**
 		 * This method provides the data for testing if all elements pass the truthy test.

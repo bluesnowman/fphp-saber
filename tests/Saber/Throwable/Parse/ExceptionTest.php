@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-namespace Saber\Throwable\OutOfBounds {
+namespace Saber\Throwable\Parse {
 
 	use \Saber\Core;
 	use \Saber\Throwable;
@@ -44,13 +44,13 @@ namespace Saber\Throwable\OutOfBounds {
 		 * @dataProvider dataBox
 		 */
 		public function testBox($provided, $expected) {
-			$p0 = Throwable\OutOfBounds\Exception::make($provided[0], $provided[1], $provided[2]);
-			$e0 = new Throwable\OutOfBounds\Exception($expected[0], $expected[1], $expected[2]);
+			$p0 = Throwable\Parse\Exception::make($provided[0], $provided[1], $provided[2]);
+			$e0 = new Throwable\Parse\Exception($expected[0], $expected[1], $expected[2]);
 
-			$this->assertInstanceOf('\\OutOfBoundsException', $p0);
+			$this->assertInstanceOf('\\RuntimeException', $p0);
 			$this->assertInstanceOf('\\Saber\\Core\\Type', $p0);
 			$this->assertInstanceOf('\\Saber\\Throwable\\Runtime\\Exception', $p0);
-			$this->assertInstanceOf('\\Saber\\Throwable\\OutOfBounds\\Exception', $p0);
+			$this->assertInstanceOf('\\Saber\\Throwable\\Parse\\Exception', $p0);
 			$this->assertEquals($e0, $p0);
 			$this->assertTrue($e0->__eq($p0));
 
@@ -79,7 +79,7 @@ namespace Saber\Throwable\OutOfBounds {
 		 * @dataProvider dataCompare
 		 */
 		public function testCompare($provided, $expected) {
-			$p0 = Throwable\OutOfBounds\Exception::make($provided[0][0], $provided[0][1], $provided[0][2])->compare(Throwable\OutOfBounds\Exception::make($provided[1][0], $provided[1][1], $provided[1][2]));
+			$p0 = Throwable\Parse\Exception::make($provided[0][0], $provided[0][1], $provided[0][2])->compare(Throwable\Parse\Exception::make($provided[1][0], $provided[1][1], $provided[1][2]));
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Int32\\Type', $p0);
@@ -93,7 +93,7 @@ namespace Saber\Throwable\OutOfBounds {
 		 */
 		public function dataToString() {
 			$data = array(
-				array(array('Message', array(), 0), array('Saber\\Throwable\\OutOfBounds\\Exception [ 0 ]: Message ~ ')),
+				array(array('Message', array(), 0), array('Saber\\Throwable\\Parse\\Exception [ 0 ]: Message ~ ')),
 			);
 			return $data;
 		}
@@ -104,7 +104,7 @@ namespace Saber\Throwable\OutOfBounds {
 		 * @dataProvider dataToString
 		 */
 		public function testToString($provided, $expected) {
-			$p0 = Throwable\OutOfBounds\Exception::make($provided[0], $provided[1], $provided[2])->__toString();
+			$p0 = Throwable\Parse\Exception::make($provided[0], $provided[1], $provided[2])->__toString();
 			$e0 = $expected[0];
 
 			$this->assertInternalType('string', $p0);

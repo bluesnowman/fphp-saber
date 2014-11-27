@@ -41,7 +41,7 @@ namespace Saber\Throwable\Runtime\Exception {
 			$type = $x->__typeOf();
 			if ($y !== null) {
 				if ($y instanceof $type) {
-					return Bool\Type::box($x->__hashCode() === $y->__hashCode());
+					return Bool\Type::box($x->getCode() === $x->getCode());
 				}
 			}
 			return Bool\Type::false();

@@ -28,7 +28,7 @@ namespace Saber\Throwable\EmptyCollection {
 
 		#endregion
 
-		#region Methods -> Boxing/Creation
+		#region Methods -> Initialization
 
 		/**
 		 * This constructor creates a new runtime exception.

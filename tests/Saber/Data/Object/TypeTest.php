@@ -47,6 +47,8 @@ namespace Saber\Data\Object {
 		 * @dataProvider dataBox
 		 */
 		public function testBox($provided, $expected) {
+			//$this->markTestIncomplete();
+
 			$p0 = Object\Type::make($provided[0]);
 			$e0 = new Object\Type($expected[0]);
 
@@ -73,6 +75,8 @@ namespace Saber\Data\Object {
 		 * This method tests the ability to make a choice.
 		 */
 		public function testChoice() {
+			//$this->markTestIncomplete();
+
 			$x = Object\Type::make(null);
 
 			$p0 = $x->choice();
@@ -111,6 +115,8 @@ namespace Saber\Data\Object {
 		 * @dataProvider dataCompare
 		 */
 		public function testCompare($provided, $expected) {
+			//$this->markTestIncomplete();
+
 			$p0 = Object\Type::make($provided[0])->compare(Object\Type::make($provided[1]));
 			$e0 = $expected[0];
 
@@ -138,6 +144,8 @@ namespace Saber\Data\Object {
 		 * @dataProvider dataToString
 		 */
 		public function testToString($provided, $expected) {
+			//$this->markTestIncomplete();
+
 			$p0 = Object\Type::make($provided[0])->__toString();
 			$e0 = $expected[0];
 

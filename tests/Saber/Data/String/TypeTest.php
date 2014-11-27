@@ -52,6 +52,8 @@ namespace Saber\Data\String {
 		 * @dataProvider dataAll
 		 */
 		public function testAll($provided, $expected) {
+			$this->markTestIncomplete();
+
 			$x = String\Type::make($provided[0]);
 			$y = Char\Type::make($provided[1]);
 
@@ -88,6 +90,8 @@ namespace Saber\Data\String {
 		 * @dataProvider dataAny
 		 */
 		public function testAny($provided, $expected) {
+			$this->markTestIncomplete();
+
 			$x = String\Type::make($provided[0]);
 			$y = Char\Type::make($provided[1]);
 
@@ -120,6 +124,8 @@ namespace Saber\Data\String {
 		 * @dataProvider dataAppend
 		 */
 		public function testAppend($provided, $expected) {
+			$this->markTestIncomplete();
+
 			$p0 = String\Type::make($provided[0])->append(Char\Type::make($provided[1]));
 			$e0 = $expected[0];
 
@@ -145,6 +151,8 @@ namespace Saber\Data\String {
 		 * @dataProvider dataBox
 		 */
 		public function testBox($provided, $expected) {
+			//$this->markTestIncomplete();
+
 			$p0 = String\Type::make($provided[0]);
 			$e0 = new String\Type($expected[0]);
 
@@ -181,6 +189,8 @@ namespace Saber\Data\String {
 		 * @dataProvider dataIsEmpty
 		 */
 		public function testIsEmpty($provided, $expected) {
+			//$this->markTestIncomplete();
+
 			$p0 = String\Type::make($provided[0])->isEmpty();
 			$e0 = $expected[0];
 
@@ -208,6 +218,8 @@ namespace Saber\Data\String {
 		 * @dataProvider dataLength
 		 */
 		public function testLength($provided, $expected) {
+			//$this->markTestIncomplete();
+
 			$p0 = String\Type::make($provided[0])->length();
 			$e0 = $expected[0];
 
@@ -234,6 +246,8 @@ namespace Saber\Data\String {
 		 * @dataProvider dataReplicate
 		 */
 		public function testReplicate($provided, $expected) {
+			$this->markTestIncomplete();
+
 			$p0 = String\Type::replicate(Int32\Type::make($provided[0]), Char\Type::make($provided[1]));
 			$e0 = $expected[0];
 
@@ -259,6 +273,8 @@ namespace Saber\Data\String {
 		 * @dataProvider dataReverse
 		 */
 		public function testReverse($provided, $expected) {
+			$this->markTestIncomplete();
+
 			$p0 = String\Type::make($provided[0])->reverse();
 			$e0 = $expected[0];
 

@@ -55,6 +55,8 @@ namespace Saber\Data\Bool {
 		 * @dataProvider dataAND
 		 */
 		public function testAND($provided, $expected) {
+			//$this->markTestIncomplete();
+
 			$p0 = Bool\Module::and_(Bool\Type::make($provided[0]), Bool\Type::make($provided[1]));
 			$e0 = $expected[0];
 
@@ -86,6 +88,8 @@ namespace Saber\Data\Bool {
 		 * @dataProvider dataBox
 		 */
 		public function testBox($provided, $expected) {
+			//$this->markTestIncomplete();
+
 			$p0 = Bool\Type::make($provided[0]);
 			$e0 = new Bool\Type($expected[0]);
 
@@ -106,6 +110,8 @@ namespace Saber\Data\Bool {
 		 * This method tests the ability to make a choice.
 		 */
 		public function testChoice() {
+			//$this->markTestIncomplete();
+
 			$x = Bool\Type::true();
 
 			$p0 = $x->choice();
@@ -152,6 +158,8 @@ namespace Saber\Data\Bool {
 		 * @dataProvider dataCompare
 		 */
 		public function testCompare($provided, $expected) {
+			//$this->markTestIncomplete();
+
 			$p0 = Bool\Module::compare(Bool\Type::make($provided[0]), Bool\Type::make($provided[1]));
 			$e0 = $expected[0];
 
@@ -188,6 +196,8 @@ namespace Saber\Data\Bool {
 		 * @dataProvider dataOR
 		 */
 		public function testOR($provided, $expected) {
+			//$this->markTestIncomplete();
+
 			$p0 = Bool\Module::or_(Bool\Type::make($provided[0]), Bool\Type::make($provided[1]));
 			$e0 = $expected[0];
 
@@ -224,6 +234,8 @@ namespace Saber\Data\Bool {
 		 * @dataProvider dataNAND
 		 */
 		public function testNAND($provided, $expected) {
+			//$this->markTestIncomplete();
+
 			$p0 = Bool\Module::nand(Bool\Type::make($provided[0]), Bool\Type::make($provided[1]));
 			$e0 = $expected[0];
 
@@ -260,6 +272,8 @@ namespace Saber\Data\Bool {
 		 * @dataProvider dataNOR
 		 */
 		public function testNOR($provided, $expected) {
+			//$this->markTestIncomplete();
+
 			$p0 = Bool\Module::nor(Bool\Type::make($provided[0]), Bool\Type::make($provided[1]));
 			$e0 = $expected[0];
 
@@ -291,6 +305,8 @@ namespace Saber\Data\Bool {
 		 * @dataProvider dataNOT
 		 */
 		public function testNOT($provided, $expected) {
+			//$this->markTestIncomplete();
+
 			$p0 = Bool\Module::not(Bool\Type::make($provided[0]));
 			$e0 = $expected[0];
 
@@ -322,6 +338,8 @@ namespace Saber\Data\Bool {
 		 * @dataProvider dataToInt32
 		 */
 		public function testToInt32($provided, $expected) {
+			//$this->markTestIncomplete();
+
 			$p0 = Bool\Module::toInt32(Bool\Type::make($provided[0]));
 			$e0 = $expected[0];
 
@@ -353,6 +371,8 @@ namespace Saber\Data\Bool {
 		 * @dataProvider dataToString
 		 */
 		public function testToString($provided, $expected) {
+			//$this->markTestIncomplete();
+
 			$p0 = Bool\Type::make($provided[0])->__toString();
 			$e0 = $expected[0];
 
@@ -389,6 +409,8 @@ namespace Saber\Data\Bool {
 		 * @dataProvider dataXOR
 		 */
 		public function testXOR($provided, $expected) {
+			//$this->markTestIncomplete();
+
 			$p0 = Bool\Module::xor_(Bool\Type::make($provided[0]), Bool\Type::make($provided[1]));
 			$e0 = $expected[0];
 

@@ -576,7 +576,7 @@ namespace Saber\Data\String {
 			$buffer = '';
 			$length = $xs->length();
 
-			for ($i = Int32\Module::decrement($length); Int32\Module::ge($i, Int32\Type::zero())->unbox(); $i = Int32\Module::decrement($length)) {
+			for ($i = Int32\Module::decrement($length); Int32\Module::ge($i, Int32\Type::zero())->unbox(); $i = Int32\Module::decrement($i)) {
 				$buffer .= $xs->__element($i);
 			}
 

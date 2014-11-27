@@ -246,7 +246,7 @@ namespace Saber\Data\String {
 		 * @dataProvider dataReplicate
 		 */
 		public function testReplicate($provided, $expected) {
-			$this->markTestIncomplete();
+			//$this->markTestIncomplete();
 
 			$p0 = String\Type::replicate(Int32\Type::make($provided[0]), Char\Type::make($provided[1]));
 			$e0 = $expected[0];
@@ -273,7 +273,7 @@ namespace Saber\Data\String {
 		 * @dataProvider dataReverse
 		 */
 		public function testReverse($provided, $expected) {
-			$this->markTestIncomplete();
+			//$this->markTestIncomplete();
 
 			$p0 = String\Type::make($provided[0])->reverse();
 			$e0 = $expected[0];

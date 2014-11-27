@@ -343,7 +343,7 @@ namespace Saber\Data\ArrayList {
 			$z = $initial;
 			$length = $xs->length();
 
-			for ($i = Int32\Module::decrement($length); Int32\Module::ge($i, Int32\Type::zero())->unbox(); $i = Int32\Module::decrement($length)) {
+			for ($i = Int32\Module::decrement($length); Int32\Module::ge($i, Int32\Type::zero())->unbox(); $i = Int32\Module::decrement($i)) {
 				$z = $operator($z, $xs->element($i));
 			}
 

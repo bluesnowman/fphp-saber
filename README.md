@@ -75,7 +75,7 @@ This library has adopted the following naming conventions for certain variables:
 
 ### Callables
 
-An `$operator` function is used to find the result of applying an operation to one or two operands.
+An `$operator` function is used to find the result of applying an operator to one or two operands.
 
 ````
 Core\Type function(Core\Type $c)
@@ -94,6 +94,8 @@ A `$procedure` function is used to perform an operation that does NOT return a v
 ````
 null function(Core\Type $x)
 null function(Core\Type $x, Int32\Type $i)
+Unit\Type function(Core\Type $x)
+Unit\Type function(Core\Type $x, Int32\Type $i)
 ````
 
 A `$subroutine` function is used to perform an operation that does return a value.

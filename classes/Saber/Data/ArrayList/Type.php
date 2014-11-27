@@ -75,6 +75,17 @@ namespace Saber\Data\ArrayList {
 		}
 
 		/**
+		 * This method returns an empty instance.
+		 *
+		 * @access public
+		 * @static
+		 * @return ArrayList\Type                                   the string
+		 */
+		public static function empty_() {
+			return new ArrayList\Type(array());
+		}
+
+		/**
 		 * This method creates a list of "n" length with every element set to the given object.
 		 *
 		 * @access public

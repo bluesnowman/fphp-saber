@@ -31,6 +31,23 @@ namespace Saber\Data\LinkedList {
 
 		/**
 		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered "not" type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param mixed $value                                      the value(s) to be boxed
+		 * @return LinkedList\Type                                  the boxed object
+		 */
+		public static function box($value/*...*/) {
+			$zs = LinkedList\Type::nil();
+			for ($i = count($value) - 1; $i >= 0; $i--) {
+				$zs = LinkedList\Module::prepend($zs, $value[$i]);
+			}
+			return $zs;
+		}
+
+		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
 		 * primitive or object.  It is considered type-safe.
 		 *
 		 * @access public
@@ -57,23 +74,6 @@ namespace Saber\Data\LinkedList {
 		}
 
 		/**
-		 * This method returns a value as a boxed object.  A value is typically a PHP typed
-		 * primitive or object.  It is considered "not" type-safe.
-		 *
-		 * @access public
-		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return LinkedList\Type                                  the boxed object
-		 */
-		public static function box($value/*...*/) {
-			$zs = LinkedList\Type::nil();
-			for ($i = count($value) - 1; $i >= 0; $i--) {
-				$zs = LinkedList\Module::prepend($zs, $value[$i]);
-			}
-			return $zs;
-		}
-
-		/**
 		 * This method returns a "cons" object for a collection.
 		 *
 		 * @access public
@@ -94,6 +94,17 @@ namespace Saber\Data\LinkedList {
 		 * @return LinkedList\Nil\Type                              the "nil" object
 		 */
 		public static function nil() {
+			return new LinkedList\Nil\Type();
+		}
+
+		/**
+		 * This method returns an empty instance.
+		 *
+		 * @access public
+		 * @static
+		 * @return LinkedList\Nil\Type                              the "nil" object
+		 */
+		public static function empty_() {
 			return new LinkedList\Nil\Type();
 		}
 

@@ -6,7 +6,7 @@ A functional PHP library, which encourages strong typing, immutable objects, and
 ### Requirements
 
 * PHP 5.4+
-* The [mbstring](http://php.net/manual/en/book.mbstring.php) extension (only if dealing with different character sets).
+* The [mbstring](http://php.net/manual/en/book.mbstring.php) extension or the [iconv](http://php.net/manual/en/book.iconv.php) extension (only if dealing with different character sets).
 * The [gmp](http://php.net/manual/en/book.gmp.php) extension (only if using `Integer\Type`).
 
 ### [Boxing](http://msdn.microsoft.com/en-us/library/yz2be5wk.aspx)
@@ -89,7 +89,7 @@ Bool\Type function(Core\Type $x)
 Bool\Type function(Core\Type $x, Int32\Type $i)
 ````
 
-A `$procedure` function is used to perform an operation that does NOT return a value (i.e. either a `null` value or a `Unit\Type` object).
+A `$procedure` function is used to perform an operation that does NOT return a value (except for either a `null` value or a `Unit\Type` object).
 
 ````
 null function(Core\Type $x)

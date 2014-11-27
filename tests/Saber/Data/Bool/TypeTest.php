@@ -16,15 +16,15 @@
  * limitations under the License.
  */
 
-namespace Saber\Data {
+namespace Saber\Data\Bool {
 
 	use \Saber\Core;
-	use \Saber\Data;
+	use \Saber\Data\Bool;
 
 	/**
-	 * @group BoolType
+	 * @group TypeTest
 	 */
-	class BoolTest extends Core\AnyTest {
+	class TypeTest extends Core\Test {
 
 		/**
 		 * This method provides the data for testing the evaluation of one value "AND" another.
@@ -58,7 +58,7 @@ namespace Saber\Data {
 			$p0 = Bool\Module::and_(Bool\Type::make($provided[0]), Bool\Type::make($provided[1]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -89,8 +89,9 @@ namespace Saber\Data {
 			$p0 = Bool\Type::make($provided[0]);
 			$e0 = new Bool\Type($expected[0]);
 
-			//$this->assertInstanceOf('\\Saber\\Core\\AnyVal', $p0);
-			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Core\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool\\Type', $p0);
 			$this->assertTrue(Bool\Module::eq($e0, $p0)->unbox());
 			$this->assertTrue(Bool\Module::id($e0, $p0)->unbox());
 
@@ -105,12 +106,11 @@ namespace Saber\Data {
 		 * This method tests the ability to make a choice.
 		 */
 		public function testChoice() {
-			/*
 			$x = Bool\Type::true();
 
 			$p0 = $x->choice();
 
-			$this->assertInstanceOf('\\Saber\\Control\\Monad\\Choice', $p0);
+			$this->assertInstanceOf('\\Saber\\Control\\Choice\\Type', $p0);
 
 			$p1 = $x->choice()->when(Bool\Type::true(), function(Bool\Type $x) {})->end()->unbox();
 
@@ -121,7 +121,6 @@ namespace Saber\Data {
 
 			$this->assertInternalType('boolean', $p2);
 			$this->assertFalse($p2);
-			*/
 		}
 
 		/**
@@ -156,7 +155,7 @@ namespace Saber\Data {
 			$p0 = Bool\Module::compare(Bool\Type::make($provided[0]), Bool\Type::make($provided[1]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Int32\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -192,7 +191,7 @@ namespace Saber\Data {
 			$p0 = Bool\Module::or_(Bool\Type::make($provided[0]), Bool\Type::make($provided[1]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -228,7 +227,7 @@ namespace Saber\Data {
 			$p0 = Bool\Module::nand(Bool\Type::make($provided[0]), Bool\Type::make($provided[1]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -264,7 +263,7 @@ namespace Saber\Data {
 			$p0 = Bool\Module::nor(Bool\Type::make($provided[0]), Bool\Type::make($provided[1]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -295,7 +294,7 @@ namespace Saber\Data {
 			$p0 = Bool\Module::not(Bool\Type::make($provided[0]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -326,7 +325,7 @@ namespace Saber\Data {
 			$p0 = Bool\Module::toInt32(Bool\Type::make($provided[0]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Int32\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -393,7 +392,7 @@ namespace Saber\Data {
 			$p0 = Bool\Module::xor_(Bool\Type::make($provided[0]), Bool\Type::make($provided[1]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 

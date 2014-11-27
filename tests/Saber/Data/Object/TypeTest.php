@@ -16,15 +16,15 @@
  * limitations under the License.
  */
 
-namespace Saber\Data {
+namespace Saber\Data\Object {
 
 	use \Saber\Core;
-	use \Saber\Data;
+	use \Saber\Data\Object;
 
 	/**
-	 * @group AnyVal
+	 * @group TypeTest
 	 */
-	class UnitTest extends Core\AnyTest {
+	class TypeTest extends Core\Test {
 
 		/**
 		 * This method provides the data for testing the boxing of a value.
@@ -33,9 +33,10 @@ namespace Saber\Data {
 		 */
 		public function dataBox() {
 			$data = array(
-				array(array(1), array(null)),
+				array(array(1), array(1)),
 				array(array(null), array(null)),
-				array(array(''), array(null)),
+				array(array(''), array('')),
+				array(array(new \stdClass()), array(new \stdClass())),
 			);
 			return $data;
 		}
@@ -46,39 +47,44 @@ namespace Saber\Data {
 		 * @dataProvider dataBox
 		 */
 		public function testBox($provided, $expected) {
-			$p0 = Unit\Type::make($provided[0]);
-			$e0 = new Data\Unit($expected[0]);
+			$p0 = Object\Type::make($provided[0]);
+			$e0 = new Object\Type($expected[0]);
 
-			$this->assertInstanceOf('\\Saber\\Core\\AnyVal', $p0);
-			$this->assertInstanceOf('\\Saber\\Data\\Unit', $p0);
+			$this->assertInstanceOf('\\Saber\\Core\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Object\\Type', $p0);
 			$this->assertEquals($e0, $p0);
-			$this->assertTrue($e0->__equals($p0));
-			$this->assertTrue($e0->__identical($p0));
+			$this->assertTrue($e0->__eq($p0));
 
 			$p1 = $p0->unbox();
 			$e1 = $expected[0];
 
-			$this->assertInternalType('null', $p1);
-			$this->assertSame($e1, $p1);
-			$this->assertNull($p1);
+			if (is_object($p1)) {
+				$this->assertInstanceOf(get_class($e1), $p1);
+			}
+			else {
+				$this->assertInternalType(strtolower(gettype($e1)), $p1);
+			}
+
+			$this->assertEquals($e1, $p1);
 		}
 
 		/**
 		 * This method tests the ability to make a choice.
 		 */
 		public function testChoice() {
-			$x = Unit\Type::make(null);
+			$x = Object\Type::make(null);
 
 			$p0 = $x->choice();
 
-			$this->assertInstanceOf('\\Saber\\Control\\Monad\\Choice', $p0);
+			$this->assertInstanceOf('\\Saber\\Control\\Choice\\Type', $p0);
 
-			$p1 = $x->choice()->when(Unit\Type::make(null), function(Unit\Type $x) {})->end()->unbox();
+			$p1 = $x->choice()->when(Object\Type::make(null), function(Object\Type $x) {})->end()->unbox();
 
 			$this->assertInternalType('boolean', $p1);
 			$this->assertTrue($p1);
 
-			$p2 = $x->choice()->when(Bool\Type::true(), function(Unit\Type $x) {})->end()->unbox();
+			$p2 = $x->choice()->when(Object\Type::make(1), function(Object\Type $x) {})->end()->unbox();
 
 			$this->assertInternalType('boolean', $p2);
 			$this->assertFalse($p2);
@@ -89,11 +95,12 @@ namespace Saber\Data {
 		 *
 		 * @return array
 		 */
-		public function dataCompareTo() {
+		public function dataCompare() {
 			$data = array(
-				array(array(1, null), array(0)),
+				array(array(1, null), array(1)),
 				array(array(null, null), array(0)),
-				array(array(null, 1), array(0)),
+				array(array(null, 1), array(-1)),
+				array(array(1, 1), array(0)),
 			);
 			return $data;
 		}
@@ -101,43 +108,14 @@ namespace Saber\Data {
 		/**
 		 * This method tests the evaluation of one value compared to another.
 		 *
-		 * @dataProvider dataCompareTo
+		 * @dataProvider dataCompare
 		 */
-		public function testCompareTo($provided, $expected) {
-			$p0 = Unit\Type::make($provided[0])->compareTo(Unit\Type::make($provided[1]));
+		public function testCompare($provided, $expected) {
+			$p0 = Object\Type::make($provided[0])->compare(Object\Type::make($provided[1]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Int32\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
-		}
-
-		/**
-		 * This method provides the data for testing the ability to show a value.
-		 *
-		 * @return array
-		 */
-		public function dataShow() {
-			$data = array(
-				array(array(null), array('null')),
-				array(array(''), array('null')),
-				array(array(0), array('null')),
-			);
-			return $data;
-		}
-
-		/**
-		 * This method tests the ability to show a value.
-		 *
-		 * @dataProvider dataShow
-		 */
-		public function testShow($provided, $expected) {
-			$p0 = Unit\Type::make($provided[0]);
-			$e0 = $expected[0];
-
-			$this->expectOutputString($e0);
-			$p1 = $p0->show();
-
-			$this->assertInstanceOf('\\Saber\\Data\\Unit', $p1);
 		}
 
 		/**
@@ -148,8 +126,8 @@ namespace Saber\Data {
 		public function dataToString() {
 			$data = array(
 				array(array(null), array('null')),
-				array(array(''), array('null')),
-				array(array(0), array('null')),
+				array(array(''), array('')),
+				array(array(0), array('0')),
 			);
 			return $data;
 		}
@@ -160,7 +138,7 @@ namespace Saber\Data {
 		 * @dataProvider dataToString
 		 */
 		public function testToString($provided, $expected) {
-			$p0 = Unit\Type::make($provided[0])->__toString();
+			$p0 = Object\Type::make($provided[0])->__toString();
 			$e0 = $expected[0];
 
 			$this->assertInternalType('string', $p0);

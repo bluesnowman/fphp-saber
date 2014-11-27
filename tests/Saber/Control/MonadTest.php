@@ -25,7 +25,7 @@ namespace Saber\Control {
 	/**
 	 * @group AnyCtrl
 	 */
-	class MonadTest extends Core\AnyTest {
+	class MonadTest extends Core\Test {
 
 		/**
 		 * This method tests a set of choices.

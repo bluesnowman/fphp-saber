@@ -16,16 +16,16 @@
  * limitations under the License.
  */
 
-namespace Saber\Data {
+namespace Saber\Data\Integer {
 
 	use \Saber\Core;
-	use \Saber\Data;
+	use \Saber\Data\Integer;
 
 	/**
 	 * @requires extension gmp
-	 * @group AnyVal
+	 * @group TypeTest
 	 */
-	class IntegerTest extends Core\AnyTest {
+	class TypeTest extends Core\Test {
 
 		/**
 		 * This method provides the data for testing the computation of adding one value to another.
@@ -56,7 +56,7 @@ namespace Saber\Data {
 			$p0 = Integer\Type::make($provided[0])->add(Integer\Type::make($provided[1]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Integer', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Integer\\Type', $p0);
 			$this->assertEquals($e0, $p0->unbox());
 		}
 

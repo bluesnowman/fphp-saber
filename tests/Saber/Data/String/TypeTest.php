@@ -16,15 +16,17 @@
  * limitations under the License.
  */
 
-namespace Saber\Data {
+namespace Saber\Data\String {
 
 	use \Saber\Core;
-	use \Saber\Data;
+	use \Saber\Data\Char;
+	use \Saber\Data\Int32;
+	use \Saber\Data\String;
 
 	/**
-	 * @group AnyRef
+	 * @group TypeTestx
 	 */
-	class StringTest extends Core\AnyTest {
+	class TypeTest extends Core\Test {
 
 		/**
 		 * This method provides the data for testing if all elements pass the truthy test.
@@ -54,11 +56,11 @@ namespace Saber\Data {
 			$y = Char\Type::make($provided[1]);
 
 			$p0 = $x->all(function(Core\Any $x, Int32\Type $i) use ($y) {
-				return $x->equals($y);
+				return $x->eq($y);
 			});
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -90,11 +92,11 @@ namespace Saber\Data {
 			$y = Char\Type::make($provided[1]);
 
 			$p0 = $x->any(function(Core\Any $x, Int32\Type $i) use ($y) {
-				return $x->equals($y);
+				return $x->eq($y);
 			});
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -121,7 +123,7 @@ namespace Saber\Data {
 			$p0 = String\Type::make($provided[0])->append(Char\Type::make($provided[1]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\String', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\String\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -146,10 +148,11 @@ namespace Saber\Data {
 			$p0 = String\Type::make($provided[0]);
 			$e0 = new String\Type($expected[0]);
 
-			$this->assertInstanceOf('\\Saber\\Core\\AnyRef', $p0);
-			$this->assertInstanceOf('\\Saber\\Data\\String', $p0);
+			$this->assertInstanceOf('\\Saber\\Core\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\String\\Type', $p0);
 			$this->assertEquals($e0, $p0);
-			$this->assertTrue($e0->__equals($p0));
+			$this->assertTrue($e0->__eq($p0));
 
 			$p1 = $p0->unbox();
 			$e1 = $expected[0];
@@ -181,7 +184,7 @@ namespace Saber\Data {
 			$p0 = String\Type::make($provided[0])->isEmpty();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -208,7 +211,7 @@ namespace Saber\Data {
 			$p0 = String\Type::make($provided[0])->length();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Int32\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -234,7 +237,7 @@ namespace Saber\Data {
 			$p0 = String\Type::replicate(Int32\Type::make($provided[0]), Char\Type::make($provided[1]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\String', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\String\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -259,7 +262,7 @@ namespace Saber\Data {
 			$p0 = String\Type::make($provided[0])->reverse();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\String', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\String\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 

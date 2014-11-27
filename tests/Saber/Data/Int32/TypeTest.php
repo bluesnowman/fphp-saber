@@ -16,15 +16,15 @@
  * limitations under the License.
  */
 
-namespace Saber\Data {
+namespace Saber\Data\Int32 {
 
 	use \Saber\Core;
-	use \Saber\Data;
+	use \Saber\Data\Int32;
 
 	/**
-	 * @group AnyVal
+	 * @group TypeTest
 	 */
-	class Int32Test extends Core\AnyTest {
+	class TypeTest extends Core\Test {
 
 		/**
 		 * This method provides the data for testing the computation of a value's absolute value.
@@ -50,7 +50,7 @@ namespace Saber\Data {
 			$p0 = Int32\Type::make($provided[0])->abs();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Int32\\Type', $p0);
 			$this->assertEquals($e0, $p0->unbox());
 		}
 
@@ -83,7 +83,7 @@ namespace Saber\Data {
 			$p0 = Int32\Type::make($provided[0])->add(Int32\Type::make($provided[1]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Int32\\Type', $p0);
 			$this->assertEquals($e0, $p0->unbox());
 		}
 
@@ -110,11 +110,12 @@ namespace Saber\Data {
 			$p0 = Int32\Type::make($provided[0]);
 			$e0 = new Int32\Type($expected[0]);
 
-			$this->assertInstanceOf('\\Saber\\Core\\AnyVal', $p0);
-			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
+			$this->assertInstanceOf('\\Saber\\Core\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Int32\\Type', $p0);
 			$this->assertEquals($e0, $p0);
-			$this->assertTrue($e0->__equals($p0));
-			$this->assertTrue($e0->__identical($p0));
+			$this->assertTrue($e0->__eq($p0));
+			$this->assertTrue($e0->__id($p0));
 
 			$p1 = $p0->unbox();
 			$e1 = $expected[0];
@@ -131,7 +132,7 @@ namespace Saber\Data {
 
 			$p0 = $x->choice();
 
-			$this->assertInstanceOf('\\Saber\\Control\\Monad\\Choice', $p0);
+			$this->assertInstanceOf('\\Saber\\Control\\Choice\\Type', $p0);
 
 			$p1 = $x->choice()->when(Int32\Type::make(3), function(Int32\Type $x) {})->end()->unbox();
 
@@ -149,7 +150,7 @@ namespace Saber\Data {
 		 *
 		 * @return array
 		 */
-		public function dataCompareTo() {
+		public function dataCompare() {
 			$data = array(
 				array(array(1, 1), array(0)),
 				array(array(1, 0), array(1)),
@@ -170,13 +171,13 @@ namespace Saber\Data {
 		/**
 		 * This method tests the evaluation of one value compared to another.
 		 *
-		 * @dataProvider dataCompareTo
+		 * @dataProvider dataCompare
 		 */
-		public function testCompareTo($provided, $expected) {
-			$p0 = Int32\Type::make($provided[0])->compareTo(Int32\Type::make($provided[1]));
+		public function testCompare($provided, $expected) {
+			$p0 = Int32\Type::make($provided[0])->compare(Int32\Type::make($provided[1]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Int32\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -206,7 +207,7 @@ namespace Saber\Data {
 			$p0 = Int32\Type::make($provided[0])->decrement();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Int32\\Type', $p0);
 			$this->assertEquals($e0, $p0->unbox());
 		}
 
@@ -241,43 +242,8 @@ namespace Saber\Data {
 			$p0 = Int32\Type::make($provided[0])->divide(Int32\Type::make($provided[1]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Int32\\Type', $p0);
 			$this->assertEquals($e0, $p0->unbox());
-		}
-
-		/**
-		 * This method provides the data for testing whether a value is an even number.
-		 *
-		 * @return array
-		 */
-		public function dataEven() {
-			$data = array(
-				array(array(4), array(true)),
-				array(array(3), array(false)),
-				array(array(2), array(true)),
-				array(array(1), array(false)),
-				array(array(0), array(true)),
-				array(array(null), array(true)),
-				array(array(''), array(true)),
-				array(array(-1), array(false)),
-				array(array(-2), array(true)),
-				array(array(-3), array(false)),
-				array(array(-4), array(true)),
-			);
-			return $data;
-		}
-
-		/**
-		 * This method tests whether a value is an even number.
-		 *
-		 * @dataProvider dataEven
-		 */
-		public function testEven($provided, $expected) {
-			$p0 = Int32\Type::make($provided[0])->even();
-			$e0 = $expected[0];
-
-			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
-			$this->assertSame($e0, $p0->unbox());
 		}
 
 		/**
@@ -302,7 +268,7 @@ namespace Saber\Data {
 			$p0 = Int32\Type::make($provided[0])->gcd(Int32\Type::make($provided[1]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Int32\\Type', $p0);
 			$this->assertEquals($e0, $p0->unbox());
 		}
 
@@ -333,8 +299,78 @@ namespace Saber\Data {
 			$p0 = Int32\Type::make($provided[0])->increment();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Int32\\Type', $p0);
 			$this->assertEquals($e0, $p0->unbox());
+		}
+
+		/**
+		 * This method provides the data for testing whether a value is an even number.
+		 *
+		 * @return array
+		 */
+		public function dataIsEven() {
+			$data = array(
+				array(array(4), array(true)),
+				array(array(3), array(false)),
+				array(array(2), array(true)),
+				array(array(1), array(false)),
+				array(array(0), array(true)),
+				array(array(null), array(true)),
+				array(array(''), array(true)),
+				array(array(-1), array(false)),
+				array(array(-2), array(true)),
+				array(array(-3), array(false)),
+				array(array(-4), array(true)),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests whether a value is an even number.
+		 *
+		 * @dataProvider dataIsEven
+		 */
+		public function testIsEven($provided, $expected) {
+			$p0 = Int32\Type::make($provided[0])->isEven();
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\Bool\\Type', $p0);
+			$this->assertSame($e0, $p0->unbox());
+		}
+
+		/**
+		 * This method provides the data for testing whether a value is an odd number.
+		 *
+		 * @return array
+		 */
+		public function dataIsOdd() {
+			$data = array(
+				array(array(4), array(false)),
+				array(array(3), array(true)),
+				array(array(2), array(false)),
+				array(array(1), array(true)),
+				array(array(0), array(false)),
+				array(array(null), array(false)),
+				array(array(''), array(false)),
+				array(array(-1), array(true)),
+				array(array(-2), array(false)),
+				array(array(-3), array(true)),
+				array(array(-4), array(false)),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests whether a value is an odd number.
+		 *
+		 * @dataProvider dataIsOdd
+		 */
+		public function testIsOdd($provided, $expected) {
+			$p0 = Int32\Type::make($provided[0])->isOdd();
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\Bool\\Type', $p0);
+			$this->assertSame($e0, $p0->unbox());
 		}
 
 		/**
@@ -373,7 +409,7 @@ namespace Saber\Data {
 			$p0 = Int32\Type::make($provided[0])->modulo(Int32\Type::make($provided[1]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Int32\\Type', $p0);
 			$this->assertEquals($e0, $p0->unbox());
 		}
 
@@ -431,7 +467,7 @@ namespace Saber\Data {
 			$p0 = Int32\Type::make($provided[0])->multiply(Int32\Type::make($provided[1]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Int32\\Type', $p0);
 			$this->assertEquals($e0, $p0->unbox());
 		}
 
@@ -454,7 +490,7 @@ namespace Saber\Data {
 		}
 
 		/**
-		 * This method tests whether a value is an odd number.
+		 * This method tests whether the data for testing the computation of negating a value.
 		 *
 		 * @dataProvider dataNegate
 		 */
@@ -462,72 +498,8 @@ namespace Saber\Data {
 			$p0 = Int32\Type::make($provided[0])->negate();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Int32\\Type', $p0);
 			$this->assertEquals($e0, $p0->unbox());
-		}
-
-		/**
-		 * This method provides the data for testing whether a value is an odd number.
-		 *
-		 * @return array
-		 */
-		public function dataOdd() {
-			$data = array(
-				array(array(4), array(false)),
-				array(array(3), array(true)),
-				array(array(2), array(false)),
-				array(array(1), array(true)),
-				array(array(0), array(false)),
-				array(array(null), array(false)),
-				array(array(''), array(false)),
-				array(array(-1), array(true)),
-				array(array(-2), array(false)),
-				array(array(-3), array(true)),
-				array(array(-4), array(false)),
-			);
-			return $data;
-		}
-
-		/**
-		 * This method tests whether a value is an odd number.
-		 *
-		 * @dataProvider dataOdd
-		 */
-		public function testOdd($provided, $expected) {
-			$p0 = Int32\Type::make($provided[0])->odd();
-			$e0 = $expected[0];
-
-			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
-			$this->assertSame($e0, $p0->unbox());
-		}
-
-		/**
-		 * This method provides the data for testing the ability to show a value.
-		 *
-		 * @return array
-		 */
-		public function dataShow() {
-			$data = array(
-				array(array(-1), array('-1')),
-				array(array(0), array('0')),
-				array(array(1), array('1')),
-			);
-			return $data;
-		}
-
-		/**
-		 * This method tests the ability to show a value.
-		 *
-		 * @dataProvider dataShow
-		 */
-		public function testShow($provided, $expected) {
-			$p0 = Int32\Type::make($provided[0]);
-			$e0 = $expected[0];
-
-			$this->expectOutputString($e0);
-			$p1 = $p0->show();
-
-			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p1);
 		}
 
 		/**
@@ -561,7 +533,7 @@ namespace Saber\Data {
 			$p0 = Int32\Type::make($provided[0])->subtract(Int32\Type::make($provided[1]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Int32\\Type', $p0);
 			$this->assertEquals($e0, $p0->unbox());
 		}
 

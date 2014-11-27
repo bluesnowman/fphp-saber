@@ -16,15 +16,15 @@
  * limitations under the License.
  */
 
-namespace Saber\Data {
+namespace Saber\Data\Char {
 
 	use \Saber\Core;
-	use \Saber\Data;
+	use \Saber\Data\Char;
 
 	/**
-	 * @group AnyVal
+	 * @group TypeTest
 	 */
-	class CharTest extends Core\AnyTest {
+	class TypeTest extends Core\Test {
 
 		/**
 		 * This method provides the data for testing the boxing of a value.
@@ -49,11 +49,12 @@ namespace Saber\Data {
 			$p0 = Char\Type::make($provided[0]);
 			$e0 = new Char\Type($expected[0], 'UTF-8');
 
-			$this->assertInstanceOf('\\Saber\\Core\\AnyVal', $p0);
-			$this->assertInstanceOf('\\Saber\\Data\\Char', $p0);
+			$this->assertInstanceOf('\\Saber\\Core\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Char\\Type', $p0);
 			$this->assertEquals($e0, $p0);
-			$this->assertTrue($e0->__equals($p0));
-			$this->assertTrue($e0->__identical($p0));
+			$this->assertTrue($e0->__eq($p0));
+			$this->assertTrue($e0->__id($p0));
 
 			$p1 = $p0->unbox();
 			$e1 = $expected[0];
@@ -70,7 +71,7 @@ namespace Saber\Data {
 
 			$p0 = $x->choice();
 
-			$this->assertInstanceOf('\\Saber\\Control\\Monad\\Choice', $p0);
+			$this->assertInstanceOf('\\Saber\\Control\\Choice\\Type', $p0);
 
 			$p1 = $x->choice()->when(Char\Type::make('m'), function(Char\Type $x) {})->end()->unbox();
 
@@ -88,7 +89,7 @@ namespace Saber\Data {
 		 *
 		 * @return array
 		 */
-		public function dataCompareTo() {
+		public function dataCompare() {
 			$data = array(
 				array(array('a', 'b'), array(-1)),
 				array(array('b', 'b'), array(0)),
@@ -100,13 +101,13 @@ namespace Saber\Data {
 		/**
 		 * This method tests the evaluation of one value compared to another.
 		 *
-		 * @dataProvider dataCompareTo
+		 * @dataProvider dataCompare
 		 */
-		public function testCompareTo($provided, $expected) {
-			$p0 = Char\Type::make($provided[0])->compareTo(Char\Type::make($provided[1]));
+		public function testCompare($provided, $expected) {
+			$p0 = Char\Type::make($provided[0])->compare(Char\Type::make($provided[1]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Int32\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -137,7 +138,7 @@ namespace Saber\Data {
 			$p0 = Char\Type::make($provided[0])->isAlpha();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -169,7 +170,7 @@ namespace Saber\Data {
 			$p0 = Char\Type::make($provided[0])->isAlphaNum();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -201,7 +202,7 @@ namespace Saber\Data {
 			$p0 = Char\Type::make($provided[0])->isAscii();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -228,7 +229,7 @@ namespace Saber\Data {
 			$p0 = Char\Type::make($provided[0])->isControl();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -256,7 +257,7 @@ namespace Saber\Data {
 			$p0 = Char\Type::make($provided[0])->isCyrillic();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -293,7 +294,7 @@ namespace Saber\Data {
 			$p0 = Char\Type::make($provided[0])->isDigit();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -342,7 +343,7 @@ namespace Saber\Data {
 			$p0 = Char\Type::make($provided[0])->isHexDigit();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -371,7 +372,7 @@ namespace Saber\Data {
 			$p0 = Char\Type::make($provided[0])->isLatin1();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -403,7 +404,7 @@ namespace Saber\Data {
 			$p0 = Char\Type::make($provided[0])->isLowerCase();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -432,7 +433,7 @@ namespace Saber\Data {
 			$p0 = Char\Type::make($provided[0])->isNumber();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -468,7 +469,7 @@ namespace Saber\Data {
 			$p0 = Char\Type::make($provided[0])->isOctDigit();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -495,7 +496,7 @@ namespace Saber\Data {
 			$p0 = Char\Type::make($provided[0])->isPrintable();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -523,7 +524,7 @@ namespace Saber\Data {
 			$p0 = Char\Type::make($provided[0])->isPunctuation();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -551,7 +552,7 @@ namespace Saber\Data {
 			$p0 = Char\Type::make($provided[0])->isSeparator();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -579,7 +580,7 @@ namespace Saber\Data {
 			$p0 = Char\Type::make($provided[0])->isSpace();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -608,7 +609,7 @@ namespace Saber\Data {
 			$p0 = Char\Type::make($provided[0])->isSymbol();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -640,35 +641,8 @@ namespace Saber\Data {
 			$p0 = Char\Type::make($provided[0])->isUpperCase();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Bool', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Bool\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
-		}
-
-		/**
-		 * This method provides the data for testing the ability to show a value.
-		 *
-		 * @return array
-		 */
-		public function dataShow() {
-			$data = array(
-				array(array('m'), array('m')),
-			);
-			return $data;
-		}
-
-		/**
-		 * This method tests the ability to show a value.
-		 *
-		 * @dataProvider dataShow
-		 */
-		public function testShow($provided, $expected) {
-			$p0 = Char\Type::make($provided[0]);
-			$e0 = $expected[0];
-
-			$this->expectOutputString($e0);
-			$p1 = $p0->show();
-
-			$this->assertInstanceOf('\\Saber\\Data\\Char', $p1);
 		}
 
 		/**
@@ -693,7 +667,7 @@ namespace Saber\Data {
 			$p0 = Char\Type::make($provided[0])->toInt32();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Int32', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Int32\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -719,7 +693,7 @@ namespace Saber\Data {
 			$p0 = Char\Type::make($provided[0])->toLowerCase();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Char', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Char\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -772,7 +746,7 @@ namespace Saber\Data {
 			$p0 = Char\Type::make($provided[0])->toUpperCase();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Char', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Char\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 

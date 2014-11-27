@@ -26,6 +26,6 @@ namespace Saber\Core {
 	 * @class
 	 * @package Saber
 	 */
-	abstract class AnyTest extends \PHPUnit_Framework_TestCase { }
+	abstract class Test extends \PHPUnit_Framework_TestCase { }
 
 }

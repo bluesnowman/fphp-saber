@@ -42,7 +42,7 @@ namespace Saber\Data\Object {
 			$type = $x->__typeOf();
 			if ($y !== null) {
 				if ($y instanceof $type) {
-					return Bool\Type::box($x->__hashCode() === $y->__hashCode());
+					return Bool\Type::box($x->unbox() == $y->unbox());
 				}
 			}
 			return Bool\Type::false();
@@ -61,7 +61,7 @@ namespace Saber\Data\Object {
 		public static function id(Object\Type $x, Core\Type $y) { // ===
 			if ($y !== null) {
 				if ($x->__typeOf() === $y->__typeOf()) {
-					return Bool\Type::box($x->__hashCode() === $y->__hashCode());
+					return Bool\Type::box($x->unbox() === $y->unbox());
 				}
 			}
 			return Bool\Type::false();
@@ -121,12 +121,13 @@ namespace Saber\Data\Object {
 				return Int32\Type::one();
 			}
 
-			$r = strcmp($x->__hashCode(), $y->__hashCode());
+			$__x = $x->unbox();
+			$__y = $y->unbox();
 
-			if ($r < 0) {
+			if ($__x < $__y) {
 				return Int32\Type::negative();
 			}
-			else if ($r == 0) {
+			else if ($__x == $__y) {
 				return Int32\Type::zero();
 			}
 			else {

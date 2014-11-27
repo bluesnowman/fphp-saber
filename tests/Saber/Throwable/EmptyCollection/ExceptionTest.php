@@ -24,7 +24,7 @@ namespace Saber\Throwable\EmptyCollection {
 	/**
 	 * @group AnyErr
 	 */
-	class ExceptionTest extends Core\AnyTest {
+	class ExceptionTest extends Core\Test {
 
 		/**
 		 * This method provides the data for testing the boxing of a value.

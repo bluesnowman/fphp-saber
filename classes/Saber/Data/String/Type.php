@@ -28,7 +28,7 @@ namespace Saber\Data\String {
 	use \Saber\Data\String;
 	use \Saber\Throwable;
 
-	class Type extends Data\Type implements Core\Boxable\Type {
+	final class Type extends Data\Type implements Core\Boxable\Type {
 
 		#region Methods -> Initialization
 
@@ -136,9 +136,10 @@ namespace Saber\Data\String {
 		 * This constructor initializes the class with the specified value.
 		 *
 		 * @access public
+		 * @final
 		 * @param string $value                                     the value to be assigned
 		 */
-		public function __construct($value) {
+		public final function __construct($value) {
 			$this->value = (string) $value;
 		}
 

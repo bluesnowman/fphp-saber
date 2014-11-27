@@ -43,11 +43,12 @@ namespace Saber\Data\LinkedList\Cons {
 		 * This constructor initializes the class with the specified values.
 		 *
 		 * @access public
+		 * @final
 		 * @param Core\Type $head                                   the object to be assigned
 		 *                                                          to the head
 		 * @param LinkedList\Type $tail                             the tail to be linked
 		 */
-		public function __construct(Core\Type $head, LinkedList\Type $tail) {
+		public final function __construct(Core\Type $head, LinkedList\Type $tail) {
 			$this->value = $head;
 			$this->tail = $tail;
 		}

@@ -22,7 +22,7 @@ namespace Saber\Data\Option\None {
 	use \Saber\Data\Option;
 	use \Saber\Throwable;
 
-	class Type extends Option\Type {
+	final class Type extends Option\Type {
 
 		#region Methods -> Object Oriented
 
@@ -30,11 +30,12 @@ namespace Saber\Data\Option\None {
 		 * This method returns the object stored within the option.
 		 *
 		 * @access public
+		 * @final
 		 * @return Core\Type                                        the stored object
 		 * @throws Throwable\UnimplementedMethod\Exception          indicates that this method cannot
 		 *                                                          be called
 		 */
-		public function object() {
+		public final function object() {
 			throw new Throwable\UnimplementedMethod\Exception('Method :method has not been implemented.', array(':method' => __FUNCTION__));
 		}
 

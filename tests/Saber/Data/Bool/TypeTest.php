@@ -24,7 +24,7 @@ namespace Saber\Data\Bool {
 	/**
 	 * @group TypeTest
 	 */
-	class TypeTest extends Core\Test {
+	final class TypeTest extends Core\Test {
 
 		/**
 		 * This method provides the data for testing the evaluation of one value "AND" another.

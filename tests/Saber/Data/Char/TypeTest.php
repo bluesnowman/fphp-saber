@@ -24,7 +24,7 @@ namespace Saber\Data\Char {
 	/**
 	 * @group TypeTest
 	 */
-	class TypeTest extends Core\Test {
+	final class TypeTest extends Core\Test {
 
 		/**
 		 * This method provides the data for testing the boxing of a value.

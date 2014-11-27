@@ -134,9 +134,10 @@ namespace Saber\Data\Char {
 		 * This constructor initializes the class with the specified value.
 		 *
 		 * @access public
+		 * @final
 		 * @param string $value                                     the value to be assigned
 		 */
-		public function __construct($value) {
+		public final function __construct($value) {
 			$this->value = (string) $value;
 		}
 

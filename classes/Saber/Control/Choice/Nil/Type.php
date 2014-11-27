@@ -22,15 +22,16 @@ namespace Saber\Control\Choice\Nil {
 	use \Saber\Core;
 	use \Saber\Throwable;
  
-	class Type extends Control\Choice\Type {
+	final class Type extends Control\Choice\Type {
 
 		/**
 		 * This method causes the choice block to be closed and executed.
 		 *
 		 * @access public
+		 * @final
 		 * @return boolean                                          whether a clause has executed
 		 */
-		public function __end() {
+		public final function __end() {
 			return false;
 		}
 
@@ -39,13 +40,14 @@ namespace Saber\Control\Choice\Nil {
 		 * be satisfied.
 		 *
 		 * @access public
+		 * @final
 		 * @param callable $procedure                               the procedure to be executed
 		 * @return Control\Choice\Type                              a reference to the next choice
 		 *                                                          monad node
 		 * @throws Throwable\UnimplementedMethod\Exception          indicates that this method cannot
 		 *                                                          be called
 		 */
-		public function otherwise(callable $procedure) {
+		public final function otherwise(callable $procedure) {
 			throw new Throwable\UnimplementedMethod\Exception('Method :method has not been implemented.', array(':method' => __FUNCTION__));
 		}
 
@@ -53,6 +55,7 @@ namespace Saber\Control\Choice\Nil {
 		 * This method sets the procedure that will be executed should "y" not equal "x".
 		 *
 		 * @access public
+		 * @final
 		 * @param Core\Equality\Type $y                             the object to be evaluated
 		 *                                                          against
 		 * @param callable $procedure                               the procedure to be executed
@@ -61,7 +64,7 @@ namespace Saber\Control\Choice\Nil {
 		 * @throws Throwable\UnimplementedMethod\Exception          indicates that this method cannot
 		 *                                                          be called
 		 */
-		public function unless(Core\Equality\Type $y, callable $procedure) {
+		public final function unless(Core\Equality\Type $y, callable $procedure) {
 			throw new Throwable\UnimplementedMethod\Exception('Method :method has not been implemented.', array(':method' => __FUNCTION__));
 		}
 
@@ -69,6 +72,7 @@ namespace Saber\Control\Choice\Nil {
 		 * This method sets the procedure that will be executed should "y" equal "x".
 		 *
 		 * @access public
+		 * @final
 		 * @param Core\Equality\Type $y                             the object to be evaluated
 		 *                                                          against
 		 * @param callable $procedure                               the procedure to be executed
@@ -77,7 +81,7 @@ namespace Saber\Control\Choice\Nil {
 		 * @throws Throwable\UnimplementedMethod\Exception          indicates that this method cannot
 		 *                                                          be called
 		 */
-		public function when(Core\Equality\Type $y, callable $procedure) {
+		public final function when(Core\Equality\Type $y, callable $procedure) {
 			throw new Throwable\UnimplementedMethod\Exception('Method :method has not been implemented.', array(':method' => __FUNCTION__));
 		}
 

@@ -123,9 +123,10 @@ namespace Saber\Data\Tuple {
 		 * This constructor initializes the class with the specified value.
 		 *
 		 * @access public
+		 * @final
 		 * @param array $value                                      the value to be assigned
 		 */
-		public function __construct(array $value) {
+		public final function __construct(array $value) {
 			$this->value = $value;
 		}
 

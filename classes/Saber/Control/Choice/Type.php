@@ -68,9 +68,10 @@ namespace Saber\Control\Choice {
 		 * This method returns the object's hash code.
 		 *
 		 * @access public
+		 * @final
 		 * @return string                                           the object's hash code
 		 */
-		public function __hashCode() {
+		public final function __hashCode() {
 			return spl_object_hash($this);
 		}
 
@@ -78,10 +79,10 @@ namespace Saber\Control\Choice {
 		 * This method returns the object as a string.
 		 *
 		 * @access public
-		 * @abstract
+		 * @final
 		 * @return string                                           the object as a string
 		 */
-		public function __toString() {
+		public final function __toString() {
 			return $this->__hashCode();
 		}
 

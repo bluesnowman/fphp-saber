@@ -19,6 +19,7 @@
 namespace Saber\Data\Int32 {
 
 	use \Saber\Core;
+	use \Saber\Data\ArrayList;
 	use \Saber\Data\Bool;
 	use \Saber\Data\Double;
 	use \Saber\Data\Float;
@@ -26,6 +27,7 @@ namespace Saber\Data\Int32 {
 	use \Saber\Data\Integer;
 	use \Saber\Data\Integral;
 	use \Saber\Data\String;
+	use \Saber\Data\Tuple;
 
 	class Module extends Integral\Module {
 
@@ -160,6 +162,36 @@ namespace Saber\Data\Int32 {
 		 */
 		public static function negate(Int32\Type $x) {
 			return Int32\Type::box($x->unbox() * -1);
+		}
+
+		/**
+		 * This method returns a list of all numbers for the specified sequence.
+		 *
+		 * @access public
+		 * @static
+		 * @param Int32\Type $x                                     where to start
+		 * @param Core\Type $y                                      either an integer representing
+		 *                                                          the end of the sequence or a
+		 *                                                          tuple describing the sequence
+		 * @return ArrayList\Type                                   an empty array list
+		 */
+		public static function sequence(Int32\Type $x, Core\Type $y) {
+			$buffer = array();
+
+			if ($y instanceof Tuple\Type) {
+				$s = Int32\Module::subtract($y->first(), $x);
+				$n = $y->second();
+			}
+			else { // ($y instanceof Int32\Type)
+				$s = Int32\Type::one();
+				$n = $y;
+			}
+
+			for ($i = $x; Int32\Module::le($i, $n)->unbox(); $i = Int32\Module::add($i, $s)) {
+				$buffer[] = $i;
+			}
+
+			return ArrayList\Type::box($buffer);
 		}
 
 		/**

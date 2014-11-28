@@ -11,7 +11,7 @@ A functional PHP library, which encourages strong typing, immutable objects, and
 
 ### [Boxing](http://msdn.microsoft.com/en-us/library/yz2be5wk.aspx)
 
-Most classes implement the boxing interface.  Classes that implement this interface will have three method: `make`, `box`, and `unbox`.
+Most classes implement the boxing interface.  Classes that implement this interface will have three methods: `make`, `box`, and `unbox`.
 
 To "box" a PHP typed primitive or object, create an instance of the respective data type using the  class's `make` method.  This method enforces the type by converting the value to the correct data type.  If the value cannot be converted to the correct data type, an exception will be thrown.
 
@@ -40,7 +40,7 @@ This library allow for a fluent API; therefore, methods can be chained.  Most cl
 $object = Int32\Type::box(7)->increment()->decrement();
 ````
 
-This is the same as doing:
+This statement is functionally equivalent to writing:
 
 ````
 $object = Int32\Module::decrement(Int32\Module::increment(Int32\Type::box(7)));
@@ -138,6 +138,21 @@ Control\Monad::choice($x)
 	})
 ->end();
 ````
+
+### Sequences
+
+A list containing a sequence of numbers can be easily created by doing the following:
+````
+$object = Int32\Module::sequence(Int32\Type::zero(), Int32\Type::box(5));
+````
+This means [0..5].  It will produce [0,1,2,3,4,5].
+
+You can also generate sequences like [0,2..10], which will produce [0,2,4,6,8,10].
+````
+$object = Int32\Module::sequence(Int32\Type::zero(), Tuple\Type::box(Int32\Type::box(2), Int32\Type::box(10)));
+````
+
+Similar methods exist as well for Double, Float, and Integer.
 
 ### Hierarchy
 

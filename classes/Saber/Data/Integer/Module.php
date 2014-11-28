@@ -18,14 +18,14 @@
 
 namespace Saber\Data\Integer {
 
-	use \Saber\Control;
 	use \Saber\Core;
+	use \Saber\Data\ArrayList;
 	use \Saber\Data\Bool;
 	use \Saber\Data\Int32;
 	use \Saber\Data\Integer;
 	use \Saber\Data\Integral;
 	use \Saber\Data\String;
-	use \Saber\Throwable;
+	use \Saber\Data\Tuple;
 
 	/**
 	 * @see http://php.net/manual/en/ref.gmp.php
@@ -150,6 +150,36 @@ namespace Saber\Data\Integer {
 		 */
 		public static function negate(Integer\Type $x) {
 			return Integer\Type::box(gmp_strval(gmp_neg($x->unbox())));
+		}
+
+		/**
+		 * This method returns a list of all numbers for the specified sequence.
+		 *
+		 * @access public
+		 * @static
+		 * @param Integer\Type $x                                   where to start
+		 * @param Core\Type $y                                      either an integer representing
+		 *                                                          the end of the sequence or a
+		 *                                                          tuple describing the sequence
+		 * @return ArrayList\Type                                   an empty array list
+		 */
+		public static function sequence(Integer\Type $x, Core\Type $y) {
+			$buffer = array();
+
+			if ($y instanceof Tuple\Type) {
+				$s = Integer\Module::subtract($y->first(), $x);
+				$n = $y->second();
+			}
+			else { // ($y instanceof Integer\Type)
+				$s = Integer\Type::one();
+				$n = $y;
+			}
+
+			for ($i = $x; Integer\Module::le($i, $n)->unbox(); $i = Integer\Module::add($i, $s)) {
+				$buffer[] = $i;
+			}
+
+			return ArrayList\Type::box($buffer);
 		}
 
 		/**

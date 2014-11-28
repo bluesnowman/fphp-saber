@@ -79,7 +79,7 @@ namespace Saber\Data\ArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @return ArrayList\Type                                   the string
+		 * @return ArrayList\Type                                   an empty array list
 		 */
 		public static function empty_() {
 			return new ArrayList\Type(array());

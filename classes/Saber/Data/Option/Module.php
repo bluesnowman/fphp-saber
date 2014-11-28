@@ -26,7 +26,6 @@ namespace Saber\Data\Option {
 	use \Saber\Data\LinkedList;
 	use \Saber\Data\Option;
 	use \Saber\Data\String;
-	use \Saber\Throwable;
 
 	abstract class Module extends Collection\Module {
 

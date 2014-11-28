@@ -20,14 +20,12 @@ namespace Saber\Data\Char {
 
 	include_once(implode(DIRECTORY_SEPARATOR, array(dirname(__FILE__), '..', '..', 'Ext', 'mbstring.php')));
 
-	use \Saber\Control;
 	use \Saber\Core;
 	use \Saber\Data;
 	use \Saber\Data\Bool;
 	use \Saber\Data\Char;
 	use \Saber\Data\Int32;
 	use \Saber\Data\String;
-	use \Saber\Throwable;
 
 	/**
 	 * @see http://www.haskell.org/ghc/docs/6.4.2/html/libraries/base/Data-Char.html

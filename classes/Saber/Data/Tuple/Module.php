@@ -23,7 +23,6 @@ namespace Saber\Data\Tuple {
 	use \Saber\Data\Collection;
 	use \Saber\Data\Int32;
 	use \Saber\Data\Tuple;
-	use \Saber\Throwable;
 
 	class Module extends Collection\Module {
 
@@ -37,8 +36,6 @@ namespace Saber\Data\Tuple {
 		 * @param Tuple\Type $xs                                    the left operand
 		 * @param Int32\Type $i                                     the index of the element
 		 * @return mixed                                            the element at the specified index
-		 * @throws Throwable\OutOfBounds\Exception                  indicates the specified index
-		 *                                                          cannot be found
 		 */
 		public static function element(Tuple\Type $xs, Int32\Type $i) {
 			return $xs->element($i);

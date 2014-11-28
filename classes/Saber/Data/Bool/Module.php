@@ -18,7 +18,6 @@
 
 namespace Saber\Data\Bool {
 
-	use \Saber\Control;
 	use \Saber\Core;
 	use \Saber\Data;
 	use \Saber\Data\Bool;

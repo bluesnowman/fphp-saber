@@ -19,6 +19,7 @@
 namespace Saber\Data\Double {
 
 	use \Saber\Core;
+	use \Saber\Data\ArrayList;
 	use \Saber\Data\Bool;
 	use \Saber\Data\Double;
 	use \Saber\Data\Float;
@@ -26,6 +27,7 @@ namespace Saber\Data\Double {
 	use \Saber\Data\Int32;
 	use \Saber\Data\Integer;
 	use \Saber\Data\String;
+	use \Saber\Data\Tuple;
 
 	class Module extends Floating\Module {
 
@@ -147,6 +149,36 @@ namespace Saber\Data\Double {
 		 */
 		public static function negate(Double\Type $x) {
 			return Double\Type::box($x->unbox() * -1.0);
+		}
+
+		/**
+		 * This method returns a list of all numbers for the specified sequence.
+		 *
+		 * @access public
+		 * @static
+		 * @param Double\Type $x                                    where to start
+		 * @param Core\Type $y                                      either an integer representing
+		 *                                                          the end of the sequence or a
+		 *                                                          tuple describing the sequence
+		 * @return ArrayList\Type                                   an empty array list
+		 */
+		public static function sequence(Double\Type $x, Core\Type $y) {
+			$buffer = array();
+
+			if ($y instanceof Tuple\Type) {
+				$s = Double\Module::subtract($y->first(), $x);
+				$n = $y->second();
+			}
+			else { // ($y instanceof Double\Type)
+				$s = Double\Type::one();
+				$n = $y;
+			}
+
+			for ($i = $x; Double\Module::le($i, $n)->unbox(); $i = Double\Module::add($i, $s)) {
+				$buffer[] = $i;
+			}
+
+			return ArrayList\Type::box($buffer);
 		}
 
 		/**

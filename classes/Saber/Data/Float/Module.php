@@ -19,6 +19,7 @@
 namespace Saber\Data\Float {
 
 	use \Saber\Core;
+	use \Saber\Data\ArrayList;
 	use \Saber\Data\Bool;
 	use \Saber\Data\Double;
 	use \Saber\Data\Float;
@@ -26,6 +27,7 @@ namespace Saber\Data\Float {
 	use \Saber\Data\Int32;
 	use \Saber\Data\Integer;
 	use \Saber\Data\String;
+	use \Saber\Data\Tuple;
 
 	class Module extends Floating\Module {
 
@@ -150,6 +152,36 @@ namespace Saber\Data\Float {
 		}
 
 		/**
+		 * This method returns a list of all numbers for the specified sequence.
+		 *
+		 * @access public
+		 * @static
+		 * @param Float\Type $x                                     where to start
+		 * @param Core\Type $y                                      either an integer representing
+		 *                                                          the end of the sequence or a
+		 *                                                          tuple describing the sequence
+		 * @return ArrayList\Type                                   an empty array list
+		 */
+		public static function sequence(Float\Type $x, Core\Type $y) {
+			$buffer = array();
+
+			if ($y instanceof Tuple\Type) {
+				$s = Float\Module::subtract($y->first(), $x);
+				$n = $y->second();
+			}
+			else { // ($y instanceof Float\Type)
+				$s = Float\Type::one();
+				$n = $y;
+			}
+
+			for ($i = $x; Float\Module::le($i, $n)->unbox(); $i = Float\Module::add($i, $s)) {
+				$buffer[] = $i;
+			}
+
+			return ArrayList\Type::box($buffer);
+		}
+
+		/**
 		 * This method returns the result of subtracting the specified value from this object's
 		 * value.
 		 *
@@ -165,7 +197,7 @@ namespace Saber\Data\Float {
 
 		#endregion
 
-		#region Methods -> Data Typing
+		#region Methods -> Conversion
 
 		/**
 		 * This method return the value as a Double. Note: Using this method may result in

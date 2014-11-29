@@ -21,12 +21,41 @@ namespace Saber\Data\Bool {
 	use \Saber\Core;
 	use \Saber\Data;
 	use \Saber\Data\Bool;
+	use \Saber\Data\Double;
+	use \Saber\Data\Float;
 	use \Saber\Data\Int32;
+	use \Saber\Data\Integer;
 	use \Saber\Data\String;
 
 	class Module extends Data\Module {
 
 		#region Methods -> Conversion
+
+		/**
+		 * This method return the value as a Double. Note: Using this method may result in
+		 * lost of precision.
+		 *
+		 * @access public
+		 * @static
+		 * @param Bool\Type $x                                      the object to be converted
+		 * @return Double\Type                                      the value as a Double
+		 */
+		public static function toDouble(Bool\Type $x) {
+			return Double\Type::box($x->unbox());
+		}
+
+		/**
+		 * This method return the value as a Float. Note: Using this method may result in
+		 * lost of precision.
+		 *
+		 * @access public
+		 * @static
+		 * @param Bool\Type $x                                      the object to be converted
+		 * @return Float\Type                                       the value as a Float
+		 */
+		public static function toFloat(Bool\Type $x) {
+			return Float\Type::box($x->unbox());
+		}
 
 		/**
 		 * This method return the value as an Int32. Note: Using this method may result in
@@ -39,6 +68,19 @@ namespace Saber\Data\Bool {
 		 */
 		public static function toInt32(Bool\Type $x) {
 			return Int32\Type::box($x->unbox());
+		}
+
+		/**
+		 * This method return the value as an Integer. Note: Using this method may result in
+		 * lost of precision.
+		 *
+		 * @access public
+		 * @static
+		 * @param Bool\Type $x                                      the object to be converted
+		 * @return Integer\Type                                     the value as an Integer
+		 */
+		public static function toInteger(Bool\Type $x) {
+			return Integer\Type::box($x->unbox());
 		}
 
 		#endregion

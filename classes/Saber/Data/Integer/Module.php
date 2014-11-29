@@ -88,6 +88,20 @@ namespace Saber\Data\Integer {
 		}
 
 		/**
+		 * This method computes the factorial of an integer.
+		 *
+		 * @access public
+		 * @static
+		 * @param Integer\Type $n                                   the operand
+		 * @return Integer\Type                                     the result
+		 */
+		public static function factorial(Integer\Type $n) {
+			return (Integer\Module::eq($n, Integer\Type::zero())->unbox())
+				? Integer\Type::one()
+				: Integer\Module::multiply($n, Integer\Module::factorial(Integer\Module::decrement($n)));
+		}
+
+		/**
 		 * This method returns the greatest common divisor.
 		 *
 		 * @access public
@@ -175,8 +189,15 @@ namespace Saber\Data\Integer {
 				$n = $y;
 			}
 
-			for ($i = $x; Integer\Module::le($i, $n)->unbox(); $i = Integer\Module::add($i, $s)) {
-				$buffer[] = $i;
+			if (Integer\Module::isNegative($s)->unbox()) {
+				for ($i = $x; Integer\Module::ge($i, $n)->unbox(); $i = Integer\Module::add($i, $s)) {
+					$buffer[] = $i;
+				}
+			}
+			else {
+				for ($i = $x; Integer\Module::le($i, $n)->unbox(); $i = Integer\Module::add($i, $s)) {
+					$buffer[] = $i;
+				}
 			}
 
 			return ArrayList\Type::box($buffer);

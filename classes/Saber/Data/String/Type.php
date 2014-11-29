@@ -30,6 +30,19 @@ namespace Saber\Data\String {
 
 	final class Type extends Data\Type implements Core\Boxable\Type {
 
+		#region Properties
+
+		/**
+		 * This variable stores references to commonly used singletons.
+		 *
+		 * @access protected
+		 * @static
+		 * @var array
+		 */
+		protected static $singletons = array();
+
+		#endregion
+
 		#region Methods -> Initialization
 
 		/**
@@ -78,7 +91,10 @@ namespace Saber\Data\String {
 		 * @return String\Type                                      the string
 		 */
 		public static function empty_() {
-			return new String\Type('');
+			if (!isset(static::$singletons[0])) {
+				static::$singletons[0] = new String\Type('');
+			}
+			return static::$singletons[0];
 		}
 
 		/**

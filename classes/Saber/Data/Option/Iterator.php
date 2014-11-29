@@ -19,10 +19,11 @@
 namespace Saber\Data\Option {
 
 	use \Saber\Data\Bool;
+	use \Saber\Data\Collection;
 	use \Saber\Data\Int32;
 	use \Saber\Data\Option;
 
-	final class Iterator implements \Countable, \Iterator {
+	final class Iterator extends Collection\Iterator {
 
 		/**
 		 * This variable stores a reference to the collection being iterated.

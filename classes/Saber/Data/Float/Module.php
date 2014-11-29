@@ -174,8 +174,15 @@ namespace Saber\Data\Float {
 				$n = $y;
 			}
 
-			for ($i = $x; Float\Module::le($i, $n)->unbox(); $i = Float\Module::add($i, $s)) {
-				$buffer[] = $i;
+			if (Float\Module::isNegative($s)->unbox()) {
+				for ($i = $x; Float\Module::ge($i, $n)->unbox(); $i = Float\Module::add($i, $s)) {
+					$buffer[] = $i;
+				}
+			}
+			else {
+				for ($i = $x; Float\Module::le($i, $n)->unbox(); $i = Float\Module::add($i, $s)) {
+					$buffer[] = $i;
+				}
 			}
 
 			return ArrayList\Type::box($buffer);

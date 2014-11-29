@@ -116,6 +116,15 @@ namespace Saber\Throwable\Runtime\Exception {
 		}
 
 		/**
+		 * This method releases any internal references to an object.
+		 *
+		 * @access public
+		 */
+		public function __destruct() {
+			$this->code = null;
+		}
+
+		/**
 		 * This method returns the object's hash code.
 		 *
 		 * @access public

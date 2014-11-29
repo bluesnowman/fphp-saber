@@ -28,6 +28,19 @@ namespace Saber\Data\Option {
 
 	abstract class Type extends Data\Type {
 
+		#region Properties
+
+		/**
+		 * This variable stores references to commonly used singletons.
+		 *
+		 * @access protected
+		 * @static
+		 * @var array
+		 */
+		protected static $singletons = array();
+
+		#endregion
+
 		#region Methods -> Initialization
 
 		/**
@@ -38,7 +51,10 @@ namespace Saber\Data\Option {
 		 * @return Option\None\Type                                 the "none" option
 		 */
 		public static function none() {
-			return new Option\None\Type();
+			if (!isset(static::$singletons[0])) {
+				static::$singletons[0] = new Option\None\Type();
+			}
+			return static::$singletons[0];
 		}
 
 		/**

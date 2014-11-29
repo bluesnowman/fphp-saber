@@ -85,6 +85,20 @@ namespace Saber\Data\Int32 {
 		}
 
 		/**
+		 * This method computes the factorial of an integer.
+		 *
+		 * @access public
+		 * @static
+		 * @param Int32\Type $n                                     the operand
+		 * @return Int32\Type                                       the result
+		 */
+		public static function factorial(Int32\Type $n) {
+			return (Int32\Module::eq($n, Int32\Type::zero())->unbox())
+				? Int32\Type::one()
+				: Int32\Module::multiply($n, Int32\Module::factorial(Int32\Module::decrement($n)));
+		}
+
+		/**
 		 * This method returns the greatest common divisor.
 		 *
 		 * @access public
@@ -187,8 +201,15 @@ namespace Saber\Data\Int32 {
 				$n = $y;
 			}
 
-			for ($i = $x; Int32\Module::le($i, $n)->unbox(); $i = Int32\Module::add($i, $s)) {
-				$buffer[] = $i;
+			if (Int32\Module::isNegative($s)->unbox()) {
+				for ($i = $x; Int32\Module::ge($i, $n)->unbox(); $i = Int32\Module::add($i, $s)) {
+					$buffer[] = $i;
+				}
+			}
+			else {
+				for ($i = $x; Int32\Module::le($i, $n)->unbox(); $i = Int32\Module::add($i, $s)) {
+					$buffer[] = $i;
+				}
 			}
 
 			return ArrayList\Type::box($buffer);

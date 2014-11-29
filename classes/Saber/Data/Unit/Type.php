@@ -25,6 +25,19 @@ namespace Saber\Data\Unit {
 
 	final class Type extends Data\Type implements Core\Boxable\Type {
 
+		#region Properties
+
+		/**
+		 * This variable stores references to commonly used singletons.
+		 *
+		 * @access protected
+		 * @static
+		 * @var array
+		 */
+		protected static $singletons = array();
+
+		#endregion
+
 		#region Methods -> Initialization
 
 		/**
@@ -33,11 +46,13 @@ namespace Saber\Data\Unit {
 		 *
 		 * @access public
 		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
 		 * @return Unit\Type                                        the boxed object
 		 */
-		public static function box($value/*...*/) {
-			return new Unit\Type($value);
+		public static function box() {
+			if (!isset(static::$singletons[0])) {
+				static::$singletons[0] = new Unit\Type();
+			}
+			return static::$singletons[0];
 		}
 
 		/**
@@ -46,11 +61,10 @@ namespace Saber\Data\Unit {
 		 *
 		 * @access public
 		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
 		 * @return Unit\Type                                        the boxed object
 		 */
-		public static function make($value/*...*/) {
-			return new Unit\Type($value);
+		public static function make() {
+			return Unit\Type::box();
 		}
 
 		#endregion

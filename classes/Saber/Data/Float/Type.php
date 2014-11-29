@@ -25,6 +25,19 @@ namespace Saber\Data\Float {
 
 	final class Type extends Floating\Type {
 
+		#region Properties
+
+		/**
+		 * This variable stores references to commonly used singletons.
+		 *
+		 * @access protected
+		 * @static
+		 * @var array
+		 */
+		protected static $singletons = array();
+
+		#endregion
+
 		#region Methods -> Initialization
 
 		/**
@@ -61,7 +74,10 @@ namespace Saber\Data\Float {
 		 * @return Float\Type                                       the object
 		 */
 		public static function negative() {
-			return new Float\Type(-1.0);
+			if (!isset(static::$singletons[-1])) {
+				static::$singletons[-1] = new Float\Type(-1.0);
+			}
+			return static::$singletons[-1];
 		}
 
 		/**
@@ -72,7 +88,10 @@ namespace Saber\Data\Float {
 		 * @return Float\Type                                       the object
 		 */
 		public static function one() {
-			return new Float\Type(1.0);
+			if (!isset(static::$singletons[1])) {
+				static::$singletons[1] = new Float\Type(1.0);
+			}
+			return static::$singletons[1];
 		}
 
 		/**
@@ -83,7 +102,10 @@ namespace Saber\Data\Float {
 		 * @return Float\Type                                       the object
 		 */
 		public static function zero() {
-			return new Float\Type(0.0);
+			if (!isset(static::$singletons[0])) {
+				static::$singletons[0] = new Float\Type(0.0);
+			}
+			return static::$singletons[0];
 		}
 
 		#endregion

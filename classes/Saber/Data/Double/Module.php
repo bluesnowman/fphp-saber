@@ -174,8 +174,15 @@ namespace Saber\Data\Double {
 				$n = $y;
 			}
 
-			for ($i = $x; Double\Module::le($i, $n)->unbox(); $i = Double\Module::add($i, $s)) {
-				$buffer[] = $i;
+			if (Double\Module::isNegative($s)->unbox()) {
+				for ($i = $x; Double\Module::ge($i, $n)->unbox(); $i = Double\Module::add($i, $s)) {
+					$buffer[] = $i;
+				}
+			}
+			else {
+				for ($i = $x; Double\Module::le($i, $n)->unbox(); $i = Double\Module::add($i, $s)) {
+					$buffer[] = $i;
+				}
 			}
 
 			return ArrayList\Type::box($buffer);

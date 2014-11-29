@@ -25,6 +25,7 @@ namespace Saber\Data\LinkedList {
 	use \Saber\Data\Int32;
 	use \Saber\Data\LinkedList;
 	use \Saber\Data\Option;
+	use \Saber\Data\Tuple;
 	use \Saber\Throwable;
 
 	abstract class Module extends Collection\Module {
@@ -735,6 +736,37 @@ namespace Saber\Data\LinkedList {
 			return LinkedList\Module::takeWhile($xs, function(Core\Type $x, Int32\Type $i) use ($predicate) {
 				return Bool\Module::not($predicate($x, $i));
 			});
+		}
+
+		/**
+		 * This method returns a new list of tuple pairings.
+		 *
+		 * @access public
+		 * @static
+		 * @param LinkedList\Type $xs                               the left operand
+		 * @param LinkedList\Type $ys                               the right operand
+		 * @return LinkedList\Type                                  a new list of tuple pairings
+		 */
+		public static function zip(LinkedList\Type $xs, LinkedList\Type $ys) {
+			$start = LinkedList\Type::nil();
+			$tail = null;
+
+			for ($as = $xs, $bs = $ys; !$as->__isEmpty() && !$bs->__isEmpty(); $as = $as->tail(), $bs = $bs->tail()) {
+				$tuple = Tuple\Type::box($as->head(), $bs->head());
+
+				$cons = LinkedList\Type::cons($tuple, LinkedList\Type::nil());
+
+				if ($tail !== null) {
+					$tail->tail = $cons;
+				}
+				else {
+					$start = $cons;
+				}
+
+				$tail = $cons;
+			}
+
+			return $start;
 		}
 
 		#endregion

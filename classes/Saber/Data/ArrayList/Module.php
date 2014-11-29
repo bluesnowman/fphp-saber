@@ -25,6 +25,7 @@ namespace Saber\Data\ArrayList {
 	use \Saber\Data\Int32;
 	use \Saber\Data\LinkedList;
 	use \Saber\Data\Option;
+	use \Saber\Data\Tuple;
 	use \Saber\Throwable;
 
 	class Module extends Collection\Module {
@@ -663,7 +664,7 @@ namespace Saber\Data\ArrayList {
 				$buffer[] = $x;
 			}
 
-			return new ArrayList\Type($buffer);
+			return ArrayList\Type::box($buffer);
 		}
 
 		/**
@@ -679,6 +680,26 @@ namespace Saber\Data\ArrayList {
 			return ArrayList\Module::takeWhile($xs, function(Core\Type $x, Int32\Type $i) use ($predicate) {
 				return Bool\Module::not($predicate($x, $i));
 			});
+		}
+
+		/**
+		 * This method returns a new list of tuple pairings.
+		 *
+		 * @access public
+		 * @static
+		 * @param ArrayList\Type $xs                                the left operand
+		 * @param ArrayList\Type $ys                                the right operand
+		 * @return ArrayList\Type                                   a new list of tuple pairings
+		 */
+		public static function zip(ArrayList\Type $xs, ArrayList\Type $ys) {
+			$buffer = array();
+			$length = Int32\Module::min($xs->length(), $ys->length());
+
+			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
+				$buffer[] = Tuple\Type::box($xs->element($i), $ys->element($i));
+			}
+
+			return ArrayList\Type::box($buffer);
 		}
 
 		#endregion

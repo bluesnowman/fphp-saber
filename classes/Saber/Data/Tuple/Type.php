@@ -39,6 +39,7 @@ namespace Saber\Data\Tuple {
 		 * @return Tuple\Type                                       the boxed object
 		 */
 		public static function box($value/*...*/) {
+			$value = func_get_args();
 			return new Tuple\Type($value);
 		}
 

@@ -19,6 +19,7 @@
 namespace Saber\Throwable\InvalidArgument {
 
 	use \Saber\Core;
+	use \Saber\Data\Int32;
 	use \Saber\Throwable;
 
 	/**
@@ -33,7 +34,7 @@ namespace Saber\Throwable\InvalidArgument {
 		 */
 		public function dataBox() {
 			$data = array(
-				array(array('', array(), 0), array('', array(), 0)),
+				array(array('', array(), Int32\Type::zero()), array('', array(), Int32\Type::zero())),
 			);
 			return $data;
 		}
@@ -58,7 +59,7 @@ namespace Saber\Throwable\InvalidArgument {
 			$e2 = $expected[2];
 
 			$this->assertInternalType('integer', $p2);
-			$this->assertSame($e2, $p2);
+			$this->assertSame($e2->unbox(), $p2);
 		}
 
 		/**
@@ -68,7 +69,7 @@ namespace Saber\Throwable\InvalidArgument {
 		 */
 		public function dataCompare() {
 			$data = array(
-				array(array(array('', array(), 0), array('', array(), 0)), array(0)),
+				array(array(array('', array(), Int32\Type::zero()), array('', array(), Int32\Type::zero())), array(0)),
 			);
 			return $data;
 		}
@@ -93,7 +94,7 @@ namespace Saber\Throwable\InvalidArgument {
 		 */
 		public function dataToString() {
 			$data = array(
-				array(array('Message', array(), 0), array('Saber\\Throwable\\InvalidArgument\\Exception [ 0 ]: Message ~ ')),
+				array(array('Message', array(), Int32\Type::zero()), array('Saber\\Throwable\\InvalidArgument\\Exception [ 0 ]: Message ~ ')),
 			);
 			return $data;
 		}

@@ -585,6 +585,20 @@ namespace Saber\Data\LinkedList {
 		}
 
 		/**
+		 * This method returns the latter value should the former value evaluates
+		 * to null.
+		 *
+		 * @access public
+		 * @static
+		 * @param LinkedList\Type $xs                               the value to be evaluated
+		 * @param LinkedList\Type $ys                               the default value
+		 * @return LinkedList\Type                                  the result
+		 */
+		public static function nvl(LinkedList\Type $xs, LinkedList\Type $ys = null) {
+			return ($xs !== null) ? $xs : ($ys ?: LinkedList\Type::empty_());
+		}
+
+		/**
 		 * This method prepends the specified object to the front of this collection.
 		 *
 		 * @access public

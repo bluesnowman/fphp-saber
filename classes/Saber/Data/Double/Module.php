@@ -155,6 +155,20 @@ namespace Saber\Data\Double {
 		#region Methods -> Basic Operations
 
 		/**
+		 * This method returns the latter value should the former value evaluates
+		 * to null.
+		 *
+		 * @access public
+		 * @static
+		 * @param Double\Type $x                                    the value to be evaluated
+		 * @param Double\Type $y                                    the default value
+		 * @return Double\Type                                      the result
+		 */
+		public static function nvl(Double\Type $x, Double\Type $y = null) {
+			return ($x !== null) ? $x : ($y ?: Double\Type::zero());
+		}
+
+		/**
 		 * This method returns a list of all numbers for the specified sequence.
 		 *
 		 * @access public

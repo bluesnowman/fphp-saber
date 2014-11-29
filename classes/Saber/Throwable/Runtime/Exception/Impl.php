@@ -24,18 +24,6 @@ namespace Saber\Throwable\Runtime\Exception {
 
 	trait Impl {
 
-		#region Properties
-
-		/**
-		 * This variable stores the code associated with the exception.
-		 *
-		 * @access protected
-		 * @var integer
-		 */
-		protected $code;
-
-		#endregion
-
 		#region Methods -> Initialization
 
 		/**
@@ -113,15 +101,6 @@ namespace Saber\Throwable\Runtime\Exception {
 				}
 			}
 			throw new Throwable\UnimplementedMethod\Exception('Unable to call method. No method ":method" exists in module ":module".', array(':module' => $module, ':method' => $method));
-		}
-
-		/**
-		 * This method releases any internal references to an object.
-		 *
-		 * @access public
-		 */
-		public function __destruct() {
-			$this->code = null;
 		}
 
 		/**

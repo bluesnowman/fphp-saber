@@ -525,6 +525,20 @@ namespace Saber\Data\String {
 		}
 
 		/**
+		 * This method returns the latter value should the former value evaluates
+		 * to null.
+		 *
+		 * @access public
+		 * @static
+		 * @param String\Type $xs                                   the value to be evaluated
+		 * @param String\Type $ys                                   the default value
+		 * @return String\Type                                      the result
+		 */
+		public static function nvl(String\Type $xs, String\Type $ys = null) {
+			return ($xs !== null) ? $xs : ($ys ?: String\Type::empty_());
+		}
+
+		/**
 		 * This method prepends the specified object to the front of this string.
 		 *
 		 * @access public

@@ -26,6 +26,24 @@ namespace Saber\Data\Object {
 
 	class Module extends Data\Module {
 
+		#region Methods -> Basic Operations
+
+		/**
+		 * This method returns the latter value should the former value evaluates
+		 * to null.
+		 *
+		 * @access public
+		 * @static
+		 * @param Object\Type $x                                    the value to be evaluated
+		 * @param Object\Type $y                                    the default value
+		 * @return Object\Type                                      the result
+		 */
+		public static function nvl(Object\Type $x, Object\Type $y = null) {
+			return ($x !== null) ? $x : ($y ?: Object\Type::box(null));
+		}
+
+		#endregion
+
 		#region Methods -> Equality
 
 		/**

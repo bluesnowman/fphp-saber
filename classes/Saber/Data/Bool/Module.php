@@ -29,6 +29,24 @@ namespace Saber\Data\Bool {
 
 	class Module extends Data\Module {
 
+		#region Methods -> Basic Operations
+
+		/**
+		 * This method returns the latter value should the former value evaluates
+		 * to null.
+		 *
+		 * @access public
+		 * @static
+		 * @param Bool\Type $x                                      the value to be evaluated
+		 * @param Bool\Type $y                                      the default value
+		 * @return Bool\Type                                        the result
+		 */
+		public static function nvl(Bool\Type $x, Bool\Type $y = null) {
+			return ($x !== null) ? $x : ($y ?: Bool\Type::false());
+		}
+
+		#endregion
+
 		#region Methods -> Conversion
 
 		/**

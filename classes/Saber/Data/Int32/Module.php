@@ -211,6 +211,20 @@ namespace Saber\Data\Int32 {
 		#region Methods -> Basic Operations
 
 		/**
+		 * This method returns the latter value should the former value evaluates
+		 * to null.
+		 *
+		 * @access public
+		 * @static
+		 * @param Int32\Type $x                                     the value to be evaluated
+		 * @param Int32\Type $y                                     the default value
+		 * @return Int32\Type                                       the result
+		 */
+		public static function nvl(Int32\Type $x, Int32\Type $y = null) {
+			return ($x !== null) ? $x : ($y ?: Int32\Type::zero());
+		}
+
+		/**
 		 * This method returns a list of all numbers for the specified sequence.
 		 *
 		 * @access public

@@ -18,6 +18,7 @@
 
 namespace Saber\Throwable\UnimplementedMethod {
 
+	use \Saber\Data\Int32;
 	use \Saber\Throwable;
 
 	class Exception extends \BadMethodCallException implements Throwable\Runtime\Exception {
@@ -36,15 +37,13 @@ namespace Saber\Throwable\UnimplementedMethod {
 		 * @access public
 		 * @param string $message                                   the error message
 		 * @param array $values                                     the value to be formatted
-		 * @param integer $code                                     the exception code
+		 * @param Int32\Type $code                                  the exception code
 		 */
-		public function __construct($message = '', array $values = null, $code = 0) {
+		public function __construct($message = '', array $values = null, Int32\Type $code = null) {
 			parent::__construct(
 				empty($values) ? (string) $message : strtr( (string) $message, $values),
-				(int) $code
+				Int32\Module::nvl($code)->unbox()
 			);
-			$this->code = (int) $code; // Known bug: http://bugs.php.net/39615
-			$this->value = $values;
 		}
 
 		#endregion

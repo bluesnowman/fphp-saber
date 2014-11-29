@@ -155,6 +155,20 @@ namespace Saber\Data\Float {
 		#region Methods -> Basic Operations
 
 		/**
+		 * This method returns the latter value should the former value evaluates
+		 * to null.
+		 *
+		 * @access public
+		 * @static
+		 * @param Float\Type $x                                     the value to be evaluated
+		 * @param Float\Type $y                                     the default value
+		 * @return Float\Type                                       the result
+		 */
+		public static function nvl(Float\Type $x, Float\Type $y = null) {
+			return ($x !== null) ? $x : ($y ?: Float\Type::zero());
+		}
+
+		/**
 		 * This method returns a list of all numbers for the specified sequence.
 		 *
 		 * @access public

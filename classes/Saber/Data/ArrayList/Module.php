@@ -159,7 +159,7 @@ namespace Saber\Data\ArrayList {
 				$buffer[] = $xs->element($i);
 			}
 
-			return new ArrayList\Type($buffer);
+			return ArrayList\Type::box($buffer);
 		}
 
 		/**
@@ -184,7 +184,7 @@ namespace Saber\Data\ArrayList {
 				}
 			}
 
-			return new ArrayList\Type($buffer);
+			return ArrayList\Type::box($buffer);
 		}
 
 		/**
@@ -254,7 +254,7 @@ namespace Saber\Data\ArrayList {
 				}
 			}
 
-			return new ArrayList\Type($buffer);
+			return ArrayList\Type::box($buffer);
 		}
 
 		/**
@@ -415,7 +415,7 @@ namespace Saber\Data\ArrayList {
 				$buffer[] = $xs->element($i);
 			}
 
-			return new ArrayList\Type($buffer);
+			return ArrayList\Type::box($buffer);
 		}
 
 		/**
@@ -440,7 +440,7 @@ namespace Saber\Data\ArrayList {
 				}
 			}
 
-			return new ArrayList\Type($buffer);
+			return ArrayList\Type::box($buffer);
 		}
 
 		/**
@@ -521,7 +521,7 @@ namespace Saber\Data\ArrayList {
 				$buffer[] = $subroutine($xs->element($i), $i);
 			}
 
-			return new ArrayList\Type($buffer);
+			return ArrayList\Type::box($buffer);
 		}
 
 		/**
@@ -542,6 +542,20 @@ namespace Saber\Data\ArrayList {
 		}
 
 		/**
+		 * This method returns the latter value should the former value evaluates
+		 * to null.
+		 *
+		 * @access public
+		 * @static
+		 * @param ArrayList\Type $xs                                the value to be evaluated
+		 * @param ArrayList\Type $ys                                the default value
+		 * @return ArrayList\Type                                   the result
+		 */
+		public static function nvl(ArrayList\Type $xs, ArrayList\Type $ys = null) {
+			return ($xs !== null) ? $xs : ($ys ?: ArrayList\Type::empty_());
+		}
+
+		/**
 		 * This method prepends the specified object to the front of this list.
 		 *
 		 * @access public
@@ -553,7 +567,7 @@ namespace Saber\Data\ArrayList {
 		public static function prepend(ArrayList\Type $xs, Core\Type $y) {
 			$buffer = $xs->unbox();
 			array_unshift($buffer, $y);
-			return new ArrayList\Type($buffer);
+			return ArrayList\Type::box($buffer);
 		}
 
 		/**
@@ -594,7 +608,7 @@ namespace Saber\Data\ArrayList {
 		 * @return ArrayList\Type                                   the list
 		 */
 		public static function reverse(ArrayList\Type $xs) {
-			return new ArrayList\Type(array_reverse($xs->unbox()));
+			return ArrayList\Type::box(array_reverse($xs->unbox()));
 		}
 
 		/**
@@ -608,7 +622,7 @@ namespace Saber\Data\ArrayList {
 		 * @return ArrayList\Type                                   the list
 		 */
 		public static function slice(ArrayList\Type $xs, Int32\Type $offset, Int32\Type $length) {
-			return new ArrayList\Type(array_slice($xs->unbox(), $offset->unbox(), $length->unbox()));
+			return ArrayList\Type::box(array_slice($xs->unbox(), $offset->unbox(), $length->unbox()));
 		}
 
 		/**
@@ -640,7 +654,7 @@ namespace Saber\Data\ArrayList {
 				$buffer[] = $xs->element($i);
 			}
 
-			return new ArrayList\Type($buffer);
+			return ArrayList\Type::box($buffer);
 		}
 
 		/**

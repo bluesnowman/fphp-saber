@@ -85,7 +85,7 @@ namespace Saber\Data\Int32 {
 		}
 
 		/**
-		 * This method computes the factorial of an integer.
+		 * This method computes the nth factorial number.
 		 *
 		 * @access public
 		 * @static
@@ -96,6 +96,20 @@ namespace Saber\Data\Int32 {
 			return (Int32\Module::eq($n, Int32\Type::zero())->unbox())
 				? Int32\Type::one()
 				: Int32\Module::multiply($n, Int32\Module::factorial(Int32\Module::decrement($n)));
+		}
+
+		/**
+		 * This method computes the nth fibonacci number.
+		 *
+		 * @access public
+		 * @static
+		 * @param Int32\Type $n                                     the operand
+		 * @return Int32\Type                                       the result
+		 */
+		public static function fibonacci(Int32\Type $n) {
+			return (Int32\Module::le($n, Int32\Type::one())->unbox())
+				? $n
+				: Int32\Module::add(Int32\Module::fibonacci(Int32\Module::decrement($n)), Int32\Module::fibonacci(Int32\Module::subtract($n, Int32\Type::box(2))));
 		}
 
 		/**
@@ -231,7 +245,7 @@ namespace Saber\Data\Int32 {
 
 		#endregion
 
-		#region Methods -> Data Typing
+		#region Methods -> Conversion
 
 		/**
 		 * This method return the value as a Double. Note: Using this method may result in

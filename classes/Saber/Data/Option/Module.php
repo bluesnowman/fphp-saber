@@ -214,13 +214,13 @@ namespace Saber\Data\Option {
 		 * @return ArrayList\Type                                   the collection as an array list
 		 */
 		public static function toArrayList(Option\Type $xs) {
-			$array = array();
+			$buffer = array();
 
 			if ($xs->__isDefined()) {
-				$array[] = $xs->object();
+				$buffer[] = $xs->object();
 			}
 
-			return ArrayList\Type::box($array);
+			return ArrayList\Type::box($buffer);
 		}
 
 		/**

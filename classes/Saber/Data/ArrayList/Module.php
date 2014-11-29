@@ -681,15 +681,19 @@ namespace Saber\Data\ArrayList {
 			});
 		}
 
+		#endregion
+
+		#region Methods -> Conversion
+
 		/**
 		 * This method returns the collection as an array.
 		 *
 		 * @access public
 		 * @static
-		 * @param ArrayList\Type $xs                                the left operand
+		 * @param ArrayList\Type $xs                                the operand
 		 * @return ArrayList\Type                                   the collection as an array list
 		 */
-		public static function toArray(ArrayList\Type $xs) {
+		public static function toArrayList(ArrayList\Type $xs) {
 			return $xs;
 		}
 
@@ -698,10 +702,10 @@ namespace Saber\Data\ArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ArrayList\Type $xs                                the left operand
+		 * @param ArrayList\Type $xs                                the operand
 		 * @return LinkedList\Type                                  the collection as a linked list
 		 */
-		public static function toList(ArrayList\Type $xs) {
+		public static function toLinkedList(ArrayList\Type $xs) {
 			$length = $xs->length();
 			$zs = LinkedList\Type::nil();
 			for ($i = Int32\Module::decrement($length); Int32\Module::ge($i, Int32\Type::zero())->unbox(); $i = Int32\Module::decrement($i)) {

@@ -34,6 +34,24 @@ namespace Saber\Data\Char {
 	 */
 	class Module extends Data\Module {
 
+		#region Methods -> Basic Operations
+
+		/**
+		 * This method returns the latter value should the former value evaluates
+		 * to null.
+		 *
+		 * @access public
+		 * @static
+		 * @param Char\Type $x                                      the value to be evaluated
+		 * @param Char\Type $y                                      the default value
+		 * @return Char\Type                                        the result
+		 */
+		public static function nvl(Char\Type $x, Char\Type $y = null) {
+			return ($x !== null) ? $x : ($y ?: Char\Type::box(chr(0)));
+		}
+
+		#endregion
+
 		#region Methods -> Conversion
 
 		/**

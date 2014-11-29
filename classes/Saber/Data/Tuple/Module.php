@@ -66,6 +66,20 @@ namespace Saber\Data\Tuple {
 		}
 
 		/**
+		 * This method returns the latter value should the former value evaluates
+		 * to null.
+		 *
+		 * @access public
+		 * @static
+		 * @param Tuple\Type $x                                      the value to be evaluated
+		 * @param Tuple\Type $y                                      the default value
+		 * @return Tuple\Type                                        the result
+		 */
+		public static function nvl(Tuple\Type $x, Tuple\Type $y = null) {
+			return ($x !== null) ? $x : ($y ?: Tuple\Type::box(null, null));
+		}
+
+		/**
 		 * This method returns the second element in the tuple.
 		 *
 		 * @access public

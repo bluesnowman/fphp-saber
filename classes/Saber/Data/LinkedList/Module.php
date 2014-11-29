@@ -751,11 +751,9 @@ namespace Saber\Data\LinkedList {
 		 */
 		public static function toArrayList(LinkedList\Type $xs) {
 			$buffer = array();
-
-			for ($zs = $xs; !$zs->__isEmpty(); $zs = $zs->tail()) {
-				$buffer[] = $zs->head();
-			}
-
+			LinkedList\Module::each($xs, function(Core\Type $x, Int32\Type $i) use ($buffer) {
+				$buffer[] = $x;
+			});
 			return ArrayList\Type::box($buffer);
 		}
 

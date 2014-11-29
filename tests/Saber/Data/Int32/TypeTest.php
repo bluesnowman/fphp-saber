@@ -118,6 +118,7 @@ namespace Saber\Data\Int32 {
 
 			$this->assertInstanceOf('\\Saber\\Core\\Type', $p0);
 			$this->assertInstanceOf('\\Saber\\Data\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Integral\\Type', $p0);
 			$this->assertInstanceOf('\\Saber\\Data\\Int32\\Type', $p0);
 			$this->assertEquals($e0, $p0);
 			$this->assertTrue($e0->__eq($p0));

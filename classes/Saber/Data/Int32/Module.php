@@ -193,6 +193,24 @@ namespace Saber\Data\Int32 {
 		}
 
 		/**
+		 * This method returns the result of subtracting the specified value from this object's
+		 * value.
+		 *
+		 * @access public
+		 * @static
+		 * @param Int32\Type $x                                     the left operand
+		 * @param Int32\Type $y                                     the right operand
+		 * @return Int32\Type                                       the result
+		 */
+		public static function subtract(Int32\Type $x, Int32\Type $y) {
+			return Int32\Type::box($x->unbox() - $y->unbox());
+		}
+
+		#endregion
+
+		#region Methods -> Basic Operations
+
+		/**
 		 * This method returns a list of all numbers for the specified sequence.
 		 *
 		 * @access public
@@ -227,20 +245,6 @@ namespace Saber\Data\Int32 {
 			}
 
 			return ArrayList\Type::box($buffer);
-		}
-
-		/**
-		 * This method returns the result of subtracting the specified value from this object's
-		 * value.
-		 *
-		 * @access public
-		 * @static
-		 * @param Int32\Type $x                                     the left operand
-		 * @param Int32\Type $y                                     the right operand
-		 * @return Int32\Type                                       the result
-		 */
-		public static function subtract(Int32\Type $x, Int32\Type $y) {
-			return Int32\Type::box($x->unbox() - $y->unbox());
 		}
 
 		#endregion

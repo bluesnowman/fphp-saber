@@ -183,6 +183,24 @@ namespace Saber\Data\Integer {
 		}
 
 		/**
+		 * This method returns the result of subtracting the specified value from this object's
+		 * value.
+		 *
+		 * @access public
+		 * @static
+		 * @param Integer\Type $x                                   the left operand
+		 * @param Integer\Type $y                                   the right operand
+		 * @return Integer\Type                                     the result
+		 */
+		public static function subtract(Integer\Type $x, Integer\Type $y) {
+			return Integer\Type::box(gmp_strval(gmp_sub($x->unbox(), $y->unbox())));
+		}
+
+		#endregion
+
+		#region Methods -> Basic Operations
+
+		/**
 		 * This method returns a list of all numbers for the specified sequence.
 		 *
 		 * @access public
@@ -217,20 +235,6 @@ namespace Saber\Data\Integer {
 			}
 
 			return ArrayList\Type::box($buffer);
-		}
-
-		/**
-		 * This method returns the result of subtracting the specified value from this object's
-		 * value.
-		 *
-		 * @access public
-		 * @static
-		 * @param Integer\Type $x                                   the left operand
-		 * @param Integer\Type $y                                   the right operand
-		 * @return Integer\Type                                     the result
-		 */
-		public static function subtract(Integer\Type $x, Integer\Type $y) {
-			return Integer\Type::box(gmp_strval(gmp_sub($x->unbox(), $y->unbox())));
 		}
 
 		#endregion

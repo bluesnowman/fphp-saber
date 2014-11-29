@@ -85,21 +85,6 @@ namespace Saber\Data\Double {
 		}
 
 		/**
-		 * This method recursively calculates the greatest common divisor.
-		 *
-		 * @access protected
-		 * @static
-		 * @param double $x                                         the left operand
-		 * @param double $y                                         the right operand
-		 * @return double                                           the result
-		 *
-		 * @see http://stackoverflow.com/questions/13828011/look-for-the-gcd-greatest-common-divisor-of-more-than-2-integers
-		 */
-		protected function _gcd($x, $y) {
-		    return ($y > 0.01) ? Double\Module::_gcd($y, fmod($x, $y)) : $x;
-		}
-
-		/**
 		 * This method returns the result of incrementing this object's value.
 		 *
 		 * @access public
@@ -152,6 +137,24 @@ namespace Saber\Data\Double {
 		}
 
 		/**
+		 * This method returns the result of subtracting the specified value from this object's
+		 * value.
+		 *
+		 * @access public
+		 * @static
+		 * @param Double\Type $x                                    the left operand
+		 * @param Double\Type $y                                    the right operand
+		 * @return Double\Type                                      the result
+		 */
+		public static function subtract(Double\Type $x, Double\Type $y) {
+			return Double\Type::box($x->unbox() - $y->unbox());
+		}
+
+		#endregion
+
+		#region Methods -> Basic Operations
+
+		/**
 		 * This method returns a list of all numbers for the specified sequence.
 		 *
 		 * @access public
@@ -186,20 +189,6 @@ namespace Saber\Data\Double {
 			}
 
 			return ArrayList\Type::box($buffer);
-		}
-
-		/**
-		 * This method returns the result of subtracting the specified value from this object's
-		 * value.
-		 *
-		 * @access public
-		 * @static
-		 * @param Double\Type $x                                    the left operand
-		 * @param Double\Type $y                                    the right operand
-		 * @return Double\Type                                      the result
-		 */
-		public static function subtract(Double\Type $x, Double\Type $y) {
-			return Double\Type::box($x->unbox() - $y->unbox());
 		}
 
 		#endregion

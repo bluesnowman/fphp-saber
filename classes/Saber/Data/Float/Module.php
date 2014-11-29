@@ -85,21 +85,6 @@ namespace Saber\Data\Float {
 		}
 
 		/**
-		 * This method recursively calculates the greatest common divisor.
-		 *
-		 * @access protected
-		 * @static
-		 * @param float $x                                          the left operand
-		 * @param float $y                                          the right operand
-		 * @return float                                            the result
-		 *
-		 * @see http://stackoverflow.com/questions/13828011/look-for-the-gcd-greatest-common-divisor-of-more-than-2-integers
-		 */
-		protected function _gcd($x, $y) {
-		    return ($y > 0.01) ? Float\Module::_gcd($y, fmod($x, $y)) : $x;
-		}
-
-		/**
 		 * This method returns the result of incrementing this object's value.
 		 *
 		 * @access public
@@ -152,6 +137,24 @@ namespace Saber\Data\Float {
 		}
 
 		/**
+		 * This method returns the result of subtracting the specified value from this object's
+		 * value.
+		 *
+		 * @access public
+		 * @static
+		 * @param Float\Type $x                                     the left operand
+		 * @param Float\Type $y                                     the right operand
+		 * @return Float\Type                                       the result
+		 */
+		public static function subtract(Float\Type $x, Float\Type $y) {
+			return Float\Type::box($x->unbox() - $y->unbox());
+		}
+
+		#endregion
+
+		#region Methods -> Basic Operations
+
+		/**
 		 * This method returns a list of all numbers for the specified sequence.
 		 *
 		 * @access public
@@ -186,20 +189,6 @@ namespace Saber\Data\Float {
 			}
 
 			return ArrayList\Type::box($buffer);
-		}
-
-		/**
-		 * This method returns the result of subtracting the specified value from this object's
-		 * value.
-		 *
-		 * @access public
-		 * @static
-		 * @param Float\Type $x                                     the left operand
-		 * @param Float\Type $y                                     the right operand
-		 * @return Float\Type                                       the result
-		 */
-		public static function subtract(Float\Type $x, Float\Type $y) {
-			return Float\Type::box($x->unbox() - $y->unbox());
 		}
 
 		#endregion
@@ -294,7 +283,7 @@ namespace Saber\Data\Float {
 		 */
 		public static function id(Float\Type $x, Core\Type $y) { // ===
 			if ($y !== null) {
-				if ($x->__typeOf() === $y->typeOf()) {
+				if ($x->__typeOf() === $y->__typeOf()) {
 					return Bool\Type::box($x->unbox() === $y->unbox());
 				}
 			}

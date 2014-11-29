@@ -21,6 +21,8 @@ namespace Saber\Data\Integer {
 	use \Saber\Core;
 	use \Saber\Data\ArrayList;
 	use \Saber\Data\Bool;
+	use \Saber\Data\Double;
+	use \Saber\Data\Float;
 	use \Saber\Data\Int32;
 	use \Saber\Data\Integer;
 	use \Saber\Data\Integral;
@@ -88,7 +90,7 @@ namespace Saber\Data\Integer {
 		}
 
 		/**
-		 * This method computes the factorial of an integer.
+		 * This method computes the nth factorial number.
 		 *
 		 * @access public
 		 * @static
@@ -99,6 +101,20 @@ namespace Saber\Data\Integer {
 			return (Integer\Module::eq($n, Integer\Type::zero())->unbox())
 				? Integer\Type::one()
 				: Integer\Module::multiply($n, Integer\Module::factorial(Integer\Module::decrement($n)));
+		}
+
+		/**
+		 * This method computes the nth fibonacci number.
+		 *
+		 * @access public
+		 * @static
+		 * @param Integer\Type $n                                   the operand
+		 * @return Integer\Type                                     the result
+		 */
+		public static function fibonacci(Integer\Type $n) {
+			return (Integer\Module::le($n, Integer\Type::one())->unbox())
+				? $n
+				: Integer\Module::add(Integer\Module::fibonacci(Integer\Module::decrement($n)), Integer\Module::fibonacci(Integer\Module::subtract($n, Integer\Type::box(2))));
 		}
 
 		/**
@@ -215,6 +231,62 @@ namespace Saber\Data\Integer {
 		 */
 		public static function subtract(Integer\Type $x, Integer\Type $y) {
 			return Integer\Type::box(gmp_strval(gmp_sub($x->unbox(), $y->unbox())));
+		}
+
+		#endregion
+
+		#region Methods -> Conversion
+
+		/**
+		 * This method return the value as a Double. Note: Using this method may result in
+		 * lost of precision.
+		 *
+		 * @access public
+		 * @static
+		 * @param Integer\Type $x                                   the object to be converted
+		 * @return Double\Type                                      the value as a Double
+		 */
+		public static function toDouble(Integer\Type $x) {
+			return Double\Type::box($x->unbox());
+		}
+
+		/**
+		 * This method return the value as a Float. Note: Using this method may result in
+		 * lost of precision.
+		 *
+		 * @access public
+		 * @static
+		 * @param Integer\Type $x                                   the object to be converted
+		 * @return Float\Type                                       the value as a Float
+		 */
+		public static function toFloat(Integer\Type $x) {
+			return Float\Type::box($x->unbox());
+		}
+
+		/**
+		 * This method return the value as an Int32. Note: Using this method may result in
+		 * lost of precision.
+		 *
+		 * @access public
+		 * @static
+		 * @param Integer\Type $x                                   the object to be converted
+		 * @return Int32\Type                                       the value as an Int32
+		 */
+		public static function toInt32(Integer\Type $x) {
+			return Int32\Type::box($x->unbox());
+		}
+
+		/**
+		 * This method return the value as an Integer. Note: Using this method may result in
+		 * lost of precision.
+		 *
+		 * @access public
+		 * @static
+		 * @param Integer\Type $x                                   the object to be converted
+		 * @return Integer\Type                                     the value as an Integer
+		 */
+		public static function toInteger(Integer\Type $x) {
+			return Integer\Type::box($x->unbox());
 		}
 
 		#endregion

@@ -321,7 +321,7 @@ namespace Saber\Data\LinkedList {
 				$z = $zs->head();
 
 				$ys = ($z instanceof Collection\Type)
-					? LinkedList\Module::toList(LinkedList\Module::flatten($z))
+					? LinkedList\Module::toLinkedList(LinkedList\Module::flatten($z))
 					: LinkedList\Type::cons($z, LinkedList\Type::nil());
 
 				if ($tail !== null) {
@@ -737,15 +737,19 @@ namespace Saber\Data\LinkedList {
 			});
 		}
 
+		#endregion
+
+		#region Methods -> Conversion
+
 		/**
 		 * This method returns the collection as an array.
 		 *
 		 * @access public
 		 * @static
-		 * @param LinkedList\Type $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the operand
 		 * @return ArrayList\Type                                   the collection as an array list
 		 */
-		public static function toArray(LinkedList\Type $xs) {
+		public static function toArrayList(LinkedList\Type $xs) {
 			$buffer = array();
 
 			for ($zs = $xs; !$zs->__isEmpty(); $zs = $zs->tail()) {
@@ -760,10 +764,10 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param LinkedList\Type $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the operand
 		 * @return LinkedList\Type                                  the collection as a linked list
 		 */
-		public static function toList(LinkedList\Type $xs) {
+		public static function toLinkedList(LinkedList\Type $xs) {
 			return $xs;
 		}
 

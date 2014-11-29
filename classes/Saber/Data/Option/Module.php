@@ -201,6 +201,10 @@ namespace Saber\Data\Option {
 			return ($xs->__isDefined()) ? $xs->object() : $y;
 		}
 
+		#endregion
+
+		#region Methods -> Conversion
+
 		/**
 		 * This method returns the collection as an array.
 		 *
@@ -209,7 +213,7 @@ namespace Saber\Data\Option {
 		 * @param Option\Type $xs                                   the operand
 		 * @return ArrayList\Type                                   the collection as an array list
 		 */
-		public static function toArray(Option\Type $xs) {
+		public static function toArrayList(Option\Type $xs) {
 			$array = array();
 
 			if ($xs->__isDefined()) {
@@ -227,7 +231,7 @@ namespace Saber\Data\Option {
 		 * @param Option\Type $xs                                   the operand
 		 * @return LinkedList\Type                                  the option as a linked list
 		 */
-		public static function toList(Option\Type $xs) {
+		public static function toLinkedList(Option\Type $xs) {
 			return ($xs->__isDefined())
 				? LinkedList\Type::cons($xs->object(), LinkedList\Type::nil())
 				: LinkedList\Type::nil();

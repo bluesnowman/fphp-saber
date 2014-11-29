@@ -21,10 +21,12 @@ namespace Saber\Data\String {
 	include_once(implode(DIRECTORY_SEPARATOR, array(dirname(__FILE__), '..', '..', 'Ext', 'mbstring.php')));
 
 	use \Saber\Core;
+	use \Saber\Data\ArrayList;
 	use \Saber\Data\Bool;
 	use \Saber\Data\Char;
 	use \Saber\Data\Collection;
 	use \Saber\Data\Int32;
+	use \Saber\Data\LinkedList;
 	use \Saber\Data\Option;
 	use \Saber\Data\String;
 	use \Saber\Throwable;
@@ -666,6 +668,43 @@ namespace Saber\Data\String {
 			return String\Module::takeWhile($xs, function(Core\Type $x, Int32\Type $i) use ($predicate) {
 				return Bool\Module::not($predicate($x, $i));
 			});
+		}
+
+		#endregion
+
+		#region Methods -> Conversion
+
+		/**
+		 * This method returns the collection as an array.
+		 *
+		 * @access public
+		 * @static
+		 * @param String\Type $xs                                   the operand
+		 * @return String\Type                                      the collection as an array list
+		 */
+		public static function toArrayList(String\Type $xs) {
+			$buffer = array();
+			String\Module::each($xs, function(Char\Type $x, Int32\Type $i) use ($buffer) {
+				$buffer[] = $x;
+			});
+			return ArrayList\Type::box($buffer);
+		}
+
+		/**
+		 * This method returns the collection as a linked list.
+		 *
+		 * @access public
+		 * @static
+		 * @param String\Type $xs                                   the operand
+		 * @return LinkedList\Type                                  the collection as a linked list
+		 */
+		public static function toLinkedList(String\Type $xs) {
+			$length = $xs->length();
+			$zs = LinkedList\Type::nil();
+			for ($i = Int32\Module::decrement($length); Int32\Module::ge($i, Int32\Type::zero())->unbox(); $i = Int32\Module::decrement($i)) {
+				$zs = LinkedList\Module::prepend($zs, $xs->element($i));
+			}
+			return $zs;
 		}
 
 		#endregion

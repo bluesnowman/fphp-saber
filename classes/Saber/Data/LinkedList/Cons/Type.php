@@ -22,6 +22,7 @@ namespace Saber\Data\LinkedList\Cons {
 	use \Saber\Data\Bool;
 	use \Saber\Data\Int32;
 	use \Saber\Data\LinkedList;
+	use \Saber\Throwable;
 
 	final class Type extends LinkedList\Type {
 
@@ -62,6 +63,23 @@ namespace Saber\Data\LinkedList\Cons {
 		public final function __destruct() {
 			$this->value = null;
 			$this->tail = null;
+		}
+
+		/**
+		 * This method sets the value for the specified key.
+		 *
+		 * @access public
+		 * @final
+		 * @param string $name                                      the name of the property
+		 * @param mixed $value                                      the value of the property
+		 * @throws Throwable\InvalidProperty\Exception              indicates that the specified property
+		 *                                                          is either inaccessible or undefined
+		 */
+		public final function __set($name, $value) {
+			if (!in_array($name, array('tail'))) {
+				throw new Throwable\InvalidProperty\Exception('Unable to set the specified property. Property ":name" is either inaccessible or undefined.', array(':name' => $name));
+			}
+			$this->$name = $value;
 		}
 
 		#endregion

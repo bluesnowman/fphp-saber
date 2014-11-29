@@ -26,6 +26,19 @@ namespace Saber\Data\Bool {
 
 	final class Type extends Data\Type implements Core\Boxable\Type {
 
+		#region Properties
+
+		/**
+		 * This variable stores references to commonly used singletons.
+		 *
+		 * @access protected
+		 * @static
+		 * @var array
+		 */
+		protected static $singletons = array();
+
+		#endregion
+
 		#region Methods -> Initialization
 
 		/**
@@ -64,7 +77,10 @@ namespace Saber\Data\Bool {
 		 * @return Bool\Type                                        the object
 		 */
 		public static function false() {
-			return Bool\Type::box(false);
+			if (!isset(static::$singletons[0])) {
+				static::$singletons[0] = new Bool\Type(false);
+			}
+			return static::$singletons[0];
 		}
 
 		/**
@@ -74,7 +90,10 @@ namespace Saber\Data\Bool {
 		 * @return Bool\Type                                        the object
 		 */
 		public static function true() {
-			return Bool\Type::box(true);
+			if (!isset(static::$singletons[1])) {
+				static::$singletons[1] = new Bool\Type(true);
+			}
+			return static::$singletons[1];
 		}
 
 		#endregion

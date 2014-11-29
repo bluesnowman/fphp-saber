@@ -53,6 +53,17 @@ namespace Saber\Data\LinkedList\Cons {
 			$this->tail = $tail;
 		}
 
+		/**
+		 * This method releases any internal references to an object.
+		 *
+		 * @access public
+		 * @final
+		 */
+		public final function __destruct() {
+			$this->value = null;
+			$this->tail = null;
+		}
+
 		#endregion
 
 		#region Methods -> Object Oriented

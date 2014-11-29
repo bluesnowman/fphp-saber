@@ -29,6 +29,19 @@ namespace Saber\Data\ArrayList {
 
 	final class Type extends Collection\Type implements Core\Boxable\Type {
 
+		#region Properties
+
+		/**
+		 * This variable stores references to commonly used singletons.
+		 *
+		 * @access protected
+		 * @static
+		 * @var array
+		 */
+		protected static $singletons = array();
+
+		#endregion
+
 		#region Methods -> Initialization
 
 		/**
@@ -82,7 +95,10 @@ namespace Saber\Data\ArrayList {
 		 * @return ArrayList\Type                                   an empty array list
 		 */
 		public static function empty_() {
-			return new ArrayList\Type(array());
+			if (!isset(static::$singletons[0])) {
+				static::$singletons[0] = new ArrayList\Type(array());
+			}
+			return static::$singletons[0];
 		}
 
 		/**

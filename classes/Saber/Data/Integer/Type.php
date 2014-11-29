@@ -25,6 +25,19 @@ namespace Saber\Data\Integer {
 
 	final class Type extends Integral\Type {
 
+		#region Properties
+
+		/**
+		 * This variable stores references to commonly used singletons.
+		 *
+		 * @access protected
+		 * @static
+		 * @var array
+		 */
+		protected static $singletons = array();
+
+		#endregion
+
 		#region Methods -> Initialization
 
 		/**
@@ -69,7 +82,10 @@ namespace Saber\Data\Integer {
 		 * @return Integer\Type                                     the object
 		 */
 		public static function negative() {
-			return new Integer\Type(-1);
+			if (!isset(static::$singletons[-1])) {
+				static::$singletons[-1] = new Integer\Type(-1);
+			}
+			return static::$singletons[-1];
 		}
 
 		/**
@@ -80,7 +96,10 @@ namespace Saber\Data\Integer {
 		 * @return Integer\Type                                     the object
 		 */
 		public static function one() {
-			return new Integer\Type(1);
+			if (!isset(static::$singletons[1])) {
+				static::$singletons[1] = new Integer\Type(1);
+			}
+			return static::$singletons[1];
 		}
 
 		/**
@@ -91,7 +110,10 @@ namespace Saber\Data\Integer {
 		 * @return Integer\Type                                     the object
 		 */
 		public static function zero() {
-			return new Integer\Type(0);
+			if (!isset(static::$singletons[0])) {
+				static::$singletons[0] = new Integer\Type(0);
+			}
+			return static::$singletons[0];
 		}
 
 		#endregion

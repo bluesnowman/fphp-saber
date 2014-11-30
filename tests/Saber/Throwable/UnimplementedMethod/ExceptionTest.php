@@ -45,7 +45,7 @@ namespace Saber\Throwable\UnimplementedMethod {
 		 *
 		 * @dataProvider dataBox
 		 */
-		public function testBox($provided, $expected) {
+		public function testBox(array $provided, array $expected) {
 			$p0 = Throwable\UnimplementedMethod\Exception::make($provided[0], $provided[1], $provided[2]);
 			$e0 = new Throwable\UnimplementedMethod\Exception($expected[0], $expected[1], $expected[2]);
 
@@ -80,7 +80,7 @@ namespace Saber\Throwable\UnimplementedMethod {
 		 *
 		 * @dataProvider dataCompare
 		 */
-		public function testCompare($provided, $expected) {
+		public function testCompare(array $provided, array $expected) {
 			$p0 = Throwable\UnimplementedMethod\Exception::make($provided[0][0], $provided[0][1], $provided[0][2])->compare(Throwable\UnimplementedMethod\Exception::make($provided[1][0], $provided[1][1], $provided[1][2]));
 			$e0 = $expected[0];
 
@@ -105,7 +105,7 @@ namespace Saber\Throwable\UnimplementedMethod {
 		 *
 		 * @dataProvider dataToString
 		 */
-		public function testToString($provided, $expected) {
+		public function testToString(array $provided, array $expected) {
 			$p0 = Throwable\UnimplementedMethod\Exception::make($provided[0], $provided[1], $provided[2])->__toString();
 			$e0 = $expected[0];
 

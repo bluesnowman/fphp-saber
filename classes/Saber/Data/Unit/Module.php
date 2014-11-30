@@ -39,7 +39,7 @@ namespace Saber\Data\Unit {
 		 * @return Unit\Type                                        the result
 		 */
 		public static function nvl(Unit\Type $x = null, Unit\Type $y = null) {
-			return ($x !== null) ? $x : (($y !== null) ? $y : Unit\Type::box());
+			return ($x !== null) ? $x : (($y !== null) ? $y : Unit\Type::instance());
 		}
 
 		#endregion

@@ -46,7 +46,7 @@ namespace Saber\Data\Int32 {
 		 *
 		 * @dataProvider dataAbs
 		 */
-		public function testAbs($provided, $expected) {
+		public function testAbs(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Int32\Type::make($provided[0])->abs();
@@ -81,7 +81,7 @@ namespace Saber\Data\Int32 {
 		 *
 		 * @dataProvider dataAdd
 		 */
-		public function testAdd($provided, $expected) {
+		public function testAdd(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Int32\Type::make($provided[0])->add(Int32\Type::make($provided[1]));
@@ -110,7 +110,7 @@ namespace Saber\Data\Int32 {
 		 *
 		 * @dataProvider dataBox
 		 */
-		public function testBox($provided, $expected) {
+		public function testBox(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Int32\Type::make($provided[0]);
@@ -182,7 +182,7 @@ namespace Saber\Data\Int32 {
 		 *
 		 * @dataProvider dataCompare
 		 */
-		public function testCompare($provided, $expected) {
+		public function testCompare(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Int32\Type::make($provided[0])->compare(Int32\Type::make($provided[1]));
@@ -214,7 +214,7 @@ namespace Saber\Data\Int32 {
 		 *
 		 * @dataProvider dataDecrement
 		 */
-		public function testDecrement($provided, $expected) {
+		public function testDecrement(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Int32\Type::make($provided[0])->decrement();
@@ -251,7 +251,7 @@ namespace Saber\Data\Int32 {
 		 *
 		 * @dataProvider dataDivide
 		 */
-		public function testDivide($provided, $expected) {
+		public function testDivide(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Int32\Type::make($provided[0])->divide(Int32\Type::make($provided[1]));
@@ -279,7 +279,7 @@ namespace Saber\Data\Int32 {
 		 *
 		 * @dataProvider dataGCD
 		 */
-		public function testGCD($provided, $expected) {
+		public function testGCD(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Int32\Type::make($provided[0])->gcd(Int32\Type::make($provided[1]));
@@ -312,7 +312,7 @@ namespace Saber\Data\Int32 {
 		 *
 		 * @dataProvider dataIncrement
 		 */
-		public function testIncrement($provided, $expected) {
+		public function testIncrement(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Int32\Type::make($provided[0])->increment();
@@ -349,7 +349,7 @@ namespace Saber\Data\Int32 {
 		 *
 		 * @dataProvider dataIsEven
 		 */
-		public function testIsEven($provided, $expected) {
+		public function testIsEven(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Int32\Type::make($provided[0])->isEven();
@@ -386,7 +386,7 @@ namespace Saber\Data\Int32 {
 		 *
 		 * @dataProvider dataIsOdd
 		 */
-		public function testIsOdd($provided, $expected) {
+		public function testIsOdd(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Int32\Type::make($provided[0])->isOdd();
@@ -428,7 +428,7 @@ namespace Saber\Data\Int32 {
 		 *
 		 * @dataProvider dataModulo
 		 */
-		public function testModulo($provided, $expected) {
+		public function testModulo(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Int32\Type::make($provided[0])->modulo(Int32\Type::make($provided[1]));
@@ -488,7 +488,7 @@ namespace Saber\Data\Int32 {
 		 *
 		 * @dataProvider dataMultiply
 		 */
-		public function testMultiply($provided, $expected) {
+		public function testMultiply(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Int32\Type::make($provided[0])->multiply(Int32\Type::make($provided[1]));
@@ -521,7 +521,7 @@ namespace Saber\Data\Int32 {
 		 *
 		 * @dataProvider dataNegate
 		 */
-		public function testNegate($provided, $expected) {
+		public function testNegate(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Int32\Type::make($provided[0])->negate();
@@ -558,7 +558,7 @@ namespace Saber\Data\Int32 {
 		 *
 		 * @dataProvider dataSubtract
 		 */
-		public function testSubtract($provided, $expected) {
+		public function testSubtract(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Int32\Type::make($provided[0])->subtract(Int32\Type::make($provided[1]));
@@ -589,7 +589,7 @@ namespace Saber\Data\Int32 {
 		 *
 		 * @dataProvider dataToString
 		 */
-		public function testToString($provided, $expected) {
+		public function testToString(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Int32\Type::make($provided[0])->__toString();

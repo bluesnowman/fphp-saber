@@ -47,7 +47,7 @@ namespace Saber\Data\Double {
 		 *
 		 * @dataProvider dataAbs
 		 */
-		public function testAbs($provided, $expected) {
+		public function testAbs(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Double\Type::make($provided[0])->abs();
@@ -82,7 +82,7 @@ namespace Saber\Data\Double {
 		 *
 		 * @dataProvider dataAdd
 		 */
-		public function testAdd($provided, $expected) {
+		public function testAdd(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Double\Type::make($provided[0])->add(Double\Type::make($provided[1]));
@@ -112,7 +112,7 @@ namespace Saber\Data\Double {
 		 *
 		 * @dataProvider dataBox
 		 */
-		public function testBox($provided, $expected) {
+		public function testBox(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Double\Type::make($provided[0]);
@@ -184,7 +184,7 @@ namespace Saber\Data\Double {
 		 *
 		 * @dataProvider dataCompare
 		 */
-		public function testCompare($provided, $expected) {
+		public function testCompare(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Double\Type::make($provided[0])->compare(Double\Type::make($provided[1]));
@@ -216,7 +216,7 @@ namespace Saber\Data\Double {
 		 *
 		 * @dataProvider dataDecrement
 		 */
-		public function testDecrement($provided, $expected) {
+		public function testDecrement(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Double\Type::make($provided[0])->decrement();
@@ -253,7 +253,7 @@ namespace Saber\Data\Double {
 		 *
 		 * @dataProvider dataDivide
 		 */
-		public function testDivide($provided, $expected) {
+		public function testDivide(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Double\Type::make($provided[0])->divide(Double\Type::make($provided[1]));
@@ -286,7 +286,7 @@ namespace Saber\Data\Double {
 		 *
 		 * @dataProvider dataIncrement
 		 */
-		public function testIncrement($provided, $expected) {
+		public function testIncrement(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Double\Type::make($provided[0])->increment();
@@ -328,7 +328,7 @@ namespace Saber\Data\Double {
 		 *
 		 * @dataProvider dataModulo
 		 */
-		public function testModulo($provided, $expected) {
+		public function testModulo(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Double\Type::make($provided[0])->modulo(Double\Type::make($provided[1]));
@@ -388,7 +388,7 @@ namespace Saber\Data\Double {
 		 *
 		 * @dataProvider dataMultiply
 		 */
-		public function testMultiply($provided, $expected) {
+		public function testMultiply(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Double\Type::make($provided[0])->multiply(Double\Type::make($provided[1]));
@@ -421,7 +421,7 @@ namespace Saber\Data\Double {
 		 *
 		 * @dataProvider dataNegate
 		 */
-		public function testNegate($provided, $expected) {
+		public function testNegate(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Double\Type::make($provided[0])->negate();
@@ -458,7 +458,7 @@ namespace Saber\Data\Double {
 		 *
 		 * @dataProvider dataSubtract
 		 */
-		public function testSubtract($provided, $expected) {
+		public function testSubtract(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Double\Type::make($provided[0])->subtract(Double\Type::make($provided[1]));
@@ -489,7 +489,7 @@ namespace Saber\Data\Double {
 		 *
 		 * @dataProvider dataToString
 		 */
-		public function testToString($provided, $expected) {
+		public function testToString(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Double\Type::make($provided[0])->__toString();

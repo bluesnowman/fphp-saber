@@ -23,7 +23,7 @@ namespace Saber\Data\Tuple {
 	use \Saber\Data\Unit;
 
 	/**
-	 * @group TupleTest
+	 * @group TypeTest
 	 */
 	class TypeTest extends Core\Test {
 
@@ -34,7 +34,7 @@ namespace Saber\Data\Tuple {
 		 */
 		public function dataBox() {
 			$data = array(
-				array(array(Unit\Type::box(), Unit\Type::box()), array(Unit\Type::box(), Unit\Type::box())),
+				array(array(Unit\Type::instance(), Unit\Type::instance()), array(Unit\Type::instance(), Unit\Type::instance())),
 				array(array(null, null), array(null, null)),
 			);
 			return $data;
@@ -45,7 +45,7 @@ namespace Saber\Data\Tuple {
 		 *
 		 * @dataProvider dataBox
 		 */
-		public function testBox($provided, $expected) {
+		public function testBox(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Tuple\Type::make($provided[0], $provided[1]);

@@ -51,7 +51,7 @@ namespace Saber\Data\String {
 		 *
 		 * @dataProvider dataAll
 		 */
-		public function testAll($provided, $expected) {
+		public function testAll(array $provided, array $expected) {
 			$this->markTestIncomplete();
 
 			$x = String\Type::make($provided[0]);
@@ -89,7 +89,7 @@ namespace Saber\Data\String {
 		 *
 		 * @dataProvider dataAny
 		 */
-		public function testAny($provided, $expected) {
+		public function testAny(array $provided, array $expected) {
 			$this->markTestIncomplete();
 
 			$x = String\Type::make($provided[0]);
@@ -123,7 +123,7 @@ namespace Saber\Data\String {
 		 *
 		 * @dataProvider dataAppend
 		 */
-		public function testAppend($provided, $expected) {
+		public function testAppend(array $provided, array $expected) {
 			$this->markTestIncomplete();
 
 			$p0 = String\Type::make($provided[0])->append(Char\Type::make($provided[1]));
@@ -150,7 +150,7 @@ namespace Saber\Data\String {
 		 *
 		 * @dataProvider dataBox
 		 */
-		public function testBox($provided, $expected) {
+		public function testBox(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = String\Type::make($provided[0]);
@@ -188,7 +188,7 @@ namespace Saber\Data\String {
 		 *
 		 * @dataProvider dataIsEmpty
 		 */
-		public function testIsEmpty($provided, $expected) {
+		public function testIsEmpty(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = String\Type::make($provided[0])->isEmpty();
@@ -217,7 +217,7 @@ namespace Saber\Data\String {
 		 *
 		 * @dataProvider dataLength
 		 */
-		public function testLength($provided, $expected) {
+		public function testLength(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = String\Type::make($provided[0])->length();
@@ -245,7 +245,7 @@ namespace Saber\Data\String {
 		 *
 		 * @dataProvider dataReplicate
 		 */
-		public function testReplicate($provided, $expected) {
+		public function testReplicate(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = String\Type::replicate(Int32\Type::make($provided[0]), Char\Type::make($provided[1]));
@@ -272,7 +272,7 @@ namespace Saber\Data\String {
 		 *
 		 * @dataProvider dataReverse
 		 */
-		public function testReverse($provided, $expected) {
+		public function testReverse(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = String\Type::make($provided[0])->reverse();

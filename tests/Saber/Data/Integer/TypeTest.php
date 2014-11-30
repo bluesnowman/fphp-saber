@@ -52,7 +52,7 @@ namespace Saber\Data\Integer {
 		 *
 		 * @dataProvider dataAdd
 		 */
-		public function testAdd($provided, $expected) {
+		public function testAdd(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Integer\Type::make($provided[0])->add(Integer\Type::make($provided[1]));

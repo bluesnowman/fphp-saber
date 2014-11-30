@@ -45,7 +45,7 @@ namespace Saber\Data\Char {
 		 *
 		 * @dataProvider dataBox
 		 */
-		public function testBox($provided, $expected) {
+		public function testBox(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Char\Type::make($provided[0]);
@@ -107,7 +107,7 @@ namespace Saber\Data\Char {
 		 *
 		 * @dataProvider dataCompare
 		 */
-		public function testCompare($provided, $expected) {
+		public function testCompare(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Char\Type::make($provided[0])->compare(Char\Type::make($provided[1]));
@@ -140,7 +140,7 @@ namespace Saber\Data\Char {
 		 *
 		 * @dataProvider dataIsAlpha
 		 */
-		public function testIsAlpha($provided, $expected) {
+		public function testIsAlpha(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Char\Type::make($provided[0])->isAlpha();
@@ -174,7 +174,7 @@ namespace Saber\Data\Char {
 		 *
 		 * @dataProvider dataIsAlphaNum
 		 */
-		public function testIsAlphaNum($provided, $expected) {
+		public function testIsAlphaNum(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Char\Type::make($provided[0])->isAlphaNum();
@@ -208,7 +208,7 @@ namespace Saber\Data\Char {
 		 *
 		 * @dataProvider dataIsAscii
 		 */
-		public function testIsAscii($provided, $expected) {
+		public function testIsAscii(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Char\Type::make($provided[0])->isAscii();
@@ -237,7 +237,7 @@ namespace Saber\Data\Char {
 		 *
 		 * @dataProvider dataIsControl
 		 */
-		public function testIsControl($provided, $expected) {
+		public function testIsControl(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Char\Type::make($provided[0])->isControl();
@@ -267,7 +267,7 @@ namespace Saber\Data\Char {
 		 *
 		 * @dataProvider dataIsCyrillic
 		 */
-		public function testIsCyrillic($provided, $expected) {
+		public function testIsCyrillic(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Char\Type::make($provided[0])->isCyrillic();
@@ -306,7 +306,7 @@ namespace Saber\Data\Char {
 		 *
 		 * @dataProvider dataIsDigit
 		 */
-		public function testIsHexadecimal($provided, $expected) {
+		public function testIsHexadecimal(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Char\Type::make($provided[0])->isDigit();
@@ -357,7 +357,7 @@ namespace Saber\Data\Char {
 		 *
 		 * @dataProvider dataIsHexDigit
 		 */
-		public function testIsHexDigit($provided, $expected) {
+		public function testIsHexDigit(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Char\Type::make($provided[0])->isHexDigit();
@@ -388,7 +388,7 @@ namespace Saber\Data\Char {
 		 *
 		 * @dataProvider dataIsLatin1
 		 */
-		public function testIsLatin1($provided, $expected) {
+		public function testIsLatin1(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Char\Type::make($provided[0])->isLatin1();
@@ -422,7 +422,7 @@ namespace Saber\Data\Char {
 		 *
 		 * @dataProvider dataIsLowerCase
 		 */
-		public function testIsLowerCase($provided, $expected) {
+		public function testIsLowerCase(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Char\Type::make($provided[0])->isLowerCase();
@@ -453,7 +453,7 @@ namespace Saber\Data\Char {
 		 *
 		 * @dataProvider dataIsNumber
 		 */
-		public function testIsNumber($provided, $expected) {
+		public function testIsNumber(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Char\Type::make($provided[0])->isNumber();
@@ -491,7 +491,7 @@ namespace Saber\Data\Char {
 		 *
 		 * @dataProvider dataIsOctDigit
 		 */
-		public function testIsOctDigit($provided, $expected) {
+		public function testIsOctDigit(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Char\Type::make($provided[0])->isOctDigit();
@@ -520,7 +520,7 @@ namespace Saber\Data\Char {
 		 *
 		 * @dataProvider dataIsPrintable
 		 */
-		public function testIsPrintable($provided, $expected) {
+		public function testIsPrintable(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Char\Type::make($provided[0])->isPrintable();
@@ -550,7 +550,7 @@ namespace Saber\Data\Char {
 		 *
 		 * @dataProvider dataIsPunctuation
 		 */
-		public function testIsPunctuation($provided, $expected) {
+		public function testIsPunctuation(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Char\Type::make($provided[0])->isPunctuation();
@@ -580,7 +580,7 @@ namespace Saber\Data\Char {
 		 *
 		 * @dataProvider dataIsSeparator
 		 */
-		public function testIsSeparator($provided, $expected) {
+		public function testIsSeparator(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Char\Type::make($provided[0])->isSeparator();
@@ -610,7 +610,7 @@ namespace Saber\Data\Char {
 		 *
 		 * @dataProvider dataIsSpace
 		 */
-		public function testIsSpace($provided, $expected) {
+		public function testIsSpace(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Char\Type::make($provided[0])->isSpace();
@@ -641,7 +641,7 @@ namespace Saber\Data\Char {
 		 *
 		 * @dataProvider dataIsSymbol
 		 */
-		public function testIsSymbol($provided, $expected) {
+		public function testIsSymbol(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Char\Type::make($provided[0])->isSymbol();
@@ -675,7 +675,7 @@ namespace Saber\Data\Char {
 		 *
 		 * @dataProvider dataIsUpperCase
 		 */
-		public function testIsUpperCase($provided, $expected) {
+		public function testIsUpperCase(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Char\Type::make($provided[0])->isUpperCase();
@@ -703,7 +703,7 @@ namespace Saber\Data\Char {
 		 *
 		 * @dataProvider dataToInt32
 		 */
-		public function testToInt32($provided, $expected) {
+		public function testToInt32(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Char\Type::make($provided[0])->toInt32();
@@ -731,7 +731,7 @@ namespace Saber\Data\Char {
 		 *
 		 * @dataProvider dataToLowerCase
 		 */
-		public function testToLowerCase($provided, $expected) {
+		public function testToLowerCase(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Char\Type::make($provided[0])->toLowerCase();
@@ -760,7 +760,7 @@ namespace Saber\Data\Char {
 		 *
 		 * @dataProvider dataToString
 		 */
-		public function testToString($provided, $expected) {
+		public function testToString(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Char\Type::make($provided[0])->__toString();
@@ -788,7 +788,7 @@ namespace Saber\Data\Char {
 		 *
 		 * @dataProvider dataToUpperCase
 		 */
-		public function testToUpperCase($provided, $expected) {
+		public function testToUpperCase(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Char\Type::make($provided[0])->toUpperCase();

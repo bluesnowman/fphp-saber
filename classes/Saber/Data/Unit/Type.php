@@ -41,30 +41,17 @@ namespace Saber\Data\Unit {
 		#region Methods -> Initialization
 
 		/**
-		 * This method returns a value as a boxed object.  A value is typically a PHP typed
-		 * primitive or object.  It is considered "not" type-safe.
+		 * This method returns an instance of this type.
 		 *
 		 * @access public
 		 * @static
-		 * @return Unit\Type                                        the boxed object
+		 * @return Unit\Type                                        an instance of this type
 		 */
-		public static function box() {
+		public static function instance() {
 			if (!isset(static::$singletons[0])) {
 				static::$singletons[0] = new Unit\Type();
 			}
 			return static::$singletons[0];
-		}
-
-		/**
-		 * This method returns a value as a boxed object.  A value is typically a PHP typed
-		 * primitive or object.  It is considered type-safe.
-		 *
-		 * @access public
-		 * @static
-		 * @return Unit\Type                                        the boxed object
-		 */
-		public static function make() {
-			return Unit\Type::box();
 		}
 
 		#endregion

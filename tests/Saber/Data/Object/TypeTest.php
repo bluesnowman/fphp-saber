@@ -46,7 +46,7 @@ namespace Saber\Data\Object {
 		 *
 		 * @dataProvider dataBox
 		 */
-		public function testBox($provided, $expected) {
+		public function testBox(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Object\Type::make($provided[0]);
@@ -114,7 +114,7 @@ namespace Saber\Data\Object {
 		 *
 		 * @dataProvider dataCompare
 		 */
-		public function testCompare($provided, $expected) {
+		public function testCompare(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Object\Type::make($provided[0])->compare(Object\Type::make($provided[1]));
@@ -143,7 +143,7 @@ namespace Saber\Data\Object {
 		 *
 		 * @dataProvider dataToString
 		 */
-		public function testToString($provided, $expected) {
+		public function testToString(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = Object\Type::make($provided[0])->__toString();

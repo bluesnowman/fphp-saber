@@ -71,12 +71,12 @@ namespace Saber\Data\Tuple {
 		 *
 		 * @access public
 		 * @static
-		 * @param Tuple\Type $x                                      the value to be evaluated
-		 * @param Tuple\Type $y                                      the default value
+		 * @param Tuple\Type $xs                                     the value to be evaluated
+		 * @param Tuple\Type $ys                                     the default value
 		 * @return Tuple\Type                                        the result
 		 */
-		public static function nvl(Tuple\Type $x, Tuple\Type $y = null) {
-			return ($x !== null) ? $x : ($y ?: Tuple\Type::box(null, null));
+		public static function nvl(Tuple\Type $xs = null, Tuple\Type $ys = null) {
+			return ($xs !== null) ? $xs : (($ys !== null) ? $ys : Tuple\Type::box(null, null));
 		}
 
 		/**

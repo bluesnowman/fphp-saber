@@ -164,8 +164,8 @@ namespace Saber\Data\Double {
 		 * @param Double\Type $y                                    the default value
 		 * @return Double\Type                                      the result
 		 */
-		public static function nvl(Double\Type $x, Double\Type $y = null) {
-			return ($x !== null) ? $x : ($y ?: Double\Type::zero());
+		public static function nvl(Double\Type $x = null, Double\Type $y = null) {
+			return ($x !== null) ? $x : (($y !== null) ? $y : Double\Type::zero());
 		}
 
 		/**

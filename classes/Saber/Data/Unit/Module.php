@@ -38,8 +38,8 @@ namespace Saber\Data\Unit {
 		 * @param Unit\Type $y                                      the default value
 		 * @return Unit\Type                                        the result
 		 */
-		public static function nvl(Unit\Type $x, Unit\Type $y = null) {
-			return ($x !== null) ? $x : ($y ?: Unit\Type::box());
+		public static function nvl(Unit\Type $x = null, Unit\Type $y = null) {
+			return ($x !== null) ? $x : (($y !== null) ? $y : Unit\Type::box());
 		}
 
 		#endregion

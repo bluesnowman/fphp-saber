@@ -594,8 +594,8 @@ namespace Saber\Data\LinkedList {
 		 * @param LinkedList\Type $ys                               the default value
 		 * @return LinkedList\Type                                  the result
 		 */
-		public static function nvl(LinkedList\Type $xs, LinkedList\Type $ys = null) {
-			return ($xs !== null) ? $xs : ($ys ?: LinkedList\Type::empty_());
+		public static function nvl(LinkedList\Type $xs = null, LinkedList\Type $ys = null) {
+			return ($xs !== null) ? $xs : (($ys !== null) ? $ys : LinkedList\Type::empty_());
 		}
 
 		/**

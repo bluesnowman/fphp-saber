@@ -534,8 +534,8 @@ namespace Saber\Data\String {
 		 * @param String\Type $ys                                   the default value
 		 * @return String\Type                                      the result
 		 */
-		public static function nvl(String\Type $xs, String\Type $ys = null) {
-			return ($xs !== null) ? $xs : ($ys ?: String\Type::empty_());
+		public static function nvl(String\Type $xs = null, String\Type $ys = null) {
+			return ($xs !== null) ? $xs : (($ys !== null) ? $ys : String\Type::empty_());
 		}
 
 		/**

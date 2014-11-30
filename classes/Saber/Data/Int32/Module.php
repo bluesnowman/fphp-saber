@@ -220,8 +220,8 @@ namespace Saber\Data\Int32 {
 		 * @param Int32\Type $y                                     the default value
 		 * @return Int32\Type                                       the result
 		 */
-		public static function nvl(Int32\Type $x, Int32\Type $y = null) {
-			return ($x !== null) ? $x : ($y ?: Int32\Type::zero());
+		public static function nvl(Int32\Type $x = null, Int32\Type $y = null) {
+			return ($x !== null) ? $x : (($y !== null) ? $y : Int32\Type::zero());
 		}
 
 		/**

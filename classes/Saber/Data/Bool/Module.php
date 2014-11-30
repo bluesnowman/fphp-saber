@@ -41,8 +41,8 @@ namespace Saber\Data\Bool {
 		 * @param Bool\Type $y                                      the default value
 		 * @return Bool\Type                                        the result
 		 */
-		public static function nvl(Bool\Type $x, Bool\Type $y = null) {
-			return ($x !== null) ? $x : ($y ?: Bool\Type::false());
+		public static function nvl(Bool\Type $x = null, Bool\Type $y = null) {
+			return ($x !== null) ? $x : (($y !== null) ? $y : Bool\Type::false());
 		}
 
 		#endregion

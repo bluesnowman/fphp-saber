@@ -164,8 +164,8 @@ namespace Saber\Data\Float {
 		 * @param Float\Type $y                                     the default value
 		 * @return Float\Type                                       the result
 		 */
-		public static function nvl(Float\Type $x, Float\Type $y = null) {
-			return ($x !== null) ? $x : ($y ?: Float\Type::zero());
+		public static function nvl(Float\Type $x = null, Float\Type $y = null) {
+			return ($x !== null) ? $x : (($y !== null) ? $y : Float\Type::zero());
 		}
 
 		/**

@@ -171,8 +171,8 @@ namespace Saber\Data\Option {
 		 * @param Option\Type $ys                                   the default value
 		 * @return Option\Type                                      the result
 		 */
-		public static function nvl(Option\Type $xs, Option\Type $ys = null) {
-			return ($xs !== null) ? $xs : ($ys ?: Option\Type::none());
+		public static function nvl(Option\Type $xs = null, Option\Type $ys = null) {
+			return ($xs !== null) ? $xs : (($ys !== null) ? $ys : Option\Type::none());
 		}
 
 		/**

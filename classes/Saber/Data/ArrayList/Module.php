@@ -551,8 +551,8 @@ namespace Saber\Data\ArrayList {
 		 * @param ArrayList\Type $ys                                the default value
 		 * @return ArrayList\Type                                   the result
 		 */
-		public static function nvl(ArrayList\Type $xs, ArrayList\Type $ys = null) {
-			return ($xs !== null) ? $xs : ($ys ?: ArrayList\Type::empty_());
+		public static function nvl(ArrayList\Type $xs = null, ArrayList\Type $ys = null) {
+			return ($xs !== null) ? $xs : (($ys !== null) ? $ys : ArrayList\Type::empty_());
 		}
 
 		/**

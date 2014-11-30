@@ -46,8 +46,8 @@ namespace Saber\Data\Char {
 		 * @param Char\Type $y                                      the default value
 		 * @return Char\Type                                        the result
 		 */
-		public static function nvl(Char\Type $x, Char\Type $y = null) {
-			return ($x !== null) ? $x : ($y ?: Char\Type::box(chr(0)));
+		public static function nvl(Char\Type $x = null, Char\Type $y = null) {
+			return ($x !== null) ? $x : (($y !== null) ? $y : Char\Type::box(chr(0)));
 		}
 
 		#endregion

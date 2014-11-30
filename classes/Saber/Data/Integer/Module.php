@@ -210,8 +210,8 @@ namespace Saber\Data\Integer {
 		 * @param Integer\Type $y                                   the default value
 		 * @return Integer\Type                                     the result
 		 */
-		public static function nvl(Integer\Type $x, Integer\Type $y = null) {
-			return ($x !== null) ? $x : ($y ?: Integer\Type::zero());
+		public static function nvl(Integer\Type $x = null, Integer\Type $y = null) {
+			return ($x !== null) ? $x : (($y !== null) ? $y : Integer\Type::zero());
 		}
 
 		/**

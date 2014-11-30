@@ -35,6 +35,7 @@ namespace Saber\Throwable\UnexpectedValue {
 		public function dataBox() {
 			$data = array(
 				array(array('', array(), Int32\Type::zero()), array('', array(), Int32\Type::zero())),
+				array(array('', array(), null), array('', array(), Int32\Type::zero())),
 			);
 			return $data;
 		}

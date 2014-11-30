@@ -200,24 +200,36 @@ namespace Saber\Data\Tuple {
 				return Int32\Type::one();
 			}
 
-			$x_length = $xs->length();
-			$y_length = $ys->length();
+			$length = Int32\Module::min($xs->length(), $ys->length());
 
-			if ($x_length < $y_length) {
-				return Int32\Type::negative();
-			}
-			else if ($x_length > $y_length) {
-				return Int32\Type::one();
-			}
-			else { // ($x_length == $y_length)
-				for ($i = Int32\Type::zero(); Int32\Module::lt($i, $x_length)->unbox(); $i = Int32\Module::increment($i)) {
-					$x = $xs->element($i);
-					$y = $ys->element($i);
-					$r = call_user_func_array(array(get_class($x), 'compare'), array($x, $y));
+			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
+				$x = $xs->element($i);
+				$y = $ys->element($i);
+
+				if (($x === null) && ($y !== null)) {
+					return Int32\Type::negative();
+				}
+				else if (($x !== null) && ($y === null)) {
+					return Int32\Type::one();
+				}
+				else if (($x !== null) && ($y !== null)) {
+					$r = call_user_func_array(array($x, 'compare'), array($x, $y));
 					if ($r->unbox() != 0) {
 						return $r;
 					}
 				}
+			}
+
+			$x_length = $xs->__length();
+			$y_length = $ys->__length();
+
+			if ($x_length < $y_length) {
+				return Int32\Type::negative();
+			}
+			else if ($x_length == $y_length) {
+				return Int32\Type::zero();
+			}
+			else { // ($x_length > $y_length)
 				return Int32\Type::one();
 			}
 		}

@@ -39,8 +39,8 @@ namespace Saber\Data\Tuple {
 		 * @return Tuple\Type                                       the boxed object
 		 */
 		public static function box($value/*...*/) {
-			$value = func_get_args();
-			return new Tuple\Type($value);
+			$values = func_get_args();
+			return new Tuple\Type($values);
 		}
 
 		/**
@@ -54,20 +54,13 @@ namespace Saber\Data\Tuple {
 		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
 		public static function make($value/*...*/) {
-			$value = func_get_args();
-			if (($value === null) || !is_array($value)) {
-				$type = gettype($value);
-				if ($type == 'object') {
-					$type = get_class($value);
-				}
-				throw new Throwable\InvalidArgument\Exception('Unable to box value(s). Expected an array, but got ":type".', array(':type' => $type));
-			}
 			$count = func_num_args();
 			if ($count < 2) {
 				throw new Throwable\InvalidArgument\Exception('Unable to box value(s). Tuple must have at least 2 objects, but got ":count".', array(':count' => $count));
 			}
-			foreach ($value as $object) {
-				if (!(is_object($object) && ($object instanceof Core\Type))) {
+			$values = func_get_args();
+			foreach ($values as $value) {
+				if (!(($value === null) || (is_object($value) && ($value instanceof Core\Type)))) {
 					$type = gettype($value);
 					if ($type == 'object') {
 						$type = get_class($value);
@@ -75,7 +68,7 @@ namespace Saber\Data\Tuple {
 					throw new Throwable\InvalidArgument\Exception('Unable to box value(s). Expected a boxed object, but got ":type".', array(':type' => $type));
 				}
 			}
-			return new Tuple\Type($value);
+			return new Tuple\Type($values);
 		}
 
 		#endregion

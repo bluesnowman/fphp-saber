@@ -183,6 +183,19 @@ namespace Saber\Data\Integer {
 		}
 
 		/**
+		 * This method returns the number raised to the power of the specified exponent.
+		 *
+		 * @access public
+		 * @static
+		 * @param Integer\Type $x                                   the operand
+		 * @param Int32\Type $exponent                              the exponent to be raised by
+		 * @return Integer\Type                                     the result
+		 */
+		public static function pow(Integer\Type $x, Int32\Type $exponent) {
+			return Integer\Type::box(gmp_strval(gmp_pow($x->unbox(), $exponent->unbox())));
+		}
+
+		/**
 		 * This method returns the result of subtracting the specified value from this object's
 		 * value.
 		 *

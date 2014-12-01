@@ -137,6 +137,19 @@ namespace Saber\Data\Float {
 		}
 
 		/**
+		 * This method returns the number raised to the power of the specified exponent.
+		 *
+		 * @access public
+		 * @static
+		 * @param Float\Type $x                                     the operand
+		 * @param Int32\Type $exponent                              the exponent to be raised by
+		 * @return Float\Type                                       the result
+		 */
+		public static function pow(Float\Type $x, Int32\Type $exponent) {
+			return Float\Type::box(pow($x->unbox(), $exponent->unbox()));
+		}
+
+		/**
 		 * This method returns the result of subtracting the specified value from this object's
 		 * value.
 		 *

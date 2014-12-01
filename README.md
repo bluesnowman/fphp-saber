@@ -171,9 +171,11 @@ Below is a list of data types:
       + Option\Type
       + String\Type
     + Num\Type
-      + Floating\Type
-        + Double\Type
-        + Float\Type
+      + Fractional\Type
+        + Floating\Type
+          + Double\Type
+          + Float\Type
+        + Ratio\Type
       + Integral\Type
         + Int32\Type
         + Integer\Type

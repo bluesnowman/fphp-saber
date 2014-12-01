@@ -261,6 +261,27 @@ namespace Saber\Data\Int32 {
 			return ArrayList\Type::box($buffer);
 		}
 
+		/**
+		 * This method returns -1, 0 or 1 when the value is negative, zero, or positive.
+		 *
+		 * @access public
+		 * @static
+		 * @param Int32\Type $x                                     the number to be evaluated
+		 * @return Int32\Type                                       the result
+		 */
+		public static function signum(Int32\Type $x) {
+			$value = $x->unbox();
+			if ($value < 0) {
+				return Int32\Type::negative();
+			}
+			else if ($value == 0) {
+				return Int32\Type::zero();
+			}
+			else { // ($value > 0)
+				return Int32\Type::one();
+			}
+		}
+
 		#endregion
 
 		#region Methods -> Conversion
@@ -333,10 +354,8 @@ namespace Saber\Data\Int32 {
 		 */
 		public static function eq(Int32\Type $x, Core\Type $y) { // ==
 			$type = $x->__typeOf();
-			if ($y !== null) {
-				if ($y instanceof $type) {
-					return Bool\Type::box($x->unbox() == $y->unbox());
-				}
+			if ($y instanceof $type) {
+				return Bool\Type::box($x->unbox() == $y->unbox());
 			}
 			return Bool\Type::false();
 		}
@@ -352,10 +371,8 @@ namespace Saber\Data\Int32 {
 		 *                                                          to the right operand
 		 */
 		public static function id(Int32\Type $x, Core\Type $y) { // ===
-			if ($y !== null) {
-				if ($x->__typeOf() === $y->__typeOf()) {
-					return Bool\Type::box($x->unbox() === $y->unbox());
-				}
+			if ($x->__typeOf() === $y->__typeOf()) {
+				return Bool\Type::box($x->unbox() === $y->unbox());
 			}
 			return Bool\Type::false();
 		}

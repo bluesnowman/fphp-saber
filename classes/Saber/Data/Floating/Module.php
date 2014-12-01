@@ -18,8 +18,8 @@
 
 namespace Saber\Data\Floating {
 
-	use \Saber\Data\Num;
+	use \Saber\Data\Fractional;
 
-	abstract class Module extends Num\Module { }
+	abstract class Module extends Fractional\Module { }
 
 }

@@ -16,10 +16,10 @@
  * limitations under the License.
  */
 
-namespace Saber\Data\Floating {
+namespace Saber\Data\Fractional {
 
-	use \Saber\Data\Fractional;
+	use \Saber\Data\Num;
 
-	abstract class Type extends Fractional\Type { }
+	abstract class Module extends Num\Module { }
 
 }

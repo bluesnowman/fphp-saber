@@ -205,6 +205,27 @@ namespace Saber\Data\Float {
 			return ArrayList\Type::box($buffer);
 		}
 
+		/**
+		 * This method returns -1, 0 or 1 when the value is negative, zero, or positive.
+		 *
+		 * @access public
+		 * @static
+		 * @param Float\Type $x                                     the number to be evaluated
+		 * @return Float\Type                                       the result
+		 */
+		public static function signum(Float\Type $x) {
+			$value = $x->unbox();
+			if ($value < 0) {
+				return Int32\Type::negative();
+			}
+			else if ($value == 0) {
+				return Int32\Type::zero();
+			}
+			else { // ($value > 0)
+				return Int32\Type::one();
+			}
+		}
+
 		#endregion
 
 		#region Methods -> Conversion

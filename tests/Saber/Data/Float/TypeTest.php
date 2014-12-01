@@ -120,6 +120,7 @@ namespace Saber\Data\Float {
 
 			$this->assertInstanceOf('\\Saber\\Core\\Type', $p0);
 			$this->assertInstanceOf('\\Saber\\Data\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Fractional\\Type', $p0);
 			$this->assertInstanceOf('\\Saber\\Data\\Floating\\Type', $p0);
 			$this->assertInstanceOf('\\Saber\\Data\\Float\\Type', $p0);
 			$this->assertEquals($e0, $p0);

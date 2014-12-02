@@ -113,7 +113,7 @@ Objects can be evaluated against each other using the `when` clause.  A `when` c
 $x = Int32\Type::box(8);
 $y = Int32\Type::box(8);
 
-Control\Monad::choice($x)
+Control\Type::choice($x)
 	->when($y, function(Int32\Type $x) {
 		// passes, do something
 	})
@@ -129,7 +129,7 @@ Objects can also be evaluated against each other using the `unless` clause.  An 
 $x = Int32\Type::box(8);
 $y = Int32\Type::box(7);
 
-Control\Monad::choice($x)
+Control\Type::choice($x)
 	->unless($y, function(Int32\Type $x) {
 		// passes, do something
 	})

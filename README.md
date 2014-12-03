@@ -11,8 +11,6 @@ A functional PHP library, which encourages strong typing, immutable objects, and
 
 ### [Boxing](http://msdn.microsoft.com/en-us/library/yz2be5wk.aspx)
 
-Most classes implement the boxing interface.  Classes that implement this interface will have three methods: `make`, `box`, and `unbox`.
-
 To "box" a PHP typed primitive or object, create an instance of the respective data type using the  class's `make` method.  This method enforces the type by converting the value to the correct data type.  If the value cannot be converted to the correct data type, an exception will be thrown.
 
 ````
@@ -24,7 +22,22 @@ For better performance, use the `box` method to avoid type conversion.
 ````
 $object = Int32\Type::box(7);
 ````
-It is recommend that you use either the `make` method or the `box` method instead of using the constructor when initializing a data type.
+
+Some data types can also be initialized using a singleton method.  For instance, the Unit\Type class is initialized like so:
+
+````
+$object = Unit\Type::instance();
+````
+
+Similarly, other data types have more specific singleton methods.  Amongst these are the number classes, which have singletons for negative one, zero, and one.
+
+````
+$negative = Int32\Type::negative();
+$zero = Int32\Type::zero();
+$one = Int32\Type::one();
+````
+
+It is recommend that you use these factory/singleton methods, when possible, instead of using the constructor to initialize a data type.  This is for conventional reasons and for implementation reasons.
 
 To "unbox" a boxed object, call the `unbox` method on the respective class to get its value.
 
@@ -34,7 +47,7 @@ $value = $object->unbox();
 
 ### [Fluent API](http://en.wikipedia.org/wiki/Fluent_interface)
 
-This library allow for a fluent API; therefore, methods can be chained.  Most classes are not limited to just their methods, but also have access to their module's methods as well by way of PHP's magical `__call` method.  For example, you can do the following:
+Many data types allow for a fluent API; therefore, many methods can be chained together in one statement.  Through the use of PHP's magical `__call` method, certain data types can access their respective module's methods as well as if they were instance methods.  For example, you can do the following:
 
 ````
 $object = Int32\Type::box(7)->increment()->decrement();
@@ -156,7 +169,7 @@ Similar methods exist as well for Double, Float, and Integer.
 
 ### Hierarchy
 
-Below is a list of data types:
+Below describes the relationships between data types:
 
 ````
 + Core\Type
@@ -171,14 +184,13 @@ Below is a list of data types:
       + Option\Type
       + String\Type
     + Num\Type
-      + Fractional\Type
-        + Floating\Type
-          + Double\Type
-          + Float\Type
-        + Ratio\Type
-      + Integral\Type
+      + Floating\Type : Fractional\Type
+        + Double\Type : Real\Type
+        + Float\Type : Real\Type
+      + Integral\Type : Real\Type
         + Int32\Type
         + Integer\Type
+      + Ratio\Type : Fractional\Type
     + Object\Type
     + Tuple\Type
     + Unit\Type
@@ -193,7 +205,6 @@ Below is a list of data types:
 Most data types have a module associated with it.  A module contains a set of common static methods for processing its respective data type.
 
 Collection types also have an iterator class so that the class can be used with the PHP's `foreach` loop.  Because these iterator classes have to conform to PHP's predefined interface, methods in this class act more native than like the rest of this library (i.e. many methods returns native PHP values instead of Saber objects).
-
 
 ### Unit Tests
 

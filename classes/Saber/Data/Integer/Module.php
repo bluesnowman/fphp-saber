@@ -36,7 +36,7 @@ namespace Saber\Data\Integer {
 	 */
 	class Module extends Integral\Module {
 
-		#region Methods -> Arithmetic
+		#region Methods -> Arithmetic Operations
 
 		/**
 		 * This method returns the absolute value of this object's value.
@@ -214,20 +214,6 @@ namespace Saber\Data\Integer {
 		#region Methods -> Basic Operations
 
 		/**
-		 * This method returns the latter value should the former value evaluates
-		 * to null.
-		 *
-		 * @access public
-		 * @static
-		 * @param Integer\Type $x                                   the value to be evaluated
-		 * @param Integer\Type $y                                   the default value
-		 * @return Integer\Type                                     the result
-		 */
-		public static function nvl(Integer\Type $x = null, Integer\Type $y = null) {
-			return ($x !== null) ? $x : (($y !== null) ? $y : Integer\Type::zero());
-		}
-
-		/**
 		 * This method returns a list of all numbers for the specified sequence.
 		 *
 		 * @access public
@@ -287,10 +273,24 @@ namespace Saber\Data\Integer {
 
 		#endregion
 
-		#region Methods -> Conversion
+		#region Methods -> Conversion Operations
 
 		/**
-		 * This method return the value as a Double. Note: Using this method may result in
+		 * This method returns the latter value should the former value evaluates
+		 * to null.
+		 *
+		 * @access public
+		 * @static
+		 * @param Integer\Type $x                                   the value to be evaluated
+		 * @param Integer\Type $y                                   the default value
+		 * @return Integer\Type                                     the result
+		 */
+		public static function nvl(Integer\Type $x = null, Integer\Type $y = null) {
+			return ($x !== null) ? $x : (($y !== null) ? $y : Integer\Type::zero());
+		}
+
+		/**
+		 * This method returns the value as a Double. Note: Using this method may result in
 		 * lost of precision.
 		 *
 		 * @access public
@@ -303,7 +303,7 @@ namespace Saber\Data\Integer {
 		}
 
 		/**
-		 * This method return the value as a Float. Note: Using this method may result in
+		 * This method returns the value as a Float. Note: Using this method may result in
 		 * lost of precision.
 		 *
 		 * @access public
@@ -316,7 +316,7 @@ namespace Saber\Data\Integer {
 		}
 
 		/**
-		 * This method return the value as an Int32. Note: Using this method may result in
+		 * This method returns the value as an Int32. Note: Using this method may result in
 		 * lost of precision.
 		 *
 		 * @access public
@@ -329,7 +329,7 @@ namespace Saber\Data\Integer {
 		}
 
 		/**
-		 * This method return the value as an Integer. Note: Using this method may result in
+		 * This method returns the value as an Integer. Note: Using this method may result in
 		 * lost of precision.
 		 *
 		 * @access public
@@ -343,7 +343,7 @@ namespace Saber\Data\Integer {
 
 		#endregion
 
-		#region Methods -> Equality
+		#region Methods -> Equality Operations
 
 		/**
 		 * This method evaluates whether the left operand is equal to the right operand.
@@ -414,7 +414,7 @@ namespace Saber\Data\Integer {
 
 		#endregion
 
-		#region Methods -> Ordering
+		#region Methods -> Ordering Operations
 
 		/**
 		 * This method compares the operands for order.
@@ -527,7 +527,7 @@ namespace Saber\Data\Integer {
 
 		#endregion
 
-		#region Methods -> Validation
+		#region Methods -> Evaluating Operations
 
 		/**
 		 * This method evaluates whether the operand is an even number.

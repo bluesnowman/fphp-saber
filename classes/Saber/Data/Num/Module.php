@@ -18,8 +18,6 @@
 
 namespace Saber\Data\Num {
 
-	use \Saber\Data;
-
-	abstract class Module extends Data\Module { }
+	interface Module { }
 
 }

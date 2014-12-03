@@ -163,7 +163,7 @@ namespace Saber\Data\ArrayList {
 		}
 
 		/**
-		 * This method return the list from element where the predicate function fails.
+		 * This method returns the list from element where the predicate function fails.
 		 *
 		 * @access public
 		 * @static
@@ -188,7 +188,7 @@ namespace Saber\Data\ArrayList {
 		}
 
 		/**
-		 * This method return the list from element where the predicate function doesn't fail.
+		 * This method returns the list from element where the predicate function doesn't fail.
 		 *
 		 * @access public
 		 * @static
@@ -376,7 +376,7 @@ namespace Saber\Data\ArrayList {
 		}
 
 		/**
-		 * This method return the index of the first occurrence of the object; otherwise, it returns -1;
+		 * This method returns the index of the first occurrence of the object; otherwise, it returns -1;
 		 *
 		 * @access public
 		 * @static
@@ -542,20 +542,6 @@ namespace Saber\Data\ArrayList {
 		}
 
 		/**
-		 * This method returns the latter value should the former value evaluates
-		 * to null.
-		 *
-		 * @access public
-		 * @static
-		 * @param ArrayList\Type $xs                                the value to be evaluated
-		 * @param ArrayList\Type $ys                                the default value
-		 * @return ArrayList\Type                                   the result
-		 */
-		public static function nvl(ArrayList\Type $xs = null, ArrayList\Type $ys = null) {
-			return ($xs !== null) ? $xs : (($ys !== null) ? $ys : ArrayList\Type::empty_());
-		}
-
-		/**
 		 * This method prepends the specified object to the front of this list.
 		 *
 		 * @access public
@@ -718,7 +704,21 @@ namespace Saber\Data\ArrayList {
 
 		#endregion
 
-		#region Methods -> Conversion
+		#region Methods -> Conversion Operations
+
+		/**
+		 * This method returns the latter value should the former value evaluates
+		 * to null.
+		 *
+		 * @access public
+		 * @static
+		 * @param ArrayList\Type $xs                                the value to be evaluated
+		 * @param ArrayList\Type $ys                                the default value
+		 * @return ArrayList\Type                                   the result
+		 */
+		public static function nvl(ArrayList\Type $xs = null, ArrayList\Type $ys = null) {
+			return ($xs !== null) ? $xs : (($ys !== null) ? $ys : ArrayList\Type::empty_());
+		}
 
 		/**
 		 * This method returns the collection as an array.
@@ -751,7 +751,7 @@ namespace Saber\Data\ArrayList {
 
 		#endregion
 
-		#region Methods -> Equality
+		#region Methods -> Equality Operations
 
 		/**
 		 * This method evaluates whether the left operand is equal to the right operand.
@@ -844,7 +844,7 @@ namespace Saber\Data\ArrayList {
 
 		#endregion
 
-		#region Methods -> Ordering
+		#region Methods -> Ordering Operations
 
 		/**
 		 * This method compares the specified object with the current object for order.

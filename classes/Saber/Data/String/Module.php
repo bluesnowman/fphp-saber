@@ -163,7 +163,7 @@ namespace Saber\Data\String {
 		}
 
 		/**
-		 * This method return the string from element where the predicate function fails.
+		 * This method returns the string from element where the predicate function fails.
 		 *
 		 * @access public
 		 * @static
@@ -188,7 +188,7 @@ namespace Saber\Data\String {
 		}
 
 		/**
-		 * This method return the string from element where the predicate function doesn't fail.
+		 * This method returns the string from element where the predicate function doesn't fail.
 		 *
 		 * @access public
 		 * @static
@@ -359,7 +359,7 @@ namespace Saber\Data\String {
 		}
 
 		/**
-		 * This method return the index of the first occurrence of the object; otherwise, it returns -1;
+		 * This method returns the index of the first occurrence of the object; otherwise, it returns -1;
 		 *
 		 * @access public
 		 * @static
@@ -525,20 +525,6 @@ namespace Saber\Data\String {
 		}
 
 		/**
-		 * This method returns the latter value should the former value evaluates
-		 * to null.
-		 *
-		 * @access public
-		 * @static
-		 * @param String\Type $xs                                   the value to be evaluated
-		 * @param String\Type $ys                                   the default value
-		 * @return String\Type                                      the result
-		 */
-		public static function nvl(String\Type $xs = null, String\Type $ys = null) {
-			return ($xs !== null) ? $xs : (($ys !== null) ? $ys : String\Type::empty_());
-		}
-
-		/**
 		 * This method prepends the specified object to the front of this string.
 		 *
 		 * @access public
@@ -686,7 +672,21 @@ namespace Saber\Data\String {
 
 		#endregion
 
-		#region Methods -> Conversion
+		#region Methods -> Conversion Operations
+
+		/**
+		 * This method returns the latter value should the former value evaluates
+		 * to null.
+		 *
+		 * @access public
+		 * @static
+		 * @param String\Type $xs                                   the value to be evaluated
+		 * @param String\Type $ys                                   the default value
+		 * @return String\Type                                      the result
+		 */
+		public static function nvl(String\Type $xs = null, String\Type $ys = null) {
+			return ($xs !== null) ? $xs : (($ys !== null) ? $ys : String\Type::empty_());
+		}
 
 		/**
 		 * This method returns the collection as an array.
@@ -723,7 +723,7 @@ namespace Saber\Data\String {
 
 		#endregion
 
-		#region Methods -> Equality
+		#region Methods -> Equality Operations
 
 		/**
 		 * This method evaluates whether the specified object is equal to the current object.
@@ -794,7 +794,7 @@ namespace Saber\Data\String {
 
 		#endregion
 
-		#region Methods -> Ordering
+		#region Methods -> Ordering Operations
 
 		/**
 		 * This method compares the specified object with the current object for order.

@@ -182,7 +182,7 @@ namespace Saber\Data\LinkedList {
 		}
 
 		/**
-		 * This method return the collection from element where the predicate function fails.
+		 * This method returns the collection from element where the predicate function fails.
 		 *
 		 * @access public
 		 * @static
@@ -201,7 +201,7 @@ namespace Saber\Data\LinkedList {
 		}
 
 		/**
-		 * This method return the collection from element where the predicate function doesn't fail.
+		 * This method returns the collection from element where the predicate function doesn't fail.
 		 *
 		 * @access public
 		 * @static
@@ -405,7 +405,7 @@ namespace Saber\Data\LinkedList {
 		}
 
 		/**
-		 * This method return the index of the first occurrence of the object; otherwise, it returns -1;
+		 * This method returns the index of the first occurrence of the object; otherwise, it returns -1;
 		 *
 		 * @access public
 		 * @static
@@ -582,20 +582,6 @@ namespace Saber\Data\LinkedList {
 			return LinkedList\Module::all($xs, function(Core\Type $x, Int32\Type $i) use ($predicate) {
 				return Bool\Module::not($predicate($x, $i));
 			});
-		}
-
-		/**
-		 * This method returns the latter value should the former value evaluates
-		 * to null.
-		 *
-		 * @access public
-		 * @static
-		 * @param LinkedList\Type $xs                               the value to be evaluated
-		 * @param LinkedList\Type $ys                               the default value
-		 * @return LinkedList\Type                                  the result
-		 */
-		public static function nvl(LinkedList\Type $xs = null, LinkedList\Type $ys = null) {
-			return ($xs !== null) ? $xs : (($ys !== null) ? $ys : LinkedList\Type::empty_());
 		}
 
 		/**
@@ -785,7 +771,21 @@ namespace Saber\Data\LinkedList {
 
 		#endregion
 
-		#region Methods -> Conversion
+		#region Methods -> Conversion Operations
+
+		/**
+		 * This method returns the latter value should the former value evaluates
+		 * to null.
+		 *
+		 * @access public
+		 * @static
+		 * @param LinkedList\Type $xs                               the value to be evaluated
+		 * @param LinkedList\Type $ys                               the default value
+		 * @return LinkedList\Type                                  the result
+		 */
+		public static function nvl(LinkedList\Type $xs = null, LinkedList\Type $ys = null) {
+			return ($xs !== null) ? $xs : (($ys !== null) ? $ys : LinkedList\Type::empty_());
+		}
 
 		/**
 		 * This method returns the collection as an array.
@@ -817,7 +817,7 @@ namespace Saber\Data\LinkedList {
 
 		#endregion
 
-		#region Methods -> Equality
+		#region Methods -> Equality Operations
 
 		/**
 		 * This method evaluates whether the left operand is equal to the right operand.
@@ -927,7 +927,7 @@ namespace Saber\Data\LinkedList {
 
 		#endregion
 
-		#region Methods -> Ordering
+		#region Methods -> Ordering Operations
 
 		/**
 		 * This method compares the operands for order.

@@ -20,6 +20,6 @@ namespace Saber\Data\Fractional {
 
 	use \Saber\Data\Num;
 
-	abstract class Type extends Num\Type { }
+	interface Type extends Num\Type { }
 
 }

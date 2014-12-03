@@ -19,12 +19,13 @@
 namespace Saber\Data\Ratio {
 
 	use \Saber\Core;
+	use \Saber\Data;
 	use \Saber\Data\Fractional;
 	use \Saber\Data\Int32;
 	use \Saber\Data\Ratio;
 	use \Saber\Throwable;
 
-	final class Type extends Fractional\Type {
+	final class Type extends Data\Type implements Fractional\Type {
 
 		#region Properties
 

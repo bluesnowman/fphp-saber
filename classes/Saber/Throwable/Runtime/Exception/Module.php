@@ -25,7 +25,7 @@ namespace Saber\Throwable\Runtime\Exception {
 
 	class Module extends Core\Module {
 
-		#region Methods -> Equality
+		#region Methods -> Equality Operations
 
 		/**
 		 * This method evaluates whether the left operand is equal to the right operand.
@@ -96,7 +96,7 @@ namespace Saber\Throwable\Runtime\Exception {
 
 		#endregion
 
-		#region Methods -> Ordering
+		#region Methods -> Ordering Operations
 
 		/**
 		 * This method compares the operands for order.

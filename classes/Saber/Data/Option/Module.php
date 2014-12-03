@@ -162,20 +162,6 @@ namespace Saber\Data\Option {
 		}
 
 		/**
-		 * This method returns the latter value should the former value evaluates
-		 * to null.
-		 *
-		 * @access public
-		 * @static
-		 * @param Option\Type $xs                                   the value to be evaluated
-		 * @param Option\Type $ys                                   the default value
-		 * @return Option\Type                                      the result
-		 */
-		public static function nvl(Option\Type $xs = null, Option\Type $ys = null) {
-			return ($xs !== null) ? $xs : (($ys !== null) ? $ys : Option\Type::none());
-		}
-
-		/**
 		 * This method returns the object stored within the option.
 		 *
 		 * @access public
@@ -217,7 +203,21 @@ namespace Saber\Data\Option {
 
 		#endregion
 
-		#region Methods -> Conversion
+		#region Methods -> Conversion Operations
+
+		/**
+		 * This method returns the latter value should the former value evaluates
+		 * to null.
+		 *
+		 * @access public
+		 * @static
+		 * @param Option\Type $xs                                   the value to be evaluated
+		 * @param Option\Type $ys                                   the default value
+		 * @return Option\Type                                      the result
+		 */
+		public static function nvl(Option\Type $xs = null, Option\Type $ys = null) {
+			return ($xs !== null) ? $xs : (($ys !== null) ? $ys : Option\Type::none());
+		}
 
 		/**
 		 * This method returns the collection as an array.
@@ -253,7 +253,7 @@ namespace Saber\Data\Option {
 
 		#endregion
 
-		#region Methods -> Validation
+		#region Methods -> Evaluating Operations
 
 		/**
 		 * This method returns whether this instance is a "some" option.
@@ -270,7 +270,7 @@ namespace Saber\Data\Option {
 
 		#endregion
 
-		#region Methods -> Equality
+		#region Methods -> Equality Operations
 
 		/**
 		 * This method evaluates whether the specified object is equal to the current object.
@@ -375,7 +375,7 @@ namespace Saber\Data\Option {
 
 		#endregion
 
-		#region Methods -> Ordering
+		#region Methods -> Ordering Operations
 
 		/**
 		 * This method compares the specified object with the current object for order.

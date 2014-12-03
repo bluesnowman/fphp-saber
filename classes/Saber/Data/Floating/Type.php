@@ -18,8 +18,9 @@
 
 namespace Saber\Data\Floating {
 
+	use \Saber\Data;
 	use \Saber\Data\Fractional;
 
-	abstract class Type extends Fractional\Type { }
+	abstract class Type extends Data\Type implements Fractional\Type { }
 
 }

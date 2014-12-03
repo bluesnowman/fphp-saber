@@ -26,7 +26,7 @@ namespace Saber\Data\Unit {
 
 	class Module extends Data\Module {
 
-		#region Methods -> Basic Operations
+		#region Methods -> Conversion Operations
 
 		/**
 		 * This method returns the latter value should the former value evaluates
@@ -44,7 +44,7 @@ namespace Saber\Data\Unit {
 
 		#endregion
 
-		#region Methods -> Equality
+		#region Methods -> Equality Operations
 
 		/**
 		 * This method evaluates whether the left operand is equal to the right operand.
@@ -106,7 +106,7 @@ namespace Saber\Data\Unit {
 
 		#endregion
 
-		#region Methods -> Ordering
+		#region Methods -> Ordering Operations
 
 		/**
 		 * This method compares the operands for order.

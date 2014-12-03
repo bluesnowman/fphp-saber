@@ -66,20 +66,6 @@ namespace Saber\Data\Tuple {
 		}
 
 		/**
-		 * This method returns the latter value should the former value evaluates
-		 * to null.
-		 *
-		 * @access public
-		 * @static
-		 * @param Tuple\Type $xs                                     the value to be evaluated
-		 * @param Tuple\Type $ys                                     the default value
-		 * @return Tuple\Type                                        the result
-		 */
-		public static function nvl(Tuple\Type $xs = null, Tuple\Type $ys = null) {
-			return ($xs !== null) ? $xs : (($ys !== null) ? $ys : Tuple\Type::box(null, null));
-		}
-
-		/**
 		 * This method returns the second element in the tuple.
 		 *
 		 * @access public
@@ -105,7 +91,25 @@ namespace Saber\Data\Tuple {
 
 		#endregion
 
-		#region Methods -> Equality
+		#region Methods -> Conversion Operations
+
+		/**
+		 * This method returns the latter value should the former value evaluates
+		 * to null.
+		 *
+		 * @access public
+		 * @static
+		 * @param Tuple\Type $xs                                     the value to be evaluated
+		 * @param Tuple\Type $ys                                     the default value
+		 * @return Tuple\Type                                        the result
+		 */
+		public static function nvl(Tuple\Type $xs = null, Tuple\Type $ys = null) {
+			return ($xs !== null) ? $xs : (($ys !== null) ? $ys : Tuple\Type::box(null, null));
+		}
+
+		#endregion
+
+		#region Methods -> Equality Operations
 
 		/**
 		 * This method evaluates whether the left operand is equal to the right operand.
@@ -176,7 +180,7 @@ namespace Saber\Data\Tuple {
 
 		#endregion
 
-		#region Methods -> Ordering
+		#region Methods -> Ordering Operations
 
 		/**
 		 * This method compares the operands for order.

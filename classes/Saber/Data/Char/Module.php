@@ -34,7 +34,7 @@ namespace Saber\Data\Char {
 	 */
 	class Module extends Data\Module {
 
-		#region Methods -> Basic Operations
+		#region Methods -> Conversion Operations
 
 		/**
 		 * This method returns the latter value should the former value evaluates
@@ -50,12 +50,8 @@ namespace Saber\Data\Char {
 			return ($x !== null) ? $x : (($y !== null) ? $y : Char\Type::box(chr(0)));
 		}
 
-		#endregion
-
-		#region Methods -> Conversion
-
 		/**
-		 * This method return the value as an Int32. Note: Using this method may result in
+		 * This method returns the value as an Int32. Note: Using this method may result in
 		 * lost of precision.
 		 *
 		 * @access public
@@ -67,9 +63,37 @@ namespace Saber\Data\Char {
 			return Int32\Type::box(ord($x->unbox()));
 		}
 
+		/**
+		 * This method returns the corresponding lower case letter, if any.
+		 *
+		 * @access public
+		 * @static
+		 * @param Char\Type $x                                      the object to be converted
+		 * @return Char\Type                                        the lower case letter
+		 *
+		 * @see http://php.net/manual/en/function.mb-strtolower.php
+		 */
+		public static function toLowerCase(Char\Type $x) {
+			return Char\Type::box(mb_strtolower($x->unbox(), Char\Type::UTF_8_ENCODING));
+		}
+
+		/**
+		 * This method returns the corresponding upper case letter, if any.
+		 *
+		 * @access public
+		 * @static
+		 * @param Char\Type $x                                      the object to be converted
+		 * @return Char\Type                                        the upper case letter
+		 *
+		 * @see http://php.net/manual/en/function.mb-strtoupper.php
+		 */
+		public static function toUpperCase(Char\Type $x) {
+			return Char\Type::box(mb_strtoupper($x->unbox(), Char\Type::UTF_8_ENCODING));
+		}
+
 		#endregion
 
-		#region Methods -> Equality
+		#region Methods -> Equality Operations
 
 		/**
 		 * This method evaluates whether the left operand is equal to the right operand.
@@ -140,7 +164,7 @@ namespace Saber\Data\Char {
 
 		#endregion
 
-		#region Methods -> Ordering
+		#region Methods -> Ordering Operations
 
 		/**
 		 * This method compares the operands for order.
@@ -262,39 +286,7 @@ namespace Saber\Data\Char {
 
 		#endregion
 
-		#region Methods -> Processing
-
-		/**
-		 * This method returns the corresponding lower case letter, if any.
-		 *
-		 * @access public
-		 * @static
-		 * @param Char\Type $x                                      the object to be converted
-		 * @return Char\Type                                        the lower case letter
-		 *
-		 * @see http://php.net/manual/en/function.mb-strtolower.php
-		 */
-		public static function toLowerCase(Char\Type $x) {
-			return Char\Type::box(mb_strtolower($x->unbox(), Char\Type::UTF_8_ENCODING));
-		}
-
-		/**
-		 * This method returns the corresponding upper case letter, if any.
-		 *
-		 * @access public
-		 * @static
-		 * @param Char\Type $x                                      the object to be converted
-		 * @return Char\Type                                        the upper case letter
-		 *
-		 * @see http://php.net/manual/en/function.mb-strtoupper.php
-		 */
-		public static function toUpperCase(Char\Type $x) {
-			return Char\Type::box(mb_strtoupper($x->unbox(), Char\Type::UTF_8_ENCODING));
-		}
-
-		#endregion
-
-		#region Methods -> Validation
+		#region Methods -> Evaluating Operations
 
 		/**
 		 * This method returns whether this character is an alphabetic character.

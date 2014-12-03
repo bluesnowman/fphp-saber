@@ -19,6 +19,7 @@
 namespace Saber\Data\Ratio {
 
 	use \Saber\Core;
+	use \Saber\Data;
 	use \Saber\Data\Bool;
 	use \Saber\Data\Double;
 	use \Saber\Data\Float;
@@ -27,9 +28,9 @@ namespace Saber\Data\Ratio {
 	use \Saber\Data\Integer;
 	use \Saber\Data\Ratio;
 
-	class Module extends Fractional\Module {
+	class Module extends Data\Module implements Fractional\Module {
 
-		#region Methods -> Arithmetic
+		#region Methods -> Arithmetic Operations
 
 		/**
 		 * This method returns the absolute value of this object's value.
@@ -160,6 +161,10 @@ namespace Saber\Data\Ratio {
 			return Ratio\Type::make($x->denominator(), $x->numerator());
 		}
 
+		#endregion
+
+		#region Methods -> Conversion Operations
+
 		/**
 		 * This method returns the latter value should the former value evaluates
 		 * to null.
@@ -174,12 +179,8 @@ namespace Saber\Data\Ratio {
 			return ($x !== null) ? $x : (($y !== null) ? $y : Ratio\Type::zero());
 		}
 
-		#endregion
-
-		#region Methods -> Conversion
-
 		/**
-		 * This method return the value as a Double. Note: Using this method may result in
+		 * This method returns the value as a Double. Note: Using this method may result in
 		 * lost of precision.
 		 *
 		 * @access public
@@ -194,7 +195,7 @@ namespace Saber\Data\Ratio {
 		}
 
 		/**
-		 * This method return the value as a Float. Note: Using this method may result in
+		 * This method returns the value as a Float. Note: Using this method may result in
 		 * lost of precision.
 		 *
 		 * @access public
@@ -207,7 +208,7 @@ namespace Saber\Data\Ratio {
 		}
 
 		/**
-		 * This method return the value as an Int32. Note: Using this method may result in
+		 * This method returns the value as an Int32. Note: Using this method may result in
 		 * lost of precision.
 		 *
 		 * @access public
@@ -220,7 +221,7 @@ namespace Saber\Data\Ratio {
 		}
 
 		/**
-		 * This method return the value as an Integer. Note: Using this method may result in
+		 * This method returns the value as an Integer. Note: Using this method may result in
 		 * lost of precision.
 		 *
 		 * @access public
@@ -234,7 +235,7 @@ namespace Saber\Data\Ratio {
 
 		#endregion
 
-		#region Methods -> Equality
+		#region Methods -> Equality Operations
 
 		/**
 		 * This method evaluates whether the left operand is equal to the right operand.
@@ -307,7 +308,7 @@ namespace Saber\Data\Ratio {
 
 		#endregion
 
-		#region Methods -> Ordering
+		#region Methods -> Ordering Operations
 
 		/**
 		 * This method compares the operands for order.
@@ -421,7 +422,7 @@ namespace Saber\Data\Ratio {
 
 		#endregion
 
-		#region Methods -> Validation
+		#region Methods -> Evaluating Operations
 
 		/**
 		 * This method returns whether the ratio is a whole number.

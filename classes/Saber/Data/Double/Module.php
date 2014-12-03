@@ -26,12 +26,13 @@ namespace Saber\Data\Double {
 	use \Saber\Data\Floating;
 	use \Saber\Data\Int32;
 	use \Saber\Data\Integer;
+	use \Saber\Data\Real;
 	use \Saber\Data\String;
 	use \Saber\Data\Tuple;
 
-	class Module extends Floating\Module {
+	class Module extends Floating\Module implements Real\Module {
 
-		#region Methods -> Arithmetic
+		#region Methods -> Arithmetic Operations
 
 		/**
 		 * This method returns the absolute value of this object's value.
@@ -59,6 +60,18 @@ namespace Saber\Data\Double {
 		}
 
 		/**
+		 * This method returns the ceiling of this object's value.
+		 *
+		 * @access public
+		 * @static
+		 * @param Double\Type $x                                    the operand
+		 * @return Double\Type                                      the result
+		 */
+		public static function ceil(Double\Type $x) {
+			return Double\Type::box(ceil($x->unbox()));
+		}
+
+		/**
 		 * This method returns the result of decrementing this object's value.
 		 *
 		 * @access public
@@ -82,6 +95,18 @@ namespace Saber\Data\Double {
 		 */
 		public static function divide(Double\Type $x, Double\Type $y) {
 			return Double\Type::box($x->unbox() / $y->unbox());
+		}
+
+		/**
+		 * This method returns the floor of this object's value.
+		 *
+		 * @access public
+		 * @static
+		 * @param Double\Type $x                                    the operand
+		 * @return Double\Type                                      the result
+		 */
+		public static function floor(Double\Type $x) {
+			return Double\Type::box(floor($x->unbox()));
 		}
 
 		/**
@@ -150,6 +175,38 @@ namespace Saber\Data\Double {
 		}
 
 		/**
+		 * This method returns the natural logarithm of this object's value plus one.
+		 *
+		 * @access public
+		 * @static
+		 * @param Double\Type $x                                    the min operand
+		 * @param Double\Type $y                                    the max operand
+		 * @return Double\Type                                      the result
+		 */
+		public static function rand(Double\Type $x = null, Double\Type $y = null) {
+			$x = Double\Module::nvl($x);
+			if (function_exists('mt_rand')) {
+				$y = Double\Module::nvl($y, Double\Type::box(mt_getrandmax()));
+				return Double\Type::box(mt_rand($x->unbox(), $y->unbox()));
+			}
+			$y = Double\Module::nvl($y, Double\Type::box(getrandmax()));
+			return Double\Type::box(rand($x->unbox(), $y->unbox()));
+		}
+
+		/**
+		 * This method returns the result of rounding this object's value.
+		 *
+		 * @access public
+		 * @static
+		 * @param Double\Type $x                                    the operand
+		 * @param Int32\Type $precision                             the precision to use when rounding
+		 * @return Double\Type                                      the result
+		 */
+		public static function round(Double\Type $x, Int32\Type $precision = null) {
+			return Double\Type::box(round($x->unbox(), Int32\Module::nvl($precision)->unbox()));
+		}
+
+		/**
 		 * This method returns the result of subtracting the specified value from this object's
 		 * value.
 		 *
@@ -166,20 +223,6 @@ namespace Saber\Data\Double {
 		#endregion
 
 		#region Methods -> Basic Operations
-
-		/**
-		 * This method returns the latter value should the former value evaluates
-		 * to null.
-		 *
-		 * @access public
-		 * @static
-		 * @param Double\Type $x                                    the value to be evaluated
-		 * @param Double\Type $y                                    the default value
-		 * @return Double\Type                                      the result
-		 */
-		public static function nvl(Double\Type $x = null, Double\Type $y = null) {
-			return ($x !== null) ? $x : (($y !== null) ? $y : Double\Type::zero());
-		}
 
 		/**
 		 * This method returns a list of all numbers for the specified sequence.
@@ -241,10 +284,36 @@ namespace Saber\Data\Double {
 
 		#endregion
 
-		#region Methods -> Conversion
+		#region Methods -> Conversion Operations
 
 		/**
-		 * This method return the value as a Double. Note: Using this method may result in
+		 * This method returns the latter value should the former value evaluates
+		 * to null.
+		 *
+		 * @access public
+		 * @static
+		 * @param Double\Type $x                                    the value to be evaluated
+		 * @param Double\Type $y                                    the default value
+		 * @return Double\Type                                      the result
+		 */
+		public static function nvl(Double\Type $x = null, Double\Type $y = null) {
+			return ($x !== null) ? $x : (($y !== null) ? $y : Double\Type::zero());
+		}
+
+		/**
+		 * This method returns the value in degrees.
+		 *
+		 * @access public
+		 * @static
+		 * @param Double\Type $x                                    the object to be converted
+		 * @return Double\Type                                      the value as a Double
+		 */
+		public static function toDegrees(Double\Type $x) {
+			return Double\Type::box(deg2rad($x->unbox()));
+		}
+
+		/**
+		 * This method returns the value as a Double. Note: Using this method may result in
 		 * lost of precision.
 		 *
 		 * @access public
@@ -257,7 +326,7 @@ namespace Saber\Data\Double {
 		}
 
 		/**
-		 * This method return the value as a Float. Note: Using this method may result in
+		 * This method returns the value as a Float. Note: Using this method may result in
 		 * lost of precision.
 		 *
 		 * @access public
@@ -270,7 +339,7 @@ namespace Saber\Data\Double {
 		}
 
 		/**
-		 * This method return the value as an Int32. Note: Using this method may result in
+		 * This method returns the value as an Int32. Note: Using this method may result in
 		 * lost of precision.
 		 *
 		 * @access public
@@ -283,7 +352,7 @@ namespace Saber\Data\Double {
 		}
 
 		/**
-		 * This method return the value as an Integer. Note: Using this method may result in
+		 * This method returns the value as an Integer. Note: Using this method may result in
 		 * lost of precision.
 		 *
 		 * @access public
@@ -295,9 +364,21 @@ namespace Saber\Data\Double {
 			return Integer\Type::box($x->unbox());
 		}
 
+		/**
+		 * This method returns the value in radians.
+		 *
+		 * @access public
+		 * @static
+		 * @param Double\Type $x                                    the object to be converted
+		 * @return Double\Type                                      the value as a Double
+		 */
+		public static function toRadian(Double\Type $x) {
+			return Double\Type::box(rad2deg($x->unbox()));
+		}
+
 		#endregion
 
-		#region Methods -> Equality
+		#region Methods -> Equality Operations
 
 		/**
 		 * This method evaluates whether the left operand is equal to the right operand.
@@ -368,7 +449,7 @@ namespace Saber\Data\Double {
 
 		#endregion
 
-		#region Methods -> Ordering
+		#region Methods -> Ordering Operations
 
 		/**
 		 * This method compares the operands for order.
@@ -490,7 +571,7 @@ namespace Saber\Data\Double {
 
 		#endregion
 
-		#region Methods -> Validation
+		#region Methods -> Evaluating Operations
 
 		/**
 		 * This method returns whether the operand is a negative number.

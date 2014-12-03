@@ -18,8 +18,9 @@
 
 namespace Saber\Data\Floating {
 
+	use \Saber\Data;
 	use \Saber\Data\Fractional;
 
-	abstract class Module extends Fractional\Module { }
+	abstract class Module extends Data\Module implements Fractional\Module { }
 
 }

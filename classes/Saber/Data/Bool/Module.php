@@ -29,7 +29,7 @@ namespace Saber\Data\Bool {
 
 	class Module extends Data\Module {
 
-		#region Methods -> Basic Operations
+		#region Methods -> Conversion Operations
 
 		/**
 		 * This method returns the latter value should the former value evaluates
@@ -45,12 +45,8 @@ namespace Saber\Data\Bool {
 			return ($x !== null) ? $x : (($y !== null) ? $y : Bool\Type::false());
 		}
 
-		#endregion
-
-		#region Methods -> Conversion
-
 		/**
-		 * This method return the value as a Double. Note: Using this method may result in
+		 * This method returns the value as a Double. Note: Using this method may result in
 		 * lost of precision.
 		 *
 		 * @access public
@@ -63,7 +59,7 @@ namespace Saber\Data\Bool {
 		}
 
 		/**
-		 * This method return the value as a Float. Note: Using this method may result in
+		 * This method returns the value as a Float. Note: Using this method may result in
 		 * lost of precision.
 		 *
 		 * @access public
@@ -76,7 +72,7 @@ namespace Saber\Data\Bool {
 		}
 
 		/**
-		 * This method return the value as an Int32. Note: Using this method may result in
+		 * This method returns the value as an Int32. Note: Using this method may result in
 		 * lost of precision.
 		 *
 		 * @access public
@@ -89,7 +85,7 @@ namespace Saber\Data\Bool {
 		}
 
 		/**
-		 * This method return the value as an Integer. Note: Using this method may result in
+		 * This method returns the value as an Integer. Note: Using this method may result in
 		 * lost of precision.
 		 *
 		 * @access public
@@ -103,7 +99,7 @@ namespace Saber\Data\Bool {
 
 		#endregion
 
-		#region Methods -> Equality
+		#region Methods -> Equality Operations
 
 		/**
 		 * This method evaluates whether the left operand is equal to the right operand.
@@ -299,7 +295,7 @@ namespace Saber\Data\Bool {
 
 		#endregion
 
-		#region Methods -> Ordering
+		#region Methods -> Ordering Operations
 
 		/**
 		 * This method compares the operands for order.

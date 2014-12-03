@@ -120,6 +120,8 @@ namespace Saber\Data\Double {
 
 			$this->assertInstanceOf('\\Saber\\Core\\Type', $p0);
 			$this->assertInstanceOf('\\Saber\\Data\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Num\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Real\\Type', $p0);
 			$this->assertInstanceOf('\\Saber\\Data\\Fractional\\Type', $p0);
 			$this->assertInstanceOf('\\Saber\\Data\\Floating\\Type', $p0);
 			$this->assertInstanceOf('\\Saber\\Data\\Double\\Type', $p0);

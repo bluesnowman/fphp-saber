@@ -21,9 +21,10 @@ namespace Saber\Data\Double {
 	use \Saber\Core;
 	use \Saber\Data\Double;
 	use \Saber\Data\Floating;
+	use \Saber\Data\Real;
 	use \Saber\Throwable;
 
-	final class Type extends Floating\Type {
+	final class Type extends Floating\Type implements Real\Type {
 
 		#region Properties
 

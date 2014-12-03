@@ -20,6 +20,6 @@ namespace Saber\Data\Fractional {
 
 	use \Saber\Data\Num;
 
-	abstract class Module extends Num\Module { }
+	interface Module extends Num\Module { }
 
 }

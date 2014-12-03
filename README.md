@@ -37,7 +37,7 @@ $zero = Int32\Type::zero();
 $one = Int32\Type::one();
 ````
 
-It is recommend that you use these factory/singleton methods, when possible, instead of using the constructor to initialize a data type.  This is for conventional reasons and for implementation reasons.
+It is recommend that you use these factory/singleton methods, when possible, instead of using the constructor to initialize a data type.  This is for both conventional reasons and implementation reasons.
 
 To "unbox" a boxed object, call the `unbox` method on the respective class to get its value.
 

@@ -24,13 +24,12 @@ namespace Saber\Control\Choice\Cons {
 	final class Type extends Control\Choice\Type {
 
 		/**
-		 * This variable stores the procedure to be executed when condition is
-		 * satisfied.
+		 * This variable stores the predicate that is called when evaluating the equality.
 		 *
 		 * @access protected
 		 * @var callable
 		 */
-		protected $procedure;
+		protected $predicate;
 
 		/**
 		 * This variable stores the object to be evaluated.
@@ -57,7 +56,7 @@ namespace Saber\Control\Choice\Cons {
 		 * @param Control\Choice\Type $xs                           the tail
 		 */
 		public final function __construct(Core\Equality\Type $x, Control\Choice\Type $xs) {
-			$this->procedure = null;
+			$this->predicate = null;
 			$this->x = $x;
 			$this->xs = $xs;
 		}
@@ -69,7 +68,7 @@ namespace Saber\Control\Choice\Cons {
 		 * @final
 		 */
 		public final function __destruct() {
-			$this->procedure = null;
+			$this->predicate = null;
 			$this->x = null;
 			$this->xs = null;
 		}
@@ -83,9 +82,9 @@ namespace Saber\Control\Choice\Cons {
 		 */
 		public final function __end() {
 			if (!$this->xs->__end()) {
-				$procedure = $this->procedure;
-				if (($procedure !== null) && is_callable($procedure)) {
-					return $procedure($this->x);
+				$predicate = $this->predicate;
+				if (($predicate !== null) && is_callable($predicate)) {
+					return $predicate($this->x);
 				}
 				return false;
 			}
@@ -103,7 +102,7 @@ namespace Saber\Control\Choice\Cons {
 		 *                                                          monad node
 		 */
 		public final function otherwise(callable $procedure) {
-			$this->procedure = function($x) use ($procedure) {
+			$this->predicate = function($x) use ($procedure) {
 				$procedure($x);
 				return true;
 			};
@@ -122,7 +121,7 @@ namespace Saber\Control\Choice\Cons {
 		 *                                                          monad node
 		 */
 		public final function unless(Core\Equality\Type $y, callable $procedure) {
-			$this->procedure = function($x) use ($y, $procedure) {
+			$this->predicate = function($x) use ($y, $procedure) {
 				if (!$y->__eq($x)) {
 					$procedure($x);
 					return true;
@@ -144,7 +143,7 @@ namespace Saber\Control\Choice\Cons {
 		 *                                                          monad node
 		 */
 		public final function when(Core\Equality\Type $y, callable $procedure) {
-			$this->procedure = function($x) use ($y, $procedure) {
+			$this->predicate = function($x) use ($y, $procedure) {
 				if ($y->__eq($x)) {
 					$procedure($x);
 					return true;

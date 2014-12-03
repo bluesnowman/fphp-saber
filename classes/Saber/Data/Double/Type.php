@@ -130,7 +130,7 @@ namespace Saber\Data\Double {
 			$module = '\\Saber\\Data\\Double\\Module';
 			if (preg_match('/^__[a-z_][a-z0-9_]*$/i', $method)) {
 				$method = substr($method, 2);
-				if (!in_array($method, array('call', 'choice', 'iterator', 'unbox'))) {
+				if (!in_array($method, array('call', 'choice', 'unbox'))) {
 					if (method_exists($module, $method)) {
 						array_unshift($args, $this);
 						$result = call_user_func_array(array($module, $method), $args);

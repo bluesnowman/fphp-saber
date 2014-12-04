@@ -62,9 +62,10 @@ namespace Saber\Data\LinkedList {
 		 * @return LinkedList\Type                                  the boxed object
 		 */
 		public static function box($value/*...*/) {
+			$xs = (is_array($value)) ? $value : func_get_args();
 			$zs = LinkedList\Type::nil();
-			for ($i = count($value) - 1; $i >= 0; $i--) {
-				$zs = LinkedList\Module::prepend($zs, $value[$i]);
+			for ($i = count($xs) - 1; $i >= 0; $i--) {
+				$zs = LinkedList\Module::prepend($zs, $xs[$i]);
 			}
 			return $zs;
 		}
@@ -80,20 +81,12 @@ namespace Saber\Data\LinkedList {
 		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
 		public static function make($value/*...*/) {
-			if (is_array($value)) {
-				$zs = LinkedList\Type::nil();
-				for ($i = count($value) - 1; $i >= 0; $i--) {
-					$zs = LinkedList\Module::prepend($zs, $value[$i]);
-				}
-				return $zs;
+			$xs = (is_array($value)) ? $value : func_get_args();
+			$zs = LinkedList\Type::nil();
+			for ($i = count($xs) - 1; $i >= 0; $i--) {
+				$zs = LinkedList\Module::prepend($zs, $xs[$i]);
 			}
-			else {
-				$type = gettype($value);
-				if ($type == 'object') {
-					$type = get_class($value);
-				}
-				throw new Throwable\InvalidArgument\Exception('Unable to box value. Expected an array, but got ":type".', array(':type' => $type));
-			}
+			return $zs;
 		}
 
 		/**

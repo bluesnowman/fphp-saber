@@ -63,7 +63,8 @@ namespace Saber\Data\ArrayList {
 		 * @return ArrayList\Type                                   the boxed object
 		 */
 		public static function box($value/*...*/) {
-			return new ArrayList\Type($value);
+			$xs = (is_array($value)) ? $value : func_get_args();
+			return new ArrayList\Type($xs);
 		}
 
 		/**
@@ -77,23 +78,17 @@ namespace Saber\Data\ArrayList {
 		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
 		public static function make($value/*...*/) {
-			if (($value === null) || !is_array($value)) {
-				$type = gettype($value);
-				if ($type == 'object') {
-					$type = get_class($value);
-				}
-				throw new Throwable\InvalidArgument\Exception('Unable to create array list. Expected an array, but got ":type".', array(':type' => $type));
-			}
-			foreach ($value as $object) {
-				if (!(is_object($object) && ($object instanceof Core\Type))) {
-					$type = gettype($value);
+			$xs = (is_array($value)) ? $value : func_get_args();
+			foreach ($xs as $x) {
+				if (!(is_object($x) && ($x instanceof Core\Type))) {
+					$type = gettype($x);
 					if ($type == 'object') {
-						$type = get_class($value);
+						$type = get_class($x);
 					}
 					throw new Throwable\InvalidArgument\Exception('Unable to create array list. Expected a boxed value, but got ":type".', array(':type' => $type));
 				}
 			}
-			return new ArrayList\Type($value);
+			return new ArrayList\Type($xs);
 		}
 
 		/**

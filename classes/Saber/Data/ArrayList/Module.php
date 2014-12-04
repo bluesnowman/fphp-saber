@@ -19,6 +19,7 @@
 namespace Saber\Data\ArrayList {
 
 	use \Saber\Core;
+	use \Saber\Data;
 	use \Saber\Data\ArrayList;
 	use \Saber\Data\Bool;
 	use \Saber\Data\Int32;
@@ -28,7 +29,7 @@ namespace Saber\Data\ArrayList {
 	use \Saber\Data\Vector;
 	use \Saber\Throwable;
 
-	class Module extends Vector\Module {
+	final class Module extends Data\Module implements Vector\Module {
 
 		#region Methods -> Basic Operations
 

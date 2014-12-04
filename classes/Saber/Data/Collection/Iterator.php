@@ -18,8 +18,6 @@
 
 namespace Saber\Data\Collection {
 
-	use \Saber\Data;
-
-	abstract class Iterator extends Data\Iterator { }
+	interface Iterator { }
 
 }

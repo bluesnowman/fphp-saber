@@ -19,6 +19,7 @@
 namespace Saber\Data\Integer {
 
 	use \Saber\Core;
+	use \Saber\Data;
 	use \Saber\Data\ArrayList;
 	use \Saber\Data\Bool;
 	use \Saber\Data\Double;
@@ -34,7 +35,7 @@ namespace Saber\Data\Integer {
 	 * @see http://verysimple.com/2013/11/05/compile-php-extensions-for-mamp/
 	 * @see http://coder1.com/articles/how-to-install-php-gmp-mac-osx-1037
 	 */
-	class Module extends Integral\Module {
+	class Module extends Data\Module implements Integral\Module {
 
 		#region Methods -> Arithmetic Operations
 

@@ -18,13 +18,14 @@
 
 namespace Saber\Data\String {
 
+	use \Saber\Data;
 	use \Saber\Data\Bool;
 	use \Saber\Data\Char;
-	use \Saber\Data\Collection;
 	use \Saber\Data\Int32;
 	use \Saber\Data\String;
+	use \Saber\Data\Vector;
 
-	final class Iterator extends Collection\Iterator {
+	final class Iterator extends Data\Iterator implements Vector\Iterator {
 
 		/**
 		 * This variable stores a reference to the collection being iterated.

@@ -18,8 +18,6 @@
 
 namespace Saber\Data\Collection {
 
-	use \Saber\Data;
-
-	abstract class Type extends Data\Type { }
+	interface Type { }
 
 }

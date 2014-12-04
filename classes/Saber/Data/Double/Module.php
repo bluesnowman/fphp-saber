@@ -19,6 +19,7 @@
 namespace Saber\Data\Double {
 
 	use \Saber\Core;
+	use \Saber\Data;
 	use \Saber\Data\ArrayList;
 	use \Saber\Data\Bool;
 	use \Saber\Data\Double;
@@ -30,7 +31,7 @@ namespace Saber\Data\Double {
 	use \Saber\Data\String;
 	use \Saber\Data\Tuple;
 
-	class Module extends Floating\Module implements Real\Module {
+	class Module extends Data\Module implements Floating\Module, Real\Module {
 
 		#region Methods -> Arithmetic Operations
 

@@ -19,6 +19,7 @@
 namespace Saber\Data\Int32 {
 
 	use \Saber\Core;
+	use \Saber\Data;
 	use \Saber\Data\ArrayList;
 	use \Saber\Data\Bool;
 	use \Saber\Data\Double;
@@ -29,7 +30,7 @@ namespace Saber\Data\Int32 {
 	use \Saber\Data\String;
 	use \Saber\Data\Tuple;
 
-	class Module extends Integral\Module {
+	class Module extends Data\Module implements Integral\Module {
 
 		#region Methods -> Arithmetic Operations
 

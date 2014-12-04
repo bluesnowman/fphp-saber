@@ -20,6 +20,6 @@ namespace Saber\Data\Vector {
 
 	use \Saber\Data\Collection;
 
-	abstract class Module extends Collection\Module { }
+	interface Module extends Collection\Module { }
 
 }

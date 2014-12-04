@@ -26,9 +26,10 @@ namespace Saber\Data\String {
 	use \Saber\Data\Char;
 	use \Saber\Data\Int32;
 	use \Saber\Data\String;
+	use \Saber\Data\Vector;
 	use \Saber\Throwable;
 
-	final class Type extends Data\Type implements Core\Boxable\Type {
+	final class Type extends Data\Type implements Core\Boxable\Type, Vector\Type {
 
 		#region Properties
 

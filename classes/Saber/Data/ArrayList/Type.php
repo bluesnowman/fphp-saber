@@ -27,7 +27,7 @@ namespace Saber\Data\ArrayList {
 	use \Saber\Data\Vector;
 	use \Saber\Throwable;
 
-	final class Type extends Vector\Type implements Core\Boxable\Type {
+	final class Type extends Data\Type implements Core\Boxable\Type, Vector\Type {
 
 		#region Properties
 

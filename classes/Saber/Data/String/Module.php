@@ -21,17 +21,18 @@ namespace Saber\Data\String {
 	include_once(implode(DIRECTORY_SEPARATOR, array(dirname(__FILE__), '..', '..', 'Ext', 'mbstring.php')));
 
 	use \Saber\Core;
+	use \Saber\Data;
 	use \Saber\Data\ArrayList;
 	use \Saber\Data\Bool;
 	use \Saber\Data\Char;
-	use \Saber\Data\Collection;
 	use \Saber\Data\Int32;
 	use \Saber\Data\LinkedList;
 	use \Saber\Data\Option;
 	use \Saber\Data\String;
+	use \Saber\Data\Vector;
 	use \Saber\Throwable;
 
-	class Module extends Collection\Module {
+	final class Module extends Data\Module implements Vector\Module {
 
 		#region Methods -> Basic Operations
 

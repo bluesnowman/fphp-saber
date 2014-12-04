@@ -19,6 +19,7 @@
 namespace Saber\Data\LinkedList {
 
 	use \Saber\Core;
+	use \Saber\Data;
 	use \Saber\Data\ArrayList;
 	use \Saber\Data\Bool;
 	use \Saber\Data\Collection;
@@ -29,7 +30,7 @@ namespace Saber\Data\LinkedList {
 	use \Saber\Data\Vector;
 	use \Saber\Throwable;
 
-	abstract class Module extends Vector\Module {
+	abstract class Module extends Data\Module implements Vector\Module {
 
 		#region Methods -> Basic Operations
 

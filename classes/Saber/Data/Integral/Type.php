@@ -18,9 +18,8 @@
 
 namespace Saber\Data\Integral {
 
-	use \Saber\Data;
 	use \Saber\Data\Real;
 
-	abstract class Type extends Data\Type implements Real\Type { }
+	interface Type extends Real\Type { }
 
 }

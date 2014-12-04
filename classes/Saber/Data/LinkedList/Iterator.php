@@ -18,12 +18,13 @@
 
 namespace Saber\Data\LinkedList {
 
+	use \Saber\Data;
 	use \Saber\Data\Bool;
 	use \Saber\Data\Int32;
 	use \Saber\Data\LinkedList;
 	use \Saber\Data\Vector;
 
-	final class Iterator extends Vector\Iterator {
+	final class Iterator extends Data\Iterator implements Vector\Iterator {
 
 		/**
 		 * This variable stores a reference to the first node in the collection.

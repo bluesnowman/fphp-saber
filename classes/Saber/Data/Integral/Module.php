@@ -18,9 +18,8 @@
 
 namespace Saber\Data\Integral {
 
-	use \Saber\Data;
 	use \Saber\Data\Real;
 
-	abstract class Module extends Data\Module implements Real\Module { }
+	interface Module extends Real\Module { }
 
 }

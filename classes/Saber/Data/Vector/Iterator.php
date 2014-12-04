@@ -20,6 +20,6 @@ namespace Saber\Data\Vector {
 
 	use \Saber\Data\Collection;
 
-	abstract class Iterator extends Collection\Iterator { }
+	interface Iterator extends Collection\Iterator { }
 
 }

@@ -19,11 +19,12 @@
 namespace Saber\Data\Int32 {
 
 	use \Saber\Core;
+	use \Saber\Data;
 	use \Saber\Data\Int32;
 	use \Saber\Data\Integral;
 	use \Saber\Throwable;
 
-	final class Type extends Integral\Type {
+	final class Type extends Data\Type implements Integral\Type {
 
 		#region Properties
 

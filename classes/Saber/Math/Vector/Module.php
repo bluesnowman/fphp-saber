@@ -26,9 +26,6 @@ namespace Saber\Math\Vector {
 
 	final class Module extends Core\Module {
 
-
-		#region Methods -> Object Oriented -> Numeric Operations
-
 		/**
 		 * This method returns the average of all elements in the list.
 		 *
@@ -73,8 +70,6 @@ namespace Saber\Math\Vector {
 			}
 			return Double\Module::add($xs->head()->toDouble(), static::sum($xs->tail()));
 		}
-
-		#endregion
 
 	}
 

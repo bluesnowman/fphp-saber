@@ -26,9 +26,10 @@ namespace Saber\Data\LinkedList {
 	use \Saber\Data\LinkedList;
 	use \Saber\Data\Option;
 	use \Saber\Data\Tuple;
+	use \Saber\Data\Vector;
 	use \Saber\Throwable;
 
-	abstract class Module extends Collection\Module {
+	abstract class Module extends Vector\Module {
 
 		#region Methods -> Basic Operations
 

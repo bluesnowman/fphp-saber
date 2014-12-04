@@ -20,12 +20,12 @@ namespace Saber\Data\LinkedList {
 
 	use \Saber\Core;
 	use \Saber\Data\Bool;
-	use \Saber\Data\Collection;
 	use \Saber\Data\Int32;
 	use \Saber\Data\LinkedList;
+	use \Saber\Data\Vector;
 	use \Saber\Throwable;
 
-	abstract class Type extends Collection\Type implements Core\Boxable\Type {
+	abstract class Type extends Vector\Type implements Core\Boxable\Type {
 
 		#region Properties
 

@@ -21,14 +21,14 @@ namespace Saber\Data\ArrayList {
 	use \Saber\Core;
 	use \Saber\Data\ArrayList;
 	use \Saber\Data\Bool;
-	use \Saber\Data\Collection;
 	use \Saber\Data\Int32;
 	use \Saber\Data\LinkedList;
 	use \Saber\Data\Option;
 	use \Saber\Data\Tuple;
+	use \Saber\Data\Vector;
 	use \Saber\Throwable;
 
-	class Module extends Collection\Module {
+	class Module extends Vector\Module {
 
 		#region Methods -> Basic Operations
 

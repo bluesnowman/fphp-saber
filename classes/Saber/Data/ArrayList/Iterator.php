@@ -20,10 +20,10 @@ namespace Saber\Data\ArrayList {
 
 	use \Saber\Data\ArrayList;
 	use \Saber\Data\Bool;
-	use \Saber\Data\Collection;
 	use \Saber\Data\Int32;
+	use \Saber\Data\Vector;
 
-	final class Iterator extends Collection\Iterator {
+	final class Iterator extends Vector\Iterator {
 
 		/**
 		 * This variable stores a reference to the collection being iterated.

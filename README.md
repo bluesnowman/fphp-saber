@@ -23,13 +23,13 @@ For better performance, use the `box` method to avoid type conversion.
 $object = Int32\Type::box(7);
 ````
 
-Some data types can also be initialized using a singleton method.  For instance, the Unit\Type class is initialized like so:
+Some data types can also be initialized using a singleton method.  For instance, the `Unit\Type` class is initialized like so:
 
 ````
 $object = Unit\Type::instance();
 ````
 
-Similarly, other data types have more specific singleton methods.  Amongst these are the number classes, which have singletons for negative one, zero, and one.
+Similarly, other data types have more specific singleton methods.  Amongst these are the `Num` classes, which have singletons for negative one, zero, and one.
 
 ````
 $negative = Int32\Type::negative();
@@ -61,11 +61,13 @@ $object = Int32\Module::decrement(Int32\Module::increment(Int32\Type::box(7)));
 
 ### Methods
 
-In general, methods that are NOT preceded by two underscores will return a boxed object.  An exception to this rule is the `unbox` method.
+In general, methods that are NOT preceded by two underscores will return a boxed object.
 
 ````
 $object = Int32\Type::box(7)->increment();
 ````
+
+An exception to this rule is the `unbox` method.
 
 Methods that are preceded by two underscores will return an unboxed value, which is typically a PHP typed primitive or object.  This is made possible via PHP's magical `__call` method.
 
@@ -102,7 +104,7 @@ Bool\Type function(Core\Type $x)
 Bool\Type function(Core\Type $x, Int32\Type $i)
 ````
 
-A `$procedure` function is used to perform an operation that does NOT return a value (except for either a `null` value or a `Unit\Type` object).
+A `$procedure` function is used to perform an operation that does NOT return a value (even though, technically, it does return a `null` value by default).  In cases where logic benefits to use a return statement to terminate a procedure prematurely, it is recommended that the return value is either a `null` value or an `Unit\Type` object.
 
 ````
 null function(Core\Type $x)
@@ -179,10 +181,11 @@ Below describes the relationships between data types:
     + Bool\Type
     + Char\Type
     + Collection\Type
-      + ArrayList\Type
-      + LinkedList\Type
+      + Vector\Type
+        + ArrayList\Type
+        + LinkedList\Type
+        + String\Type
       + Option\Type
-      + String\Type
     + Num\Type
       + Floating\Type : Fractional\Type
         + Double\Type : Real\Type

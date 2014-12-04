@@ -22,12 +22,12 @@ namespace Saber\Data\ArrayList {
 	use \Saber\Data;
 	use \Saber\Data\ArrayList;
 	use \Saber\Data\Bool;
-	use \Saber\Data\Collection;
 	use \Saber\Data\Int32;
 	use \Saber\Data\String;
+	use \Saber\Data\Vector;
 	use \Saber\Throwable;
 
-	final class Type extends Collection\Type implements Core\Boxable\Type {
+	final class Type extends Vector\Type implements Core\Boxable\Type {
 
 		#region Properties
 

@@ -29,6 +29,15 @@ namespace Saber\Data\Integer {
 		#region Properties
 
 		/**
+		 * This variable stores the class path to this class' module.
+		 *
+		 * @access protected
+		 * @static
+		 * @var string
+		 */
+		protected static $module = '\\Saber\\Data\\Integer\\Module';
+
+		/**
 		 * This variable stores references to commonly used singletons.
 		 *
 		 * @access protected
@@ -135,13 +144,12 @@ namespace Saber\Data\Integer {
 		 *                                                          implemented the called method
 		 */
 		public final function __call($method, $args) {
-			$module = '\\Saber\\Data\\Integer\\Module';
 			if (preg_match('/^__[a-z_][a-z0-9_]*$/i', $method)) {
 				$method = substr($method, 2);
 				if (!in_array($method, array('call', 'choice', 'unbox'))) {
-					if (method_exists($module, $method)) {
+					if (method_exists(static::$module, $method)) {
 						array_unshift($args, $this);
-						$result = call_user_func_array(array($module, $method), $args);
+						$result = call_user_func_array(array(static::$module, $method), $args);
 						if ($result instanceof Core\Boxable\Type) {
 							return $result->unbox();
 						}
@@ -150,13 +158,13 @@ namespace Saber\Data\Integer {
 				}
 			}
 			else {
-				if (method_exists($module, $method)) {
+				if (method_exists(static::$module, $method)) {
 					array_unshift($args, $this);
-					$result = call_user_func_array(array($module, $method), $args);
+					$result = call_user_func_array(array(static::$module, $method), $args);
 					return $result;
 				}
 			}
-			throw new Throwable\UnimplementedMethod\Exception('Unable to call method. No method ":method" exists in module ":module".', array(':module' => $module, ':method' => $method));
+			throw new Throwable\UnimplementedMethod\Exception('Unable to call method. No method ":method" exists in module ":module".', array(':module' => static::$module, ':method' => $method));
 		}
 
 		/**

@@ -17,13 +17,13 @@ To "box" a PHP typed primitive or object, create an instance of the respective d
 $object = Int32\Type::make(7);
 ````
 
-For better performance, use the `box` method to avoid type conversion.
+For better performance, use the `box` method to avoid any unnecessary preprocessing that its corresponding `make` method might otherwise perform before creating the instance.
 
 ````
 $object = Int32\Type::box(7);
 ````
 
-Some data types can also be initialized using a singleton method.  For instance, the `Unit\Type` class is initialized like so:
+Some data types are initialized using a singleton method.  For instance, the `Unit\Type` class is initialized like so:
 
 ````
 $object = Unit\Type::instance();
@@ -90,7 +90,7 @@ This library has adopted the following naming conventions for certain variables:
 
 ### Callables
 
-An `$operator` function is used to find the result of applying an operator to one or two operands.
+An `$operator` function is used to find the result of applying an operator to one or more operands.
 
 ````
 Core\Type function(Core\Type $c)
@@ -245,8 +245,7 @@ To run just a specific group of unit tests, for example:
 make execute GROUP=TypeTest
 ````
 
-For more information, see the [documentation](https://github.com/bluesnowman/fphp-saber/blob/master/Makefile)
-in the `Makefile` itself.
+For more information regarding additional commands, see the [documentation](https://github.com/bluesnowman/fphp-saber/blob/master/Makefile) in the `Makefile` itself.
 
 ### Pull Requests
 

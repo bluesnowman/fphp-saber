@@ -18,6 +18,8 @@
 
 namespace Saber\Data\Double {
 
+	include_once(implode(DIRECTORY_SEPARATOR, array(dirname(__FILE__), '..', '..', 'Ext', 'mtrand.php')));
+
 	use \Saber\Core;
 	use \Saber\Data;
 	use \Saber\Data\ArrayList;
@@ -176,7 +178,7 @@ namespace Saber\Data\Double {
 		}
 
 		/**
-		 * This method returns the natural logarithm of this object's value plus one.
+		 * This method returns a random number with the range of x and y.
 		 *
 		 * @access public
 		 * @static
@@ -184,14 +186,10 @@ namespace Saber\Data\Double {
 		 * @param Double\Type $y                                    the max operand
 		 * @return Double\Type                                      the result
 		 */
-		public static function rand(Double\Type $x = null, Double\Type $y = null) {
+		public static function random(Double\Type $x = null, Double\Type $y = null) {
 			$x = Double\Module::nvl($x);
-			if (function_exists('mt_rand')) {
-				$y = Double\Module::nvl($y, Double\Type::box(mt_getrandmax()));
-				return Double\Type::box(mt_rand($x->unbox(), $y->unbox()));
-			}
-			$y = Double\Module::nvl($y, Double\Type::box(getrandmax()));
-			return Double\Type::box(rand($x->unbox(), $y->unbox()));
+			$y = Double\Module::nvl($y, Double\Type::box(mt_getrandmax()));
+			return Double\Type::box(mt_rand($x->unbox(), $y->unbox()));
 		}
 
 		/**

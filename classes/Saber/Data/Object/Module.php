@@ -24,7 +24,7 @@ namespace Saber\Data\Object {
 	use \Saber\Data\Int32;
 	use \Saber\Data\Object;
 
-	class Module extends Data\Module {
+	final class Module extends Data\Module {
 
 		#region Methods -> Basic Operations
 

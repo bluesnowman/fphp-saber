@@ -27,7 +27,7 @@ namespace Saber\Data\Bool {
 	use \Saber\Data\Integer;
 	use \Saber\Data\String;
 
-	class Module extends Data\Module {
+	final class Module extends Data\Module {
 
 		#region Methods -> Conversion Operations
 

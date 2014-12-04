@@ -20,6 +20,6 @@ namespace Saber\Data {
 
 	use \Saber\Core;
 
-	class Module extends Core\Module { }
+	abstract class Module extends Core\Module { }
 
 }

@@ -23,7 +23,7 @@ namespace Saber\Throwable\Runtime\Exception {
 	use \Saber\Data\Int32;
 	use \Saber\Throwable;
 
-	class Module extends Core\Module {
+	final class Module extends Core\Module {
 
 		#region Methods -> Equality Operations
 

@@ -19,12 +19,13 @@
 namespace Saber\Data\Tuple {
 
 	use \Saber\Core;
+	use \Saber\Data;
 	use \Saber\Data\Bool;
 	use \Saber\Data\Collection;
 	use \Saber\Data\Int32;
 	use \Saber\Data\Tuple;
 
-	class Module extends Collection\Module {
+	final class Module extends Data\Module implements Collection\Module {
 
 		#region Methods -> Basic Operations
 

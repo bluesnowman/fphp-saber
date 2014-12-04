@@ -24,7 +24,7 @@ namespace Saber\Data\Unit {
 	use \Saber\Data\Int32;
 	use \Saber\Data\Unit;
 
-	class Module extends Data\Module {
+	final class Module extends Data\Module {
 
 		#region Methods -> Conversion Operations
 

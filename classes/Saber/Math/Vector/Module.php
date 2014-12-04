@@ -18,13 +18,11 @@
 
 namespace Saber\Math\Vector {
 
-	use \Saber\Core;
+	use \Saber\Data;
 	use \Saber\Data\Double;
-	use \Saber\Data\Int32;
-	use \Saber\Data\Real;
 	use \Saber\Data\Vector;
 
-	final class Module extends Core\Module {
+	final class Module extends Data\Module implements Vector\Module {
 
 		/**
 		 * This method returns the average of all elements in the list.

@@ -33,7 +33,7 @@ namespace Saber\Data\Double {
 	use \Saber\Data\String;
 	use \Saber\Data\Tuple;
 
-	class Module extends Data\Module implements Floating\Module, Real\Module {
+	final class Module extends Data\Module implements Floating\Module, Real\Module {
 
 		#region Methods -> Arithmetic Operations
 

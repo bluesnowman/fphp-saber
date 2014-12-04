@@ -32,7 +32,7 @@ namespace Saber\Data\Char {
 	 * @see http://php.net/manual/en/ref.ctype.php
 	 * @see http://php.net/manual/en/regexp.reference.unicode.php
 	 */
-	class Module extends Data\Module {
+	final class Module extends Data\Module {
 
 		#region Methods -> Conversion Operations
 

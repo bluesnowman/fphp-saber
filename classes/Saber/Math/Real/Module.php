@@ -18,11 +18,11 @@
 
 namespace Saber\Math\Real {
 
-	use \Saber\Core;
+	use \Saber\Data;
 	use \Saber\Data\Double;
 	use \Saber\Data\Real;
 
-	class Module extends Core\Module {
+	final class Module extends Data\Module implements Real\Module {
 
 		/**
 		 * This method returns the arc cosine of this object's value in radians.

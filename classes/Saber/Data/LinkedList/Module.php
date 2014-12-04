@@ -30,7 +30,7 @@ namespace Saber\Data\LinkedList {
 	use \Saber\Data\Vector;
 	use \Saber\Throwable;
 
-	abstract class Module extends Data\Module implements Vector\Module {
+	final class Module extends Data\Module implements Vector\Module {
 
 		#region Methods -> Basic Operations
 

@@ -28,7 +28,7 @@ namespace Saber\Data\Ratio {
 	use \Saber\Data\Integer;
 	use \Saber\Data\Ratio;
 
-	class Module extends Data\Module implements Fractional\Module {
+	final class Module extends Data\Module implements Fractional\Module {
 
 		#region Methods -> Arithmetic Operations
 

@@ -30,7 +30,7 @@ namespace Saber\Data\Int32 {
 	use \Saber\Data\String;
 	use \Saber\Data\Tuple;
 
-	class Module extends Data\Module implements Integral\Module {
+	final class Module extends Data\Module implements Integral\Module {
 
 		#region Methods -> Arithmetic Operations
 

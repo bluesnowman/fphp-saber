@@ -29,7 +29,7 @@ Some data types are initialized using a singleton method.  For instance, the `Un
 $object = Unit\Type::instance();
 ````
 
-Similarly, other data types have more specific singleton methods.  Amongst these are the `Num` classes, which have singletons for negative one, zero, and one.
+Similarly, other data types have more specific singleton methods.  Amongst these are the `Num` classes, which have singletons for negative one, zero, and positive one.
 
 ````
 $negative = Int32\Type::negative();

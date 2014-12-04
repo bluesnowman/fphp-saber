@@ -33,10 +33,9 @@ namespace Saber\Math\Vector {
 		 * @return Double\Type                                      the result
 		 */
 		public static function average(Vector\Type $xs) {
-			if ($xs->__isEmpty()) {
-				return Double\Type::zero();
-			}
-			return Double\Module::divide(static::sum($xs), $xs->length()->toDouble());
+			return ($xs->__isEmpty())
+				? Double\Type::zero()
+				: Double\Module::divide(static::sum($xs), $xs->length()->toDouble());
 		}
 
 		/**
@@ -48,10 +47,9 @@ namespace Saber\Math\Vector {
 		 * @return Double\Type                                      the result
 		 */
 		public static function product(Vector\Type $xs) {
-			if ($xs->__isEmpty()) {
-				return Double\Type::one();
-			}
-			return Double\Module::multiply($xs->head()->toDouble(), static::product($xs->tail()));
+			return ($xs->__isEmpty())
+				? Double\Type::one()
+				: Double\Module::multiply($xs->head()->toDouble(), static::product($xs->tail()));
 		}
 
 		/**
@@ -63,10 +61,9 @@ namespace Saber\Math\Vector {
 		 * @return Double\Type                                      the result
 		 */
 		public static function sum(Vector\Type $xs) {
-			if ($xs->__isEmpty()) {
-				return Double\Type::zero();
-			}
-			return Double\Module::add($xs->head()->toDouble(), static::sum($xs->tail()));
+			return ($xs->__isEmpty())
+				? Double\Type::zero()
+				: Double\Module::add($xs->head()->toDouble(), static::sum($xs->tail()));
 		}
 
 	}

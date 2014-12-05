@@ -514,6 +514,8 @@ namespace Saber\Data\ArrayList {
 		 * @param Core\Equality\Type $x                             the key being looked up
 		 * @return Option\Type                                      an option containing the associated
 		 *                                                          value
+		 * @throws Throwable\UnexpectedValue\Exception              indicates that the list is not
+		 *                                                          associative
 		 */
 		public static function lookup(ArrayList\Type $xss, Core\Equality\Type $x) {
 			$length = $xss->length();

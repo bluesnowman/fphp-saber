@@ -547,6 +547,9 @@ namespace Saber\Data\LinkedList {
 		 * @param Core\Equality\Type $x                             the key being looked up
 		 * @return Option\Type                                      an option containing the associated
 		 *                                                          value
+		 *
+		 * @throws Throwable\UnexpectedValue\Exception              indicates that the list is not
+		 *                                                          associative
 		 */
 		public static function lookup(LinkedList\Type $xss, Core\Equality\Type $x) {
 			if ($xss->__isEmpty()) {

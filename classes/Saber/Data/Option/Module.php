@@ -19,6 +19,7 @@
 namespace Saber\Data\Option {
 
 	use \Saber\Core;
+	use \Saber\Data;
 	use \Saber\Data\ArrayList;
 	use \Saber\Data\Bool;
 	use \Saber\Data\Collection;
@@ -27,7 +28,7 @@ namespace Saber\Data\Option {
 	use \Saber\Data\Option;
 	use \Saber\Data\String;
 
-	abstract class Module extends Collection\Module {
+	final class Module extends Data\Module implements Collection\Module {
 
 		#region Methods -> Basic Operations
 

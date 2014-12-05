@@ -21,12 +21,13 @@ namespace Saber\Data\Option {
 	use \Saber\Core;
 	use \Saber\Data;
 	use \Saber\Data\Bool;
+	use \Saber\Data\Collection;
 	use \Saber\Data\Int32;
 	use \Saber\Data\Option;
 	use \Saber\Data\String;
 	use \Saber\Throwable;
 
-	abstract class Type extends Data\Type {
+	abstract class Type extends Data\Type implements Collection\Type {
 
 		#region Properties
 

@@ -549,15 +549,16 @@ namespace Saber\Data\LinkedList {
 		 *                                                          value
 		 */
 		public static function lookup(LinkedList\Type $xss, Core\Equality\Type $x) {
-			for ($zss = $xss; !$zss->__isEmpty(); $zss = $zss->tail()) {
-				$zs = $zss->head();
-				$z = Tuple\Module::first($zs);
-				if ($x->__eq($z)) {
-					return Option\Type::some(Tuple\Module::second($zs));
-				}
+			if ($xss->__isEmpty()) {
+				return Option\Type::none();
 			}
 
-			return Option\Type::none();
+			$xs = $xss->head();
+			if ($x->__eq(Tuple\Module::first($xs))) {
+				return Option\Type::some(Tuple\Module::second($xs));
+			}
+
+			return LinkedList\Module::lookup($xss->tail(), $x);
 		}
 
 		/**

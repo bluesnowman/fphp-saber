@@ -539,6 +539,28 @@ namespace Saber\Data\LinkedList {
 		}
 
 		/**
+		 * This method returns an option containing the value paired with the lookup key x.
+		 *
+		 * @access public
+		 * @static
+		 * @param LinkedList\Type $xss                              the left operand
+		 * @param Core\Equality\Type $x                             the key being looked up
+		 * @return Option\Type                                      an option containing the associated
+		 *                                                          value
+		 */
+		public static function lookup(LinkedList\Type $xss, Core\Equality\Type $x) {
+			for ($zss = $xss; !$zss->__isEmpty(); $zss = $zss->tail()) {
+				$zs = $zss->head();
+				$z = Tuple\Module::first($zs);
+				if ($x->__eq($z)) {
+					return Option\Type::some(Tuple\Module::second($zs));
+				}
+			}
+
+			return Option\Type::none();
+		}
+
+		/**
 		 * This method applies each element in this collection to the subroutine function.
 		 *
 		 * @access public

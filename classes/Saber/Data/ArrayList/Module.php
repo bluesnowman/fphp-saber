@@ -506,6 +506,30 @@ namespace Saber\Data\ArrayList {
 		}
 
 		/**
+		 * This method returns an option containing the value paired with the lookup key x.
+		 *
+		 * @access public
+		 * @static
+		 * @param ArrayList\Type $xss                               the left operand
+		 * @param Core\Equality\Type $x                             the key being looked up
+		 * @return Option\Type                                      an option containing the associated
+		 *                                                          value
+		 */
+		public static function lookup(ArrayList\Type $xss, Core\Equality\Type $x) {
+			$length = $xss->length();
+
+			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
+				$zs = $xss->element($i);
+				$z = Tuple\Module::first($zs);
+				if ($x->__eq($z)) {
+					return Option\Type::some(Tuple\Module::second($zs));
+				}
+			}
+
+			return Option\Type::none();
+		}
+
+		/**
 		 * This method applies each element in this list to the subroutine function.
 		 *
 		 * @access public

@@ -520,8 +520,12 @@ namespace Saber\Data\ArrayList {
 
 			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
 				$zs = $xss->element($i);
-				$z = Tuple\Module::first($zs);
-				if ($x->__eq($z)) {
+
+				if (!Tuple\Module::isPair($zs)->unbox()) {
+					throw new Throwable\UnexpectedValue\Exception('Unable to process tuple. Expected a length of "2", but got a length of ":length".', array(':length' => $zs->__length()));
+				}
+
+				if ($x->__eq(Tuple\Module::first($zs))) {
 					return Option\Type::some(Tuple\Module::second($zs));
 				}
 			}

@@ -554,6 +554,11 @@ namespace Saber\Data\LinkedList {
 			}
 
 			$xs = $xss->head();
+
+			if (!Tuple\Module::isPair($xs)->unbox()) {
+				throw new Throwable\UnexpectedValue\Exception('Unable to process tuple. Expected a length of "2", but got a length of ":length".', array(':length' => $xs->__length()));
+			}
+
 			if ($x->__eq(Tuple\Module::first($xs))) {
 				return Option\Type::some(Tuple\Module::second($xs));
 			}
@@ -822,7 +827,7 @@ namespace Saber\Data\LinkedList {
 		 */
 		public static function toArrayList(LinkedList\Type $xs) {
 			$buffer = array();
-			LinkedList\Module::each($xs, function(Core\Type $x, Int32\Type $i) use ($buffer) {
+			LinkedList\Module::each($xs, function(Core\Type $x) use ($buffer) {
 				$buffer[] = $x;
 			});
 			return ArrayList\Type::box($buffer);
@@ -1166,12 +1171,15 @@ namespace Saber\Data\LinkedList {
 		 *                                                          to true
 		 */
 		public static function true(LinkedList\Type $xs) {
-			for ($zs = $xs; !$zs->__isEmpty(); $zs = $zs->tail()) {
-				if ($zs->__head() !== true) {
-					return Bool\Type::false();
-				}
+			if ($xs->__isEmpty()) {
+				return Bool\Type::true();
 			}
-			return Bool\Type::true();
+
+			if ($xs->__head() !== true) {
+				return Bool\Type::false();
+			}
+
+			return LinkedList\Module::true($xs->tail());
 		}
 
 		/**
@@ -1185,12 +1193,15 @@ namespace Saber\Data\LinkedList {
 		 *                                                          the collection evaluate to true
 		 */
 		public static function truthy(LinkedList\Type $xs) {
-			for ($zs = $xs; !$zs->__isEmpty(); $zs = $zs->tail()) {
-				if (!$zs->__head()) {
-					return Bool\Type::false();
-				}
+			if ($xs->__isEmpty()) {
+				return Bool\Type::true();
 			}
-			return Bool\Type::true();
+
+			if (!$xs->__head()) {
+				return Bool\Type::false();
+			}
+
+			return LinkedList\Module::truthy($xs->tail());
 		}
 
 		#endregion

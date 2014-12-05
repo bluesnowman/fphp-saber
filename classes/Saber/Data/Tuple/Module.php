@@ -323,6 +323,23 @@ namespace Saber\Data\Tuple {
 
 		#endregion
 
+		#region Methods -> Evaluating Operations
+
+		/**
+		 * This method evaluates whether the tuple is a pair.
+		 *
+		 * @access public
+		 * @static
+		 * @param Tuple\Type $x                                     the object to be evaluated
+		 * @return Bool\Type                                        whether the operand is an even
+		 *                                                          number
+		 */
+		public static function isPair(Tuple\Type $x) {
+			return Bool\Type::box($x->__length() == 2);
+		}
+
+		#endregion
+
 	}
 
 }

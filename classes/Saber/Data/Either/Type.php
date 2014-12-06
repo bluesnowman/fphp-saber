@@ -51,7 +51,7 @@ namespace Saber\Data\Either {
 		 * @return Either\Left\Type                                 a left node
 		 */
 		public static function left(Core\Type $x = null) {
-			if ($x !== null) {
+			if ($x === null) {
 				$x = Unit\Type::instance();
 			}
 			return new Either\Left\Type($x);
@@ -66,7 +66,7 @@ namespace Saber\Data\Either {
 		 * @return Either\Right\Type                                a right node
 		 */
 		public static function right(Core\Type $x = null) {
-			if ($x !== null) {
+			if ($x === null) {
 				$x = Unit\Type::instance();
 			}
 			return new Either\Right\Type($x);

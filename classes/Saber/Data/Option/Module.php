@@ -293,10 +293,8 @@ namespace Saber\Data\Option {
 						if ($x === null) {
 							return Bool\Type::box($y === null);
 						}
-						$module = $x->__typeOf();
-						$method = 'eq';
-						if (method_exists($module, $method)) {
-							return call_user_func_array(array($module, $method), array($x, $y));
+						else if ($x instanceof Core\Equality\Type) {
+							return $x->eq($y);
 						}
 						return Bool\Type::box(spl_object_hash($x) === spl_object_hash($y));
 					}
@@ -329,10 +327,8 @@ namespace Saber\Data\Option {
 						if ($x === null) {
 							return Bool\Type::box($y === null);
 						}
-						$module = $x->__typeOf();
-						$method = 'id';
-						if (method_exists($module, $method)) {
-							return call_user_func_array(array($module, $method), array($x, $y));
+						else if ($x instanceof Core\Equality\Type) {
+							return $x->id($y);
 						}
 						return Bool\Type::box(spl_object_hash($x) === spl_object_hash($y));
 					}

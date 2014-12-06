@@ -1098,7 +1098,7 @@ namespace Saber\Data\LinkedList {
 
 		#endregion
 
-		#region Methods -> Boolean Operations
+		#region Methods -> Logical Operations
 
 		/**
 		 * This method (aka "truthy") returns whether all of the elements of the collection evaluate

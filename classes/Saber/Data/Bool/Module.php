@@ -170,7 +170,129 @@ namespace Saber\Data\Bool {
 
 		#endregion
 
-		#region Methods -> Logical
+		#region Methods -> Ordering Operations
+
+		/**
+		 * This method compares the operands for order.
+		 *
+		 * @access public
+		 * @static
+		 * @param Bool\Type $x                                      the left operand
+		 * @param Bool\Type $y                                      the right operand
+		 * @return Int32\Type                                       the order as to whether the left
+		 *                                                          operand is less than, equals to,
+		 *                                                          or greater than the right operand
+		 */
+		public static function compare(Bool\Type $x, Bool\Type $y) {
+			if (($x === null) && ($y !== null)) {
+				return Int32\Type::negative();
+			}
+			if (($x === null) && ($y === null)) {
+				return Int32\Type::zero();
+			}
+			if (($x !== null) && ($y === null)) {
+				return Int32\Type::one();
+			}
+
+			$__x = $x->unbox();
+			$__y = $y->unbox();
+
+			if (!$__x && $__y) {
+				return Int32\Type::negative();
+			}
+			else if ($__x == $__y) {
+				return Int32\Type::zero();
+			}
+			else { // ($__x && !$__y)
+				return Int32\Type::one();
+			}
+		}
+
+		/**
+		 * This method evaluates whether the left operand is greater than or equal to the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param Bool\Type $x                                      the left operand
+		 * @param Bool\Type $y                                      the right operand
+		 * @return Bool\Type                                        whether the left operand is greater
+		 *                                                          than or equal to the right operand
+		 */
+		public static function ge(Bool\Type $x, Bool\Type $y) { // >=
+			return Bool\Type::box(Bool\Module::compare($x, $y)->unbox() >= 0);
+		}
+
+		/**
+		 * This method evaluates whether the left operand is greater than the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param Bool\Type $x                                      the left operand
+		 * @param Bool\Type $y                                      the right operand
+		 * @return Bool\Type                                        whether the left operand is greater
+		 *                                                          than the right operand
+		 */
+		public static function gt(Bool\Type $x, Bool\Type $y) { // >
+			return Bool\Type::box(Bool\Module::compare($x, $y)->unbox() > 0);
+		}
+
+		/**
+		 * This method evaluates whether the left operand is less than or equal to the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param Bool\Type $x                                      the left operand
+		 * @param Bool\Type $y                                      the right operand
+		 * @return Bool\Type                                        whether the left operand is less than
+		 *                                                          or equal to the right operand
+		 */
+		public static function le(Bool\Type $x, Bool\Type $y) { // <=
+			return Bool\Type::box(Bool\Module::compare($x, $y)->unbox() <= 0);
+		}
+
+		/**
+		 * This method evaluates whether the left operand is less than the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param Bool\Type $x                                      the left operand
+		 * @param Bool\Type $y                                      the right operand
+		 * @return Bool\Type                                        whether the left operand is less than
+		 *                                                          the right operand
+		 */
+		public static function lt(Bool\Type $x, Bool\Type $y) { // <
+			return Bool\Type::box(Bool\Module::compare($x, $y)->unbox() < 0);
+		}
+
+		/**
+		 * This method returns the numerically highest value.
+		 *
+		 * @access public
+		 * @static
+		 * @param Bool\Type $x                                      the left operand
+		 * @param Bool\Type $y                                      the right operand
+		 * @return Int32\Type                                       the maximum value
+		 */
+		public static function max(Bool\Type $x, Bool\Type $y) {
+			return (Bool\Module::compare($x, $y)->unbox() >= 0) ? $x : $y;
+		}
+
+		/**
+		 * This method returns the numerically lowest value.
+		 *
+		 * @access public
+		 * @static
+		 * @param Bool\Type $x                                      the left operand
+		 * @param Bool\Type $y                                      the right operand
+		 * @return Int32\Type                                       the minimum value
+		 */
+		public static function min(Bool\Type $x, Bool\Type $y) {
+			return (Bool\Module::compare($x, $y)->unbox() <= 0) ? $x : $y;
+		}
+
+		#endregion
+
+		#region Methods -> Logical Operations
 
 		/**
 		 * This method returns whether both operands are "true".
@@ -291,128 +413,6 @@ namespace Saber\Data\Bool {
 		 */
 		public static function xor_(Bool\Type $x, Bool\Type $y) {
 			return Bool\Type::box($x->unbox() xor $y->unbox());
-		}
-
-		#endregion
-
-		#region Methods -> Ordering Operations
-
-		/**
-		 * This method compares the operands for order.
-		 *
-		 * @access public
-		 * @static
-		 * @param Bool\Type $x                                      the left operand
-		 * @param Bool\Type $y                                      the right operand
-		 * @return Int32\Type                                       the order as to whether the left
-		 *                                                          operand is less than, equals to,
-		 *                                                          or greater than the right operand
-		 */
-		public static function compare(Bool\Type $x, Bool\Type $y) {
-			if (($x === null) && ($y !== null)) {
-				return Int32\Type::negative();
-			}
-			if (($x === null) && ($y === null)) {
-				return Int32\Type::zero();
-			}
-			if (($x !== null) && ($y === null)) {
-				return Int32\Type::one();
-			}
-
-			$__x = $x->unbox();
-			$__y = $y->unbox();
-
-			if (!$__x && $__y) {
-				return Int32\Type::negative();
-			}
-			else if ($__x == $__y) {
-				return Int32\Type::zero();
-			}
-			else { // ($__x && !$__y)
-				return Int32\Type::one();
-			}
-		}
-
-		/**
-		 * This method evaluates whether the left operand is greater than or equal to the right operand.
-		 *
-		 * @access public
-		 * @static
-		 * @param Bool\Type $x                                      the left operand
-		 * @param Bool\Type $y                                      the right operand
-		 * @return Bool\Type                                        whether the left operand is greater
-		 *                                                          than or equal to the right operand
-		 */
-		public static function ge(Bool\Type $x, Bool\Type $y) { // >=
-			return Bool\Type::box(Bool\Module::compare($x, $y)->unbox() >= 0);
-		}
-
-		/**
-		 * This method evaluates whether the left operand is greater than the right operand.
-		 *
-		 * @access public
-		 * @static
-		 * @param Bool\Type $x                                      the left operand
-		 * @param Bool\Type $y                                      the right operand
-		 * @return Bool\Type                                        whether the left operand is greater
-		 *                                                          than the right operand
-		 */
-		public static function gt(Bool\Type $x, Bool\Type $y) { // >
-			return Bool\Type::box(Bool\Module::compare($x, $y)->unbox() > 0);
-		}
-
-		/**
-		 * This method evaluates whether the left operand is less than or equal to the right operand.
-		 *
-		 * @access public
-		 * @static
-		 * @param Bool\Type $x                                      the left operand
-		 * @param Bool\Type $y                                      the right operand
-		 * @return Bool\Type                                        whether the left operand is less than
-		 *                                                          or equal to the right operand
-		 */
-		public static function le(Bool\Type $x, Bool\Type $y) { // <=
-			return Bool\Type::box(Bool\Module::compare($x, $y)->unbox() <= 0);
-		}
-
-		/**
-		 * This method evaluates whether the left operand is less than the right operand.
-		 *
-		 * @access public
-		 * @static
-		 * @param Bool\Type $x                                      the left operand
-		 * @param Bool\Type $y                                      the right operand
-		 * @return Bool\Type                                        whether the left operand is less than
-		 *                                                          the right operand
-		 */
-		public static function lt(Bool\Type $x, Bool\Type $y) { // <
-			return Bool\Type::box(Bool\Module::compare($x, $y)->unbox() < 0);
-		}
-
-		/**
-		 * This method returns the numerically highest value.
-		 *
-		 * @access public
-		 * @static
-		 * @param Bool\Type $x                                      the left operand
-		 * @param Bool\Type $y                                      the right operand
-		 * @return Int32\Type                                       the maximum value
-		 */
-		public static function max(Bool\Type $x, Bool\Type $y) {
-			return (Bool\Module::compare($x, $y)->unbox() >= 0) ? $x : $y;
-		}
-
-		/**
-		 * This method returns the numerically lowest value.
-		 *
-		 * @access public
-		 * @static
-		 * @param Bool\Type $x                                      the left operand
-		 * @param Bool\Type $y                                      the right operand
-		 * @return Int32\Type                                       the minimum value
-		 */
-		public static function min(Bool\Type $x, Bool\Type $y) {
-			return (Bool\Module::compare($x, $y)->unbox() <= 0) ? $x : $y;
 		}
 
 		#endregion

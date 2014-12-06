@@ -126,8 +126,8 @@ namespace Saber\Data\Ratio {
 		 */
 		public static function pow(Ratio\Type $x, Int32\Type $exponent) {
 			return Ratio\Type::make(
-				Int32\Type::pow($x->numerator(), $exponent),
-				Int32\Type::pow($x->denominator(), $exponent)
+				Int32\Module::pow($x->numerator(), $exponent),
+				Int32\Module::pow($x->denominator(), $exponent)
 			);
 		}
 

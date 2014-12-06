@@ -1005,7 +1005,7 @@ namespace Saber\Data\ArrayList {
 
 		#endregion
 
-		#region Methods -> Boolean Operations
+		#region Methods -> Logical Operations
 
 		/**
 		 * This method (aka "truthy") returns whether all of the elements of the list evaluate

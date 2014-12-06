@@ -178,6 +178,27 @@ $object = Int32\Module::sequence(Int32\Type::zero(), Tuple\Type::box(Int32\Type:
 
 Similar methods exist as well for Double, Float, and Integer.
 
+### Exceptions
+
+To throw an exception, do the following:
+
+````
+$message = 'Hi, my name is :name';
+$name = 'Blue Snowman';
+$code = Int32\Type::zero();
+Control\Exception\Module::raise(
+    new Throwable\UnexpectedValue\Exception($message, array(':name' => $name), $code)
+);
+````
+
+Besides using the traditional `try/catch` statement, you can use the built in `try_` control feature:
+
+````
+$either = Control\Exception\Module::try_(function() {
+	// do something that might cause an exception to be thrown
+});
+````
+
 ### Hierarchy
 
 Below describes the relationships between data types:
@@ -195,6 +216,9 @@ Below describes the relationships between data types:
         + LinkedList\Type
         + String\Type
       + Option\Type
+    + Either\Type
+      + Either\Type\Left
+      + Either\Type\Right
     + Num\Type
       + Floating\Type : Fractional\Type
         + Double\Type : Real\Type
@@ -204,14 +228,17 @@ Below describes the relationships between data types:
         + Integer\Type
       + Ratio\Type : Fractional\Type
     + Object\Type
+    + Regex\Type
     + Tuple\Type
     + Unit\Type
   + Throwable\Runtime\Exception
     + Throwable\EmptyCollection\Exception
     + Throwable\InvalidArgument\Exception
     + Throwable\OutOfBounds\Exception
+    + Throwable\Parse\Exception
     + Throwable\UnexpectedValue\Exception
     + Throwable\UnimplementedMethod\Exception
+    + Throwable\Unknown\Exception
 ````
 
 Most data types have a module associated with it.  A module contains a set of common static methods for processing its respective data type.

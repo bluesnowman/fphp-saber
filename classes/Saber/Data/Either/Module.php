@@ -40,6 +40,24 @@ namespace Saber\Data\Either {
 
 		#endregion
 
+		#region Methods -> Conversion Operations
+
+		/**
+		 * This method returns the latter value should the former value evaluates
+		 * to null.
+		 *
+		 * @access public
+		 * @static
+		 * @param Either\Type $x                                    the value to be evaluated
+		 * @param Either\Type $y                                    the default value
+		 * @return Either\Type                                      the result
+		 */
+		public static function nvl(Either\Type $x = null, Either\Type $y = null) {
+			return ($x !== null) ? $x : (($y !== null) ? $y : Either\Type::left());
+		}
+
+		#endregion
+
 	}
 
 }

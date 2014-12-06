@@ -26,16 +26,16 @@ namespace Saber\Data\Either {
 		#region Methods -> Basic Operations
 
 		/**
-		 * This method returns a tuple with the elements swapped.
+		 * This method returns the swapped node.
 		 *
 		 * @access public
 		 * @static
-		 * @param Either\Type $xs                                   the left operand
+		 * @param Either\Type $x                                    the node to be swapped
 		 * @return Either\Type                                      a tuple with the element swapped
 		 */
-		public static function swap(Either\Type $xs) {
-			$x = $xs->unbox();
-			return ($xs->__isLeft()) ? Either\Type::right($x) : Either\Type::left($x);
+		public static function swap(Either\Type $x) {
+			$value = $x->unbox();
+			return ($x->__isLeft()) ? Either\Type::right($value) : Either\Type::left($value);
 		}
 
 		#endregion

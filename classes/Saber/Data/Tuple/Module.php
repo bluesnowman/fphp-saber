@@ -331,11 +331,10 @@ namespace Saber\Data\Tuple {
 		 * @access public
 		 * @static
 		 * @param Tuple\Type $x                                     the object to be evaluated
-		 * @return Bool\Type                                        whether the operand is an even
-		 *                                                          number
+		 * @return Bool\Type                                        whether the tuple is a pair
 		 */
 		public static function isPair(Tuple\Type $x) {
-			return Bool\Type::box($x->__length() == 2);
+			return $x->isPair();
 		}
 
 		#endregion

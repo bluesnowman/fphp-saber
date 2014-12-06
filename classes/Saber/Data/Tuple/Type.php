@@ -171,6 +171,17 @@ namespace Saber\Data\Tuple {
 		}
 
 		/**
+		 * This method evaluates whether the tuple is a pair.
+		 *
+		 * @access public
+		 * @final
+		 * @return boolean                                          whether the tuple is a pair
+		 */
+		public final function __isPair() {
+			return ($this->__length() == 2);
+		}
+
+		/**
 		 * This method returns the length of this array list.
 		 *
 		 * @access public
@@ -239,6 +250,17 @@ namespace Saber\Data\Tuple {
 		 */
 		public final function isEmpty() {
 			return Bool\Type::box($this->__isEmpty());
+		}
+
+		/**
+		 * This method evaluates whether the tuple is a pair.
+		 *
+		 * @access public
+		 * @final
+		 * @return Bool\Type                                        whether the tuple is a pair
+		 */
+		public final function isPair() {
+			return Bool\Type::box($this->__isPair());
 		}
 
 		/**

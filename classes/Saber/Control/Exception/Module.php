@@ -18,13 +18,13 @@
  
 namespace Saber\Control\Exception {
 
-	use \Saber\Core;
+	use \Saber\Control;
 	use \Saber\Data\Int32;
-	use \Saber\Data\Option;
+	use \Saber\Data\Either;
 	use \Saber\Data\Unit;
 	use \Saber\Throwable;
 
-	final class Type extends Core\Module {
+	final class Module extends Control\Module {
 
 		/**
 		 * This method returns a Left\Type when an exception is encountered or a Right\Type
@@ -33,18 +33,17 @@ namespace Saber\Control\Exception {
 		 * @public
 		 * @static
 		 * @param callable $tryblock                                the try-block to be processed
-		 * @return Option\Type                                      either a Left\Type or a Right\Type
+		 * @return Either\Type                                      either a Left\Type or a Right\Type
 		 */
-		public static function try_(callable $tryblock) { // TOOD re-implement using Either\Type
+		public static function try_(callable $tryblock) {
 			try {
-				$result = $tryblock();
-				if ($result !== null) {
-					Option\Type::some($result);
-				}
-				return Option\Type::some(Unit\Type::instance());
+				return Either\Type::right($tryblock());
 			}
-			catch (\Exception $e) {
-				return Option\Type::some($e);
+			catch (Throwable\Runtime\Exception $re) {
+				return Either\Type::left($re);
+			}
+			catch (\Exception $ue) {
+				return Either\Type::left(new Throwable\Unknown\Exception($ue));
 			}
 		}
 

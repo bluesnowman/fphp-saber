@@ -186,9 +186,11 @@ To throw an exception, do the following:
 $message = 'Hi, my name is :name';
 $name = 'Blue Snowman';
 $code = Int32\Type::zero();
-Control\Exception\Module::raise(
-    new Throwable\UnexpectedValue\Exception($message, array(':name' => $name), $code)
-);
+Control\Exception\Module::raise(new Throwable\UnexpectedValue\Exception(
+    $message,                // optional
+    array(':name' => $name), // optional
+    $code                    // optional
+));
 ````
 
 Besides using the traditional `try/catch` statement, you can use the built in `try_` control feature:
@@ -198,6 +200,8 @@ $either = Control\Exception\Module::try_(function() {
 	// do something that might cause an exception to be thrown
 });
 ````
+
+This will wrap the result into an `Either\Type`.  Convention dictates that the exception will be wrapped in an `Either\Left\Type` and a successful result will be wrapped in an `Either\Right\Type`.
 
 ### Hierarchy
 

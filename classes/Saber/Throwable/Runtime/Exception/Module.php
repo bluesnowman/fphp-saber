@@ -19,11 +19,89 @@
 namespace Saber\Throwable\Runtime\Exception {
 
 	use \Saber\Core;
+	use \Saber\Data\ArrayList;
 	use \Saber\Data\Bool;
 	use \Saber\Data\Int32;
+	use \Saber\Data\String;
 	use \Saber\Throwable;
 
 	final class Module extends Core\Module {
+
+		#region Methods -> Informational Operations
+
+		/**
+		 * This method returns the exception code.
+		 *
+		 * @access public
+		 * @static
+		 * @param Throwable\Runtime\Exception $x                    the exception to be processed
+		 * @return integer                                          the exception code
+		 */
+		public static function getCode(Throwable\Runtime\Exception $x) {
+			return Int32\Type::box($x->__getCode());
+		}
+
+		/**
+		 * This method returns the source file's name.
+		 *
+		 * @access public
+		 * @static
+		 * @param Throwable\Runtime\Exception $x                    the exception to be processed
+		 * @return string                                           the source file's name
+		 */
+		public static function getFile(Throwable\Runtime\Exception $x) {
+			return String\Type::box($x->__getFile());
+		}
+
+		/**
+		 * This method returns the line at which the exception was thrown.
+		 *
+		 * @access public
+		 * @static
+		 * @param Throwable\Runtime\Exception $x                    the exception to be processed
+		 * @return integer                                          the source line
+		 */
+		public static function getLine(Throwable\Runtime\Exception $x) {
+			return Int32\Type::box($x->__getLine());
+		}
+
+		/**
+		 * This method returns the exception message.
+		 *
+		 * @access public
+		 * @static
+		 * @param Throwable\Runtime\Exception $x                    the exception to be processed
+		 * @return string                                           the exception message
+		 */
+		public static function getMessage(Throwable\Runtime\Exception $x) {
+			return String\Type::box($x->__getMessage());
+		}
+
+		/**
+		 * This method returns any backtrace information.
+		 *
+		 * @access public
+		 * @static
+		 * @param Throwable\Runtime\Exception $x                    the exception to be processed
+		 * @return array                                            any backtrace information
+		 */
+		public static function getTrace(Throwable\Runtime\Exception $x) {
+			return ArrayList\Type::box($x->__getTrace()); // TODO re-implement to use recursive make
+		}
+
+		/**
+		 * This method returns the backtrace information as a string.
+		 *
+		 * @access public
+		 * @static
+		 * @param Throwable\Runtime\Exception $x                    the exception to be processed
+		 * @return string                                           the backtrace information
+		 */
+		public static function getTraceAsString(Throwable\Runtime\Exception $x) {
+			return String\Type::box($x->__getTraceAsString());
+		}
+
+		#endregion
 
 		#region Methods -> Equality Operations
 
@@ -41,7 +119,7 @@ namespace Saber\Throwable\Runtime\Exception {
 			$type = $x->__typeOf();
 			if ($y !== null) {
 				if ($y instanceof $type) {
-					return Bool\Type::box($x->getCode() === $x->getCode());
+					return Bool\Type::box($x->__getCode() === $y->__getCode());
 				}
 			}
 			return Bool\Type::false();
@@ -120,8 +198,8 @@ namespace Saber\Throwable\Runtime\Exception {
 				return Int32\Type::one();
 			}
 
-			$x = $x->getCode();
-			$y = $y->getCode();
+			$x = $x->__getCode();
+			$y = $y->__getCode();
 
 			if ($x < $y) {
 				return Int32\Type::negative();

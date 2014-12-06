@@ -88,6 +88,8 @@ This library has adopted the following naming conventions for certain variables:
 `$n` usually represents a count.<br />
 `$p` usually represents a position.<br />
 
+`$e` usually represents an exception.<br />
+
 ### Callables
 
 An `$operator` function is used to find the result of applying an operator to one or more operands.
@@ -118,6 +120,13 @@ A `$subroutine` function is used to perform an operation that does return a valu
 ````
 Core\Type function(Core\Type $x)
 Core\Type function(Core\Type $x, Int32\Type $i)
+````
+
+A `$tryblock` function is used to process a block of code that may throw a runtime exception.
+
+````
+Core\Type function()
+Core\Type function()
 ````
 
 ### Choices

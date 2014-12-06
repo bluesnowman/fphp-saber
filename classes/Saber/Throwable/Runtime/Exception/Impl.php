@@ -71,14 +71,13 @@ namespace Saber\Throwable\Runtime\Exception {
 		 * result when the method name is preceded by a double-underscore.
 		 *
 		 * @access public
-		 * @final
 		 * @param string $method                                    the method being called
 		 * @param array $args                                       the arguments associated with the call
 		 * @return mixed                                            the un-boxed value
 		 * @throws Throwable\UnimplementedMethod\Exception          indicates that the class has not
 		 *                                                          implemented the called method
 		 */
-		public final function __call($method, $args) {
+		public function __call($method, $args) {
 			$module = '\\Saber\\Throwable\\Runtime\\Exception\\Module';
 			if (preg_match('/^__[a-z_][a-z0-9_]*$/i', $method)) {
 				$method = substr($method, 2);
@@ -104,13 +103,72 @@ namespace Saber\Throwable\Runtime\Exception {
 		}
 
 		/**
+		 * This method returns the exception code.
+		 *
+		 * @access public
+		 * @return integer                                          the exception code
+		 */
+		public function __getCode() {
+			return $this->getCode();
+		}
+
+		/**
+		 * This method returns the source file's name.
+		 *
+		 * @access public
+		 * @return string                                           the source file's name
+		 */
+		public function __getFile() {
+			return $this->getFile();
+		}
+
+		/**
+		 * This method returns the line at which the exception was thrown.
+		 *
+		 * @access public
+		 * @return integer                                          the source line
+		 */
+		public function __getLine() {
+			return $this->getLine();
+		}
+
+		/**
+		 * This method returns the exception message.
+		 *
+		 * @access public
+		 * @return string                                           the exception message
+		 */
+		public function __getMessage() {
+			return $this->getMessage();
+		}
+
+		/**
+		 * This method returns any backtrace information.
+		 *
+		 * @access public
+		 * @return array                                            any backtrace information
+		 */
+		public function __getTrace() {
+			return $this->getTrace();
+		}
+
+		/**
+		 * This method returns the backtrace information as a string.
+		 *
+		 * @access public
+		 * @return string                                           the backtrace information
+		 */
+		public function __getTraceAsString() {
+			return $this->getTraceAsString();
+		}
+
+		/**
 		 * This method returns the object's hash code.
 		 *
 		 * @access public
-		 * @final
 		 * @return string                                           the object's hash code
 		 */
-		public final function __hashCode() {
+		public function __hashCode() {
 			return spl_object_hash($this);
 		}
 
@@ -118,17 +176,16 @@ namespace Saber\Throwable\Runtime\Exception {
 		 * This method returns the object as a string.
 		 *
 		 * @access public
-		 * @final
 		 * @return string                                           the object as a string
 		 */
-		public final function __toString() {
+		public function __toString() {
 			return sprintf(
 				'%s [ %s ]: %s ~ %s [ %d ]',
 				$this->__typeOf(),
-				$this->getCode(),
-				strip_tags($this->getMessage()),
-				$this->getFile(),
-				$this->getLine()
+				$this->__getCode(),
+				strip_tags($this->__getMessage()),
+				$this->__getFile(),
+				$this->__getLine()
 			);
 		}
 
@@ -136,10 +193,9 @@ namespace Saber\Throwable\Runtime\Exception {
 		 * This method returns the object's class type.
 		 *
 		 * @access public
-		 * @final
 		 * @return string                                           the object's class type
 		 */
-		public final function __typeOf() {
+		public function __typeOf() {
 			return get_class($this);
 		}
 

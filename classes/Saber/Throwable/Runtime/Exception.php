@@ -20,6 +20,60 @@ namespace Saber\Throwable\Runtime {
 
 	use \Saber\Core;
 
-	interface Exception extends Core\Type { }
+	interface Exception extends Core\Type {
+
+		#region Methods -> Native Oriented
+
+		/**
+		 * This method returns the exception code.
+		 *
+		 * @access public
+		 * @return integer                                          the exception code
+		 */
+		public function __getCode();
+
+		/**
+		 * This method returns the source file's name.
+		 *
+		 * @access public
+		 * @return string                                           the source file's name
+		 */
+		public function __getFile();
+
+		/**
+		 * This method returns the line at which the exception was thrown.
+		 *
+		 * @access public
+		 * @return integer                                          the source line
+		 */
+		public function __getLine();
+
+		/**
+		 * This method returns the exception message.
+		 *
+		 * @access public
+		 * @return string                                           the exception message
+		 */
+		public function __getMessage();
+
+		/**
+		 * This method returns any backtrace information.
+		 *
+		 * @access public
+		 * @return array                                            any backtrace information
+		 */
+		public function __getTrace();
+
+		/**
+		 * This method returns the backtrace information as a string.
+		 *
+		 * @access public
+		 * @return string                                           the backtrace information
+		 */
+		public function __getTraceAsString();
+
+		#endregion
+
+	}
 
 }

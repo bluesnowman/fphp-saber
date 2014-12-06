@@ -217,8 +217,8 @@ Below describes the relationships between data types:
         + String\Type
       + Option\Type
     + Either\Type
-      + Either\Type\Left
-      + Either\Type\Right
+      + Either\Left\Type
+      + Either\Right\Type
     + Num\Type
       + Floating\Type : Fractional\Type
         + Double\Type : Real\Type

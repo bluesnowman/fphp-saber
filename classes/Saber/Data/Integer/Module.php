@@ -544,19 +544,6 @@ namespace Saber\Data\Integer {
 		}
 
 		/**
-		 * This method evaluates whether the operand is an odd number.
-		 *
-		 * @access public
-		 * @static
-		 * @param Integer\Type $x                                   the object to be evaluated
-		 * @return Bool\Type                                        whether the operand is an odd
-		 *                                                          number
-		 */
-		public static function isOdd(Integer\Type $x) {
-			return Bool\Type::box(gmp_strval(gmp_div_r($x->unbox(), '2')) != '0');
-		}
-
-		/**
 		 * This method returns whether the operand is a negative number.
 		 *
 		 * @access public
@@ -567,6 +554,19 @@ namespace Saber\Data\Integer {
 		 */
 		public static function isNegative(Integer\Type $x) {
 			return Bool\Type::box(gmp_sign($x->unbox()) == -1);
+		}
+
+		/**
+		 * This method evaluates whether the operand is an odd number.
+		 *
+		 * @access public
+		 * @static
+		 * @param Integer\Type $x                                   the object to be evaluated
+		 * @return Bool\Type                                        whether the operand is an odd
+		 *                                                          number
+		 */
+		public static function isOdd(Integer\Type $x) {
+			return Bool\Type::box(gmp_strval(gmp_div_r($x->unbox(), '2')) != '0');
 		}
 
 		#endregion

@@ -559,19 +559,6 @@ namespace Saber\Data\Int32 {
 		}
 
 		/**
-		 * This method evaluates whether the operand is an odd number.
-		 *
-		 * @access public
-		 * @static
-		 * @param Int32\Type $x                                     the object to be evaluated
-		 * @return Bool\Type                                        whether the operand is an odd
-		 *                                                          number
-		 */
-		public static function isOdd(Int32\Type $x) {
-			return Bool\Type::box(($x->unbox() % 2) != 0);
-		}
-
-		/**
 		 * This method returns whether the operand is a negative number.
 		 *
 		 * @access public
@@ -582,6 +569,19 @@ namespace Saber\Data\Int32 {
 		 */
 		public static function isNegative(Int32\Type $x) {
 			return Bool\Type::box($x->unbox() < 0);
+		}
+
+		/**
+		 * This method evaluates whether the operand is an odd number.
+		 *
+		 * @access public
+		 * @static
+		 * @param Int32\Type $x                                     the object to be evaluated
+		 * @return Bool\Type                                        whether the operand is an odd
+		 *                                                          number
+		 */
+		public static function isOdd(Int32\Type $x) {
+			return Bool\Type::box(($x->unbox() % 2) != 0);
 		}
 
 		#endregion

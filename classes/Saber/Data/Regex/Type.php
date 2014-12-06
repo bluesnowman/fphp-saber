@@ -151,7 +151,7 @@ namespace Saber\Data\Regex {
 		 * @access public
 		 * @final
 		 * @param integer $depth                                    how many levels to unbox
-		 * @return boolean                                          the un-boxed value
+		 * @return string                                           the un-boxed value
 		 */
 		public final function unbox($depth = 0) {
 			return $this->value;

@@ -139,6 +139,35 @@ namespace Saber\Data\Unit {
 			$this->assertEquals($e0, $p0);
 		}
 
+		/**
+		 * This method provides the data for testing that a value is converted to a string.
+		 *
+		 * @return array
+		 */
+		public function dataToString() {
+			$data = array(
+				array(array(null), array('null')),
+				array(array(''), array('null')),
+				array(array(0), array('null')),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests that a value is converted to a string.
+		 *
+		 * @dataProvider dataToString
+		 */
+		public function testToString(array $provided, array $expected) {
+			//$this->markTestIncomplete();
+
+			$p0 = Unit\Type::instance($provided[0])->__toString();
+			$e0 = $expected[0];
+
+			$this->assertInternalType('string', $p0);
+			$this->assertSame($e0, $p0);
+		}
+
 	}
 
 }

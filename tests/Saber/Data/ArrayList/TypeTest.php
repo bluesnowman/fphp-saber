@@ -72,17 +72,14 @@ namespace Saber\Data\ArrayList {
 			//$this->markTestIncomplete();
 
 			$p0 = ArrayList\Type::box($provided);
-			$e0 = new ArrayList\Type($expected);
 
 			$this->assertInstanceOf('\\Saber\\Data\\ArrayList\\Type', $p0);
 
 			$p1 = $p0->unbox();
-			$e1 = $e0->unbox();
+			$e1 = count($expected);
 
 			$this->assertInternalType('array', $p1);
-			$this->assertInternalType('array', $e1);
-			$this->assertCount(count($expected), $p1);
-			$this->assertCount(count($e1), $p1);
+			$this->assertCount($e1, $p1);
 		}
 
 		/**
@@ -106,17 +103,14 @@ namespace Saber\Data\ArrayList {
 			//$this->markTestIncomplete();
 
 			$p0 = ArrayList\Type::make($provided);
-			$e0 = new ArrayList\Type($expected);
 
 			$this->assertInstanceOf('\\Saber\\Data\\ArrayList\\Type', $p0);
 
 			$p1 = $p0->unbox();
-			$e1 = $e0->unbox();
+			$e1 = count($expected);
 
 			$this->assertInternalType('array', $p1);
-			$this->assertInternalType('array', $e1);
-			$this->assertCount(count($expected), $p1);
-			$this->assertCount(count($e1), $p1);
+			$this->assertCount($e1, $p1);
 		}
 
 		/**
@@ -130,9 +124,10 @@ namespace Saber\Data\ArrayList {
 			$this->assertInstanceOf('\\Saber\\Data\\ArrayList\\Type', $p0);
 
 			$p1 = $p0->unbox();
+			$e1 = 0;
 
 			$this->assertInternalType('array', $p1);
-			$this->assertCount(0, $p1);
+			$this->assertCount($e1, $p1);
 		}
 
 		/**
@@ -157,17 +152,14 @@ namespace Saber\Data\ArrayList {
 			//$this->markTestIncomplete();
 
 			$p0 = ArrayList\Type::replicate($provided[0], Int32\Type::make($provided[1]));
-			$e0 = new ArrayList\Type($expected);
 
 			$this->assertInstanceOf('\\Saber\\Data\\ArrayList\\Type', $p0);
 
 			$p1 = $p0->unbox();
-			$e1 = $e0->unbox();
+			$e1 = count($expected);
 
 			$this->assertInternalType('array', $p1);
-			$this->assertInternalType('array', $e1);
-			$this->assertCount(count($expected), $p1);
-			$this->assertCount(count($e1), $p1);
+			$this->assertCount($e1, $p1);
 		}
 
 		#endregion

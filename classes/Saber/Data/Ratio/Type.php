@@ -288,7 +288,6 @@ namespace Saber\Data\Ratio {
 				return array($this->__numerator(), $this->__denominator());
 			}
 			return $this->value;
-
 		}
 
 		#endregion

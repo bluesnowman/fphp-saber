@@ -33,7 +33,7 @@ namespace Saber\Data\LinkedList\Nil {
 		 * @final
 		 */
 		public final function __construct() {
-			$this->value = null;
+			$this->value = array();
 		}
 
 		#endregion

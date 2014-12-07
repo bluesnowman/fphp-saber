@@ -215,7 +215,7 @@ namespace Saber\Data\LinkedList {
 		 * @return boolean                                          whether the linked list is empty
 		 */
 		public final function __isEmpty() {
-			return ($this->value instanceof LinkedList\Nil\Type);
+			return ($this instanceof LinkedList\Nil\Type);
 		}
 
 		/**

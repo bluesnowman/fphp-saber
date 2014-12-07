@@ -118,17 +118,14 @@ namespace Saber\Data\LinkedList\Cons {
 		 * @return array                                            the un-boxed value
 		 */
 		public final function unbox($depth = 0) {
-			if ($depth > 0) {
-				$buffer = array();
-				for ($zs = $this; ! $zs->__isEmpty(); $zs = $zs->tail()) {
-					$z = $zs->head();
-					$buffer[] = ($z instanceof Core\Boxable\Type)
-						? $z->unbox($depth - 1)
-						: $z;
-				}
-				return $buffer;
+			$buffer = array();
+			for ($zs = $this; ! $zs->__isEmpty(); $zs = $zs->tail()) {
+				$z = $zs->head();
+				$buffer[] = (($depth > 0) && ($z instanceof Core\Boxable\Type))
+					? $z->unbox($depth - 1)
+					: $z;
 			}
-			return $this->value;
+			return $buffer;
 		}
 
 		#endregion

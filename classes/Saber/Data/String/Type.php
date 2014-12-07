@@ -112,16 +112,16 @@ namespace Saber\Data\String {
 		 *
 		 * @access public
 		 * @static
+		 * @param Char\Type $x                                      the object to be replicated
 		 * @param Int32\Type $n                                     the number of times to replicate
-		 * @param Char\Type $y                                      the object to be replicated
 		 * @return String\Type                                      the string
 		 */
-		public static function replicate(Int32\Type $n, Char\Type $y) {
+		public static function replicate(Char\Type $x, Int32\Type $n) {
 			$buffer = '';
 			$length = $n->unbox();
 
 			for ($i = 0; $i < $length; $i++) {
-				$buffer .= $y->__toString();
+				$buffer .= $x->__toString();
 			}
 
 			return String\Type::box($buffer);

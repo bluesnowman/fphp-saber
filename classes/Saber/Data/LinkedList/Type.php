@@ -132,15 +132,15 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
+		 * @param Core\Type $x                                      the object to be replicated
 		 * @param Int32\Type $n                                     the number of times to replicate
-		 * @param Core\Type $y                                      the object to be replicated
 		 * @return LinkedList\Type                                  the collection
 		 */
-		public static function replicate(Int32\Type $n, Core\Type $y) {
+		public static function replicate(Core\Type $x, Int32\Type $n) {
 			if ($n->unbox() <= 0) {
 				return LinkedList\Type::nil();
 			}
-			return LinkedList\Type::cons($y, LinkedList\Type::replicate(Int32\Module::decrement($n), $y));
+			return LinkedList\Type::cons($x, LinkedList\Type::replicate($x, Int32\Module::decrement($n)));
 		}
 
 		#endregion

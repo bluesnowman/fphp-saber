@@ -109,15 +109,15 @@ namespace Saber\Data\ArrayList {
 		 * This method creates a list of "n" length with every element set to the given object.
 		 *
 		 * @access public
+		 * @param Core\Type $x                                      the object to be replicated
 		 * @param Int32\Type $n                                     the number of times to replicate
-		 * @param Core\Type $y                                      the object to be replicated
 		 * @return ArrayList\Type                                   the collection
 		 */
-		public static function replicate(Int32\Type $n, Core\Type $y) {
+		public static function replicate(Core\Type $x, Int32\Type $n) {
 			$buffer = array();
 
 			for ($i = $n->unbox() - 1; $i >= 0; $i--) {
-				$buffer[] = $y;
+				$buffer[] = $x;
 			}
 
 			return new ArrayList\Type($buffer);

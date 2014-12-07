@@ -234,8 +234,8 @@ namespace Saber\Data\String {
 		 */
 		public function dataReplicate() {
 			$data = array(
-				array(array(1, 's'), array('s')),
-				array(array(5, 's'), array('sssss')),
+				array(array('s', 1), array('s')),
+				array(array('s', 5), array('sssss')),
 			);
 			return $data;
 		}
@@ -248,7 +248,7 @@ namespace Saber\Data\String {
 		public function testReplicate(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
-			$p0 = String\Type::replicate(Int32\Type::make($provided[0]), Char\Type::make($provided[1]));
+			$p0 = String\Type::replicate(Char\Type::make($provided[0]), Int32\Type::make($provided[1]));
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\String\\Type', $p0);

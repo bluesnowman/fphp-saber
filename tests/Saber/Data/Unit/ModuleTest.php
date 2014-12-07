@@ -25,7 +25,7 @@ namespace Saber\Data\Unit {
 	/**
 	 * @group ModuleTest
 	 */
-	class ModuleTest extends Core\Test {
+	final class ModuleTest extends Core\Test {
 
 		/**
 		 * This method tests the ability to make a choice.

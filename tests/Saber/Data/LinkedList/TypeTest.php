@@ -28,6 +28,24 @@ namespace Saber\Data\LinkedList {
 	final class TypeTest extends Core\Test {
 
 		/**
+		 * This method tests the data type.
+		 */
+		public function testType() {
+			//$this->markTestIncomplete();
+
+			$p0 = new LinkedList\Nil\Type();
+
+			$this->assertInstanceOf('\\Saber\\Data\\LinkedList\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Vector\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Collection\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Core\\Equality\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Core\\Comparable\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Core\\Boxable\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Core\\Type', $p0);
+		}
+
+		/**
 		 * This method provides the data for testing the boxing of a value.
 		 *
 		 * @return array
@@ -50,10 +68,6 @@ namespace Saber\Data\LinkedList {
 			$p0 = LinkedList\Type::box($provided);
 
 			$this->assertInstanceOf('\\Saber\\Data\\LinkedList\\Type', $p0);
-			$this->assertInstanceOf('\\Saber\\Data\\Vector\\Type', $p0);
-			$this->assertInstanceOf('\\Saber\\Data\\Collection\\Type', $p0);
-			$this->assertInstanceOf('\\Saber\\Data\\Type', $p0);
-			$this->assertInstanceOf('\\Saber\\Core\\Type', $p0);
 
 			$p1 = $p0->unbox();
 			$e1 = count($expected);
@@ -85,10 +99,6 @@ namespace Saber\Data\LinkedList {
 			$p0 = LinkedList\Type::make($provided);
 
 			$this->assertInstanceOf('\\Saber\\Data\\LinkedList\\Type', $p0);
-			$this->assertInstanceOf('\\Saber\\Data\\Vector\\Type', $p0);
-			$this->assertInstanceOf('\\Saber\\Data\\Collection\\Type', $p0);
-			$this->assertInstanceOf('\\Saber\\Data\\Type', $p0);
-			$this->assertInstanceOf('\\Saber\\Core\\Type', $p0);
 
 			$p1 = $p0->unbox();
 			$e1 = count($expected);
@@ -106,10 +116,6 @@ namespace Saber\Data\LinkedList {
 			$p0 = LinkedList\Type::empty_();
 
 			$this->assertInstanceOf('\\Saber\\Data\\LinkedList\\Type', $p0);
-			$this->assertInstanceOf('\\Saber\\Data\\Vector\\Type', $p0);
-			$this->assertInstanceOf('\\Saber\\Data\\Collection\\Type', $p0);
-			$this->assertInstanceOf('\\Saber\\Data\\Type', $p0);
-			$this->assertInstanceOf('\\Saber\\Core\\Type', $p0);
 
 			$p1 = $p0->unbox();
 
@@ -141,10 +147,6 @@ namespace Saber\Data\LinkedList {
 			$p0 = LinkedList\Type::replicate($provided[0], Int32\Type::make($provided[1]));
 
 			$this->assertInstanceOf('\\Saber\\Data\\LinkedList\\Type', $p0);
-			$this->assertInstanceOf('\\Saber\\Data\\Vector\\Type', $p0);
-			$this->assertInstanceOf('\\Saber\\Data\\Collection\\Type', $p0);
-			$this->assertInstanceOf('\\Saber\\Data\\Type', $p0);
-			$this->assertInstanceOf('\\Saber\\Core\\Type', $p0);
 
 			$p1 = $p0->unbox();
 			$e1 = count($expected);

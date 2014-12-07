@@ -24,113 +24,26 @@ namespace Saber\Data\String {
 	use \Saber\Data\String;
 
 	/**
-	 * @group TypeTestx
+	 * @group TypeTest
 	 */
 	final class TypeTest extends Core\Test {
 
 		/**
-		 * This method provides the data for testing if all elements pass the truthy test.
-		 *
-		 * @return array
+		 * This method tests the data type.
 		 */
-		public function dataAll() {
-			$data = array(
-				array(array('', 's'), array(true)),
-				array(array('s', 's'), array(true)),
-				array(array('w', 's'), array(false)),
-				array(array('sssss', 's'), array(true)),
-				array(array('wssss', 's'), array(false)),
-				array(array('sswss', 's'), array(false)),
-				array(array('ssssw', 's'), array(false)),
-			);
-			return $data;
-		}
+		public function testType() {
+			//$this->markTestIncomplete();
 
-		/**
-		 * This method tests if all elements pass the truthy test.
-		 *
-		 * @dataProvider dataAll
-		 */
-		public function testAll(array $provided, array $expected) {
-			$this->markTestIncomplete();
-
-			$x = String\Type::make($provided[0]);
-			$y = Char\Type::make($provided[1]);
-
-			$p0 = $x->all(function(Core\Any $x, Int32\Type $i) use ($y) {
-				return $x->eq($y);
-			});
-			$e0 = $expected[0];
-
-			$this->assertInstanceOf('\\Saber\\Data\\Bool\\Type', $p0);
-			$this->assertSame($e0, $p0->unbox());
-		}
-
-		/**
-		 * This method provides the data for testing if any elements pass the truthy test.
-		 *
-		 * @return array
-		 */
-		public function dataAny() {
-			$data = array(
-				array(array('', 's'), array(false)),
-				array(array('s', 's'), array(true)),
-				array(array('w', 's'), array(false)),
-				array(array('string', 's'), array(true)),
-				array(array('string', 'i'), array(true)),
-				array(array('string', 'g'), array(true)),
-				array(array('string', 'x'), array(false)),
-			);
-			return $data;
-		}
-
-		/**
-		 * This method tests if any elements pass the truthy test.
-		 *
-		 * @dataProvider dataAny
-		 */
-		public function testAny(array $provided, array $expected) {
-			$this->markTestIncomplete();
-
-			$x = String\Type::make($provided[0]);
-			$y = Char\Type::make($provided[1]);
-
-			$p0 = $x->any(function(Core\Any $x, Int32\Type $i) use ($y) {
-				return $x->eq($y);
-			});
-			$e0 = $expected[0];
-
-			$this->assertInstanceOf('\\Saber\\Data\\Bool\\Type', $p0);
-			$this->assertSame($e0, $p0->unbox());
-		}
-
-		/**
-		 * This method provides the data for testing that a value is appended.
-		 *
-		 * @return array
-		 */
-		public function dataAppend() {
-			$data = array(
-				array(array('', 's'), array('s')),
-				array(array('s', 's'), array('ss')),
-				array(array('string', 's'), array('strings')),
-			);
-			return $data;
-		}
-
-		/**
-		 * This method tests that a value is appended.
-		 *
-		 * @dataProvider dataAppend
-		 */
-		public function testAppend(array $provided, array $expected) {
-			$this->markTestIncomplete();
-
-			$p0 = String\Type::make($provided[0])->append(Char\Type::make($provided[1]));
-			$e0 = $expected[0];
+			$p0 = new String\Type('test');
 
 			$this->assertInstanceOf('\\Saber\\Data\\String\\Type', $p0);
-			$this->assertSame($e0, $p0->unbox());
+			$this->assertInstanceOf('\\Saber\\Data\\Vector\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Collection\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Core\\Equality\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Core\\Comparable\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Core\\Boxable\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Core\\Type', $p0);
 		}
 
 		/**
@@ -153,20 +66,119 @@ namespace Saber\Data\String {
 		public function testBox(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
-			$p0 = String\Type::make($provided[0]);
-			$e0 = new String\Type($expected[0]);
+			$p0 = String\Type::box($provided[0]);
 
-			$this->assertInstanceOf('\\Saber\\Core\\Type', $p0);
-			$this->assertInstanceOf('\\Saber\\Data\\Type', $p0);
 			$this->assertInstanceOf('\\Saber\\Data\\String\\Type', $p0);
-			$this->assertEquals($e0, $p0);
-			$this->assertTrue($e0->__eq($p0));
 
 			$p1 = $p0->unbox();
 			$e1 = $expected[0];
 
 			$this->assertInternalType('string', $p1);
+			$this->assertInternalType('string', $e1);
+			$this->assertTrue(strlen($e1) == strlen($p1));
 			$this->assertSame($e1, $p1);
+		}
+
+		/**
+		 * This method provides the data for testing the making of a value.
+		 *
+		 * @return array
+		 */
+		public function dataMake() {
+			$data = array(
+				array(array('string'), array('string')),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the making of a value.
+		 *
+		 * @dataProvider dataMake
+		 */
+		public function testMake(array $provided, array $expected) {
+			//$this->markTestIncomplete();
+
+			$p0 = String\Type::make($provided[0]);
+
+			$this->assertInstanceOf('\\Saber\\Data\\String\\Type', $p0);
+
+			$p1 = $p0->unbox();
+			$e1 = $expected[0];
+
+			$this->assertInternalType('string', $p1);
+			$this->assertInternalType('string', $e1);
+			$this->assertTrue(strlen($e1) == strlen($p1));
+			$this->assertSame($e1, $p1);
+		}
+
+		/**
+		 * This method tests the creation of an empty list.
+		 */
+		public function testEmpty() {
+			//$this->markTestIncomplete();
+
+			$p0 = String\Type::empty_();
+
+			$this->assertInstanceOf('\\Saber\\Data\\String\\Type', $p0);
+
+			$p1 = $p0->unbox();
+
+			$this->assertInternalType('string', $p1);
+			$this->assertTrue(0 == strlen($p1));
+		}
+
+		/**
+		 * This method provides the data for testing that a value is repeated "n" times.
+		 *
+		 * @return array
+		 */
+		public function dataReplicate() {
+			$data = array(
+				array(array('s', 1), array('s')),
+				array(array('s', 5), array('sssss')),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests that a value is repeated "n" times.
+		 *
+		 * @dataProvider dataReplicate
+		 */
+		public function testReplicate(array $provided, array $expected) {
+			//$this->markTestIncomplete();
+
+			$p0 = String\Type::replicate(Char\Type::make($provided[0]), Int32\Type::make($provided[1]));
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\String\\Type', $p0);
+			$this->assertSame($e0, $p0->unbox());
+		}
+
+		/**
+		 * This method tests that an element is accessible.
+		 */
+		public function testElements() {
+			//$this->markTestIncomplete();
+
+			$p0 = String\Type::box('012');
+
+			$this->assertSame('0', $p0->element(Int32\Type::zero())->unbox());
+			$this->assertSame('1', $p0->element(Int32\Type::one())->unbox());
+			$this->assertSame('2', $p0->element(Int32\Type::box(2))->unbox());
+
+			$this->assertSame('0', $p0->head()->unbox());
+
+			$p1 = $p0->tail();
+
+			$this->assertInstanceOf('\\Saber\\Data\\String\\Type', $p1);
+
+			$p2 = $p1->unbox();
+
+			$this->assertInternalType('string', $p2);
+			$this->assertTrue(2 == strlen($p2));
+			$this->assertSame('12', $p2);
 		}
 
 		/**
@@ -224,61 +236,6 @@ namespace Saber\Data\String {
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Int32\\Type', $p0);
-			$this->assertSame($e0, $p0->unbox());
-		}
-
-		/**
-		 * This method provides the data for testing that a value is repeated "n" times.
-		 *
-		 * @return array
-		 */
-		public function dataReplicate() {
-			$data = array(
-				array(array('s', 1), array('s')),
-				array(array('s', 5), array('sssss')),
-			);
-			return $data;
-		}
-
-		/**
-		 * This method tests that a value is repeated "n" times.
-		 *
-		 * @dataProvider dataReplicate
-		 */
-		public function testReplicate(array $provided, array $expected) {
-			//$this->markTestIncomplete();
-
-			$p0 = String\Type::replicate(Char\Type::make($provided[0]), Int32\Type::make($provided[1]));
-			$e0 = $expected[0];
-
-			$this->assertInstanceOf('\\Saber\\Data\\String\\Type', $p0);
-			$this->assertSame($e0, $p0->unbox());
-		}
-
-		/**
-		 * This method provides the data for testing that a value is reversed.
-		 *
-		 * @return array
-		 */
-		public function dataReverse() {
-			$data = array(
-				array(array('string'), array('gnirts')),
-			);
-			return $data;
-		}
-
-		/**
-		 * This method tests that a value is reversed.
-		 *
-		 * @dataProvider dataReverse
-		 */
-		public function testReverse(array $provided, array $expected) {
-			//$this->markTestIncomplete();
-
-			$p0 = String\Type::make($provided[0])->reverse();
-			$e0 = $expected[0];
-
-			$this->assertInstanceOf('\\Saber\\Data\\String\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 

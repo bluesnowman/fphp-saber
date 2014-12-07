@@ -25,7 +25,7 @@ namespace Saber\Throwable\OutOfBounds {
 	/**
 	 * @group ExceptionTest
 	 */
-	class ExceptionTest extends Core\Test {
+	final class ExceptionTest extends Core\Test {
 
 		/**
 		 * This method provides the data for testing the boxing of a value.

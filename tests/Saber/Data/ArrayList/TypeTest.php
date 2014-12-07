@@ -28,6 +28,24 @@ namespace Saber\Data\ArrayList {
 	final class TypeTest extends Core\Test {
 
 		/**
+		 * This method tests the data type.
+		 */
+		public function testType() {
+			//$this->markTestIncomplete();
+
+			$p0 = new ArrayList\Type(array());
+
+			$this->assertInstanceOf('\\Saber\\Data\\ArrayList\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Vector\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Collection\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Core\\Equality\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Core\\Comparable\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Core\\Boxable\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Core\\Type', $p0);
+		}
+
+		/**
 		 * This method provides the data for testing the boxing of a value.
 		 *
 		 * @return array
@@ -51,16 +69,13 @@ namespace Saber\Data\ArrayList {
 			$e0 = new ArrayList\Type($expected);
 
 			$this->assertInstanceOf('\\Saber\\Data\\ArrayList\\Type', $p0);
-			$this->assertInstanceOf('\\Saber\\Data\\Vector\\Type', $p0);
-			$this->assertInstanceOf('\\Saber\\Data\\Collection\\Type', $p0);
-			$this->assertInstanceOf('\\Saber\\Data\\Type', $p0);
-			$this->assertInstanceOf('\\Saber\\Core\\Type', $p0);
 
 			$p1 = $p0->unbox();
 			$e1 = $e0->unbox();
 
 			$this->assertInternalType('array', $p1);
 			$this->assertInternalType('array', $e1);
+			$this->assertCount(count($expected), $p1);
 			$this->assertCount(count($e1), $p1);
 		}
 
@@ -88,16 +103,13 @@ namespace Saber\Data\ArrayList {
 			$e0 = new ArrayList\Type($expected);
 
 			$this->assertInstanceOf('\\Saber\\Data\\ArrayList\\Type', $p0);
-			$this->assertInstanceOf('\\Saber\\Data\\Vector\\Type', $p0);
-			$this->assertInstanceOf('\\Saber\\Data\\Collection\\Type', $p0);
-			$this->assertInstanceOf('\\Saber\\Data\\Type', $p0);
-			$this->assertInstanceOf('\\Saber\\Core\\Type', $p0);
 
 			$p1 = $p0->unbox();
 			$e1 = $e0->unbox();
 
 			$this->assertInternalType('array', $p1);
 			$this->assertInternalType('array', $e1);
+			$this->assertCount(count($expected), $p1);
 			$this->assertCount(count($e1), $p1);
 		}
 
@@ -110,10 +122,6 @@ namespace Saber\Data\ArrayList {
 			$p0 = ArrayList\Type::empty_();
 
 			$this->assertInstanceOf('\\Saber\\Data\\ArrayList\\Type', $p0);
-			$this->assertInstanceOf('\\Saber\\Data\\Vector\\Type', $p0);
-			$this->assertInstanceOf('\\Saber\\Data\\Collection\\Type', $p0);
-			$this->assertInstanceOf('\\Saber\\Data\\Type', $p0);
-			$this->assertInstanceOf('\\Saber\\Core\\Type', $p0);
 
 			$p1 = $p0->unbox();
 
@@ -146,16 +154,13 @@ namespace Saber\Data\ArrayList {
 			$e0 = new ArrayList\Type($expected);
 
 			$this->assertInstanceOf('\\Saber\\Data\\ArrayList\\Type', $p0);
-			$this->assertInstanceOf('\\Saber\\Data\\Vector\\Type', $p0);
-			$this->assertInstanceOf('\\Saber\\Data\\Collection\\Type', $p0);
-			$this->assertInstanceOf('\\Saber\\Data\\Type', $p0);
-			$this->assertInstanceOf('\\Saber\\Core\\Type', $p0);
 
 			$p1 = $p0->unbox();
 			$e1 = $e0->unbox();
 
 			$this->assertInternalType('array', $p1);
 			$this->assertInternalType('array', $e1);
+			$this->assertCount(count($expected), $p1);
 			$this->assertCount(count($e1), $p1);
 		}
 

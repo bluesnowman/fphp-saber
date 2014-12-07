@@ -232,7 +232,6 @@ Below describes the relationships between data types:
         + Integer\Type
       + Ratio\Type : Fractional\Type
     + Object\Type
-    + Regex\Type
     + Tuple\Type
     + Unit\Type
   + Throwable\Runtime\Exception
@@ -243,6 +242,8 @@ Below describes the relationships between data types:
     + Throwable\UnexpectedValue\Exception
     + Throwable\UnimplementedMethod\Exception
     + Throwable\Unknown\Exception
+  + Util\Type
+    + Regex\Type
 ````
 
 Most data types have a module associated with it.  A module contains a set of common static methods for processing its respective data type.

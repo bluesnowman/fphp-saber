@@ -25,7 +25,7 @@ namespace Saber\Throwable\InvalidProperty {
 	/**
 	 * @group ExceptionTest
 	 */
-	final class ExceptionTest extends Core\Test {
+	final class ExceptionTypeTest extends Core\TypeTest {
 
 		/**
 		 * This method provides the data for testing the boxing of a value.

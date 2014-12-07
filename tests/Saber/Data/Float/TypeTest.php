@@ -24,7 +24,7 @@ namespace Saber\Data\Float {
 	/**
 	 * @group TypeTest
 	 */
-	final class TypeTest extends Core\Test {
+	final class TypeTest extends Core\TypeTest {
 
 		/**
 		 * This method provides the data for testing the computation of a value's absolute value.

@@ -25,7 +25,9 @@ namespace Saber\Data\LinkedList {
 	/**
 	 * @group TypeTest
 	 */
-	final class TypeTest extends Core\Test {
+	final class TypeTest extends Core\TypeTest {
+
+		#region Tests -> Inheritance
 
 		/**
 		 * This method tests the data type.
@@ -44,6 +46,10 @@ namespace Saber\Data\LinkedList {
 			$this->assertInstanceOf('\\Saber\\Core\\Boxable\\Type', $p0);
 			$this->assertInstanceOf('\\Saber\\Core\\Type', $p0);
 		}
+
+		#endregion
+
+		#region Tests -> Initialization
 
 		/**
 		 * This method provides the data for testing the boxing of a value.
@@ -155,6 +161,10 @@ namespace Saber\Data\LinkedList {
 			$this->assertCount($e1, $p1);
 		}
 
+		#endregion
+
+		#region Tests -> Interface
+
 		/**
 		 * This method tests that an element is accessible.
 		 */
@@ -239,6 +249,8 @@ namespace Saber\Data\LinkedList {
 			$this->assertInstanceOf('\\Saber\\Data\\Int32\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
+
+		#endregion
 
 	}
 

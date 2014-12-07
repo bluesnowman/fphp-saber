@@ -25,7 +25,7 @@ namespace Saber\Control {
 	/**
 	 * @group TypeTest
 	 */
-	final class TypeTest extends Core\Test {
+	final class TypeTest extends Core\TypeTest {
 
 		/**
 		 * This method tests a set of choices.

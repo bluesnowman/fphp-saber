@@ -25,7 +25,7 @@ namespace Saber\Data\Integer {
 	 * @requires extension gmp
 	 * @group TypeTest
 	 */
-	final class TypeTest extends Core\Test {
+	final class TypeTest extends Core\TypeTest {
 
 		/**
 		 * This method provides the data for testing the computation of adding one value to another.

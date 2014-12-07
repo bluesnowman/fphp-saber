@@ -27,6 +27,24 @@ namespace Saber\Control\Exception {
 	final class Module extends Control\Module {
 
 		/**
+		 * This method throws the specified exception, but will wrap "unknown" exceptions
+		 * for consistent handling.
+		 *
+		 * @access public
+		 * @static
+		 * @param \Exception $e                                     the exception to be thrown
+		 * @throws Throwable\Runtime\Exception                      the thrown exception
+		 */
+		public static function raise(\Exception $e) {
+			if ($e instanceof Throwable\Runtime\Exception) {
+				throw $e;
+			}
+			else {
+				throw new Throwable\Unknown\Exception($e);
+			}
+		}
+
+		/**
 		 * This method returns a Left\Type when an exception is encountered or a Right\Type
 		 * when try-block has executed successfully.
 		 *
@@ -44,24 +62,6 @@ namespace Saber\Control\Exception {
 			}
 			catch (\Exception $ue) {
 				return Either\Type::left(new Throwable\Unknown\Exception($ue));
-			}
-		}
-
-		/**
-		 * This method throws the specified exception, but will wrap "unknown" exceptions
-		 * for consistent handling.
-		 *
-		 * @access public
-		 * @static
-		 * @param \Exception $e                                     the exception to be thrown
-		 * @throws Throwable\Runtime\Exception                      the thrown exception
-		 */
-		public static function raise(\Exception $e) {
-			if ($e instanceof Throwable\Runtime\Exception) {
-				throw $e;
-			}
-			else {
-				throw new Throwable\Unknown\Exception($e);
 			}
 		}
 

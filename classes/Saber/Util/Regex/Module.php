@@ -16,16 +16,16 @@
  * limitations under the License.
  */
 
-namespace Saber\Data\Regex {
+namespace Saber\Util\Regex {
 
 	use \Saber\Core;
 	use \Saber\Data;
 	use \Saber\Data\ArrayList;
 	use \Saber\Data\Bool;
 	use \Saber\Data\Int32;
-	use \Saber\Data\Regex;
 	use \Saber\Data\String;
 	use \Saber\Data\Tuple;
+	use \Saber\Util\Regex;
 
 	final class Module extends Data\Module {
 

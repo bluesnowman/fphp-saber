@@ -22,6 +22,7 @@ namespace Saber\Data\Integer {
 	use \Saber\Data\Integer;
 
 	/**
+	 * @requires extension gmp
 	 * @group ModuleTest
 	 */
 	final class ModuleTest extends Core\ModuleTest {

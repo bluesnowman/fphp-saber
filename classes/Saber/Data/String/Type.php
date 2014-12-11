@@ -108,7 +108,7 @@ namespace Saber\Data\String {
 		}
 
 		/**
-		 * This method creates a string of "n" length with every element set to the given object.
+		 * This method creates a string of "n" length with every item set to the given object.
 		 *
 		 * @access public
 		 * @static
@@ -180,18 +180,6 @@ namespace Saber\Data\String {
 		}
 
 		/**
-		 * This method returns the element at the specified index.
-		 *
-		 * @access public
-		 * @final
-		 * @param Int32\Type $i                                     the index of the element
-		 * @return string                                           the element at the specified index
-		 */
-		public final function __element(Int32\Type $i) {
-			return mb_substr($this->value, $i->unbox(), 1, Char\Type::UTF_8_ENCODING);
-		}
-
-		/**
 		 * This method returns the head object in this list.
 		 *
 		 * @access public
@@ -211,6 +199,18 @@ namespace Saber\Data\String {
 		 */
 		public final function __isEmpty() {
 			return (($this->value === null) || ($this->value === ''));
+		}
+
+		/**
+		 * This method returns the item at the specified index.
+		 *
+		 * @access public
+		 * @final
+		 * @param Int32\Type $i                                     the index of the item
+		 * @return string                                           the item at the specified index
+		 */
+		public final function __item(Int32\Type $i) {
+			return mb_substr($this->value, $i->unbox(), 1, Char\Type::UTF_8_ENCODING);
 		}
 
 		/**
@@ -251,18 +251,6 @@ namespace Saber\Data\String {
 		#region Methods -> Object Oriented
 
 		/**
-		 * This method returns the element at the specified index.
-		 *
-		 * @access public
-		 * @final
-		 * @param Int32\Type $i                                     the index of the element
-		 * @return Char\Type                                        the element at the specified index
-		 */
-		public final function element(Int32\Type $i) {
-			return Char\Type::box($this->__element($i));
-		}
-
-		/**
 		 * This method returns the head object in this list.
 		 *
 		 * @access public
@@ -282,6 +270,18 @@ namespace Saber\Data\String {
 		 */
 		public final function isEmpty() {
 			return Bool\Type::box($this->__isEmpty());
+		}
+
+		/**
+		 * This method returns the item at the specified index.
+		 *
+		 * @access public
+		 * @final
+		 * @param Int32\Type $i                                     the index of the item
+		 * @return Char\Type                                        the item at the specified index
+		 */
+		public final function item(Int32\Type $i) {
+			return Char\Type::box($this->__item($i));
 		}
 
 		/**

@@ -85,7 +85,7 @@ namespace Saber\Data\String {
 		 * @return Char\Type                                        the current object
 		 */
 		public final function current() {
-			$this->xs->element($this->i);
+			$this->xs->item($this->i);
 		}
 
 		/**

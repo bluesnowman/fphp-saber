@@ -59,6 +59,8 @@ This statement is functionally equivalent to writing:
 $object = Int32\Module::decrement(Int32\Module::increment(Int32\Type::box(7)));
 ````
 
+Note this fluent API only works with methods that return `Core\Type` objects.
+
 ### Methods
 
 In general, methods that are NOT preceded by two underscores will return a boxed object.
@@ -215,11 +217,13 @@ Below describes the relationships between data types:
     + Bool\Type
     + Char\Type
     + Collection\Type
+      + Map\Type
+        + Dictionary\Type
+      + Option\Type
       + Vector\Type
         + ArrayList\Type
         + LinkedList\Type
         + String\Type
-      + Option\Type
     + Either\Type
       + Either\Left\Type
       + Either\Right\Type

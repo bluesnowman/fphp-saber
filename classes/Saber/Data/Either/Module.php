@@ -31,7 +31,7 @@ namespace Saber\Data\Either {
 		 * @access public
 		 * @static
 		 * @param Either\Type $x                                    the node to be swapped
-		 * @return Either\Type                                      a tuple with the element swapped
+		 * @return Either\Type                                      a tuple with the item swapped
 		 */
 		public static function swap(Either\Type $x) {
 			$value = $x->unbox();

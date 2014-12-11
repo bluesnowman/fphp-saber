@@ -30,28 +30,28 @@ namespace Saber\Data\Tuple {
 		#region Methods -> Basic Operations
 
 		/**
-		 * This method returns the element at the specified index.
+		 * This method returns the first item in the tuple.
 		 *
 		 * @access public
 		 * @static
 		 * @param Tuple\Type $xs                                    the left operand
-		 * @param Int32\Type $i                                     the index of the element
-		 * @return mixed                                            the element at the specified index
-		 */
-		public static function element(Tuple\Type $xs, Int32\Type $i) {
-			return $xs->element($i);
-		}
-
-		/**
-		 * This method returns the first element in the tuple.
-		 *
-		 * @access public
-		 * @static
-		 * @param Tuple\Type $xs                                    the left operand
-		 * @return mixed                                            the first element in the tuple
+		 * @return mixed                                            the first item in the tuple
 		 */
 		public static function first(Tuple\Type $xs) {
 			return $xs->first();
+		}
+
+		/**
+		 * This method returns the item at the specified index.
+		 *
+		 * @access public
+		 * @static
+		 * @param Tuple\Type $xs                                    the left operand
+		 * @param Int32\Type $i                                     the index of the item
+		 * @return mixed                                            the item at the specified index
+		 */
+		public static function item(Tuple\Type $xs, Int32\Type $i) {
+			return $xs->item($i);
 		}
 
 		/**
@@ -67,24 +67,24 @@ namespace Saber\Data\Tuple {
 		}
 
 		/**
-		 * This method returns the second element in the tuple.
+		 * This method returns the second item in the tuple.
 		 *
 		 * @access public
 		 * @static
 		 * @param Tuple\Type $xs                                    the left operand
-		 * @return mixed                                            the second element in the tuple
+		 * @return mixed                                            the second item in the tuple
 		 */
 		public static function second(Tuple\Type $xs) {
 			return $xs->second();
 		}
 
 		/**
-		 * This method returns a tuple with the elements swapped.
+		 * This method returns a tuple with the items swapped.
 		 *
 		 * @access public
 		 * @static
 		 * @param Tuple\Type $xs                                    the left operand
-		 * @return Tuple\Type                                       a tuple with the element swapped
+		 * @return Tuple\Type                                       a tuple with the item swapped
 		 */
 		public static function swap(Tuple\Type $xs) {
 			return Tuple\Type::box($xs->second(), $xs->first());
@@ -208,8 +208,8 @@ namespace Saber\Data\Tuple {
 			$length = Int32\Module::min($xs->length(), $ys->length());
 
 			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$x = $xs->element($i);
-				$y = $ys->element($i);
+				$x = $xs->item($i);
+				$y = $ys->item($i);
 
 				if (($x === null) && ($y !== null)) {
 					return Int32\Type::negative();

@@ -167,16 +167,16 @@ namespace Saber\Data\String {
 		#region Tests -> Interface
 
 		/**
-		 * This method tests that an element is accessible.
+		 * This method tests that an item is accessible.
 		 */
 		public function testElements() {
 			//$this->markTestIncomplete();
 
 			$p0 = String\Type::box('012');
 
-			$this->assertSame('0', $p0->element(Int32\Type::zero())->unbox());
-			$this->assertSame('1', $p0->element(Int32\Type::one())->unbox());
-			$this->assertSame('2', $p0->element(Int32\Type::box(2))->unbox());
+			$this->assertSame('0', $p0->item(Int32\Type::zero())->unbox());
+			$this->assertSame('1', $p0->item(Int32\Type::one())->unbox());
+			$this->assertSame('2', $p0->item(Int32\Type::box(2))->unbox());
 
 			$this->assertSame('0', $p0->head()->unbox());
 

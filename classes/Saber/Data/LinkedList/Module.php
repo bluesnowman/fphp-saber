@@ -35,14 +35,14 @@ namespace Saber\Data\LinkedList {
 		#region Methods -> Basic Operations
 
 		/**
-		 * This method (aka "every" or "forall") iterates over the elements in the collection, yielding each
-		 * element to the predicate function, or fails the truthy test.  Opposite of "none".
+		 * This method (aka "every" or "forall") iterates over the items in the collection, yielding each
+		 * item to the predicate function, or fails the truthy test.  Opposite of "none".
 		 *
 		 * @access public
 		 * @static
 		 * @param LinkedList\Type $xs                               the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return Bool\Type                                        whether each element passed the
+		 * @return Bool\Type                                        whether each item passed the
 		 *                                                          truthy test
 		 */
 		public static function all(LinkedList\Type $xs, callable $predicate) {
@@ -60,14 +60,14 @@ namespace Saber\Data\LinkedList {
 		}
 
 		/**
-		 * This method (aka "exists" or "some") returns whether some of the elements in the collection
+		 * This method (aka "exists" or "some") returns whether some of the items in the collection
 		 * passed the truthy test.
 		 *
 		 * @access public
 		 * @static
 		 * @param LinkedList\Type $xs                               the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return Bool\Type                                        whether some of the elements
+		 * @return Bool\Type                                        whether some of the items
 		 *                                                          passed the truthy test
 		 */
 		public static function any(LinkedList\Type $xs, callable $predicate) {
@@ -165,12 +165,12 @@ namespace Saber\Data\LinkedList {
 		}
 
 		/**
-		 * This method returns the collection after dropping the first "n" elements.
+		 * This method returns the collection after dropping the first "n" items.
 		 *
 		 * @access public
 		 * @static
 		 * @param LinkedList\Type $xs                               the left operand
-		 * @param Int32\Type $n                                     the number of elements to drop
+		 * @param Int32\Type $n                                     the number of items to drop
 		 * @return LinkedList\Type                                  the collection
 		 */
 		public static function drop(LinkedList\Type $xs, Int32\Type $n) {
@@ -184,7 +184,7 @@ namespace Saber\Data\LinkedList {
 		}
 
 		/**
-		 * This method returns the collection from element where the predicate function fails.
+		 * This method returns the collection from item where the predicate function fails.
 		 *
 		 * @access public
 		 * @static
@@ -203,7 +203,7 @@ namespace Saber\Data\LinkedList {
 		}
 
 		/**
-		 * This method returns the collection from element where the predicate function doesn't fail.
+		 * This method returns the collection from item where the predicate function doesn't fail.
 		 *
 		 * @access public
 		 * @static
@@ -218,7 +218,7 @@ namespace Saber\Data\LinkedList {
 		}
 
 		/**
-		 * This method iterates over the elements in the collection, yielding each element to the
+		 * This method iterates over the items in the collection, yielding each item to the
 		 * callback function.
 		 *
 		 * @access public
@@ -236,22 +236,7 @@ namespace Saber\Data\LinkedList {
 		}
 
 		/**
-		 * This method returns the element at the specified index.
-		 *
-		 * @access public
-		 * @static
-		 * @param LinkedList\Type $xs                               the left operand
-		 * @param Int32\Type $i                                     the index of the element
-		 * @return Core\Type                                        the element at the specified index
-		 * @throws Throwable\OutOfBounds\Exception                  indicates the specified index
-		 *                                                          cannot be found
-		 */
-		public static function element(LinkedList\Type $xs, Int32\Type $i) {
-			return $xs->element($i);
-		}
-
-		/**
-		 * This method returns a collection of those elements that satisfy the predicate.
+		 * This method returns a collection of those items that satisfy the predicate.
 		 *
 		 * @access public
 		 * @static
@@ -431,13 +416,13 @@ namespace Saber\Data\LinkedList {
 		}
 
 		/**
-		 * This method returns all but the last element of in the collection.
+		 * This method returns all but the last item of in the collection.
 		 *
 		 * @access public
 		 * @static
 		 * @param LinkedList\Type $xs                               the left operand
 		 * @return LinkedList\Type                                  the collection, minus the last
-		 *                                                          element
+		 *                                                          item
 		 */
 		public static function init(LinkedList\Type $xs) {
 			$start = LinkedList\Type::nil();
@@ -460,7 +445,7 @@ namespace Saber\Data\LinkedList {
 		}
 
 		/**
-		 * The method intersperses the specified object between each element in the collection.
+		 * The method intersperses the specified object between each item in the collection.
 		 *
 		 * @access public
 		 * @static
@@ -487,6 +472,21 @@ namespace Saber\Data\LinkedList {
 		}
 
 		/**
+		 * This method returns the item at the specified index.
+		 *
+		 * @access public
+		 * @static
+		 * @param LinkedList\Type $xs                               the left operand
+		 * @param Int32\Type $i                                     the index of the item
+		 * @return Core\Type                                        the item at the specified index
+		 * @throws Throwable\OutOfBounds\Exception                  indicates the specified index
+		 *                                                          cannot be found
+		 */
+		public static function item(LinkedList\Type $xs, Int32\Type $i) {
+			return $xs->item($i);
+		}
+
+		/**
 		 * This method returns an iterator for this collection.
 		 *
 		 * @access public
@@ -499,12 +499,12 @@ namespace Saber\Data\LinkedList {
 		}
 
 		/**
-		 * This method returns the last element in this collection.
+		 * This method returns the last item in this collection.
 		 *
 		 * @access public
 		 * @static
 		 * @param LinkedList\Type $xs                               the left operand
-		 * @return Core\Type                                        the last element in this collection
+		 * @return Core\Type                                        the last item in this collection
 		 */
 		public static function last(LinkedList\Type $xs) {
 			$z = $xs->head();
@@ -569,7 +569,7 @@ namespace Saber\Data\LinkedList {
 		}
 
 		/**
-		 * This method applies each element in this collection to the subroutine function.
+		 * This method applies each item in this collection to the subroutine function.
 		 *
 		 * @access public
 		 * @static
@@ -600,14 +600,14 @@ namespace Saber\Data\LinkedList {
 		}
 
 		/**
-		 * This method iterates over the elements in the collection, yielding each element to the
+		 * This method iterates over the items in the collection, yielding each item to the
 		 * predicate function, or fails the falsy test.
 		 *
 		 * @access public
 		 * @static
 		 * @param LinkedList\Type $xs                               the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return Bool\Type                                        whether each element passed the
+		 * @return Bool\Type                                        whether each item passed the
 		 *                                                          falsy test
 		 */
 		public static function none(LinkedList\Type $xs, callable $predicate) {
@@ -644,7 +644,7 @@ namespace Saber\Data\LinkedList {
 		}
 
 		/**
-		 * This method returns a collection of those elements that don't satisfy the predicate.
+		 * This method returns a collection of those items that don't satisfy the predicate.
 		 *
 		 * @access public
 		 * @static
@@ -659,7 +659,7 @@ namespace Saber\Data\LinkedList {
 		}
 
 		/**
-		 * This method reverses the order of the elements in this collection.
+		 * This method reverses the order of the items in this collection.
 		 *
 		 * @access public
 		 * @static
@@ -699,12 +699,12 @@ namespace Saber\Data\LinkedList {
 		}
 
 		/**
-		 * This method returns the first "n" elements in the collection.
+		 * This method returns the first "n" items in the collection.
 		 *
 		 * @access public
 		 * @static
 		 * @param LinkedList\Type $xs                               the left operand
-		 * @param Int32\Type $n                                     the number of elements to take
+		 * @param Int32\Type $n                                     the number of items to take
 		 * @return LinkedList\Type                                  the collection
 		 */
 		public static function take(LinkedList\Type $xs, Int32\Type $n) {
@@ -715,7 +715,7 @@ namespace Saber\Data\LinkedList {
 		}
 
 		/**
-		 * This method returns each element in this collection until the predicate fails.
+		 * This method returns each item in this collection until the predicate fails.
 		 *
 		 * @access public
 		 * @static
@@ -756,7 +756,7 @@ namespace Saber\Data\LinkedList {
 		}
 
 		/**
-		 * This method returns each element in this collection until the predicate doesn't fail.
+		 * This method returns each item in this collection until the predicate doesn't fail.
 		 *
 		 * @access public
 		 * @static
@@ -1101,13 +1101,13 @@ namespace Saber\Data\LinkedList {
 		#region Methods -> Logical Operations
 
 		/**
-		 * This method (aka "truthy") returns whether all of the elements of the collection evaluate
+		 * This method (aka "truthy") returns whether all of the items of the collection evaluate
 		 * to true.
 		 *
 		 * @access public
 		 * @static
 		 * @param LinkedList\Type $xs                               the left operand
-		 * @return Bool\Type                                        whether all of the elements of
+		 * @return Bool\Type                                        whether all of the items of
 		 *                                                          the collection evaluate to true
 		 */
 		public static function and_(LinkedList\Type $xs) {
@@ -1115,13 +1115,13 @@ namespace Saber\Data\LinkedList {
 		}
 
 		/**
-		 * This method (aka "falsy") returns whether all of the elements of the collection evaluate
+		 * This method (aka "falsy") returns whether all of the items of the collection evaluate
 		 * to false.
 		 *
 		 * @access public
 		 * @static
 		 * @param LinkedList\Type $xs                               the left operand
-		 * @return Bool\Type                                        whether all of the elements of
+		 * @return Bool\Type                                        whether all of the items of
 		 *                                                          the collection evaluate to false
 		 *
 		 * @see http://www.sitepoint.com/javascript-truthy-falsy/
@@ -1131,13 +1131,13 @@ namespace Saber\Data\LinkedList {
 		}
 
 		/**
-		 * This method returns whether all of the elements of the collection strictly evaluate to
+		 * This method returns whether all of the items of the collection strictly evaluate to
 		 * false.
 		 *
 		 * @access public
 		 * @static
 		 * @param LinkedList\Type $xs                               the left operand
-		 * @return Bool\Type                                        whether all of the elements of
+		 * @return Bool\Type                                        whether all of the items of
 		 *                                                          the collection strictly evaluate
 		 *                                                          to false
 		 */
@@ -1146,13 +1146,13 @@ namespace Saber\Data\LinkedList {
 		}
 
 		/**
-		 * This method (aka "or") returns whether all of the elements of the collection evaluate to
+		 * This method (aka "or") returns whether all of the items of the collection evaluate to
 		 * false.
 		 *
 		 * @access public
 		 * @static
 		 * @param LinkedList\Type $xs                               the left operand
-		 * @return Bool\Type                                        whether all of the elements of
+		 * @return Bool\Type                                        whether all of the items of
 		 *                                                          the collection evaluate to false
 		 *
 		 * @see http://www.sitepoint.com/javascript-truthy-falsy/
@@ -1162,13 +1162,13 @@ namespace Saber\Data\LinkedList {
 		}
 
 		/**
-		 * This method returns whether all of the elements of the collection strictly evaluate
+		 * This method returns whether all of the items of the collection strictly evaluate
 		 * to true.
 		 *
 		 * @access public
 		 * @static
 		 * @param LinkedList\Type $xs                               the left operand
-		 * @return Bool\Type                                        whether all of the elements of
+		 * @return Bool\Type                                        whether all of the items of
 		 *                                                          the collection strictly evaluate
 		 *                                                          to true
 		 */
@@ -1185,13 +1185,13 @@ namespace Saber\Data\LinkedList {
 		}
 
 		/**
-		 * This method (aka "and") returns whether all of the elements of the collection evaluate to
+		 * This method (aka "and") returns whether all of the items of the collection evaluate to
 		 * true.
 		 *
 		 * @access public
 		 * @static
 		 * @param LinkedList\Type $xs                               the left operand
-		 * @return Bool\Type                                        whether all of the elements of
+		 * @return Bool\Type                                        whether all of the items of
 		 *                                                          the collection evaluate to true
 		 */
 		public static function truthy(LinkedList\Type $xs) {

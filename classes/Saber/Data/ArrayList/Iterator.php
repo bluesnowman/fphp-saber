@@ -84,7 +84,7 @@ namespace Saber\Data\ArrayList {
 		 * @return mixed                                            the current object
 		 */
 		public final function current() {
-			$this->xs->element($this->i);
+			$this->xs->item($this->i);
 		}
 
 		/**

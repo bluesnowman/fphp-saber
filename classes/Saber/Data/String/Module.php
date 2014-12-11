@@ -37,21 +37,21 @@ namespace Saber\Data\String {
 		#region Methods -> Basic Operations
 
 		/**
-		 * This method (aka "every" or "forall") iterates over the elements in the string, yielding each
-		 * element to the predicate function, or fails the truthy test.  Opposite of "none".
+		 * This method (aka "every" or "forall") iterates over the items in the string, yielding each
+		 * item to the predicate function, or fails the truthy test.  Opposite of "none".
 		 *
 		 * @access public
 		 * @static
 		 * @param String\Type $xs                                   the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return Bool\Type                                        whether each element passed the
+		 * @return Bool\Type                                        whether each item passed the
 		 *                                                          truthy test
 		 */
 		public static function all(String\Type $xs, callable $predicate) {
 			$length = $xs->length();
 
 			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$x = String\Module::element($xs, $i);
+				$x = String\Module::item($xs, $i);
 				if (!$predicate($x, $i)->unbox()) {
 					return Bool\Type::false();
 				}
@@ -61,14 +61,14 @@ namespace Saber\Data\String {
 		}
 
 		/**
-		 * This method (aka "exists" or "some") returns whether some of the elements in the string
+		 * This method (aka "exists" or "some") returns whether some of the items in the string
 		 * passed the truthy test.
 		 *
 		 * @access public
 		 * @static
 		 * @param String\Type $xs                                   the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return Bool\Type                                        whether some of the elements
+		 * @return Bool\Type                                        whether some of the items
 		 *                                                          passed the truthy test
 		 */
 		public static function any(String\Type $xs, callable $predicate) {
@@ -132,7 +132,7 @@ namespace Saber\Data\String {
 			$skip = false;
 
 			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$x = String\Module::element($xs, $i);
+				$x = String\Module::item($xs, $i);
 				if (Char\Module::eq($x, $y)->unbox() && !$skip) {
 					$skip = true;
 					continue;
@@ -144,12 +144,12 @@ namespace Saber\Data\String {
 		}
 
 		/**
-		 * This method returns the string after dropping the first "n" elements.
+		 * This method returns the string after dropping the first "n" items.
 		 *
 		 * @access public
 		 * @static
 		 * @param String\Type $xs                                   the left operand
-		 * @param Int32\Type $n                                     the number of elements to drop
+		 * @param Int32\Type $n                                     the number of items to drop
 		 * @return String\Type                                      the string
 		 */
 		public static function drop(String\Type $xs, Int32\Type $n) {
@@ -157,14 +157,14 @@ namespace Saber\Data\String {
 			$length = $xs->length();
 
 			for ($i = $n; Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$buffer .= String\Module::element($xs, $i);
+				$buffer .= String\Module::item($xs, $i);
 			}
 
 			return String\Type::box($buffer);
 		}
 
 		/**
-		 * This method returns the string from element where the predicate function fails.
+		 * This method returns the string from item where the predicate function fails.
 		 *
 		 * @access public
 		 * @static
@@ -178,7 +178,7 @@ namespace Saber\Data\String {
 
 			$failed = false;
 			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$x = String\Module::element($xs, $i);
+				$x = String\Module::item($xs, $i);
 				if (!$predicate($x, $i)->unbox() || $failed) {
 					$buffer .= $x->unbox();
 					$failed = true;
@@ -189,7 +189,7 @@ namespace Saber\Data\String {
 		}
 
 		/**
-		 * This method returns the string from element where the predicate function doesn't fail.
+		 * This method returns the string from item where the predicate function doesn't fail.
 		 *
 		 * @access public
 		 * @static
@@ -204,7 +204,7 @@ namespace Saber\Data\String {
 		}
 
 		/**
-		 * This method iterates over the elements in the string, yielding each element to the procedure
+		 * This method iterates over the items in the string, yielding each item to the procedure
 		 * function.
 		 *
 		 * @access public
@@ -216,27 +216,12 @@ namespace Saber\Data\String {
 			$length = $xs->length();
 
 			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$procedure(String\Module::element($xs, $i), $i);
+				$procedure(String\Module::item($xs, $i), $i);
 			}
 		}
 
 		/**
-		 * This method returns the element at the specified index.
-		 *
-		 * @access public
-		 * @static
-		 * @param String\Type $xs                                   the left operand
-		 * @param Int32\Type $i                                     the index of the element
-		 * @return Char\Type                                        the element at the specified index
-		 * @throws Throwable\OutOfBounds\Exception                  indicates the specified index
-		 *                                                          cannot be found
-		 */
-		public static function element(String\Type $xs, Int32\Type $i) {
-			return $xs->element($i);
-		}
-
-		/**
-		 * This method returns a string of those elements that satisfy the predicate.
+		 * This method returns a string of those items that satisfy the predicate.
 		 *
 		 * @access public
 		 * @static
@@ -249,7 +234,7 @@ namespace Saber\Data\String {
 			$length = $xs->length();
 
 			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$x = $xs->element($i);
+				$x = $xs->item($i);
 				if ($predicate($x, $i)->unbox()) {
 					$buffer .= $x->unbox();
 				}
@@ -272,7 +257,7 @@ namespace Saber\Data\String {
 			$length = $xs->length();
 
 			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$x = $xs->element($i);
+				$x = $xs->item($i);
 				if ($predicate($x, $i)->unbox()) {
 					return Option\Type::some($x);
 				}
@@ -308,7 +293,7 @@ namespace Saber\Data\String {
 			$length = $xs->length();
 
 			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$z = $operator($z, $xs->element($i));
+				$z = $operator($z, $xs->item($i));
 			}
 
 			return $z;
@@ -329,7 +314,7 @@ namespace Saber\Data\String {
 			$length = $xs->length();
 
 			for ($i = Int32\Module::decrement($length); Int32\Module::ge($i, Int32\Type::zero())->unbox(); $i = Int32\Module::decrement($i)) {
-				$z = $operator($z, $xs->element($i));
+				$z = $operator($z, $xs->item($i));
 			}
 
 			return $z;
@@ -373,7 +358,7 @@ namespace Saber\Data\String {
 			$length = $xs->length();
 
 			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$x = $xs->element($i);
+				$x = $xs->item($i);
 				if (Char\Module::eq($x, $object)->unbox()) {
 					return $i;
 				}
@@ -383,27 +368,27 @@ namespace Saber\Data\String {
 		}
 
 		/**
-		 * This method returns all but the last element of in the string.
+		 * This method returns all but the last item of in the string.
 		 *
 		 * @access public
 		 * @static
 		 * @param String\Type $xs                                   the left operand
 		 * @return String\Type                                      the string, minus the last
-		 *                                                          element
+		 *                                                          item
 		 */
 		public static function init(String\Type $xs) {
 			$buffer = '';
 			$length = Int32\Module::decrement($xs->length());
 
 			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$buffer .= $xs->__element($i);
+				$buffer .= $xs->__item($i);
 			}
 
 			return String\Type::box($buffer);
 		}
 
 		/**
-		 * The method intersperses the specified object between each element in the string.
+		 * The method intersperses the specified object between each item in the string.
 		 *
 		 * @access public
 		 * @static
@@ -417,10 +402,10 @@ namespace Saber\Data\String {
 			$length = $xs->length();
 
 			if ($length->unbox() > 0) {
-				$buffer .= String\Module::element($xs, Int32\Type::zero())->unbox();
+				$buffer .= String\Module::item($xs, Int32\Type::zero())->unbox();
 				for ($i = Int32\Type::one(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
 					$buffer .= $y->__toString();
-					$buffer .= $xs->__element($i);
+					$buffer .= $xs->__item($i);
 				}
 			}
 
@@ -440,6 +425,21 @@ namespace Saber\Data\String {
 		}
 
 		/**
+		 * This method returns the item at the specified index.
+		 *
+		 * @access public
+		 * @static
+		 * @param String\Type $xs                                   the left operand
+		 * @param Int32\Type $i                                     the index of the item
+		 * @return Char\Type                                        the item at the specified index
+		 * @throws Throwable\OutOfBounds\Exception                  indicates the specified index
+		 *                                                          cannot be found
+		 */
+		public static function item(String\Type $xs, Int32\Type $i) {
+			return $xs->item($i);
+		}
+
+		/**
 		 * This method returns an iterator for this collection.
 		 *
 		 * @access public
@@ -452,16 +452,16 @@ namespace Saber\Data\String {
 		}
 
 		/**
-		 * This method returns the last element in this string.
+		 * This method returns the last item in this string.
 		 *
 		 * @access public
 		 * @static
 		 * @param String\Type $xs                                   the left operand
-		 * @return Char\Type                                        the last element in this linked
+		 * @return Char\Type                                        the last item in this linked
 		 *                                                          string
 		 */
 		public static function last(String\Type $xs) {
-			return $xs->element(Int32\Module::decrement($xs->length()));
+			return $xs->item(Int32\Module::decrement($xs->length()));
 		}
 
 		/**
@@ -489,7 +489,7 @@ namespace Saber\Data\String {
 		}
 
 		/**
-		 * This method applies each element in this string to the subroutine function.
+		 * This method applies each item in this string to the subroutine function.
 		 *
 		 * @access public
 		 * @static
@@ -502,21 +502,21 @@ namespace Saber\Data\String {
 			$length = $xs->length();
 
 			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$buffer .= $subroutine($xs->element($i), $i)->unbox();
+				$buffer .= $subroutine($xs->item($i), $i)->unbox();
 			}
 
 			return String\Type::box($buffer);
 		}
 
 		/**
-		 * This method iterates over the elements in the string, yielding each element to the
+		 * This method iterates over the items in the string, yielding each item to the
 		 * predicate function, or fails the falsy test.
 		 *
 		 * @access public
 		 * @static
 		 * @param String\Type $xs                                   the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return Bool\Type                                        whether each element passed the
+		 * @return Bool\Type                                        whether each item passed the
 		 *                                                          falsy test
 		 */
 		public static function none(String\Type $xs, callable $predicate) {
@@ -553,7 +553,7 @@ namespace Saber\Data\String {
 		}
 
 		/**
-		 * This method returns a string of those elements that don't satisfy the predicate.
+		 * This method returns a string of those items that don't satisfy the predicate.
 		 *
 		 * @access public
 		 * @static
@@ -568,7 +568,7 @@ namespace Saber\Data\String {
 		}
 
 		/**
-		 * This method reverses the order of the elements in this string.
+		 * This method reverses the order of the items in this string.
 		 *
 		 * @access public
 		 * @static
@@ -580,7 +580,7 @@ namespace Saber\Data\String {
 			$length = $xs->length();
 
 			for ($i = Int32\Module::decrement($length); Int32\Module::ge($i, Int32\Type::zero())->unbox(); $i = Int32\Module::decrement($i)) {
-				$buffer .= $xs->__element($i);
+				$buffer .= $xs->__item($i);
 			}
 
 			return String\Type::box($buffer);
@@ -613,12 +613,12 @@ namespace Saber\Data\String {
 		}
 
 		/**
-		 * This method returns the first "n" elements in the string.
+		 * This method returns the first "n" items in the string.
 		 *
 		 * @access public
 		 * @static
 		 * @param String\Type $xs                                   the left operand
-		 * @param Int32\Type $n                                     the number of elements to take
+		 * @param Int32\Type $n                                     the number of items to take
 		 * @return String\Type                                      the string
 		 */
 		public static function take(String\Type $xs, Int32\Type $n) {
@@ -626,14 +626,14 @@ namespace Saber\Data\String {
 			$length = Int32\Module::min($n, $xs->length());
 
 			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$buffer .= $xs->__element($i);
+				$buffer .= $xs->__item($i);
 			}
 
 			return String\Type::box($buffer);
 		}
 
 		/**
-		 * This method returns each element in this string until the predicate fails.
+		 * This method returns each item in this string until the predicate fails.
 		 *
 		 * @access public
 		 * @static
@@ -646,7 +646,7 @@ namespace Saber\Data\String {
 			$length = $xs->length();
 
 			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$x = $xs->element($i);
+				$x = $xs->item($i);
 				if (!$predicate($x, $i)->unbox()) {
 					break;
 				}
@@ -657,7 +657,7 @@ namespace Saber\Data\String {
 		}
 
 		/**
-		 * This method returns each element in this string until the predicate doesn't fail.
+		 * This method returns each item in this string until the predicate doesn't fail.
 		 *
 		 * @access public
 		 * @static
@@ -717,7 +717,7 @@ namespace Saber\Data\String {
 			$length = $xs->length();
 			$zs = LinkedList\Type::nil();
 			for ($i = Int32\Module::decrement($length); Int32\Module::ge($i, Int32\Type::zero())->unbox(); $i = Int32\Module::decrement($i)) {
-				$zs = LinkedList\Module::prepend($zs, $xs->element($i));
+				$zs = LinkedList\Module::prepend($zs, $xs->item($i));
 			}
 			return $zs;
 		}

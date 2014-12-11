@@ -34,21 +34,21 @@ namespace Saber\Data\ArrayList {
 		#region Methods -> Basic Operations
 
 		/**
-		 * This method (aka "every" or "forall") iterates over the elements in the list, yielding each
-		 * element to the predicate function, or fails the truthy test.  Opposite of "none".
+		 * This method (aka "every" or "forall") iterates over the items in the list, yielding each
+		 * item to the predicate function, or fails the truthy test.  Opposite of "none".
 		 *
 		 * @access public
 		 * @static
 		 * @param ArrayList\Type $xs                                the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return Bool\Type                                        whether each element passed the
+		 * @return Bool\Type                                        whether each item passed the
 		 *                                                          truthy test
 		 */
 		public static function all(ArrayList\Type $xs, callable $predicate) {
 			$length = $xs->length();
 
 			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				if (!$predicate($xs->element($i), $i)->unbox()) {
+				if (!$predicate($xs->item($i), $i)->unbox()) {
 					return Bool\Type::false();
 				}
 			}
@@ -57,14 +57,14 @@ namespace Saber\Data\ArrayList {
 		}
 
 		/**
-		 * This method (aka "exists" or "some") returns whether some of the elements in the list passed the truthy
+		 * This method (aka "exists" or "some") returns whether some of the items in the list passed the truthy
 		 * test.
 		 *
 		 * @access public
 		 * @static
 		 * @param ArrayList\Type $xs                                the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return Bool\Type                                        whether some of the elements
+		 * @return Bool\Type                                        whether some of the items
 		 *                                                          passed the truthy test
 		 */
 		public static function any(ArrayList\Type $xs, callable $predicate) {
@@ -144,12 +144,12 @@ namespace Saber\Data\ArrayList {
 		}
 
 		/**
-		 * This method returns the list after dropping the first "n" elements.
+		 * This method returns the list after dropping the first "n" items.
 		 *
 		 * @access public
 		 * @static
 		 * @param ArrayList\Type $xs                                the left operand
-		 * @param Int32\Type $n                                     the number of elements to drop
+		 * @param Int32\Type $n                                     the number of items to drop
 		 * @return ArrayList\Type                                   the list
 		 */
 		public static function drop(ArrayList\Type $xs, Int32\Type $n) {
@@ -157,14 +157,14 @@ namespace Saber\Data\ArrayList {
 			$length = $xs->length();
 
 			for ($i = $n; Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$buffer[] = $xs->element($i);
+				$buffer[] = $xs->item($i);
 			}
 
 			return ArrayList\Type::box($buffer);
 		}
 
 		/**
-		 * This method returns the list from element where the predicate function fails.
+		 * This method returns the list from item where the predicate function fails.
 		 *
 		 * @access public
 		 * @static
@@ -178,7 +178,7 @@ namespace Saber\Data\ArrayList {
 
 			$failed = false;
 			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$x = $xs->element($i);
+				$x = $xs->item($i);
 				if (!$predicate($x, $i)->unbox() || $failed) {
 					$buffer[] = $x;
 					$failed = true;
@@ -189,7 +189,7 @@ namespace Saber\Data\ArrayList {
 		}
 
 		/**
-		 * This method returns the list from element where the predicate function doesn't fail.
+		 * This method returns the list from item where the predicate function doesn't fail.
 		 *
 		 * @access public
 		 * @static
@@ -204,7 +204,7 @@ namespace Saber\Data\ArrayList {
 		}
 
 		/**
-		 * This method iterates over the elements in the list, yielding each element to the procedure
+		 * This method iterates over the items in the list, yielding each item to the procedure
 		 * function.
 		 *
 		 * @access public
@@ -216,27 +216,12 @@ namespace Saber\Data\ArrayList {
 			$length = $xs->length();
 
 			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$procedure($xs->element($i), $i);
+				$procedure($xs->item($i), $i);
 			}
 		}
 
 		/**
-		 * This method returns the element at the specified index.
-		 *
-		 * @access public
-		 * @static
-		 * @param ArrayList\Type $xs                                the left operand
-		 * @param Int32\Type $i                                     the index of the element
-		 * @return Core\Type                                        the element at the specified index
-		 * @throws Throwable\OutOfBounds\Exception                  indicates the specified index
-		 *                                                          cannot be found
-		 */
-		public static function element(ArrayList\Type $xs, Int32\Type $i) {
-			return $xs->element($i);
-		}
-
-		/**
-		 * This method returns a list of those elements that satisfy the predicate.
+		 * This method returns a list of those items that satisfy the predicate.
 		 *
 		 * @access public
 		 * @static
@@ -249,7 +234,7 @@ namespace Saber\Data\ArrayList {
 			$length = $xs->length();
 
 			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$x = $xs->element($i);
+				$x = $xs->item($i);
 				if ($predicate($x, $i)->unbox()) {
 					$buffer[] = $x;
 				}
@@ -272,7 +257,7 @@ namespace Saber\Data\ArrayList {
 			$length = $xs->length();
 
 			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$x = $xs->element($i);
+				$x = $xs->item($i);
 				if ($predicate($x, $i)->unbox()) {
 					return Option\Type::some($x);
 				}
@@ -294,12 +279,12 @@ namespace Saber\Data\ArrayList {
 			$x_length = $xs->length();
 
 			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $x_length)->unbox(); $i = Int32\Module::increment($i)) {
-				$x = $xs->element($i);
+				$x = $xs->item($i);
 				if ($x instanceof ArrayList\Type) {
 					$ys = ArrayList\Module::flatten($x);
 					$y_length = $ys->length();
 					for ($j = Int32\Type::zero(); Int32\Module::lt($j, $y_length)->unbox(); $j = Int32\Module::increment($j)) {
-						$buffer[] = $ys->element($j);
+						$buffer[] = $ys->item($j);
 					}
 				}
 				else {
@@ -325,7 +310,7 @@ namespace Saber\Data\ArrayList {
 			$length = $xs->length();
 
 			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$z = $operator($z, $xs->element($i));
+				$z = $operator($z, $xs->item($i));
 			}
 
 			return $z;
@@ -346,7 +331,7 @@ namespace Saber\Data\ArrayList {
 			$length = $xs->length();
 
 			for ($i = Int32\Module::decrement($length); Int32\Module::ge($i, Int32\Type::zero())->unbox(); $i = Int32\Module::decrement($i)) {
-				$z = $operator($z, $xs->element($i));
+				$z = $operator($z, $xs->item($i));
 			}
 
 			return $z;
@@ -361,7 +346,7 @@ namespace Saber\Data\ArrayList {
 		 * @return Core\Type                                        the head object in this list
 		 */
 		public static function head(ArrayList\Type $xs) {
-			return $xs->element(Int32\Type::zero());
+			return $xs->item(Int32\Type::zero());
 		}
 
 		/**
@@ -390,7 +375,7 @@ namespace Saber\Data\ArrayList {
 			$length = $xs->length();
 
 			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$x = $xs->element($i);
+				$x = $xs->item($i);
 				if (call_user_func_array(array(get_class($x), 'eq'), array($x, $y))->unbox()) {
 					return $i;
 				}
@@ -400,27 +385,27 @@ namespace Saber\Data\ArrayList {
 		}
 
 		/**
-		 * This method returns all but the last element of in the list.
+		 * This method returns all but the last item of in the list.
 		 *
 		 * @access public
 		 * @static
 		 * @param ArrayList\Type $xs                                the left operand
 		 * @return ArrayList\Type                                   the list, minus the last
-		 *                                                          element
+		 *                                                          item
 		 */
 		public static function init(ArrayList\Type $xs) {
 			$buffer = array();
 			$length = Int32\Module::decrement($xs->length());
 
 			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$buffer[] = $xs->element($i);
+				$buffer[] = $xs->item($i);
 			}
 
 			return ArrayList\Type::box($buffer);
 		}
 
 		/**
-		 * The method intersperses the specified object between each element in the list.
+		 * The method intersperses the specified object between each item in the list.
 		 *
 		 * @access public
 		 * @static
@@ -434,10 +419,10 @@ namespace Saber\Data\ArrayList {
 			$length = $xs->length();
 
 			if ($length > 0) {
-				$buffer[] = $xs->element(Int32\Type::zero());
+				$buffer[] = $xs->item(Int32\Type::zero());
 				for ($i = Int32\Type::one(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
 					$buffer[] = $y;
-					$buffer[] = $xs->element($i);
+					$buffer[] = $xs->item($i);
 				}
 			}
 
@@ -457,6 +442,21 @@ namespace Saber\Data\ArrayList {
 		}
 
 		/**
+		 * This method returns the item at the specified index.
+		 *
+		 * @access public
+		 * @static
+		 * @param ArrayList\Type $xs                                the left operand
+		 * @param Int32\Type $i                                     the index of the item
+		 * @return Core\Type                                        the item at the specified index
+		 * @throws Throwable\OutOfBounds\Exception                  indicates the specified index
+		 *                                                          cannot be found
+		 */
+		public static function item(ArrayList\Type $xs, Int32\Type $i) {
+			return $xs->item($i);
+		}
+
+		/**
 		 * This method returns an iterator for this collection.
 		 *
 		 * @access public
@@ -469,16 +469,16 @@ namespace Saber\Data\ArrayList {
 		}
 
 		/**
-		 * This method returns the last element in this list.
+		 * This method returns the last item in this list.
 		 *
 		 * @access public
 		 * @static
 		 * @param ArrayList\Type $xs                                the left operand
-		 * @return mixed                                            the last element in this linked
+		 * @return mixed                                            the last item in this linked
 		 *                                                          list
 		 */
 		public static function last(ArrayList\Type $xs) {
-			return $xs->element(Int32\Module::decrement($xs->length()));
+			return $xs->item(Int32\Module::decrement($xs->length()));
 		}
 
 		/**
@@ -521,7 +521,7 @@ namespace Saber\Data\ArrayList {
 			$length = $xss->length();
 
 			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$zs = $xss->element($i);
+				$zs = $xss->item($i);
 
 				if (!Tuple\Module::isPair($zs)->unbox()) {
 					throw new Throwable\UnexpectedValue\Exception('Unable to process tuple. Expected a length of "2", but got a length of ":length".', array(':length' => $zs->__length()));
@@ -536,7 +536,7 @@ namespace Saber\Data\ArrayList {
 		}
 
 		/**
-		 * This method applies each element in this list to the subroutine function.
+		 * This method applies each item in this list to the subroutine function.
 		 *
 		 * @access public
 		 * @static
@@ -549,21 +549,21 @@ namespace Saber\Data\ArrayList {
 			$length = $xs->length();
 
 			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$buffer[] = $subroutine($xs->element($i), $i);
+				$buffer[] = $subroutine($xs->item($i), $i);
 			}
 
 			return ArrayList\Type::box($buffer);
 		}
 
 		/**
-		 * This method iterates over the elements in the list, yielding each element to the
+		 * This method iterates over the items in the list, yielding each item to the
 		 * predicate function, or fails the falsy test.
 		 *
 		 * @access public
 		 * @static
 		 * @param ArrayList\Type $xs                                the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return Bool\Type                                        whether each element passed the
+		 * @return Bool\Type                                        whether each item passed the
 		 *                                                          falsy test
 		 */
 		public static function none(ArrayList\Type $xs, callable $predicate) {
@@ -602,7 +602,7 @@ namespace Saber\Data\ArrayList {
 		}
 
 		/**
-		 * This method returns a list of those elements that don't satisfy the predicate.
+		 * This method returns a list of those items that don't satisfy the predicate.
 		 *
 		 * @access public
 		 * @static
@@ -617,7 +617,7 @@ namespace Saber\Data\ArrayList {
 		}
 
 		/**
-		 * This method reverses the order of the elements in this list.
+		 * This method reverses the order of the items in this list.
 		 *
 		 * @access public
 		 * @static
@@ -655,12 +655,12 @@ namespace Saber\Data\ArrayList {
 		}
 
 		/**
-		 * This method returns the first "n" elements in the list.
+		 * This method returns the first "n" items in the list.
 		 *
 		 * @access public
 		 * @static
 		 * @param ArrayList\Type $xs                                the left operand
-		 * @param Int32\Type $n                                     the number of elements to take
+		 * @param Int32\Type $n                                     the number of items to take
 		 * @return ArrayList\Type                                   the list
 		 */
 		public static function take(ArrayList\Type $xs, Int32\Type $n) {
@@ -668,14 +668,14 @@ namespace Saber\Data\ArrayList {
 			$length = Int32\Module::min($n, $xs->length());
 
 			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$buffer[] = $xs->element($i);
+				$buffer[] = $xs->item($i);
 			}
 
 			return ArrayList\Type::box($buffer);
 		}
 
 		/**
-		 * This method returns each element in this list until the predicate fails.
+		 * This method returns each item in this list until the predicate fails.
 		 *
 		 * @access public
 		 * @static
@@ -688,7 +688,7 @@ namespace Saber\Data\ArrayList {
 			$length = $xs->length();
 
 			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$x = $xs->element($i);
+				$x = $xs->item($i);
 				if (!$predicate($x, $i)->unbox()) {
 					break;
 				}
@@ -699,7 +699,7 @@ namespace Saber\Data\ArrayList {
 		}
 
 		/**
-		 * This method returns each element in this list until the predicate doesn't fail.
+		 * This method returns each item in this list until the predicate doesn't fail.
 		 *
 		 * @access public
 		 * @static
@@ -727,7 +727,7 @@ namespace Saber\Data\ArrayList {
 			$length = Int32\Module::min($xs->length(), $ys->length());
 
 			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$buffer[] = Tuple\Type::box($xs->element($i), $ys->element($i));
+				$buffer[] = Tuple\Type::box($xs->item($i), $ys->item($i));
 			}
 
 			return ArrayList\Type::box($buffer);
@@ -775,7 +775,7 @@ namespace Saber\Data\ArrayList {
 			$length = $xs->length();
 			$zs = LinkedList\Type::nil();
 			for ($i = Int32\Module::decrement($length); Int32\Module::ge($i, Int32\Type::zero())->unbox(); $i = Int32\Module::decrement($i)) {
-				$zs = LinkedList\Module::prepend($zs, $xs->element($i));
+				$zs = LinkedList\Module::prepend($zs, $xs->item($i));
 			}
 			return $zs;
 		}
@@ -803,7 +803,7 @@ namespace Saber\Data\ArrayList {
 
 					for ($i = 0; ($i < $x_length) && ($i < $y_length); $i++) {
 						$p = Int32\Type::box($i);
-						$r = $xs->element($p)->eq($ys->element($p));
+						$r = $xs->item($p)->eq($ys->item($p));
 						if (!$r->unbox()) {
 							return $r;
 						}
@@ -833,7 +833,7 @@ namespace Saber\Data\ArrayList {
 
 					for ($i = 0; ($i < $x_length) && ($i < $y_length); $i++) {
 						$p = Int32\Type::box($i);
-						$r = $xs->element($p)->id($ys->element($p));
+						$r = $xs->item($p)->id($ys->item($p));
 						if (!$r->unbox()) {
 							return $r;
 						}
@@ -904,7 +904,7 @@ namespace Saber\Data\ArrayList {
 
 			for ($i = 0; ($i < $x_length) && ($i < $y_length); $i++) {
 				$p = Int32\Type::box($i);
-				$r = $xs->element($p)->compare($ys->element($p));
+				$r = $xs->item($p)->compare($ys->item($p));
 				if ($r->unbox() != 0) {
 					return $r;
 				}
@@ -1008,13 +1008,13 @@ namespace Saber\Data\ArrayList {
 		#region Methods -> Logical Operations
 
 		/**
-		 * This method (aka "truthy") returns whether all of the elements of the list evaluate
+		 * This method (aka "truthy") returns whether all of the items of the list evaluate
 		 * to true.
 		 *
 		 * @access public
 		 * @static
 		 * @param ArrayList\Type $xs                                the left operand
-		 * @return Bool\Type                                        whether all of the elements of
+		 * @return Bool\Type                                        whether all of the items of
 		 *                                                          the list evaluate to true
 		 */
 		public static function and_(ArrayList\Type $xs) {
@@ -1022,13 +1022,13 @@ namespace Saber\Data\ArrayList {
 		}
 
 		/**
-		 * This method (aka "falsy") returns whether all of the elements of the list evaluate
+		 * This method (aka "falsy") returns whether all of the items of the list evaluate
 		 * to false.
 		 *
 		 * @access public
 		 * @static
 		 * @param ArrayList\Type $xs                                the left operand
-		 * @return Bool\Type                                        whether all of the elements of
+		 * @return Bool\Type                                        whether all of the items of
 		 *                                                          the list evaluate to false
 		 *
 		 * @see http://www.sitepoint.com/javascript-truthy-falsy/
@@ -1038,13 +1038,13 @@ namespace Saber\Data\ArrayList {
 		}
 
 		/**
-		 * This method returns whether all of the elements of the list strictly evaluate to
+		 * This method returns whether all of the items of the list strictly evaluate to
 		 * false.
 		 *
 		 * @access public
 		 * @static
 		 * @param ArrayList\Type $xs                                the left operand
-		 * @return Bool\Type                                        whether all of the elements of
+		 * @return Bool\Type                                        whether all of the items of
 		 *                                                          the list strictly evaluate
 		 *                                                          to false
 		 */
@@ -1053,13 +1053,13 @@ namespace Saber\Data\ArrayList {
 		}
 
 		/**
-		 * This method (aka "or") returns whether all of the elements of the list evaluate to
+		 * This method (aka "or") returns whether all of the items of the list evaluate to
 		 * false.
 		 *
 		 * @access public
 		 * @static
 		 * @param ArrayList\Type $xs                                the left operand
-		 * @return Bool\Type                                        whether all of the elements of
+		 * @return Bool\Type                                        whether all of the items of
 		 *                                                          the list evaluate to false
 		 *
 		 * @see http://www.sitepoint.com/javascript-truthy-falsy/
@@ -1069,13 +1069,13 @@ namespace Saber\Data\ArrayList {
 		}
 
 		/**
-		 * This method returns whether all of the elements of the list strictly evaluate
+		 * This method returns whether all of the items of the list strictly evaluate
 		 * to true.
 		 *
 		 * @access public
 		 * @static
 		 * @param ArrayList\Type $xs                                the left operand
-		 * @return Bool\Type                                        whether all of the elements of
+		 * @return Bool\Type                                        whether all of the items of
 		 *                                                          the list strictly evaluate
 		 *                                                          to true
 		 */
@@ -1083,7 +1083,7 @@ namespace Saber\Data\ArrayList {
 			$length = $xs->length();
 
 			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				if (Bool\Module::ni(Bool\Type::true(), $xs->element($i))->unbox()) {
+				if (Bool\Module::ni(Bool\Type::true(), $xs->item($i))->unbox()) {
 					return Bool\Type::false();
 				}
 			}
@@ -1092,20 +1092,20 @@ namespace Saber\Data\ArrayList {
 		}
 
 		/**
-		 * This method (aka "and") returns whether all of the elements of the list evaluate to
+		 * This method (aka "and") returns whether all of the items of the list evaluate to
 		 * true.
 		 *
 		 * @access public
 		 * @static
 		 * @param ArrayList\Type $xs                                the left operand
-		 * @return Bool\Type                                        whether all of the elements of
+		 * @return Bool\Type                                        whether all of the items of
 		 *                                                          the list evaluate to true
 		 */
 		public static function truthy(ArrayList\Type $xs) {
 			$length = $xs->length();
 
 			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				if (!$xs->__element($i)) {
+				if (!$xs->__item($i)) {
 					return Bool\Type::false();
 				}
 			}

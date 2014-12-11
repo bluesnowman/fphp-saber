@@ -33,14 +33,14 @@ namespace Saber\Data\Option {
 		#region Methods -> Basic Operations
 
 		/**
-		 * This method (aka "every" or "forall") iterates over the elements in the collection, yielding each
-		 * element to the predicate function, or fails the truthy test.  Opposite of "none".
+		 * This method (aka "every" or "forall") iterates over the items in the collection, yielding each
+		 * item to the predicate function, or fails the truthy test.  Opposite of "none".
 		 *
 		 * @access public
 		 * @static
 		 * @param Option\Type $xs                                   the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return Bool\Type                                        whether each element passed the
+		 * @return Bool\Type                                        whether each item passed the
 		 *                                                          truthy test
 		 */
 		public static function all(Option\Type $xs, callable $predicate) {
@@ -48,14 +48,14 @@ namespace Saber\Data\Option {
 		}
 
 		/**
-		 * This method (aka "exists" or "some") returns whether some of the elements in the collection
+		 * This method (aka "exists" or "some") returns whether some of the items in the collection
 		 * passed the truthy test.
 		 *
 		 * @access public
 		 * @static
 		 * @param Option\Type $xs                                   the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return Bool\Type                                        whether some of the elements
+		 * @return Bool\Type                                        whether some of the items
 		 *                                                          passed the truthy test
 		 */
 		public static function any(Option\Type $xs, callable $predicate) {
@@ -78,7 +78,7 @@ namespace Saber\Data\Option {
 		}
 
 		/**
-		 * This method iterates over the elements in the option, yielding each element to the
+		 * This method iterates over the items in the option, yielding each item to the
 		 * procedure function.
 		 *
 		 * @access public
@@ -93,7 +93,7 @@ namespace Saber\Data\Option {
 		}
 
 		/**
-		 * This method returns a collection of those elements that satisfy the predicate.
+		 * This method returns a collection of those items that satisfy the predicate.
 		 *
 		 * @access public
 		 * @static
@@ -150,7 +150,7 @@ namespace Saber\Data\Option {
 		}
 
 		/**
-		 * This method applies each element in this option to the subroutine function.
+		 * This method applies each item in this option to the subroutine function.
 		 *
 		 * @access public
 		 * @static

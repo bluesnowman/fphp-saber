@@ -29,7 +29,7 @@ namespace Saber\Data\String {
 	final class ModuleTest extends Core\TypeTest {
 
 		/**
-		 * This method provides the data for testing if all elements pass the truthy test.
+		 * This method provides the data for testing if all items pass the truthy test.
 		 *
 		 * @return array
 		 */
@@ -47,7 +47,7 @@ namespace Saber\Data\String {
 		}
 
 		/**
-		 * This method tests if all elements pass the truthy test.
+		 * This method tests if all items pass the truthy test.
 		 *
 		 * @dataProvider dataAll
 		 */
@@ -67,7 +67,7 @@ namespace Saber\Data\String {
 		}
 
 		/**
-		 * This method provides the data for testing if any elements pass the truthy test.
+		 * This method provides the data for testing if any items pass the truthy test.
 		 *
 		 * @return array
 		 */
@@ -85,7 +85,7 @@ namespace Saber\Data\String {
 		}
 
 		/**
-		 * This method tests if any elements pass the truthy test.
+		 * This method tests if any items pass the truthy test.
 		 *
 		 * @dataProvider dataAny
 		 */

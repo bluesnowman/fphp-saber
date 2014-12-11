@@ -78,7 +78,7 @@ namespace Saber\Data\ArrayList {
 		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
 		public static function make($value/*...*/) {
-			$xs = (is_array($value)) ? $value : func_get_args();
+			$xs = (is_array($value)) ? array_values($value) : func_get_args();
 			foreach ($xs as $x) {
 				if (!(is_object($x) && ($x instanceof Core\Type))) {
 					$type = gettype($x);
@@ -106,7 +106,7 @@ namespace Saber\Data\ArrayList {
 		}
 
 		/**
-		 * This method creates a list of "n" length with every element set to the given object.
+		 * This method creates a list of "n" length with every item set to the given object.
 		 *
 		 * @access public
 		 * @param Core\Type $x                                      the object to be replicated
@@ -176,18 +176,6 @@ namespace Saber\Data\ArrayList {
 		}
 
 		/**
-		 * This method returns the element at the specified index.
-		 *
-		 * @access public
-		 * @final
-		 * @param Int32\Type $i                                     the index of the element
-		 * @return mixed                                            the element at the specified index
-		 */
-		public final function __element(Int32\Type $i) {
-			return $this->element($i)->unbox();
-		}
-
-		/**
 		 * This method returns the head object in this list.
 		 *
 		 * @access public
@@ -207,6 +195,18 @@ namespace Saber\Data\ArrayList {
 		 */
 		public final function __isEmpty() {
 			return empty($this->value);
+		}
+
+		/**
+		 * This method returns the item at the specified index.
+		 *
+		 * @access public
+		 * @final
+		 * @param Int32\Type $i                                     the index of the item
+		 * @return mixed                                            the item at the specified index
+		 */
+		public final function __item(Int32\Type $i) {
+			return $this->item($i)->unbox();
 		}
 
 		/**
@@ -247,18 +247,6 @@ namespace Saber\Data\ArrayList {
 		#region Methods -> Object Oriented
 
 		/**
-		 * This method returns the element at the specified index.
-		 *
-		 * @access public
-		 * @final
-		 * @param Int32\Type $i                                     the index of the element
-		 * @return mixed                                            the element at the specified index
-		 */
-		public final function element(Int32\Type $i) {
-			return $this->value[$i->unbox()];
-		}
-
-		/**
 		 * This method returns the head object in this list.
 		 *
 		 * @access public
@@ -289,6 +277,18 @@ namespace Saber\Data\ArrayList {
 		 */
 		public final function length() {
 			return Int32\Type::box($this->__length());
+		}
+
+		/**
+		 * This method returns the item at the specified index.
+		 *
+		 * @access public
+		 * @final
+		 * @param Int32\Type $i                                     the index of the item
+		 * @return mixed                                            the item at the specified index
+		 */
+		public final function item(Int32\Type $i) {
+			return $this->value[$i->unbox()];
 		}
 
 		/**

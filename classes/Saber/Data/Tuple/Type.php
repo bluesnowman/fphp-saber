@@ -137,23 +137,11 @@ namespace Saber\Data\Tuple {
 		}
 
 		/**
-		 * This method returns the element at the specified index.
+		 * This method returns the first item in the tuple.
 		 *
 		 * @access public
 		 * @final
-		 * @param Int32\Type $i                                     the index of the element
-		 * @return mixed                                            the element at the specified index
-		 */
-		public final function __element(Int32\Type $i) {
-			return $this->element($i)->unbox();
-		}
-
-		/**
-		 * This method returns the first element in the tuple.
-		 *
-		 * @access public
-		 * @final
-		 * @return mixed                                            the first element in the tuple
+		 * @return mixed                                            the first item in the tuple
 		 */
 		public final function __first() {
 			return $this->first()->unbox();
@@ -182,6 +170,18 @@ namespace Saber\Data\Tuple {
 		}
 
 		/**
+		 * This method returns the item at the specified index.
+		 *
+		 * @access public
+		 * @final
+		 * @param Int32\Type $i                                     the index of the item
+		 * @return mixed                                            the item at the specified index
+		 */
+		public final function __item(Int32\Type $i) {
+			return $this->item($i)->unbox();
+		}
+
+		/**
 		 * This method returns the length of this array list.
 		 *
 		 * @access public
@@ -193,11 +193,11 @@ namespace Saber\Data\Tuple {
 		}
 
 		/**
-		 * This method returns the second element in the tuple.
+		 * This method returns the second item in the tuple.
 		 *
 		 * @access public
 		 * @final
-		 * @return mixed                                            the second element in the tuple
+		 * @return mixed                                            the second item in the tuple
 		 */
 		public final function __second() {
 			return $this->second()->unbox();
@@ -219,23 +219,11 @@ namespace Saber\Data\Tuple {
 		#region Methods -> Object Oriented
 
 		/**
-		 * This method returns the element at the specified index.
+		 * This method returns the first item in the tuple.
 		 *
 		 * @access public
 		 * @final
-		 * @param Int32\Type $i                                     the index of the element
-		 * @return mixed                                            the element at the specified index
-		 */
-		public final function element(Int32\Type $i) {
-			return $this->value[$i->unbox()];
-		}
-
-		/**
-		 * This method returns the first element in the tuple.
-		 *
-		 * @access public
-		 * @final
-		 * @return mixed                                            the first element in the tuple
+		 * @return mixed                                            the first item in the tuple
 		 */
 		public final function first() {
 			return $this->value[0];
@@ -264,6 +252,18 @@ namespace Saber\Data\Tuple {
 		}
 
 		/**
+		 * This method returns the item at the specified index.
+		 *
+		 * @access public
+		 * @final
+		 * @param Int32\Type $i                                     the index of the item
+		 * @return mixed                                            the item at the specified index
+		 */
+		public final function item(Int32\Type $i) {
+			return $this->value[$i->unbox()];
+		}
+
+		/**
 		 * This method returns the length of this array list.
 		 *
 		 * @access public
@@ -275,11 +275,11 @@ namespace Saber\Data\Tuple {
 		}
 
 		/**
-		 * This method returns the second element in the tuple.
+		 * This method returns the second item in the tuple.
 		 *
 		 * @access public
 		 * @final
-		 * @return mixed                                            the second element in the tuple
+		 * @return mixed                                            the second item in the tuple
 		 */
 		public final function second() {
 			return $this->value[1];

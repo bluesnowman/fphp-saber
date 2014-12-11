@@ -25,7 +25,7 @@ namespace Saber\Math\Vector {
 	final class Module extends Data\Module implements Vector\Module {
 
 		/**
-		 * This method returns the average of all elements in the list.
+		 * This method returns the average of all items in the list.
 		 *
 		 * @access public
 		 * @static
@@ -39,7 +39,7 @@ namespace Saber\Math\Vector {
 		}
 
 		/**
-		 * This method returns the product of all elements in the list.
+		 * This method returns the product of all items in the list.
 		 *
 		 * @access public
 		 * @static
@@ -53,7 +53,7 @@ namespace Saber\Math\Vector {
 		}
 
 		/**
-		 * This method returns the sum of all elements in the list.
+		 * This method returns the sum of all items in the list.
 		 *
 		 * @access public
 		 * @static

@@ -128,7 +128,7 @@ namespace Saber\Data\LinkedList {
 		}
 
 		/**
-		 * This method creates a list of "n" length with every element set to the given object.
+		 * This method creates a list of "n" length with every item set to the given object.
 		 *
 		 * @access public
 		 * @static
@@ -185,18 +185,6 @@ namespace Saber\Data\LinkedList {
 		}
 
 		/**
-		 * This method returns the element at the specified index.
-		 *
-		 * @access public
-		 * @final
-		 * @param Int32\Type $i                                     the index of the element
-		 * @return mixed                                            the element at the specified index
-		 */
-		public final function __element(Int32\Type $i) {
-			return $this->element($i)->unbox();
-		}
-
-		/**
 		 * This method returns the head object in this linked list.
 		 *
 		 * @access public
@@ -216,6 +204,18 @@ namespace Saber\Data\LinkedList {
 		 */
 		public final function __isEmpty() {
 			return ($this instanceof LinkedList\Nil\Type);
+		}
+
+		/**
+		 * This method returns the item at the specified index.
+		 *
+		 * @access public
+		 * @final
+		 * @param Int32\Type $i                                     the index of the item
+		 * @return mixed                                            the item at the specified index
+		 */
+		public final function __item(Int32\Type $i) {
+			return $this->item($i)->unbox();
 		}
 
 		/**
@@ -256,27 +256,6 @@ namespace Saber\Data\LinkedList {
 		#region Methods -> Object Oriented
 
 		/**
-		 * This method returns the element at the specified index.
-		 *
-		 * @access public
-		 * @final
-		 * @param Int32\Type $i                                     the index of the element
-		 * @return mixed                                            the element at the specified index
-		 */
-		public final function element(Int32\Type $i) {
-			$j = Int32\Type::zero();
-
-			for ($zs = $this; ! $zs->__isEmpty(); $zs = $zs->tail()) {
-				if (Int32\Module::eq($i, $j)->unbox()) {
-					return $zs->head();
-				}
-				$j = Int32\Module::increment($j);
-			}
-
-			throw new Throwable\OutOfBounds\Exception('Unable to return element at index :index.', array(':index' => $i->unbox()));
-		}
-
-		/**
 		 * This method returns the head object in this linked list.
 		 *
 		 * @access public
@@ -294,6 +273,27 @@ namespace Saber\Data\LinkedList {
 		 */
 		public final function isEmpty() {
 			return Bool\Type::box($this->__isEmpty());
+		}
+
+		/**
+		 * This method returns the item at the specified index.
+		 *
+		 * @access public
+		 * @final
+		 * @param Int32\Type $i                                     the index of the item
+		 * @return mixed                                            the item at the specified index
+		 */
+		public final function item(Int32\Type $i) {
+			$j = Int32\Type::zero();
+
+			for ($zs = $this; ! $zs->__isEmpty(); $zs = $zs->tail()) {
+				if (Int32\Module::eq($i, $j)->unbox()) {
+					return $zs->head();
+				}
+				$j = Int32\Module::increment($j);
+			}
+
+			throw new Throwable\OutOfBounds\Exception('Unable to return item at index :index.', array(':index' => $i->unbox()));
 		}
 
 		/**

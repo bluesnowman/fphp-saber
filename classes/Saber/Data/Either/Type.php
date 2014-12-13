@@ -147,6 +147,17 @@ namespace Saber\Data\Either {
 		}
 
 		/**
+		 * This method returns the object stored within the either.
+		 *
+		 * @access public
+		 * @final
+		 * @return mixed                                            the stored object
+		 */
+		public final function __object() {
+			return $this->object()->unbox();
+		}
+
+		/**
 		 * This method returns the object as a string.
 		 *
 		 * @access public
@@ -181,6 +192,39 @@ namespace Saber\Data\Either {
 		 */
 		public final function isRight() {
 			return Bool\Type::box($this->__isRight());
+		}
+
+		/**
+		 * This method returns the object stored within the either.
+		 *
+		 * @access public
+		 * @final
+		 * @return Core\Type                                        the stored object
+		 */
+		public final function object() {
+			return $this->value;
+		}
+
+		/**
+		 * This method returns a left projection of this either.
+		 *
+		 * @access public
+		 * @final
+		 * @return Either\Left\Projection                           a left projection
+		 */
+		public final function projectLeft() {
+			return new Either\Left\Projection($this);
+		}
+
+		/**
+		 * This method returns a right projection of this either.
+		 *
+		 * @access public
+		 * @final
+		 * @return Either\Right\Projection                          a right projection
+		 */
+		public final function projectRight() {
+			return new Either\Right\Projection($this);
 		}
 
 		/**

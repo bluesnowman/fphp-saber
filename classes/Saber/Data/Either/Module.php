@@ -25,6 +25,14 @@ namespace Saber\Data\Either {
 
 		#region Methods -> Basic Operations
 
+		public static function fold(Either\Type $x, callable $left, callable $right) {
+			return $x->isLeft() ? $left($x->projectLeft()->object()) : $right($x->projectRight()->object());
+		}
+
+		public static function reduce(Either\Type $x) {
+			return $x->isLeft() ? $x->projectLeft()->object() : $x->projectRight()->object();
+		}
+
 		/**
 		 * This method returns the swapped node.
 		 *

@@ -98,8 +98,11 @@ namespace Saber\Data\LinkedList {
 		 * @param LinkedList\Type $tail                             the tail to be used
 		 * @return LinkedList\Cons\Type                             the "cons" object
 		 */
-		public static function cons(Core\Type $head, LinkedList\Type $tail) {
-			return new LinkedList\Cons\Type($head, $tail);
+		public static function cons(Core\Type $head, LinkedList\Type $tail = null) {
+			if ($tail !== null) {
+				return new LinkedList\Cons\Type($head, $tail);
+			}
+			return new LinkedList\Cons\Type($head, LinkedList\Type::nil());
 		}
 
 		/**

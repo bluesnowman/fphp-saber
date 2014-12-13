@@ -25,6 +25,19 @@ namespace Saber\Control\Choice {
  
 	abstract class Type implements Core\Type {
 
+		#region Properties
+
+		/**
+		 * This variable stores references to commonly used singletons.
+		 *
+		 * @access protected
+		 * @static
+		 * @var array
+		 */
+		protected static $singletons = array();
+
+		#endregion
+
 		#region Methods -> Initialization
 
 		/**
@@ -37,7 +50,10 @@ namespace Saber\Control\Choice {
 		 * @return Control\Choice\Type                              the "cons" object
 		 */
 		public static function cons(Core\Equality\Type $x, Control\Choice\Type $xs) {
-			return new Control\Choice\Cons\Type($x, $xs);
+			if ($xs !== null) {
+				return new Control\Choice\Cons\Type($x, $xs);
+			}
+			return new Control\Choice\Cons\Type($x, Control\Choice\Type::nil());
 		}
 
 		/**
@@ -48,7 +64,10 @@ namespace Saber\Control\Choice {
 		 * @return Control\Choice\Type                              the "nil" object
 		 */
 		public static function nil() {
-			return new Control\Choice\Nil\Type();
+			if (!isset(static::$singletons[0])) {
+				static::$singletons[0] = new Control\Choice\Nil\Type();
+			}
+			return static::$singletons[0];
 		}
 
 		#endregion

@@ -221,12 +221,12 @@ namespace Saber\Data\Option {
 		}
 
 		/**
-		 * This method returns the collection as an array.
+		 * This method returns the option as an array.
 		 *
 		 * @access public
 		 * @static
 		 * @param Option\Type $xs                                   the operand
-		 * @return ArrayList\Type                                   the collection as an array list
+		 * @return ArrayList\Type                                   the option as an array list
 		 */
 		public static function toArrayList(Option\Type $xs) {
 			$buffer = array();
@@ -239,7 +239,7 @@ namespace Saber\Data\Option {
 		}
 
 		/**
-		 * This method returns the option as a list.
+		 * This method returns the option as a linked list.
 		 *
 		 * @access public
 		 * @static
@@ -248,8 +248,20 @@ namespace Saber\Data\Option {
 		 */
 		public static function toLinkedList(Option\Type $xs) {
 			return ($xs->__isDefined())
-				? LinkedList\Type::cons($xs->object(), LinkedList\Type::nil())
+				? LinkedList\Type::cons($xs->object())
 				: LinkedList\Type::nil();
+		}
+
+		/**
+		 * This method returns the option.
+		 *
+		 * @access public
+		 * @static
+		 * @param Option\Type $xs                                   the operand
+		 * @return LinkedList\Type                                  the option
+		 */
+		public static function toOption(Option\Type $xs) {
+			return $xs;
 		}
 
 		#endregion

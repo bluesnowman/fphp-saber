@@ -1,0 +1,170 @@
+<?php
+
+/**
+ * Copyright 2014 Blue Snowman
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+namespace Saber\Data\Either\Left {
+
+	use \Saber\Core;
+	use \Saber\Data\ArrayList;
+	use \Saber\Data\Bool;
+	use \Saber\Data\Either;
+	use \Saber\Data\LinkedList;
+	use \Saber\Data\Option;
+	use \Saber\Throwable;
+
+	final class Projection extends Either\Projection {
+
+		#region Methods -> Basic Operations
+
+		/**
+		 * This method (aka "every" or "forall") iterates over the items in the collection, yielding each
+		 * item to the predicate function, or fails the truthy test.  Opposite of "none".
+		 *
+		 * @access public
+		 * @param callable $predicate                               the predicate function to be used
+		 * @return Bool\Type                                        whether each item passed the
+		 *                                                          truthy test
+		 */
+		public function all(callable $predicate) {
+			return Bool\Type::box($this->either->__isRight() || $predicate($this->either->object())->unbox());
+		}
+
+		/**
+		 * This method (aka "exists" or "some") returns whether some of the items in the collection
+		 * passed the truthy test.
+		 *
+		 * @access public
+		 * @param callable $predicate                               the predicate function to be used
+		 * @return Bool\Type                                        whether some of the items
+		 *                                                          passed the truthy test
+		 */
+		public function any(callable $predicate) {
+			return Bool\Type::box($this->either->__isLeft() && $predicate($this->either->object())->unbox());
+		}
+
+		/**
+		 * This method iterates over the items in the either, yielding each item to the
+		 * procedure function.
+		 *
+		 * @access public
+		 * @param callable $procedure                               the procedure function to be used
+		 */
+		public function each(callable $procedure) {
+			if ($this->either->__isLeft()) {
+				$procedure($this->either->object());
+			}
+		}
+
+		/**
+		 * This method returns a collection of those items that satisfy the predicate.
+		 *
+		 * @access public
+		 * @param callable $predicate                               the predicate function to be used
+		 * @return Either\Type                                      the either
+		 */
+		public function filter(callable $predicate) {
+			return ($this->either->__isLeft())
+				? ($predicate($this->either->object())->unbox())
+					? Option\Type::some(Either\Type::left($this->either->object()))
+					: Option\Type::none()
+				: Option\Type::none();
+		}
+
+		/**
+		 * This method applies each item in this either to the subroutine function.
+		 *
+		 * @access public
+		 * @param callable $subroutine                              the subroutine function to be used
+		 * @return Either\Type                                      the either
+		 */
+		public function map(callable $subroutine) {
+			return ($this->either->__isLeft())
+				? Either\Type::left($subroutine($this->either->object()))
+				: Either\Type::right($this->either->projectRight()->object());
+		}
+
+		/**
+		 * This method returns the object stored within the option.
+		 *
+		 * @access public
+		 * @return Core\Type                                        the stored object
+		 */
+		public function object() {
+			if (!$this->either->__isLeft()) {
+				throw new Throwable\UnimplementedMethod\Exception('Method :method has not been implemented.', array(':method' => __FUNCTION__));
+			}
+			return $this->either->object();
+		}
+
+		/**
+		 * This method returns this either's object if is has "some" object; otherwise, it will
+		 * return the specified object.
+		 *
+		 * @access public
+		 * @param Core\Type $y                                      the alternative object
+		 * @return Core\Type                                        the boxed object
+		 */
+		public function orSome(Core\Type $y) {
+			return ($this->either->__isLeft()) ? $this->either->object() : $y;
+		}
+
+		#endregion
+
+		#region Methods -> Conversion Operations
+
+		/**
+		 * This method returns the either as an array.
+		 *
+		 * @access public
+		 * @return ArrayList\Type                                   the either as an array list
+		 */
+		public function toArrayList() {
+			if ($this->either->__isLeft()) {
+				return ArrayList\Type::box(array($this->either->object()));
+			}
+			return ArrayList\Type::empty_();
+		}
+
+		/**
+		 * This method returns the either as a linked list.
+		 *
+		 * @access public
+		 * @return LinkedList\Type                                  the either as a linked list
+		 */
+		public function toLinkedList() {
+			return ($this->either->__isLeft())
+				? LinkedList\Type::cons($this->either->object())
+				: LinkedList\Type::nil();
+		}
+
+		/**
+		 * This method returns the either as an option.
+		 *
+		 * @access public
+		 * @return Option\Type                                      the either as an option
+		 */
+		public function toOption() {
+			return ($this->either->__isLeft())
+				? Option\Type::some($this->either->object())
+				: Option\Type::none();
+		}
+
+		#endregion
+
+	}
+
+}

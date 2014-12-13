@@ -84,7 +84,7 @@ namespace Saber\Data\LinkedList {
 		 * @return LinkedList\Type                                  the collection
 		 */
 		public static function append(LinkedList\Type $xs, Core\Type $y) {
-			return LinkedList\Module::concat($xs, LinkedList\Type::cons($y, LinkedList\Type::nil()));
+			return LinkedList\Module::concat($xs, LinkedList\Type::cons($y));
 		}
 
 		/**
@@ -135,7 +135,7 @@ namespace Saber\Data\LinkedList {
 			for ($zs = $xs; !$zs->__isEmpty(); $zs = $zs->tail()) {
 				$head = $zs->head();
 				if (!call_user_func_array(array(get_class($head), 'eq'), array($head, $y))->unbox()) {
-					$cons = LinkedList\Type::cons($head, LinkedList\Type::nil());
+					$cons = LinkedList\Type::cons($head);
 
 					if ($tail !== null) {
 						$tail->tail = $cons;
@@ -252,7 +252,7 @@ namespace Saber\Data\LinkedList {
 			for ($zs = $xs; !$zs->__isEmpty(); $zs = $zs->tail()) {
 				$z = $zs->head();
 				if ($predicate($z, $i)->unbox()) {
-					$ys = LinkedList\Type::cons($z, LinkedList\Type::nil());
+					$ys = LinkedList\Type::cons($z);
 
 					if ($tail !== null) {
 						$tail->tail = $ys;
@@ -310,7 +310,7 @@ namespace Saber\Data\LinkedList {
 
 				$ys = ($z instanceof Collection\Type)
 					? LinkedList\Module::toLinkedList(LinkedList\Module::flatten($z))
-					: LinkedList\Type::cons($z, LinkedList\Type::nil());
+					: LinkedList\Type::cons($z);
 
 				if ($tail !== null) {
 					$tail->tail = $ys;
@@ -429,7 +429,7 @@ namespace Saber\Data\LinkedList {
 			$tail = null;
 
 			for ($zs = $xs; !$zs->__isEmpty() && !$zs->tail()->__isEmpty(); $zs = $zs->tail()) {
-				$ys = LinkedList\Type::cons($zs->head(), LinkedList\Type::nil());
+				$ys = LinkedList\Type::cons($zs->head());
 
 				if ($tail !== null) {
 					$tail->tail = $ys;
@@ -583,7 +583,7 @@ namespace Saber\Data\LinkedList {
 
 			$i = Int32\Type::zero();
 			for ($zs = $xs; !$zs->__isEmpty(); $zs = $zs->tail()) {
-				$ys = LinkedList\Type::cons($subroutine($zs->head(), $i), LinkedList\Type::nil());
+				$ys = LinkedList\Type::cons($subroutine($zs->head(), $i));
 
 				if ($tail !== null) {
 					$tail->tail = $ys;
@@ -734,7 +734,7 @@ namespace Saber\Data\LinkedList {
 				$z = $zs->head();
 
 				if ($predicate($z, $i)->unbox()) {
-					$ys = LinkedList\Type::cons($z, LinkedList\Type::nil());
+					$ys = LinkedList\Type::cons($z);
 
 					if ($tail !== null) {
 						$tail->tail = $ys;
@@ -786,7 +786,7 @@ namespace Saber\Data\LinkedList {
 			for ($as = $xs, $bs = $ys; !$as->__isEmpty() && !$bs->__isEmpty(); $as = $as->tail(), $bs = $bs->tail()) {
 				$tuple = Tuple\Type::box($as->head(), $bs->head());
 
-				$cons = LinkedList\Type::cons($tuple, LinkedList\Type::nil());
+				$cons = LinkedList\Type::cons($tuple);
 
 				if ($tail !== null) {
 					$tail->tail = $cons;

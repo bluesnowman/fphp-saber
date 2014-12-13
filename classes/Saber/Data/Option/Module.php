@@ -73,7 +73,7 @@ namespace Saber\Data\Option {
 		 */
 		public static function bind(Option\Type $xs, callable $subroutine) {
 			return ($xs->__isDefined())
-				? $subroutine($xs->object(), Int32\Type::zero())
+				? Option\Type::covariant($subroutine($xs->object(), Int32\Type::zero()))
 				: Option\Type::none();
 		}
 

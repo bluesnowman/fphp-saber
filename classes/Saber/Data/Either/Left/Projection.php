@@ -24,6 +24,7 @@ namespace Saber\Data\Either\Left {
 	use \Saber\Data\Either;
 	use \Saber\Data\LinkedList;
 	use \Saber\Data\Option;
+	use \Saber\Data\Unit;
 	use \Saber\Throwable;
 
 	final class Projection extends Either\Projection {
@@ -35,11 +36,12 @@ namespace Saber\Data\Either\Left {
 		 * item to the predicate function, or fails the truthy test.  Opposite of "none".
 		 *
 		 * @access public
+		 * @final
 		 * @param callable $predicate                               the predicate function to be used
 		 * @return Bool\Type                                        whether each item passed the
 		 *                                                          truthy test
 		 */
-		public function all(callable $predicate) {
+		public final function all(callable $predicate) {
 			return Bool\Type::box($this->either->__isRight() || $predicate($this->either->object())->unbox());
 		}
 
@@ -48,12 +50,27 @@ namespace Saber\Data\Either\Left {
 		 * passed the truthy test.
 		 *
 		 * @access public
+		 * @final
 		 * @param callable $predicate                               the predicate function to be used
 		 * @return Bool\Type                                        whether some of the items
 		 *                                                          passed the truthy test
 		 */
-		public function any(callable $predicate) {
+		public final function any(callable $predicate) {
 			return Bool\Type::box($this->either->__isLeft() && $predicate($this->either->object())->unbox());
+		}
+
+		/**
+		 * This method binds the specified subroutine to the projection's object.
+		 *
+		 * @access public
+		 * @final
+		 * @param callable $subroutine                              the subroutine to bind
+		 * @return Either\Type                                      the either
+		 */
+		public final function bind(callable $subroutine) {
+			return ($this->either->__isLeft())
+				? Either\Type::covariant($subroutine($this->either->object()))
+				: Either\Type::right($this->either->projectLeft()->object());
 		}
 
 		/**
@@ -61,11 +78,12 @@ namespace Saber\Data\Either\Left {
 		 * procedure function.
 		 *
 		 * @access public
+		 * @final
 		 * @param callable $procedure                               the procedure function to be used
 		 */
-		public function each(callable $procedure) {
+		public final function each(callable $procedure) {
 			if ($this->either->__isLeft()) {
-				$procedure($this->either->object());
+				Unit\Type::covariant($procedure($this->either->object()));
 			}
 		}
 
@@ -73,10 +91,11 @@ namespace Saber\Data\Either\Left {
 		 * This method returns a collection of those items that satisfy the predicate.
 		 *
 		 * @access public
+		 * @final
 		 * @param callable $predicate                               the predicate function to be used
 		 * @return Either\Type                                      the either
 		 */
-		public function filter(callable $predicate) {
+		public final function filter(callable $predicate) {
 			return ($this->either->__isLeft())
 				? ($predicate($this->either->object())->unbox())
 					? Option\Type::some(Either\Type::left($this->either->object()))
@@ -88,10 +107,11 @@ namespace Saber\Data\Either\Left {
 		 * This method applies each item in this either to the subroutine function.
 		 *
 		 * @access public
+		 * @final
 		 * @param callable $subroutine                              the subroutine function to be used
 		 * @return Either\Type                                      the either
 		 */
-		public function map(callable $subroutine) {
+		public final function map(callable $subroutine) {
 			return ($this->either->__isLeft())
 				? Either\Type::left($subroutine($this->either->object()))
 				: Either\Type::right($this->either->projectRight()->object());
@@ -101,9 +121,10 @@ namespace Saber\Data\Either\Left {
 		 * This method returns the object stored within the option.
 		 *
 		 * @access public
+		 * @final
 		 * @return Core\Type                                        the stored object
 		 */
-		public function object() {
+		public final function object() {
 			if (!$this->either->__isLeft()) {
 				throw new Throwable\UnimplementedMethod\Exception('Method :method has not been implemented.', array(':method' => __FUNCTION__));
 			}
@@ -115,11 +136,14 @@ namespace Saber\Data\Either\Left {
 		 * return the specified object.
 		 *
 		 * @access public
+		 * @final
 		 * @param Core\Type $y                                      the alternative object
 		 * @return Core\Type                                        the boxed object
 		 */
-		public function orSome(Core\Type $y) {
-			return ($this->either->__isLeft()) ? $this->either->object() : $y;
+		public final function orSome(Core\Type $y) {
+			return ($this->either->__isLeft())
+				? $this->either->object()
+				: $y;
 		}
 
 		#endregion
@@ -130,22 +154,23 @@ namespace Saber\Data\Either\Left {
 		 * This method returns the either as an array.
 		 *
 		 * @access public
+		 * @final
 		 * @return ArrayList\Type                                   the either as an array list
 		 */
-		public function toArrayList() {
-			if ($this->either->__isLeft()) {
-				return ArrayList\Type::box(array($this->either->object()));
-			}
-			return ArrayList\Type::empty_();
+		public final function toArrayList() {
+			return ($this->either->__isLeft())
+				? ArrayList\Type::box(array($this->either->object()))
+				: ArrayList\Type::empty_();
 		}
 
 		/**
 		 * This method returns the either as a linked list.
 		 *
 		 * @access public
+		 * @final
 		 * @return LinkedList\Type                                  the either as a linked list
 		 */
-		public function toLinkedList() {
+		public final function toLinkedList() {
 			return ($this->either->__isLeft())
 				? LinkedList\Type::cons($this->either->object())
 				: LinkedList\Type::nil();
@@ -155,9 +180,10 @@ namespace Saber\Data\Either\Left {
 		 * This method returns the either as an option.
 		 *
 		 * @access public
+		 * @final
 		 * @return Option\Type                                      the either as an option
 		 */
-		public function toOption() {
+		public final function toOption() {
 			return ($this->either->__isLeft())
 				? Option\Type::some($this->either->object())
 				: Option\Type::none();

@@ -74,6 +74,16 @@ namespace Saber\Data\Either {
 		public abstract function any(callable $predicate);
 
 		/**
+		 * This method binds the specified subroutine to the projection's object.
+		 *
+		 * @access public
+		 * @abstract
+		 * @param callable $subroutine                              the subroutine to bind
+		 * @return Either\Type                                      the either
+		 */
+		public abstract function bind(callable $subroutine);
+
+		/**
 		 * This method iterates over the items in the either, yielding each item to the
 		 * procedure function.
 		 *

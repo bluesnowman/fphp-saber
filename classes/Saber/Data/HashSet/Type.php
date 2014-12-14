@@ -105,7 +105,7 @@ namespace Saber\Data\HashSet {
 					if ($type == 'object') {
 						$type = get_class($x);
 					}
-					throw new Throwable\InvalidArgument\Exception('Unable to create dictionary. Expected a boxed value, but got ":type".', array(':type' => $type));
+					throw new Throwable\InvalidArgument\Exception('Unable to create hash set. Expected a boxed value, but got ":type".', array(':type' => $type));
 				}
 			}
 			return new HashSet\Type($xs);
@@ -116,7 +116,7 @@ namespace Saber\Data\HashSet {
 		 *
 		 * @access public
 		 * @static
-		 * @return HashSet\Type                                     an empty dictionary
+		 * @return HashSet\Type                                     an empty collection
 		 */
 		public static function empty_() {
 			return new HashSet\Type(array());
@@ -260,11 +260,11 @@ namespace Saber\Data\HashSet {
 		}
 
 		/**
-		 * This method returns the size of this dictionary.
+		 * This method returns the size of this collection.
 		 *
 		 * @access public
 		 * @final
-		 * @return integer                                          the size of this dictionary
+		 * @return integer                                          the size of this collection
 		 */
 		public final function __size() {
 			return count($this->__items());
@@ -385,11 +385,11 @@ namespace Saber\Data\HashSet {
 		}
 
 		/**
-		 * This method returns the size of this dictionary.
+		 * This method returns the size of this collection.
 		 *
 		 * @access public
 		 * @final
-		 * @return Int32\Type                                       the size of this dictionary
+		 * @return Int32\Type                                       the size of this collection
 		 */
 		public final function size() {
 			return Int32\Type::box($this->__size());

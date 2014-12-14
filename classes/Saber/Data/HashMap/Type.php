@@ -116,7 +116,7 @@ namespace Saber\Data\HashMap {
 		 *
 		 * @access public
 		 * @static
-		 * @return HashMap\Type                                     an empty dictionary
+		 * @return HashMap\Type                                     an empty collection
 		 */
 		public static function empty_() {
 			return new HashMap\Type(array());
@@ -313,11 +313,11 @@ namespace Saber\Data\HashMap {
 		}
 
 		/**
-		 * This method returns the size of this dictionary.
+		 * This method returns the size of this collection.
 		 *
 		 * @access public
 		 * @final
-		 * @return integer                                          the size of this dictionary
+		 * @return integer                                          the size of this collection
 		 */
 		public final function __size() {
 			return count($this->__keys());
@@ -491,11 +491,11 @@ namespace Saber\Data\HashMap {
 		}
 
 		/**
-		 * This method returns the size of this dictionary.
+		 * This method returns the size of this collection.
 		 *
 		 * @access public
 		 * @final
-		 * @return Int32\Type                                       the size of this dictionary
+		 * @return Int32\Type                                       the size of this collection
 		 */
 		public final function size() {
 			return Int32\Type::box($this->__size());

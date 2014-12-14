@@ -23,11 +23,13 @@ namespace Saber\Data\Option {
 	use \Saber\Data\ArrayList;
 	use \Saber\Data\Bool;
 	use \Saber\Data\Collection;
+	use \Saber\Data\Either;
 	use \Saber\Data\Int32;
 	use \Saber\Data\LinkedList;
 	use \Saber\Data\Option;
 	use \Saber\Data\String;
 	use \Saber\Data\Trit;
+	use \Saber\Data\Unit;
 
 	final class Module extends Data\Module implements Collection\Module {
 
@@ -89,7 +91,7 @@ namespace Saber\Data\Option {
 		 */
 		public static function each(Option\Type $xs, callable $procedure) {
 			if ($xs->__isDefined()) {
-				$procedure($xs->object(), Int32\Type::zero());
+				Unit\Type::covariant($procedure($xs->object(), Int32\Type::zero()));
 			}
 		}
 
@@ -160,7 +162,9 @@ namespace Saber\Data\Option {
 		 * @return Option\Type                                      the option
 		 */
 		public static function map(Option\Type $xs, callable $subroutine) {
-			return ($xs->__isDefined()) ? Option\Type::some($subroutine($xs->object())) : Option\Type::none();
+			return ($xs->__isDefined())
+				? Option\Type::some($subroutine($xs->object()))
+				: Option\Type::none();
 		}
 
 		/**
@@ -240,6 +244,23 @@ namespace Saber\Data\Option {
 		}
 
 		/**
+		 * This method returns this option's object in an Either\Left\Type if defined; otherwise,
+		 * returns the specified object in an Either\Right\Type.
+		 *
+		 * @access public
+		 * @static
+		 * @param Option\Type $xs                                   the operand
+		 * @param Core\Type $x                                      the object to be returned
+		 *                                                          if option is not defined
+		 * @return Either\Type                                      the either
+		 */
+		public static function toLeft(Option\Type $xs, Core\Type $x) {
+			return ($xs->__isDefined())
+				? Either\Type::left($xs->object())
+				: Either\Type::right($x);
+		}
+
+		/**
 		 * This method returns the option as a linked list.
 		 *
 		 * @access public
@@ -263,6 +284,23 @@ namespace Saber\Data\Option {
 		 */
 		public static function toOption(Option\Type $xs) {
 			return $xs;
+		}
+
+		/**
+		 * This method returns this option's object in an Either\Right\Type if defined; otherwise,
+		 * returns the specified object in an Either\Left\Type.
+		 *
+		 * @access public
+		 * @static
+		 * @param Option\Type $xs                                   the operand
+		 * @param Core\Type $x                                      the object to be returned
+		 *                                                          if option is not defined
+		 * @return Either\Type                                      the either
+		 */
+		public static function toRight(Option\Type $xs, Core\Type $x) {
+			return ($xs->__isDefined())
+				? Either\Type::right($xs->object())
+				: Either\Type::left($x);
 		}
 
 		#endregion

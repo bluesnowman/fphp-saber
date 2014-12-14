@@ -161,17 +161,6 @@ namespace Saber\Data\Option {
 		}
 
 		/**
-		 * This method returns the length of this option.
-		 *
-		 * @access public
-		 * @final
-		 * @return integer                                          the length of this option
-		 */
-		public final function __length() {
-			return ($this->__isDefined()) ? 1 : 0;
-		}
-
-		/**
 		 * This method returns the object stored within the option.
 		 *
 		 * @access public
@@ -180,6 +169,17 @@ namespace Saber\Data\Option {
 		 */
 		public final function __object() {
 			return $this->object()->unbox();
+		}
+
+		/**
+		 * This method returns the size of this option.
+		 *
+		 * @access public
+		 * @final
+		 * @return integer                                          the size of this option
+		 */
+		public final function __size() {
+			return ($this->__isDefined()) ? 1 : 0;
 		}
 
 		/**
@@ -210,17 +210,6 @@ namespace Saber\Data\Option {
 		}
 
 		/**
-		 * This method returns the length of this option.
-		 *
-		 * @access public
-		 * @final
-		 * @return Int32\Type                                       the length of this option
-		 */
-		public final function length() {
-			return Int32\Type::box($this->__length());
-		}
-
-		/**
 		 * This method returns the object stored within the option.
 		 *
 		 * @access public
@@ -228,6 +217,17 @@ namespace Saber\Data\Option {
 		 * @return Core\Type                                        the stored object
 		 */
 		public abstract function object();
+
+		/**
+		 * This method returns the size of this option.
+		 *
+		 * @access public
+		 * @final
+		 * @return Int32\Type                                       the size of this option
+		 */
+		public final function size() {
+			return Int32\Type::box($this->__size());
+		}
 
 		#endregion
 

@@ -149,7 +149,7 @@ namespace Saber\Data\Option {
 		 * @return Int32\Type                                       the length of this option
 		 */
 		public static function length(Option\Type $xs) {
-			return $xs->length();
+			return $xs->size();
 		}
 
 		/**

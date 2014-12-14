@@ -73,7 +73,7 @@ namespace Saber\Data\Option {
 		 * @return integer                                          the length of the collection
 		 */
 		public final function count() {
-			return $this->xs->__length();
+			return $this->xs->__size();
 		}
 
 		/**
@@ -128,7 +128,7 @@ namespace Saber\Data\Option {
 		 * @return boolean                                          whether there are more objects
 		 */
 		public final function valid() {
-			return ($this->i->unbox() < $this->xs->__length());
+			return ($this->i->unbox() < $this->xs->__size());
 		}
 
 	}

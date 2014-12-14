@@ -21,11 +21,12 @@ namespace Saber\Data\Either {
 	use \Saber\Core;
 	use \Saber\Data;
 	use \Saber\Data\Bool;
+	use \Saber\Data\Collection;
 	use \Saber\Data\Either;
 	use \Saber\Data\Unit;
 	use \Saber\Throwable;
 
-	abstract class Type extends Data\Type implements Core\Boxable\Type {
+	abstract class Type extends Data\Type implements Core\Boxable\Type, Collection\Type {
 
 		#region Properties
 

@@ -217,18 +217,19 @@ Below describes the relationships between data types:
     + Bool\Type
     + Char\Type
     + Collection\Type
+      + Either\Type
+        + Either\Left\Type
+        + Either\Right\Type
       + Map\Type
         + HashMap\Type
       + Option\Type
       + Set\Type
         + HashSet\Type
+      + Tuple\Type
       + Vector\Type
         + ArrayList\Type
         + LinkedList\Type
         + String\Type
-    + Either\Type
-      + Either\Left\Type
-      + Either\Right\Type
     + Num\Type
       + Floating\Type : Fractional\Type
         + Double\Type : Real\Type
@@ -239,7 +240,6 @@ Below describes the relationships between data types:
         + Trit\Type
       + Ratio\Type : Fractional\Type
     + Object\Type
-    + Tuple\Type
     + Unit\Type
   + Throwable\Runtime\Exception
     + Throwable\EmptyCollection\Exception

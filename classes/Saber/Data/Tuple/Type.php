@@ -26,7 +26,7 @@ namespace Saber\Data\Tuple {
 	use \Saber\Data\Tuple;
 	use \Saber\Throwable;
 
-	final class Type extends Data\Type implements Collection\Type, Core\Boxable\Type {
+	final class Type extends Data\Type implements Core\Boxable\Type, Collection\Type {
 
 		#region Properties
 

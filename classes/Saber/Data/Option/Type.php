@@ -27,7 +27,7 @@ namespace Saber\Data\Option {
 	use \Saber\Data\String;
 	use \Saber\Throwable;
 
-	abstract class Type extends Data\Type implements Collection\Type {
+	abstract class Type extends Data\Type implements Core\Boxable\Type, Collection\Type {
 
 		#region Properties
 

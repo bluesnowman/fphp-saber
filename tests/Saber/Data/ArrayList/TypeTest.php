@@ -169,7 +169,7 @@ namespace Saber\Data\ArrayList {
 		/**
 		 * This method tests that an item is accessible.
 		 */
-		public function testElements() {
+		public function testItems() {
 			//$this->markTestIncomplete();
 
 			$p0 = ArrayList\Type::box(array(Int32\Type::zero(), Int32\Type::one(), Int32\Type::box(2)));

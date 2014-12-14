@@ -169,7 +169,7 @@ namespace Saber\Data\String {
 		/**
 		 * This method tests that an item is accessible.
 		 */
-		public function testElements() {
+		public function testItems() {
 			//$this->markTestIncomplete();
 
 			$p0 = String\Type::box('012');

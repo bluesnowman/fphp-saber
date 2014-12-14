@@ -21,11 +21,12 @@ namespace Saber\Data\Tuple {
 	use \Saber\Core;
 	use \Saber\Data;
 	use \Saber\Data\Bool;
+	use \Saber\Data\Collection;
 	use \Saber\Data\Int32;
 	use \Saber\Data\Tuple;
 	use \Saber\Throwable;
 
-	final class Type extends Data\Type implements Core\Boxable\Type {
+	final class Type extends Data\Type implements Collection\Type, Core\Boxable\Type {
 
 		#region Properties
 
@@ -69,8 +70,8 @@ namespace Saber\Data\Tuple {
 		 * @return Tuple\Type                                       the boxed object
 		 */
 		public static function box($value/*...*/) {
-			$values = func_get_args();
-			return new Tuple\Type($values);
+			$xs = (is_array($value)) ? $value : func_get_args();
+			return new Tuple\Type($xs);
 		}
 
 		/**
@@ -84,21 +85,21 @@ namespace Saber\Data\Tuple {
 		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
 		public static function make($value/*...*/) {
-			$count = func_num_args();
+			$xs = (is_array($value)) ? $value : func_get_args();
+			$count = count($xs);
 			if ($count < 2) {
 				throw new Throwable\InvalidArgument\Exception('Unable to box value(s). Tuple must have at least 2 objects, but got ":count".', array(':count' => $count));
 			}
-			$values = func_get_args();
-			foreach ($values as $value) {
-				if (!(($value === null) || (is_object($value) && ($value instanceof Core\Type)))) {
-					$type = gettype($value);
+			foreach ($xs as $x) {
+				if (!(($x === null) || (is_object($x) && ($x instanceof Core\Type)))) {
+					$type = gettype($x);
 					if ($type == 'object') {
-						$type = get_class($value);
+						$type = get_class($x);
 					}
 					throw new Throwable\InvalidArgument\Exception('Unable to box value(s). Expected a boxed object, but got ":type".', array(':type' => $type));
 				}
 			}
-			return new Tuple\Type($values);
+			return new Tuple\Type($xs);
 		}
 
 		#endregion
@@ -274,7 +275,7 @@ namespace Saber\Data\Tuple {
 		 * @access public
 		 * @final
 		 * @param Int32\Type $i                                     the index of the item
-		 * @return mixed                                            the item at the specified index
+		 * @return Core\Type                                        the item at the specified index
 		 */
 		public final function item(Int32\Type $i) {
 			return $this->value[$i->unbox()];

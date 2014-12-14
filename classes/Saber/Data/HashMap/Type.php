@@ -164,6 +164,17 @@ namespace Saber\Data\HashMap {
 		}
 
 		/**
+		 * This method removes all entries from the collection.
+		 *
+		 * @access public
+		 * @final
+		 * @return array                                            the collection
+		 */
+		public final function __clear() {
+			return $this->clear()->unbox();
+		}
+
+		/**
 		 * This constructor initializes the class with the specified value.
 		 *
 		 * @access public
@@ -326,6 +337,18 @@ namespace Saber\Data\HashMap {
 		#endregion
 
 		#region Methods -> Object Oriented
+
+		/**
+		 * This method removes all entries from the collection.
+		 *
+		 * @access public
+		 * @final
+		 * @return HashMap\Type                                     the collection
+		 */
+		public final function clear() {
+			$this->value = array();
+			return $this;
+		}
 
 		/**
 		 * This method returns all key/value pairs in the collection.

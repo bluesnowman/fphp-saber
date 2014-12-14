@@ -127,6 +127,18 @@ namespace Saber\Data\HashSet {
 		#region Methods -> Native Oriented
 
 		/**
+		 * This method adds the item to the collection (if it doesn't already exist).
+		 *
+		 * @access public
+		 * @final
+		 * @param Core\Type $item                                   the item to be stored
+		 * @return mixed                                            the collection
+		 */
+		public final function __addItem(Core\Type $item) {
+			return $this->addItem($item)->unbox();
+		}
+
+		/**
 		 * This method is called when a method is not defined and will attempt to remap
 		 * the call.  Particularly, this method provides a shortcut means of unboxing a method's
 		 * result when the method name is preceded by a double-underscore.
@@ -164,6 +176,17 @@ namespace Saber\Data\HashSet {
 		}
 
 		/**
+		 * This method removes all entries from the collection.
+		 *
+		 * @access public
+		 * @final
+		 * @return array                                            the collection
+		 */
+		public final function __clear() {
+			return $this->clear()->unbox();
+		}
+
+		/**
 		 * This constructor initializes the class with the specified value.
 		 *
 		 * @access public
@@ -172,18 +195,6 @@ namespace Saber\Data\HashSet {
 		 */
 		public final function __construct(array $value) {
 			$this->value = $value;
-		}
-
-		/**
-		 * This method adds the item to the collection (if it doesn't already exist).
-		 *
-		 * @access public
-		 * @final
-		 * @param Core\Type $item                                   the item to be stored
-		 * @return mixed                                            the collection
-		 */
-		public final function __addItem(Core\Type $item) {
-			return $this->addItem($item)->unbox();
 		}
 
 		/**
@@ -296,6 +307,18 @@ namespace Saber\Data\HashSet {
 				}
 			}
 			$this->value[$hashCode][] = $item;
+			return $this;
+		}
+
+		/**
+		 * This method removes all entries from the collection.
+		 *
+		 * @access public
+		 * @final
+		 * @return HashSet\Type                                     the collection
+		 */
+		public final function clear() {
+			$this->value = array();
 			return $this;
 		}
 

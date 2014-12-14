@@ -16,13 +16,13 @@
  * limitations under the License.
  */
 
-namespace Saber\Data\Dictionary {
+namespace Saber\Data\HashMap {
 
 	use \Saber\Core;
 	use \Saber\Data;
 	use \Saber\Data\ArrayList;
 	use \Saber\Data\Bool;
-	use \Saber\Data\Dictionary;
+	use \Saber\Data\HashMap;
 	use \Saber\Data\Int32;
 	use \Saber\Data\Map;
 	use \Saber\Data\Trit;
@@ -41,7 +41,7 @@ namespace Saber\Data\Dictionary {
 		 * @static
 		 * @var string
 		 */
-		protected static $module = '\\Saber\\Data\\Dictionary\\Module';
+		protected static $module = '\\Saber\\Data\\HashMap\\Module';
 
 		/**
 		 * This variable stores the size of the collection.
@@ -62,7 +62,7 @@ namespace Saber\Data\Dictionary {
 		 * @access public
 		 * @static
 		 * @param Core\Type $x                                      the class to be evaluated
-		 * @return Dictionary\Type                                  the class
+		 * @return HashMap\Type                                     the class
 		 * @throw Throwable\InvalidArgument\Exception               indicated that the specified class
 		 *                                                          is not a covariant
 		 */
@@ -80,11 +80,11 @@ namespace Saber\Data\Dictionary {
 		 * @access public
 		 * @static
 		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return Dictionary\Type                                  the boxed object
+		 * @return HashMap\Type                                     the boxed object
 		 */
 		public static function box($value/*...*/) {
 			$xs = (is_array($value)) ? $value : func_get_args();
-			return new Dictionary\Type($xs);
+			return new HashMap\Type($xs);
 		}
 
 		/**
@@ -94,7 +94,7 @@ namespace Saber\Data\Dictionary {
 		 * @access public
 		 * @static
 		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return Dictionary\Type                                  the boxed object
+		 * @return HashMap\Type                                     the boxed object
 		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
 		public static function make($value/*...*/) {
@@ -105,10 +105,10 @@ namespace Saber\Data\Dictionary {
 					if ($type == 'object') {
 						$type = get_class($x);
 					}
-					throw new Throwable\InvalidArgument\Exception('Unable to create dictionary. Expected a boxed value, but got ":type".', array(':type' => $type));
+					throw new Throwable\InvalidArgument\Exception('Unable to create hash map. Expected a boxed value, but got ":type".', array(':type' => $type));
 				}
 			}
-			return new Dictionary\Type($xs);
+			return new HashMap\Type($xs);
 		}
 
 		/**
@@ -116,10 +116,10 @@ namespace Saber\Data\Dictionary {
 		 *
 		 * @access public
 		 * @static
-		 * @return Dictionary\Type                                  an empty dictionary
+		 * @return HashMap\Type                                     an empty dictionary
 		 */
 		public static function empty_() {
-			return new Dictionary\Type(array());
+			return new HashMap\Type(array());
 		}
 
 		#endregion
@@ -284,8 +284,8 @@ namespace Saber\Data\Dictionary {
 		 * @param Core\Type $item                                   the item to be stored
 		 * @return mixed                                            the collection
 		 */
-		public final function __put(Core\Type $key, Core\Type $item) {
-			return $this->put($key, $item)->unbox();
+		public final function __putEntry(Core\Type $key, Core\Type $item) {
+			return $this->putEntry($key, $item)->unbox();
 		}
 
 		/**
@@ -297,8 +297,8 @@ namespace Saber\Data\Dictionary {
 		 *                                                          item to be removed
 		 * @return mixed                                            the item removed
 		 */
-		public final function __remove(Core\Type $key) {
-			return $this->remove($key)->unbox();
+		public final function __removeKey(Core\Type $key) {
+			return $this->removeKey($key)->unbox();
 		}
 
 		/**
@@ -421,7 +421,7 @@ namespace Saber\Data\Dictionary {
 		 *
 		 * @see http://stackoverflow.com/questions/4980757/how-do-hashtables-deal-with-collisions
 		 */
-		public final function put(Core\Type $key, Core\Type $item) {
+		public final function putEntry(Core\Type $key, Core\Type $item) {
 			$hashCode = $key->__hashCode();
 			if (array_key_exists($hashCode, $this->value)) {
 				$bucket = $this->value[$hashCode];
@@ -446,7 +446,7 @@ namespace Saber\Data\Dictionary {
 		 *                                                          item to be removed
 		 * @return Core\Type                                        the item removed
 		 */
-		public final function remove(Core\Type $key) {
+		public final function removeKey(Core\Type $key) {
 			$hashCode = $key->__hashCode();
 			$item = Unit\Type::instance();
 			if (array_key_exists($hashCode, $this->value)) {

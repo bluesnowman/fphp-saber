@@ -16,16 +16,10 @@
  * limitations under the License.
  */
 
-namespace Saber\Data\Dictionary {
+namespace Saber\Data\Set {
 
-	use \Saber\Data;
-	use \Saber\Data\Bool;
-	use \Saber\Data\Dictionary;
-	use \Saber\Data\Int32;
-	use \Saber\Data\Map;
+	use \Saber\Data\Collection;
 
-	final class Iterator extends Data\Iterator implements Map\Iterator {
-
-	}
+	interface Iterator extends Collection\Iterator { }
 
 }

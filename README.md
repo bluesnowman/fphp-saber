@@ -218,8 +218,10 @@ Below describes the relationships between data types:
     + Char\Type
     + Collection\Type
       + Map\Type
-        + Dictionary\Type
+        + HashMap\Type
       + Option\Type
+      + Set\Type
+        + HashSet\Type
       + Vector\Type
         + ArrayList\Type
         + LinkedList\Type

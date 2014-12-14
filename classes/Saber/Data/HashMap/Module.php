@@ -16,10 +16,10 @@
  * limitations under the License.
  */
 
-namespace Saber\Data\Dictionary {
+namespace Saber\Data\HashMap {
 
 	use \Saber\Data;
-	use \Saber\Data\Dictionary;
+	use \Saber\Data\HashMap;
 	use \Saber\Data\Map;
 
 	final class Module extends Data\Module implements Map\Module {

@@ -27,6 +27,7 @@ namespace Saber\Data\Option {
 	use \Saber\Data\LinkedList;
 	use \Saber\Data\Option;
 	use \Saber\Data\String;
+	use \Saber\Data\Trit;
 
 	final class Module extends Data\Module implements Collection\Module {
 
@@ -393,45 +394,35 @@ namespace Saber\Data\Option {
 		 * @static
 		 * @param Option\Type $xs                                   the left operand
 		 * @param Option\Type $ys                                   the object to be compared
-		 * @return Int32\Type                                       whether the current object is less than,
+		 * @return Trit\Type                                        whether the current object is less than,
 		 *                                                          equal to, or greater than the specified
 		 *                                                          object
 		 */
 		public static function compare(Option\Type $xs, Option\Type $ys) {
-			if (($xs === null) && ($ys !== null)) {
-				return Int32\Type::negative();
-			}
-			if (($xs === null) && ($ys === null)) {
-				return Int32\Type::zero();
-			}
-			if (($xs !== null) && ($ys === null)) {
-				return Int32\Type::one();
-			}
-
 			$x = $xs->__isDefined();
 			$y = $ys->__isDefined();
 
 			if (!$x && $y) {
-				return Int32\Type::negative();
+				return Trit\Type::negative();
 			}
 			if (!$x && !$y) {
-				return Int32\Type::zero();
+				return Trit\Type::zero();
 			}
 			if ($x && !$y) {
-				return Int32\Type::one();
+				return Trit\Type::positive();
 			}
 
 			$x = $xs->object();
 			$y = $ys->object();
 
 			if (($x === null) && ($y !== null)) {
-				return Int32\Type::negative();
+				return Trit\Type::negative();
 			}
 			if (($x === null) && ($y === null)) {
-				return Int32\Type::zero();
+				return Trit\Type::zero();
 			}
 			if (($x !== null) && ($y === null)) {
-				return Int32\Type::one();
+				return Trit\Type::positive();
 			}
 
 			if ($x instanceof Core\Comparable\Type) {
@@ -504,7 +495,7 @@ namespace Saber\Data\Option {
 		 * @static
 		 * @param Option\Type $xs                                   the left operand
 		 * @param Option\Type $ys                                   the right operand
-		 * @return Int32\Type                                       the maximum value
+		 * @return Option\Type                                      the maximum value
 		 */
 		public static function max(Option\Type $xs, Option\Type $ys) {
 			return (Option\Module::compare($xs, $ys)->unbox() >= 0) ? $xs : $ys;
@@ -517,7 +508,7 @@ namespace Saber\Data\Option {
 		 * @static
 		 * @param Option\Type $xs                                   the left operand
 		 * @param Option\Type $ys                                   the right operand
-		 * @return Int32\Type                                       the minimum value
+		 * @return Option\Type                                      the minimum value
 		 */
 		public static function min(Option\Type $xs, Option\Type $ys) {
 			return (Option\Module::compare($xs, $ys)->unbox() <= 0) ? $xs : $ys;

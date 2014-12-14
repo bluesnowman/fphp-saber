@@ -24,6 +24,7 @@ namespace Saber\Util\Regex {
 	use \Saber\Data\Bool;
 	use \Saber\Data\Int32;
 	use \Saber\Data\String;
+	use \Saber\Data\Trit;
 	use \Saber\Data\Tuple;
 	use \Saber\Util\Regex;
 
@@ -176,32 +177,12 @@ namespace Saber\Util\Regex {
 		 * @static
 		 * @param Regex\Type $xs                                    the left operand
 		 * @param Regex\Type $ys                                    the object to be compared
-		 * @return Int32\Type                                       whether the current object is less than,
+		 * @return Trit\Type                                        whether the current object is less than,
 		 *                                                          equal to, or greater than the specified
 		 *                                                          object
 		 */
 		public static function compare(Regex\Type $xs, Regex\Type $ys) {
-			if (($xs === null) && ($ys !== null)) {
-				return Int32\Type::negative();
-			}
-			if (($xs === null) && ($ys === null)) {
-				return Int32\Type::zero();
-			}
-			if (($xs !== null) && ($ys === null)) {
-				return Int32\Type::one();
-			}
-
-			$r = strcmp($xs->unbox(), $ys->unbox());
-
-			if ($r < 0) {
-				return Int32\Type::negative();
-			}
-			else if ($r == 0) {
-				return Int32\Type::zero();
-			}
-			else {
-				return Int32\Type::one();
-			}
+			return Trit\Type::make(strcmp($xs->unbox(), $ys->unbox()));
 		}
 
 		/**
@@ -267,7 +248,7 @@ namespace Saber\Util\Regex {
 		 * @static
 		 * @param Regex\Type $xs                                    the left operand
 		 * @param Regex\Type $ys                                    the right operand
-		 * @return Int32\Type                                       the maximum value
+		 * @return Regex\Type                                       the maximum value
 		 */
 		public static function max(Regex\Type $xs, Regex\Type $ys) {
 			return (Regex\Module::compare($xs, $ys)->unbox() >= 0) ? $xs : $ys;
@@ -280,7 +261,7 @@ namespace Saber\Util\Regex {
 		 * @static
 		 * @param Regex\Type $xs                                    the left operand
 		 * @param Regex\Type $ys                                    the right operand
-		 * @return Int32\Type                                       the minimum value
+		 * @return Regex\Type                                       the minimum value
 		 */
 		public static function min(Regex\Type $xs, Regex\Type $ys) {
 			return (Regex\Module::compare($xs, $ys)->unbox() <= 0) ? $xs : $ys;

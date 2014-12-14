@@ -28,6 +28,7 @@ namespace Saber\Data\Integer {
 	use \Saber\Data\Integer;
 	use \Saber\Data\Integral;
 	use \Saber\Data\String;
+	use \Saber\Data\Trit;
 	use \Saber\Data\Tuple;
 
 	/**
@@ -257,19 +258,10 @@ namespace Saber\Data\Integer {
 		 * @access public
 		 * @static
 		 * @param Integer\Type $x                                   the number to be evaluated
-		 * @return Integer\Type                                     the result
+		 * @return Trit\Type                                        the result
 		 */
 		public static function signum(Integer\Type $x) {
-			$value = $x->unbox();
-			if ($value < 0) {
-				return Int32\Type::negative();
-			}
-			else if ($value == 0) {
-				return Int32\Type::zero();
-			}
-			else { // ($value > 0)
-				return Int32\Type::one();
-			}
+			return Trit\Type::make($x->unbox());
 		}
 
 		#endregion
@@ -424,22 +416,12 @@ namespace Saber\Data\Integer {
 		 * @static
 		 * @param Integer\Type $x                                   the left operand
 		 * @param Integer\Type $y                                   the right operand
-		 * @return Integer\Type                                     the order as to whether the left
+		 * @return Trit\Type                                        the order as to whether the left
 		 *                                                          operand is less than, equals to,
 		 *                                                          or greater than the right operand
 		 */
 		public static function compare(Integer\Type $x, Integer\Type $y) {
-			if (($x === null) && ($y !== null)) {
-				return Int32\Type::negative();
-			}
-			if (($x === null) && ($y === null)) {
-				return Int32\Type::zero();
-			}
-			if (($x !== null) && ($y === null)) {
-				return Int32\Type::one();
-			}
-
-			return Int32\Type::box(gmp_cmp($x->unbox(), $y->unbox()));
+			return Trit\Type::make(gmp_cmp($x->unbox(), $y->unbox()));
 		}
 
 		#endregion

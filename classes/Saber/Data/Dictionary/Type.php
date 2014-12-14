@@ -25,6 +25,7 @@ namespace Saber\Data\Dictionary {
 	use \Saber\Data\Dictionary;
 	use \Saber\Data\Int32;
 	use \Saber\Data\Map;
+	use \Saber\Data\Trit;
 	use \Saber\Data\Tuple;
 	use \Saber\Data\Unit;
 	use \Saber\Throwable;

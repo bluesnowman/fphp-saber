@@ -26,6 +26,7 @@ namespace Saber\Data\Bool {
 	use \Saber\Data\Int32;
 	use \Saber\Data\Integer;
 	use \Saber\Data\String;
+	use \Saber\Data\Trit;
 
 	final class Module extends Data\Module {
 
@@ -179,32 +180,22 @@ namespace Saber\Data\Bool {
 		 * @static
 		 * @param Bool\Type $x                                      the left operand
 		 * @param Bool\Type $y                                      the right operand
-		 * @return Int32\Type                                       the order as to whether the left
+		 * @return Trit\Type                                        the order as to whether the left
 		 *                                                          operand is less than, equals to,
 		 *                                                          or greater than the right operand
 		 */
 		public static function compare(Bool\Type $x, Bool\Type $y) {
-			if (($x === null) && ($y !== null)) {
-				return Int32\Type::negative();
-			}
-			if (($x === null) && ($y === null)) {
-				return Int32\Type::zero();
-			}
-			if (($x !== null) && ($y === null)) {
-				return Int32\Type::one();
-			}
-
 			$__x = $x->unbox();
 			$__y = $y->unbox();
 
 			if (!$__x && $__y) {
-				return Int32\Type::negative();
+				return Trit\Type::negative();
 			}
 			else if ($__x == $__y) {
-				return Int32\Type::zero();
+				return Trit\Type::zero();
 			}
 			else { // ($__x && !$__y)
-				return Int32\Type::one();
+				return Trit\Type::positive();
 			}
 		}
 
@@ -271,7 +262,7 @@ namespace Saber\Data\Bool {
 		 * @static
 		 * @param Bool\Type $x                                      the left operand
 		 * @param Bool\Type $y                                      the right operand
-		 * @return Int32\Type                                       the maximum value
+		 * @return Bool\Type                                        the maximum value
 		 */
 		public static function max(Bool\Type $x, Bool\Type $y) {
 			return (Bool\Module::compare($x, $y)->unbox() >= 0) ? $x : $y;
@@ -284,7 +275,7 @@ namespace Saber\Data\Bool {
 		 * @static
 		 * @param Bool\Type $x                                      the left operand
 		 * @param Bool\Type $y                                      the right operand
-		 * @return Int32\Type                                       the minimum value
+		 * @return Bool\Type                                        the minimum value
 		 */
 		public static function min(Bool\Type $x, Bool\Type $y) {
 			return (Bool\Module::compare($x, $y)->unbox() <= 0) ? $x : $y;

@@ -26,6 +26,7 @@ namespace Saber\Data\Char {
 	use \Saber\Data\Char;
 	use \Saber\Data\Int32;
 	use \Saber\Data\String;
+	use \Saber\Data\Trit;
 
 	/**
 	 * @see http://www.haskell.org/ghc/docs/6.4.2/html/libraries/base/Data-Char.html
@@ -173,32 +174,22 @@ namespace Saber\Data\Char {
 		 * @static
 		 * @param Char\Type $x                                      the left operand
 		 * @param Char\Type $y                                      the right operand
-		 * @return Int32\Type                                       the order as to whether the left
+		 * @return Trit\Type                                        the order as to whether the left
 		 *                                                          operand is less than, equals to,
 		 *                                                          or greater than the right operand
 		 */
 		public static function compare(Char\Type $x, Char\Type $y) {
-			if (($x === null) && ($y !== null)) {
-				return Int32\Type::negative();
-			}
-			if (($x === null) && ($y === null)) {
-				return Int32\Type::zero();
-			}
-			if (($x !== null) && ($y === null)) {
-				return Int32\Type::one();
-			}
-
 			$__x = $x->unbox();
 			$__y = $y->unbox();
 
 			if ($__x < $__y) {
-				return Int32\Type::negative();
+				return Trit\Type::negative();
 			}
 			else if ($__x == $__y) {
-				return Int32\Type::zero();
+				return Trit\Type::zero();
 			}
 			else { // ($__x > $__y)
-				return Int32\Type::one();
+				return Trit\Type::positive();
 			}
 		}
 
@@ -265,7 +256,7 @@ namespace Saber\Data\Char {
 		 * @static
 		 * @param Char\Type $x                                      the left operand
 		 * @param Char\Type $y                                      the right operand
-		 * @return Int32\Type                                       the maximum value
+		 * @return Char\Type                                        the maximum value
 		 */
 		public static function max(Char\Type $x, Char\Type $y) {
 			return (Char\Module::compare($x, $y)->unbox() >= 0) ? $x : $y;
@@ -278,7 +269,7 @@ namespace Saber\Data\Char {
 		 * @static
 		 * @param Char\Type $x                                      the left operand
 		 * @param Char\Type $y                                      the right operand
-		 * @return Int32\Type                                       the minimum value
+		 * @return Char\Type                                        the minimum value
 		 */
 		public static function min(Char\Type $x, Char\Type $y) {
 			return (Char\Module::compare($x, $y)->unbox() <= 0) ? $x : $y;

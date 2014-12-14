@@ -234,6 +234,7 @@ Below describes the relationships between data types:
       + Integral\Type : Real\Type
         + Int32\Type
         + Integer\Type
+        + Trit\Type
       + Ratio\Type : Fractional\Type
     + Object\Type
     + Tuple\Type

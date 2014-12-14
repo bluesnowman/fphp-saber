@@ -23,6 +23,7 @@ namespace Saber\Throwable\Runtime\Exception {
 	use \Saber\Data\Bool;
 	use \Saber\Data\Int32;
 	use \Saber\Data\String;
+	use \Saber\Data\Trit;
 	use \Saber\Throwable;
 
 	final class Module extends Core\Module {
@@ -183,32 +184,22 @@ namespace Saber\Throwable\Runtime\Exception {
 		 * @static
 		 * @param Throwable\Runtime\Exception $x                    the left operand
 		 * @param Throwable\Runtime\Exception $y                    the right operand
-		 * @return Int32\Type                                       the order as to whether the left
+		 * @return Trit\Type                                        the order as to whether the left
 		 *                                                          operand is less than, equals to,
 		 *                                                          or greater than the right operand
 		 */
 		public static function compare(Throwable\Runtime\Exception $x, Throwable\Runtime\Exception $y) {
-			if (($x === null) && ($y !== null)) {
-				return Int32\Type::negative();
-			}
-			if (($x === null) && ($y === null)) {
-				return Int32\Type::zero();
-			}
-			if (($x !== null) && ($y === null)) {
-				return Int32\Type::one();
-			}
-
 			$x = $x->__getCode();
 			$y = $y->__getCode();
 
 			if ($x < $y) {
-				return Int32\Type::negative();
+				return Trit\Type::negative();
 			}
 			else if ($x == $y) {
-				return Int32\Type::zero();
+				return Trit\Type::zero();
 			}
 			else { // ($x > $y)
-				return Int32\Type::one();
+				return Trit\Type::positive();
 			}
 		}
 

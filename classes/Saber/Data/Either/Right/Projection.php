@@ -22,6 +22,7 @@ namespace Saber\Data\Either\Right {
 	use \Saber\Data\ArrayList;
 	use \Saber\Data\Bool;
 	use \Saber\Data\Either;
+	use \Saber\Data\Int32;
 	use \Saber\Data\LinkedList;
 	use \Saber\Data\Option;
 	use \Saber\Data\Unit;
@@ -42,7 +43,7 @@ namespace Saber\Data\Either\Right {
 		 *                                                          truthy test
 		 */
 		public function all(callable $predicate) {
-			return Bool\Type::box($this->either->__isLeft() || $predicate($this->either->object())->unbox());
+			return Bool\Type::box($this->either->__isLeft() || $predicate($this->either->object(), Int32\Type::zero())->unbox());
 		}
 
 		/**
@@ -56,7 +57,7 @@ namespace Saber\Data\Either\Right {
 		 *                                                          passed the truthy test
 		 */
 		public function any(callable $predicate) {
-			return Bool\Type::box($this->either->__isRight() && $predicate($this->either->object())->unbox());
+			return Bool\Type::box($this->either->__isRight() && $predicate($this->either->object(), Int32\Type::zero())->unbox());
 		}
 
 		/**
@@ -69,7 +70,7 @@ namespace Saber\Data\Either\Right {
 		 */
 		public function bind(callable $subroutine) {
 			return ($this->either->__isRight())
-				? Either\Type::covariant($subroutine($this->either->object()))
+				? Either\Type::covariant($subroutine($this->either->object(), Int32\Type::zero()))
 				: Either\Type::left($this->either->projectLeft()->object());
 		}
 
@@ -83,7 +84,7 @@ namespace Saber\Data\Either\Right {
 		 */
 		public function each(callable $procedure) {
 			if ($this->either->__isRight()) {
-				Unit\Type::covariant($procedure($this->either->object()));
+				Unit\Type::covariant($procedure($this->either->object(), Int32\Type::zero()));
 			}
 		}
 
@@ -97,7 +98,7 @@ namespace Saber\Data\Either\Right {
 		 */
 		public function filter(callable $predicate) {
 			return ($this->either->__isRight())
-				? ($predicate($this->either->object())->unbox())
+				? ($predicate($this->either->object(), Int32\Type::zero())->unbox())
 					? Option\Type::some(Either\Type::right($this->either->object()))
 					: Option\Type::none()
 				: Option\Type::none();
@@ -113,7 +114,7 @@ namespace Saber\Data\Either\Right {
 		 */
 		public function map(callable $subroutine) {
 			return ($this->either->__isRight())
-				? Either\Type::right($subroutine($this->either->object()))
+				? Either\Type::right($subroutine($this->either->object(), Int32\Type::zero()))
 				: Either\Type::left($this->either->projectLeft()->object());
 		}
 

@@ -29,6 +29,7 @@ namespace Saber\Data\String {
 	use \Saber\Data\LinkedList;
 	use \Saber\Data\Option;
 	use \Saber\Data\String;
+	use \Saber\Data\Trit;
 	use \Saber\Data\Vector;
 	use \Saber\Throwable;
 
@@ -804,32 +805,12 @@ namespace Saber\Data\String {
 		 * @static
 		 * @param String\Type $xs                                   the left operand
 		 * @param String\Type $ys                                   the object to be compared
-		 * @return Int32\Type                                       whether the current object is less than,
+		 * @return Trit\Type                                        whether the current object is less than,
 		 *                                                          equal to, or greater than the specified
 		 *                                                          object
 		 */
 		public static function compare(String\Type $xs, String\Type $ys) {
-			if (($xs === null) && ($ys !== null)) {
-				return Int32\Type::negative();
-			}
-			if (($xs === null) && ($ys === null)) {
-				return Int32\Type::zero();
-			}
-			if (($xs !== null) && ($ys === null)) {
-				return Int32\Type::one();
-			}
-
-			$r = strcmp($xs->unbox(), $ys->unbox());
-
-			if ($r < 0) {
-				return Int32\Type::negative();
-			}
-			else if ($r == 0) {
-				return Int32\Type::zero();
-			}
-			else {
-				return Int32\Type::one();
-			}
+			return Trit\Type::make(strcmp($xs->unbox(), $ys->unbox()));
 		}
 
 		/**
@@ -895,7 +876,7 @@ namespace Saber\Data\String {
 		 * @static
 		 * @param String\Type $xs                                   the left operand
 		 * @param String\Type $ys                                   the right operand
-		 * @return Int32\Type                                       the maximum value
+		 * @return String\Type                                      the maximum value
 		 */
 		public static function max(String\Type $xs, String\Type $ys) {
 			return (String\Module::compare($xs, $ys)->unbox() >= 0) ? $xs : $ys;
@@ -908,7 +889,7 @@ namespace Saber\Data\String {
 		 * @static
 		 * @param String\Type $xs                                   the left operand
 		 * @param String\Type $ys                                   the right operand
-		 * @return Int32\Type                                       the minimum value
+		 * @return String\Type                                      the minimum value
 		 */
 		public static function min(String\Type $xs, String\Type $ys) {
 			return (String\Module::compare($xs, $ys)->unbox() <= 0) ? $xs : $ys;

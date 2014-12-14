@@ -25,6 +25,7 @@ namespace Saber\Data\ArrayList {
 	use \Saber\Data\Int32;
 	use \Saber\Data\LinkedList;
 	use \Saber\Data\Option;
+	use \Saber\Data\Trit;
 	use \Saber\Data\Tuple;
 	use \Saber\Data\Vector;
 	use \Saber\Throwable;
@@ -884,21 +885,11 @@ namespace Saber\Data\ArrayList {
 		 * @static
 		 * @param ArrayList\Type $xs                                the left operand
 		 * @param ArrayList\Type $ys                                the object to be compared
-		 * @return Int32\Type                                       whether the current object is less than,
+		 * @return Trit\Type                                        whether the current object is less than,
 		 *                                                          equal to, or greater than the specified
 		 *                                                          object
 		 */
 		public static function compare(ArrayList\Type $xs, ArrayList\Type $ys) {
-			if (($xs === null) && ($ys !== null)) {
-				return Int32\Type::negative();
-			}
-			if (($xs === null) && ($ys === null)) {
-				return Int32\Type::zero();
-			}
-			if (($xs !== null) && ($ys === null)) {
-				return Int32\Type::one();
-			}
-
 			$x_length = $xs->__length();
 			$y_length = $ys->__length();
 
@@ -911,13 +902,13 @@ namespace Saber\Data\ArrayList {
 			}
 
 			if ($x_length < $y_length) {
-				return Int32\Type::negative();
+				return Trit\Type::negative();
 			}
 			else if ($x_length == $y_length) {
-				return Int32\Type::zero();
+				return Trit\Type::zero();
 			}
 			else { // ($x_length > $y_length)
-				return Int32\Type::one();
+				return Trit\Type::positive();
 			}
 		}
 
@@ -984,7 +975,7 @@ namespace Saber\Data\ArrayList {
 		 * @static
 		 * @param ArrayList\Type $xs                                the left operand
 		 * @param ArrayList\Type $ys                                the right operand
-		 * @return Int32\Type                                       the maximum value
+		 * @return ArrayList\Type                                   the maximum value
 		 */
 		public static function max(ArrayList\Type $xs, ArrayList\Type $ys) {
 			return (ArrayList\Module::compare($xs, $ys)->unbox() >= 0) ? $xs : $ys;
@@ -997,7 +988,7 @@ namespace Saber\Data\ArrayList {
 		 * @static
 		 * @param ArrayList\Type $xs                                the left operand
 		 * @param ArrayList\Type $ys                                the right operand
-		 * @return Int32\Type                                       the minimum value
+		 * @return ArrayList\Type                                   the minimum value
 		 */
 		public static function min(ArrayList\Type $xs, ArrayList\Type $ys) {
 			return (ArrayList\Module::compare($xs, $ys)->unbox() <= 0) ? $xs : $ys;
@@ -1049,7 +1040,7 @@ namespace Saber\Data\ArrayList {
 		 *                                                          to false
 		 */
 		public static function false(ArrayList\Type $xs) {
-			return Bool\Module::not(ArrayList\Type::true($xs));
+			return Bool\Module::not(ArrayList\Module::true($xs));
 		}
 
 		/**

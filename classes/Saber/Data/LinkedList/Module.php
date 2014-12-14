@@ -26,6 +26,7 @@ namespace Saber\Data\LinkedList {
 	use \Saber\Data\Int32;
 	use \Saber\Data\LinkedList;
 	use \Saber\Data\Option;
+	use \Saber\Data\Trit;
 	use \Saber\Data\Tuple;
 	use \Saber\Data\Vector;
 	use \Saber\Throwable;
@@ -968,29 +969,22 @@ namespace Saber\Data\LinkedList {
 		 * @static
 		 * @param LinkedList\Type $xs                               the left operand
 		 * @param LinkedList\Type $ys                               the right operand
-		 * @return Int32\Type                                       the order as to whether the left
+		 * @return Trit\Type                                        the order as to whether the left
 		 *                                                          operand is less than, equals to,
 		 *                                                          or greater than the right operand
 		 */
 		public static function compare(LinkedList\Type $xs, LinkedList\Type $ys) {
-			if (($xs === null) && ($ys !== null)) {
-				return Int32\Type::negative();
-			}
-			if (($xs === null) && ($ys === null)) {
-				return Int32\Type::zero();
-			}
-			if (($xs !== null) && ($ys === null)) {
-				return Int32\Type::one();
-			}
-
 			$x = ($xs instanceof LinkedList\Nil\Type);
 			$y = ($ys instanceof LinkedList\Nil\Type);
 
-			if (($x && !$y) || (!$x && $y)) {
-				return Bool\Type::false();
+			if (!$x && $y) {
+				return Trit\Type::negative();
 			}
 			if ($x && $y) {
-				return Bool\Type::true();
+				return Trit\Type::zero();
+			}
+			if ($x && !$y) {
+				return Trit\Type::positive();
 			}
 
 			for ($as = $xs, $bs = $ys; !$as->__isEmpty() && !$bs->__isEmpty(); $as = $as->tail(), $bs = $bs->tail()) {
@@ -1004,13 +998,13 @@ namespace Saber\Data\LinkedList {
 			$y_length = $ys->__length();
 
 			if ($x_length < $y_length) {
-				return Int32\Type::negative();
+				return Trit\Type::negative();
 			}
 			else if ($x_length == $y_length) {
-				return Int32\Type::zero();
+				return Trit\Type::zero();
 			}
 			else { // ($x_length > $y_length)
-				return Int32\Type::one();
+				return Trit\Type::positive();
 			}
 		}
 

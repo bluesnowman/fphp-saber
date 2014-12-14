@@ -23,6 +23,7 @@ namespace Saber\Data\Tuple {
 	use \Saber\Data\Bool;
 	use \Saber\Data\Collection;
 	use \Saber\Data\Int32;
+	use \Saber\Data\Trit;
 	use \Saber\Data\Tuple;
 
 	final class Module extends Data\Module implements Collection\Module {
@@ -190,21 +191,11 @@ namespace Saber\Data\Tuple {
 		 * @static
 		 * @param Tuple\Type $xs                                    the left operand
 		 * @param Tuple\Type $ys                                    the right operand
-		 * @return Int32\Type                                       the order as to whether the left
+		 * @return Trit\Type                                        the order as to whether the left
 		 *                                                          operand is less than, equals to,
 		 *                                                          or greater than the right operand
 		 */
 		public static function compare(Tuple\Type $xs, Tuple\Type $ys) {
-			if (($xs === null) && ($ys !== null)) {
-				return Int32\Type::negative();
-			}
-			if (($xs === null) && ($ys === null)) {
-				return Int32\Type::zero();
-			}
-			if (($xs !== null) && ($ys === null)) {
-				return Int32\Type::one();
-			}
-
 			$length = Int32\Module::min($xs->length(), $ys->length());
 
 			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
@@ -212,10 +203,10 @@ namespace Saber\Data\Tuple {
 				$y = $ys->item($i);
 
 				if (($x === null) && ($y !== null)) {
-					return Int32\Type::negative();
+					return Trit\Type::negative();
 				}
 				else if (($x !== null) && ($y === null)) {
-					return Int32\Type::one();
+					return Trit\Type::positive();
 				}
 				else if (($x !== null) && ($y !== null)) {
 					$r = call_user_func_array(array($x, 'compare'), array($x, $y));
@@ -229,13 +220,13 @@ namespace Saber\Data\Tuple {
 			$y_length = $ys->__length();
 
 			if ($x_length < $y_length) {
-				return Int32\Type::negative();
+				return Trit\Type::negative();
 			}
 			else if ($x_length == $y_length) {
-				return Int32\Type::zero();
+				return Trit\Type::zero();
 			}
 			else { // ($x_length > $y_length)
-				return Int32\Type::one();
+				return Trit\Type::positive();
 			}
 		}
 
@@ -302,7 +293,7 @@ namespace Saber\Data\Tuple {
 		 * @static
 		 * @param Tuple\Type $xs                                    the left operand
 		 * @param Tuple\Type $ys                                    the right operand
-		 * @return Int32\Type                                       the maximum value
+		 * @return Tuple\Type                                       the maximum value
 		 */
 		public static function max(Tuple\Type $xs, Tuple\Type $ys) {
 			return (Tuple\Module::compare($xs, $ys)->unbox() >= 0) ? $xs : $ys;
@@ -315,7 +306,7 @@ namespace Saber\Data\Tuple {
 		 * @static
 		 * @param Tuple\Type $xs                                    the left operand
 		 * @param Tuple\Type $ys                                    the right operand
-		 * @return Int32\Type                                       the minimum value
+		 * @return Tuple\Type                                       the minimum value
 		 */
 		public static function min(Tuple\Type $xs, Tuple\Type $ys) {
 			return (Tuple\Module::compare($xs, $ys)->unbox() <= 0) ? $xs : $ys;

@@ -31,6 +31,7 @@ namespace Saber\Data\Float {
 	use \Saber\Data\Integer;
 	use \Saber\Data\Real;
 	use \Saber\Data\String;
+	use \Saber\Data\Trit;
 	use \Saber\Data\Tuple;
 
 	final class Module extends Data\Module implements Floating\Module, Real\Module {
@@ -266,19 +267,10 @@ namespace Saber\Data\Float {
 		 * @access public
 		 * @static
 		 * @param Float\Type $x                                     the number to be evaluated
-		 * @return Float\Type                                       the result
+		 * @return Trit\Type                                        the result
 		 */
 		public static function signum(Float\Type $x) {
-			$value = $x->unbox();
-			if ($value < 0) {
-				return Int32\Type::negative();
-			}
-			else if ($value == 0) {
-				return Int32\Type::zero();
-			}
-			else { // ($value > 0)
-				return Int32\Type::one();
-			}
+			return Trit\Type::make($x->unbox());
 		}
 
 		#endregion
@@ -433,32 +425,22 @@ namespace Saber\Data\Float {
 		 * @static
 		 * @param Float\Type $x                                     the left operand
 		 * @param Float\Type $y                                     the right operand
-		 * @return Int32\Type                                       the order as to whether the left
+		 * @return Trit\Type                                        the order as to whether the left
 		 *                                                          operand is less than, equals to,
 		 *                                                          or greater than the right operand
 		 */
 		public static function compare(Float\Type $x, Float\Type $y) {
-			if (($x === null) && ($y !== null)) {
-				return Int32\Type::negative();
-			}
-			if (($x === null) && ($y === null)) {
-				return Int32\Type::zero();
-			}
-			if (($x !== null) && ($y === null)) {
-				return Int32\Type::one();
-			}
-
 			$__x = $x->unbox();
 			$__y = $y->unbox();
 
 			if ($__x < $__y) {
-				return Int32\Type::negative();
+				return Trit\Type::negative();
 			}
 			else if ($__x == $__y) {
-				return Int32\Type::zero();
+				return Trit\Type::zero();
 			}
 			else { // ($__x > $__y)
-				return Int32\Type::one();
+				return Trit\Type::positive();
 			}
 		}
 

@@ -18,6 +18,7 @@
 
 namespace Saber\Data\Either {
 
+	use \Saber\Core;
 	use \Saber\Data;
 	use \Saber\Data\Either;
 
@@ -25,12 +26,30 @@ namespace Saber\Data\Either {
 
 		#region Methods -> Basic Operations
 
-		public static function fold(Either\Type $x, callable $left, callable $right) {
-			return $x->isLeft() ? $left($x->projectLeft()->object()) : $right($x->projectRight()->object());
+		/**
+		 * This method returns the result of a fold reduction on the either.
+		 *
+		 * @access public
+		 * @static
+		 * @param Either\Type $xs                                   the left operand
+		 * @param callable $left                                    the operator function to be used
+		 * @param callable $right                                   the operator function to be used
+		 * @return Core\Type                                        the result
+		 */
+		public static function fold(Either\Type $xs, callable $left, callable $right) {
+			return ($xs->__isLeft()) ? $left($xs->projectLeft()->object()) : $right($xs->projectRight()->object());
 		}
 
-		public static function reduce(Either\Type $x) {
-			return $x->isLeft() ? $x->projectLeft()->object() : $x->projectRight()->object();
+		/**
+		 * This method returns the result of a reduction on the either.
+		 *
+		 * @access public
+		 * @static
+		 * @param Either\Type $xs                                   the operand
+		 * @return Core\Type                                        the result
+		 */
+		public static function reduce(Either\Type $xs) {
+			return ($xs->__isLeft()) ? $xs->projectLeft()->object() : $xs->projectRight()->object();
 		}
 
 		/**

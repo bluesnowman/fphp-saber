@@ -23,6 +23,7 @@ namespace Saber\Data\Object {
 	use \Saber\Data\Bool;
 	use \Saber\Data\Int32;
 	use \Saber\Data\Object;
+	use \Saber\Data\Trit;
 
 	final class Module extends Data\Module {
 
@@ -124,32 +125,22 @@ namespace Saber\Data\Object {
 		 * @static
 		 * @param Object\Type $x                                    the left operand
 		 * @param Object\Type $y                                    the right operand
-		 * @return Int32\Type                                       the order as to whether the left
+		 * @return Trit\Type                                        the order as to whether the left
 		 *                                                          operand is less than, equals to,
 		 *                                                          or greater than the right operand
 		 */
 		public static function compare(Object\Type $x, Object\Type $y) {
-			if (($x === null) && ($y !== null)) {
-				return Int32\Type::negative();
-			}
-			if (($x === null) && ($y === null)) {
-				return Int32\Type::zero();
-			}
-			if (($x !== null) && ($y === null)) {
-				return Int32\Type::one();
-			}
-
 			$__x = $x->unbox();
 			$__y = $y->unbox();
 
 			if ($__x < $__y) {
-				return Int32\Type::negative();
+				return Trit\Type::negative();
 			}
 			else if ($__x == $__y) {
-				return Int32\Type::zero();
+				return Trit\Type::zero();
 			}
 			else {
-				return Int32\Type::one();
+				return Trit\Type::positive();
 			}
 		}
 

@@ -22,6 +22,7 @@ namespace Saber\Data\Unit {
 	use \Saber\Data;
 	use \Saber\Data\Bool;
 	use \Saber\Data\Int32;
+	use \Saber\Data\Trit;
 	use \Saber\Data\Unit;
 
 	final class Module extends Data\Module {
@@ -115,26 +116,15 @@ namespace Saber\Data\Unit {
 		 * @static
 		 * @param Unit\Type $x                                      the left operand
 		 * @param Unit\Type $y                                      the right operand
-		 * @return Int32\Type                                       the order as to whether the left
+		 * @return Trit\Type                                        the order as to whether the left
 		 *                                                          operand is less than, equals to,
 		 *                                                          or greater than the right operand
 		 */
 		public static function compare(Unit\Type $x, Unit\Type $y) {
 			if (Unit\Module::eq($x, $y)->unbox()) {
-				return Int32\Type::zero();
+				return Trit\Type::zero();
 			}
-
-			$r = strcmp($x->__typeOf(), $y->__typeOf());
-
-			if ($r < 0) {
-				return Int32\Type::negative();
-			}
-			else if ($r > 0) {
-				return Int32\Type::one();
-			}
-			else {
-				return Int32\Type::zero();
-			}
+			return Trit\Type::make(strcmp($x->__typeOf(), $y->__typeOf()));
 		}
 
 		/**

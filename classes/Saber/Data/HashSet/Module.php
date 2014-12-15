@@ -24,6 +24,22 @@ namespace Saber\Data\HashSet {
 
 	final class Module extends Data\Module implements Set\Module {
 
+		#region Methods -> Basic Operations
+
+		/**
+		 * This method returns an iterator for this collection.
+		 *
+		 * @access public
+		 * @static
+		 * @param HashSet\Type $xs                                  the left operand
+		 * @return HashSet\Iterator                                 an iterator for this collection
+		 */
+		public static function iterator(HashSet\Type $xs) {
+			return new HashSet\Iterator($xs);
+		}
+
+		#endregion
+
 	}
 
 }

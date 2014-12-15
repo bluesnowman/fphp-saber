@@ -27,18 +27,10 @@ namespace Saber\Data\HashSet {
 	final class Iterator extends Data\Iterator implements Set\Iterator {
 
 		/**
-		 * This variable stores a reference to the array iterator.
-		 *
-		 * @access protected
-		 * @var HashSet\Type
-		 */
-		protected $iterator;
-
-		/**
 		 * This variable stores a reference to the collection being iterated.
 		 *
 		 * @access protected
-		 * @var HashSet\Type
+		 * @var array
 		 */
 		protected $xs;
 
@@ -58,8 +50,7 @@ namespace Saber\Data\HashSet {
 		 * @param HashSet\Type $xs                                  the collection to be iterated
 		 */
 		public final function __construct(HashSet\Type $xs) {
-			$this->iterator = new \RecursiveIteratorIterator(new HashSet\RecursiveArrayOnlyIterator($xs->unbox()));
-			$this->xs = $xs;
+			$this->xs = $xs->unbox();
 			$this->i = Int32\Type::zero();
 		}
 
@@ -70,7 +61,6 @@ namespace Saber\Data\HashSet {
 		 * @final
 		 */
 		public final function __destruct() {
-			$this->iterator = null;
 			$this->xs = null;
 			$this->i = null;
 		}
@@ -83,7 +73,7 @@ namespace Saber\Data\HashSet {
 		 * @return integer                                          the size of the collection
 		 */
 		public final function count() {
-			return $this->xs->__size();
+			return count($this->xs);
 		}
 
 		/**
@@ -94,7 +84,7 @@ namespace Saber\Data\HashSet {
 		 * @return mixed                                            the current object
 		 */
 		public final function current() {
-			return $this->iterator->current();
+			return current($this->xs);
 		}
 
 		/**
@@ -116,9 +106,9 @@ namespace Saber\Data\HashSet {
 		 * @return Bool\Type                                        whether there are more objects
 		 */
 		public final function next() {
-			$this->iterator->next();
+			next($this->xs);
 			$this->i = Int32\Module::increment($this->i);
-			return Bool\Type::box($this->iterator->valid());
+			return Bool\Type::box($this->valid());
 		}
 
 		/**
@@ -128,7 +118,7 @@ namespace Saber\Data\HashSet {
 		 * @final
 		 */
 		public final function rewind() {
-			$this->iterator->rewind();
+			reset($this->xs);
 			$this->i = Int32\Type::zero();
 		}
 
@@ -140,21 +130,8 @@ namespace Saber\Data\HashSet {
 		 * @return boolean                                          whether there are more objects
 		 */
 		public final function valid() {
-			return $this->iterator->valid();
-		}
-
-	}
-
-	class RecursiveArrayOnlyIterator extends \RecursiveArrayIterator {
-
-		/**
-		 * This method returns whether the current has children.
-		 *
-		 * @access public
-		 * @return boolean                                          whether the current has children
-		 */
-		public function hasChildren() {
-			return is_array($this->current());
+			$key = key($this->xs);
+			return ($key !== null);
 		}
 
 	}

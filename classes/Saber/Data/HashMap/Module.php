@@ -24,6 +24,22 @@ namespace Saber\Data\HashMap {
 
 	final class Module extends Data\Module implements Map\Module {
 
+		#region Methods -> Basic Operations
+
+		/**
+		 * This method returns an iterator for this collection.
+		 *
+		 * @access public
+		 * @static
+		 * @param HashMap\Type $xs                                  the left operand
+		 * @return HashMap\Iterator                                 an iterator for this collection
+		 */
+		public static function iterator(HashMap\Type $xs) {
+			return new HashMap\Iterator($xs);
+		}
+
+		#endregion
+
 	}
 
 }

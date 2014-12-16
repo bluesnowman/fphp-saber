@@ -87,10 +87,10 @@ namespace Saber\Data\HashSet {
 		 * @static
 		 * @param HashSet\Type $xs                                  the hash set
 		 * @param Core\Type $x                                      the item to be found
-		 * @return boolean                                          whether the key exists
+		 * @return Bool\Type                                        whether the item exists
 		 */
 		public static function hasItem(HashSet\Type $xs, Core\Type $x) {
-			return $xs->__hasItem($x);
+			return $xs->hasItem($x);
 		}
 
 		/**

@@ -203,7 +203,7 @@ namespace Saber\Data\HashSet {
 		 * @access public
 		 * @final
 		 * @param Core\Type $item                                   the item to be found
-		 * @return boolean                                          whether the key exists
+		 * @return boolean                                          whether the item exists
 		 */
 		public final function __hasItem(Core\Type $item) {
 			$hashCode = $item->__hashCode();
@@ -328,7 +328,7 @@ namespace Saber\Data\HashSet {
 		 * @access public
 		 * @final
 		 * @param Core\Type $item                                   the item to be found
-		 * @return boolean                                          whether the key exists
+		 * @return Bool\Type                                        whether the item exists
 		 */
 		public final function hasItem(Core\Type $item) {
 			return Bool\Type::box($this->__hasItem($item));

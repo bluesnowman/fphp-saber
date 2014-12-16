@@ -258,7 +258,7 @@ Below describes the relationships between data types:
 
 Most data types have a module associated with it.  A module contains a set of common static methods for processing its respective data type.
 
-Collection types also have an iterator class so that the class can be used with PHP's `foreach` loop.  Because these iterator classes have to conform to PHP's `Iterator` interface, methods in these classes do not necessarily conform to all of the conventions that this library otherwise uses (i.e. some non-doubly underscored methods will return PHP typed primitives or objects instead of `Core\Type` objects as would be expected).
+Collection types also have an iterator class so that the class can be used with PHP's `foreach` loop.  Because these iterator classes must conform to PHP's `Iterator` and `Countable` interfaces, methods in these classes do not necessarily conform to all of the conventions that this library otherwise uses (i.e. some non-doubly underscored methods will return PHP typed primitives instead their respective `Core\Type` objects).
 
 ### Unit Tests
 

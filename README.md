@@ -81,16 +81,19 @@ $value = Int32\Type::box(7)->__increment();
 
 This library has adopted the following naming conventions for certain variables:
 
+`$c` usually represents a carried value.<br />
+`$e` usually represents an exception.<br />
+`$i`, `$j`, and `$k` usually represent an index or count.<br />
+`$n` usually represents a quantity.<br />
+`$p` usually represents a position.<br />
+`$r` usually represents a result.<br />
+
 `$x`, `$y`, and `$z` usually represent an object or a value.<br />
 `$xs`, `$ys`, and `$zs` usually represent a collection of `$x`, `$y`, and `$z` objects/values, respectively.<br />
 `$xss`, `$yss`, and `$zss` usually represent a collection of `$xs`, `$ys`, and `$zs` collections, respectively.<br />
 
-`$c` usually represents a carry.<br />
-`$i`, `$j`, and `$k` usually represent an index.<br />
-`$n` usually represents a count.<br />
-`$p` usually represents a position.<br />
-
-`$e` usually represents an exception.<br />
+`$xi`, `$yi`, and `$zi` usually represent an iterator for a collection of `$x`, `$y`, and `$z` objects/values, respectively.<br />
+`$xsi`, `$ysi`, and `$zsi` usually represent an iterator for a collection of `$xs`, `$ys`, and `$zs` collections, respectively.<br />
 
 ### Callables
 
@@ -108,7 +111,7 @@ Bool\Type function(Core\Type $x)
 Bool\Type function(Core\Type $x, Int32\Type $i)
 ````
 
-A `$procedure` function is used to perform an operation that does NOT return a value (even though, technically, it does return a `null` value by default).  In cases where logic benefits to use a return statement to terminate a procedure prematurely, it is recommended that the return value is either a `null` value or an `Unit\Type` object.
+A `$procedure` function is used to perform an operation that does NOT return a value (even though, technically, PHP does return a `null` value by default).  In cases where logic benefits to use a return statement to terminate a procedure prematurely, the return value must be either a `null` value or an `Unit\Type` object.
 
 ````
 null function(Core\Type $x)

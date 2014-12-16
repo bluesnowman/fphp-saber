@@ -30,6 +30,7 @@ namespace Saber\Data\String {
 	use \Saber\Data\Option;
 	use \Saber\Data\String;
 	use \Saber\Data\Trit;
+	use \Saber\Data\Unit;
 	use \Saber\Data\Vector;
 	use \Saber\Throwable;
 
@@ -217,7 +218,7 @@ namespace Saber\Data\String {
 			$length = $xs->length();
 
 			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$procedure(String\Module::item($xs, $i), $i);
+				Unit\Type::covariant($procedure(String\Module::item($xs, $i), $i));
 			}
 		}
 
@@ -342,7 +343,9 @@ namespace Saber\Data\String {
 		 * @return Option\Type                                      the option
 		 */
 		public static function headOption(String\Type $xs) {
-			return (!$xs->__isEmpty()) ? Option\Type::some($xs->head()) : Option\Type::none();
+			return (!$xs->__isEmpty())
+				? Option\Type::some($xs->head())
+				: Option\Type::none();
 		}
 
 		/**
@@ -474,7 +477,9 @@ namespace Saber\Data\String {
 		 * @return Option\Type                                      the option
 		 */
 		public static function lastOption(String\Type $xs) {
-			return (!$xs->__isEmpty()) ? Option\Type::some(String\Module::last($xs)) : Option\Type::none();
+			return (!$xs->__isEmpty())
+				? Option\Type::some(String\Module::last($xs))
+				: Option\Type::none();
 		}
 
 		/**

@@ -320,7 +320,7 @@ namespace Saber\Data\HashMap {
 		 * @return integer                                          the size of this collection
 		 */
 		public final function __size() {
-			return count($this->__keys());
+			return count($this->__items());
 		}
 
 		/**
@@ -485,7 +485,12 @@ namespace Saber\Data\HashMap {
 						$item = $second;
 					}
 				}
-				$this->value[$hashCode] = $buffer;
+				if (empty($buffer)) {
+					unset($this->value[$hashCode]);
+				}
+				else {
+					$this->value[$hashCode] = $buffer;
+				}
 			}
 			return $item;
 		}

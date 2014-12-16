@@ -28,6 +28,7 @@ namespace Saber\Data\LinkedList {
 	use \Saber\Data\Option;
 	use \Saber\Data\Trit;
 	use \Saber\Data\Tuple;
+	use \Saber\Data\Unit;
 	use \Saber\Data\Vector;
 	use \Saber\Throwable;
 
@@ -231,7 +232,7 @@ namespace Saber\Data\LinkedList {
 			$i = Int32\Type::zero();
 
 			for ($zs = $xs; !$zs->__isEmpty(); $zs = $zs->tail()) {
-				$procedure($zs->head(), $i);
+				Unit\Type::covariant($procedure($zs->head(), $i));
 				$i = Int32\Module::increment($i);
 			}
 		}

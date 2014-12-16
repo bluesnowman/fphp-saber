@@ -379,7 +379,12 @@ namespace Saber\Data\HashSet {
 						$item = $entry;
 					}
 				}
-				$this->value[$hashCode] = $buffer;
+				if (empty($buffer)) {
+					unset($this->value[$hashCode]);
+				}
+				else {
+					$this->value[$hashCode] = $buffer;
+				}
 			}
 			return $item;
 		}
@@ -404,12 +409,14 @@ namespace Saber\Data\HashSet {
 		 * @return array                                            the un-boxed value
 		 */
 		public final function unbox($depth = 0) {
-			if ($depth > 0) {
+			if ($depth > 1) {
 				$buffer = array();
-				foreach ($this->value as $item) {
-					$buffer[] = ($item instanceof Core\Boxable\Type)
-						? $item->unbox($depth - 1)
-						: $item;
+				foreach ($this->value as $hashCode => $bucket) {
+					foreach ($bucket as $entry) {
+						$buffer[$hashCode][] = ($entry instanceof Core\Boxable\Type)
+							? $entry->unbox($depth - 1)
+							: $entry;
+					}
 				}
 				return $buffer;
 			}

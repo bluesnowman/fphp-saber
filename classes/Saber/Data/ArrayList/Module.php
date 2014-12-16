@@ -27,6 +27,7 @@ namespace Saber\Data\ArrayList {
 	use \Saber\Data\Option;
 	use \Saber\Data\Trit;
 	use \Saber\Data\Tuple;
+	use \Saber\Data\Unit;
 	use \Saber\Data\Vector;
 	use \Saber\Throwable;
 
@@ -217,7 +218,7 @@ namespace Saber\Data\ArrayList {
 			$length = $xs->length();
 
 			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$procedure($xs->item($i), $i);
+				Unit\Type::covariant($procedure($xs->item($i), $i));
 			}
 		}
 

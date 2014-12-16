@@ -1,7 +1,7 @@
 Saber
 ==========
 
-A functional PHP library, which encourages strong typing, immutable objects, and lazy evaluation.
+A functional PHP library, which promotes strong typing, immutable objects, and lazy evaluation.
 
 ### Requirements
 

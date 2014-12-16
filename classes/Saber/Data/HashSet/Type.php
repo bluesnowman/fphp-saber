@@ -198,17 +198,6 @@ namespace Saber\Data\HashSet {
 		}
 
 		/**
-		 * This method (aka "null") returns whether this list is empty.
-		 *
-		 * @access public
-		 * @final
-		 * @return boolean                                          whether the list is empty
-		 */
-		public final function __isEmpty() {
-			return empty($this->value);
-		}
-
-		/**
 		 * This method returns the item associated with the specified key.
 		 *
 		 * @access public
@@ -231,6 +220,17 @@ namespace Saber\Data\HashSet {
 		}
 
 		/**
+		 * This method (aka "null") returns whether this list is empty.
+		 *
+		 * @access public
+		 * @final
+		 * @return boolean                                          whether the list is empty
+		 */
+		public final function __isEmpty() {
+			return empty($this->value);
+		}
+
+		/**
 		 * This method returns all of the items in the collection.
 		 *
 		 * @access public
@@ -248,12 +248,12 @@ namespace Saber\Data\HashSet {
 		}
 
 		/**
-		 * This method returns an item after removing it from the collection.
+		 * This method returns the collection with the item removed.
 		 *
 		 * @access public
 		 * @final
 		 * @param Core\Type $item                                   the item to be removed
-		 * @return mixed                                            the item removed
+		 * @return array                                            the collection
 		 */
 		public final function __removeItem(Core\Type $item) {
 			return $this->removeItem($item)->unbox();
@@ -323,17 +323,6 @@ namespace Saber\Data\HashSet {
 		}
 
 		/**
-		 * This method (aka "null") returns whether this list is empty.
-		 *
-		 * @access public
-		 * @final
-		 * @return Bool\Type                                        whether the list is empty
-		 */
-		public final function isEmpty() {
-			return Bool\Type::box($this->__isEmpty());
-		}
-
-		/**
 		 * This method returns the item associated with the specified key.
 		 *
 		 * @access public
@@ -343,6 +332,17 @@ namespace Saber\Data\HashSet {
 		 */
 		public final function hasItem(Core\Type $item) {
 			return Bool\Type::box($this->__hasItem($item));
+		}
+
+		/**
+		 * This method (aka "null") returns whether this list is empty.
+		 *
+		 * @access public
+		 * @final
+		 * @return Bool\Type                                        whether the list is empty
+		 */
+		public final function isEmpty() {
+			return Bool\Type::box($this->__isEmpty());
 		}
 
 		/**
@@ -357,16 +357,15 @@ namespace Saber\Data\HashSet {
 		}
 
 		/**
-		 * This method returns an item after removing it from the collection.
+		 * This method returns the collection with the item removed.
 		 *
 		 * @access public
 		 * @final
 		 * @param Core\Type $item                                   the item to be removed
-		 * @return Core\Type                                        the item removed
+		 * @return HashSet\Type                                     the collection
 		 */
 		public final function removeItem(Core\Type $item) {
 			$hashCode = $item->__hashCode();
-			$item = Unit\Type::instance();
 			if (array_key_exists($hashCode, $this->value)) {
 				$bucket = $this->value[$hashCode];
 				$type = $item->__typeOf();
@@ -374,9 +373,6 @@ namespace Saber\Data\HashSet {
 				foreach ($bucket as $entry) {
 					if ($type != $entry->__typeOf()) {
 						$buffer[] = $entry;
-					}
-					else{
-						$item = $entry;
 					}
 				}
 				if (empty($buffer)) {
@@ -386,7 +382,7 @@ namespace Saber\Data\HashSet {
 					$this->value[$hashCode] = $buffer;
 				}
 			}
-			return $item;
+			return $this;
 		}
 
 		/**

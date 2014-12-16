@@ -221,11 +221,13 @@ Below describes the relationships between data types:
     + Char\Type
     + Collection\Type
       + Either\Type
-        + Either\Left\Type
-        + Either\Right\Type
+        + Left\Type
+        + Right\Type
       + Map\Type
         + HashMap\Type
       + Option\Type
+        + Some\Type
+        + None\Type
       + Set\Type
         + HashSet\Type
       + Tuple\Type

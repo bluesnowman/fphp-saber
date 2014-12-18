@@ -44,7 +44,7 @@ namespace Saber\Data\HashSet {
 		protected static $module = '\\Saber\\Data\\HashSet\\Module';
 
 		/**
-		 * This variable stores the size of the collection.
+		 * This variable stores the size of the hash set.
 		 *
 		 * @access protected
 		 * @static
@@ -164,11 +164,11 @@ namespace Saber\Data\HashSet {
 		}
 
 		/**
-		 * This method removes all entries from the collection.
+		 * This method removes all entries from the hash set.
 		 *
 		 * @access public
 		 * @final
-		 * @return array                                            the collection
+		 * @return array                                            the hash set
 		 */
 		public final function __clear() {
 			return $this->clear()->unbox();
@@ -219,11 +219,11 @@ namespace Saber\Data\HashSet {
 		}
 
 		/**
-		 * This method returns all of the items in the collection.
+		 * This method returns all of the items in the hash set.
 		 *
 		 * @access public
 		 * @final
-		 * @return array                                            all items in the collection
+		 * @return array                                            all items in the hash set
 		 */
 		public final function __items() {
 			$items = array();
@@ -236,24 +236,24 @@ namespace Saber\Data\HashSet {
 		}
 
 		/**
-		 * This method puts the item into the collection (if it doesn't already exist).
+		 * This method puts the item into the hash set (if it doesn't already exist).
 		 *
 		 * @access public
 		 * @final
 		 * @param Core\Type $item                                   the item to be stored
-		 * @return mixed                                            the collection
+		 * @return mixed                                            the hash set
 		 */
 		public final function __putItem(Core\Type $item) {
 			return $this->putItem($item)->unbox();
 		}
 
 		/**
-		 * This method returns the collection with the item removed.
+		 * This method returns the hash set with the item removed.
 		 *
 		 * @access public
 		 * @final
 		 * @param Core\Type $item                                   the item to be removed
-		 * @return array                                            the collection
+		 * @return array                                            the hash set
 		 */
 		public final function __removeItem(Core\Type $item) {
 			return $this->removeItem($item)->unbox();
@@ -286,11 +286,11 @@ namespace Saber\Data\HashSet {
 		#region Methods -> Object Oriented
 
 		/**
-		 * This method removes all entries from the collection.
+		 * This method removes all entries from the hash set.
 		 *
 		 * @access public
 		 * @final
-		 * @return HashSet\Type                                     the collection
+		 * @return HashSet\Type                                     the hash set
 		 */
 		public final function clear() {
 			$this->value = array();
@@ -321,23 +321,23 @@ namespace Saber\Data\HashSet {
 		}
 
 		/**
-		 * This method returns all of the items in the collection.
+		 * This method returns all of the items in the hash set.
 		 *
 		 * @access public
 		 * @final
-		 * @return ArrayList\Type                                   all items in the collection
+		 * @return ArrayList\Type                                   all items in the hash set
 		 */
 		public final function items() {
 			return ArrayList\Type::box($this->__items());
 		}
 
 		/**
-		 * This method puts the item into the collection (if it doesn't already exist).
+		 * This method puts the item into the hash set (if it doesn't already exist).
 		 *
 		 * @access public
 		 * @final
 		 * @param Core\Type $item                                   the item to be stored
-		 * @return Core\Type                                        the collection
+		 * @return HashSet\Type                                     the hash set
 		 *
 		 * @see http://stackoverflow.com/questions/4980757/how-do-hashtables-deal-with-collisions
 		 */
@@ -357,12 +357,12 @@ namespace Saber\Data\HashSet {
 		}
 
 		/**
-		 * This method returns the collection with the item removed.
+		 * This method returns the hash set with the item removed.
 		 *
 		 * @access public
 		 * @final
 		 * @param Core\Type $item                                   the item to be removed
-		 * @return HashSet\Type                                     the collection
+		 * @return HashSet\Type                                     the hash set
 		 */
 		public final function removeItem(Core\Type $item) {
 			$hashCode = $item->__hashCode();

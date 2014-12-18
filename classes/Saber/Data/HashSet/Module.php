@@ -39,7 +39,7 @@ namespace Saber\Data\HashSet {
 		 *
 		 * @access public
 		 * @static
-		 * @param HashSet\Type $xs                                  the left operand
+		 * @param HashSet\Type $xs                                  the hash set
 		 * @param callable $predicate                               the predicate function to be used
 		 * @return Bool\Type                                        whether each item passed the
 		 *                                                          truthy test
@@ -64,7 +64,7 @@ namespace Saber\Data\HashSet {
 		 *
 		 * @access public
 		 * @static
-		 * @param HashSet\Type $xs                                  the left operand
+		 * @param HashSet\Type $xs                                  the hash set
 		 * @param callable $predicate                               the predicate function to be used
 		 * @return Bool\Type                                        whether some of the items
 		 *                                                          passed the truthy test
@@ -84,12 +84,12 @@ namespace Saber\Data\HashSet {
 		}
 
 		/**
-		 * This method removes all entries from the collection.
+		 * This method removes all entries from the hash set.
 		 *
 		 * @access public
 		 * @static
 		 * @param HashSet\Type $xs                                  the hash set
-		 * @return HashSet\Type                                     the collection
+		 * @return HashSet\Type                                     the hash set
 		 */
 		public static function clear(HashSet\Type $xs) {
 			return HashSet\Type::empty_();
@@ -120,7 +120,7 @@ namespace Saber\Data\HashSet {
 		 *
 		 * @access public
 		 * @static
-		 * @param HashSet\Type $xs                                  the left operand
+		 * @param HashSet\Type $xs                                  the hash set
 		 * @param callable $predicate                               the predicate function to be used
 		 * @return HashSet\Type                                     the hash set
 		 */
@@ -145,7 +145,7 @@ namespace Saber\Data\HashSet {
 		 *
 		 * @access public
 		 * @static
-		 * @param HashSet\Type $xs                                  the left operand
+		 * @param HashSet\Type $xs                                  the hash set
 		 * @param callable $operator                                the operator function to be used
 		 * @param Core\Type $initial                                the initial value to be used
 		 * @return Core\Type                                        the result
@@ -249,12 +249,12 @@ namespace Saber\Data\HashSet {
 		}
 
 		/**
-		 * This method returns all of the items in the collection.
+		 * This method returns all of the items in the hash set.
 		 *
 		 * @access public
 		 * @static
 		 * @param HashSet\Type $xs                                  the hash set
-		 * @return ArrayList\Type                                   all items in the collection
+		 * @return ArrayList\Type                                   all items in the hash set
 		 */
 		public static function items(HashSet\Type $xs) {
 			return $xs->items();
@@ -277,7 +277,7 @@ namespace Saber\Data\HashSet {
 		 *
 		 * @access public
 		 * @static
-		 * @param HashSet\Type $xs                                  the left operand
+		 * @param HashSet\Type $xs                                  the hash set
 		 * @param callable $subroutine                              the subroutine function to be used
 		 * @return HashSet\Type                                     the hash set
 		 */
@@ -322,13 +322,13 @@ namespace Saber\Data\HashSet {
 		}
 
 		/**
-		 * This method puts the item into the collection (if it doesn't already exist).
+		 * This method puts the item into the hash set (if it doesn't already exist).
 		 *
 		 * @access public
 		 * @static
 		 * @param HashSet\Type $xs                                  the hash set
 		 * @param Core\Type $x                                      the item to be stored
-		 * @return Core\Type                                        the collection
+		 * @return HashSet\Type                                     the hash set
 		 */
 		public static function putItem(HashSet\Type $xs, Core\Type $x) {
 			$zs = HashSet\Type::box($xs->unbox());
@@ -337,13 +337,13 @@ namespace Saber\Data\HashSet {
 		}
 
 		/**
-		 * This method returns the collection with the item removed.
+		 * This method returns the hash set with the item removed.
 		 *
 		 * @access public
 		 * @static
 		 * @param HashSet\Type $xs                                  the hash set
 		 * @param Core\Type $x                                      the item to be removed
-		 * @return Core\Type                                        the item removed
+		 * @return HashSet\Type                                     the hash set
 		 */
 		public static function removeItem(HashSet\Type $xs, Core\Type $x) {
 			$zs = HashSet\Type::box($xs->unbox());
@@ -401,12 +401,12 @@ namespace Saber\Data\HashSet {
 		}
 
 		/**
-		 * This method returns the collection as an array.
+		 * This method returns the hash set as an array.
 		 *
 		 * @access public
 		 * @static
 		 * @param HashSet\Type $xs                                  the operand
-		 * @return HashSet\Type                                     the collection as an array list
+		 * @return HashSet\Type                                     the hash set as an array list
 		 */
 		public static function toArrayList(HashSet\Type $xs) {
 			$buffer = array();
@@ -418,12 +418,12 @@ namespace Saber\Data\HashSet {
 		}
 
 		/**
-		 * This method returns the collection as a linked list.
+		 * This method returns the hash set as a linked list.
 		 *
 		 * @access public
 		 * @static
 		 * @param HashSet\Type $xs                                  the operand
-		 * @return LinkedList\Type                                  the collection as a linked list
+		 * @return LinkedList\Type                                  the hash set as a linked list
 		 */
 		public static function toLinkedList(HashSet\Type $xs) {
 			$zs = LinkedList\Type::nil();

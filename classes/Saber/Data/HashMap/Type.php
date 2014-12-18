@@ -293,7 +293,7 @@ namespace Saber\Data\HashMap {
 		 * @param Core\Type $key                                    the key to associate with
 		 *                                                          the item
 		 * @param Core\Type $item                                   the item to be stored
-		 * @return mixed                                            the collection
+		 * @return mixed                                            the hash map
 		 */
 		public final function __putEntry(Core\Type $key, Core\Type $item) {
 			return $this->putEntry($key, $item)->unbox();
@@ -440,7 +440,7 @@ namespace Saber\Data\HashMap {
 		 * @param Core\Type $key                                    the key to associate with
 		 *                                                          the item
 		 * @param Core\Type $item                                   the item to be stored
-		 * @return Core\Type                                        the collection
+		 * @return HashMap\Type                                     the hash map
 		 *
 		 * @see http://stackoverflow.com/questions/4980757/how-do-hashtables-deal-with-collisions
 		 */

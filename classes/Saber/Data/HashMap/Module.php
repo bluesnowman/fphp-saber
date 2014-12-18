@@ -39,7 +39,7 @@ namespace Saber\Data\HashMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param HashMap\Type $xs                                  the left operand
+		 * @param HashMap\Type $xs                                  the hash map
 		 * @param callable $predicate                               the predicate function to be used
 		 * @return Bool\Type                                        whether each item passed the
 		 *                                                          truthy test
@@ -65,7 +65,7 @@ namespace Saber\Data\HashMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param HashMap\Type $xs                                  the left operand
+		 * @param HashMap\Type $xs                                  the hash map
 		 * @param callable $predicate                               the predicate function to be used
 		 * @return Bool\Type                                        whether some of the items
 		 *                                                          passed the truthy test
@@ -86,23 +86,23 @@ namespace Saber\Data\HashMap {
 		}
 
 		/**
-		 * This method removes all entries from the collection.
+		 * This method removes all entries from the hash map.
 		 *
 		 * @access public
 		 * @static
-		 * @param HashMap\Type $xs                                  the hash set
-		 * @return HashMap\Type                                     the collection
+		 * @param HashMap\Type $xs                                  the hash map
+		 * @return HashMap\Type                                     the hash map
 		 */
 		public static function clear(HashMap\Type $xs) {
 			return HashMap\Type::empty_();
 		}
 
 		/**
-		 * This method returns all key/value pairs in the collection.
+		 * This method returns all key/value pairs in the hash map.
 		 *
 		 * @access public
 		 * @static
-		 * @param HashMap\Type $xs                                  the hash set
+		 * @param HashMap\Type $xs                                  the hash map
 		 * @return ArrayList\Type                                   all key/value pairs in the
 		 *                                                          collection
 		 */
@@ -115,9 +115,9 @@ namespace Saber\Data\HashMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param HashMap\Type $xs                                  the left operand
+		 * @param HashMap\Type $xs                                  the hash map
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return HashMap\Type                                     the hash set
+		 * @return HashMap\Type                                     the hash map
 		 */
 		public static function filter(HashMap\Type $xs, callable $predicate) {
 			$xi = HashMap\Module::iterator($xs);
@@ -141,7 +141,7 @@ namespace Saber\Data\HashMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param HashMap\Type $xs                                  the left operand
+		 * @param HashMap\Type $xs                                  the hash map
 		 * @param callable $operator                                the operator function to be used
 		 * @param Core\Type $initial                                the initial value to be used
 		 * @return Core\Type                                        the result
@@ -163,7 +163,7 @@ namespace Saber\Data\HashMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param HashMap\Type $xs                                  the hash set
+		 * @param HashMap\Type $xs                                  the hash map
 		 * @param Core\Type $k                                      the key to be found
 		 * @return Bool\Type                                        whether the key exists
 		 */
@@ -176,7 +176,7 @@ namespace Saber\Data\HashMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param HashMap\Type $xs                                  the hash set
+		 * @param HashMap\Type $xs                                  the hash map
 		 * @return Bool\Type                                        whether the list is empty
 		 */
 		public static function isEmpty(HashMap\Type $xs) {
@@ -188,7 +188,7 @@ namespace Saber\Data\HashMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param HashMap\Type $xs                                  the hash set
+		 * @param HashMap\Type $xs                                  the hash map
 		 * @param Core\Type $k                                      the key to be fetched
 		 * @return Core\Type                                        the item associated with the
 		 *                                                          specified key
@@ -198,12 +198,12 @@ namespace Saber\Data\HashMap {
 		}
 
 		/**
-		 * This method returns all of the items in the collection.
+		 * This method returns all of the items in the hash map.
 		 *
 		 * @access public
 		 * @static
-		 * @param HashMap\Type $xs                                  the hash set
-		 * @return ArrayList\Type                                   all items in the collection
+		 * @param HashMap\Type $xs                                  the hash map
+		 * @return ArrayList\Type                                   all items in the hash map
 		 */
 		public static function items(HashMap\Type $xs) {
 			return $xs->items();
@@ -214,7 +214,7 @@ namespace Saber\Data\HashMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param HashMap\Type $xs                                  the hash set
+		 * @param HashMap\Type $xs                                  the hash map
 		 * @return HashMap\Iterator                                 an iterator for this collection
 		 */
 		public static function iterator(HashMap\Type $xs) {
@@ -222,12 +222,12 @@ namespace Saber\Data\HashMap {
 		}
 
 		/**
-		 * This method returns all of the keys in the collection.
+		 * This method returns all of the keys in the hash map.
 		 *
 		 * @access public
 		 * @static
-		 * @param HashMap\Type $xs                                  the hash set
-		 * @return ArrayList\Type                                   all keys in the collection
+		 * @param HashMap\Type $xs                                  the hash map
+		 * @return ArrayList\Type                                   all keys in the hash map
 		 */
 		public static function keys(HashMap\Type $xs) {
 			return $xs->keys();
@@ -238,9 +238,9 @@ namespace Saber\Data\HashMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param HashMap\Type $xs                                  the left operand
+		 * @param HashMap\Type $xs                                  the hash map
 		 * @param callable $subroutine                              the subroutine function to be used
-		 * @return HashMap\Type                                     the hash set
+		 * @return HashMap\Type                                     the hash map
 		 */
 		public static function map(HashMap\Type $xs, callable $subroutine) {
 			$xi = HashMap\Module::iterator($xs);
@@ -258,15 +258,15 @@ namespace Saber\Data\HashMap {
 		}
 
 		/**
-		 * This method adds the item with the specified key to the collection (if it doesn't
+		 * This method adds the item with the specified key to the hash map (if it doesn't
 		 * already exist).
 		 *
 		 * @access public
 		 * @static
-		 * @param HashMap\Type $xs                                  the hash set
+		 * @param HashMap\Type $xs                                  the hash map
 		 * @param Tuple\Type $entry                                 the key/value pair to be put
-		 *                                                          in the collection
-		 * @return Core\Type                                        the collection
+		 *                                                          in the hash map
+		 * @return HashMap\Type                                     the hash map
 		 */
 		public static function putEntry(HashMap\Type $xs, Tuple\Type $entry) {
 			$zs = HashMap\Type::box($xs->unbox());
@@ -275,11 +275,11 @@ namespace Saber\Data\HashMap {
 		}
 
 		/**
-		 * This method returns an item after removing it from the collection.
+		 * This method returns an item after removing it from the hash map.
 		 *
 		 * @access public
 		 * @static
-		 * @param HashMap\Type $xs                                  the hash set
+		 * @param HashMap\Type $xs                                  the hash map
 		 * @param Core\Type $k                                      the key associated with the
 		 *                                                          item to be removed
 		 * @return Core\Type                                        the item removed
@@ -295,7 +295,7 @@ namespace Saber\Data\HashMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param HashMap\Type $xs                                  the hash set
+		 * @param HashMap\Type $xs                                  the hash map
 		 * @return Int32\Type                                       the size of this collection
 		 */
 		public static function size(HashMap\Type $xs) {
@@ -321,12 +321,12 @@ namespace Saber\Data\HashMap {
 		}
 
 		/**
-		 * This method returns the collection as an array.
+		 * This method returns the hash map as an array.
 		 *
 		 * @access public
 		 * @static
-		 * @param HashMap\Type $xs                                  the hash set
-		 * @return HashMap\Type                                     the collection as an array list
+		 * @param HashMap\Type $xs                                  the hash map
+		 * @return HashMap\Type                                     the hash map as an array list
 		 */
 		public static function toArrayList(HashMap\Type $xs) {
 			$buffer = array();
@@ -338,12 +338,12 @@ namespace Saber\Data\HashMap {
 		}
 
 		/**
-		 * This method returns the collection as a linked list.
+		 * This method returns the hash map as a linked list.
 		 *
 		 * @access public
 		 * @static
-		 * @param HashMap\Type $xs                                  the hash set
-		 * @return LinkedList\Type                                  the collection as a linked list
+		 * @param HashMap\Type $xs                                  the hash map
+		 * @return LinkedList\Type                                  the hash map as a linked list
 		 */
 		public static function toLinkedList(HashMap\Type $xs) {
 			$zs = LinkedList\Type::nil();

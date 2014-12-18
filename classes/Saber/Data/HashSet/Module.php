@@ -26,6 +26,7 @@ namespace Saber\Data\HashSet {
 	use \Saber\Data\Int32;
 	use \Saber\Data\LinkedList;
 	use \Saber\Data\Set;
+	use \Saber\Data\Tuple;
 	use \Saber\Data\Unit;
 	use \Saber\Throwable;
 
@@ -46,13 +47,11 @@ namespace Saber\Data\HashSet {
 		 */
 		public static function all(HashSet\Type $xs, callable $predicate) {
 			$xi = HashSet\Module::iterator($xs);
-			$i = Int32\Type::zero();
 
-			foreach ($xi as $x) {
+			foreach ($xi as $i => $x) {
 				if (!$predicate($x, $i)->unbox()) {
 					return Bool\Type::false();
 				}
-				$i = Int32\Module::increment($i);
 			}
 
 			return Bool\Type::true(); // yes, an empty array returns "true"
@@ -71,13 +70,11 @@ namespace Saber\Data\HashSet {
 		 */
 		public static function any(HashSet\Type $xs, callable $predicate) {
 			$xi = HashSet\Module::iterator($xs);
-			$i = Int32\Type::zero();
 
-			foreach ($xi as $x) {
+			foreach ($xi as $i => $x) {
 				if ($predicate($x, $i)->unbox()) {
 					return Bool\Type::true();
 				}
-				$i = Int32\Module::increment($i);
 			}
 
 			return Bool\Type::false();
@@ -125,16 +122,14 @@ namespace Saber\Data\HashSet {
 		 * @return HashSet\Type                                     the hash set
 		 */
 		public static function filter(HashSet\Type $xs, callable $predicate) {
-			$xi = HashSet\Module::iterator($xs);
-			$i = Int32\Type::zero();
-
 			$zs = HashSet\Type::empty_();
 
-			foreach ($xi as $x) {
+			$xi = HashSet\Module::iterator($xs);
+
+			foreach ($xi as $i => $x) {
 				if ($predicate($x, $i)->unbox()) {
 					$zs->putItem($x);
 				}
-				$i = Int32\Module::increment($i);
 			}
 
 			return $zs;
@@ -282,17 +277,43 @@ namespace Saber\Data\HashSet {
 		 * @return HashSet\Type                                     the hash set
 		 */
 		public static function map(HashSet\Type $xs, callable $subroutine) {
-			$xi = HashSet\Module::iterator($xs);
-			$i = Int32\Type::zero();
-
 			$zs = HashSet\Type::empty_();
 
-			foreach ($xi as $x) {
+			$xi = HashSet\Module::iterator($xs);
+
+			foreach ($xi as $i => $x) {
 				$zs->putItem($subroutine($x, $i));
-				$i = Int32\Module::increment($i);
 			}
 
 			return $zs;
+		}
+
+		/**
+		 * This method returns a pair of hash sets: those items that satisfy the predicate and
+		 * those items that do not satisfy the predicate.
+		 *
+		 * @access public
+		 * @static
+		 * @param ArrayList\Type $xs                                the hash set to be partitioned
+		 * @param callable $predicate                               the predicate function to be used
+		 * @return Tuple\Type                                       the results
+		 */
+		public static function partition(ArrayList\Type $xs, callable $predicate) {
+			$passed = HashSet\Type::empty_();
+			$failed = HashSet\Type::empty_();
+
+			$xi = HashSet\Module::iterator($xs);
+
+			foreach ($xi as $i => $x) {
+				if ($predicate($x, $i)->unbox()) {
+					$passed->putItem($x);
+				}
+				else {
+					$failed->putItem($x);
+				}
+			}
+
+			return Tuple\Type::box($passed, $failed);
 		}
 
 		/**

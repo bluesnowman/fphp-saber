@@ -120,10 +120,10 @@ namespace Saber\Data\HashMap {
 		 * @return HashMap\Type                                     the hash map
 		 */
 		public static function filter(HashMap\Type $xs, callable $predicate) {
+			$zs = HashMap\Type::empty_();
+
 			$xi = HashMap\Module::iterator($xs);
 			$i = Int32\Type::zero();
-
-			$zs = HashMap\Type::empty_();
 
 			foreach ($xi as $k => $v) {
 				$entry = Tuple\Type::box($k, $v);
@@ -243,10 +243,10 @@ namespace Saber\Data\HashMap {
 		 * @return HashMap\Type                                     the hash map
 		 */
 		public static function map(HashMap\Type $xs, callable $subroutine) {
+			$zs = HashMap\Type::empty_();
+
 			$xi = HashMap\Module::iterator($xs);
 			$i = Int32\Type::zero();
-
-			$zs = HashMap\Type::empty_();
 
 			foreach ($xi as $k => $v) {
 				$entry = Tuple\Type::box($k, $v);
@@ -255,6 +255,36 @@ namespace Saber\Data\HashMap {
 			}
 
 			return $zs;
+		}
+
+		/**
+		 * This method returns a pair of hash sets: those items that satisfy the predicate and
+		 * those items that do not satisfy the predicate.
+		 *
+		 * @access public
+		 * @static
+		 * @param ArrayList\Type $xs                                the hash set to be partitioned
+		 * @param callable $predicate                               the predicate function to be used
+		 * @return Tuple\Type                                       the results
+		 */
+		public static function partition(ArrayList\Type $xs, callable $predicate) {
+			$passed = HashMap\Type::empty_();
+			$failed = HashMap\Type::empty_();
+
+			$xi = HashMap\Module::iterator($xs);
+			$i = Int32\Type::zero();
+
+			foreach ($xi as $k => $v) {
+				$entry = Tuple\Type::box($k, $v);
+				if ($predicate($entry, $i)->unbox()) {
+					$passed->putEntry($entry->first(), $entry->second());
+				}
+				else {
+					$failed->putEntry($entry->first(), $entry->second());
+				}
+			}
+
+			return Tuple\Type::box($passed, $failed);
 		}
 
 		/**

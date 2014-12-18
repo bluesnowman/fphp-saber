@@ -30,6 +30,7 @@ namespace Saber\Data\String {
 	use \Saber\Data\Option;
 	use \Saber\Data\String;
 	use \Saber\Data\Trit;
+	use \Saber\Data\Tuple;
 	use \Saber\Data\Unit;
 	use \Saber\Data\Vector;
 	use \Saber\Throwable;
@@ -529,6 +530,35 @@ namespace Saber\Data\String {
 			return String\Module::all($xs, function(Core\Type $object, Int32\Type $index) use ($predicate) {
 				return Bool\Module::not($predicate($object, $index));
 			});
+		}
+
+		/**
+		 * This method returns a pair of strings: those items that satisfy the predicate and
+		 * those items that do not satisfy the predicate.
+		 *
+		 * @access public
+		 * @static
+		 * @param String\Type $xs                                   the string to be partitioned
+		 * @param callable $predicate                               the predicate function to be used
+		 * @return Tuple\Type                                       the results
+		 */
+		public static function partition(String\Type $xs, callable $predicate) {
+			$passed = '';
+			$failed = '';
+
+			$length = $xs->length();
+
+			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
+				$x = $xs->item($i);
+				if ($predicate($x, $i)->unbox()) {
+					$passed .= $x->unbox();
+				}
+				else {
+					$failed .= $x->unbox();
+				}
+			}
+
+			return Tuple\Type::box(String\Type::box($passed), String\Type::box($failed));
 		}
 
 		/**

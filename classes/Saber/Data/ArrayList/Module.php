@@ -575,6 +575,35 @@ namespace Saber\Data\ArrayList {
 		}
 
 		/**
+		 * This method returns a pair of lists: those items that satisfy the predicate and
+		 * those items that do not satisfy the predicate.
+		 *
+		 * @access public
+		 * @static
+		 * @param ArrayList\Type $xs                                the array list to be partitioned
+		 * @param callable $predicate                               the predicate function to be used
+		 * @return Tuple\Type                                       the results
+		 */
+		public static function partition(ArrayList\Type $xs, callable $predicate) {
+			$passed = array();
+			$failed = array();
+
+			$length = $xs->length();
+
+			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
+				$x = $xs->item($i);
+				if ($predicate($x, $i)->unbox()) {
+					$passed[] = $x;
+				}
+				else {
+					$failed[] = $x;
+				}
+			}
+
+			return Tuple\Type::box(ArrayList\Type::box($passed), ArrayList\Type::box($failed));
+		}
+
+		/**
 		 * This method prepends the specified object to the front of this list.
 		 *
 		 * @access public

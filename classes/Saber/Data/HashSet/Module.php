@@ -294,11 +294,11 @@ namespace Saber\Data\HashSet {
 		 *
 		 * @access public
 		 * @static
-		 * @param ArrayList\Type $xs                                the hash set to be partitioned
+		 * @param HashSet\Type $xs                                  the hash set to be partitioned
 		 * @param callable $predicate                               the predicate function to be used
 		 * @return Tuple\Type                                       the results
 		 */
-		public static function partition(ArrayList\Type $xs, callable $predicate) {
+		public static function partition(HashSet\Type $xs, callable $predicate) {
 			$passed = HashSet\Type::empty_();
 			$failed = HashSet\Type::empty_();
 

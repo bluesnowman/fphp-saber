@@ -258,16 +258,16 @@ namespace Saber\Data\HashMap {
 		}
 
 		/**
-		 * This method returns a pair of hash sets: those items that satisfy the predicate and
+		 * This method returns a pair of hash maps: those items that satisfy the predicate and
 		 * those items that do not satisfy the predicate.
 		 *
 		 * @access public
 		 * @static
-		 * @param ArrayList\Type $xs                                the hash set to be partitioned
+		 * @param HashMap\Type $xs                                  the hash map to be partitioned
 		 * @param callable $predicate                               the predicate function to be used
 		 * @return Tuple\Type                                       the results
 		 */
-		public static function partition(ArrayList\Type $xs, callable $predicate) {
+		public static function partition(HashMap\Type $xs, callable $predicate) {
 			$passed = HashMap\Type::empty_();
 			$failed = HashMap\Type::empty_();
 

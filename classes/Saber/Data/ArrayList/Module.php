@@ -575,7 +575,7 @@ namespace Saber\Data\ArrayList {
 		}
 
 		/**
-		 * This method returns a pair of lists: those items that satisfy the predicate and
+		 * This method returns a pair of array lists: those items that satisfy the predicate and
 		 * those items that do not satisfy the predicate.
 		 *
 		 * @access public

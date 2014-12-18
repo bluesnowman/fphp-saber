@@ -127,18 +127,6 @@ namespace Saber\Data\HashSet {
 		#region Methods -> Native Oriented
 
 		/**
-		 * This method adds the item to the collection (if it doesn't already exist).
-		 *
-		 * @access public
-		 * @final
-		 * @param Core\Type $item                                   the item to be stored
-		 * @return mixed                                            the collection
-		 */
-		public final function __addItem(Core\Type $item) {
-			return $this->addItem($item)->unbox();
-		}
-
-		/**
 		 * This method is called when a method is not defined and will attempt to remap
 		 * the call.  Particularly, this method provides a shortcut means of unboxing a method's
 		 * result when the method name is preceded by a double-underscore.
@@ -248,6 +236,18 @@ namespace Saber\Data\HashSet {
 		}
 
 		/**
+		 * This method puts the item into the collection (if it doesn't already exist).
+		 *
+		 * @access public
+		 * @final
+		 * @param Core\Type $item                                   the item to be stored
+		 * @return mixed                                            the collection
+		 */
+		public final function __putItem(Core\Type $item) {
+			return $this->putItem($item)->unbox();
+		}
+
+		/**
 		 * This method returns the collection with the item removed.
 		 *
 		 * @access public
@@ -284,31 +284,6 @@ namespace Saber\Data\HashSet {
 		#endregion
 
 		#region Methods -> Object Oriented
-
-		/**
-		 * This method adds the item to the collection (if it doesn't already exist).
-		 *
-		 * @access public
-		 * @final
-		 * @param Core\Type $item                                   the item to be stored
-		 * @return Core\Type                                        the collection
-		 *
-		 * @see http://stackoverflow.com/questions/4980757/how-do-hashtables-deal-with-collisions
-		 */
-		public final function addItem(Core\Type $item) {
-			$hashCode = $item->__hashCode();
-			if (array_key_exists($hashCode, $this->value)) {
-				$bucket = $this->value[$hashCode];
-				$type = $item->__typeOf();
-				foreach ($bucket as $entry) {
-					if ($type == $entry->__typeOf()) {
-						return $this;
-					}
-				}
-			}
-			$this->value[$hashCode][] = $item;
-			return $this;
-		}
 
 		/**
 		 * This method removes all entries from the collection.
@@ -354,6 +329,31 @@ namespace Saber\Data\HashSet {
 		 */
 		public final function items() {
 			return ArrayList\Type::box($this->__items());
+		}
+
+		/**
+		 * This method puts the item into the collection (if it doesn't already exist).
+		 *
+		 * @access public
+		 * @final
+		 * @param Core\Type $item                                   the item to be stored
+		 * @return Core\Type                                        the collection
+		 *
+		 * @see http://stackoverflow.com/questions/4980757/how-do-hashtables-deal-with-collisions
+		 */
+		public final function putItem(Core\Type $item) {
+			$hashCode = $item->__hashCode();
+			if (array_key_exists($hashCode, $this->value)) {
+				$bucket = $this->value[$hashCode];
+				$type = $item->__typeOf();
+				foreach ($bucket as $entry) {
+					if ($type == $entry->__typeOf()) {
+						return $this;
+					}
+				}
+			}
+			$this->value[$hashCode][] = $item;
+			return $this;
 		}
 
 		/**

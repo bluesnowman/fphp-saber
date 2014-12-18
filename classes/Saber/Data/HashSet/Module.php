@@ -34,18 +34,53 @@ namespace Saber\Data\HashSet {
 		#region Methods -> Basic Operations
 
 		/**
-		 * This method adds the item to the collection (if it doesn't already exist).
+		 * This method (aka "every" or "forall") iterates over the items in the list, yielding each
+		 * item to the predicate function, or fails the truthy test.  Opposite of "none".
 		 *
 		 * @access public
 		 * @static
-		 * @param HashSet\Type $xs                                  the hash set
-		 * @param Core\Type $x                                      the item to be stored
-		 * @return Core\Type                                        the collection
+		 * @param HashSet\Type $xs                                  the left operand
+		 * @param callable $predicate                               the predicate function to be used
+		 * @return Bool\Type                                        whether each item passed the
+		 *                                                          truthy test
 		 */
-		public static function addItem(HashSet\Type $xs, Core\Type $x) {
-			$zs = HashSet\Type::box($xs->unbox());
-			$zs->addItem($x);
-			return $zs;
+		public static function all(HashSet\Type $xs, callable $predicate) {
+			$xi = HashSet\Module::iterator($xs);
+			$i = Int32\Type::zero();
+
+			foreach ($xi as $x) {
+				if (!$predicate($x, $i)->unbox()) {
+					return Bool\Type::false();
+				}
+				$i = Int32\Module::increment($i);
+			}
+
+			return Bool\Type::true(); // yes, an empty array returns "true"
+		}
+
+		/**
+		 * This method (aka "exists" or "some") returns whether some of the items in the list passed the truthy
+		 * test.
+		 *
+		 * @access public
+		 * @static
+		 * @param HashSet\Type $xs                                  the left operand
+		 * @param callable $predicate                               the predicate function to be used
+		 * @return Bool\Type                                        whether some of the items
+		 *                                                          passed the truthy test
+		 */
+		public static function any(HashSet\Type $xs, callable $predicate) {
+			$xi = HashSet\Module::iterator($xs);
+			$i = Int32\Type::zero();
+
+			foreach ($xi as $x) {
+				if ($predicate($x, $i)->unbox()) {
+					return Bool\Type::true();
+				}
+				$i = Int32\Module::increment($i);
+			}
+
+			return Bool\Type::false();
 		}
 
 		/**
@@ -81,6 +116,52 @@ namespace Saber\Data\HashSet {
 		}
 
 		/**
+		 * This method returns a hash set of those items that satisfy the predicate.
+		 *
+		 * @access public
+		 * @static
+		 * @param HashSet\Type $xs                                  the left operand
+		 * @param callable $predicate                               the predicate function to be used
+		 * @return HashSet\Type                                     the hash set
+		 */
+		public static function filter(HashSet\Type $xs, callable $predicate) {
+			$xi = HashSet\Module::iterator($xs);
+			$i = Int32\Type::zero();
+
+			$zs = HashSet\Type::empty_();
+
+			foreach ($xi as $x) {
+				if ($predicate($x, $i)->unbox()) {
+					$zs->putItem($x);
+				}
+				$i = Int32\Module::increment($i);
+			}
+
+			return $zs;
+		}
+
+		/**
+		 * This method applies a fold reduction on the list using the operator function.
+		 *
+		 * @access public
+		 * @static
+		 * @param HashSet\Type $xs                                  the left operand
+		 * @param callable $operator                                the operator function to be used
+		 * @param Core\Type $initial                                the initial value to be used
+		 * @return Core\Type                                        the result
+		 */
+		public static function fold(HashSet\Type $xs, callable $operator, Core\Type $initial) {
+			$xi = HashSet\Module::iterator($xs);
+			$z = $initial;
+
+			foreach ($xi as $x) {
+				$z = $operator($z, $x);
+			}
+
+			return $z;
+		}
+
+		/**
 		 * This method returns the item associated with the specified key.
 		 *
 		 * @access public
@@ -109,7 +190,7 @@ namespace Saber\Data\HashSet {
 			$yi = HashSet\Module::iterator($ys);
 			foreach ($yi as $y) {
 				if ($xs->__hasItem($y)) {
-					$zs->addItem($zs);
+					$zs->putItem($zs);
 				}
 			}
 			return $zs;
@@ -152,8 +233,8 @@ namespace Saber\Data\HashSet {
 		 *
 		 * @access public
 		 * @static
-		 * @param HashSet\Type $xs                                  the first set
-		 * @param HashSet\Type $ys                                  the second set
+		 * @param HashSet\Type $xs                                  the first hash set
+		 * @param HashSet\Type $ys                                  the second hash set
 		 * @return Bool\Type                                        whether the second hash set is a
 		 *                                                          superset of the first hash set
 		 */
@@ -192,6 +273,29 @@ namespace Saber\Data\HashSet {
 		}
 
 		/**
+		 * This method applies each item in this hash set to the subroutine function.
+		 *
+		 * @access public
+		 * @static
+		 * @param HashSet\Type $xs                                  the left operand
+		 * @param callable $subroutine                              the subroutine function to be used
+		 * @return HashSet\Type                                     the hash set
+		 */
+		public static function map(HashSet\Type $xs, callable $subroutine) {
+			$xi = HashSet\Module::iterator($xs);
+			$i = Int32\Type::zero();
+
+			$zs = HashSet\Type::empty_();
+
+			foreach ($xi as $x) {
+				$zs->putItem($subroutine($x, $i));
+				$i = Int32\Module::increment($i);
+			}
+
+			return $zs;
+		}
+
+		/**
 		 * This method returns the power set of the specified hash set.
 		 *
 		 * @access public
@@ -201,20 +305,35 @@ namespace Saber\Data\HashSet {
 		 */
 		public static function powerset(HashSet\Type $xs) {
 			$css = HashSet\Type::empty_();
-			$css->addItem(HashSet\Type::empty_());
+			$css->putItem(HashSet\Type::empty_());
 			$xi = HashSet\Module::iterator($xs);
 			foreach ($xi as $x) {
 				$as = HashSet\Type::empty_();
 				$csi = HashSet\Module::iterator($css);
 				foreach ($csi as $cs) {
-					$as->addItem($cs);
+					$as->putItem($cs);
 					$bs = HashSet\Type::box($cs);
-					$bs->addItem($x);
-					$as->addItem($bs);
+					$bs->putItem($x);
+					$as->putItem($bs);
 				}
 				$css = $as;
 			}
 			return $css;
+		}
+
+		/**
+		 * This method puts the item into the collection (if it doesn't already exist).
+		 *
+		 * @access public
+		 * @static
+		 * @param HashSet\Type $xs                                  the hash set
+		 * @param Core\Type $x                                      the item to be stored
+		 * @return Core\Type                                        the collection
+		 */
+		public static function putItem(HashSet\Type $xs, Core\Type $x) {
+			$zs = HashSet\Type::box($xs->unbox());
+			$zs->putItem($x);
+			return $zs;
 		}
 
 		/**
@@ -223,12 +342,12 @@ namespace Saber\Data\HashSet {
 		 * @access public
 		 * @static
 		 * @param HashSet\Type $xs                                  the hash set
-		 * @param Core\Type $item                                   the item to be removed
+		 * @param Core\Type $x                                      the item to be removed
 		 * @return Core\Type                                        the item removed
 		 */
-		public static function removeItem(HashSet\Type $xs, Core\Type $item) {
+		public static function removeItem(HashSet\Type $xs, Core\Type $x) {
 			$zs = HashSet\Type::box($xs->unbox());
-			$zs->removeItem($item);
+			$zs->removeItem($x);
 			return $zs;
 		}
 
@@ -258,7 +377,7 @@ namespace Saber\Data\HashSet {
 			$zs = HashSet\Type::box($xs->unbox());
 			$yi = HashSet\Module::iterator($ys);
 			foreach ($yi as $y) {
-				$zs->addItem($y);
+				$zs->putItem($y);
 			}
 			return $zs;
 		}
@@ -310,12 +429,13 @@ namespace Saber\Data\HashSet {
 			$zs = LinkedList\Type::nil();
 			$xi = HashSet\Module::iterator($xs);
 			foreach ($xi as $x) {
-				$zs = LinkedList\Module::prepend($zs, $x);
+				$zs = LinkedList\Type::cons($x, $zs);
 			}
 			return $zs;
 		}
 
 		#endregion
+
 	}
 
 }

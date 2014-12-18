@@ -82,7 +82,7 @@ namespace Saber\Data\LinkedList {
 			$xs = (is_array($value)) ? $value : func_get_args();
 			$zs = LinkedList\Type::nil();
 			for ($i = count($xs) - 1; $i >= 0; $i--) {
-				$zs = LinkedList\Module::prepend($zs, $xs[$i]);
+				$zs = LinkedList\Type::cons($xs[$i], $zs);
 			}
 			return $zs;
 		}
@@ -101,7 +101,7 @@ namespace Saber\Data\LinkedList {
 			$xs = (is_array($value)) ? $value : func_get_args();
 			$zs = LinkedList\Type::nil();
 			for ($i = count($xs) - 1; $i >= 0; $i--) {
-				$zs = LinkedList\Module::prepend($zs, $xs[$i]);
+				$zs = LinkedList\Type::cons($xs[$i], $zs);
 			}
 			return $zs;
 		}

@@ -723,7 +723,7 @@ namespace Saber\Data\String {
 			$length = $xs->length();
 			$zs = LinkedList\Type::nil();
 			for ($i = Int32\Module::decrement($length); Int32\Module::ge($i, Int32\Type::zero())->unbox(); $i = Int32\Module::decrement($i)) {
-				$zs = LinkedList\Module::prepend($zs, $xs->item($i));
+				$zs = LinkedList\Type::cons($xs->item($i), $zs);
 			}
 			return $zs;
 		}

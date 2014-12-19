@@ -750,6 +750,23 @@ namespace Saber\Data\LinkedList {
 		}
 
 		/**
+		 * This method returns a tuple where the first item is longest prefix of the linked
+		 * list that satisfies the predicate and the second item is the remainder.
+		 *
+		 * @access public
+		 * @static
+		 * @param LinkedList\Type $xs                               the linked list
+		 * @param callable $predicate                               the predicate function to be used
+		 * @return LinkedList\Type                                  the tuple
+		 */
+		public static function span(LinkedList\Type $xs, callable $predicate) {
+			return Tuple\Type::box(
+				LinkedList\Module::takeWhile($xs, $predicate),
+				LinkedList\Module::dropWhile($xs, $predicate)
+			);
+		}
+
+		/**
 		 * This method returns the tail of this list.
 		 *
 		 * @access public

@@ -668,6 +668,23 @@ namespace Saber\Data\String {
 		}
 
 		/**
+		 * This method returns a tuple where the first item is longest prefix of the string
+		 * that satisfies the predicate and the second item is the remainder.
+		 *
+		 * @access public
+		 * @static
+		 * @param String\Type $xs                                   the string
+		 * @param callable $predicate                               the predicate function to be used
+		 * @return String\Type                                      the tuple
+		 */
+		public static function span(String\Type $xs, callable $predicate) {
+			return Tuple\Type::box(
+				String\Module::takeWhile($xs, $predicate),
+				String\Module::dropWhile($xs, $predicate)
+			);
+		}
+
+		/**
 		 * This method returns the tail of this string.
 		 *
 		 * @access public

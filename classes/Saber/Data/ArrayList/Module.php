@@ -750,6 +750,23 @@ namespace Saber\Data\ArrayList {
 		}
 
 		/**
+		 * This method returns a tuple where the first item is longest prefix of the array
+		 * list that satisfies the predicate and the second item is the remainder.
+		 *
+		 * @access public
+		 * @static
+		 * @param ArrayList\Type $xs                                the array list
+		 * @param callable $predicate                               the predicate function to be used
+		 * @return ArrayList\Type                                   the tuple
+		 */
+		public static function span(ArrayList\Type $xs, callable $predicate) {
+			return Tuple\Type::box(
+				ArrayList\Module::takeWhile($xs, $predicate),
+				ArrayList\Module::dropWhile($xs, $predicate)
+			);
+		}
+
+		/**
 		 * This method returns the tail of this list.
 		 *
 		 * @access public

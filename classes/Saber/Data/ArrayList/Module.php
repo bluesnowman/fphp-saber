@@ -750,8 +750,8 @@ namespace Saber\Data\ArrayList {
 		}
 
 		/**
-		 * This method returns a tuple where the first item is longest prefix of the array
-		 * list that satisfies the predicate and the second item is the remainder.
+		 * This method returns a tuple where the first item contains longest prefix of the array
+		 * list that satisfies the predicate and the second item contains the remainder.
 		 *
 		 * @access public
 		 * @static
@@ -763,6 +763,23 @@ namespace Saber\Data\ArrayList {
 			return Tuple\Type::box(
 				ArrayList\Module::takeWhile($xs, $predicate),
 				ArrayList\Module::dropWhile($xs, $predicate)
+			);
+		}
+
+		/**
+		 * This method returns a tuple where the first item contains the first "n" items
+		 * in the array list and the second item contains the remainder.
+		 *
+		 * @access public
+		 * @static
+		 * @param ArrayList\Type $xs                                the array list
+		 * @param Int32\Type $n                                     the number of items to take
+		 * @return Tuple\Type                                       the tuple
+		 */
+		public static function split(ArrayList\Type $xs, Int32\Type $n) {
+			return Tuple\Type::box(
+				ArrayList\Module::take($xs, $n),
+				ArrayList\Module::drop($xs, $n)
 			);
 		}
 

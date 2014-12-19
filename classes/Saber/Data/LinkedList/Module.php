@@ -750,8 +750,8 @@ namespace Saber\Data\LinkedList {
 		}
 
 		/**
-		 * This method returns a tuple where the first item is longest prefix of the linked
-		 * list that satisfies the predicate and the second item is the remainder.
+		 * This method returns a tuple where the first item contains longest prefix of the linked
+		 * list that satisfies the predicate and the second item contains the remainder.
 		 *
 		 * @access public
 		 * @static
@@ -763,6 +763,23 @@ namespace Saber\Data\LinkedList {
 			return Tuple\Type::box(
 				LinkedList\Module::takeWhile($xs, $predicate),
 				LinkedList\Module::dropWhile($xs, $predicate)
+			);
+		}
+
+		/**
+		 * This method returns a tuple where the first item contains the first "n" items
+		 * in the linked list and the second item contains the remainder.
+		 *
+		 * @access public
+		 * @static
+		 * @param LinkedList\Type $xs                               the linked list
+		 * @param Int32\Type $n                                     the number of items to take
+		 * @return Tuple\Type                                       the tuple
+		 */
+		public static function split(LinkedList\Type $xs, Int32\Type $n) {
+			return Tuple\Type::box(
+				LinkedList\Module::take($xs, $n),
+				LinkedList\Module::drop($xs, $n)
 			);
 		}
 

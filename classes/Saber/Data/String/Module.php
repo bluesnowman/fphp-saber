@@ -668,8 +668,8 @@ namespace Saber\Data\String {
 		}
 
 		/**
-		 * This method returns a tuple where the first item is longest prefix of the string
-		 * that satisfies the predicate and the second item is the remainder.
+		 * This method returns a tuple where the first item contains longest prefix of the string
+		 * that satisfies the predicate and the second item contains the remainder.
 		 *
 		 * @access public
 		 * @static
@@ -681,6 +681,23 @@ namespace Saber\Data\String {
 			return Tuple\Type::box(
 				String\Module::takeWhile($xs, $predicate),
 				String\Module::dropWhile($xs, $predicate)
+			);
+		}
+
+		/**
+		 * This method returns a tuple where the first item contains the first "n" characters
+		 * in the string and the second item contains the remainder.
+		 *
+		 * @access public
+		 * @static
+		 * @param String\Type $xs                                   the string
+		 * @param Int32\Type $n                                     the number of characters to take
+		 * @return Tuple\Type                                       the tuple
+		 */
+		public static function split(String\Type $xs, Int32\Type $n) {
+			return Tuple\Type::box(
+				String\Module::take($xs, $n),
+				String\Module::drop($xs, $n)
 			);
 		}
 

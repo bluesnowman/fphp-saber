@@ -620,12 +620,12 @@ namespace Saber\Data\LinkedList {
 		}
 
 		/**
-		 * This method returns a pair of array lists: those items that satisfy the predicate and
+		 * This method returns a pair of linked lists: those items that satisfy the predicate and
 		 * those items that do not satisfy the predicate.
 		 *
 		 * @access public
 		 * @static
-		 * @param LinkedList\Type $xs                               the array list to be partitioned
+		 * @param LinkedList\Type $xs                               the linked list to be partitioned
 		 * @param callable $predicate                               the predicate function to be used
 		 * @return Tuple\Type                                       the results
 		 */

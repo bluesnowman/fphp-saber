@@ -23,6 +23,7 @@ namespace Saber\Data\LinkedList {
 	use \Saber\Data\ArrayList;
 	use \Saber\Data\Bool;
 	use \Saber\Data\Collection;
+	use \Saber\Data\HashMap;
 	use \Saber\Data\Int32;
 	use \Saber\Data\LinkedList;
 	use \Saber\Data\Option;
@@ -615,6 +616,70 @@ namespace Saber\Data\LinkedList {
 		public static function none(LinkedList\Type $xs, callable $predicate) {
 			return LinkedList\Module::all($xs, function(Core\Type $x, Int32\Type $i) use ($predicate) {
 				return Bool\Module::not($predicate($x, $i));
+			});
+		}
+
+		/**
+		 * This method returns a pair of array lists: those items that satisfy the predicate and
+		 * those items that do not satisfy the predicate.
+		 *
+		 * @access public
+		 * @static
+		 * @param LinkedList\Type $xs                               the array list to be partitioned
+		 * @param callable $predicate                               the predicate function to be used
+		 * @return Tuple\Type                                       the results
+		 */
+		public static function partition(LinkedList\Type $xs, callable $predicate) {
+			$passed = LinkedList\Type::nil();
+			$passed_tail = null;
+			$failed = LinkedList\Type::nil();
+			$failed_tail = null;
+
+			$i = Int32\Type::zero();
+			for ($zs = $xs; !$zs->__isEmpty(); $zs = $zs->tail()) {
+				$a = $zs->head();
+
+				$as = LinkedList\Type::cons($a);
+
+				if ($predicate($a, $i)->unbox()) {
+					if ($passed_tail !== null) {
+						$passed_tail->tail = $as;
+					}
+					else {
+						$passed = $as;
+					}
+					$passed_tail = $as;
+				}
+				else {
+					if ($failed_tail !== null) {
+						$failed_tail->tail = $as;
+					}
+					else {
+						$failed = $as;
+					}
+					$failed_tail = $as;
+				}
+
+				$i = Int32\Module::increment($i);
+			}
+
+			return Tuple\Type::box($passed, $failed);
+		}
+
+		/**
+		 * This method returns a linked list of values matching the specified key.
+		 *
+		 * @access public
+		 * @static
+		 * @param LinkedList\Type $xss                              the linked list to be processed
+		 * @param Core\Type $k                                      the key associated with value to be
+		 *                                                          plucked
+		 * @return LinkedList\Type                                  a list of values matching the specified
+		 *                                                          key
+		 */
+		public static function pluck(LinkedList\Type $xss, Core\Type $k) {
+			return LinkedList\Module::map($xss, function(HashMap\Type $xs, Int32\Type $i) use ($k) {
+				return $xs->item($k);
 			});
 		}
 

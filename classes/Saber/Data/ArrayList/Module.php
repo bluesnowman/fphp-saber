@@ -22,6 +22,7 @@ namespace Saber\Data\ArrayList {
 	use \Saber\Data;
 	use \Saber\Data\ArrayList;
 	use \Saber\Data\Bool;
+	use \Saber\Data\HashMap;
 	use \Saber\Data\Int32;
 	use \Saber\Data\LinkedList;
 	use \Saber\Data\Option;
@@ -360,7 +361,9 @@ namespace Saber\Data\ArrayList {
 		 * @return Option\Type                                      the option
 		 */
 		public static function headOption(ArrayList\Type $xs) {
-			return (!$xs->__isEmpty()) ? Option\Type::some($xs->head()) : Option\Type::none();
+			return (!$xs->__isEmpty())
+				? Option\Type::some($xs->head())
+				: Option\Type::none();
 		}
 
 		/**
@@ -492,7 +495,9 @@ namespace Saber\Data\ArrayList {
 		 * @return Option\Type                                      the option
 		 */
 		public static function lastOption(ArrayList\Type $xs) {
-			return (!$xs->__isEmpty()) ? Option\Type::some(ArrayList\Module::last($xs)) : Option\Type::none();
+			return (!$xs->__isEmpty())
+				? Option\Type::some(ArrayList\Module::last($xs))
+				: Option\Type::none();
 		}
 
 		/**
@@ -601,6 +606,23 @@ namespace Saber\Data\ArrayList {
 			}
 
 			return Tuple\Type::box(ArrayList\Type::box($passed), ArrayList\Type::box($failed));
+		}
+
+		/**
+		 * This method returns a list of values matching the specified key.
+		 *
+		 * @access public
+		 * @static
+		 * @param ArrayList\Type $xss                               the array list to be processed
+		 * @param Core\Type $k                                      the key associated with value to be
+		 *                                                          plucked
+		 * @return ArrayList\Type                                   a list of values matching the specified
+		 *                                                          key
+		 */
+		public static function pluck(ArrayList\Type $xss, Core\Type $k) {
+			return ArrayList\Module::map($xss, function(HashMap\Type $xs, Int32\Type $i) use ($k) {
+				return $xs->item($k);
+			});
 		}
 
 		/**

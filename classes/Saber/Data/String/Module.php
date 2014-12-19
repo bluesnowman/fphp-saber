@@ -589,7 +589,7 @@ namespace Saber\Data\String {
 		}
 
 		/**
-		 * This method returns a string of those items that don't satisfy the predicate.
+		 * This method (aka "reject") returns a string of those items that don't satisfy the predicate.
 		 *
 		 * @access public
 		 * @static

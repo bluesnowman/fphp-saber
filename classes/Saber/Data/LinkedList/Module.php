@@ -711,7 +711,7 @@ namespace Saber\Data\LinkedList {
 		}
 
 		/**
-		 * This method returns a collection of those items that don't satisfy the predicate.
+		 * This method (aka "reject") returns a collection of those items that don't satisfy the predicate.
 		 *
 		 * @access public
 		 * @static

@@ -655,7 +655,7 @@ namespace Saber\Data\ArrayList {
 		}
 
 		/**
-		 * This method returns a list of those items that don't satisfy the predicate.
+		 * This method (aka "reject") returns a list of those items that don't satisfy the predicate.
 		 *
 		 * @access public
 		 * @static

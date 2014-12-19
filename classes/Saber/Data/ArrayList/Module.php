@@ -682,6 +682,30 @@ namespace Saber\Data\ArrayList {
 		}
 
 		/**
+		 * This method shuffles the items in the array list using the Fisher-Yates shuffle.
+		 *
+		 * @access public
+		 * @static
+		 * @param ArrayList\Type $xs                                the array list to be shuffled
+		 * @return ArrayList\Type                                   the shuffled array list
+		 *
+		 * @see http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
+		 */
+		public static function shuffle(ArrayList\Type $xs) {
+			$buffer = $xs->unbox();
+			$length = count($buffer);
+
+			for ($i = $length - 1; $i > 0; $i--) {
+				$j = rand(0, $i);
+				$value = $buffer[$j];
+				$buffer[$j] = $buffer[$i];
+				$buffer[$i] = $value;
+			}
+
+			return ArrayList\Type::box($buffer);
+		}
+
+		/**
 		 * This method returns the extracted slice of the list.
 		 *
 		 * @access public

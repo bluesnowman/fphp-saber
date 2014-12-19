@@ -740,6 +740,30 @@ namespace Saber\Data\LinkedList {
 		}
 
 		/**
+		 * This method shuffles the items in the linked list using the Fisher-Yates shuffle.
+		 *
+		 * @access public
+		 * @static
+		 * @param LinkedList\Type $xs                               the linked list to be shuffled
+		 * @return LinkedList\Type                                  the shuffled linked list
+		 *
+		 * @see http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
+		 */
+		public static function shuffle(LinkedList\Type $xs) {
+			$buffer = $xs->unbox();
+			$length = count($buffer);
+
+			for ($i = $length - 1; $i > 0; $i--) {
+				$j = rand(0, $i);
+				$value = $buffer[$j];
+				$buffer[$j] = $buffer[$i];
+				$buffer[$i] = $value;
+			}
+
+			return LinkedList\Type::box($buffer);
+		}
+
+		/**
 		 * This method returns the extracted slice of the collection.
 		 *
 		 * @access public

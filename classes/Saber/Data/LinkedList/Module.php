@@ -711,15 +711,17 @@ namespace Saber\Data\LinkedList {
 		}
 
 		/**
-		 * This method (aka "reject") returns a collection of those items that don't satisfy the predicate.
+		 * This method (aka "remove") returns a linked list containing those items that do not
+		 * satisfy the predicate.  Opposite of "filter".
 		 *
 		 * @access public
 		 * @static
-		 * @param LinkedList\Type $xs                               the left operand
+		 * @param LinkedList\Type $xs                               the linked list
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return LinkedList\Type                                  the collection
+		 * @return LinkedList\Type                                  a linked list containing those items
+		 *                                                          that do not satisfy the predicate
 		 */
-		public static function remove(LinkedList\Type $xs, callable $predicate) {
+		public static function reject(LinkedList\Type $xs, callable $predicate) {
 			return LinkedList\Module::filter($xs, function(Core\Type $x, Int32\Type $i) use ($predicate) {
 				return Bool\Module::not($predicate($x, $i));
 			});

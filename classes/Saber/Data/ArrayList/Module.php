@@ -655,15 +655,17 @@ namespace Saber\Data\ArrayList {
 		}
 
 		/**
-		 * This method (aka "reject") returns a list of those items that don't satisfy the predicate.
+		 * This method (aka "remove") returns an array list containing those items that do not
+		 * satisfy the predicate.  Opposite of "filter".
 		 *
 		 * @access public
 		 * @static
-		 * @param ArrayList\Type $xs                                the left operand
+		 * @param ArrayList\Type $xs                                the array list
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return ArrayList\Type                                   the list
+		 * @return ArrayList\Type                                   an array list containing those items
+		 *                                                          that do not satisfy the predicate
 		 */
-		public static function remove(ArrayList\Type $xs, callable $predicate) {
+		public static function reject(ArrayList\Type $xs, callable $predicate) {
 			return ArrayList\Module::filter($xs, function(Core\Type $x, Int32\Type $i) use ($predicate) {
 				return Bool\Module::not($predicate($x, $i));
 			});

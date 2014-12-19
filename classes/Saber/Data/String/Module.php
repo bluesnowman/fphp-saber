@@ -589,15 +589,17 @@ namespace Saber\Data\String {
 		}
 
 		/**
-		 * This method (aka "reject") returns a string of those items that don't satisfy the predicate.
+		 * This method (aka "remove") returns a string containing those characters that do not
+		 * satisfy the predicate.  Opposite of "filter".
 		 *
 		 * @access public
 		 * @static
-		 * @param String\Type $xs                                   the left operand
+		 * @param String\Type $xs                                   the string
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return String\Type                                      the string
+		 * @return String\Type                                      a string containing those characters
+		 *                                                          that do not satisfy the predicate
 		 */
-		public static function remove(String\Type $xs, callable $predicate) {
+		public static function reject(String\Type $xs, callable $predicate) {
 			return String\Module::filter($xs, function(Core\Type $x, Int32\Type $i) use ($predicate) {
 				return Bool\Module::not($predicate($x, $i));
 			});

@@ -117,7 +117,7 @@ namespace Saber\Data\LinkedList {
 		 */
 		public static function contains(LinkedList\Type $xs, Core\Type $y) {
 			return LinkedList\Module::any($xs, function(Core\Type $x, Int32\Type $i) use ($y) {
-				return call_user_func_array(array(get_class($x), 'eq'), array($x, $y));
+				return $x->eq($y);
 			});
 		}
 
@@ -137,7 +137,7 @@ namespace Saber\Data\LinkedList {
 			$index = Int32\Type::zero();
 			for ($zs = $xs; !$zs->__isEmpty(); $zs = $zs->tail()) {
 				$head = $zs->head();
-				if (!call_user_func_array(array(get_class($head), 'eq'), array($head, $y))->unbox()) {
+				if (!$head->__eq($y)) {
 					$cons = LinkedList\Type::cons($head);
 
 					if ($tail !== null) {

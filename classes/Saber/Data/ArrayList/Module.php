@@ -86,7 +86,7 @@ namespace Saber\Data\ArrayList {
 		public static function append(ArrayList\Type $xs, Core\Type $y) {
 			$buffer = $xs->unbox();
 			$buffer[] = $y;
-			return new ArrayList\Type($buffer);
+			return ArrayList\Type::box($buffer);
 		}
 
 		/**
@@ -103,7 +103,7 @@ namespace Saber\Data\ArrayList {
 			foreach ($ys->unbox() as $y) {
 				$buffer[] = $y;
 			}
-			return new ArrayList\Type($buffer);
+			return ArrayList\Type::box($buffer);
 		}
 
 		/**
@@ -118,7 +118,7 @@ namespace Saber\Data\ArrayList {
 		 */
 		public static function contains(ArrayList\Type $xs, Core\Type $y) {
 			return ArrayList\Module::any($xs, function(Core\Type $x, Int32\Type $i) use ($y) {
-				return call_user_func_array(array(get_class($x), 'eq'), array($x, $y));
+				return $x->eq($y);
 			});
 		}
 
@@ -136,14 +136,14 @@ namespace Saber\Data\ArrayList {
 			$skip = false;
 
 			foreach ($xs->unbox() as $z) {
-				if (call_user_func_array(array(get_class($z), 'eq'), array($z, $y))->unbox() && !$skip) {
+				if ($z->__eq($y) && !$skip) {
 					$skip = true;
 					continue;
 				}
 				$buffer[] = $z;
 			}
 
-			return new ArrayList\Type($buffer);
+			return ArrayList\Type::box($buffer);
 		}
 
 		/**
@@ -338,6 +338,34 @@ namespace Saber\Data\ArrayList {
 			}
 
 			return $z;
+		}
+
+		/**
+		 * This method returns a hash map of lists of items that are considered in the same group.
+		 *
+		 * @access public
+		 * @static
+		 * @param ArrayList\Type $xs                                the array list to be processed
+		 * @param callable $subroutine                              the subroutine to be used
+		 * @return HashMap\Type                                     a hash map of lists of items that
+		 *                                                          are considered in the same group
+		 */
+		public static function group(ArrayList\Type $xs, callable $subroutine) {
+			$groups = HashMap\Type::empty_();
+
+			ArrayList\Module::each($xs, function(Core\Type $x, Int32\Type $i) use ($groups, $subroutine) {
+				$key = $subroutine($x, $i);
+
+				$item = ($groups->__hasKey($key))
+					? $groups->item($key)->unbox()
+					: array();
+
+				$item[] = $x;
+
+				$groups->putEntry($key, ArrayList\Type::box($item));
+			});
+
+			return $groups;
 		}
 
 		/**

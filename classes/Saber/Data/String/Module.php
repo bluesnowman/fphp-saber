@@ -25,6 +25,7 @@ namespace Saber\Data\String {
 	use \Saber\Data\ArrayList;
 	use \Saber\Data\Bool;
 	use \Saber\Data\Char;
+	use \Saber\Data\HashMap;
 	use \Saber\Data\Int32;
 	use \Saber\Data\LinkedList;
 	use \Saber\Data\Option;
@@ -321,6 +322,34 @@ namespace Saber\Data\String {
 			}
 
 			return $z;
+		}
+
+		/**
+		 * This method returns a hash map of lists of characters that are considered in the same group.
+		 *
+		 * @access public
+		 * @static
+		 * @param ArrayList\Type $xs                                the array list to be processed
+		 * @param callable $subroutine                              the subroutine to be used
+		 * @return HashMap\Type                                     a hash map of lists of characters that
+		 *                                                          are considered in the same group
+		 */
+		public static function group(ArrayList\Type $xs, callable $subroutine) {
+			$groups = HashMap\Type::empty_();
+
+			String\Module::each($xs, function(Char\Type $x, Int32\Type $i) use ($groups, $subroutine) {
+				$key = $subroutine($x, $i);
+
+				$item = ($groups->__hasKey($key))
+					? $groups->item($key)->unbox()
+					: '';
+
+				$item .= $x->unbox();
+
+				$groups->putEntry($key, String\Type::box($item));
+			});
+
+			return $groups;
 		}
 
 		/**

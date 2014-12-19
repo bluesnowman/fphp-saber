@@ -630,40 +630,10 @@ namespace Saber\Data\LinkedList {
 		 * @return Tuple\Type                                       the results
 		 */
 		public static function partition(LinkedList\Type $xs, callable $predicate) {
-			$passed = LinkedList\Type::nil();
-			$passed_tail = null;
-			$failed = LinkedList\Type::nil();
-			$failed_tail = null;
-
-			$i = Int32\Type::zero();
-			for ($zs = $xs; !$zs->__isEmpty(); $zs = $zs->tail()) {
-				$a = $zs->head();
-
-				$as = LinkedList\Type::cons($a);
-
-				if ($predicate($a, $i)->unbox()) {
-					if ($passed_tail !== null) {
-						$passed_tail->tail = $as;
-					}
-					else {
-						$passed = $as;
-					}
-					$passed_tail = $as;
-				}
-				else {
-					if ($failed_tail !== null) {
-						$failed_tail->tail = $as;
-					}
-					else {
-						$failed = $as;
-					}
-					$failed_tail = $as;
-				}
-
-				$i = Int32\Module::increment($i);
-			}
-
-			return Tuple\Type::box($passed, $failed);
+			return Tuple\Type::box(
+				LinkedList\Module::filter($xs, $predicate),
+				LinkedList\Module::reject($xs, $predicate)
+			);
 		}
 
 		/**

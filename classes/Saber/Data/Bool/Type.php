@@ -29,6 +29,15 @@ namespace Saber\Data\Bool {
 		#region Properties
 
 		/**
+		 * This variable stores any mixins that can be used to extends this data type.
+		 *
+		 * @access protected
+		 * @static
+		 * @var array
+		 */
+		protected static $mixins = array();
+
+		/**
 		 * This variable stores the class path to this class' module.
 		 *
 		 * @access protected
@@ -120,6 +129,22 @@ namespace Saber\Data\Bool {
 				static::$singletons[1] = new Bool\Type(true);
 			}
 			return static::$singletons[1];
+		}
+
+		#endregion
+
+		#region Methods -> Extensible
+
+		/**
+		 * This method allows for the class to be extend with custom utility functions.
+		 *
+		 * @access public
+		 * @static
+		 * @param String\Type $name                                 the name of the mixin
+		 * @param callable $function                                the custom utility function
+		 */
+		public static function mixin(String\Type $name, callable $function) {
+			static::$mixins[$name->unbox()] = $function;
 		}
 
 		#endregion

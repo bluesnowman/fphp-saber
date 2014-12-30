@@ -23,6 +23,7 @@ namespace Saber\Data\Char {
 	use \Saber\Core;
 	use \Saber\Data;
 	use \Saber\Data\Char;
+	use \Saber\Data\String;
 	use \Saber\Throwable;
 
 	final class Type extends Data\Type implements Core\Boxable\Type {
@@ -40,6 +41,15 @@ namespace Saber\Data\Char {
 		#endregion
 
 		#region Properties
+
+		/**
+		 * This variable stores any mixins that can be used to extends this data type.
+		 *
+		 * @access protected
+		 * @static
+		 * @var array
+		 */
+		protected static $mixins = array();
 
 		/**
 		 * This variable stores the class path to this class' module.
@@ -167,6 +177,22 @@ namespace Saber\Data\Char {
 				static::$singletons[' '] = new Char\Type(' ');
 			}
 			return static::$singletons[' '];
+		}
+
+		#endregion
+
+		#region Methods -> Extensible
+
+		/**
+		 * This method allows for the class to be extend with custom utility functions.
+		 *
+		 * @access public
+		 * @static
+		 * @param String\Type $name                                 the name of the mixin
+		 * @param callable $function                                the custom utility function
+		 */
+		public static function mixin(String\Type $name, callable $function) {
+			static::$mixins[$name->unbox()] = $function;
 		}
 
 		#endregion

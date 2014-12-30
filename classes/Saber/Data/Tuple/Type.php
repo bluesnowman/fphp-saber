@@ -23,12 +23,22 @@ namespace Saber\Data\Tuple {
 	use \Saber\Data\Bool;
 	use \Saber\Data\Collection;
 	use \Saber\Data\Int32;
+	use \Saber\Data\String;
 	use \Saber\Data\Tuple;
 	use \Saber\Throwable;
 
 	final class Type extends Data\Type implements Core\Boxable\Type, Collection\Type {
 
 		#region Properties
+
+		/**
+		 * This variable stores any mixins that can be used to extends this data type.
+		 *
+		 * @access protected
+		 * @static
+		 * @var array
+		 */
+		protected static $mixins = array();
 
 		/**
 		 * This variable stores the class path to this class' module.
@@ -100,6 +110,22 @@ namespace Saber\Data\Tuple {
 				}
 			}
 			return new Tuple\Type($xs);
+		}
+
+		#endregion
+
+		#region Methods -> Extensible
+
+		/**
+		 * This method allows for the class to be extend with custom utility functions.
+		 *
+		 * @access public
+		 * @static
+		 * @param String\Type $name                                 the name of the mixin
+		 * @param callable $function                                the custom utility function
+		 */
+		public static function mixin(String\Type $name, callable $function) {
+			static::$mixins[$name->unbox()] = $function;
 		}
 
 		#endregion

@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-namespace Saber\Util\Regex {
+namespace Saber\Util\Text\Regex {
 
 	use \Saber\Core;
 	use \Saber\Data;
@@ -26,7 +26,7 @@ namespace Saber\Util\Regex {
 	use \Saber\Data\String;
 	use \Saber\Data\Trit;
 	use \Saber\Data\Tuple;
-	use \Saber\Util\Regex;
+	use \Saber\Util\Text\Regex;
 
 	final class Module extends Data\Module {
 
@@ -71,10 +71,12 @@ namespace Saber\Util\Regex {
 		 * @return ArrayList\Type                                   an array of sub-strings
 		 */
 		public static function split(Regex\Type $x, Core\Type $ys) {
-			$buffer = ($ys instanceof Tuple\Type)
+			$zs = ($ys instanceof Tuple\Type)
 				? preg_split($x->unbox(), $ys->first()->__toString(), $ys->second()->__toString())
 				: preg_split($x->unbox(), $ys->__toString());
-			return ArrayList\Type::box($buffer);
+			return ArrayList\Type::box(array_map(function($z) {
+				return String\Type::box($z);
+			}, $zs));
 		}
 
 		#endregion

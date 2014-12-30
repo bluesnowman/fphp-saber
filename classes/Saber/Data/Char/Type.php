@@ -50,6 +50,15 @@ namespace Saber\Data\Char {
 		 */
 		protected static $module = '\\Saber\\Data\\Char\\Module';
 
+		/**
+		 * This variable stores references to commonly used singletons.
+		 *
+		 * @access protected
+		 * @static
+		 * @var array
+		 */
+		protected static $singletons = array();
+
 		#endregion
 
 		#region Methods -> Initialization
@@ -116,6 +125,48 @@ namespace Saber\Data\Char {
 				}
 				throw new Throwable\InvalidArgument\Exception('Unable to box value. Expected a character, but got ":type".', array(':type' => $type));
 			}
+		}
+
+		/**
+		 * This method returns a character representing the "carriage return" value.
+		 *
+		 * @access public
+		 * @static
+		 * @return Char\Type                                        the character
+		 */
+		public static function cr() {
+			if (!isset(static::$singletons["\r"])) {
+				static::$singletons["\r"] = new Char\Type("\r");
+			}
+			return static::$singletons["\r"];
+		}
+
+		/**
+		 * This method returns a character representing the "line feed" value.
+		 *
+		 * @access public
+		 * @static
+		 * @return Char\Type                                        the character
+		 */
+		public static function lf() {
+			if (!isset(static::$singletons["\n"])) {
+				static::$singletons["\n"] = new Char\Type("\n");
+			}
+			return static::$singletons["\n"];
+		}
+
+		/**
+		 * This method returns a character representing the "space" value.
+		 *
+		 * @access public
+		 * @static
+		 * @return Char\Type                                        the character
+		 */
+		public static function space() {
+			if (!isset(static::$singletons[' '])) {
+				static::$singletons[' '] = new Char\Type(' ');
+			}
+			return static::$singletons[' '];
 		}
 
 		#endregion

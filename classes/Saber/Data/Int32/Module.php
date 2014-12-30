@@ -124,22 +124,7 @@ namespace Saber\Data\Int32 {
 		 * @return Int32\Type                                       the result
 		 */
 		public static function gcd(Int32\Type $x, Int32\Type $y) {
-			return Int32\Type::box(Int32\Module::_gcd(abs($x->unbox()), abs($y->unbox())));
-		}
-
-		/**
-		 * This method recursively calculates the greatest common divisor.
-		 *
-		 * @access protected
-		 * @static
-		 * @param integer $x                                        the left operand
-		 * @param integer $y                                        the right operand
-		 * @return integer                                          the result
-		 *
-		 * @see http://stackoverflow.com/questions/13828011/look-for-the-gcd-greatest-common-divisor-of-more-than-2-integers
-		 */
-		protected static function _gcd($x, $y) {
-		    return $y ? Int32\Module::_gcd($y, $x % $y) : $x;
+			return ($y->unbox() == 0) ? $x : Int32\Module::gcd($y, Int32\Module::modulo($x, $y));
 		}
 
 		/**

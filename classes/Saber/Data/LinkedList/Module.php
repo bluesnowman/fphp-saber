@@ -91,6 +91,22 @@ namespace Saber\Data\LinkedList {
 		}
 
 		/**
+		 * This method returns a tuple where the first item contains longest prefix of the linked
+		 * list that does not satisfy the predicate and the second item contains the remainder.
+		 *
+		 * @access public
+		 * @static
+		 * @param LinkedList\Type $xs                               the linked list
+		 * @param callable $predicate                               the predicate function to be used
+		 * @return Tuple\Type                                       the tuple
+		 */
+		public static function break_(LinkedList\Type $xs, callable $predicate) {
+			return LinkedList\Module::span($xs, function(Core\Type $x, Int32\Type $i) use ($predicate) {
+				return Bool\Module::not($predicate($x, $i));
+			});
+		}
+
+		/**
 		 * This method concatenates a collection to this object's collection. Performs in O(n) time.
 		 *
 		 * @access public
@@ -757,7 +773,7 @@ namespace Saber\Data\LinkedList {
 		 * @static
 		 * @param LinkedList\Type $xs                               the linked list
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return LinkedList\Type                                  the tuple
+		 * @return Tuple\Type                                       the tuple
 		 */
 		public static function span(LinkedList\Type $xs, callable $predicate) {
 			return Tuple\Type::box(

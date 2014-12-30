@@ -26,6 +26,7 @@ namespace Saber\Data\HashSet {
 	use \Saber\Data\Int32;
 	use \Saber\Data\LinkedList;
 	use \Saber\Data\Set;
+	use \Saber\Data\Trit;
 	use \Saber\Data\Tuple;
 	use \Saber\Data\Unit;
 	use \Saber\Throwable;
@@ -385,6 +386,24 @@ namespace Saber\Data\HashSet {
 		}
 
 		/**
+		 * This method returns a hash set which represents the symmetric difference between
+		 * the two specified hash sets.
+		 *
+		 * @access public
+		 * @static
+		 * @param HashSet\Type $xs                                  the first hash set
+		 * @param HashSet\Type $ys                                  the second hash set
+		 * @return HashSet\Type                                     a hash set which represents the symmetric
+		 *                                                          difference of the two specified sets
+		 */
+		public static function symmetricDifference(HashSet\Type $xs, HashSet\Type $ys) {
+			$as = HashSet\Module::union($xs, $ys);
+			$bs = HashSet\Module::intersection($xs, $ys);
+			$cs = HashSet\Module::difference($as, $bs);
+			return $cs;
+		}
+
+		/**
 		 * This method returns a hash set which represents the union of the two specified hash sets.
 		 *
 		 * @access public
@@ -453,6 +472,199 @@ namespace Saber\Data\HashSet {
 				$zs = LinkedList\Type::cons($x, $zs);
 			}
 			return $zs;
+		}
+
+		#endregion
+
+		#region Methods -> Equality Operations
+
+		/**
+		 * This method evaluates whether the left operand is equal to the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param HashSet\Type $xs                                  the left operand
+		 * @param Core\Type $ys                                     the right operand
+		 * @return Bool\Type                                        whether the left operand is equal
+		 *                                                          to the right operand
+		 */
+		public static function eq(HashSet\Type $xs, Core\Type $ys) { // ==
+			$type = $xs->__typeOf();
+			if (($ys !== null) && ($ys instanceof $type)) {
+				if (Int32\Module::eq($xs->size(), $ys->size())->unbox()) {
+					return HashSet\Module::all($xs, function (Core\Type $x, Int32\Type $i) use ($ys) {
+						return $ys->hasItem($x);
+					});
+				}
+			}
+			return Bool\Type::false();
+		}
+
+		/**
+		 * This method evaluates whether the left operand is identical to the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param HashSet\Type $xs                                  the left operand
+		 * @param Core\Type $ys                                     the right operand
+		 * @return Bool\Type                                        whether the left operand is identical
+		 *                                                          to the right operand
+		 */
+		public static function id(HashSet\Type $xs, Core\Type $ys) { // ===
+			if (($ys !== null) && ($xs->__typeOf() === $ys->__typeOf())) {
+				if (Int32\Module::eq($xs->size(), $ys->size())) {
+					return Bool\Type::box((string)serialize($xs) == (string)serialize($ys));
+				}
+			}
+			return Bool\Type::false();
+		}
+
+		/**
+		 * This method evaluates whether the left operand is NOT equal to the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param HashSet\Type $xs                                  the left operand
+		 * @param Core\Type $ys                                     the right operand
+		 * @return Bool\Type                                        whether the left operand is NOT equal
+		 *                                                          to the right operand
+		 */
+		public static function ne(HashSet\Type $xs, Core\Type $ys) { // !=
+			return Bool\Module::not(HashSet\Module::eq($xs, $ys));
+		}
+
+		/**
+		 * This method evaluates whether the left operand is NOT identical to the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param HashSet\Type $xs                                  the left operand
+		 * @param Core\Type $ys                                     the right operand
+		 * @return Bool\Type                                        whether the left operand is NOT identical
+		 *                                                          to the right operand
+		 */
+		public static function ni(HashSet\Type $xs, Core\Type $ys) { // !==
+			return Bool\Module::not(HashSet\Module::id($xs, $ys));
+		}
+
+		#endregion
+
+		#region Methods -> Ordering Operations
+
+		/**
+		 * This method compares the specified object with the current object for order.
+		 *
+		 * @access public
+		 * @static
+		 * @param HashSet\Type $xs                                  the left operand
+		 * @param HashSet\Type $ys                                  the object to be compared
+		 * @return Trit\Type                                        whether the current object is less than,
+		 *                                                          equal to, or greater than the specified
+		 *                                                          object
+		 */
+		public static function compare(HashSet\Type $xs, HashSet\Type $ys) {
+			$x_length = $xs->__size();
+			$y_length = $ys->__size();
+
+			if ($x_length == $y_length) {
+				$xi = HashSet\Module::iterator($xs);
+
+				foreach ($xi as $x) {
+					if (!$ys->__hasItem($x)) {
+						return Trit\Type::make(strcmp((string)serialize($xs), (string)serialize($ys)));
+					}
+				}
+
+				return Trit\Type::zero();
+			}
+			else if ($x_length < $y_length) {
+				return Trit\Type::negative();
+			}
+			else { // ($x_length > $y_length)
+				return Trit\Type::positive();
+			}
+		}
+
+		/**
+		 * This method evaluates whether the left operand is greater than or equal to the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param HashSet\Type $xs                                  the left operand
+		 * @param HashSet\Type $ys                                  the right operand
+		 * @return Bool\Type                                        whether the left operand is greater
+		 *                                                          than or equal to the right operand
+		 */
+		public static function ge(HashSet\Type $xs, HashSet\Type $ys) { // >=
+			return Bool\Type::box(HashSet\Module::compare($xs, $ys)->unbox() >= 0);
+		}
+
+		/**
+		 * This method evaluates whether the left operand is greater than the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param HashSet\Type $xs                                  the left operand
+		 * @param HashSet\Type $ys                                  the right operand
+		 * @return Bool\Type                                        whether the left operand is greater
+		 *                                                          than the right operand
+		 */
+		public static function gt(HashSet\Type $xs, HashSet\Type $ys) { // >
+			return Bool\Type::box(HashSet\Module::compare($xs, $ys)->unbox() > 0);
+		}
+
+		/**
+		 * This method evaluates whether the left operand is less than or equal to the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param HashSet\Type $xs                                  the left operand
+		 * @param HashSet\Type $ys                                  the right operand
+		 * @return Bool\Type                                        whether the left operand is less than
+		 *                                                          or equal to the right operand
+		 */
+		public static function le(HashSet\Type $xs, HashSet\Type $ys) { // <=
+			return Bool\Type::box(HashSet\Module::compare($xs, $ys)->unbox() <= 0);
+		}
+
+		/**
+		 * This method evaluates whether the left operand is less than the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param HashSet\Type $xs                                  the left operand
+		 * @param HashSet\Type $ys                                  the right operand
+		 * @return Bool\Type                                        whether the left operand is less than
+		 *                                                          the right operand
+		 */
+		public static function lt(HashSet\Type $xs, HashSet\Type $ys) { // <
+			return Bool\Type::box(HashSet\Module::compare($xs, $ys)->unbox() < 0);
+		}
+
+		/**
+		 * This method returns the numerically highest value.
+		 *
+		 * @access public
+		 * @static
+		 * @param HashSet\Type $xs                                  the left operand
+		 * @param HashSet\Type $ys                                  the right operand
+		 * @return HashSet\Type                                     the maximum value
+		 */
+		public static function max(HashSet\Type $xs, HashSet\Type $ys) {
+			return (HashSet\Module::compare($xs, $ys)->unbox() >= 0) ? $xs : $ys;
+		}
+
+		/**
+		 * This method returns the numerically lowest value.
+		 *
+		 * @access public
+		 * @static
+		 * @param HashSet\Type $xs                                  the left operand
+		 * @param HashSet\Type $ys                                  the right operand
+		 * @return HashSet\Type                                     the minimum value
+		 */
+		public static function min(HashSet\Type $xs, HashSet\Type $ys) {
+			return (HashSet\Module::compare($xs, $ys)->unbox() <= 0) ? $xs : $ys;
 		}
 
 		#endregion

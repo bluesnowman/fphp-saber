@@ -26,6 +26,7 @@ namespace Saber\Data\HashMap {
 	use \Saber\Data\Int32;
 	use \Saber\Data\LinkedList;
 	use \Saber\Data\Map;
+	use \Saber\Data\Trit;
 	use \Saber\Data\Tuple;
 	use \Saber\Data\Unit;
 
@@ -382,6 +383,203 @@ namespace Saber\Data\HashMap {
 				$zs = LinkedList\Type::cons($x, $zs);
 			}
 			return $zs;
+		}
+
+		#endregion
+
+		#region Methods -> Equality Operations
+
+		/**
+		 * This method evaluates whether the left operand is equal to the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param HashMap\Type $xs                                  the left operand
+		 * @param Core\Type $ys                                     the right operand
+		 * @return Bool\Type                                        whether the left operand is equal
+		 *                                                          to the right operand
+		 */
+		public static function eq(HashMap\Type $xs, Core\Type $ys) { // ==
+			$type = $xs->__typeOf();
+			if (($ys !== null) && ($ys instanceof $type)) {
+				if (Int32\Module::__eq($xs->size(), $ys->size())) {
+					return HashMap\Module::all($xs, function (Tuple\Type $x, Int32\Type $i) use ($ys) {
+						$key = $x->first();
+						if ($ys->__hasKey($key)) {
+							return $ys->item($key)->eq($x->second());
+						}
+						return Bool\Type::false();
+					});
+				}
+			}
+			return Bool\Type::false();
+		}
+
+		/**
+		 * This method evaluates whether the left operand is identical to the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param HashMap\Type $xs                                  the left operand
+		 * @param Core\Type $ys                                     the right operand
+		 * @return Bool\Type                                        whether the left operand is identical
+		 *                                                          to the right operand
+		 */
+		public static function id(HashMap\Type $xs, Core\Type $ys) { // ===
+			if (($ys !== null) && ($xs->__typeOf() === $ys->__typeOf())) {
+				if (Int32\Module::eq($xs->size(), $ys->size())) {
+					return Bool\Type::box((string)serialize($xs) == (string)serialize($ys));
+				}
+			}
+			return Bool\Type::false();
+		}
+
+		/**
+		 * This method evaluates whether the left operand is NOT equal to the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param HashMap\Type $xs                                  the left operand
+		 * @param Core\Type $ys                                     the right operand
+		 * @return Bool\Type                                        whether the left operand is NOT equal
+		 *                                                          to the right operand
+		 */
+		public static function ne(HashMap\Type $xs, Core\Type $ys) { // !=
+			return Bool\Module::not(HashMap\Module::eq($xs, $ys));
+		}
+
+		/**
+		 * This method evaluates whether the left operand is NOT identical to the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param HashMap\Type $xs                                  the left operand
+		 * @param Core\Type $ys                                     the right operand
+		 * @return Bool\Type                                        whether the left operand is NOT identical
+		 *                                                          to the right operand
+		 */
+		public static function ni(HashMap\Type $xs, Core\Type $ys) { // !==
+			return Bool\Module::not(HashMap\Module::id($xs, $ys));
+		}
+
+		#endregion
+
+		#region Methods -> Ordering Operations
+
+		/**
+		 * This method compares the specified object with the current object for order.
+		 *
+		 * @access public
+		 * @static
+		 * @param HashMap\Type $xs                                  the left operand
+		 * @param HashMap\Type $ys                                  the object to be compared
+		 * @return Trit\Type                                        whether the current object is less than,
+		 *                                                          equal to, or greater than the specified
+		 *                                                          object
+		 */
+		public static function compare(HashMap\Type $xs, HashMap\Type $ys) {
+			$x_length = $xs->__size();
+			$y_length = $ys->__size();
+
+			if ($x_length == $y_length) {
+				$xi = HashMap\Module::iterator($xs);
+
+				foreach ($xi as $k => $v) {
+					if (!$ys->__hasKey($k) || !$ys->item($k)->__eq($v)) {
+						return Trit\Type::make(strcmp((string)serialize($xs), (string)serialize($ys)));
+					}
+				}
+
+				return Trit\Type::zero();
+			}
+			else if ($x_length < $y_length) {
+				return Trit\Type::negative();
+			}
+			else { // ($x_length > $y_length)
+				return Trit\Type::positive();
+			}
+		}
+
+		/**
+		 * This method evaluates whether the left operand is greater than or equal to the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param HashMap\Type $xs                                  the left operand
+		 * @param HashMap\Type $ys                                  the right operand
+		 * @return Bool\Type                                        whether the left operand is greater
+		 *                                                          than or equal to the right operand
+		 */
+		public static function ge(HashMap\Type $xs, HashMap\Type $ys) { // >=
+			return Bool\Type::box(HashMap\Module::compare($xs, $ys)->unbox() >= 0);
+		}
+
+		/**
+		 * This method evaluates whether the left operand is greater than the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param HashMap\Type $xs                                  the left operand
+		 * @param HashMap\Type $ys                                  the right operand
+		 * @return Bool\Type                                        whether the left operand is greater
+		 *                                                          than the right operand
+		 */
+		public static function gt(HashMap\Type $xs, HashMap\Type $ys) { // >
+			return Bool\Type::box(HashMap\Module::compare($xs, $ys)->unbox() > 0);
+		}
+
+		/**
+		 * This method evaluates whether the left operand is less than or equal to the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param HashMap\Type $xs                                  the left operand
+		 * @param HashMap\Type $ys                                  the right operand
+		 * @return Bool\Type                                        whether the left operand is less than
+		 *                                                          or equal to the right operand
+		 */
+		public static function le(HashMap\Type $xs, HashMap\Type $ys) { // <=
+			return Bool\Type::box(HashMap\Module::compare($xs, $ys)->unbox() <= 0);
+		}
+
+		/**
+		 * This method evaluates whether the left operand is less than the right operand.
+		 *
+		 * @access public
+		 * @static
+		 * @param HashMap\Type $xs                                  the left operand
+		 * @param HashMap\Type $ys                                  the right operand
+		 * @return Bool\Type                                        whether the left operand is less than
+		 *                                                          the right operand
+		 */
+		public static function lt(HashMap\Type $xs, HashMap\Type $ys) { // <
+			return Bool\Type::box(HashMap\Module::compare($xs, $ys)->unbox() < 0);
+		}
+
+		/**
+		 * This method returns the numerically highest value.
+		 *
+		 * @access public
+		 * @static
+		 * @param HashMap\Type $xs                                  the left operand
+		 * @param HashMap\Type $ys                                  the right operand
+		 * @return HashMap\Type                                     the maximum value
+		 */
+		public static function max(HashMap\Type $xs, HashMap\Type $ys) {
+			return (HashMap\Module::compare($xs, $ys)->unbox() >= 0) ? $xs : $ys;
+		}
+
+		/**
+		 * This method returns the numerically lowest value.
+		 *
+		 * @access public
+		 * @static
+		 * @param HashMap\Type $xs                                  the left operand
+		 * @param HashMap\Type $ys                                  the right operand
+		 * @return HashMap\Type                                     the minimum value
+		 */
+		public static function min(HashMap\Type $xs, HashMap\Type $ys) {
+			return (HashMap\Module::compare($xs, $ys)->unbox() <= 0) ? $xs : $ys;
 		}
 
 		#endregion

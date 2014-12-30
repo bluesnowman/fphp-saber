@@ -90,6 +90,22 @@ namespace Saber\Data\ArrayList {
 		}
 
 		/**
+		 * This method returns a tuple where the first item contains longest prefix of the array
+		 * list that does not satisfy the predicate and the second item contains the remainder.
+		 *
+		 * @access public
+		 * @static
+		 * @param ArrayList\Type $xs                                the array list
+		 * @param callable $predicate                               the predicate function to be used
+		 * @return Tuple\Type                                       the tuple
+		 */
+		public static function break_(ArrayList\Type $xs, callable $predicate) {
+			return ArrayList\Module::span($xs, function(Core\Type $x, Int32\Type $i) use ($predicate) {
+				return Bool\Module::not($predicate($x, $i));
+			});
+		}
+
+		/**
 		 * This method concatenates a list to this object's list.
 		 *
 		 * @access public
@@ -757,7 +773,7 @@ namespace Saber\Data\ArrayList {
 		 * @static
 		 * @param ArrayList\Type $xs                                the array list
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return ArrayList\Type                                   the tuple
+		 * @return Tuple\Type                                       the tuple
 		 */
 		public static function span(ArrayList\Type $xs, callable $predicate) {
 			return Tuple\Type::box(
@@ -1211,15 +1227,9 @@ namespace Saber\Data\ArrayList {
 		 *                                                          to true
 		 */
 		public static function true(ArrayList\Type $xs) {
-			$length = $xs->length();
-
-			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				if (Bool\Module::ni(Bool\Type::true(), $xs->item($i))->unbox()) {
-					return Bool\Type::false();
-				}
-			}
-
-			return Bool\Type::true();
+			return ArrayList\Module::all($xs, function(Bool\Type $x, Int32\Type $i) {
+				return $x;
+			});
 		}
 
 		/**

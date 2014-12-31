@@ -46,6 +46,19 @@ namespace Saber\Data\Trit {
 		}
 
 		/**
+		 * This method returns the value as a Bool. Note: Using this method may result in
+		 * lost of precision.
+		 *
+		 * @access public
+		 * @static
+		 * @param Trit\Type $x                                      the object to be converted
+		 * @return Bool\Type                                        the value as a Bool
+		 */
+		public static function toBool(Trit\Type $x) {
+			return Trit\Module::eq($x, Trit\Type::zero());
+		}
+
+		/**
 		 * This method returns the value as a Double. Note: Using this method may result in
 		 * lost of precision.
 		 *
@@ -113,10 +126,8 @@ namespace Saber\Data\Trit {
 		 */
 		public static function eq(Trit\Type $x, Core\Type $y) { // ==
 			$type = $x->__typeOf();
-			if ($y !== null) {
-				if ($y instanceof $type) {
-					return Bool\Type::box($x->unbox() == $y->unbox());
-				}
+			if (($y !== null) && ($y instanceof $type)) {
+				return Bool\Type::box($x->unbox() == $y->unbox());
 			}
 			return Bool\Type::false();
 		}

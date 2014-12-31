@@ -31,23 +31,6 @@ namespace Saber\Util\Text {
 		#region Methods -> Basic Operations
 
 		/**
-		 * This method returns an array list of substrings that were delimited by the specified
-		 * delimiter.
-		 *
-		 * @access public
-		 * @static
-		 * @param String\Type $xs                                   the delimiter
-		 * @param String\Type $ys                                   the string to be exploded
-		 * @return ArrayList\Type                                   the array list of substrings
-		 */
-		public static function explode(String\Type $xs, String\Type $ys) {
-			$zs = explode($xs->unbox(), $ys->unbox());
-			return ArrayList\Type::box(array_map(function($z) {
-				return String\Type::box($z);
-			}, $zs));
-		}
-
-		/**
 		 * This method returns a string representing the vector of substring delimited by the
 		 * specified string.
 		 *
@@ -57,7 +40,7 @@ namespace Saber\Util\Text {
 		 * @param Vector\Type $ys                                   the vector of substrings
 		 * @return String\Type                                      the string
 		 */
-		public static function implode(String\Type $xs, Vector\Type $ys) {
+		public static function join(String\Type $xs, Vector\Type $ys) {
 			$zs = array_map(function(String\Type $y) {
 				return $y->unbox();
 			}, $ys->unbox());
@@ -78,6 +61,23 @@ namespace Saber\Util\Text {
 		}
 
 		/**
+		 * This method returns an array list of substrings that were delimited by the specified
+		 * delimiter.
+		 *
+		 * @access public
+		 * @static
+		 * @param String\Type $xs                                   the delimiter
+		 * @param String\Type $ys                                   the string to be exploded
+		 * @return ArrayList\Type                                   the array list of substrings
+		 */
+		public static function split(String\Type $xs, String\Type $ys) {
+			$zs = explode($xs->unbox(), $ys->unbox());
+			return ArrayList\Type::box(array_map(function($z) {
+				return String\Type::box($z);
+			}, $zs));
+		}
+
+		/**
 		 * This method returns a string representing the vector of substring delimited by the
 		 * "line feed" character.
 		 *
@@ -87,7 +87,7 @@ namespace Saber\Util\Text {
 		 * @return String\Type                                      the string
 		 */
 		public static function unlines(Vector\Type $xs) {
-			return Text\Module::implode(String\Type::box("\n"), $xs);
+			return Text\Module::join(String\Type::box("\n"), $xs);
 		}
 
 		/**
@@ -100,7 +100,7 @@ namespace Saber\Util\Text {
 		 * @return String\Type                                      the string
 		 */
 		public static function unwords(Vector\Type $xs) {
-			return Text\Module::implode(String\Type::box(' '), $xs);
+			return Text\Module::join(String\Type::box(' '), $xs);
 		}
 
 		/**

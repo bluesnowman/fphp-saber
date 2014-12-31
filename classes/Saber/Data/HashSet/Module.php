@@ -94,26 +94,6 @@ namespace Saber\Data\HashSet {
 		}
 
 		/**
-		 * This method returns a hash set which represents the (asymmetric) difference between
-		 * the two specified hash sets.
-		 *
-		 * @access public
-		 * @static
-		 * @param HashSet\Type $xs                                  the first hash set
-		 * @param HashSet\Type $ys                                  the second hash set
-		 * @return HashSet\Type                                     a hash set which represents the (asymmetric)
-		 *                                                          difference of the two specified hash sets
-		 */
-		public static function difference(HashSet\Type $xs, HashSet\Type $ys) {
-			$zs = HashSet\Type::box($xs->unbox());
-			$yi = HashSet\Module::iterator($ys);
-			foreach ($yi as $y) {
-				$zs->removeItem($y);
-			}
-			return $zs;
-		}
-
-		/**
 		 * This method returns a hash set of those items that satisfy the predicate.
 		 *
 		 * @access public
@@ -396,10 +376,10 @@ namespace Saber\Data\HashSet {
 		 * @return HashSet\Type                                     a hash set which represents the symmetric
 		 *                                                          difference of the two specified sets
 		 */
-		public static function symmetricDifference(HashSet\Type $xs, HashSet\Type $ys) {
+		public static function difference(HashSet\Type $xs, HashSet\Type $ys) {
 			$as = HashSet\Module::union($xs, $ys);
 			$bs = HashSet\Module::intersection($xs, $ys);
-			$cs = HashSet\Module::difference($as, $bs);
+			$cs = HashSet\Module::without($as, $bs);
 			return $cs;
 		}
 
@@ -418,6 +398,26 @@ namespace Saber\Data\HashSet {
 			$yi = HashSet\Module::iterator($ys);
 			foreach ($yi as $y) {
 				$zs->putItem($y);
+			}
+			return $zs;
+		}
+
+		/**
+		 * This method returns a hash set which represents the asymmetric difference between
+		 * the two specified hash sets.
+		 *
+		 * @access public
+		 * @static
+		 * @param HashSet\Type $xs                                  the first hash set
+		 * @param HashSet\Type $ys                                  the second hash set
+		 * @return HashSet\Type                                     a hash set which represents the (asymmetric)
+		 *                                                          difference of the two specified hash sets
+		 */
+		public static function without(HashSet\Type $xs, HashSet\Type $ys) {
+			$zs = HashSet\Type::box($xs->unbox());
+			$yi = HashSet\Module::iterator($ys);
+			foreach ($yi as $y) {
+				$zs->removeItem($y);
 			}
 			return $zs;
 		}

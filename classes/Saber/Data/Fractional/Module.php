@@ -18,8 +18,8 @@
 
 namespace Saber\Data\Fractional {
 
-	use \Saber\Data\Num;
+	use \Saber\Data\Number;
 
-	interface Module extends Num\Module { }
+	interface Module extends Number\Module { }
 
 }

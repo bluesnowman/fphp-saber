@@ -235,7 +235,7 @@ Below describes the relationships between data types:
         + ArrayList\Type
         + LinkedList\Type
         + String\Type
-    + Num\Type
+    + Number\Type
       + Floating\Type : Fractional\Type
         + Double\Type : Real\Type
         + Float\Type : Real\Type

@@ -16,8 +16,10 @@
  * limitations under the License.
  */
 
-namespace Saber\Data\Num {
+namespace Saber\Data\Number {
 
-	interface Module { }
+	use \Saber\Core;
+
+	interface Type extends Core\Boxable\Type { }
 
 }

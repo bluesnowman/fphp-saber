@@ -177,7 +177,7 @@ namespace Saber\Data\Ratio {
 
 			$this->assertInstanceOf('\\Saber\\Core\\Type', $p0);
 			$this->assertInstanceOf('\\Saber\\Data\\Type', $p0);
-			$this->assertInstanceOf('\\Saber\\Data\\Num\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Number\\Type', $p0);
 			$this->assertInstanceOf('\\Saber\\Data\\Fractional\\Type', $p0);
 			$this->assertInstanceOf('\\Saber\\Data\\Ratio\\Type', $p0);
 

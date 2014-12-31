@@ -18,8 +18,8 @@
 
 namespace Saber\Data\Real {
 
-	use \Saber\Data\Num;
+	use \Saber\Data\Number;
 
-	interface Type extends Num\Type { }
+	interface Type extends Number\Type { }
 
 }

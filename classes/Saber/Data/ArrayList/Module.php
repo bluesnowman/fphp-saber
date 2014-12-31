@@ -23,6 +23,7 @@ namespace Saber\Data\ArrayList {
 	use \Saber\Data\ArrayList;
 	use \Saber\Data\Bool;
 	use \Saber\Data\HashMap;
+	use \Saber\Data\HashSet;
 	use \Saber\Data\Int32;
 	use \Saber\Data\LinkedList;
 	use \Saber\Data\Option;
@@ -624,6 +625,28 @@ namespace Saber\Data\ArrayList {
 		}
 
 		/**
+		 * This method returns an array list containing only unique elements from the specified
+		 * array list (i.e. duplicates are removed).
+		 *
+		 * @access public
+		 * @static
+		 * @param ArrayList\Type $xs                                the array list to be processed
+		 * @return ArrayList\Type                                   an array list with the duplicates
+		 *                                                          removed
+		 */
+		public static function nub(ArrayList\Type $xs) {
+			$zs = HashSet\Type::empty_();
+
+			return ArrayList\Module::filter($xs, function(Core\Type $x, Int32\Type $i) use ($zs) {
+				if ($zs->__hasItem($x)) {
+					return Bool\Type::false();
+				}
+				$zs->putItem($x);
+				return Bool\Type::true();
+			});
+		}
+
+		/**
 		 * This method returns a pair of array lists: those items that satisfy the predicate and
 		 * those items that do not satisfy the predicate.
 		 *
@@ -868,6 +891,30 @@ namespace Saber\Data\ArrayList {
 			return ArrayList\Module::takeWhile($xs, function(Core\Type $x, Int32\Type $i) use ($predicate) {
 				return Bool\Module::not($predicate($x, $i));
 			});
+		}
+
+		/**
+		 * This method returns a tuple of two (or more) array lists after splitting an array list of
+		 * tuple groupings.
+		 *
+		 * @access public
+		 * @static
+		 * @param ArrayList\Type $xss                               an array list of tuple groupings
+		 * @return Tuple\Type                                       a tuple of two (or more) array lists
+		 */
+		public static function unzip(ArrayList\Type $xss) {
+			$as = array();
+			$bs = array();
+
+			$length = $xss->length();
+
+			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
+				$xs = $xss->item($i);
+				$as[] = $xs->first();
+				$bs[] = $xs->second();
+			}
+
+			return Tuple\Type::box(ArrayList\Type::box($as), ArrayList\Type::box($bs));
 		}
 
 		/**
@@ -1155,7 +1202,7 @@ namespace Saber\Data\ArrayList {
 		#region Methods -> Logical Operations
 
 		/**
-		 * This method (aka "truthy") returns whether all of the items of the list evaluate
+		 * This method (aka "true") returns whether all of the items of the list evaluate
 		 * to true.
 		 *
 		 * @access public
@@ -1165,93 +1212,24 @@ namespace Saber\Data\ArrayList {
 		 *                                                          the list evaluate to true
 		 */
 		public static function and_(ArrayList\Type $xs) {
-			return ArrayList\Module::truthy($xs);
-		}
-
-		/**
-		 * This method (aka "falsy") returns whether all of the items of the list evaluate
-		 * to false.
-		 *
-		 * @access public
-		 * @static
-		 * @param ArrayList\Type $xs                                the left operand
-		 * @return Bool\Type                                        whether all of the items of
-		 *                                                          the list evaluate to false
-		 *
-		 * @see http://www.sitepoint.com/javascript-truthy-falsy/
-		 */
-		public static function or_(ArrayList\Type $xs) {
-			return ArrayList\Module::falsy($xs);
-		}
-
-		/**
-		 * This method returns whether all of the items of the list strictly evaluate to
-		 * false.
-		 *
-		 * @access public
-		 * @static
-		 * @param ArrayList\Type $xs                                the left operand
-		 * @return Bool\Type                                        whether all of the items of
-		 *                                                          the list strictly evaluate
-		 *                                                          to false
-		 */
-		public static function false(ArrayList\Type $xs) {
-			return Bool\Module::not(ArrayList\Module::true($xs));
-		}
-
-		/**
-		 * This method (aka "or") returns whether all of the items of the list evaluate to
-		 * false.
-		 *
-		 * @access public
-		 * @static
-		 * @param ArrayList\Type $xs                                the left operand
-		 * @return Bool\Type                                        whether all of the items of
-		 *                                                          the list evaluate to false
-		 *
-		 * @see http://www.sitepoint.com/javascript-truthy-falsy/
-		 */
-		public static function falsy(ArrayList\Type $xs) {
-			return Bool\Module::not(ArrayList\Module::truthy($xs));
-		}
-
-		/**
-		 * This method returns whether all of the items of the list strictly evaluate
-		 * to true.
-		 *
-		 * @access public
-		 * @static
-		 * @param ArrayList\Type $xs                                the left operand
-		 * @return Bool\Type                                        whether all of the items of
-		 *                                                          the list strictly evaluate
-		 *                                                          to true
-		 */
-		public static function true(ArrayList\Type $xs) {
 			return ArrayList\Module::all($xs, function(Bool\Type $x, Int32\Type $i) {
 				return $x;
 			});
 		}
 
 		/**
-		 * This method (aka "and") returns whether all of the items of the list evaluate to
-		 * true.
+		 * This method returns whether any of the items of the list evaluate to true.
 		 *
 		 * @access public
 		 * @static
 		 * @param ArrayList\Type $xs                                the left operand
 		 * @return Bool\Type                                        whether all of the items of
-		 *                                                          the list evaluate to true
+		 *                                                          the list evaluate to false
 		 */
-		public static function truthy(ArrayList\Type $xs) {
-			$length = $xs->length();
-
-			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				if (!$xs->__item($i)) {
-					return Bool\Type::false();
-				}
-			}
-
-			return Bool\Type::true();
+		public static function or_(ArrayList\Type $xs) {
+			return ArrayList\Module::any($xs, function(Bool\Type $x, Int32\Type $i) {
+				return $x;
+			});
 		}
 
 		#endregion

@@ -20,9 +20,11 @@ namespace Saber\Data\Tuple {
 
 	use \Saber\Core;
 	use \Saber\Data;
+	use \Saber\Data\ArrayList;
 	use \Saber\Data\Bool;
 	use \Saber\Data\Collection;
 	use \Saber\Data\Int32;
+	use \Saber\Data\LinkedList;
 	use \Saber\Data\Trit;
 	use \Saber\Data\Tuple;
 
@@ -107,6 +109,35 @@ namespace Saber\Data\Tuple {
 		 */
 		public static function nvl(Tuple\Type $xs = null, Tuple\Type $ys = null) {
 			return ($xs !== null) ? $xs : (($ys !== null) ? $ys : Tuple\Type::box(null, null));
+		}
+
+		/**
+		 * This method returns the tuple as an array.
+		 *
+		 * @access public
+		 * @static
+		 * @param Tuple\Type $xs                                    the operand
+		 * @return ArrayList\Type                                   the tuple as an array list
+		 */
+		public static function toArrayList(Tuple\Type $xs) {
+			return ArrayList\Type::box($xs->unbox());
+		}
+
+		/**
+		 * This method returns the tuple as a linked list.
+		 *
+		 * @access public
+		 * @static
+		 * @param Tuple\Type $xs                                    the operand
+		 * @return LinkedList\Type                                  the tuple as a linked list
+		 */
+		public static function toLinkedList(Tuple\Type $xs) {
+			$length = $xs->length();
+			$zs = LinkedList\Type::nil();
+			for ($i = Int32\Module::decrement($length); Int32\Module::ge($i, Int32\Type::zero())->unbox(); $i = Int32\Module::decrement($i)) {
+				$zs = LinkedList\Type::cons($xs->item($i), $zs);
+			}
+			return $zs;
 		}
 
 		#endregion

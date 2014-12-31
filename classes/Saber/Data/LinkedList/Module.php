@@ -24,6 +24,7 @@ namespace Saber\Data\LinkedList {
 	use \Saber\Data\Bool;
 	use \Saber\Data\Collection;
 	use \Saber\Data\HashMap;
+	use \Saber\Data\HashSet;
 	use \Saber\Data\Int32;
 	use \Saber\Data\LinkedList;
 	use \Saber\Data\Option;
@@ -636,6 +637,28 @@ namespace Saber\Data\LinkedList {
 		}
 
 		/**
+		 * This method returns a linked list containing only unique elements from the specified
+		 * linked list (i.e. duplicates are removed).
+		 *
+		 * @access public
+		 * @static
+		 * @param LinkedList\Type $xs                               the linked list to be processed
+		 * @return LinkedList\Type                                  an linked list with the duplicates
+		 *                                                          removed
+		 */
+		public static function nub(LinkedList\Type $xs) {
+			$zs = HashSet\Type::empty_();
+
+			return LinkedList\Module::filter($xs, function(Core\Type $x, Int32\Type $i) use ($zs) {
+				if ($zs->__hasItem($x)) {
+					return Bool\Type::false();
+				}
+				$zs->putItem($x);
+				return Bool\Type::true();
+			});
+		}
+
+		/**
 		 * This method returns a pair of linked lists: those items that satisfy the predicate and
 		 * those items that do not satisfy the predicate.
 		 *
@@ -881,6 +904,27 @@ namespace Saber\Data\LinkedList {
 			return LinkedList\Module::takeWhile($xs, function(Core\Type $x, Int32\Type $i) use ($predicate) {
 				return Bool\Module::not($predicate($x, $i));
 			});
+		}
+
+		/**
+		 * This method returns a tuple of two (or more) linked lists after splitting a linked list of
+		 * tuple groupings.
+		 *
+		 * @access public
+		 * @static
+		 * @param LinkedList\Type $xss                              a linked list of tuple groupings
+		 * @return Tuple\Type                                       a tuple of two (or more) linked lists
+		 */
+		public static function unzip(LinkedList\Type $xss) {
+			$as = array();
+			$bs = array();
+
+			LinkedList\Module::each($xss, function(Tuple\Type $xs, Int32\Type $i) use (&$as, &$bs) {
+				$as[] = $xs->first();
+				$bs[] = $xs->second();
+			});
+
+			return Tuple\Type::box(LinkedList\Type::box($as), LinkedList\Type::box($bs));
 		}
 
 		/**
@@ -1207,7 +1251,7 @@ namespace Saber\Data\LinkedList {
 		#region Methods -> Logical Operations
 
 		/**
-		 * This method (aka "truthy") returns whether all of the items of the collection evaluate
+		 * This method (aka "true") returns whether all of the items of the collection evaluate
 		 * to true.
 		 *
 		 * @access public
@@ -1217,99 +1261,24 @@ namespace Saber\Data\LinkedList {
 		 *                                                          the collection evaluate to true
 		 */
 		public static function and_(LinkedList\Type $xs) {
-			return LinkedList\Module::truthy($xs);
+			return LinkedList\Module::all($xs, function(Bool\Type $x, Int32\Type $i) {
+				return $x;
+			});
 		}
 
 		/**
-		 * This method (aka "falsy") returns whether all of the items of the collection evaluate
-		 * to false.
+		 * This method returns whether any of the items of the collection evaluate to true.
 		 *
 		 * @access public
 		 * @static
 		 * @param LinkedList\Type $xs                               the left operand
 		 * @return Bool\Type                                        whether all of the items of
 		 *                                                          the collection evaluate to false
-		 *
-		 * @see http://www.sitepoint.com/javascript-truthy-falsy/
 		 */
 		public static function or_(LinkedList\Type $xs) {
-			return LinkedList\Module::falsy($xs);
-		}
-
-		/**
-		 * This method returns whether all of the items of the collection strictly evaluate to
-		 * false.
-		 *
-		 * @access public
-		 * @static
-		 * @param LinkedList\Type $xs                               the left operand
-		 * @return Bool\Type                                        whether all of the items of
-		 *                                                          the collection strictly evaluate
-		 *                                                          to false
-		 */
-		public static function false(LinkedList\Type $xs) {
-			return Bool\Module::not(LinkedList\Type::true($xs));
-		}
-
-		/**
-		 * This method (aka "or") returns whether all of the items of the collection evaluate to
-		 * false.
-		 *
-		 * @access public
-		 * @static
-		 * @param LinkedList\Type $xs                               the left operand
-		 * @return Bool\Type                                        whether all of the items of
-		 *                                                          the collection evaluate to false
-		 *
-		 * @see http://www.sitepoint.com/javascript-truthy-falsy/
-		 */
-		public static function falsy(LinkedList\Type $xs) {
-			return Bool\Module::not(LinkedList\Module::truthy($xs));
-		}
-
-		/**
-		 * This method returns whether all of the items of the collection strictly evaluate
-		 * to true.
-		 *
-		 * @access public
-		 * @static
-		 * @param LinkedList\Type $xs                               the left operand
-		 * @return Bool\Type                                        whether all of the items of
-		 *                                                          the collection strictly evaluate
-		 *                                                          to true
-		 */
-		public static function true(LinkedList\Type $xs) {
-			if ($xs->__isEmpty()) {
-				return Bool\Type::true();
-			}
-
-			if ($xs->__head() !== true) {
-				return Bool\Type::false();
-			}
-
-			return LinkedList\Module::true($xs->tail());
-		}
-
-		/**
-		 * This method (aka "and") returns whether all of the items of the collection evaluate to
-		 * true.
-		 *
-		 * @access public
-		 * @static
-		 * @param LinkedList\Type $xs                               the left operand
-		 * @return Bool\Type                                        whether all of the items of
-		 *                                                          the collection evaluate to true
-		 */
-		public static function truthy(LinkedList\Type $xs) {
-			if ($xs->__isEmpty()) {
-				return Bool\Type::true();
-			}
-
-			if (!$xs->__head()) {
-				return Bool\Type::false();
-			}
-
-			return LinkedList\Module::truthy($xs->tail());
+			return LinkedList\Module::any($xs, function(Bool\Type $x, Int32\Type $i) {
+				return $x;
+			});
 		}
 
 		#endregion

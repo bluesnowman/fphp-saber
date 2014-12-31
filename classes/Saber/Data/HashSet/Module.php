@@ -94,6 +94,24 @@ namespace Saber\Data\HashSet {
 		}
 
 		/**
+		 * This method returns a hash set which represents the symmetric difference between
+		 * the two specified hash sets.
+		 *
+		 * @access public
+		 * @static
+		 * @param HashSet\Type $xs                                  the first hash set
+		 * @param HashSet\Type $ys                                  the second hash set
+		 * @return HashSet\Type                                     a hash set which represents the symmetric
+		 *                                                          difference of the two specified sets
+		 */
+		public static function difference(HashSet\Type $xs, HashSet\Type $ys) {
+			$as = HashSet\Module::union($xs, $ys);
+			$bs = HashSet\Module::intersection($xs, $ys);
+			$cs = HashSet\Module::without($as, $bs);
+			return $cs;
+		}
+
+		/**
 		 * This method returns a hash set of those items that satisfy the predicate.
 		 *
 		 * @access public
@@ -363,24 +381,6 @@ namespace Saber\Data\HashSet {
 		 */
 		public static function size(HashSet\Type $xs) {
 			return $xs->size();
-		}
-
-		/**
-		 * This method returns a hash set which represents the symmetric difference between
-		 * the two specified hash sets.
-		 *
-		 * @access public
-		 * @static
-		 * @param HashSet\Type $xs                                  the first hash set
-		 * @param HashSet\Type $ys                                  the second hash set
-		 * @return HashSet\Type                                     a hash set which represents the symmetric
-		 *                                                          difference of the two specified sets
-		 */
-		public static function difference(HashSet\Type $xs, HashSet\Type $ys) {
-			$as = HashSet\Module::union($xs, $ys);
-			$bs = HashSet\Module::intersection($xs, $ys);
-			$cs = HashSet\Module::without($as, $bs);
-			return $cs;
 		}
 
 		/**

@@ -571,7 +571,7 @@ namespace Saber\Data\HashSet {
 
 				foreach ($xi as $x) {
 					if (!$ys->__hasItem($x)) {
-						return Trit\Type::make(strcmp((string)serialize($xs), (string)serialize($ys)));
+						return Trit\Type::make(strcmp((string)serialize($xs), (string)serialize($ys))); // order is not "stable"
 					}
 				}
 

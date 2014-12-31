@@ -486,7 +486,7 @@ namespace Saber\Data\HashMap {
 
 				foreach ($xi as $k => $v) {
 					if (!$ys->__hasKey($k) || !$ys->item($k)->__eq($v)) {
-						return Trit\Type::make(strcmp((string)serialize($xs), (string)serialize($ys)));
+						return Trit\Type::make(strcmp((string)serialize($xs), (string)serialize($ys))); // order is not "stable"
 					}
 				}
 

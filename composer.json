@@ -1,11 +1,15 @@
 {
-    "homepage": "http://github.com/bluesnowman/fphp-saber",
+    "name": "bluesnowman/fphp-saber",
     "description": "A functional PHP library, which promotes strong typing, immutable objects, and lazy evaluation.",
+    "version": "0.0.1",
     "type": "library",
-    "license": "Apache License, Version 2.0",
+    "homepage": "http://github.com/bluesnowman/fphp-saber",
+    "keywords": ["functional", "fp", "fphp"],
+    "license": "Apache-2.0",
     "require": {
         "php": ">=5.4.0"
     },
+    "prefer-stable": true,
     "recommend": {
         "ext-gmp": "*",
         "ext-mbstring": "*"

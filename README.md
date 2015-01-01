@@ -304,7 +304,7 @@ Help improve on this library.  If you have a bug fix, suggestion, or improvement
 
 ### License
 
-Copyright 2014 Blue Snowman
+Copyright 2014-2015 Blue Snowman
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

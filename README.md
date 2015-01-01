@@ -29,7 +29,7 @@ Some data types are initialized using a singleton method.  For instance, the `Un
 $object = Unit\Type::instance();
 ````
 
-Similarly, other data types have more specific singleton methods.  Amongst these are the `Num` classes, which have singletons for negative one, zero, and positive one.
+Similarly, other data types have more specific singleton methods.  Amongst these are the `Number` classes, which have singletons for negative one, zero, and positive one.
 
 ````
 $negative = Int32\Type::negative();
@@ -100,38 +100,36 @@ This library has adopted the following naming conventions for certain variables:
 An `$operator` function is used to find the result of applying an operator to one or more operands.
 
 ````
-Core\Type function(Core\Type $c)
-Core\Type function(Core\Type $c, Core\Type $x)
+function(Core\Type $c): Core\Type
+function(Core\Type $c, Core\Type $x): Core\Type
 ````
 
 A `$predicate` function is used to find the result of performing a Boolean evaluation.
 
 ````
-Bool\Type function(Core\Type $x)
-Bool\Type function(Core\Type $x, Int32\Type $i)
+function(Core\Type $x): Bool\Type
+function(Core\Type $x, Int32\Type $i): Bool\Type
 ````
 
 A `$procedure` function is used to perform an operation that does NOT return a value (even though, technically, PHP does return a `null` value by default).  In cases where logic benefits to use a return statement to terminate a procedure prematurely, the return value must be either a `null` value or an `Unit\Type` object.
 
 ````
-null function(Core\Type $x)
-null function(Core\Type $x, Int32\Type $i)
-Unit\Type function(Core\Type $x)
-Unit\Type function(Core\Type $x, Int32\Type $i)
+function(Core\Type $x): ?Unit\Type
+function(Core\Type $x, Int32\Type $i): ?Unit\Type
 ````
 
 A `$subroutine` function is used to perform an operation that does return a value.
 
 ````
-Core\Type function(Core\Type $x)
-Core\Type function(Core\Type $x, Int32\Type $i)
+function(Core\Type $x): Core\Type
+function(Core\Type $x, Int32\Type $i): Core\Type
 ````
 
 A `$tryblock` function is used to process a block of code that may throw a runtime exception.
 
 ````
-Core\Type function()
-Core\Type function()
+function(): Core\Type
+function(): Core\Type
 ````
 
 ### Choices

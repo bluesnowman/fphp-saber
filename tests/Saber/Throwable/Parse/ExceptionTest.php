@@ -25,7 +25,7 @@ namespace Saber\Throwable\Parse {
 	/**
 	 * @group ExceptionTest
 	 */
-	final class ExceptionTypeTest extends Core\TypeTest {
+	final class ExceptionTest extends Core\TypeTest {
 
 		/**
 		 * This method provides the data for testing the boxing of a value.

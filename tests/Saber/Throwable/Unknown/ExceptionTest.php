@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-namespace Saber\Throwable\InvalidProperty {
+namespace Saber\Throwable\Unknown {
 
 	use \Saber\Core;
 	use \Saber\Data\Int32;
@@ -46,13 +46,13 @@ namespace Saber\Throwable\InvalidProperty {
 		 * @dataProvider dataBox
 		 */
 		public function testBox(array $provided, array $expected) {
-			$p0 = Throwable\InvalidProperty\Exception::make($provided[0], $provided[1], $provided[2]);
-			$e0 = new Throwable\InvalidProperty\Exception($expected[0], $expected[1], $expected[2]);
+			$p0 = Throwable\Unknown\Exception::make($provided[0], $provided[1], $provided[2]);
+			$e0 = new Throwable\Unknown\Exception($expected[0], $expected[1], $expected[2]);
 
 			$this->assertInstanceOf('\\RuntimeException', $p0);
 			$this->assertInstanceOf('\\Saber\\Core\\Type', $p0);
 			$this->assertInstanceOf('\\Saber\\Throwable\\Runtime\\Exception', $p0);
-			$this->assertInstanceOf('\\Saber\\Throwable\\InvalidProperty\\Exception', $p0);
+			$this->assertInstanceOf('\\Saber\\Throwable\\Unknown\\Exception', $p0);
 			$this->assertEquals($e0, $p0);
 			$this->assertTrue($e0->__eq($p0));
 
@@ -81,7 +81,7 @@ namespace Saber\Throwable\InvalidProperty {
 		 * @dataProvider dataCompare
 		 */
 		public function testCompare(array $provided, array $expected) {
-			$p0 = Throwable\InvalidProperty\Exception::make($provided[0][0], $provided[0][1], $provided[0][2])->compare(Throwable\InvalidProperty\Exception::make($provided[1][0], $provided[1][1], $provided[1][2]));
+			$p0 = Throwable\Unknown\Exception::make($provided[0][0], $provided[0][1], $provided[0][2])->compare(Throwable\Unknown\Exception::make($provided[1][0], $provided[1][1], $provided[1][2]));
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Int32\\Type', $p0);
@@ -95,7 +95,7 @@ namespace Saber\Throwable\InvalidProperty {
 		 */
 		public function dataToString() {
 			$data = array(
-				array(array('Message', array(), Int32\Type::zero()), array('Saber\\Throwable\\InvalidProperty\\Exception [ 0 ]: Message ~ ')),
+				array(array('Message', array(), Int32\Type::zero()), array('Saber\\Throwable\\Unknown\\Exception [ 0 ]: Message ~ ')),
 			);
 			return $data;
 		}
@@ -106,7 +106,7 @@ namespace Saber\Throwable\InvalidProperty {
 		 * @dataProvider dataToString
 		 */
 		public function testToString(array $provided, array $expected) {
-			$p0 = Throwable\InvalidProperty\Exception::make($provided[0], $provided[1], $provided[2])->__toString();
+			$p0 = Throwable\Unknown\Exception::make($provided[0], $provided[1], $provided[2])->__toString();
 			$e0 = $expected[0];
 
 			$this->assertInternalType('string', $p0);

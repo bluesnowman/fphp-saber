@@ -167,33 +167,6 @@ namespace Saber\Data\ArrayList {
 		#region Tests -> Interface
 
 		/**
-		 * This method tests that an item is accessible.
-		 */
-		public function testItems() {
-			//$this->markTestIncomplete();
-
-			$p0 = ArrayList\Type::box(array(Int32\Type::zero(), Int32\Type::one(), Int32\Type::box(2)));
-
-			$this->assertSame(0, $p0->item(Int32\Type::zero())->unbox());
-			$this->assertSame(1, $p0->item(Int32\Type::one())->unbox());
-			$this->assertSame(2, $p0->item(Int32\Type::box(2))->unbox());
-
-			$this->assertSame(0, $p0->head()->unbox());
-
-			$p1 = $p0->tail();
-
-			$this->assertInstanceOf('\\Saber\\Data\\ArrayList\\Type', $p1);
-
-			$p2 = $p1->unbox();
-
-			$this->assertInternalType('array', $p2);
-			$this->assertCount(2, $p2);
-
-			$this->assertSame(1, $p2[0]->unbox());
-			$this->assertSame(2, $p2[1]->unbox());
-		}
-
-		/**
 		 * This method provides the data for testing that a value is empty.
 		 *
 		 * @return array
@@ -220,6 +193,33 @@ namespace Saber\Data\ArrayList {
 
 			$this->assertInstanceOf('\\Saber\\Data\\Bool\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
+		}
+
+		/**
+		 * This method tests that an item is accessible.
+		 */
+		public function testItems() {
+			//$this->markTestIncomplete();
+
+			$p0 = ArrayList\Type::box(array(Int32\Type::zero(), Int32\Type::one(), Int32\Type::box(2)));
+
+			$this->assertSame(0, $p0->item(Int32\Type::zero())->unbox());
+			$this->assertSame(1, $p0->item(Int32\Type::one())->unbox());
+			$this->assertSame(2, $p0->item(Int32\Type::box(2))->unbox());
+
+			$this->assertSame(0, $p0->head()->unbox());
+
+			$p1 = $p0->tail();
+
+			$this->assertInstanceOf('\\Saber\\Data\\ArrayList\\Type', $p1);
+
+			$p2 = $p1->unbox();
+
+			$this->assertInternalType('array', $p2);
+			$this->assertCount(2, $p2);
+
+			$this->assertSame(1, $p2[0]->unbox());
+			$this->assertSame(2, $p2[1]->unbox());
 		}
 
 		/**

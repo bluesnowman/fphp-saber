@@ -93,8 +93,8 @@ namespace Saber\Data\HashSet {
 		 * @return HashSet\Type                                     the boxed object
 		 */
 		public static function box($value/*...*/) {
-			$xs = (is_array($value)) ? $value : func_get_args();
-			return new HashSet\Type($xs);
+			$items = (is_array($value)) ? $value : func_get_args();
+			return new HashSet\Type($items);
 		}
 
 		/**
@@ -108,17 +108,12 @@ namespace Saber\Data\HashSet {
 		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
 		public static function make($value/*...*/) {
-			$xs = (is_array($value)) ? $value : func_get_args();
-			foreach ($xs as $x) {
-				if (!(is_object($x) && ($x instanceof Core\Type))) {
-					$type = gettype($x);
-					if ($type == 'object') {
-						$type = get_class($x);
-					}
-					throw new Throwable\InvalidArgument\Exception('Unable to create hash set. Expected a boxed value, but got ":type".', array(':type' => $type));
-				}
+			$items = (is_array($value)) ? $value : func_get_args();
+			$xs = new HashSet\Type();
+			foreach ($items as $item) {
+				$xs->putItem($item);
 			}
-			return new HashSet\Type($xs);
+			return $xs;
 		}
 
 		/**
@@ -129,7 +124,7 @@ namespace Saber\Data\HashSet {
 		 * @return HashSet\Type                                     an empty collection
 		 */
 		public static function empty_() {
-			return new HashSet\Type(array());
+			return new HashSet\Type();
 		}
 
 		#endregion
@@ -207,7 +202,7 @@ namespace Saber\Data\HashSet {
 		 * @final
 		 * @param array $value                                      the value to be assigned
 		 */
-		public final function __construct(array $value) {
+		public final function __construct(array $value = array()) {
 			$this->value = $value;
 		}
 

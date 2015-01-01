@@ -20,6 +20,7 @@ namespace Saber\Data\HashSet {
 
 	use \Saber\Core;
 	use \Saber\Data\HashSet;
+	use \Saber\Data\Int32;
 
 	/**
 	 * @group TypeTest
@@ -44,6 +45,41 @@ namespace Saber\Data\HashSet {
 			$this->assertInstanceOf('\\Saber\\Core\\Comparable\\Type', $p0);
 			$this->assertInstanceOf('\\Saber\\Core\\Boxable\\Type', $p0);
 			$this->assertInstanceOf('\\Saber\\Core\\Type', $p0);
+		}
+
+		#endregion
+
+		#region Tests -> Initialization
+
+		/**
+		 * This method provides the data for testing the boxing of a value.
+		 *
+		 * @return array
+		 */
+		public function dataBox() {
+			$data = array(
+				array(array(Int32\Type::zero(), Int32\Type::one()), array(Int32\Type::zero(), Int32\Type::one())),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the boxing of a value.
+		 *
+		 * @dataProvider dataBox
+		 */
+		public function testBox(array $provided, array $expected) {
+			//$this->markTestIncomplete();
+
+			$p0 = HashSet\Type::box($provided);
+
+			$this->assertInstanceOf('\\Saber\\Data\\HashSet\\Type', $p0);
+
+			$p1 = $p0->unbox();
+			$e1 = count($expected);
+
+			$this->assertInternalType('array', $p1);
+			$this->assertCount($e1, $p1);
 		}
 
 		#endregion

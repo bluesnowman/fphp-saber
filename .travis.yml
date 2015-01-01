@@ -4,4 +4,4 @@ php:
   - 5.4
   - hhvm
 script:
-  - make execute-travis GROUP=TypeTest
+  - make execute PHPUNIT_DIR='' GROUP=TypeTest

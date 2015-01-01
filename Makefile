@@ -29,6 +29,7 @@ COMPOSER_DIR = vendor
 COMPOSER_PHAR = composer.phar
 COMPOSER_URL = http://getcomposer.org/installer
 
+PHPUNIT_DIR = ./
 PHPUNIT_EXE = phpunit
 PHPUNIT_PHAR = phpunit.phar
 PHPUNIT_URL = https://phar.phpunit.de/$(PHPUNIT_PHAR)
@@ -43,18 +44,9 @@ UNIT_TESTS = tests
 # make execute GROUP=the_group_name
 execute:
 ifndef GROUP
-	./phpunit $(BOOTSTRAP_SWITCH) $(UNIT_TESTS)
+	$(PHPUNIT_DIR)$(PHPUNIT_EXE) $(BOOTSTRAP_SWITCH) $(UNIT_TESTS)
 else
-	./phpunit $(BOOTSTRAP_SWITCH) --group $(GROUP) $(UNIT_TESTS)
-endif
-
-# make execute-travis
-# make execute-travis GROUP=the_group_name
-execute-travis:
-ifndef GROUP
-	phpunit $(BOOTSTRAP_SWITCH) $(UNIT_TESTS)
-else
-	phpunit $(BOOTSTRAP_SWITCH) --group $(GROUP) $(UNIT_TESTS)
+	$(PHPUNIT_DIR)$(PHPUNIT_EXE) $(BOOTSTRAP_SWITCH) --group $(GROUP) $(UNIT_TESTS)
 endif
 
 ########################################################################

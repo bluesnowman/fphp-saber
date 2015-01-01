@@ -26,6 +26,28 @@ namespace Saber\Data\HashMap {
 	 */
 	final class TypeTest extends Core\TypeTest {
 
+		#region Tests -> Inheritance
+
+		/**
+		 * This method tests the data type.
+		 */
+		public function testType() {
+			//$this->markTestIncomplete();
+
+			$p0 = new HashMap\Type(array());
+
+			$this->assertInstanceOf('\\Saber\\Data\\HashMap\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Map\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Collection\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Core\\Equality\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Core\\Comparable\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Core\\Boxable\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Core\\Type', $p0);
+		}
+
+		#endregion
+
 	}
 
 }

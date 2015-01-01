@@ -4,4 +4,4 @@ php:
   - 5.4
   - hhvm
 script:
-  - make execute GROUP=TypeTest
+  - make execute-travis GROUP=TypeTest

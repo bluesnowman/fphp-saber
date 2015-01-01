@@ -48,6 +48,15 @@ else
 	./phpunit $(BOOTSTRAP_SWITCH) --group $(GROUP) $(UNIT_TESTS)
 endif
 
+# make execute-travis
+# make execute-travis GROUP=the_group_name
+execute-travis:
+ifndef GROUP
+	phpunit $(BOOTSTRAP_SWITCH) $(UNIT_TESTS)
+else
+	phpunit $(BOOTSTRAP_SWITCH) --group $(GROUP) $(UNIT_TESTS)
+endif
+
 ########################################################################
 # Rules (for Installing)
 ########################################################################

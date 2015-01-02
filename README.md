@@ -103,7 +103,7 @@ This library has adopted the following naming conventions for certain variables:
 A `$closure` function does not have a predefined signature or return type; but, as a general rule, it should utilize Core\Type objects for parameter and return types.
 
 ````
-function(?Core\Type... $m) ?Core\Type
+function(?Core\Type... $m): ?Core\Type
 ````
 
 An `$operator` function is used to find the result of applying an operator to one or more operands.

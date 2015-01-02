@@ -18,10 +18,11 @@
 
 namespace Saber\Throwable\EmptyCollection {
 
+	use \Saber\Core;
 	use \Saber\Data\Int32;
 	use \Saber\Throwable;
 
-	class Exception extends \RuntimeException implements Throwable\Runtime\Exception {
+	class Exception extends \RuntimeException implements Throwable\Runtime\Exception, Core\Comparable\Type, Core\Equality\Type {
 
 		#region Traits
 

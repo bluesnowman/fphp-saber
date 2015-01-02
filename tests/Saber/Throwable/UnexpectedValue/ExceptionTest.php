@@ -84,7 +84,7 @@ namespace Saber\Throwable\UnexpectedValue {
 			$p0 = Throwable\UnexpectedValue\Exception::make($provided[0][0], $provided[0][1], $provided[0][2])->compare(Throwable\UnexpectedValue\Exception::make($provided[1][0], $provided[1][1], $provided[1][2]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Int32\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Trit\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 

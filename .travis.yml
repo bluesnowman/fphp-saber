@@ -1,7 +1,8 @@
 language: php
 php:
-  - 5.5
   - 5.4
+  - 5.5
   - hhvm
 script:
   - make execute PHPUNIT_DIR='' GROUP=TypeTest
+  - make execute PHPUNIT_DIR='' GROUP=ExceptionTest

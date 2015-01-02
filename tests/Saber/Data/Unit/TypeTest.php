@@ -50,9 +50,9 @@ namespace Saber\Data\Unit {
 		#region Tests -> Initialization
 
 		/**
-		 * This method tests the boxing of a value.
+		 * This method tests the initialization of a singleton, boxed value.
 		 */
-		public function testBox() {
+		public function testSingleton() {
 			//$this->markTestIncomplete();
 
 			$p0 = Unit\Type::instance();
@@ -70,6 +70,28 @@ namespace Saber\Data\Unit {
 		#endregion
 
 		#region Tests -> Interface
+
+		/**
+		 * This method tests that an object has a unique hash code.
+		 */
+		public function testHashCode() {
+			$p0 = Unit\Type::instance()->__hashCode();
+			$e0 = 'null';
+
+			$this->assertInternalType('string', $p0);
+			$this->assertSame($e0, $p0);
+		}
+
+		/**
+		 * This method tests that a value is converted to a string.
+		 */
+		public function testToString() {
+			$p0 = Unit\Type::instance()->__toString();
+			$e0 = 'null';
+
+			$this->assertInternalType('string', $p0);
+			$this->assertSame($e0, $p0);
+		}
 
 		#endregion
 

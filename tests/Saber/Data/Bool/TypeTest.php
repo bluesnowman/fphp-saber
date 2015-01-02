@@ -122,9 +122,92 @@ namespace Saber\Data\Bool {
 			$this->assertSame($e1, $p1);
 		}
 
+		/**
+		 * This method tests the initialization of a singleton, boxed value.
+		 */
+		public function testSingletons() {
+			//$this->markTestIncomplete();
+
+			$p0 = Bool\Type::true();
+			$e0 = Bool\Type::true();
+
+			$this->assertInstanceOf('\\Saber\\Data\\Bool\\Type', $p0);
+			$this->assertSame($e0->__hashCode(), $p0->__hashCode());
+
+			$p1 = $p0->unbox();
+			$e1 = true;
+
+			$this->assertInternalType('boolean', $p1);
+			$this->assertSame($e1, $p1);
+
+			$p2 = Bool\Type::false();
+			$e2 = Bool\Type::false();
+
+			$this->assertInstanceOf('\\Saber\\Data\\Bool\\Type', $p2);
+			$this->assertSame($e2->__hashCode(), $p2->__hashCode());
+
+			$p3 = $p2->unbox();
+			$e3 = false;
+
+			$this->assertInternalType('boolean', $p3);
+			$this->assertSame($e3, $p3);
+		}
+
 		#endregion
 
 		#region Tests -> Interface
+
+		/**
+		 * This method provides the data for testing that an object has a unique hash code.
+		 *
+		 * @return array
+		 */
+		public function dataHashCode() {
+			$data = array(
+				array(array(true), array('true')),
+				array(array(false), array('false')),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests that an object has a unique hash code.
+		 *
+		 * @dataProvider dataHashCode
+		 */
+		public function testHashCode(array $provided, array $expected) {
+			$p0 = Bool\Type::make($provided[0])->__hashCode();
+			$e0 = $expected[0];
+
+			$this->assertInternalType('string', $p0);
+			$this->assertSame($e0, $p0);
+		}
+
+		/**
+		 * This method provides the data for testing that a value is converted to a string.
+		 *
+		 * @return array
+		 */
+		public function dataToString() {
+			$data = array(
+				array(array(true), array('true')),
+				array(array(false), array('false')),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests that a value is converted to a string.
+		 *
+		 * @dataProvider dataToString
+		 */
+		public function testToString(array $provided, array $expected) {
+			$p0 = Bool\Type::make($provided[0])->__toString();
+			$e0 = $expected[0];
+
+			$this->assertInternalType('string', $p0);
+			$this->assertSame($e0, $p0);
+		}
 
 		#endregion
 

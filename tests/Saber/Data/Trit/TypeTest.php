@@ -26,6 +26,204 @@ namespace Saber\Data\Trit {
 	 */
 	final class TypeTest extends Core\TypeTest {
 
+		#region Tests -> Inheritance
+
+		/**
+		 * This method tests the data type.
+		 */
+		public function testType() {
+			//$this->markTestIncomplete();
+
+			$p0 = new Trit\Type(0);
+
+			$this->assertInstanceOf('\\Saber\\Data\\Trit\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Integral\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Real\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Number\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Core\\Equality\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Core\\Comparable\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Core\\Boxable\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Core\\Type', $p0);
+		}
+
+		#endregion
+
+		#region Tests -> Initialization
+
+		/**
+		 * This method provides the data for testing the boxing of a value.
+		 *
+		 * @return array
+		 */
+		public function dataBox() {
+			$data = array(
+				array(array(-1), array(-1)),
+				array(array(0), array(0)),
+				array(array(null), array(0)),
+				array(array(''), array(0)),
+				array(array(1), array(1)),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the boxing of a value.
+		 *
+		 * @dataProvider dataBox
+		 */
+		public function testBox(array $provided, array $expected) {
+			//$this->markTestIncomplete();
+
+			$p0 = Trit\Type::box($provided[0]);
+
+			$this->assertInstanceOf('\\Saber\\Data\\Trit\\Type', $p0);
+
+			$p1 = $p0->unbox();
+			$e1 = $expected[0];
+
+			$this->assertInternalType('integer', $p1);
+			$this->assertSame($e1, $p1);
+		}
+
+		/**
+		 * This method provides the data for testing the making of a value.
+		 *
+		 * @return array
+		 */
+		public function dataMake() {
+			$data = array(
+				array(array(-1), array(-1)),
+				array(array(0), array(0)),
+				array(array(null), array(0)),
+				array(array(''), array(0)),
+				array(array(1), array(1)),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the making of a value.
+		 *
+		 * @dataProvider dataMake
+		 */
+		public function testMake(array $provided, array $expected) {
+			//$this->markTestIncomplete();
+
+			$p0 = Trit\Type::make($provided[0]);
+
+			$this->assertInstanceOf('\\Saber\\Data\\Trit\\Type', $p0);
+
+			$p1 = $p0->unbox();
+			$e1 = $expected[0];
+
+			$this->assertInternalType('integer', $p1);
+			$this->assertSame($e1, $p1);
+		}
+
+		/**
+		 * This method tests the initialization of a singleton, boxed value.
+		 */
+		public function testSingletons() {
+			//$this->markTestIncomplete();
+
+			$p0 = Trit\Type::negative();
+			$e0 = Trit\Type::negative();
+
+			$this->assertInstanceOf('\\Saber\\Data\\Trit\\Type', $p0);
+			$this->assertSame($e0->__hashCode(), $p0->__hashCode());
+
+			$p1 = $p0->unbox();
+			$e1 = -1;
+
+			$this->assertInternalType('integer', $p1);
+			$this->assertSame($e1, $p1);
+
+			$p2 = Trit\Type::zero();
+			$e2 = Trit\Type::zero();
+
+			$this->assertInstanceOf('\\Saber\\Data\\Trit\\Type', $p2);
+			$this->assertSame($e2->__hashCode(), $p2->__hashCode());
+
+			$p3 = $p2->unbox();
+			$e3 = 0;
+
+			$this->assertInternalType('integer', $p3);
+			$this->assertSame($e3, $p3);
+
+			$p4 = Trit\Type::positive();
+			$e4 = Trit\Type::positive();
+
+			$this->assertInstanceOf('\\Saber\\Data\\Trit\\Type', $p4);
+			$this->assertSame($e4->__hashCode(), $p4->__hashCode());
+
+			$p5 = $p4->unbox();
+			$e5 = 1;
+
+			$this->assertInternalType('integer', $p5);
+			$this->assertSame($e5, $p5);
+		}
+
+		#endregion
+
+		#region Tests -> Interface
+
+		/**
+		 * This method provides the data for testing that an object has a unique hash code.
+		 *
+		 * @return array
+		 */
+		public function dataHashCode() {
+			$data = array(
+				array(array(-1), array('negative')),
+				array(array(0), array('zero')),
+				array(array(1), array('positive')),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests that an object has a unique hash code.
+		 *
+		 * @dataProvider dataHashCode
+		 */
+		public function testHashCode(array $provided, array $expected) {
+			$p0 = Trit\Type::make($provided[0])->__hashCode();
+			$e0 = $expected[0];
+
+			$this->assertInternalType('string', $p0);
+			$this->assertSame($e0, $p0);
+		}
+
+		/**
+		 * This method provides the data for testing that a value is converted to a string.
+		 *
+		 * @return array
+		 */
+		public function dataToString() {
+			$data = array(
+				array(array(-1), array('-1')),
+				array(array(0), array('0')),
+				array(array(1), array('1')),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests that a value is converted to a string.
+		 *
+		 * @dataProvider dataToString
+		 */
+		public function testToString(array $provided, array $expected) {
+			$p0 = Trit\Type::make($provided[0])->__toString();
+			$e0 = $expected[0];
+
+			$this->assertInternalType('string', $p0);
+			$this->assertSame($e0, $p0);
+		}
+
+		#endregion
+
 	}
 
 }

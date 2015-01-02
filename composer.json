@@ -1,7 +1,7 @@
 {
     "name": "bluesnowman/fphp-saber",
     "description": "A functional PHP library, which promotes strong typing, immutable objects, and lazy evaluation.",
-    "version": "0.0.1",
+    "version": "v2015.01.01.01",
     "type": "library",
     "homepage": "http://github.com/bluesnowman/fphp-saber",
     "keywords": ["functional", "fp", "fphp"],

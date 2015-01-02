@@ -12,11 +12,11 @@
     "require-dev": {
         "php": ">=5.4.0"
     },
-    "prefer-stable": true,
-    "recommend": {
+    "suggest": {
         "ext-gmp": "*",
         "ext-mbstring": "*"
     },
+    "prefer-stable": true,
     "autoload": {
         "psr-0": {
             "Saber": "classes/"

@@ -3,8 +3,8 @@ Saber
 
 A functional PHP library, which promotes strong typing, immutable objects, and lazy evaluation.
 
-[![Build Status](https://secure.travis-ci.org/bluesnowman/fphp-saber.svg)](http://travis-ci.org/bluesnowman/fphp-saber)
 [![Dependency Status](https://www.versioneye.com/user/projects/54a56acf97427553100001ad/badge.png)](https://www.versioneye.com/user/projects/54a56acf97427553100001ad)
+[![Build Status](https://secure.travis-ci.org/bluesnowman/fphp-saber.svg)](http://travis-ci.org/bluesnowman/fphp-saber)
 
 ### Requirements
 

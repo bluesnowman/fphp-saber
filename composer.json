@@ -9,6 +9,9 @@
     "require": {
         "php": ">=5.4.0"
     },
+    "require-dev": {
+        "php": ">=5.4.0"
+    },
     "prefer-stable": true,
     "recommend": {
         "ext-gmp": "*",

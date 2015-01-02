@@ -127,7 +127,7 @@ namespace Saber\Throwable\Unknown {
 		 * @dataProvider dataToString
 		 */
 		public function testToString(array $provided, array $expected) {
-			$p0 = Throwable\Unknown\Exception::make($provided[0], $provided[1], $provided[2])->__toString();
+			$p0 = Throwable\Unknown\Exception::make($provided[0])->__toString();
 			$e0 = $expected[0];
 
 			$this->assertInternalType('string', $p0);

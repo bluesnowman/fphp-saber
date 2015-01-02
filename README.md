@@ -100,6 +100,12 @@ This library has adopted the following naming conventions for certain variables:
 
 ### Callables
 
+A `$closure` function does not have a predefined signature or return type.
+
+````
+function(?mixed... $m) ?mixed
+````
+
 An `$operator` function is used to find the result of applying an operator to one or more operands.
 
 ````

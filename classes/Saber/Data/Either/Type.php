@@ -110,10 +110,10 @@ namespace Saber\Data\Either {
 		 * @access public
 		 * @static
 		 * @param String\Type $name                                 the name of the mixin
-		 * @param callable $function                                the custom utility function
+		 * @param callable $closure                                 the custom utility function
 		 */
-		public static function mixin(String\Type $name, callable $function) {
-			static::$mixins[$name->unbox()] = $function;
+		public static function mixin(String\Type $name, callable $closure) {
+			static::$mixins[$name->unbox()] = $closure;
 		}
 
 		#endregion

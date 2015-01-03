@@ -144,7 +144,15 @@ namespace Saber\Data\Tuple {
 			if (preg_match('/^__[a-z_][a-z0-9_]*$/i', $method)) {
 				$method = substr($method, 2);
 				if (!in_array($method, array('call', 'choice', 'iterator', 'unbox'))) {
-					if (method_exists(static::$module, $method)) {
+					if (isset(static::$mixins[$method])) {
+						array_unshift($args, $this);
+						$result = call_user_func_array(static::$mixins[$method], $args);
+						if ($result instanceof Core\Boxable\Type) {
+							return $result->unbox();
+						}
+						return $result;
+					}
+					else if (method_exists(static::$module, $method)) {
 						array_unshift($args, $this);
 						$result = call_user_func_array(array(static::$module, $method), $args);
 						if ($result instanceof Core\Boxable\Type) {
@@ -155,10 +163,13 @@ namespace Saber\Data\Tuple {
 				}
 			}
 			else {
-				if (method_exists(static::$module, $method)) {
+				if (isset(static::$mixins[$method])) {
 					array_unshift($args, $this);
-					$result = call_user_func_array(array(static::$module, $method), $args);
-					return $result;
+					return call_user_func_array(static::$mixins[$method], $args);
+				}
+				else if (method_exists(static::$module, $method)) {
+					array_unshift($args, $this);
+					return call_user_func_array(array(static::$module, $method), $args);
 				}
 			}
 			throw new Throwable\UnimplementedMethod\Exception('Unable to call method. No method ":method" exists in module ":module".', array(':module' => static::$module, ':method' => $method));

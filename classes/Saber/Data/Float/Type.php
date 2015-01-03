@@ -66,15 +66,10 @@ namespace Saber\Data\Float {
 		 *
 		 * @access public
 		 * @static
-		 * @param Core\Type $x                                      the class to be evaluated
+		 * @param Float\Type $x                                     the class to be evaluated
 		 * @return Float\Type                                       the class
-		 * @throw Throwable\InvalidArgument\Exception               indicated that the specified class
-		 *                                                          is not a covariant
 		 */
-		public static function covariant(Core\Type $x) {
-			if (!($x instanceof static)) {
-				throw new Throwable\InvalidArgument\Exception('Invalid class type.  Expected a class of type ":type1", but got ":type2".', array(':type1' => get_called_class(), ':type2' => get_class($x)));
-			}
+		public static function covariant(Float\Type $x) {
 			return $x;
 		}
 

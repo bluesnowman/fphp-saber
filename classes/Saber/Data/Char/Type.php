@@ -78,15 +78,10 @@ namespace Saber\Data\Char {
 		 *
 		 * @access public
 		 * @static
-		 * @param Core\Type $x                                      the class to be evaluated
+		 * @param Char\Type $x                                      the class to be evaluated
 		 * @return Char\Type                                        the class
-		 * @throw Throwable\InvalidArgument\Exception               indicated that the specified class
-		 *                                                          is not a covariant
 		 */
-		public static function covariant(Core\Type $x) {
-			if (!($x instanceof static)) {
-				throw new Throwable\InvalidArgument\Exception('Invalid class type.  Expected a class of type ":type1", but got ":type2".', array(':type1' => get_called_class(), ':type2' => get_class($x)));
-			}
+		public static function covariant(Char\Type $x) {
 			return $x;
 		}
 
@@ -110,30 +105,33 @@ namespace Saber\Data\Char {
 		 * @access public
 		 * @static
 		 * @param mixed $value                                      the value(s) to be boxed
+		 * @param string $encoding                                  the character encoding to use
 		 * @return Char\Type                                        the boxed object
 		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
-		public static function make($value/*...*/) {
+		public static function make($value, $encoding = self::UTF_8_ENCODING) {
 			if (is_string($value)) {
-				if (func_num_args() > 1) {
-					$encoding = func_get_arg(1);
+				if ($encoding != Char\Type::UTF_8_ENCODING) {
 					$value = mb_convert_encoding($value, Char\Type::UTF_8_ENCODING, $encoding);
 				}
 				$length = mb_strlen($value, Char\Type::UTF_8_ENCODING);
 				if ($length != 1) {
-					throw new Throwable\InvalidArgument\Exception('Unable to box value. Expected a character, but got "string" of length ":length".', array(':length' => $length));
+					throw new Throwable\InvalidArgument\Exception(
+						'Unable to box value. Expected a character, but got "string" of length ":length".',
+						array(':length' => $length)
+					);
 				}
 				return new Char\Type($value);
 			}
-			else if (!is_string($value) && is_numeric($value)) {
+			else if (is_numeric($value)) {
 				return new Char\Type(chr((int) $value));
 			}
 			else {
-				$type = gettype($value);
-				if ($type == 'object') {
-					$type = get_class($value);
-				}
-				throw new Throwable\InvalidArgument\Exception('Unable to box value. Expected a character, but got ":type".', array(':type' => $type));
+				$type = (is_object($value)) ? gettype($value) : get_class($value);
+				throw new Throwable\InvalidArgument\Exception(
+					'Unable to box value. Expected a character, but got ":type".',
+					array(':type' => $type)
+				);
 			}
 		}
 

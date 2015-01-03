@@ -58,12 +58,12 @@ namespace Saber\Data\Either {
 		 *
 		 * @access public
 		 * @static
-		 * @param Core\Type $x                                      the class to be evaluated
+		 * @param Either\Type $x                                    the class to be evaluated
 		 * @return Either\Type                                      the class
 		 * @throw Throwable\InvalidArgument\Exception               indicated that the specified class
 		 *                                                          is not a covariant
 		 */
-		public static function covariant(Core\Type $x) {
+		public static function covariant(Either\Type $x) {
 			if (!($x instanceof static)) {
 				throw new Throwable\InvalidArgument\Exception('Invalid class type.  Expected a class of type ":type1", but got ":type2".', array(':type1' => get_called_class(), ':type2' => get_class($x)));
 			}

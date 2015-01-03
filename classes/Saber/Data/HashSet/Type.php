@@ -71,15 +71,10 @@ namespace Saber\Data\HashSet {
 		 *
 		 * @access public
 		 * @static
-		 * @param Core\Type $x                                      the class to be evaluated
+		 * @param HashSet\Type $x                                   the class to be evaluated
 		 * @return HashSet\Type                                     the class
-		 * @throw Throwable\InvalidArgument\Exception               indicated that the specified class
-		 *                                                          is not a covariant
 		 */
-		public static function covariant(Core\Type $x) {
-			if (!($x instanceof static)) {
-				throw new Throwable\InvalidArgument\Exception('Invalid class type.  Expected a class of type ":type1", but got ":type2".', array(':type1' => get_called_class(), ':type2' => get_class($x)));
-			}
+		public static function covariant(HashSet\Type $x) {
 			return $x;
 		}
 

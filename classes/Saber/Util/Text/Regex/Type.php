@@ -42,6 +42,18 @@ namespace Saber\Util\Text\Regex {
 		#region Methods -> Initialization
 
 		/**
+		 * This method enforces that the specified class is covariant.
+		 *
+		 * @access public
+		 * @static
+		 * @param Regex\Type $x                                     the class to be evaluated
+		 * @return Regex\Type                                       the class
+		 */
+		public static function covariant(Regex\Type $x) {
+			return $x;
+		}
+
+		/**
 		 * This method returns a value as a boxed object.  A value is typically a PHP typed
 		 * primitive or object.  It is considered "not" type-safe.
 		 *

@@ -1107,19 +1107,6 @@ namespace Saber\Data\LinkedList {
 		 *                                                          or greater than the right operand
 		 */
 		public static function compare(LinkedList\Type $xs, LinkedList\Type $ys) {
-			$x = ($xs instanceof LinkedList\Nil\Type);
-			$y = ($ys instanceof LinkedList\Nil\Type);
-
-			if (!$x && $y) {
-				return Trit\Type::negative();
-			}
-			if ($x && $y) {
-				return Trit\Type::zero();
-			}
-			if ($x && !$y) {
-				return Trit\Type::positive();
-			}
-
 			for ($as = $xs, $bs = $ys; !$as->__isEmpty() && !$bs->__isEmpty(); $as = $as->tail(), $bs = $bs->tail()) {
 				$r = $as->head()->compare($bs->head());
 				if ($r->unbox() != 0) {

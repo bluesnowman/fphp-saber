@@ -247,11 +247,8 @@ namespace Saber\Data\LinkedList {
 		 * @param callable $procedure                               the procedure function to be used
 		 */
 		public static function each(LinkedList\Type $xs, callable $procedure) {
-			$i = Int32\Type::zero();
-
-			for ($zs = $xs; !$zs->__isEmpty(); $zs = $zs->tail()) {
+			for ($i = Int32\Type::zero(), $zs = $xs; !$zs->__isEmpty(); $i = Int32\Module::increment($i), $zs = $zs->tail()) {
 				Unit\Type::covariant($procedure($zs->head(), $i));
-				$i = Int32\Module::increment($i);
 			}
 		}
 
@@ -1019,17 +1016,7 @@ namespace Saber\Data\LinkedList {
 		 *                                                          to the right operand
 		 */
 		public static function eq(LinkedList\Type $xs, Core\Type $ys) { // ==
-			if ($ys !== null) {
-				$x = ($xs instanceof LinkedList\Nil\Type);
-				$y = ($ys instanceof LinkedList\Nil\Type);
-
-				if (($x && !$y) || (!$x && $y)) {
-					return Bool\Type::false();
-				}
-				if ($x && $y) {
-					return Bool\Type::true();
-				}
-
+			if ($ys instanceof LinkedList\Type) {
 				for ($as = $xs, $bs = $ys; !$as->__isEmpty() && !$bs->__isEmpty(); $as = $as->tail(), $bs = $bs->tail()) {
 					$r = $as->head()->eq($bs->head());
 					if (!$r->unbox()) {
@@ -1040,10 +1027,7 @@ namespace Saber\Data\LinkedList {
 				$x_length = $xs->__length();
 				$y_length = $ys->__length();
 
-				if ($x_length < $y_length) {
-					return Bool\Type::false();
-				}
-				else if ($x_length == $y_length) {
+				if ($x_length == $y_length) {
 					return Bool\Type::true();
 				}
 			}
@@ -1061,11 +1045,7 @@ namespace Saber\Data\LinkedList {
 		 *                                                          to the right operand
 		 */
 		public static function id(LinkedList\Type $xs, Core\Type $ys) { // ===
-			if ($ys !== null) {
-				if ($xs->__typeOf() !== $ys->typeOf()) {
-					return Bool\Type::false();
-				}
-
+			if (($ys !== null) && ($xs->__typeOf() == $ys->typeOf())) {
 				for ($as = $xs, $bs = $ys; !$as->__isEmpty() && !$bs->__isEmpty(); $as = $as->tail(), $bs = $bs->tail()) {
 					$r = $as->head()->id($bs->head());
 					if (!$r->unbox()) {
@@ -1076,10 +1056,7 @@ namespace Saber\Data\LinkedList {
 				$x_length = $xs->__length();
 				$y_length = $ys->__length();
 
-				if ($x_length < $y_length) {
-					return Bool\Type::false();
-				}
-				else if ($x_length == $y_length) {
+				if ($x_length == $y_length) {
 					return Bool\Type::true();
 				}
 			}

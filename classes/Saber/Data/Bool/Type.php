@@ -81,7 +81,7 @@ namespace Saber\Data\Bool {
 		 * @return Bool\Type                                        the boxed object
 		 */
 		public static function box($value/*...*/) {
-			return new Bool\Type($value);
+			return ($value) ? Bool\Type::true() : Bool\Type::false();
 		}
 
 		/**
@@ -93,11 +93,11 @@ namespace Saber\Data\Bool {
 		 * @param mixed $value                                      the value(s) to be boxed
 		 * @return Bool\Type                                        the boxed object
 		 */
-		public static function make($value/*...*/) {
-			if ((func_num_args() > 1) && func_get_arg(1) && is_string($value) && in_array(strtolower($value), array('false', 'f', 'no', 'n', '0'))) {
-				$value = false;
+		public static function make($value) {
+			if (is_string($value) && in_array(strtolower($value), array('false', 'f', 'no', 'n', '0', 'null'))) {
+				return Bool\Type::false();
 			}
-			return new Bool\Type($value);
+			return ($value) ? Bool\Type::true() : Bool\Type::false();
 		}
 
 		/**

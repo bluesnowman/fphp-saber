@@ -1000,21 +1000,19 @@ namespace Saber\Data\ArrayList {
 		 */
 		public static function eq(ArrayList\Type $xs, Core\Type $ys) { // ==
 			$type = $xs->__typeOf();
-			if ($ys !== null) {
-				if ($ys instanceof $type) {
-					$x_length = $xs->__length();
-					$y_length = $ys->__length();
+			if ($ys instanceof $type) {
+				$x_length = $xs->__length();
+				$y_length = $ys->__length();
 
-					for ($i = 0; ($i < $x_length) && ($i < $y_length); $i++) {
-						$p = Int32\Type::box($i);
-						$r = $xs->item($p)->eq($ys->item($p));
-						if (!$r->unbox()) {
-							return $r;
-						}
+				for ($i = 0; ($i < $x_length) && ($i < $y_length); $i++) {
+					$p = Int32\Type::box($i);
+					$r = $xs->item($p)->eq($ys->item($p));
+					if (!$r->unbox()) {
+						return $r;
 					}
-
-					return Bool\Type::box($x_length == $y_length);
 				}
+
+				return Bool\Type::box($x_length == $y_length);
 			}
 			return Bool\Type::false();
 		}

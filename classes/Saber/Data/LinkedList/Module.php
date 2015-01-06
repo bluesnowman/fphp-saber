@@ -117,9 +117,15 @@ namespace Saber\Data\LinkedList {
 		 * @return LinkedList\Type                                  the collection
 		 */
 		public static function concat(LinkedList\Type $xs, LinkedList\Type $ys) {
-			for ($zs = $xs; !$zs->__isEmpty(); $zs = $zs->tail());
-			$zs->tail = $ys;
-			return $xs;
+			if (!$xs->__isEmpty()) {
+				$zs = $xs;
+				while (!$zs->tail()->__isEmpty()) {
+					$zs = $zs->tail();
+				}
+				$zs->tail = $ys;
+				return $xs;
+			}
+			return $ys;
 		}
 
 		/**

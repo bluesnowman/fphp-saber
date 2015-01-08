@@ -84,12 +84,11 @@ namespace Saber\Data\HashMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
+		 * @param array $value                                      the value(s) to be boxed
 		 * @return HashMap\Type                                     the boxed object
 		 */
-		public static function box($value/*...*/) {
-			$xs = (is_array($value)) ? $value : func_get_args();
-			return new HashMap\Type($xs);
+		public static function box(array $value) {
+			return new HashMap\Type($value);
 		}
 
 		/**

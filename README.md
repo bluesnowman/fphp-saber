@@ -6,6 +6,7 @@ A functional PHP library, which promotes strong typing, immutable objects, and l
 [![Dependency Status](https://www.versioneye.com/user/projects/54a56acf97427553100001ad/badge.png)](https://www.versioneye.com/user/projects/54a56acf97427553100001ad)
 [![Build Status](https://secure.travis-ci.org/bluesnowman/fphp-saber.svg)](http://travis-ci.org/bluesnowman/fphp-saber)
 [![Code Coverage](https://codeclimate.com/github/bluesnowman/fphp-saber/badges/gpa.svg)](https://codeclimate.com/github/bluesnowman/fphp-saber)
+[More...](https://www.openhub.net/p/fphp-saber)
 
 ### Requirements
 
@@ -21,7 +22,7 @@ To "box" a PHP typed primitive or object, create an instance of the respective d
 $object = Int32\Type::make(7);
 ````
 
-For better performance, use the `box` method to avoid any unnecessary preprocessing that its corresponding `make` method might otherwise perform before creating the instance.
+For better performance, use the `box` method to avoid any unnecessary pre-processing that its corresponding `make` method might otherwise perform before creating the instance.
 
 ````
 $object = Int32\Type::box(7);

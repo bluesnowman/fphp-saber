@@ -84,12 +84,11 @@ namespace Saber\Data\HashSet {
 		 *
 		 * @access public
 		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
+		 * @param array $value                                      the value(s) to be boxed
 		 * @return HashSet\Type                                     the boxed object
 		 */
-		public static function box($value/*...*/) {
-			$items = (is_array($value)) ? $value : func_get_args();
-			return new HashSet\Type($items);
+		public static function box(array $value) {
+			return new HashSet\Type($value);
 		}
 
 		/**

@@ -52,7 +52,7 @@ $value = $object->unbox();
 
 ### [Fluent API](http://en.wikipedia.org/wiki/Fluent_interface)
 
-Many data types allow for a fluent API; therefore, many methods can be chained together in one statement.  Through the use of PHP's magical `__call` method, certain data types can access their respective module's methods as well as if they were instance methods.  For example, you can do the following:
+Many data types allow for a fluent API; therefore, many methods can be chained together in one statement.  Through the use of PHP's magical `__call` method, certain data types can access their respective module's methods as well as if they were instance methods.  (Methods in a module are defined similarly to how [extension methods](http://msdn.microsoft.com/en-us/library/bb383977.aspx) are defined in C#.)  For example, you can do the following:
 
 ````
 $object = Int32\Type::box(7)->increment()->decrement();
@@ -64,7 +64,7 @@ This statement is functionally equivalent to writing:
 $object = Int32\Module::decrement(Int32\Module::increment(Int32\Type::box(7)));
 ````
 
-Note this fluent API only works with methods that return `Core\Type` objects.
+Note: this fluent API only works with methods that return `Core\Type` objects.
 
 ### Methods
 

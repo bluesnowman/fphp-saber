@@ -57,7 +57,6 @@ namespace Saber\Data\Char {
 			$data = array(
 				array(array('a'), array('a')),
 				array(array("\n"), array("\n")),
-				array(array(97), array('a')),
 			);
 			return $data;
 		}
@@ -70,15 +69,9 @@ namespace Saber\Data\Char {
 		public function testBox(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
-			$p0 = Char\Type::make($provided[0]);
-			$e0 = new Char\Type($expected[0], 'UTF-8');
+			$p0 = Char\Type::box($provided[0]);
 
-			$this->assertInstanceOf('\\Saber\\Core\\Type', $p0);
-			$this->assertInstanceOf('\\Saber\\Data\\Type', $p0);
 			$this->assertInstanceOf('\\Saber\\Data\\Char\\Type', $p0);
-			$this->assertEquals($e0, $p0);
-			$this->assertTrue($e0->__eq($p0));
-			$this->assertTrue($e0->__id($p0));
 
 			$p1 = $p0->unbox();
 			$e1 = $expected[0];
@@ -87,9 +80,139 @@ namespace Saber\Data\Char {
 			$this->assertSame($e1, $p1);
 		}
 
+		/**
+		 * This method provides the data for testing the making of a value.
+		 *
+		 * @return array
+		 */
+		public function dataMake() {
+			$data = array(
+				array(array('a'), array('a')),
+				array(array("\n"), array("\n")),
+				array(array(97), array('a')),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the making of a value.
+		 *
+		 * @dataProvider dataMake
+		 */
+		public function testMake(array $provided, array $expected) {
+			//$this->markTestIncomplete();
+
+			$p0 = Char\Type::make($provided[0]);
+
+			$this->assertInstanceOf('\\Saber\\Data\\Char\\Type', $p0);
+
+			$p1 = $p0->unbox();
+			$e1 = $expected[0];
+
+			$this->assertInternalType('string', $p1);
+			$this->assertSame($e1, $p1);
+		}
+
+		/**
+		 * This method tests the initialization of a singleton, boxed value.
+		 */
+		public function testSingletons() {
+			//$this->markTestIncomplete();
+
+			$p0 = Char\Type::cr();
+			$e0 = Char\Type::cr();
+
+			$this->assertInstanceOf('\\Saber\\Data\\Char\\Type', $p0);
+			$this->assertSame($e0->__hashCode(), $p0->__hashCode());
+
+			$p1 = $p0->unbox();
+			$e1 = "\r";
+
+			$this->assertInternalType('string', $p1);
+			$this->assertSame($e1, $p1);
+
+			$p2 = Char\Type::lf();
+			$e2 = Char\Type::lf();
+
+			$this->assertInstanceOf('\\Saber\\Data\\Char\\Type', $p2);
+			$this->assertSame($e2->__hashCode(), $p2->__hashCode());
+
+			$p3 = $p2->unbox();
+			$e3 = "\n";
+
+			$this->assertInternalType('string', $p3);
+			$this->assertSame($e3, $p3);
+
+			$p4 = Char\Type::space();
+			$e4 = Char\Type::space();
+
+			$this->assertInstanceOf('\\Saber\\Data\\Char\\Type', $p4);
+			$this->assertSame($e4->__hashCode(), $p4->__hashCode());
+
+			$p5 = $p4->unbox();
+			$e5 = ' ';
+
+			$this->assertInternalType('string', $p5);
+			$this->assertSame($e5, $p5);
+		}
+
 		#endregion
 
 		#region Tests -> Interface
+
+		/**
+		 * This method provides the data for testing that an object has a unique hash code.
+		 *
+		 * @return array
+		 */
+		public function dataHashCode() {
+			$data = array(
+				array(array('a'), array('a')),
+				array(array("\n"), array("\n")),
+				array(array(97), array('a')),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests that an object has a unique hash code.
+		 *
+		 * @dataProvider dataHashCode
+		 */
+		public function testHashCode(array $provided, array $expected) {
+			$p0 = Char\Type::make($provided[0])->__hashCode();
+			$e0 = $expected[0];
+
+			$this->assertInternalType('string', $p0);
+			$this->assertSame($e0, $p0);
+		}
+
+		/**
+		 * This method provides the data for testing that a value is converted to a string.
+		 *
+		 * @return array
+		 */
+		public function dataToString() {
+			$data = array(
+				array(array('a'), array('a')),
+				array(array("\n"), array("\n")),
+				array(array(97), array('a')),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests that a value is converted to a string.
+		 *
+		 * @dataProvider dataToString
+		 */
+		public function testToString(array $provided, array $expected) {
+			$p0 = Char\Type::make($provided[0])->__toString();
+			$e0 = $expected[0];
+
+			$this->assertInternalType('string', $p0);
+			$this->assertSame($e0, $p0);
+		}
 
 		#endregion
 

@@ -74,7 +74,7 @@ namespace Saber\Data\Char {
 			$p0 = Char\Type::make($provided[0])->compare(Char\Type::make($provided[1]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Int32\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Trit\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 

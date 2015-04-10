@@ -59,7 +59,7 @@ namespace Saber\Data\Unit {
 			$p0 = Unit\Module::compare(Unit\Type::instance(), Unit\Type::instance());
 			$e0 = 0;
 
-			$this->assertInstanceOf('\\Saber\\Data\\Int32\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Trit\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 

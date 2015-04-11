@@ -30,6 +30,12 @@ namespace Saber\Data\Trit {
 	 */
 	final class Type extends Data\Type implements Integral\Type {
 
+		#region Traits
+
+		use Core\Module\Dispatcher;
+
+		#endregion
+
 		#region Properties
 
 		/**
@@ -44,15 +50,6 @@ namespace Saber\Data\Trit {
 			 0 => 'zero',
 			 1 => 'positive',
 		);
-
-		/**
-		 * This variable stores any mixins that can be used to extends this data type.
-		 *
-		 * @access protected
-		 * @static
-		 * @var array
-		 */
-		protected static $mixins = array();
 
 		/**
 		 * This variable stores the class path to this class' module.
@@ -166,71 +163,7 @@ namespace Saber\Data\Trit {
 
 		#endregion
 
-		#region Methods -> Extensible
-
-		/**
-		 * This method allows for the class to be extend with custom utility functions.
-		 *
-		 * @access public
-		 * @static
-		 * @param String\Type $name                                 the name of the mixin
-		 * @param callable $closure                                 the custom utility function
-		 */
-		public static function mixin(String\Type $name, callable $closure) {
-			static::$mixins[$name->unbox()] = $closure;
-		}
-
-		#endregion
-
 		#region Methods -> Native Oriented
-
-		/**
-		 * This method is called when a method is not defined and will attempt to remap
-		 * the call.  Particularly, this method provides a shortcut means of unboxing a method's
-		 * result when the method name is preceded by a double-underscore.
-		 *
-		 * @access public
-		 * @final
-		 * @param string $method                                    the method being called
-		 * @param array $args                                       the arguments associated with the call
-		 * @return mixed                                            the un-boxed value
-		 * @throws Throwable\UnimplementedMethod\Exception          indicates that the class has not
-		 *                                                          implemented the called method
-		 */
-		public final function __call($method, $args) {
-			if (preg_match('/^__[a-z_][a-z0-9_]*$/i', $method)) {
-				$method = substr($method, 2);
-				if (!in_array($method, array('call', 'choice', 'unbox'))) {
-					if (isset(static::$mixins[$method])) {
-						array_unshift($args, $this);
-						$result = call_user_func_array(static::$mixins[$method], $args);
-						if ($result instanceof Core\Boxable\Type) {
-							return $result->unbox();
-						}
-						return $result;
-					}
-					else if (method_exists(static::$module, $method)) {
-						array_unshift($args, $this);
-						$result = call_user_func_array(array(static::$module, $method), $args);
-						if ($result instanceof Core\Boxable\Type) {
-							return $result->unbox();
-						}
-						return $result;
-					}
-				}
-			}
-			else {
-				if (isset(static::$mixins[$method])) {
-					array_unshift($args, $this);
-					return call_user_func_array(static::$mixins[$method], $args);
-				}
-				else if (method_exists(static::$module, $method)) {
-					array_unshift($args, $this);
-					return call_user_func_array(array(static::$module, $method), $args);
-				}
-			}
-			throw new Throwable\UnimplementedMethod\Exception('Unable to call method. No method ":method" exists in module ":module".', array(':module' => static::$module, ':method' => $method));
-		}
 
 		/**
 		 * This constructor initializes the class with the specified value.

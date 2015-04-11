@@ -55,7 +55,7 @@ namespace Saber\Core\Module {
 		public final function __call($method, $args) {
 			if (preg_match('/^__[a-z_][a-z0-9_]*$/i', $method)) {
 				$method = substr($method, 2);
-				if (!in_array($method, array('call', 'choice', 'unbox'))) {
+				if (!in_array($method, array('call', 'choice', 'iterator', 'unbox'))) {
 					if (isset(static::$mixins[$method])) {
 						array_unshift($args, $this);
 						$result = call_user_func_array(static::$mixins[$method], $args);

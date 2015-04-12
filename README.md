@@ -34,12 +34,12 @@ Some data types are initialized using a singleton method.  For instance, the `Un
 $object = Unit\Type::instance();
 ````
 
-Similarly, other data types have more specific singleton methods.  Amongst these are the `Number` classes, which have singletons for negative one, zero, and positive one.
+Similarly, other data types have more specific singleton methods.  Amongst these is the `Trit` class, which have singletons for negative one, zero, and positive one.
 
 ````
-$negative = Int32\Type::negative();
-$zero = Int32\Type::zero();
-$one = Int32\Type::one();
+$negative = Trit\Type::negative();
+$zero = Trit\Type::zero();
+$positive = Trit\Type::positive();
 ````
 
 It is recommend that you use these factory/singleton methods, when possible, instead of using the constructor to initialize a data type.  This is for both conventional reasons and implementation reasons.

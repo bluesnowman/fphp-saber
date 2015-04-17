@@ -67,7 +67,7 @@ namespace Saber\Throwable\Unknown {
 		 * @dataProvider dataBox
 		 */
 		public function testBox(array $provided, array $expected) {
-			$p0 = Throwable\Unknown\Exception::box($provided[0]);
+			$p0 = Throwable\Unknown\Exception::box($provided);
 
 			$this->assertInstanceOf('\\Saber\\Throwable\\Unknown\\Exception', $p0);
 
@@ -85,7 +85,13 @@ namespace Saber\Throwable\Unknown {
 		 */
 		public function dataCompare() {
 			$data = array(
-				array(array(array('', array(), Int32\Type::zero()), array('', array(), Int32\Type::zero())), array(0)),
+				array(
+					array(
+						array('', array(), Int32\Type::zero()),
+						array('', array(), Int32\Type::zero())
+					),
+					array(0)
+				),
 			);
 			return $data;
 		}
@@ -96,10 +102,10 @@ namespace Saber\Throwable\Unknown {
 		 * @dataProvider dataCompare
 		 */
 		public function testCompare(array $provided, array $expected) {
-			$p0 = Throwable\Unknown\Exception::make(
+			$p0 = Throwable\Unknown\Exception::make2(
 				new Throwable\InvalidArgument\Exception($provided[0][0], $provided[0][1], $provided[0][2])
 			)->compare(
-				Throwable\Unknown\Exception::make(
+				Throwable\Unknown\Exception::make2(
 					new Throwable\InvalidArgument\Exception($provided[1][0], $provided[1][1], $provided[1][2])
 				)
 			);
@@ -127,7 +133,7 @@ namespace Saber\Throwable\Unknown {
 		 * @dataProvider data2String
 		 */
 		public function testToString(array $provided, array $expected) {
-			$p0 = Throwable\Unknown\Exception::make($provided[0])->__toString();
+			$p0 = Throwable\Unknown\Exception::make($provided)->__toString();
 			$e0 = $expected[0];
 
 			$this->assertInternalType('string', $p0);

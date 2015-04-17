@@ -46,7 +46,7 @@ namespace Saber\Throwable\Parse {
 		 * @dataProvider dataBox
 		 */
 		public function testBox(array $provided, array $expected) {
-			$p0 = Throwable\Parse\Exception::make($provided[0], $provided[1], $provided[2]);
+			$p0 = Throwable\Parse\Exception::make($provided);
 			$e0 = new Throwable\Parse\Exception($expected[0], $expected[1], $expected[2]);
 
 			$this->assertInstanceOf('\\RuntimeException', $p0);
@@ -81,7 +81,7 @@ namespace Saber\Throwable\Parse {
 		 * @dataProvider dataCompare
 		 */
 		public function testCompare(array $provided, array $expected) {
-			$p0 = Throwable\Parse\Exception::make($provided[0][0], $provided[0][1], $provided[0][2])->compare(Throwable\Parse\Exception::make($provided[1][0], $provided[1][1], $provided[1][2]));
+			$p0 = Throwable\Parse\Exception::make($provided[0])->compare(Throwable\Parse\Exception::make($provided[1]));
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\Trit\\Type', $p0);
@@ -106,7 +106,7 @@ namespace Saber\Throwable\Parse {
 		 * @dataProvider data2String
 		 */
 		public function testToString(array $provided, array $expected) {
-			$p0 = Throwable\Parse\Exception::make($provided[0], $provided[1], $provided[2])->__toString();
+			$p0 = Throwable\Parse\Exception::make($provided)->__toString();
 			$e0 = $expected[0];
 
 			$this->assertInternalType('string', $p0);

@@ -30,6 +30,19 @@ namespace Saber\Throwable\Runtime\Exception {
 
 		#endregion
 
+		#region Properties
+
+		/**
+		 * This variable stores the class path to this class' module.
+		 *
+		 * @access protected
+		 * @static
+		 * @var string
+		 */
+		protected static $module = '\\Saber\\Throwable\\Runtime\\Exception\\Module';
+
+		#endregion
+
 		#region Methods -> Initialization
 
 		/**

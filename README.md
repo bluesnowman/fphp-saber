@@ -10,7 +10,7 @@ A functional PHP library, which promotes strong typing, immutable objects, and l
 
 ### Requirements
 
-* PHP 5.4+
+* PHP 5.6+
 * The [mbstring](http://php.net/manual/en/book.mbstring.php) extension or the [iconv](http://php.net/manual/en/book.iconv.php) extension (only if dealing with different character sets).
 * The [gmp](http://php.net/manual/en/book.gmp.php) extension (only if using `Integer\Type`).
 

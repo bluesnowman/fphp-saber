@@ -60,6 +60,32 @@ namespace Saber\Data\LinkedList {
 		#region Methods -> Initialization
 
 		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered "not" type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param array $xs                                         the value(s) to be boxed
+		 * @return LinkedList\Type                                  the boxed object
+		 */
+		public static function box(array $xs) {
+			return LinkedList\Type::make($xs);
+		}
+
+		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered "not" type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param mixed ...$xs                                      the value(s) to be boxed
+		 * @return LinkedList\Type                                  the boxed object
+		 */
+		public static function box2(...$xs) {
+			return LinkedList\Type::make($xs);
+		}
+
+		/**
 		 * This method enforces that the specified class is covariant.
 		 *
 		 * @access public
@@ -78,15 +104,14 @@ namespace Saber\Data\LinkedList {
 
 		/**
 		 * This method returns a value as a boxed object.  A value is typically a PHP typed
-		 * primitive or object.  It is considered "not" type-safe.
+		 * primitive or object.  It is considered type-safe.
 		 *
 		 * @access public
 		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return LinkedList\Type                                  the boxed object
+		 * @param array $xs                                         the value(s) to be boxed
+		 * @return Core\Type                                        the boxed object
 		 */
-		public static function box($value/*...*/) {
-			$xs = (is_array($value)) ? $value : func_get_args();
+		public static function make(array $xs) {
 			$zs = LinkedList\Type::nil();
 			for ($i = count($xs) - 1; $i >= 0; $i--) {
 				$zs = LinkedList\Type::cons($xs[$i], $zs);
@@ -100,17 +125,11 @@ namespace Saber\Data\LinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
+		 * @param mixed ...$xs                                      the value(s) to be boxed
 		 * @return Core\Type                                        the boxed object
-		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
-		public static function make($value/*...*/) {
-			$xs = (is_array($value)) ? $value : func_get_args();
-			$zs = LinkedList\Type::nil();
-			for ($i = count($xs) - 1; $i >= 0; $i--) {
-				$zs = LinkedList\Type::cons($xs[$i], $zs);
-			}
-			return $zs;
+		public static function make2(...$xs) {
+			return LinkedList\Type::make($xs);
 		}
 
 		/**

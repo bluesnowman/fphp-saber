@@ -64,6 +64,32 @@ namespace Saber\Data\HashSet {
 		#region Methods -> Initialization
 
 		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered "not" type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param array $xs                                         the value(s) to be boxed
+		 * @return HashSet\Type                                     the boxed object
+		 */
+		public static function box(array $xs) {
+			return new HashSet\Type($xs);
+		}
+
+		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered "not" type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param mixed ...$xs                                      the value(s) to be boxed
+		 * @return HashSet\Type                                     the boxed object
+		 */
+		public static function box2(...$xs) {
+			return HashSet\Type::box($xs);
+		}
+
+		/**
 		 * This method enforces that the specified class is covariant.
 		 *
 		 * @access public
@@ -74,18 +100,21 @@ namespace Saber\Data\HashSet {
 		public static function covariant(HashSet\Type $x) {
 			return $x;
 		}
-
 		/**
 		 * This method returns a value as a boxed object.  A value is typically a PHP typed
-		 * primitive or object.  It is considered "not" type-safe.
+		 * primitive or object.  It is considered type-safe.
 		 *
 		 * @access public
 		 * @static
-		 * @param array $value                                      the value(s) to be boxed
+		 * @param array $xs                                         the value(s) to be boxed
 		 * @return HashSet\Type                                     the boxed object
 		 */
-		public static function box(array $value) {
-			return new HashSet\Type($value);
+		public static function make(array $xs) {
+			$zs = new HashSet\Type();
+			foreach ($xs as $x) {
+				$zs->putItem($x);
+			}
+			return $zs;
 		}
 
 		/**
@@ -94,17 +123,11 @@ namespace Saber\Data\HashSet {
 		 *
 		 * @access public
 		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
+		 * @param mixed ...$xs                                      the value(s) to be boxed
 		 * @return HashSet\Type                                     the boxed object
-		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
-		public static function make($value/*...*/) {
-			$items = (is_array($value)) ? $value : func_get_args();
-			$xs = new HashSet\Type();
-			foreach ($items as $item) {
-				$xs->putItem($item);
-			}
-			return $xs;
+		public static function make2(...$xs) {
+			return HashSet\Type::make($xs);
 		}
 
 		/**

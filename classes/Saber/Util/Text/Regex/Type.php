@@ -48,6 +48,19 @@ namespace Saber\Util\Text\Regex {
 		#region Methods -> Initialization
 
 		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered "not" type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param string $value                                     the value(s) to be boxed
+		 * @return Regex\Type                                       the boxed expression
+		 */
+		public static function box($value) {
+			return new Regex\Type($value);
+		}
+
+		/**
 		 * This method enforces that the specified class is covariant.
 		 *
 		 * @access public
@@ -61,27 +74,14 @@ namespace Saber\Util\Text\Regex {
 
 		/**
 		 * This method returns a value as a boxed object.  A value is typically a PHP typed
-		 * primitive or object.  It is considered "not" type-safe.
-		 *
-		 * @access public
-		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return Regex\Type                                       the boxed expression
-		 */
-		public static function box($value/*...*/) {
-			return new Regex\Type($value);
-		}
-
-		/**
-		 * This method returns a value as a boxed object.  A value is typically a PHP typed
 		 * primitive or object.  It is considered type-safe.
 		 *
 		 * @access public
 		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
+		 * @param string $value                                     the value(s) to be boxed
 		 * @return Regex\Type                                       the boxed expression
 		 */
-		public static function make($value/*...*/) {
+		public static function make($value) {
 			return new Regex\Type(preg_quote($value));
 		}
 

@@ -24,6 +24,12 @@ namespace Saber\Throwable\Runtime\Exception {
 
 	trait Impl {
 
+		#region Traits
+
+		use Core\Module\Dispatcher;
+
+		#endregion
+
 		#region Methods -> Initialization
 
 		/**
@@ -89,43 +95,6 @@ namespace Saber\Throwable\Runtime\Exception {
 		#endregion
 
 		#region Methods -> Native Oriented
-
-		/**
-		 * This method is called when a method is not defined and will attempt to remap
-		 * the call.  Particularly, this method provides a shortcut means of unboxing a method's
-		 * result when the method name is preceded by a double-underscore.
-		 *
-		 * @access public
-		 * @param string $method                                    the method being called
-		 * @param array $args                                       the arguments associated with the call
-		 * @return mixed                                            the un-boxed value
-		 * @throws Throwable\UnimplementedMethod\Exception          indicates that the class has not
-		 *                                                          implemented the called method
-		 */
-		public function __call($method, $args) {
-			$module = '\\Saber\\Throwable\\Runtime\\Exception\\Module';
-			if (preg_match('/^__[a-z_][a-z0-9_]*$/i', $method)) {
-				$method = substr($method, 2);
-				if (!in_array($method, array('call', 'choice', 'unbox'))) {
-					if (method_exists($module, $method)) {
-						array_unshift($args, $this);
-						$result = call_user_func_array(array($module, $method), $args);
-						if ($result instanceof Core\Boxable\Type) {
-							return $result->unbox();
-						}
-						return $result;
-					}
-				}
-			}
-			else {
-				if (method_exists($module, $method)) {
-					array_unshift($args, $this);
-					$result = call_user_func_array(array($module, $method), $args);
-					return $result;
-				}
-			}
-			throw new Throwable\UnimplementedMethod\Exception('Unable to call method. No method ":method" exists in module ":module".', array(':module' => $module, ':method' => $method));
-		}
 
 		/**
 		 * This method returns the exception code.

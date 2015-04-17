@@ -4,7 +4,7 @@
     "version": "0.0.1",
     "type": "library",
     "homepage": "http://github.com/bluesnowman/fphp-saber",
-    "keywords": ["functional", "fp", "fphp", "lambda", "curry"],
+    "keywords": ["functional", "fp", "fphp", "lambda", "closure", "curry"],
     "license": "Apache-2.0",
     "require": {
         "php": ">=5.6.6"

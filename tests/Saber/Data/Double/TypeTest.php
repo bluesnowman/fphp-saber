@@ -199,7 +199,7 @@ namespace Saber\Data\Double {
 		 *
 		 * @return array
 		 */
-		public function dataToString() {
+		public function data2String() {
 			$data = array(
 				array(array(-1.0), array('-1.000000')),
 				array(array(0.0), array('0.000000')),
@@ -211,7 +211,7 @@ namespace Saber\Data\Double {
 		/**
 		 * This method tests that a value is converted to a string.
 		 *
-		 * @dataProvider dataToString
+		 * @dataProvider data2String
 		 */
 		public function testToString(array $provided, array $expected) {
 			$p0 = Double\Type::make($provided[0])->__toString();

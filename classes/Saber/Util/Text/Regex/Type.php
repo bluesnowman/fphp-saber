@@ -24,7 +24,7 @@ namespace Saber\Util\Text\Regex {
 	use \Saber\Throwable;
 	use \Saber\Util\Text\Regex;
 
-	final class Type extends Data\Type implements Core\Boxable\Type {
+	final class Type extends Data\Type {
 
 		#region Traits
 

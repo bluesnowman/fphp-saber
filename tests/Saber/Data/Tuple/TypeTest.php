@@ -69,7 +69,26 @@ namespace Saber\Data\Tuple {
 		public function testBox(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
-			$p0 = Tuple\Type::box($provided[0], $provided[1]);
+			$p0 = Tuple\Type::box($provided);
+
+			$this->assertInstanceOf('\\Saber\\Data\\Tuple\\Type', $p0);
+
+			$p1 = $p0->unbox();
+			$e1 = count($expected);
+
+			$this->assertInternalType('array', $p1);
+			$this->assertCount($e1, $p1);
+		}
+
+		/**
+		 * This method tests the boxing of a value.
+		 *
+		 * @dataProvider dataBox
+		 */
+		public function testBox2(array $provided, array $expected) {
+			//$this->markTestIncomplete();
+
+			$p0 = call_user_func_array(array('\\Saber\\Data\\Tuple\\Type', 'box2'), $provided);
 
 			$this->assertInstanceOf('\\Saber\\Data\\Tuple\\Type', $p0);
 
@@ -101,6 +120,25 @@ namespace Saber\Data\Tuple {
 			//$this->markTestIncomplete();
 
 			$p0 = Tuple\Type::make($provided);
+
+			$this->assertInstanceOf('\\Saber\\Data\\Tuple\\Type', $p0);
+
+			$p1 = $p0->unbox();
+			$e1 = count($expected);
+
+			$this->assertInternalType('array', $p1);
+			$this->assertCount($e1, $p1);
+		}
+
+		/**
+		 * This method tests the making of a value.
+		 *
+		 * @dataProvider dataMake
+		 */
+		public function testMake2(array $provided, array $expected) {
+			//$this->markTestIncomplete();
+
+			$p0 = call_user_func_array(array('\\Saber\\Data\\Tuple\\Type', 'make2'), $provided);
 
 			$this->assertInstanceOf('\\Saber\\Data\\Tuple\\Type', $p0);
 

@@ -84,7 +84,7 @@ namespace Saber\Data\Object {
 		 *
 		 * @return array
 		 */
-		public function dataToString() {
+		public function data2String() {
 			$data = array(
 				array(array(null), array('null')),
 				array(array(''), array('')),
@@ -96,7 +96,7 @@ namespace Saber\Data\Object {
 		/**
 		 * This method tests that a value is converted to a string.
 		 *
-		 * @dataProvider dataToString
+		 * @dataProvider data2String
 		 */
 		public function testToString(array $provided, array $expected) {
 			//$this->markTestIncomplete();

@@ -200,7 +200,7 @@ namespace Saber\Data\Trit {
 		 *
 		 * @return array
 		 */
-		public function dataToString() {
+		public function data2String() {
 			$data = array(
 				array(array(-1), array('-1')),
 				array(array(0), array('0')),
@@ -212,7 +212,7 @@ namespace Saber\Data\Trit {
 		/**
 		 * This method tests that a value is converted to a string.
 		 *
-		 * @dataProvider dataToString
+		 * @dataProvider data2String
 		 */
 		public function testToString(array $provided, array $expected) {
 			$p0 = Trit\Type::make($provided[0])->__toString();

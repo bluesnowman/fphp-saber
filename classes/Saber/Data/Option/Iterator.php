@@ -84,7 +84,7 @@ namespace Saber\Data\Option {
 		 * @return mixed                                            the current object
 		 */
 		public final function current() {
-			$this->xs->object();
+			$this->xs->item();
 		}
 
 		/**

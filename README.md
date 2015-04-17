@@ -34,7 +34,7 @@ Some data types are initialized using a singleton method.  For instance, the `Un
 $object = Unit\Type::instance();
 ````
 
-Similarly, other data types have more specific singleton methods.  Amongst these is the `Trit` class, which have singletons for negative one, zero, and positive one.
+Similarly, other data types have more specific singleton methods.  Amongst these is the `Trit` data type, which has three singleton methods for negative one, zero, and positive one.
 
 ````
 $negative = Trit\Type::negative();

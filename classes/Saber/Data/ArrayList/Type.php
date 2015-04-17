@@ -27,7 +27,7 @@ namespace Saber\Data\ArrayList {
 	use \Saber\Data\Vector;
 	use \Saber\Throwable;
 
-	final class Type extends Data\Type implements Core\Boxable\Type, Vector\Type {
+	final class Type extends Data\Type implements Vector\Type {
 
 		#region Traits
 
@@ -60,6 +60,32 @@ namespace Saber\Data\ArrayList {
 		#region Methods -> Initialization
 
 		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered "not" type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param array $xs                                         the value(s) to be boxed
+		 * @return ArrayList\Type                                   the boxed object
+		 */
+		public static function box(array $xs) {
+			return new ArrayList\Type($xs);
+		}
+
+		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered "not" type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param mixed ...$xs                                      the value(s) to be boxed
+		 * @return ArrayList\Type                                   the boxed object
+		 */
+		public static function box2(...$xs) {
+			return ArrayList\Type::box($xs);
+		}
+
+		/**
 		 * This method enforces that the specified class is covariant.
 		 *
 		 * @access public
@@ -73,30 +99,15 @@ namespace Saber\Data\ArrayList {
 
 		/**
 		 * This method returns a value as a boxed object.  A value is typically a PHP typed
-		 * primitive or object.  It is considered "not" type-safe.
-		 *
-		 * @access public
-		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return ArrayList\Type                                   the boxed object
-		 */
-		public static function box($value/*...*/) {
-			$xs = (is_array($value)) ? $value : func_get_args();
-			return new ArrayList\Type($xs);
-		}
-
-		/**
-		 * This method returns a value as a boxed object.  A value is typically a PHP typed
 		 * primitive or object.  It is considered type-safe.
 		 *
 		 * @access public
 		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
+		 * @param array $xs                                         the value(s) to be boxed
 		 * @return ArrayList\Type                                   the boxed object
 		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
-		public static function make($value/*...*/) {
-			$xs = (is_array($value)) ? array_values($value) : func_get_args();
+		public static function make(array $xs) {
 			foreach ($xs as $x) {
 				if (!(is_object($x) && ($x instanceof Core\Type))) {
 					$type = gettype($x);
@@ -107,6 +118,20 @@ namespace Saber\Data\ArrayList {
 				}
 			}
 			return new ArrayList\Type($xs);
+		}
+
+		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param mixed ...$xs                                      the value(s) to be boxed
+		 * @return ArrayList\Type                                   the boxed object
+		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
+		 */
+		public static function make2(...$xs) {
+			return ArrayList\Type::make($xs);
 		}
 
 		/**
@@ -138,7 +163,7 @@ namespace Saber\Data\ArrayList {
 				$buffer[] = $x;
 			}
 
-			return new ArrayList\Type($buffer);
+			return ArrayList\Type::box($buffer);
 		}
 
 		#endregion

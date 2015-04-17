@@ -26,11 +26,11 @@ namespace Saber\Data\Option\Some {
 		#region Methods -> Native Oriented
 
 		/**
-		 * This constructor initializes the class with the specified object.
+		 * This constructor initializes the class with the specified item.
 		 *
 		 * @access public
 		 * @final
-		 * @param Core\Type $x                                      the object to be wrapped
+		 * @param Core\Type $x                                      the item to be stored
 		 */
 		public final function __construct(Core\Type $x) {
 			$this->value = $x;
@@ -39,13 +39,30 @@ namespace Saber\Data\Option\Some {
 		#region Methods -> Object Oriented
 
 		/**
-		 * This method returns the object stored within the option.
+		 * This method returns the item stored within the option.
 		 *
 		 * @access public
 		 * @final
-		 * @return Core\Type                                        the stored object
+		 * @return Core\Type                                        the stored item
 		 */
-		public final function object() {
+		public final function item() {
+			return $this->value;
+		}
+
+		/**
+		 * This method returns the value contained within the boxed object.
+		 *
+		 * @access public
+		 * @final
+		 * @param integer $depth                                    how many levels to unbox
+		 * @return mixed                                            the un-boxed value
+		 */
+		public final function unbox($depth = 0) {
+			if ($depth > 0) {
+				if ($this->value instanceof Core\Boxable\Type) {
+					$this->value->unbox($depth - 1);
+				}
+			}
 			return $this->value;
 		}
 

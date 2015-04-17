@@ -27,7 +27,7 @@ namespace Saber\Data\Either {
 	use \Saber\Data\Unit;
 	use \Saber\Throwable;
 
-	abstract class Type extends Data\Type implements Core\Boxable\Type, Collection\Type {
+	abstract class Type extends Data\Type implements Collection\Type {
 
 		#region Traits
 
@@ -135,14 +135,14 @@ namespace Saber\Data\Either {
 		}
 
 		/**
-		 * This method returns the object stored within the either.
+		 * This method returns the item stored within the either.
 		 *
 		 * @access public
 		 * @final
-		 * @return mixed                                            the stored object
+		 * @return mixed                                            the stored item's value
 		 */
-		public final function __object() {
-			return $this->object()->unbox();
+		public final function __item() {
+			return $this->item()->unbox();
 		}
 
 		/**
@@ -183,13 +183,13 @@ namespace Saber\Data\Either {
 		}
 
 		/**
-		 * This method returns the object stored within the either.
+		 * This method returns the item stored within the either.
 		 *
 		 * @access public
 		 * @final
-		 * @return Core\Type                                        the stored object
+		 * @return Core\Type                                        the stored item
 		 */
-		public final function object() {
+		public final function item() {
 			return $this->value;
 		}
 

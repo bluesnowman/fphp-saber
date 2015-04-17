@@ -31,7 +31,7 @@ namespace Saber\Data\HashMap {
 	use \Saber\Data\Unit;
 	use \Saber\Throwable;
 
-	final class Type extends Data\Type implements Core\Boxable\Type, Map\Type {
+	final class Type extends Data\Type implements Map\Type {
 
 		#region Traits
 

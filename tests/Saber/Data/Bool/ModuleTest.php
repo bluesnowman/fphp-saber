@@ -310,7 +310,7 @@ namespace Saber\Data\Bool {
 		 *
 		 * @return array
 		 */
-		public function dataToString() {
+		public function data2String() {
 			$data = array(
 				array(array(true), array('true')),
 				array(array(1), array('true')),
@@ -326,7 +326,7 @@ namespace Saber\Data\Bool {
 		/**
 		 * This method tests that a value is converted to a string.
 		 *
-		 * @dataProvider dataToString
+		 * @dataProvider data2String
 		 */
 		public function testToString(array $provided, array $expected) {
 			//$this->markTestIncomplete();

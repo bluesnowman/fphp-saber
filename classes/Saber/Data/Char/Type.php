@@ -26,7 +26,7 @@ namespace Saber\Data\Char {
 	use \Saber\Data\String;
 	use \Saber\Throwable;
 
-	final class Type extends Data\Type implements Core\Boxable\Type {
+	final class Type extends Data\Type {
 
 		#region Traits
 
@@ -71,6 +71,19 @@ namespace Saber\Data\Char {
 		#region Methods -> Initialization
 
 		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered "not" type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param mixed $value                                      the value(s) to be boxed
+		 * @return Char\Type                                        the boxed object
+		 */
+		public static function box($value) {
+			return new Char\Type($value);
+		}
+
+		/**
 		 * This method enforces that the specified class is covariant.
 		 *
 		 * @access public
@@ -80,19 +93,6 @@ namespace Saber\Data\Char {
 		 */
 		public static function covariant(Char\Type $x) {
 			return $x;
-		}
-
-		/**
-		 * This method returns a value as a boxed object.  A value is typically a PHP typed
-		 * primitive or object.  It is considered "not" type-safe.
-		 *
-		 * @access public
-		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return Char\Type                                        the boxed object
-		 */
-		public static function box($value/*...*/) {
-			return new Char\Type($value);
 		}
 
 		/**

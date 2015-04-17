@@ -31,7 +31,7 @@ namespace Saber\Data\HashSet {
 	use \Saber\Data\Unit;
 	use \Saber\Throwable;
 
-	final class Type extends Data\Type implements Core\Boxable\Type, Set\Type {
+	final class Type extends Data\Type implements Set\Type {
 
 		#region Traits
 

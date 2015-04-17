@@ -59,18 +59,6 @@ namespace Saber\Data\Float {
 		#region Methods -> Initialization
 
 		/**
-		 * This method enforces that the specified class is covariant.
-		 *
-		 * @access public
-		 * @static
-		 * @param Float\Type $x                                     the class to be evaluated
-		 * @return Float\Type                                       the class
-		 */
-		public static function covariant(Float\Type $x) {
-			return $x;
-		}
-
-		/**
 		 * This method returns a value as a boxed object.  A value is typically a PHP typed
 		 * primitive or object.  It is considered "not" type-safe.
 		 *
@@ -81,6 +69,18 @@ namespace Saber\Data\Float {
 		 */
 		public static function box($value/*...*/) {
 			return new Float\Type($value);
+		}
+
+		/**
+		 * This method enforces that the specified class is covariant.
+		 *
+		 * @access public
+		 * @static
+		 * @param Float\Type $x                                     the class to be evaluated
+		 * @return Float\Type                                       the class
+		 */
+		public static function covariant(Float\Type $x) {
+			return $x;
 		}
 
 		/**

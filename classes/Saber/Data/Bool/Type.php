@@ -22,7 +22,7 @@ namespace Saber\Data\Bool {
 	use \Saber\Data;
 	use \Saber\Data\Bool;
 
-	final class Type extends Data\Type implements Core\Boxable\Type {
+	final class Type extends Data\Type {
 
 		#region Traits
 
@@ -55,6 +55,19 @@ namespace Saber\Data\Bool {
 		#region Methods -> Initialization
 
 		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered "not" type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param mixed $value                                      the value(s) to be boxed
+		 * @return Bool\Type                                        the boxed object
+		 */
+		public static function box($value) {
+			return ($value) ? Bool\Type::true() : Bool\Type::false();
+		}
+
+		/**
 		 * This method enforces that the specified class is covariant.
 		 *
 		 * @access public
@@ -68,19 +81,6 @@ namespace Saber\Data\Bool {
 
 		/**
 		 * This method returns a value as a boxed object.  A value is typically a PHP typed
-		 * primitive or object.  It is considered "not" type-safe.
-		 *
-		 * @access public
-		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return Bool\Type                                        the boxed object
-		 */
-		public static function box($value/*...*/) {
-			return ($value) ? Bool\Type::true() : Bool\Type::false();
-		}
-
-		/**
-		 * This method returns a value as a boxed object.  A value is typically a PHP typed
 		 * primitive or object.  It is considered type-safe.
 		 *
 		 * @access public
@@ -89,7 +89,7 @@ namespace Saber\Data\Bool {
 		 * @return Bool\Type                                        the boxed object
 		 */
 		public static function make($value) {
-			if (is_string($value) && in_array(strtolower($value), array('false', 'f', 'no', 'n', '0', 'null'))) {
+			if (is_string($value) && in_array(strtolower($value), array('false', 'f', 'no', 'n', '0', 'null', 'nil'))) {
 				return Bool\Type::false();
 			}
 			return ($value) ? Bool\Type::true() : Bool\Type::false();

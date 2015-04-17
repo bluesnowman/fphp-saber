@@ -32,13 +32,42 @@ namespace Saber\Throwable\Runtime\Exception {
 		 *
 		 * @access public
 		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
+		 * @param array $args                                       the value(s) to be boxed
 		 * @return Throwable\Runtime\Exception                      the boxed object
 		 */
-		public static function box($value/*...*/) {
+		public static function box(array $args) {
 			$class = get_called_class();
 			$reflection = new \ReflectionClass($class);
-			$args = func_get_args();
+			$object = $reflection->newInstanceArgs($args);
+			return $object;
+		}
+
+		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered "not" type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param mixed ...$args                                    the value(s) to be boxed
+		 * @return Throwable\Runtime\Exception                      the boxed object
+		 */
+		public static function box2(...$args) {
+			return static::box($args);
+		}
+
+		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param array $args                                       the value(s) to be boxed
+		 * @return Throwable\Runtime\Exception                      the boxed object
+		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
+		 */
+		public static function make(array $args) {
+			$class = get_called_class();
+			$reflection = new \ReflectionClass($class);
 			$object = $reflection->newInstanceArgs($args);
 			return $object;
 		}
@@ -49,16 +78,12 @@ namespace Saber\Throwable\Runtime\Exception {
 		 *
 		 * @access public
 		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
+		 * @param mixed ...$args                                    the value(s) to be boxed
 		 * @return Throwable\Runtime\Exception                      the boxed object
 		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
-		public static function make($value/*...*/) {
-			$class = get_called_class();
-			$reflection = new \ReflectionClass($class);
-			$args = func_get_args();
-			$object = $reflection->newInstanceArgs($args);
-			return $object;
+		public static function make2(...$args) {
+			return static::make($args);
 		}
 
 		#endregion

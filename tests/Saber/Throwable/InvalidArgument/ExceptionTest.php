@@ -93,7 +93,7 @@ namespace Saber\Throwable\InvalidArgument {
 		 *
 		 * @return array
 		 */
-		public function dataToString() {
+		public function data2String() {
 			$data = array(
 				array(array('Message', array(), Int32\Type::zero()), array('Saber\\Throwable\\InvalidArgument\\Exception [ 0 ]: Message ~ ')),
 			);
@@ -103,7 +103,7 @@ namespace Saber\Throwable\InvalidArgument {
 		/**
 		 * This method tests that a value is converted to a string.
 		 *
-		 * @dataProvider dataToString
+		 * @dataProvider data2String
 		 */
 		public function testToString(array $provided, array $expected) {
 			$p0 = Throwable\InvalidArgument\Exception::make($provided[0], $provided[1], $provided[2])->__toString();

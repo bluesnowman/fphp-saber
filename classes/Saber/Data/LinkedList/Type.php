@@ -27,7 +27,7 @@ namespace Saber\Data\LinkedList {
 	use \Saber\Data\Vector;
 	use \Saber\Throwable;
 
-	abstract class Type extends Data\Type implements Core\Boxable\Type, Vector\Type {
+	abstract class Type extends Data\Type implements Vector\Type {
 
 		#region Traits
 

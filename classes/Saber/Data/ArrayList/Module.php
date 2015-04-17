@@ -625,7 +625,7 @@ namespace Saber\Data\ArrayList {
 		}
 
 		/**
-		 * This method returns an array list containing only unique elements from the specified
+		 * This method returns an array list containing only unique items from the specified
 		 * array list (i.e. duplicates are removed).
 		 *
 		 * @access public

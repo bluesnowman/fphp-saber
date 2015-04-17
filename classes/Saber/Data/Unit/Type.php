@@ -24,7 +24,7 @@ namespace Saber\Data\Unit {
 	use \Saber\Data\Unit;
 	use \Saber\Throwable;
 
-	final class Type extends Data\Type implements Core\Boxable\Type {
+	final class Type extends Data\Type {
 
 		#region Traits
 

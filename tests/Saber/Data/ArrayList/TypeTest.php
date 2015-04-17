@@ -83,6 +83,25 @@ namespace Saber\Data\ArrayList {
 		}
 
 		/**
+		 * This method tests the boxing of a value.
+		 *
+		 * @dataProvider dataBox
+		 */
+		public function testBox2(array $provided, array $expected) {
+			//$this->markTestIncomplete();
+
+			$p0 = call_user_func_array(array('\\Saber\\Data\\ArrayList\\Type', 'box2'), $provided);
+
+			$this->assertInstanceOf('\\Saber\\Data\\ArrayList\\Type', $p0);
+
+			$p1 = $p0->unbox();
+			$e1 = count($expected);
+
+			$this->assertInternalType('array', $p1);
+			$this->assertCount($e1, $p1);
+		}
+
+		/**
 		 * This method provides the data for testing the making of a value.
 		 *
 		 * @return array
@@ -114,17 +133,19 @@ namespace Saber\Data\ArrayList {
 		}
 
 		/**
-		 * This method tests the creation of an empty list.
+		 * This method tests the making of a value.
+		 *
+		 * @dataProvider dataMake
 		 */
-		public function testEmpty() {
+		public function testMake2(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
-			$p0 = ArrayList\Type::empty_();
+			$p0 = call_user_func_array(array('\\Saber\\Data\\ArrayList\\Type', 'make2'), $provided);
 
 			$this->assertInstanceOf('\\Saber\\Data\\ArrayList\\Type', $p0);
 
 			$p1 = $p0->unbox();
-			$e1 = 0;
+			$e1 = count($expected);
 
 			$this->assertInternalType('array', $p1);
 			$this->assertCount($e1, $p1);
@@ -157,6 +178,23 @@ namespace Saber\Data\ArrayList {
 
 			$p1 = $p0->unbox();
 			$e1 = count($expected);
+
+			$this->assertInternalType('array', $p1);
+			$this->assertCount($e1, $p1);
+		}
+
+		/**
+		 * This method tests the initialization of a singleton, boxed value.
+		 */
+		public function testSingletons() {
+			//$this->markTestIncomplete();
+
+			$p0 = ArrayList\Type::empty_();
+
+			$this->assertInstanceOf('\\Saber\\Data\\ArrayList\\Type', $p0);
+
+			$p1 = $p0->unbox();
+			$e1 = 0;
 
 			$this->assertInternalType('array', $p1);
 			$this->assertCount($e1, $p1);

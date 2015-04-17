@@ -37,7 +37,7 @@ namespace Saber\Data\Either {
 		 * @return Core\Type                                        the result
 		 */
 		public static function fold(Either\Type $xs, callable $left, callable $right) {
-			return ($xs->__isLeft()) ? $left($xs->projectLeft()->object()) : $right($xs->projectRight()->object());
+			return ($xs->__isLeft()) ? $left($xs->projectLeft()->item()) : $right($xs->projectRight()->item());
 		}
 
 		/**
@@ -49,7 +49,7 @@ namespace Saber\Data\Either {
 		 * @return Core\Type                                        the result
 		 */
 		public static function reduce(Either\Type $xs) {
-			return ($xs->__isLeft()) ? $xs->projectLeft()->object() : $xs->projectRight()->object();
+			return ($xs->__isLeft()) ? $xs->projectLeft()->item() : $xs->projectRight()->item();
 		}
 
 		/**

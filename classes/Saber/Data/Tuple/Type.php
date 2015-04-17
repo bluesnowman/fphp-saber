@@ -51,6 +51,32 @@ namespace Saber\Data\Tuple {
 		#region Methods -> Initialization
 
 		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered "not" type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param array $xs                                         the value(s) to be boxed
+		 * @return Tuple\Type                                       the boxed object
+		 */
+		public static function box(array $xs) {
+			return new Tuple\Type($xs);
+		}
+
+		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered "not" type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param mixed ...$xs                                      the value(s) to be boxed
+		 * @return Tuple\Type                                       the boxed object
+		 */
+		public static function box2(...$xs) {
+			return Tuple\Type::box($xs);
+		}
+
+		/**
 		 * This method enforces that the specified class is covariant.
 		 *
 		 * @access public
@@ -64,30 +90,15 @@ namespace Saber\Data\Tuple {
 
 		/**
 		 * This method returns a value as a boxed object.  A value is typically a PHP typed
-		 * primitive or object.  It is considered "not" type-safe.
-		 *
-		 * @access public
-		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return Tuple\Type                                       the boxed object
-		 */
-		public static function box($value/*...*/) {
-			$xs = (is_array($value)) ? $value : func_get_args();
-			return new Tuple\Type($xs);
-		}
-
-		/**
-		 * This method returns a value as a boxed object.  A value is typically a PHP typed
 		 * primitive or object.  It is considered type-safe.
 		 *
 		 * @access public
 		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
+		 * @param array $xs                                         the value(s) to be boxed
 		 * @return Tuple\Type                                       the boxed object
 		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
-		public static function make($value/*...*/) {
-			$xs = (is_array($value)) ? $value : func_get_args();
+		public static function make(array $xs) {
 			$count = count($xs);
 			if ($count < 2) {
 				throw new Throwable\InvalidArgument\Exception('Unable to box value(s). Tuple must have at least 2 objects, but got ":count".', array(':count' => $count));
@@ -102,6 +113,20 @@ namespace Saber\Data\Tuple {
 				}
 			}
 			return new Tuple\Type($xs);
+		}
+
+		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param mixed ...$xs                                      the value(s) to be boxed
+		 * @return Tuple\Type                                       the boxed object
+		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
+		 */
+		public static function make2(...$xs) {
+			return Tuple\Type::make($xs);
 		}
 
 		#endregion

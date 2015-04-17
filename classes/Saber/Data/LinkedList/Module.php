@@ -640,7 +640,7 @@ namespace Saber\Data\LinkedList {
 		}
 
 		/**
-		 * This method returns a linked list containing only unique elements from the specified
+		 * This method returns a linked list containing only unique items from the specified
 		 * linked list (i.e. duplicates are removed).
 		 *
 		 * @access public

@@ -533,7 +533,7 @@ namespace Saber\Data\Int32 {
 		 *
 		 * @return array
 		 */
-		public function dataToString() {
+		public function data2String() {
 			$data = array(
 				array(array(1), array('1')),
 				array(array(0), array('0')),
@@ -547,7 +547,7 @@ namespace Saber\Data\Int32 {
 		/**
 		 * This method tests that a value is converted to a string.
 		 *
-		 * @dataProvider dataToString
+		 * @dataProvider data2String
 		 */
 		public function testToString(array $provided, array $expected) {
 			//$this->markTestIncomplete();

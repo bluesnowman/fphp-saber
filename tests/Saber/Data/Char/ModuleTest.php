@@ -707,7 +707,7 @@ namespace Saber\Data\Char {
 		 *
 		 * @return array
 		 */
-		public function dataToString() {
+		public function data2String() {
 			$data = array(
 				array(array('a'), array('a')),
 				array(array("\n"), array("\n")),
@@ -719,7 +719,7 @@ namespace Saber\Data\Char {
 		/**
 		 * This method tests that a value is converted to a string.
 		 *
-		 * @dataProvider dataToString
+		 * @dataProvider data2String
 		 */
 		public function testToString(array $provided, array $expected) {
 			//$this->markTestIncomplete();

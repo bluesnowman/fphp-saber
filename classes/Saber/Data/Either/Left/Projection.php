@@ -43,7 +43,7 @@ namespace Saber\Data\Either\Left {
 		 *                                                          truthy test
 		 */
 		public final function all(callable $predicate) {
-			return Bool\Type::box($this->either->__isRight() || $predicate($this->either->object(), Int32\Type::zero())->unbox());
+			return Bool\Type::box($this->either->__isRight() || $predicate($this->either->item(), Int32\Type::zero())->unbox());
 		}
 
 		/**
@@ -57,7 +57,7 @@ namespace Saber\Data\Either\Left {
 		 *                                                          passed the truthy test
 		 */
 		public final function any(callable $predicate) {
-			return Bool\Type::box($this->either->__isLeft() && $predicate($this->either->object(), Int32\Type::zero())->unbox());
+			return Bool\Type::box($this->either->__isLeft() && $predicate($this->either->item(), Int32\Type::zero())->unbox());
 		}
 
 		/**
@@ -70,8 +70,8 @@ namespace Saber\Data\Either\Left {
 		 */
 		public final function bind(callable $subroutine) {
 			return ($this->either->__isLeft())
-				? Either\Type::covariant($subroutine($this->either->object(), Int32\Type::zero()))
-				: Either\Type::right($this->either->projectLeft()->object());
+				? Either\Type::covariant($subroutine($this->either->item(), Int32\Type::zero()))
+				: Either\Type::right($this->either->projectLeft()->item());
 		}
 
 		/**
@@ -84,7 +84,7 @@ namespace Saber\Data\Either\Left {
 		 */
 		public final function each(callable $procedure) {
 			if ($this->either->__isLeft()) {
-				Unit\Type::covariant($procedure($this->either->object(), Int32\Type::zero()));
+				Unit\Type::covariant($procedure($this->either->item(), Int32\Type::zero()));
 			}
 		}
 
@@ -98,10 +98,24 @@ namespace Saber\Data\Either\Left {
 		 */
 		public final function filter(callable $predicate) {
 			return ($this->either->__isLeft())
-				? ($predicate($this->either->object(), Int32\Type::zero())->unbox())
-					? Option\Type::some(Either\Type::left($this->either->object()))
+				? ($predicate($this->either->item(), Int32\Type::zero())->unbox())
+					? Option\Type::some(Either\Type::left($this->either->item()))
 					: Option\Type::none()
 				: Option\Type::none();
+		}
+
+		/**
+		 * This method returns the item stored within the option.
+		 *
+		 * @access public
+		 * @final
+		 * @return Core\Type                                        the stored item
+		 */
+		public final function item() {
+			if (!$this->either->__isLeft()) {
+				throw new Throwable\UnimplementedMethod\Exception('Method :method has not been implemented.', array(':method' => __FUNCTION__));
+			}
+			return $this->either->item();
 		}
 
 		/**
@@ -114,22 +128,8 @@ namespace Saber\Data\Either\Left {
 		 */
 		public final function map(callable $subroutine) {
 			return ($this->either->__isLeft())
-				? Either\Type::left($subroutine($this->either->object(), Int32\Type::zero()))
-				: Either\Type::right($this->either->projectRight()->object());
-		}
-
-		/**
-		 * This method returns the object stored within the option.
-		 *
-		 * @access public
-		 * @final
-		 * @return Core\Type                                        the stored object
-		 */
-		public final function object() {
-			if (!$this->either->__isLeft()) {
-				throw new Throwable\UnimplementedMethod\Exception('Method :method has not been implemented.', array(':method' => __FUNCTION__));
-			}
-			return $this->either->object();
+				? Either\Type::left($subroutine($this->either->item(), Int32\Type::zero()))
+				: Either\Type::right($this->either->projectRight()->item());
 		}
 
 		/**
@@ -143,7 +143,7 @@ namespace Saber\Data\Either\Left {
 		 */
 		public final function orSome(Core\Type $y) {
 			return ($this->either->__isLeft())
-				? $this->either->object()
+				? $this->either->item()
 				: $y;
 		}
 
@@ -160,7 +160,7 @@ namespace Saber\Data\Either\Left {
 		 */
 		public final function toArrayList() {
 			return ($this->either->__isLeft())
-				? ArrayList\Type::box(array($this->either->object()))
+				? ArrayList\Type::box(array($this->either->item()))
 				: ArrayList\Type::empty_();
 		}
 
@@ -173,7 +173,7 @@ namespace Saber\Data\Either\Left {
 		 */
 		public final function toLinkedList() {
 			return ($this->either->__isLeft())
-				? LinkedList\Type::cons($this->either->object())
+				? LinkedList\Type::cons($this->either->item())
 				: LinkedList\Type::nil();
 		}
 
@@ -186,7 +186,7 @@ namespace Saber\Data\Either\Left {
 		 */
 		public final function toOption() {
 			return ($this->either->__isLeft())
-				? Option\Type::some($this->either->object())
+				? Option\Type::some($this->either->item())
 				: Option\Type::none();
 		}
 

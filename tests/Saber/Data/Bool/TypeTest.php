@@ -188,7 +188,7 @@ namespace Saber\Data\Bool {
 		 *
 		 * @return array
 		 */
-		public function dataToString() {
+		public function data2String() {
 			$data = array(
 				array(array(true), array('true')),
 				array(array(false), array('false')),
@@ -199,7 +199,7 @@ namespace Saber\Data\Bool {
 		/**
 		 * This method tests that a value is converted to a string.
 		 *
-		 * @dataProvider dataToString
+		 * @dataProvider data2String
 		 */
 		public function testToString(array $provided, array $expected) {
 			$p0 = Bool\Type::make($provided[0])->__toString();

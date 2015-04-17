@@ -95,7 +95,7 @@ namespace Saber\Data\Option {
 		 *
 		 * @access public
 		 * @static
-		 * @param Core\Type $x                                      the object to be wrapped
+		 * @param Core\Type $x                                      the item to be stored
 		 * @return Option\Some\Type                                 the "some" option
 		 */
 		public static function some(Core\Type $x) {
@@ -114,7 +114,7 @@ namespace Saber\Data\Option {
 		 * @return string                                           the object's hash code
 		 */
 		public final function __hashCode() {
-			return spl_object_hash($this->object());
+			return spl_object_hash($this->item());
 		}
 
 		/**
@@ -130,14 +130,14 @@ namespace Saber\Data\Option {
 		}
 
 		/**
-		 * This method returns the object stored within the option.
+		 * This method returns the item stored within the option.
 		 *
 		 * @access public
 		 * @final
-		 * @return mixed                                            the stored object
+		 * @return mixed                                            the stored item's value
 		 */
-		public final function __object() {
-			return $this->object()->unbox();
+		public final function __item() {
+			return $this->item()->unbox();
 		}
 
 		/**
@@ -159,7 +159,7 @@ namespace Saber\Data\Option {
 		 * @return string                                           the object as a string
 		 */
 		public final function __toString() {
-			return (string) serialize($this->object());
+			return (string) serialize($this->item());
 		}
 
 		#endregion
@@ -179,13 +179,13 @@ namespace Saber\Data\Option {
 		}
 
 		/**
-		 * This method returns the object stored within the option.
+		 * This method returns the item stored within the option.
 		 *
 		 * @access public
 		 * @abstract
-		 * @return Core\Type                                        the stored object
+		 * @return Core\Type                                        the stored item
 		 */
-		public abstract function object();
+		public abstract function item();
 
 		/**
 		 * This method returns the size of this option.

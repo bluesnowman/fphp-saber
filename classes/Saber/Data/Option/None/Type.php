@@ -27,15 +27,29 @@ namespace Saber\Data\Option\None {
 		#region Methods -> Object Oriented
 
 		/**
-		 * This method returns the object stored within the option.
+		 * This method returns the item stored within the option.
 		 *
 		 * @access public
 		 * @final
-		 * @return Core\Type                                        the stored object
+		 * @return Core\Type                                        the stored item
 		 * @throws Throwable\UnimplementedMethod\Exception          indicates that this method cannot
 		 *                                                          be called
 		 */
-		public final function object() {
+		public final function item() {
+			throw new Throwable\UnimplementedMethod\Exception('Method :method has not been implemented.', array(':method' => __FUNCTION__));
+		}
+
+		/**
+		 * This method returns the value contained within the boxed object.
+		 *
+		 * @access public
+		 * @final
+		 * @param integer $depth                                    how many levels to unbox
+		 * @return mixed                                            the un-boxed value
+		 * @throws Throwable\UnimplementedMethod\Exception          indicates that this method cannot
+		 *                                                          be called
+		 */
+		public final function unbox($depth = 0) {
 			throw new Throwable\UnimplementedMethod\Exception('Method :method has not been implemented.', array(':method' => __FUNCTION__));
 		}
 

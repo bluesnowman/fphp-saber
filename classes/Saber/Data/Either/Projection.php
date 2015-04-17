@@ -115,6 +115,15 @@ namespace Saber\Data\Either {
 		public abstract function filter(callable $predicate);
 
 		/**
+		 * This method returns the item stored within the option.
+		 *
+		 * @access public
+		 * @abstract
+		 * @return Core\Type                                        the stored item
+		 */
+		public abstract function item();
+
+		/**
 		 * This method returns an iterator for this collection.
 		 *
 		 * @access public
@@ -134,15 +143,6 @@ namespace Saber\Data\Either {
 		 * @return Either\Type                                      the either
 		 */
 		public abstract function map(callable $subroutine);
-
-		/**
-		 * This method returns the object stored within the option.
-		 *
-		 * @access public
-		 * @abstract
-		 * @return Core\Type                                        the stored object
-		 */
-		public abstract function object();
 
 		/**
 		 * This method returns this either's object if is has "some" object; otherwise, it will

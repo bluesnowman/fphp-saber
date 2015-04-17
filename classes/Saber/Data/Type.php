@@ -21,7 +21,7 @@ namespace Saber\Data {
 	use \Saber\Core;
 	use \Saber\Throwable;
 
-	abstract class Type implements Core\Type, Core\Comparable\Type, Core\Equality\Type {
+	abstract class Type implements Core\Type, Core\Boxable\Type, Core\Comparable\Type, Core\Equality\Type, \JsonSerializable {
 
 		#region Properties
 
@@ -38,51 +38,12 @@ namespace Saber\Data {
 		#region Methods -> Implementation
 
 		/**
-		 * This method is called when a method is not defined and will attempt to remap
-		 * the call.  Particularly, this method provides a shortcut means of unboxing a method's
-		 * result when the method name is preceded by a double-underscore.
-		 *
-		 * @access public
-		 * @param string $method                                    the method being called
-		 * @param array $args                                       the arguments associated with the call
-		 * @return mixed                                            the un-boxed value
-		 * @throws Throwable\UnimplementedMethod\Exception          indicates that the class has not
-		 *                                                          implemented the called method
-		 */
-		public function __call($method, $args) {
-			$class = get_class($this);
-			if (preg_match('/^__[a-z_][a-z0-9_]*$/i', $method)) {
-				$method = substr($method, 2);
-				if (!in_array($method, array('call', 'choice', 'iterator', 'unbox'))) {
-					if (method_exists($class, $method)) {
-						array_unshift($args, $this);
-						$result = call_user_func_array(array($class, $method), $args);
-						if ($result instanceof Core\Boxable\Type) {
-							return $result->unbox();
-						}
-						return $result;
-					}
-				}
-			}
-			else {
-				if (!in_array($method, array('object'))) {
-					if (method_exists($class, $method)) {
-						array_unshift($args, $this);
-						$result = call_user_func_array(array($class, $method), $args);
-						return $result;
-					}
-				}
-			}
-			throw new Throwable\UnimplementedMethod\Exception('Unable to call method. No method ":method" exists in class ":class".', array(':class' => $class, ':method' => $method));
-		}
-
-		/**
 		 * This method releases any internal references to an object.
 		 *
 		 * @access public
 		 */
 		public function __destruct() {
-			$this->value = null;
+			unset($this->value);
 		}
 
 		#endregion
@@ -132,6 +93,17 @@ namespace Saber\Data {
 		 */
 		public final function hashCode() {
 			return String\Type::box($this->__hashCode());
+		}
+
+		/**
+		 * This method returns data which can be serialized by json_encode(), which is
+		 * a value of any type other than a resource.
+		 *
+		 * @access public
+		 * @return mixed
+		 */
+		public function jsonSerialize() {
+			return $this->unbox(PHP_INT_MAX);
 		}
 
 		/**

@@ -47,7 +47,7 @@ namespace Saber\Data\Option {
 		 *                                                          truthy test
 		 */
 		public static function all(Option\Type $xs, callable $predicate) {
-			return Bool\Module::or_(Bool\Module::not($xs->isDefined()), $predicate($xs->object(), Int32\Type::zero()));
+			return Bool\Module::or_(Bool\Module::not($xs->isDefined()), $predicate($xs->item(), Int32\Type::zero()));
 		}
 
 		/**
@@ -76,7 +76,7 @@ namespace Saber\Data\Option {
 		 */
 		public static function bind(Option\Type $xs, callable $subroutine) {
 			return ($xs->__isDefined())
-				? Option\Type::covariant($subroutine($xs->object(), Int32\Type::zero()))
+				? Option\Type::covariant($subroutine($xs->item(), Int32\Type::zero()))
 				: Option\Type::none();
 		}
 
@@ -91,7 +91,7 @@ namespace Saber\Data\Option {
 		 */
 		public static function each(Option\Type $xs, callable $procedure) {
 			if ($xs->__isDefined()) {
-				Unit\Type::covariant($procedure($xs->object(), Int32\Type::zero()));
+				Unit\Type::covariant($procedure($xs->item(), Int32\Type::zero()));
 			}
 		}
 
@@ -105,7 +105,7 @@ namespace Saber\Data\Option {
 		 * @return Option\Type                                      the option
 		 */
 		public static function filter(Option\Type $xs, callable $predicate) {
-			if (Bool\Module::and_($xs->isDefined(), $predicate($xs->object(), Int32\Type::zero()))->unbox()) {
+			if (Bool\Module::and_($xs->isDefined(), $predicate($xs->item(), Int32\Type::zero()))->unbox()) {
 				return $xs;
 			}
 			return Option\Type::none();
@@ -122,12 +122,24 @@ namespace Saber\Data\Option {
 		 *                                                          satisfying the predicate, if any
 		 */
 		public static function find(Option\Type $xs, callable $predicate) {
-			if (Bool\Module::and_($xs->isDefined(), $predicate($xs->object(), Int32\Type::zero()))->unbox()) {
+			if (Bool\Module::and_($xs->isDefined(), $predicate($xs->item(), Int32\Type::zero()))->unbox()) {
 				return $xs;
 			}
 			return Option\Type::none();
 		}
 
+		/**
+		 * This method returns the item stored within the option.
+		 *
+		 * @access public
+		 * @static
+		 * @param Option\Type $xs                                   the left operand
+		 * @return Core\Type                                        the stored item
+		 */
+		public static function item(Option\Type $xs) {
+			return $xs->item();
+		}
+		
 		/**
 		 * This method returns an iterator for this collection.
 		 *
@@ -163,20 +175,8 @@ namespace Saber\Data\Option {
 		 */
 		public static function map(Option\Type $xs, callable $subroutine) {
 			return ($xs->__isDefined())
-				? Option\Type::some($subroutine($xs->object()))
+				? Option\Type::some($subroutine($xs->item()))
 				: Option\Type::none();
-		}
-
-		/**
-		 * This method returns the object stored within the option.
-		 *
-		 * @access public
-		 * @static
-		 * @param Option\Type $xs                                   the left operand
-		 * @return Core\Type                                        the stored object
-		 */
-		public static function object(Option\Type $xs) {
-			return $xs->object();
 		}
 
 		/**
@@ -204,7 +204,7 @@ namespace Saber\Data\Option {
 		 * @return Core\Type                                        the boxed object
 		 */
 		public static function orSome(Option\Type $xs, Core\Type $y) {
-			return ($xs->__isDefined()) ? $xs->object() : $y;
+			return ($xs->__isDefined()) ? $xs->item() : $y;
 		}
 
 		#endregion
@@ -237,7 +237,7 @@ namespace Saber\Data\Option {
 			$buffer = array();
 
 			if ($xs->__isDefined()) {
-				$buffer[] = $xs->object();
+				$buffer[] = $xs->item();
 			}
 
 			return ArrayList\Type::box($buffer);
@@ -256,7 +256,7 @@ namespace Saber\Data\Option {
 		 */
 		public static function toLeft(Option\Type $xs, Core\Type $x) {
 			return ($xs->__isDefined())
-				? Either\Type::left($xs->object())
+				? Either\Type::left($xs->item())
 				: Either\Type::right($x);
 		}
 
@@ -270,7 +270,7 @@ namespace Saber\Data\Option {
 		 */
 		public static function toLinkedList(Option\Type $xs) {
 			return ($xs->__isDefined())
-				? LinkedList\Type::cons($xs->object())
+				? LinkedList\Type::cons($xs->item())
 				: LinkedList\Type::nil();
 		}
 
@@ -299,7 +299,7 @@ namespace Saber\Data\Option {
 		 */
 		public static function toRight(Option\Type $xs, Core\Type $x) {
 			return ($xs->__isDefined())
-				? Either\Type::right($xs->object())
+				? Either\Type::right($xs->item())
 				: Either\Type::left($x);
 		}
 
@@ -339,8 +339,8 @@ namespace Saber\Data\Option {
 				$type = $xs->__typeOf();
 				if ($ys instanceof $type) {
 					if ($ys instanceof Option\Some\Type) {
-						$x = $xs->object();
-						$y = $ys->object();
+						$x = $xs->item();
+						$y = $ys->item();
 						if ($x === null) {
 							return Bool\Type::box($y === null);
 						}
@@ -373,8 +373,8 @@ namespace Saber\Data\Option {
 			if ($ys !== null) {
 				if ($xs->__typeOf() === $ys->__typeOf()) {
 					if ($ys instanceof Option\Some\Type) {
-						$x = $xs->object();
-						$y = $ys->object();
+						$x = $xs->item();
+						$y = $ys->item();
 						if ($x === null) {
 							return Bool\Type::box($y === null);
 						}
@@ -450,8 +450,8 @@ namespace Saber\Data\Option {
 				return Trit\Type::positive();
 			}
 
-			$x = $xs->object();
-			$y = $ys->object();
+			$x = $xs->item();
+			$y = $ys->item();
 
 			if (($x === null) && ($y !== null)) {
 				return Trit\Type::negative();

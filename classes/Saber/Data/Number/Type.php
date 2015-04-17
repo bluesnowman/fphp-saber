@@ -20,6 +20,6 @@ namespace Saber\Data\Number {
 
 	use \Saber\Core;
 
-	interface Type extends Core\Boxable\Type { }
+	interface Type { }
 
 }

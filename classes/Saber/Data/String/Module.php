@@ -603,7 +603,7 @@ namespace Saber\Data\String {
 				}
 			}
 
-			return Tuple\Type::box(String\Type::box($passed), String\Type::box($failed));
+			return Tuple\Type::box2(String\Type::box($passed), String\Type::box($failed));
 		}
 
 		/**
@@ -694,7 +694,7 @@ namespace Saber\Data\String {
 		 * @return Tuple\Type                                       the tuple
 		 */
 		public static function span(String\Type $xs, callable $predicate) {
-			return Tuple\Type::box(
+			return Tuple\Type::box2(
 				String\Module::takeWhile($xs, $predicate),
 				String\Module::dropWhile($xs, $predicate)
 			);
@@ -711,7 +711,7 @@ namespace Saber\Data\String {
 		 * @return Tuple\Type                                       the tuple
 		 */
 		public static function split(String\Type $xs, Int32\Type $n) {
-			return Tuple\Type::box(
+			return Tuple\Type::box2(
 				String\Module::take($xs, $n),
 				String\Module::drop($xs, $n)
 			);

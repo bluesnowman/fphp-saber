@@ -35,7 +35,7 @@ namespace Saber\Data\HashSet {
 		public function testType() {
 			//$this->markTestIncomplete();
 
-			$p0 = new HashSet\Type(array());
+			$p0 = new HashSet\Type();
 
 			$this->assertInstanceOf('\\Saber\\Data\\HashSet\\Type', $p0);
 			$this->assertInstanceOf('\\Saber\\Data\\Set\\Type', $p0);
@@ -58,7 +58,9 @@ namespace Saber\Data\HashSet {
 		 */
 		public function dataBox() {
 			$data = array(
-				array(array(array(Int32\Type::zero()), array(Int32\Type::one())), array(array(Int32\Type::zero()), array(Int32\Type::one()))),
+				array(array(), array(0)),
+				array(array(Int32\Type::zero()), array(1)),
+				array(array(Int32\Type::zero(), Int32\Type::one()), array(2)),
 			);
 			return $data;
 		}
@@ -76,7 +78,26 @@ namespace Saber\Data\HashSet {
 			$this->assertInstanceOf('\\Saber\\Data\\HashSet\\Type', $p0);
 
 			$p1 = $p0->unbox();
-			$e1 = count($expected);
+			$e1 = $expected[0];
+
+			$this->assertInternalType('array', $p1);
+			$this->assertCount($e1, $p1);
+		}
+
+		/**
+		 * This method tests the boxing of a value.
+		 *
+		 * @dataProvider dataBox
+		 */
+		public function testBox2(array $provided, array $expected) {
+			//$this->markTestIncomplete();
+
+			$p0 = call_user_func_array(array('\\Saber\\Data\\HashSet\\Type', 'box2'), $provided);
+
+			$this->assertInstanceOf('\\Saber\\Data\\HashSet\\Type', $p0);
+
+			$p1 = $p0->unbox();
+			$e1 = $expected[0];
 
 			$this->assertInternalType('array', $p1);
 			$this->assertCount($e1, $p1);
@@ -89,7 +110,9 @@ namespace Saber\Data\HashSet {
 		 */
 		public function dataMake() {
 			$data = array(
-				array(array(Int32\Type::zero(), Int32\Type::one()), array(Int32\Type::zero(), Int32\Type::one())),
+				array(array(), array(0)),
+				array(array(Int32\Type::zero()), array(1)),
+				array(array(Int32\Type::zero(), Int32\Type::one()), array(2)),
 			);
 			return $data;
 		}
@@ -107,7 +130,26 @@ namespace Saber\Data\HashSet {
 			$this->assertInstanceOf('\\Saber\\Data\\HashSet\\Type', $p0);
 
 			$p1 = $p0->unbox();
-			$e1 = count($expected);
+			$e1 = $expected[0];
+
+			$this->assertInternalType('array', $p1);
+			$this->assertCount($e1, $p1);
+		}
+
+		/**
+		 * This method tests the making of a value.
+		 *
+		 * @dataProvider dataMake
+		 */
+		public function testMake2(array $provided, array $expected) {
+			//$this->markTestIncomplete();
+
+			$p0 = call_user_func_array(array('\\Saber\\Data\\HashSet\\Type', 'make2'), $provided);
+
+			$this->assertInstanceOf('\\Saber\\Data\\HashSet\\Type', $p0);
+
+			$p1 = $p0->unbox();
+			$e1 = $expected[0];
 
 			$this->assertInternalType('array', $p1);
 			$this->assertCount($e1, $p1);
@@ -140,7 +182,7 @@ namespace Saber\Data\HashSet {
 		public function testClear() {
 			//$this->markTestIncomplete();
 
-			$p0 = HashSet\Type::make(array(Int32\Type::zero(), Int32\Type::one(), Int32\Type::box(2)));
+			$p0 = HashSet\Type::make2(Int32\Type::zero(), Int32\Type::one(), Int32\Type::box(2));
 
 			$p1 = $p0->unbox();
 			$this->assertCount(3, $p1);
@@ -217,7 +259,7 @@ namespace Saber\Data\HashSet {
 		public function testItems() {
 			//$this->markTestIncomplete();
 
-			$p0 = HashSet\Type::make(array(Int32\Type::zero(), Int32\Type::one(), Int32\Type::box(2)))->items();
+			$p0 = HashSet\Type::make2(Int32\Type::zero(), Int32\Type::one(), Int32\Type::box(2))->items();
 
 			$this->assertInstanceOf('\\Saber\\Data\\ArrayList\\Type', $p0);
 
@@ -285,7 +327,7 @@ namespace Saber\Data\HashSet {
 		public function testRemoveItem(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
-			$p0 = HashSet\Type::make(array(Int32\Type::zero(), Int32\Type::one(), Int32\Type::box(2)));
+			$p0 = HashSet\Type::make2(Int32\Type::zero(), Int32\Type::one(), Int32\Type::box(2));
 
 			foreach ($provided as $item) {
 				$p0->removeItem($item);

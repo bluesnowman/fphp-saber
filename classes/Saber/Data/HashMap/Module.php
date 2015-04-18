@@ -50,7 +50,7 @@ namespace Saber\Data\HashMap {
 			$i = Int32\Type::zero();
 
 			foreach ($xi as $k => $v) {
-				$entry = Tuple\Type::box($k, $v);
+				$entry = Tuple\Type::box2($k, $v);
 				if (!$predicate($entry, $i)->unbox()) {
 					return Bool\Type::false();
 				}
@@ -76,7 +76,7 @@ namespace Saber\Data\HashMap {
 			$i = Int32\Type::zero();
 
 			foreach ($xi as $k => $v) {
-				$entry = Tuple\Type::box($k, $v);
+				$entry = Tuple\Type::box2($k, $v);
 				if ($predicate($entry, $i)->unbox()) {
 					return Bool\Type::true();
 				}
@@ -127,7 +127,7 @@ namespace Saber\Data\HashMap {
 			$i = Int32\Type::zero();
 
 			foreach ($xi as $k => $v) {
-				$entry = Tuple\Type::box($k, $v);
+				$entry = Tuple\Type::box2($k, $v);
 				if ($predicate($entry, $i)->unbox()) {
 					$zs->putEntry($k, $v);
 				}
@@ -152,7 +152,7 @@ namespace Saber\Data\HashMap {
 			$z = $initial;
 
 			foreach ($xi as $k => $v) {
-				$entry = Tuple\Type::box($k, $v);
+				$entry = Tuple\Type::box2($k, $v);
 				$z = $operator($z, $entry);
 			}
 
@@ -250,7 +250,7 @@ namespace Saber\Data\HashMap {
 			$i = Int32\Type::zero();
 
 			foreach ($xi as $k => $v) {
-				$entry = Tuple\Type::box($k, $v);
+				$entry = Tuple\Type::box2($k, $v);
 				$zs = HashMap\Module::putEntry($zs, $subroutine($entry, $i));
 				$i = Int32\Module::increment($i);
 			}
@@ -276,7 +276,7 @@ namespace Saber\Data\HashMap {
 			$i = Int32\Type::zero();
 
 			foreach ($xi as $k => $v) {
-				$entry = Tuple\Type::box($k, $v);
+				$entry = Tuple\Type::box2($k, $v);
 				if ($predicate($entry, $i)->unbox()) {
 					$passed->putEntry($entry->first(), $entry->second());
 				}
@@ -285,7 +285,7 @@ namespace Saber\Data\HashMap {
 				}
 			}
 
-			return Tuple\Type::box($passed, $failed);
+			return Tuple\Type::box2($passed, $failed);
 		}
 
 		/**

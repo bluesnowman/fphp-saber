@@ -187,7 +187,7 @@ This means [0..5].  It will produce [0,1,2,3,4,5].
 
 You can also generate sequences like [0,2..10], which will produce [0,2,4,6,8,10].
 ````
-$object = Int32\Module::sequence(Int32\Type::zero(), Tuple\Type::box(Int32\Type::box(2), Int32\Type::box(10)));
+$object = Int32\Module::sequence(Int32\Type::zero(), Tuple\Type::box2(Int32\Type::box(2), Int32\Type::box(10)));
 ````
 
 Similar methods exist as well for Double, Float, and Integer.

@@ -672,7 +672,7 @@ namespace Saber\Data\ArrayList {
 				}
 			}
 
-			return Tuple\Type::box(ArrayList\Type::box($passed), ArrayList\Type::box($failed));
+			return Tuple\Type::box2(ArrayList\Type::box($passed), ArrayList\Type::box($failed));
 		}
 
 		/**
@@ -799,7 +799,7 @@ namespace Saber\Data\ArrayList {
 		 * @return Tuple\Type                                       the tuple
 		 */
 		public static function span(ArrayList\Type $xs, callable $predicate) {
-			return Tuple\Type::box(
+			return Tuple\Type::box2(
 				ArrayList\Module::takeWhile($xs, $predicate),
 				ArrayList\Module::dropWhile($xs, $predicate)
 			);
@@ -816,7 +816,7 @@ namespace Saber\Data\ArrayList {
 		 * @return Tuple\Type                                       the tuple
 		 */
 		public static function split(ArrayList\Type $xs, Int32\Type $n) {
-			return Tuple\Type::box(
+			return Tuple\Type::box2(
 				ArrayList\Module::take($xs, $n),
 				ArrayList\Module::drop($xs, $n)
 			);
@@ -914,7 +914,7 @@ namespace Saber\Data\ArrayList {
 				$bs[] = $xs->second();
 			}
 
-			return Tuple\Type::box(ArrayList\Type::box($as), ArrayList\Type::box($bs));
+			return Tuple\Type::box2(ArrayList\Type::box($as), ArrayList\Type::box($bs));
 		}
 
 		/**
@@ -931,7 +931,7 @@ namespace Saber\Data\ArrayList {
 			$length = Int32\Module::min($xs->length(), $ys->length());
 
 			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
-				$buffer[] = Tuple\Type::box($xs->item($i), $ys->item($i));
+				$buffer[] = Tuple\Type::box2($xs->item($i), $ys->item($i));
 			}
 
 			return ArrayList\Type::box($buffer);

@@ -73,7 +73,7 @@ namespace Saber\Data\HashSet {
 		 * @return HashSet\Type                                     the boxed object
 		 */
 		public static function box(array $xs) {
-			return new HashSet\Type($xs);
+			return HashSet\Type::make($xs);
 		}
 
 		/**
@@ -86,7 +86,7 @@ namespace Saber\Data\HashSet {
 		 * @return HashSet\Type                                     the boxed object
 		 */
 		public static function box2(...$xs) {
-			return HashSet\Type::box($xs);
+			return HashSet\Type::make($xs);
 		}
 
 		/**
@@ -161,10 +161,9 @@ namespace Saber\Data\HashSet {
 		 *
 		 * @access public
 		 * @final
-		 * @param array $value                                      the value to be assigned
 		 */
-		public final function __construct(array $value = array()) {
-			$this->value = $value;
+		public final function __construct() {
+			$this->value = array();
 		}
 
 		/**

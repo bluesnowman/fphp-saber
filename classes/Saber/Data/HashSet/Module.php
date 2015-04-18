@@ -312,7 +312,7 @@ namespace Saber\Data\HashSet {
 				}
 			}
 
-			return Tuple\Type::box($passed, $failed);
+			return Tuple\Type::box2($passed, $failed);
 		}
 
 		/**

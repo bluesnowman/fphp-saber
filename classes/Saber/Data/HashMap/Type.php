@@ -64,6 +64,32 @@ namespace Saber\Data\HashMap {
 		#region Methods -> Initialization
 
 		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered "not" type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param array $xss                                        the value(s) to be boxed
+		 * @return HashMap\Type                                     the boxed object
+		 */
+		public static function box(array $xss) { // an array of tuples
+			return HashMap\Type::make($xss);
+		}
+
+		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered "not" type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param mixed ...$xss                                     the value(s) to be boxed
+		 * @return HashMap\Type                                     the boxed object
+		 */
+		public static function box2(...$xss) { // an array of tuples
+			return HashMap\Type::make($xss);
+		}
+
+		/**
 		 * This method enforces that the specified class is covariant.
 		 *
 		 * @access public
@@ -77,15 +103,19 @@ namespace Saber\Data\HashMap {
 
 		/**
 		 * This method returns a value as a boxed object.  A value is typically a PHP typed
-		 * primitive or object.  It is considered "not" type-safe.
+		 * primitive or object.  It is considered type-safe.
 		 *
 		 * @access public
 		 * @static
-		 * @param array $value                                      the value(s) to be boxed
+		 * @param array $xss                                        the value(s) to be boxed
 		 * @return HashMap\Type                                     the boxed object
 		 */
-		public static function box(array $value) {
-			return new HashMap\Type($value);
+		public static function make(array $xss) { // an array of tuples
+			$zs = new HashMap\Type();
+			foreach ($xss as $xs) {
+				$zs->putEntry($xs->first(), $xs->second());
+			}
+			return $zs;
 		}
 
 		/**
@@ -94,22 +124,11 @@ namespace Saber\Data\HashMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
+		 * @param mixed ...$xss                                     the value(s) to be boxed
 		 * @return HashMap\Type                                     the boxed object
-		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
-		public static function make($value/*...*/) {
-			$xs = (is_array($value)) ? $value : func_get_args();
-			foreach ($xs as $x) {
-				if (!(is_object($x) && ($x instanceof Core\Type))) {
-					$type = gettype($x);
-					if ($type == 'object') {
-						$type = get_class($x);
-					}
-					throw new Throwable\InvalidArgument\Exception('Unable to create hash map. Expected a boxed value, but got ":type".', array(':type' => $type));
-				}
-			}
-			return new HashMap\Type($xs);
+		public static function make2(...$xss) { // an array of tuples
+			return HashMap\Type::make($xss);
 		}
 
 		/**
@@ -120,7 +139,7 @@ namespace Saber\Data\HashMap {
 		 * @return HashMap\Type                                     an empty collection
 		 */
 		public static function empty_() {
-			return new HashMap\Type(array());
+			return new HashMap\Type();
 		}
 
 		#endregion
@@ -143,10 +162,9 @@ namespace Saber\Data\HashMap {
 		 *
 		 * @access public
 		 * @final
-		 * @param array $value                                      the value to be assigned
 		 */
-		public final function __construct(array $value) {
-			$this->value = $value;
+		public final function __construct() {
+			$this->value = array();
 		}
 
 		/**
@@ -420,7 +438,7 @@ namespace Saber\Data\HashMap {
 					}
 				}
 			}
-			$this->value[$hashCode][] = Tuple\Type::box($key, $item);
+			$this->value[$hashCode][] = Tuple\Type::box2($key, $item);
 			return $this;
 		}
 
@@ -479,16 +497,15 @@ namespace Saber\Data\HashMap {
 		 * @return array                                            the un-boxed value
 		 */
 		public final function unbox($depth = 0) {
-			if ($depth > 1) {
-				$buffer = array();
-				foreach ($this->value as $hashCode => $bucket) {
-					foreach ($bucket as $entry) {
-						$buffer[$hashCode][] = $entry->unbox($depth - 1);
-					}
+			$buffer = array();
+			foreach ($this->value as $hashCode => $bucket) {
+				foreach ($bucket as $entry) {
+					$buffer[] = ($depth > 0)
+						? $entry->unbox($depth - 1)
+						: $entry;
 				}
-				return $buffer;
 			}
-			return $this->value;
+			return $buffer;
 		}
 
 		#endregion

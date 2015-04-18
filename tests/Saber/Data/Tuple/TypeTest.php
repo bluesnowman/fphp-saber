@@ -159,7 +159,7 @@ namespace Saber\Data\Tuple {
 		public function testItems() {
 			//$this->markTestIncomplete();
 
-			$p0 = Tuple\Type::box(array(Int32\Type::zero(), Int32\Type::one(), Int32\Type::box(2)));
+			$p0 = Tuple\Type::box2(Int32\Type::zero(), Int32\Type::one(), Int32\Type::box(2));
 
 			$this->assertSame(0, $p0->item(Int32\Type::zero())->unbox());
 			$this->assertSame(1, $p0->item(Int32\Type::one())->unbox());

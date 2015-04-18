@@ -90,7 +90,7 @@ namespace Saber\Data\Tuple {
 		 * @return Tuple\Type                                       a tuple with the item swapped
 		 */
 		public static function swap(Tuple\Type $xs) {
-			return Tuple\Type::box($xs->second(), $xs->first());
+			return Tuple\Type::box2($xs->second(), $xs->first());
 		}
 
 		#endregion
@@ -108,7 +108,7 @@ namespace Saber\Data\Tuple {
 		 * @return Tuple\Type                                        the result
 		 */
 		public static function nvl(Tuple\Type $xs = null, Tuple\Type $ys = null) {
-			return ($xs !== null) ? $xs : (($ys !== null) ? $ys : Tuple\Type::box(null, null));
+			return ($xs !== null) ? $xs : (($ys !== null) ? $ys : Tuple\Type::box2(null, null));
 		}
 
 		/**

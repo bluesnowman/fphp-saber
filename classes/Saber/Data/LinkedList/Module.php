@@ -672,7 +672,7 @@ namespace Saber\Data\LinkedList {
 		 * @return Tuple\Type                                       the results
 		 */
 		public static function partition(LinkedList\Type $xs, callable $predicate) {
-			return Tuple\Type::box(
+			return Tuple\Type::box2(
 				LinkedList\Module::filter($xs, $predicate),
 				LinkedList\Module::reject($xs, $predicate)
 			);
@@ -802,7 +802,7 @@ namespace Saber\Data\LinkedList {
 		 * @return Tuple\Type                                       the tuple
 		 */
 		public static function span(LinkedList\Type $xs, callable $predicate) {
-			return Tuple\Type::box(
+			return Tuple\Type::box2(
 				LinkedList\Module::takeWhile($xs, $predicate),
 				LinkedList\Module::dropWhile($xs, $predicate)
 			);
@@ -819,7 +819,7 @@ namespace Saber\Data\LinkedList {
 		 * @return Tuple\Type                                       the tuple
 		 */
 		public static function split(LinkedList\Type $xs, Int32\Type $n) {
-			return Tuple\Type::box(
+			return Tuple\Type::box2(
 				LinkedList\Module::take($xs, $n),
 				LinkedList\Module::drop($xs, $n)
 			);
@@ -927,7 +927,7 @@ namespace Saber\Data\LinkedList {
 				$bs[] = $xs->second();
 			});
 
-			return Tuple\Type::box(LinkedList\Type::box($as), LinkedList\Type::box($bs));
+			return Tuple\Type::box2(LinkedList\Type::box($as), LinkedList\Type::box($bs));
 		}
 
 		/**
@@ -944,7 +944,7 @@ namespace Saber\Data\LinkedList {
 			$tail = null;
 
 			for ($as = $xs, $bs = $ys; !$as->__isEmpty() && !$bs->__isEmpty(); $as = $as->tail(), $bs = $bs->tail()) {
-				$tuple = Tuple\Type::box($as->head(), $bs->head());
+				$tuple = Tuple\Type::box2($as->head(), $bs->head());
 
 				$cons = LinkedList\Type::cons($tuple);
 

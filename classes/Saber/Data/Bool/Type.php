@@ -26,7 +26,7 @@ namespace Saber\Data\Bool {
 
 		#region Traits
 
-		use Core\Module\Dispatcher;
+		use Core\Dispatcher;
 
 		#endregion
 

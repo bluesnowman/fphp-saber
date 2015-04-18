@@ -31,7 +31,7 @@ namespace Saber\Data\LinkedList {
 
 		#region Traits
 
-		use Core\Module\Dispatcher;
+		use Core\Dispatcher;
 
 		#endregion
 

@@ -26,7 +26,7 @@ namespace Saber\Throwable\Runtime\Exception {
 
 		#region Traits
 
-		use Core\Module\Dispatcher;
+		use Core\Dispatcher;
 
 		#endregion
 

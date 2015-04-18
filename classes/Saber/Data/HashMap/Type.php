@@ -35,7 +35,7 @@ namespace Saber\Data\HashMap {
 
 		#region Traits
 
-		use Core\Module\Dispatcher;
+		use Core\Dispatcher;
 
 		#endregion
 

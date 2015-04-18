@@ -31,7 +31,7 @@ namespace Saber\Data\ArrayList {
 
 		#region Traits
 
-		use Core\Module\Dispatcher;
+		use Core\Dispatcher;
 
 		#endregion
 

@@ -33,7 +33,7 @@ namespace Saber\Data\String {
 
 		#region Traits
 
-		use Core\Module\Dispatcher;
+		use Core\Dispatcher;
 
 		#endregion
 

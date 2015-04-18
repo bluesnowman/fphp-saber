@@ -35,7 +35,7 @@ namespace Saber\Data\HashSet {
 
 		#region Traits
 
-		use Core\Module\Dispatcher;
+		use Core\Dispatcher;
 
 		#endregion
 

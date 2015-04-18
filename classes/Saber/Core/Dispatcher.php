@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-namespace Saber\Core\Module {
+namespace Saber\Core {
 
 	use \Saber\Core;
 	use \Saber\Data\String;

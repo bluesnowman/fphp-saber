@@ -29,7 +29,7 @@ namespace Saber\Data\Int32 {
 
 		#region Traits
 
-		use Core\Module\Dispatcher;
+		use Core\Dispatcher;
 
 		#endregion
 

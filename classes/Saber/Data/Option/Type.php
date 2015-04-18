@@ -31,7 +31,7 @@ namespace Saber\Data\Option {
 
 		#region Traits
 
-		use Core\Module\Dispatcher;
+		use Core\Dispatcher;
 
 		#endregion
 

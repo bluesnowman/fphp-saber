@@ -29,7 +29,7 @@ namespace Saber\Data\Double {
 
 		#region Traits
 
-		use Core\Module\Dispatcher;
+		use Core\Dispatcher;
 
 		#endregion
 

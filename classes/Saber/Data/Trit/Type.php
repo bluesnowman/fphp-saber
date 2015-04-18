@@ -32,7 +32,7 @@ namespace Saber\Data\Trit {
 
 		#region Traits
 
-		use Core\Module\Dispatcher;
+		use Core\Dispatcher;
 
 		#endregion
 

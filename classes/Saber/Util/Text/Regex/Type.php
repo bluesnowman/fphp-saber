@@ -28,7 +28,7 @@ namespace Saber\Util\Text\Regex {
 
 		#region Traits
 
-		use Core\Module\Dispatcher;
+		use Core\Dispatcher;
 
 		#endregion
 

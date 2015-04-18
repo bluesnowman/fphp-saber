@@ -30,7 +30,7 @@ namespace Saber\Data\Float {
 
 		#region Traits
 
-		use Core\Module\Dispatcher;
+		use Core\Dispatcher;
 
 		#endregion
 

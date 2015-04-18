@@ -30,7 +30,7 @@ namespace Saber\Data\Ratio {
 
 		#region Traits
 
-		use Core\Module\Dispatcher;
+		use Core\Dispatcher;
 
 		#endregion
 

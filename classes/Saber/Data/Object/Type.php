@@ -28,7 +28,7 @@ namespace Saber\Data\Object {
 
 		#region Traits
 
-		use Core\Module\Dispatcher;
+		use Core\Dispatcher;
 
 		#endregion
 

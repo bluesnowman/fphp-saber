@@ -78,7 +78,7 @@ namespace Saber\Data\Int32 {
 		 * @param mixed $value                                      the value(s) to be boxed
 		 * @return Int32\Type                                       the boxed object
 		 */
-		public static function box($value/*...*/) {
+		public static function box($value) {
 			return new Int32\Type($value);
 		}
 
@@ -91,7 +91,7 @@ namespace Saber\Data\Int32 {
 		 * @param mixed $value                                      the value(s) to be boxed
 		 * @return Int32\Type                                       the boxed object
 		 */
-		public static function make($value/*...*/) {
+		public static function make($value) {
 			return new Int32\Type($value);
 		}
 

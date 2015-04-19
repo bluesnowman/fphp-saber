@@ -94,7 +94,7 @@ namespace Saber\Data\Trit {
 		 * @param mixed $value                                      the value(s) to be boxed
 		 * @return Trit\Type                                        the boxed object
 		 */
-		public static function box($value/*...*/) {
+		public static function box($value) {
 			return new Trit\Type($value);
 		}
 
@@ -107,7 +107,7 @@ namespace Saber\Data\Trit {
 		 * @param mixed $value                                      the value(s) to be boxed
 		 * @return Trit\Type                                        the boxed object
 		 */
-		public static function make($value/*...*/) {
+		public static function make($value) {
 			if ($value < 0) {
 				return Trit\Type::negative();
 			}

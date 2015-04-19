@@ -48,6 +48,19 @@ namespace Saber\Data\Object {
 		#region Methods -> Initialization
 
 		/**
+		 * This method returns a value as a boxed object.  A value is typically a PHP typed
+		 * primitive or object.  It is considered "not" type-safe.
+		 *
+		 * @access public
+		 * @static
+		 * @param mixed $value                                      the value(s) to be boxed
+		 * @return Object\Type                                      the boxed object
+		 */
+		public static function box($value) {
+			return new Object\Type($value);
+		}
+
+		/**
 		 * This method enforces that the specified class is covariant.
 		 *
 		 * @access public
@@ -61,19 +74,6 @@ namespace Saber\Data\Object {
 
 		/**
 		 * This method returns a value as a boxed object.  A value is typically a PHP typed
-		 * primitive or object.  It is considered "not" type-safe.
-		 *
-		 * @access public
-		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return Object\Type                                      the boxed object
-		 */
-		public static function box($value/*...*/) {
-			return new Object\Type($value);
-		}
-
-		/**
-		 * This method returns a value as a boxed object.  A value is typically a PHP typed
 		 * primitive or object.  It is considered type-safe.
 		 *
 		 * @access public
@@ -81,7 +81,7 @@ namespace Saber\Data\Object {
 		 * @param mixed $value                                      the value(s) to be boxed
 		 * @return Object\Type                                      the boxed object
 		 */
-		public static function make($value/*...*/) {
+		public static function make($value) {
 			return new Object\Type($value);
 		}
 

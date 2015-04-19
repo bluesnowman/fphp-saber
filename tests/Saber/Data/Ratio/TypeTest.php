@@ -27,6 +27,29 @@ namespace Saber\Data\Ratio {
 	 */
 	final class TypeTest extends Core\TypeTest {
 
+		#region Tests -> Inheritance
+
+		/**
+		 * This method tests the data type.
+		 */
+		public function testType() {
+			//$this->markTestIncomplete();
+
+			$p0 = new Ratio\Type(Int32\Type::one(), Int32\Type::box(2));
+
+			$this->assertInstanceOf('\\Saber\\Data\\Ratio\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Fractional\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Number\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Core\\Equality\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Core\\Comparable\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Core\\Boxable\\Type', $p0);
+			$this->assertInstanceOf('\\JsonSerializable', $p0);
+			$this->assertInstanceOf('\\Saber\\Core\\Type', $p0);
+		}
+
+		#endregion
+
 		/**
 		 * This method provides the data for testing the boxing of a boxed value.
 		 *

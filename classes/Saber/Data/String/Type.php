@@ -82,7 +82,7 @@ namespace Saber\Data\String {
 		 * @param mixed $value                                      the value(s) to be boxed
 		 * @return String\Type                                      the boxed object
 		 */
-		public static function box($value/*...*/) {
+		public static function box($value) {
 			return new String\Type($value);
 		}
 
@@ -96,7 +96,7 @@ namespace Saber\Data\String {
 		 * @return String\Type                                      the boxed object
 		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
-		public static function make($value/*...*/) {
+		public static function make($value) {
 			if (!is_string($value)) {
 				$type = gettype($value);
 				if ($type == 'object') {

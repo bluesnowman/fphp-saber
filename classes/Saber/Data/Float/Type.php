@@ -67,7 +67,7 @@ namespace Saber\Data\Float {
 		 * @param mixed $value                                      the value(s) to be boxed
 		 * @return Float\Type                                       the boxed object
 		 */
-		public static function box($value/*...*/) {
+		public static function box($value) {
 			return new Float\Type($value);
 		}
 
@@ -92,7 +92,7 @@ namespace Saber\Data\Float {
 		 * @param mixed $value                                      the value(s) to be boxed
 		 * @return Float\Type                                       the boxed object
 		 */
-		public static function make($value/*...*/) {
+		public static function make($value) {
 			return new Float\Type($value);
 		}
 

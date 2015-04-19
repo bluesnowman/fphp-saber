@@ -42,6 +42,7 @@ namespace Saber\Data\Unit {
 			$this->assertInstanceOf('\\Saber\\Core\\Equality\\Type', $p0);
 			$this->assertInstanceOf('\\Saber\\Core\\Comparable\\Type', $p0);
 			$this->assertInstanceOf('\\Saber\\Core\\Boxable\\Type', $p0);
+			$this->assertInstanceOf('\\JsonSerializable', $p0);
 			$this->assertInstanceOf('\\Saber\\Core\\Type', $p0);
 		}
 

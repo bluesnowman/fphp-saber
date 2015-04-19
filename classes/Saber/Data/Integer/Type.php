@@ -78,7 +78,7 @@ namespace Saber\Data\Integer {
 		 * @param mixed $value                                      the value(s) to be boxed
 		 * @return Integer\Type                                     the boxed object
 		 */
-		public static function box($value/*...*/) {
+		public static function box($value) {
 			return new Integer\Type($value);
 		}
 
@@ -92,8 +92,11 @@ namespace Saber\Data\Integer {
 		 * @return Core\Type                                        the boxed object
 		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
-		public static function make($value/*...*/) {
-			if (is_numeric($value)) {
+		public static function make($value) {
+			if (($value === null) || ($value == '')) {
+				$value = 0;
+			}
+			else if (is_numeric($value)) {
 				settype($value, 'integer');
 			}
 			$value = '' . $value;

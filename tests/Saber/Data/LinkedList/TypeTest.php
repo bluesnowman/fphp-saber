@@ -83,6 +83,25 @@ namespace Saber\Data\LinkedList {
 		}
 
 		/**
+		 * This method tests the boxing of a value.
+		 *
+		 * @dataProvider dataBox
+		 */
+		public function testBox2(array $provided, array $expected) {
+			//$this->markTestIncomplete();
+
+			$p0 = call_user_func_array(array('\\Saber\\Data\\LinkedList\\Type', 'box2'), $provided);
+
+			$this->assertInstanceOf('\\Saber\\Data\\LinkedList\\Type', $p0);
+
+			$p1 = $p0->unbox();
+			$e1 = count($expected);
+
+			$this->assertInternalType('array', $p1);
+			$this->assertCount($e1, $p1);
+		}
+
+		/**
 		 * This method provides the data for testing the making of a value.
 		 *
 		 * @return array
@@ -103,6 +122,25 @@ namespace Saber\Data\LinkedList {
 			//$this->markTestIncomplete();
 
 			$p0 = LinkedList\Type::make($provided);
+
+			$this->assertInstanceOf('\\Saber\\Data\\LinkedList\\Type', $p0);
+
+			$p1 = $p0->unbox();
+			$e1 = count($expected);
+
+			$this->assertInternalType('array', $p1);
+			$this->assertCount($e1, $p1);
+		}
+
+		/**
+		 * This method tests the making of a value.
+		 *
+		 * @dataProvider dataMake
+		 */
+		public function testMake2(array $provided, array $expected) {
+			//$this->markTestIncomplete();
+
+			$p0 = call_user_func_array(array('\\Saber\\Data\\LinkedList\\Type', 'make2'), $provided);
 
 			$this->assertInstanceOf('\\Saber\\Data\\LinkedList\\Type', $p0);
 

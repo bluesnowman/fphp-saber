@@ -216,6 +216,7 @@ namespace Saber\Data\HashSet {
 			//$this->markTestIncomplete();
 
 			$items = array(Int32\Type::zero(), Int32\Type::one(), Int32\Type::box(2));
+
 			$p0 = HashSet\Type::make($items)->hasItem($provided[0]);
 			$e0 = $expected[0];
 
@@ -254,7 +255,7 @@ namespace Saber\Data\HashSet {
 		}
 
 		/**
-		 * This method tests that an item is accessible.
+		 * This method tests that the items are retrievable.
 		 */
 		public function testItems() {
 			//$this->markTestIncomplete();

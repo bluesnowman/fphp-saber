@@ -178,9 +178,8 @@ namespace Saber\Data\HashSet {
 			$hashCode = $item->__hashCode();
 			if (array_key_exists($hashCode, $this->value)) {
 				$bucket = $this->value[$hashCode];
-				$type = $item->__typeOf();
 				foreach ($bucket as $entry) {
-					if ($type == $entry->__typeOf()) {
+					if ($entry->__eq($item)) {
 						return true;
 					}
 				}

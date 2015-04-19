@@ -161,6 +161,16 @@ namespace Saber\Data\String {
 		}
 
 		/**
+		 * This method returns the object's hash code.
+		 *
+		 * @access public
+		 * @return string                                           the object's hash code
+		 */
+		public function __hashCode() {
+			return md5($this->value);
+		}
+
+		/**
 		 * This method returns the head object in this list.
 		 *
 		 * @access public

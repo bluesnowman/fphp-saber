@@ -176,13 +176,7 @@ namespace Saber\Data\HashMap {
 		 *                                                          collection
 		 */
 		public final function __entries() {
-			$entries = array();
-			foreach ($this->value as $bucket) {
-				foreach ($bucket as $entry) {
-					$entries[] = $entry;
-				}
-			}
-			return $entries;
+			return $this->unbox();
 		}
 
 		/**
@@ -197,10 +191,8 @@ namespace Saber\Data\HashMap {
 			$hashCode = $key->__hashCode();
 			if (array_key_exists($hashCode, $this->value)) {
 				$bucket = $this->value[$hashCode];
-				$type = $key->__typeOf();
 				foreach ($bucket as $entry) {
-					$second = $entry->second();
-					if ($type == $second->__typeOf()) {
+					if ($entry->first()->__eq($key)) {
 						return true;
 					}
 				}
@@ -380,11 +372,9 @@ namespace Saber\Data\HashMap {
 			$hashCode = $key->__hashCode();
 			if (array_key_exists($hashCode, $this->value)) {
 				$bucket = $this->value[$hashCode];
-				$type = $key->__typeOf();
 				foreach ($bucket as $entry) {
-					$second = $entry->second();
-					if ($type == $second->__typeOf()) {
-						return $second;
+					if ($entry->first()->__eq($key)) {
+						return $entry->second();
 					}
 				}
 			}
@@ -430,10 +420,8 @@ namespace Saber\Data\HashMap {
 			$hashCode = $key->__hashCode();
 			if (array_key_exists($hashCode, $this->value)) {
 				$bucket = $this->value[$hashCode];
-				$type = $key->__typeOf();
 				foreach ($bucket as $entry) {
-					$second = $entry->second();
-					if ($type == $second->__typeOf()) {
+					if ($entry->first()->__eq($key)) {
 						return $this;
 					}
 				}
@@ -456,15 +444,13 @@ namespace Saber\Data\HashMap {
 			$item = Unit\Type::instance();
 			if (array_key_exists($hashCode, $this->value)) {
 				$bucket = $this->value[$hashCode];
-				$type = $key->__typeOf();
 				$buffer = array();
 				foreach ($bucket as $entry) {
-					$second = $entry->second();
-					if ($type != $second->__typeOf()) {
+					if ($entry->first()->__ne($key)) {
 						$buffer[] = $entry;
 					}
 					else{
-						$item = $second;
+						$item = $entry->second();
 					}
 				}
 				if (empty($buffer)) {
@@ -498,7 +484,7 @@ namespace Saber\Data\HashMap {
 		 */
 		public final function unbox($depth = 0) {
 			$buffer = array();
-			foreach ($this->value as $hashCode => $bucket) {
+			foreach ($this->value as $bucket) {
 				foreach ($bucket as $entry) {
 					$buffer[] = ($depth > 0)
 						? $entry->unbox($depth - 1)

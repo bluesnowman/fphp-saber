@@ -103,6 +103,18 @@ namespace Saber\Core {
 		}
 
 		/**
+		 * This method returns the identity for the specified value.
+		 *
+		 * @access public
+		 * @static
+		 * @param Core\Type $x                                      the object being passed
+		 * @return Core\Type                                        the identity of the object
+		 */
+		public static function identity(Core\Type $x) {
+			return $x;
+		}
+
+		/**
 		 * This method returns the value as a String.
 		 *
 		 * @access public

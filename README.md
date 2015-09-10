@@ -66,6 +66,16 @@ $object = Int32\Module::decrement(Int32\Module::increment(Int32\Type::box(7)));
 
 Note: this fluent API only works with methods that return `Core\Type` objects.
 
+### Classes
+
+A `Type` class defines a lean interface for a particular type.
+
+A `Module` class defines a set of methods that are used to process its corresponding `Type` class.  All methods are static and must define for their first argument its corresponding `Type` class.
+
+A `Utilities` class defines an assortment of methods that are related to its corresponding `Type` class.  All methods are static.
+
+An `Iterator` class defines how a collection is counted and iterated over by PHP.
+
 ### Methods
 
 In general, methods that are NOT preceded by two underscores will return a boxed object.
@@ -254,6 +264,7 @@ Below describes the relationships between data types:
         + Trit\Type
       + Ratio\Type : Fractional\Type
     + Object\Type
+    + Regex\Type
     + Unit\Type
   + Throwable\Runtime\Exception
     + Throwable\EmptyCollection\Exception
@@ -263,11 +274,9 @@ Below describes the relationships between data types:
     + Throwable\UnexpectedValue\Exception
     + Throwable\UnimplementedMethod\Exception
     + Throwable\Unknown\Exception
-  + Util\Type
-    + Regex\Type
 ````
 
-Most data types have a module associated with it.  A module contains a set of common static methods for processing its respective data type.
+Most data types have a module associated with it.
 
 Collection types also have an iterator class so that the class can be used with PHP's `foreach` loop.  Because these iterator classes must conform to PHP's `Iterator` and `Countable` interfaces, methods in these classes do not necessarily conform to all of the conventions that this library otherwise uses (i.e. some non-doubly underscored methods will return PHP typed primitives instead their respective `Core\Type` objects).
 

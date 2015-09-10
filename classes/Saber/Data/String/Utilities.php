@@ -16,17 +16,16 @@
  * limitations under the License.
  */
 
-namespace Saber\Util\Text {
+namespace Saber\Data\String {
 
 	use \Saber\Data;
 	use \Saber\Data\ArrayList;
 	use \Saber\Data\Int32;
+	use \Saber\Data\Regex;
 	use \Saber\Data\String;
 	use \Saber\Data\Vector;
-	use \Saber\Util\Text;
-	use \Saber\Util\Text\Regex;
 
-	final class Module extends Data\Module {
+	final class Utilities extends Data\Utilities {
 
 		#region Methods -> Basic Operations
 
@@ -87,7 +86,7 @@ namespace Saber\Util\Text {
 		 * @return String\Type                                      the string
 		 */
 		public static function unlines(Vector\Type $xs) {
-			return Text\Module::join(String\Type::box("\n"), $xs);
+			return String\Utilities::join(String\Type::box("\n"), $xs);
 		}
 
 		/**
@@ -100,7 +99,7 @@ namespace Saber\Util\Text {
 		 * @return String\Type                                      the string
 		 */
 		public static function unwords(Vector\Type $xs) {
-			return Text\Module::join(String\Type::box(' '), $xs);
+			return String\Utilities::join(String\Type::box(' '), $xs);
 		}
 
 		/**

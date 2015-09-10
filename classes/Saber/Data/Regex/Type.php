@@ -16,13 +16,13 @@
  * limitations under the License.
  */
 
-namespace Saber\Util\Text\Regex {
+namespace Saber\Data\Regex {
 
 	use \Saber\Core;
 	use \Saber\Data;
+	use \Saber\Data\Regex;
 	use \Saber\Data\String;
 	use \Saber\Throwable;
-	use \Saber\Util\Text\Regex;
 
 	final class Type extends Data\Type {
 
@@ -41,7 +41,7 @@ namespace Saber\Util\Text\Regex {
 		 * @static
 		 * @var string
 		 */
-		protected static $module = '\\Saber\\Util\\Text\\Regex\\Module';
+		protected static $module = '\\Saber\\Data\\Regex\\Module';
 
 		#endregion
 

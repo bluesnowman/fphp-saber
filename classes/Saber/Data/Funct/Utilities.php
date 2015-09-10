@@ -16,12 +16,27 @@
  * limitations under the License.
  */
 
-namespace Saber\Util\Closure {
+namespace Saber\Data\Funct {
 
 	use \Saber\Core;
 	use \Saber\Data;
 
-	final class Module extends Data\Module {
+	final class Utilities extends Data\Utilities {
+
+		/**
+		 * This method returns a function that will always return a reference to the specified
+		 * object.
+		 *
+		 * @access public
+		 * @static
+		 * @param Core\Type $object                                 the object to be wrapped
+		 * @return callable                                         the wrapped value
+		 */
+		public static function constant(Core\Type $object) {
+			return function() use ($object) {
+				return $object;
+			};
+		}
 
 		/**
 		 * This method is used to curry a closure's arguments.

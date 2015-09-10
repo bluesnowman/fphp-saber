@@ -77,7 +77,7 @@ namespace Saber\Data\Tuple {
 		}
 
 		/**
-		 * This method enforces that the specified class is covariant.
+		 * This method enforces that the specified class is a covariant.
 		 *
 		 * @access public
 		 * @static

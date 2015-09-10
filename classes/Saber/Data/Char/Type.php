@@ -84,7 +84,7 @@ namespace Saber\Data\Char {
 		}
 
 		/**
-		 * This method enforces that the specified class is covariant.
+		 * This method enforces that the specified class is a covariant.
 		 *
 		 * @access public
 		 * @static

@@ -6,6 +6,8 @@ A functional PHP library, which promotes strong typing, immutable objects, and l
 [![Dependency Status](https://www.versioneye.com/user/projects/5531e96410e7149066000cf8/badge.svg?style=flat)](https://www.versioneye.com/user/projects/5531e96410e7149066000cf8)
 [![Build Status](https://secure.travis-ci.org/bluesnowman/fphp-saber.svg)](http://travis-ci.org/bluesnowman/fphp-saber)
 [![Code Coverage](https://codeclimate.com/github/bluesnowman/fphp-saber/badges/gpa.svg)](https://codeclimate.com/github/bluesnowman/fphp-saber)
+[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/bluesnowman/fphp-saber.svg)](http://isitmaintained.com/project/bluesnowman/fphp-saber "Average time to resolve an issue")
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/bluesnowman/fphp-saber.svg)](http://isitmaintained.com/project/bluesnowman/fphp-saber "Percentage of issues still open")
 [More...](https://www.openhub.net/p/fphp-saber)
 
 ### Requirements

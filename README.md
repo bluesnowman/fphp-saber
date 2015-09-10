@@ -54,7 +54,7 @@ $value = $object->unbox();
 
 ### [Fluent API](http://en.wikipedia.org/wiki/Fluent_interface)
 
-Many data types allow for a fluent API; therefore, many methods can be chained together in one statement.  Through the use of PHP's magical `__call` method, certain data types can access their respective module's methods as well as if they were instance methods.  (Methods in a module are defined similarly to how [extension methods](http://msdn.microsoft.com/en-us/library/bb383977.aspx) are defined in C#.)  For example, you can do the following:
+Many data types allow for a fluent API; therefore, many methods can be chained together in one statement.  Through the use of PHP's magical `__call` method, certain data types can access their respective module's methods as if they were instance methods.  (Methods in a module are defined similarly to how [extension methods](http://msdn.microsoft.com/en-us/library/bb383977.aspx) are defined in C#.)  For example, you can do the following:
 
 ````
 $object = Int32\Type::box(7)->increment()->decrement();
@@ -86,12 +86,18 @@ In general, methods that are NOT preceded by two underscores will return a boxed
 $object = Int32\Type::box(7)->increment();
 ````
 
-An exception to this rule is the `unbox` method.
+One notable exception to this rule is the `unbox` method.
 
 Methods that are preceded by two underscores will return an unboxed value, which is typically a PHP typed primitive or object.  This is made possible via PHP's magical `__call` method.
 
 ````
 $value = Int32\Type::box(7)->__increment();
+````
+
+This is essentially functionally equivalent to writing:
+
+````
+$value = Int32\Type::box(7)->increment()->unbox();
 ````
 
 ### Variables
@@ -151,7 +157,6 @@ function(Core\Type $x, Int32\Type $i): Core\Type
 A `$tryblock` function is used to process a block of code that may throw a runtime exception.
 
 ````
-function(): Core\Type
 function(): Core\Type
 ````
 

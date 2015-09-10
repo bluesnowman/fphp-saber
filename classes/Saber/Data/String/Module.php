@@ -341,6 +341,27 @@ namespace Saber\Data\String {
 		}
 
 		/**
+		 * This method returns a formatted string using the specified vector of objects.
+		 *
+		 * @access public
+		 * @static
+		 * @param String\Type $xs                                   the string to be formatted
+		 * @param Vector\Type $args                                 the objects to be incorporated
+		 * @return String\Type                                      the newly formatted string
+		 */
+		public static function format(String\Type $xs, Vector\Type $ys) {
+			$buffer = $xs->unbox();
+			$length = $ys->length();
+
+			for ($i = Int32\Type::zero(); Int32\Module::lt($i, $length)->unbox(); $i = Int32\Module::increment($i)) {
+				$search = '{' . $i->__toString() . '}';
+				$buffer = str_replace($search, $ys->item($i)->__toString(), $buffer);
+			}
+
+			return String\Type::box($buffer);
+		}
+
+		/**
 		 * This method returns a hash map of lists of characters that are considered in the same group.
 		 *
 		 * @access public

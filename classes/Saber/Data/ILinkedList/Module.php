@@ -23,8 +23,8 @@ namespace Saber\Data\ILinkedList {
 	use \Saber\Data\IArrayList;
 	use \Saber\Data\IBool;
 	use \Saber\Data\ICollection;
-	use \Saber\Data\IHashIMap;
-	use \Saber\Data\IHashISet;
+	use \Saber\Data\IHashMap;
+	use \Saber\Data\IHashSet;
 	use \Saber\Data\IInt32;
 	use \Saber\Data\ILinkedList;
 	use \Saber\Data\IOption;
@@ -650,7 +650,7 @@ namespace Saber\Data\ILinkedList {
 		 *                                                          removed
 		 */
 		public static function nub(ILinkedList\Type $xs) {
-			$zs = IHashISet\Type::empty_();
+			$zs = IHashSet\Type::empty_();
 
 			return ILinkedList\Module::filter($xs, function(Core\Type $x, IInt32\Type $i) use ($zs) {
 				if ($zs->__hasItem($x)) {
@@ -690,7 +690,7 @@ namespace Saber\Data\ILinkedList {
 		 *                                                          key
 		 */
 		public static function pluck(ILinkedList\Type $xss, Core\Type $k) {
-			return ILinkedList\Module::map($xss, function(IHashIMap\Type $xs, IInt32\Type $i) use ($k) {
+			return ILinkedList\Module::map($xss, function(IHashMap\Type $xs, IInt32\Type $i) use ($k) {
 				return $xs->item($k);
 			});
 		}

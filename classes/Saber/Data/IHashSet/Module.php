@@ -16,13 +16,13 @@
  * limitations under the License.
  */
 
-namespace Saber\Data\IHashISet {
+namespace Saber\Data\IHashSet {
 
 	use \Saber\Core;
 	use \Saber\Data;
 	use \Saber\Data\IArrayList;
 	use \Saber\Data\IBool;
-	use \Saber\Data\IHashISet;
+	use \Saber\Data\IHashSet;
 	use \Saber\Data\IInt32;
 	use \Saber\Data\ILinkedList;
 	use \Saber\Data\ISet;
@@ -41,13 +41,13 @@ namespace Saber\Data\IHashISet {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashISet\Type $xs                                  the hash set
+		 * @param IHashSet\Type $xs                                  the hash set
 		 * @param callable $predicate                               the predicate function to be used
 		 * @return IBool\Type                                        whether each item passed the
 		 *                                                          truthy test
 		 */
-		public static function all(IHashISet\Type $xs, callable $predicate) {
-			$xi = IHashISet\Module::iterator($xs);
+		public static function all(IHashSet\Type $xs, callable $predicate) {
+			$xi = IHashSet\Module::iterator($xs);
 
 			foreach ($xi as $i => $x) {
 				if (!$predicate($x, $i)->unbox()) {
@@ -64,13 +64,13 @@ namespace Saber\Data\IHashISet {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashISet\Type $xs                                  the hash set
+		 * @param IHashSet\Type $xs                                  the hash set
 		 * @param callable $predicate                               the predicate function to be used
 		 * @return IBool\Type                                        whether some of the items
 		 *                                                          passed the truthy test
 		 */
-		public static function any(IHashISet\Type $xs, callable $predicate) {
-			$xi = IHashISet\Module::iterator($xs);
+		public static function any(IHashSet\Type $xs, callable $predicate) {
+			$xi = IHashSet\Module::iterator($xs);
 
 			foreach ($xi as $i => $x) {
 				if ($predicate($x, $i)->unbox()) {
@@ -86,11 +86,11 @@ namespace Saber\Data\IHashISet {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashISet\Type $xs                                  the hash set
-		 * @return IHashISet\Type                                     the hash set
+		 * @param IHashSet\Type $xs                                  the hash set
+		 * @return IHashSet\Type                                     the hash set
 		 */
-		public static function clear(IHashISet\Type $xs) {
-			return IHashISet\Type::empty_();
+		public static function clear(IHashSet\Type $xs) {
+			return IHashSet\Type::empty_();
 		}
 
 		/**
@@ -99,15 +99,15 @@ namespace Saber\Data\IHashISet {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashISet\Type $xs                                  the first hash set
-		 * @param IHashISet\Type $ys                                  the second hash set
-		 * @return IHashISet\Type                                     a hash set which represents the symmetric
+		 * @param IHashSet\Type $xs                                  the first hash set
+		 * @param IHashSet\Type $ys                                  the second hash set
+		 * @return IHashSet\Type                                     a hash set which represents the symmetric
 		 *                                                          difference of the two specified sets
 		 */
-		public static function difference(IHashISet\Type $xs, IHashISet\Type $ys) {
-			$as = IHashISet\Module::union($xs, $ys);
-			$bs = IHashISet\Module::intersection($xs, $ys);
-			$cs = IHashISet\Module::without($as, $bs);
+		public static function difference(IHashSet\Type $xs, IHashSet\Type $ys) {
+			$as = IHashSet\Module::union($xs, $ys);
+			$bs = IHashSet\Module::intersection($xs, $ys);
+			$cs = IHashSet\Module::without($as, $bs);
 			return $cs;
 		}
 
@@ -116,14 +116,14 @@ namespace Saber\Data\IHashISet {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashISet\Type $xs                                  the hash set
+		 * @param IHashSet\Type $xs                                  the hash set
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return IHashISet\Type                                     the hash set
+		 * @return IHashSet\Type                                     the hash set
 		 */
-		public static function filter(IHashISet\Type $xs, callable $predicate) {
-			$zs = IHashISet\Type::empty_();
+		public static function filter(IHashSet\Type $xs, callable $predicate) {
+			$zs = IHashSet\Type::empty_();
 
-			$xi = IHashISet\Module::iterator($xs);
+			$xi = IHashSet\Module::iterator($xs);
 
 			foreach ($xi as $i => $x) {
 				if ($predicate($x, $i)->unbox()) {
@@ -139,13 +139,13 @@ namespace Saber\Data\IHashISet {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashISet\Type $xs                                  the hash set
+		 * @param IHashSet\Type $xs                                  the hash set
 		 * @param callable $operator                                the operator function to be used
 		 * @param Core\Type $initial                                the initial value to be used
 		 * @return Core\Type                                        the result
 		 */
-		public static function fold(IHashISet\Type $xs, callable $operator, Core\Type $initial) {
-			$xi = IHashISet\Module::iterator($xs);
+		public static function fold(IHashSet\Type $xs, callable $operator, Core\Type $initial) {
+			$xi = IHashSet\Module::iterator($xs);
 			$z = $initial;
 
 			foreach ($xi as $x) {
@@ -160,11 +160,11 @@ namespace Saber\Data\IHashISet {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashISet\Type $xs                                  the hash set
+		 * @param IHashSet\Type $xs                                  the hash set
 		 * @param Core\Type $x                                      the item to be found
 		 * @return IBool\Type                                        whether the item exists
 		 */
-		public static function hasItem(IHashISet\Type $xs, Core\Type $x) {
+		public static function hasItem(IHashSet\Type $xs, Core\Type $x) {
 			return $xs->hasItem($x);
 		}
 
@@ -174,14 +174,14 @@ namespace Saber\Data\IHashISet {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashISet\Type $xs                                  the first hash set
-		 * @param IHashISet\Type $ys                                  the second hash set
-		 * @return IHashISet\Type                                     a hash set which represents the intersection
+		 * @param IHashSet\Type $xs                                  the first hash set
+		 * @param IHashSet\Type $ys                                  the second hash set
+		 * @return IHashSet\Type                                     a hash set which represents the intersection
 		 *                                                          of the two specified hash sets
 		 */
-		public static function intersection(IHashISet\Type $xs, IHashISet\Type $ys) {
-			$zs = IHashISet\Type::empty_();
-			$yi = IHashISet\Module::iterator($ys);
+		public static function intersection(IHashSet\Type $xs, IHashSet\Type $ys) {
+			$zs = IHashSet\Type::empty_();
+			$yi = IHashSet\Module::iterator($ys);
 			foreach ($yi as $y) {
 				if ($xs->__hasItem($y)) {
 					$zs->putItem($zs);
@@ -195,10 +195,10 @@ namespace Saber\Data\IHashISet {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashISet\Type $xs                                  the hash set
+		 * @param IHashSet\Type $xs                                  the hash set
 		 * @return IBool\Type                                        whether the list is empty
 		 */
-		public static function isEmpty(IHashISet\Type $xs) {
+		public static function isEmpty(IHashSet\Type $xs) {
 			return $xs->isEmpty();
 		}
 
@@ -207,13 +207,13 @@ namespace Saber\Data\IHashISet {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashISet\Type $xs                                  the first hash set
-		 * @param IHashISet\Type $ys                                  the second hash set
+		 * @param IHashSet\Type $xs                                  the first hash set
+		 * @param IHashSet\Type $ys                                  the second hash set
 		 * @return IBool\Type                                        whether the second hash set is a
 		 *                                                          subset of the first hash set
 		 */
-		public static function isSubset(IHashISet\Type $xs, IHashISet\Type $ys) {
-			$yi = IHashISet\Module::iterator($ys);
+		public static function isSubset(IHashSet\Type $xs, IHashSet\Type $ys) {
+			$yi = IHashSet\Module::iterator($ys);
 			foreach ($yi as $y) {
 				if (!$xs->__hasItem($y)) {
 					return IBool\Type::false();
@@ -227,13 +227,13 @@ namespace Saber\Data\IHashISet {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashISet\Type $xs                                  the first hash set
-		 * @param IHashISet\Type $ys                                  the second hash set
+		 * @param IHashSet\Type $xs                                  the first hash set
+		 * @param IHashSet\Type $ys                                  the second hash set
 		 * @return IBool\Type                                        whether the second hash set is a
 		 *                                                          superset of the first hash set
 		 */
-		public static function isSuperset(IHashISet\Type $xs, IHashISet\Type $ys) {
-			$xi = IHashISet\Module::iterator($xs);
+		public static function isSuperset(IHashSet\Type $xs, IHashSet\Type $ys) {
+			$xi = IHashSet\Module::iterator($xs);
 			foreach ($xi as $x) {
 				if (!$ys->__hasItem($x)) {
 					return IBool\Type::false();
@@ -247,10 +247,10 @@ namespace Saber\Data\IHashISet {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashISet\Type $xs                                  the hash set
+		 * @param IHashSet\Type $xs                                  the hash set
 		 * @return IArrayList\Type                                   all items in the hash set
 		 */
-		public static function items(IHashISet\Type $xs) {
+		public static function items(IHashSet\Type $xs) {
 			return $xs->items();
 		}
 
@@ -259,11 +259,11 @@ namespace Saber\Data\IHashISet {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashISet\Type $xs                                  the hash set
-		 * @return IHashISet\Iterator                                 an iterator for this collection
+		 * @param IHashSet\Type $xs                                  the hash set
+		 * @return IHashSet\Iterator                                 an iterator for this collection
 		 */
-		public static function iterator(IHashISet\Type $xs) {
-			return new IHashISet\Iterator($xs);
+		public static function iterator(IHashSet\Type $xs) {
+			return new IHashSet\Iterator($xs);
 		}
 
 		/**
@@ -271,14 +271,14 @@ namespace Saber\Data\IHashISet {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashISet\Type $xs                                  the hash set
+		 * @param IHashSet\Type $xs                                  the hash set
 		 * @param callable $subroutine                              the subroutine function to be used
-		 * @return IHashISet\Type                                     the hash set
+		 * @return IHashSet\Type                                     the hash set
 		 */
-		public static function map(IHashISet\Type $xs, callable $subroutine) {
-			$zs = IHashISet\Type::empty_();
+		public static function map(IHashSet\Type $xs, callable $subroutine) {
+			$zs = IHashSet\Type::empty_();
 
-			$xi = IHashISet\Module::iterator($xs);
+			$xi = IHashSet\Module::iterator($xs);
 
 			foreach ($xi as $i => $x) {
 				$zs->putItem($subroutine($x, $i));
@@ -293,15 +293,15 @@ namespace Saber\Data\IHashISet {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashISet\Type $xs                                  the hash set to be partitioned
+		 * @param IHashSet\Type $xs                                  the hash set to be partitioned
 		 * @param callable $predicate                               the predicate function to be used
 		 * @return ITuple\Type                                       the results
 		 */
-		public static function partition(IHashISet\Type $xs, callable $predicate) {
-			$passed = IHashISet\Type::empty_();
-			$failed = IHashISet\Type::empty_();
+		public static function partition(IHashSet\Type $xs, callable $predicate) {
+			$passed = IHashSet\Type::empty_();
+			$failed = IHashSet\Type::empty_();
 
-			$xi = IHashISet\Module::iterator($xs);
+			$xi = IHashSet\Module::iterator($xs);
 
 			foreach ($xi as $i => $x) {
 				if ($predicate($x, $i)->unbox()) {
@@ -320,19 +320,19 @@ namespace Saber\Data\IHashISet {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashISet\Type $xs                                  the hash set to be used
-		 * @return IHashISet\Type                                     the power set
+		 * @param IHashSet\Type $xs                                  the hash set to be used
+		 * @return IHashSet\Type                                     the power set
 		 */
-		public static function powerset(IHashISet\Type $xs) {
-			$css = IHashISet\Type::empty_();
-			$css->putItem(IHashISet\Type::empty_());
-			$xi = IHashISet\Module::iterator($xs);
+		public static function powerset(IHashSet\Type $xs) {
+			$css = IHashSet\Type::empty_();
+			$css->putItem(IHashSet\Type::empty_());
+			$xi = IHashSet\Module::iterator($xs);
 			foreach ($xi as $x) {
-				$as = IHashISet\Type::empty_();
-				$csi = IHashISet\Module::iterator($css);
+				$as = IHashSet\Type::empty_();
+				$csi = IHashSet\Module::iterator($css);
 				foreach ($csi as $cs) {
 					$as->putItem($cs);
-					$bs = IHashISet\Type::box($cs);
+					$bs = IHashSet\Type::box($cs);
 					$bs->putItem($x);
 					$as->putItem($bs);
 				}
@@ -346,12 +346,12 @@ namespace Saber\Data\IHashISet {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashISet\Type $xs                                  the hash set
+		 * @param IHashSet\Type $xs                                  the hash set
 		 * @param Core\Type $x                                      the item to be stored
-		 * @return IHashISet\Type                                     the hash set
+		 * @return IHashSet\Type                                     the hash set
 		 */
-		public static function putItem(IHashISet\Type $xs, Core\Type $x) {
-			$zs = IHashISet\Type::box($xs->unbox());
+		public static function putItem(IHashSet\Type $xs, Core\Type $x) {
+			$zs = IHashSet\Type::box($xs->unbox());
 			$zs->putItem($x);
 			return $zs;
 		}
@@ -361,12 +361,12 @@ namespace Saber\Data\IHashISet {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashISet\Type $xs                                  the hash set
+		 * @param IHashSet\Type $xs                                  the hash set
 		 * @param Core\Type $x                                      the item to be removed
-		 * @return IHashISet\Type                                     the hash set
+		 * @return IHashSet\Type                                     the hash set
 		 */
-		public static function removeItem(IHashISet\Type $xs, Core\Type $x) {
-			$zs = IHashISet\Type::box($xs->unbox());
+		public static function removeItem(IHashSet\Type $xs, Core\Type $x) {
+			$zs = IHashSet\Type::box($xs->unbox());
 			$zs->removeItem($x);
 			return $zs;
 		}
@@ -376,10 +376,10 @@ namespace Saber\Data\IHashISet {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashISet\Type $xs                                  the hash set
+		 * @param IHashSet\Type $xs                                  the hash set
 		 * @return IInt32\Type                                       the size of this collection
 		 */
-		public static function size(IHashISet\Type $xs) {
+		public static function size(IHashSet\Type $xs) {
 			return $xs->size();
 		}
 
@@ -388,14 +388,14 @@ namespace Saber\Data\IHashISet {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashISet\Type $xs                                  the first hash set
-		 * @param IHashISet\Type $ys                                  the second hash set
-		 * @return IHashISet\Type                                     a hash set which represents the union
+		 * @param IHashSet\Type $xs                                  the first hash set
+		 * @param IHashSet\Type $ys                                  the second hash set
+		 * @return IHashSet\Type                                     a hash set which represents the union
 		 *                                                          of the two specified hash sets
 		 */
-		public static function union(IHashISet\Type $xs, IHashISet\Type $ys) {
-			$zs = IHashISet\Type::box($xs->unbox());
-			$yi = IHashISet\Module::iterator($ys);
+		public static function union(IHashSet\Type $xs, IHashSet\Type $ys) {
+			$zs = IHashSet\Type::box($xs->unbox());
+			$yi = IHashSet\Module::iterator($ys);
 			foreach ($yi as $y) {
 				$zs->putItem($y);
 			}
@@ -408,14 +408,14 @@ namespace Saber\Data\IHashISet {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashISet\Type $xs                                  the first hash set
-		 * @param IHashISet\Type $ys                                  the second hash set
-		 * @return IHashISet\Type                                     a hash set which represents the (asymmetric)
+		 * @param IHashSet\Type $xs                                  the first hash set
+		 * @param IHashSet\Type $ys                                  the second hash set
+		 * @return IHashSet\Type                                     a hash set which represents the (asymmetric)
 		 *                                                          difference of the two specified hash sets
 		 */
-		public static function without(IHashISet\Type $xs, IHashISet\Type $ys) {
-			$zs = IHashISet\Type::box($xs->unbox());
-			$yi = IHashISet\Module::iterator($ys);
+		public static function without(IHashSet\Type $xs, IHashSet\Type $ys) {
+			$zs = IHashSet\Type::box($xs->unbox());
+			$yi = IHashSet\Module::iterator($ys);
 			foreach ($yi as $y) {
 				$zs->removeItem($y);
 			}
@@ -432,12 +432,12 @@ namespace Saber\Data\IHashISet {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashISet\Type $xs                                  the value to be evaluated
-		 * @param IHashISet\Type $ys                                  the default value
-		 * @return IHashISet\Type                                     the result
+		 * @param IHashSet\Type $xs                                  the value to be evaluated
+		 * @param IHashSet\Type $ys                                  the default value
+		 * @return IHashSet\Type                                     the result
 		 */
-		public static function nvl(IHashISet\Type $xs = null, IHashISet\Type $ys = null) {
-			return ($xs !== null) ? $xs : (($ys !== null) ? $ys : IHashISet\Type::empty_());
+		public static function nvl(IHashSet\Type $xs = null, IHashSet\Type $ys = null) {
+			return ($xs !== null) ? $xs : (($ys !== null) ? $ys : IHashSet\Type::empty_());
 		}
 
 		/**
@@ -445,12 +445,12 @@ namespace Saber\Data\IHashISet {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashISet\Type $xs                                  the operand
-		 * @return IHashISet\Type                                     the hash set as an array list
+		 * @param IHashSet\Type $xs                                  the operand
+		 * @return IHashSet\Type                                     the hash set as an array list
 		 */
-		public static function toArrayList(IHashISet\Type $xs) {
+		public static function toArrayList(IHashSet\Type $xs) {
 			$buffer = array();
-			$xi = IHashISet\Module::iterator($xs);
+			$xi = IHashSet\Module::iterator($xs);
 			foreach ($xi as $x) {
 				$buffer[] = $x;
 			}
@@ -462,12 +462,12 @@ namespace Saber\Data\IHashISet {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashISet\Type $xs                                  the operand
+		 * @param IHashSet\Type $xs                                  the operand
 		 * @return ILinkedList\Type                                  the hash set as a linked list
 		 */
-		public static function toLinkedList(IHashISet\Type $xs) {
+		public static function toLinkedList(IHashSet\Type $xs) {
 			$zs = ILinkedList\Type::nil();
-			$xi = IHashISet\Module::iterator($xs);
+			$xi = IHashSet\Module::iterator($xs);
 			foreach ($xi as $x) {
 				$zs = ILinkedList\Type::cons($x, $zs);
 			}
@@ -483,16 +483,16 @@ namespace Saber\Data\IHashISet {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashISet\Type $xs                                  the left operand
+		 * @param IHashSet\Type $xs                                  the left operand
 		 * @param Core\Type $ys                                     the right operand
 		 * @return IBool\Type                                        whether the left operand is equal
 		 *                                                          to the right operand
 		 */
-		public static function eq(IHashISet\Type $xs, Core\Type $ys) { // ==
+		public static function eq(IHashSet\Type $xs, Core\Type $ys) { // ==
 			$type = $xs->__typeOf();
 			if (($ys !== null) && ($ys instanceof $type)) {
 				if (IInt32\Module::eq($xs->size(), $ys->size())->unbox()) {
-					return IHashISet\Module::all($xs, function (Core\Type $x, IInt32\Type $i) use ($ys) {
+					return IHashSet\Module::all($xs, function (Core\Type $x, IInt32\Type $i) use ($ys) {
 						return $ys->hasItem($x);
 					});
 				}
@@ -505,12 +505,12 @@ namespace Saber\Data\IHashISet {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashISet\Type $xs                                  the left operand
+		 * @param IHashSet\Type $xs                                  the left operand
 		 * @param Core\Type $ys                                     the right operand
 		 * @return IBool\Type                                        whether the left operand is identical
 		 *                                                          to the right operand
 		 */
-		public static function id(IHashISet\Type $xs, Core\Type $ys) { // ===
+		public static function id(IHashSet\Type $xs, Core\Type $ys) { // ===
 			if (($ys !== null) && ($xs->__typeOf() === $ys->__typeOf())) {
 				if (IInt32\Module::eq($xs->size(), $ys->size())) {
 					return IBool\Type::box((string)serialize($xs) == (string)serialize($ys));
@@ -524,13 +524,13 @@ namespace Saber\Data\IHashISet {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashISet\Type $xs                                  the left operand
+		 * @param IHashSet\Type $xs                                  the left operand
 		 * @param Core\Type $ys                                     the right operand
 		 * @return IBool\Type                                        whether the left operand is NOT equal
 		 *                                                          to the right operand
 		 */
-		public static function ne(IHashISet\Type $xs, Core\Type $ys) { // !=
-			return IBool\Module::not(IHashISet\Module::eq($xs, $ys));
+		public static function ne(IHashSet\Type $xs, Core\Type $ys) { // !=
+			return IBool\Module::not(IHashSet\Module::eq($xs, $ys));
 		}
 
 		/**
@@ -538,13 +538,13 @@ namespace Saber\Data\IHashISet {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashISet\Type $xs                                  the left operand
+		 * @param IHashSet\Type $xs                                  the left operand
 		 * @param Core\Type $ys                                     the right operand
 		 * @return IBool\Type                                        whether the left operand is NOT identical
 		 *                                                          to the right operand
 		 */
-		public static function ni(IHashISet\Type $xs, Core\Type $ys) { // !==
-			return IBool\Module::not(IHashISet\Module::id($xs, $ys));
+		public static function ni(IHashSet\Type $xs, Core\Type $ys) { // !==
+			return IBool\Module::not(IHashSet\Module::id($xs, $ys));
 		}
 
 		#endregion
@@ -556,18 +556,18 @@ namespace Saber\Data\IHashISet {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashISet\Type $xs                                  the left operand
-		 * @param IHashISet\Type $ys                                  the object to be compared
+		 * @param IHashSet\Type $xs                                  the left operand
+		 * @param IHashSet\Type $ys                                  the object to be compared
 		 * @return ITrit\Type                                        whether the current object is less than,
 		 *                                                          equal to, or greater than the specified
 		 *                                                          object
 		 */
-		public static function compare(IHashISet\Type $xs, IHashISet\Type $ys) {
+		public static function compare(IHashSet\Type $xs, IHashSet\Type $ys) {
 			$x_length = $xs->__size();
 			$y_length = $ys->__size();
 
 			if ($x_length == $y_length) {
-				$xi = IHashISet\Module::iterator($xs);
+				$xi = IHashSet\Module::iterator($xs);
 
 				foreach ($xi as $x) {
 					if (!$ys->__hasItem($x)) {
@@ -590,13 +590,13 @@ namespace Saber\Data\IHashISet {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashISet\Type $xs                                  the left operand
-		 * @param IHashISet\Type $ys                                  the right operand
+		 * @param IHashSet\Type $xs                                  the left operand
+		 * @param IHashSet\Type $ys                                  the right operand
 		 * @return IBool\Type                                        whether the left operand is greater
 		 *                                                          than or equal to the right operand
 		 */
-		public static function ge(IHashISet\Type $xs, IHashISet\Type $ys) { // >=
-			return IBool\Type::box(IHashISet\Module::compare($xs, $ys)->unbox() >= 0);
+		public static function ge(IHashSet\Type $xs, IHashSet\Type $ys) { // >=
+			return IBool\Type::box(IHashSet\Module::compare($xs, $ys)->unbox() >= 0);
 		}
 
 		/**
@@ -604,13 +604,13 @@ namespace Saber\Data\IHashISet {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashISet\Type $xs                                  the left operand
-		 * @param IHashISet\Type $ys                                  the right operand
+		 * @param IHashSet\Type $xs                                  the left operand
+		 * @param IHashSet\Type $ys                                  the right operand
 		 * @return IBool\Type                                        whether the left operand is greater
 		 *                                                          than the right operand
 		 */
-		public static function gt(IHashISet\Type $xs, IHashISet\Type $ys) { // >
-			return IBool\Type::box(IHashISet\Module::compare($xs, $ys)->unbox() > 0);
+		public static function gt(IHashSet\Type $xs, IHashSet\Type $ys) { // >
+			return IBool\Type::box(IHashSet\Module::compare($xs, $ys)->unbox() > 0);
 		}
 
 		/**
@@ -618,13 +618,13 @@ namespace Saber\Data\IHashISet {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashISet\Type $xs                                  the left operand
-		 * @param IHashISet\Type $ys                                  the right operand
+		 * @param IHashSet\Type $xs                                  the left operand
+		 * @param IHashSet\Type $ys                                  the right operand
 		 * @return IBool\Type                                        whether the left operand is less than
 		 *                                                          or equal to the right operand
 		 */
-		public static function le(IHashISet\Type $xs, IHashISet\Type $ys) { // <=
-			return IBool\Type::box(IHashISet\Module::compare($xs, $ys)->unbox() <= 0);
+		public static function le(IHashSet\Type $xs, IHashSet\Type $ys) { // <=
+			return IBool\Type::box(IHashSet\Module::compare($xs, $ys)->unbox() <= 0);
 		}
 
 		/**
@@ -632,13 +632,13 @@ namespace Saber\Data\IHashISet {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashISet\Type $xs                                  the left operand
-		 * @param IHashISet\Type $ys                                  the right operand
+		 * @param IHashSet\Type $xs                                  the left operand
+		 * @param IHashSet\Type $ys                                  the right operand
 		 * @return IBool\Type                                        whether the left operand is less than
 		 *                                                          the right operand
 		 */
-		public static function lt(IHashISet\Type $xs, IHashISet\Type $ys) { // <
-			return IBool\Type::box(IHashISet\Module::compare($xs, $ys)->unbox() < 0);
+		public static function lt(IHashSet\Type $xs, IHashSet\Type $ys) { // <
+			return IBool\Type::box(IHashSet\Module::compare($xs, $ys)->unbox() < 0);
 		}
 
 		/**
@@ -646,12 +646,12 @@ namespace Saber\Data\IHashISet {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashISet\Type $xs                                  the left operand
-		 * @param IHashISet\Type $ys                                  the right operand
-		 * @return IHashISet\Type                                     the maximum value
+		 * @param IHashSet\Type $xs                                  the left operand
+		 * @param IHashSet\Type $ys                                  the right operand
+		 * @return IHashSet\Type                                     the maximum value
 		 */
-		public static function max(IHashISet\Type $xs, IHashISet\Type $ys) {
-			return (IHashISet\Module::compare($xs, $ys)->unbox() >= 0) ? $xs : $ys;
+		public static function max(IHashSet\Type $xs, IHashSet\Type $ys) {
+			return (IHashSet\Module::compare($xs, $ys)->unbox() >= 0) ? $xs : $ys;
 		}
 
 		/**
@@ -659,12 +659,12 @@ namespace Saber\Data\IHashISet {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashISet\Type $xs                                  the left operand
-		 * @param IHashISet\Type $ys                                  the right operand
-		 * @return IHashISet\Type                                     the minimum value
+		 * @param IHashSet\Type $xs                                  the left operand
+		 * @param IHashSet\Type $ys                                  the right operand
+		 * @return IHashSet\Type                                     the minimum value
 		 */
-		public static function min(IHashISet\Type $xs, IHashISet\Type $ys) {
-			return (IHashISet\Module::compare($xs, $ys)->unbox() <= 0) ? $xs : $ys;
+		public static function min(IHashSet\Type $xs, IHashSet\Type $ys) {
+			return (IHashSet\Module::compare($xs, $ys)->unbox() <= 0) ? $xs : $ys;
 		}
 
 		#endregion

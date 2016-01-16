@@ -16,10 +16,10 @@
  * limitations under the License.
  */
 
-namespace Saber\Data\IHashISet {
+namespace Saber\Data\IHashSet {
 
 	use \Saber\Core;
-	use \Saber\Data\IHashISet;
+	use \Saber\Data\IHashSet;
 
 	/**
 	 * @group ModuleTest

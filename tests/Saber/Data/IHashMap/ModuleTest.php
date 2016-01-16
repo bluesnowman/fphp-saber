@@ -16,10 +16,10 @@
  * limitations under the License.
  */
 
-namespace Saber\Data\IHashIMap {
+namespace Saber\Data\IHashMap {
 
 	use \Saber\Core;
-	use \Saber\Data\IHashIMap;
+	use \Saber\Data\IHashMap;
 
 	/**
 	 * @group ModuleTest

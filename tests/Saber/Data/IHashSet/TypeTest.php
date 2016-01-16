@@ -16,10 +16,10 @@
  * limitations under the License.
  */
 
-namespace Saber\Data\IHashISet {
+namespace Saber\Data\IHashSet {
 
 	use \Saber\Core;
-	use \Saber\Data\IHashISet;
+	use \Saber\Data\IHashSet;
 	use \Saber\Data\IInt32;
 
 	/**
@@ -35,9 +35,9 @@ namespace Saber\Data\IHashISet {
 		public function testType() {
 			//$this->markTestIncomplete();
 
-			$p0 = new IHashISet\Type();
+			$p0 = new IHashSet\Type();
 
-			$this->assertInstanceOf('\\Saber\\Data\\IHashISet\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\IHashSet\\Type', $p0);
 			$this->assertInstanceOf('\\Saber\\Data\\ISet\\Type', $p0);
 			$this->assertInstanceOf('\\Saber\\Data\\ICollection\\Type', $p0);
 			$this->assertInstanceOf('\\Saber\\Data\\Type', $p0);
@@ -74,9 +74,9 @@ namespace Saber\Data\IHashISet {
 		public function testBox(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
-			$p0 = IHashISet\Type::box($provided);
+			$p0 = IHashSet\Type::box($provided);
 
-			$this->assertInstanceOf('\\Saber\\Data\\IHashISet\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\IHashSet\\Type', $p0);
 
 			$p1 = $p0->unbox();
 			$e1 = $expected[0];
@@ -93,9 +93,9 @@ namespace Saber\Data\IHashISet {
 		public function testBox2(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
-			$p0 = call_user_func_array(array('\\Saber\\Data\\IHashISet\\Type', 'box2'), $provided);
+			$p0 = call_user_func_array(array('\\Saber\\Data\\IHashSet\\Type', 'box2'), $provided);
 
-			$this->assertInstanceOf('\\Saber\\Data\\IHashISet\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\IHashSet\\Type', $p0);
 
 			$p1 = $p0->unbox();
 			$e1 = $expected[0];
@@ -126,9 +126,9 @@ namespace Saber\Data\IHashISet {
 		public function testMake(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
-			$p0 = IHashISet\Type::make($provided);
+			$p0 = IHashSet\Type::make($provided);
 
-			$this->assertInstanceOf('\\Saber\\Data\\IHashISet\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\IHashSet\\Type', $p0);
 
 			$p1 = $p0->unbox();
 			$e1 = $expected[0];
@@ -145,9 +145,9 @@ namespace Saber\Data\IHashISet {
 		public function testMake2(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
-			$p0 = call_user_func_array(array('\\Saber\\Data\\IHashISet\\Type', 'make2'), $provided);
+			$p0 = call_user_func_array(array('\\Saber\\Data\\IHashSet\\Type', 'make2'), $provided);
 
-			$this->assertInstanceOf('\\Saber\\Data\\IHashISet\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\IHashSet\\Type', $p0);
 
 			$p1 = $p0->unbox();
 			$e1 = $expected[0];
@@ -162,9 +162,9 @@ namespace Saber\Data\IHashISet {
 		public function testEmpty() {
 			//$this->markTestIncomplete();
 
-			$p0 = IHashISet\Type::empty_();
+			$p0 = IHashSet\Type::empty_();
 
-			$this->assertInstanceOf('\\Saber\\Data\\IHashISet\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\IHashSet\\Type', $p0);
 
 			$p1 = $p0->unbox();
 			$e1 = 0;
@@ -183,7 +183,7 @@ namespace Saber\Data\IHashISet {
 		public function testClear() {
 			//$this->markTestIncomplete();
 
-			$p0 = IHashISet\Type::make2(IInt32\Type::zero(), IInt32\Type::one(), IInt32\Type::box(2));
+			$p0 = IHashSet\Type::make2(IInt32\Type::zero(), IInt32\Type::one(), IInt32\Type::box(2));
 
 			$p1 = $p0->unbox();
 			$this->assertCount(3, $p1);
@@ -218,7 +218,7 @@ namespace Saber\Data\IHashISet {
 
 			$items = array(IInt32\Type::zero(), IInt32\Type::one(), IInt32\Type::box(2));
 
-			$p0 = IHashISet\Type::make($items)->hasItem($provided[0]);
+			$p0 = IHashSet\Type::make($items)->hasItem($provided[0]);
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p0);
@@ -248,7 +248,7 @@ namespace Saber\Data\IHashISet {
 		public function testIsEmpty(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
-			$p0 = IHashISet\Type::make($provided)->isEmpty();
+			$p0 = IHashSet\Type::make($provided)->isEmpty();
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p0);
@@ -261,7 +261,7 @@ namespace Saber\Data\IHashISet {
 		public function testItems() {
 			//$this->markTestIncomplete();
 
-			$p0 = IHashISet\Type::make2(IInt32\Type::zero(), IInt32\Type::one(), IInt32\Type::box(2))->items();
+			$p0 = IHashSet\Type::make2(IInt32\Type::zero(), IInt32\Type::one(), IInt32\Type::box(2))->items();
 
 			$this->assertInstanceOf('\\Saber\\Data\\IArrayList\\Type', $p0);
 
@@ -294,7 +294,7 @@ namespace Saber\Data\IHashISet {
 		public function testPutItem(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
-			$p0 = new IHashISet\Type();
+			$p0 = new IHashSet\Type();
 
 			foreach ($provided as $item) {
 				$p0->putItem($item);
@@ -329,7 +329,7 @@ namespace Saber\Data\IHashISet {
 		public function testRemoveItem(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
-			$p0 = IHashISet\Type::make2(IInt32\Type::zero(), IInt32\Type::one(), IInt32\Type::box(2));
+			$p0 = IHashSet\Type::make2(IInt32\Type::zero(), IInt32\Type::one(), IInt32\Type::box(2));
 
 			foreach ($provided as $item) {
 				$p0->removeItem($item);
@@ -365,7 +365,7 @@ namespace Saber\Data\IHashISet {
 		public function testSize(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
-			$p0 = IHashISet\Type::make($provided)->size();
+			$p0 = IHashSet\Type::make($provided)->size();
 
 			$this->assertInstanceOf('\\Saber\\Data\\IInt32\\Type', $p0);
 

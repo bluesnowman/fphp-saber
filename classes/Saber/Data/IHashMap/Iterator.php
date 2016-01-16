@@ -16,12 +16,12 @@
  * limitations under the License.
  */
 
-namespace Saber\Data\IHashIMap {
+namespace Saber\Data\IHashMap {
 
 	use \Saber\Core;
 	use \Saber\Data;
 	use \Saber\Data\IBool;
-	use \Saber\Data\IHashIMap;
+	use \Saber\Data\IHashMap;
 	use \Saber\Data\IMap;
 
 	final class Iterator extends Data\Iterator implements IMap\Iterator {
@@ -30,7 +30,7 @@ namespace Saber\Data\IHashIMap {
 		 * This variable stores a reference to the array iterator.
 		 *
 		 * @access protected
-		 * @var IHashIMap\Type
+		 * @var IHashMap\Type
 		 */
 		protected $iterator;
 
@@ -38,7 +38,7 @@ namespace Saber\Data\IHashIMap {
 		 * This variable stores a reference to the collection being iterated.
 		 *
 		 * @access protected
-		 * @var IHashIMap\Type
+		 * @var IHashMap\Type
 		 */
 		protected $xs;
 
@@ -47,10 +47,10 @@ namespace Saber\Data\IHashIMap {
 		 *
 		 * @access public
 		 * @final
-		 * @param IHashIMap\Type $xs                                  the collection to be iterated
+		 * @param IHashMap\Type $xs                                  the collection to be iterated
 		 */
-		public final function __construct(IHashIMap\Type $xs) {
-			$this->iterator = new \RecursiveIteratorIterator(new IHashIMap\RecursiveArrayOnlyIterator($xs->unbox()));
+		public final function __construct(IHashMap\Type $xs) {
+			$this->iterator = new \RecursiveIteratorIterator(new IHashMap\RecursiveArrayOnlyIterator($xs->unbox()));
 			$this->xs = $xs;
 		}
 

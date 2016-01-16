@@ -16,11 +16,11 @@
  * limitations under the License.
  */
 
-namespace Saber\Data\IHashISet {
+namespace Saber\Data\IHashSet {
 
 	use \Saber\Data;
 	use \Saber\Data\IBool;
-	use \Saber\Data\IHashISet;
+	use \Saber\Data\IHashSet;
 	use \Saber\Data\IInt32;
 	use \Saber\Data\ISet;
 
@@ -38,7 +38,7 @@ namespace Saber\Data\IHashISet {
 		 * This variable stores a reference to the collection being iterated.
 		 *
 		 * @access protected
-		 * @var IHashISet\Type
+		 * @var IHashSet\Type
 		 */
 		protected $xs;
 
@@ -55,10 +55,10 @@ namespace Saber\Data\IHashISet {
 		 *
 		 * @access public
 		 * @final
-		 * @param IHashISet\Type $xs                                  the collection to be iterated
+		 * @param IHashSet\Type $xs                                  the collection to be iterated
 		 */
-		public final function __construct(IHashISet\Type $xs) {
-			$this->iterator = new \RecursiveIteratorIterator(new IHashISet\RecursiveArrayOnlyIterator($xs->unbox()));
+		public final function __construct(IHashSet\Type $xs) {
+			$this->iterator = new \RecursiveIteratorIterator(new IHashSet\RecursiveArrayOnlyIterator($xs->unbox()));
 			$this->xs = $xs;
 			$this->i = IInt32\Type::zero();
 		}

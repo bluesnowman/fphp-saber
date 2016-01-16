@@ -16,10 +16,10 @@
  * limitations under the License.
  */
 
-namespace Saber\Data\IHashIMap {
+namespace Saber\Data\IHashMap {
 
 	use \Saber\Core;
-	use \Saber\Data\IHashIMap;
+	use \Saber\Data\IHashMap;
 	use \Saber\Data\IInt32;
 	use \Saber\Data\IString;
 	use \Saber\Data\ITuple;
@@ -38,9 +38,9 @@ namespace Saber\Data\IHashIMap {
 		public function testType() {
 			//$this->markTestIncomplete();
 
-			$p0 = new IHashIMap\Type();
+			$p0 = new IHashMap\Type();
 
-			$this->assertInstanceOf('\\Saber\\Data\\IHashIMap\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\IHashMap\\Type', $p0);
 			$this->assertInstanceOf('\\Saber\\Data\\IMap\\Type', $p0);
 			$this->assertInstanceOf('\\Saber\\Data\\ICollection\\Type', $p0);
 			$this->assertInstanceOf('\\Saber\\Data\\Type', $p0);
@@ -77,9 +77,9 @@ namespace Saber\Data\IHashIMap {
 		public function testBox(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
-			$p0 = IHashIMap\Type::box($provided);
+			$p0 = IHashMap\Type::box($provided);
 
-			$this->assertInstanceOf('\\Saber\\Data\\IHashIMap\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\IHashMap\\Type', $p0);
 
 			$p1 = $p0->unbox();
 			$e1 = $expected[0];
@@ -96,9 +96,9 @@ namespace Saber\Data\IHashIMap {
 		public function testBox2(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
-			$p0 = call_user_func_array(array('\\Saber\\Data\\IHashIMap\\Type', 'box2'), $provided);
+			$p0 = call_user_func_array(array('\\Saber\\Data\\IHashMap\\Type', 'box2'), $provided);
 
-			$this->assertInstanceOf('\\Saber\\Data\\IHashIMap\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\IHashMap\\Type', $p0);
 
 			$p1 = $p0->unbox();
 			$e1 = $expected[0];
@@ -129,9 +129,9 @@ namespace Saber\Data\IHashIMap {
 		public function testMake(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
-			$p0 = IHashIMap\Type::make($provided);
+			$p0 = IHashMap\Type::make($provided);
 
-			$this->assertInstanceOf('\\Saber\\Data\\IHashIMap\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\IHashMap\\Type', $p0);
 
 			$p1 = $p0->unbox();
 			$e1 = $expected[0];
@@ -148,9 +148,9 @@ namespace Saber\Data\IHashIMap {
 		public function testMake2(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
-			$p0 = call_user_func_array(array('\\Saber\\Data\\IHashIMap\\Type', 'make2'), $provided);
+			$p0 = call_user_func_array(array('\\Saber\\Data\\IHashMap\\Type', 'make2'), $provided);
 
-			$this->assertInstanceOf('\\Saber\\Data\\IHashIMap\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\IHashMap\\Type', $p0);
 
 			$p1 = $p0->unbox();
 			$e1 = $expected[0];
@@ -165,9 +165,9 @@ namespace Saber\Data\IHashIMap {
 		public function testEmpty() {
 			//$this->markTestIncomplete();
 
-			$p0 = IHashIMap\Type::empty_();
+			$p0 = IHashMap\Type::empty_();
 
-			$this->assertInstanceOf('\\Saber\\Data\\IHashIMap\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\IHashMap\\Type', $p0);
 
 			$p1 = $p0->unbox();
 			$e1 = 0;
@@ -186,7 +186,7 @@ namespace Saber\Data\IHashIMap {
 		public function testClear() {
 			//$this->markTestIncomplete();
 
-			$p0 = IHashIMap\Type::make2(
+			$p0 = IHashMap\Type::make2(
 				ITuple\Type::box2(IString\Type::box('key0'), IInt32\Type::zero()),
 				ITuple\Type::box2(IString\Type::box('key1'), IInt32\Type::one()),
 				ITuple\Type::box2(IString\Type::box('key2'), IInt32\Type::box(2))
@@ -212,7 +212,7 @@ namespace Saber\Data\IHashIMap {
 				ITuple\Type::box2(IString\Type::box('key2'), IInt32\Type::box(2))
 			);
 
-			$p0 = IHashIMap\Type::make($entries)->entries();
+			$p0 = IHashMap\Type::make($entries)->entries();
 
 			$this->assertInstanceOf('\\Saber\\Data\\IArrayList\\Type', $p0);
 
@@ -251,7 +251,7 @@ namespace Saber\Data\IHashIMap {
 				ITuple\Type::box2(IString\Type::box('key2'), IInt32\Type::box(2))
 			);
 
-			$p0 = IHashIMap\Type::make($entries)->hasKey($provided[0]);
+			$p0 = IHashMap\Type::make($entries)->hasKey($provided[0]);
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p0);
@@ -280,7 +280,7 @@ namespace Saber\Data\IHashIMap {
 		public function testIsEmpty(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
-			$p0 = IHashIMap\Type::make($provided)->isEmpty();
+			$p0 = IHashMap\Type::make($provided)->isEmpty();
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p0);
@@ -316,7 +316,7 @@ namespace Saber\Data\IHashIMap {
 				ITuple\Type::box2(IString\Type::box('key2'), IInt32\Type::box(2))
 			);
 
-			$p0 = IHashIMap\Type::make($entries)->item($provided[0])->unbox();
+			$p0 = IHashMap\Type::make($entries)->item($provided[0])->unbox();
 			$e0 = $expected[0]->unbox();
 
 			$this->assertSame($e0, $p0);
@@ -334,7 +334,7 @@ namespace Saber\Data\IHashIMap {
 				ITuple\Type::box2(IString\Type::box('key2'), IInt32\Type::box(2))
 			);
 
-			$p0 = IHashIMap\Type::make($entries)->items();
+			$p0 = IHashMap\Type::make($entries)->items();
 
 			$this->assertInstanceOf('\\Saber\\Data\\IArrayList\\Type', $p0);
 
@@ -356,7 +356,7 @@ namespace Saber\Data\IHashIMap {
 				ITuple\Type::box2(IString\Type::box('key2'), IInt32\Type::box(2))
 			);
 
-			$p0 = IHashIMap\Type::make($entries)->keys();
+			$p0 = IHashMap\Type::make($entries)->keys();
 
 			$this->assertInstanceOf('\\Saber\\Data\\IArrayList\\Type', $p0);
 
@@ -389,7 +389,7 @@ namespace Saber\Data\IHashIMap {
 		public function testPutEntry(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
-			$p0 = new IHashIMap\Type();
+			$p0 = new IHashMap\Type();
 
 			foreach ($provided as $entry) {
 				$p0->putEntry($entry->first(), $entry->second());
@@ -430,7 +430,7 @@ namespace Saber\Data\IHashIMap {
 				ITuple\Type::box2(IString\Type::box('key2'), IInt32\Type::box(2))
 			);
 
-			$p0 = IHashIMap\Type::make($entries);
+			$p0 = IHashMap\Type::make($entries);
 
 			foreach ($provided as $key) {
 				$p0->removeKey($key);
@@ -464,7 +464,7 @@ namespace Saber\Data\IHashIMap {
 		public function testSize(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
-			$p0 = IHashIMap\Type::make($provided)->size();
+			$p0 = IHashMap\Type::make($provided)->size();
 
 			$this->assertInstanceOf('\\Saber\\Data\\IInt32\\Type', $p0);
 

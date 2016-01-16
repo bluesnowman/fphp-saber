@@ -250,12 +250,12 @@ Below describes the relationships between data types:
         + Left\Type
         + Right\Type
       + IMap\Type
-        + IHashIMap\Type
+        + IHashMap\Type
       + IOption\Type
         + Some\Type
         + None\Type
       + ISet\Type
-        + IHashISet\Type
+        + IHashSet\Type
       + ITuple\Type
       + IVector\Type
         + IArrayList\Type

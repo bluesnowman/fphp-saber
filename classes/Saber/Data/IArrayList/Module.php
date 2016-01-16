@@ -22,8 +22,8 @@ namespace Saber\Data\IArrayList {
 	use \Saber\Data;
 	use \Saber\Data\IArrayList;
 	use \Saber\Data\IBool;
-	use \Saber\Data\IHashIMap;
-	use \Saber\Data\IHashISet;
+	use \Saber\Data\IHashMap;
+	use \Saber\Data\IHashSet;
 	use \Saber\Data\IInt32;
 	use \Saber\Data\ILinkedList;
 	use \Saber\Data\IOption;
@@ -364,11 +364,11 @@ namespace Saber\Data\IArrayList {
 		 * @static
 		 * @param IArrayList\Type $xs                                the array list to be processed
 		 * @param callable $subroutine                              the subroutine to be used
-		 * @return IHashIMap\Type                                     a hash map of lists of items that
+		 * @return IHashMap\Type                                     a hash map of lists of items that
 		 *                                                          are considered in the same group
 		 */
 		public static function group(IArrayList\Type $xs, callable $subroutine) {
-			$groups = IHashIMap\Type::empty_();
+			$groups = IHashMap\Type::empty_();
 
 			IArrayList\Module::each($xs, function(Core\Type $x, IInt32\Type $i) use ($groups, $subroutine) {
 				$key = $subroutine($x, $i);
@@ -635,7 +635,7 @@ namespace Saber\Data\IArrayList {
 		 *                                                          removed
 		 */
 		public static function nub(IArrayList\Type $xs) {
-			$zs = IHashISet\Type::empty_();
+			$zs = IHashSet\Type::empty_();
 
 			return IArrayList\Module::filter($xs, function(Core\Type $x, IInt32\Type $i) use ($zs) {
 				if ($zs->__hasItem($x)) {
@@ -687,7 +687,7 @@ namespace Saber\Data\IArrayList {
 		 *                                                          key
 		 */
 		public static function pluck(IArrayList\Type $xss, Core\Type $k) {
-			return IArrayList\Module::map($xss, function(IHashIMap\Type $xs, IInt32\Type $i) use ($k) {
+			return IArrayList\Module::map($xss, function(IHashMap\Type $xs, IInt32\Type $i) use ($k) {
 				return $xs->item($k);
 			});
 		}

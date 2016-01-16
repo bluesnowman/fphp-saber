@@ -16,13 +16,13 @@
  * limitations under the License.
  */
 
-namespace Saber\Data\IHashIMap {
+namespace Saber\Data\IHashMap {
 
 	use \Saber\Core;
 	use \Saber\Data;
 	use \Saber\Data\IArrayList;
 	use \Saber\Data\IBool;
-	use \Saber\Data\IHashIMap;
+	use \Saber\Data\IHashMap;
 	use \Saber\Data\IInt32;
 	use \Saber\Data\ILinkedList;
 	use \Saber\Data\IMap;
@@ -40,13 +40,13 @@ namespace Saber\Data\IHashIMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashIMap\Type $xs                                  the hash map
+		 * @param IHashMap\Type $xs                                  the hash map
 		 * @param callable $predicate                               the predicate function to be used
 		 * @return IBool\Type                                        whether each item passed the
 		 *                                                          truthy test
 		 */
-		public static function all(IHashIMap\Type $xs, callable $predicate) {
-			$xi = IHashIMap\Module::iterator($xs);
+		public static function all(IHashMap\Type $xs, callable $predicate) {
+			$xi = IHashMap\Module::iterator($xs);
 			$i = IInt32\Type::zero();
 
 			foreach ($xi as $k => $v) {
@@ -66,13 +66,13 @@ namespace Saber\Data\IHashIMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashIMap\Type $xs                                  the hash map
+		 * @param IHashMap\Type $xs                                  the hash map
 		 * @param callable $predicate                               the predicate function to be used
 		 * @return IBool\Type                                        whether some of the items
 		 *                                                          passed the truthy test
 		 */
-		public static function any(IHashIMap\Type $xs, callable $predicate) {
-			$xi = IHashIMap\Module::iterator($xs);
+		public static function any(IHashMap\Type $xs, callable $predicate) {
+			$xi = IHashMap\Module::iterator($xs);
 			$i = IInt32\Type::zero();
 
 			foreach ($xi as $k => $v) {
@@ -91,11 +91,11 @@ namespace Saber\Data\IHashIMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashIMap\Type $xs                                  the hash map
-		 * @return IHashIMap\Type                                     the hash map
+		 * @param IHashMap\Type $xs                                  the hash map
+		 * @return IHashMap\Type                                     the hash map
 		 */
-		public static function clear(IHashIMap\Type $xs) {
-			return IHashIMap\Type::empty_();
+		public static function clear(IHashMap\Type $xs) {
+			return IHashMap\Type::empty_();
 		}
 
 		/**
@@ -103,11 +103,11 @@ namespace Saber\Data\IHashIMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashIMap\Type $xs                                  the hash map
+		 * @param IHashMap\Type $xs                                  the hash map
 		 * @return IArrayList\Type                                   all key/value pairs in the
 		 *                                                          collection
 		 */
-		public static function entries(IHashIMap\Type $xs) {
+		public static function entries(IHashMap\Type $xs) {
 			return $xs->entries();
 		}
 
@@ -116,14 +116,14 @@ namespace Saber\Data\IHashIMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashIMap\Type $xs                                  the hash map
+		 * @param IHashMap\Type $xs                                  the hash map
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return IHashIMap\Type                                     the hash map
+		 * @return IHashMap\Type                                     the hash map
 		 */
-		public static function filter(IHashIMap\Type $xs, callable $predicate) {
-			$zs = IHashIMap\Type::empty_();
+		public static function filter(IHashMap\Type $xs, callable $predicate) {
+			$zs = IHashMap\Type::empty_();
 
-			$xi = IHashIMap\Module::iterator($xs);
+			$xi = IHashMap\Module::iterator($xs);
 			$i = IInt32\Type::zero();
 
 			foreach ($xi as $k => $v) {
@@ -142,13 +142,13 @@ namespace Saber\Data\IHashIMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashIMap\Type $xs                                  the hash map
+		 * @param IHashMap\Type $xs                                  the hash map
 		 * @param callable $operator                                the operator function to be used
 		 * @param Core\Type $initial                                the initial value to be used
 		 * @return Core\Type                                        the result
 		 */
-		public static function fold(IHashIMap\Type $xs, callable $operator, Core\Type $initial) {
-			$xi = IHashIMap\Module::iterator($xs);
+		public static function fold(IHashMap\Type $xs, callable $operator, Core\Type $initial) {
+			$xi = IHashMap\Module::iterator($xs);
 			$z = $initial;
 
 			foreach ($xi as $k => $v) {
@@ -164,11 +164,11 @@ namespace Saber\Data\IHashIMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashIMap\Type $xs                                  the hash map
+		 * @param IHashMap\Type $xs                                  the hash map
 		 * @param Core\Type $k                                      the key to be found
 		 * @return IBool\Type                                        whether the key exists
 		 */
-		public static function hasKey(IHashIMap\Type $xs, Core\Type $k) {
+		public static function hasKey(IHashMap\Type $xs, Core\Type $k) {
 			return $xs->hasKey($k);
 		}
 
@@ -177,10 +177,10 @@ namespace Saber\Data\IHashIMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashIMap\Type $xs                                  the hash map
+		 * @param IHashMap\Type $xs                                  the hash map
 		 * @return IBool\Type                                        whether the list is empty
 		 */
-		public static function isEmpty(IHashIMap\Type $xs) {
+		public static function isEmpty(IHashMap\Type $xs) {
 			return $xs->isEmpty();
 		}
 
@@ -189,12 +189,12 @@ namespace Saber\Data\IHashIMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashIMap\Type $xs                                  the hash map
+		 * @param IHashMap\Type $xs                                  the hash map
 		 * @param Core\Type $k                                      the key to be fetched
 		 * @return Core\Type                                        the item associated with the
 		 *                                                          specified key
 		 */
-		public static function item(IHashIMap\Type $xs, Core\Type $k) {
+		public static function item(IHashMap\Type $xs, Core\Type $k) {
 			return $xs->item($k);
 		}
 
@@ -203,10 +203,10 @@ namespace Saber\Data\IHashIMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashIMap\Type $xs                                  the hash map
+		 * @param IHashMap\Type $xs                                  the hash map
 		 * @return IArrayList\Type                                   all items in the hash map
 		 */
-		public static function items(IHashIMap\Type $xs) {
+		public static function items(IHashMap\Type $xs) {
 			return $xs->items();
 		}
 
@@ -215,11 +215,11 @@ namespace Saber\Data\IHashIMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashIMap\Type $xs                                  the hash map
-		 * @return IHashIMap\Iterator                                 an iterator for this collection
+		 * @param IHashMap\Type $xs                                  the hash map
+		 * @return IHashMap\Iterator                                 an iterator for this collection
 		 */
-		public static function iterator(IHashIMap\Type $xs) {
-			return new IHashIMap\Iterator($xs);
+		public static function iterator(IHashMap\Type $xs) {
+			return new IHashMap\Iterator($xs);
 		}
 
 		/**
@@ -227,10 +227,10 @@ namespace Saber\Data\IHashIMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashIMap\Type $xs                                  the hash map
+		 * @param IHashMap\Type $xs                                  the hash map
 		 * @return IArrayList\Type                                   all keys in the hash map
 		 */
-		public static function keys(IHashIMap\Type $xs) {
+		public static function keys(IHashMap\Type $xs) {
 			return $xs->keys();
 		}
 
@@ -239,19 +239,19 @@ namespace Saber\Data\IHashIMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashIMap\Type $xs                                  the hash map
+		 * @param IHashMap\Type $xs                                  the hash map
 		 * @param callable $subroutine                              the subroutine function to be used
-		 * @return IHashIMap\Type                                     the hash map
+		 * @return IHashMap\Type                                     the hash map
 		 */
-		public static function map(IHashIMap\Type $xs, callable $subroutine) {
-			$zs = IHashIMap\Type::empty_();
+		public static function map(IHashMap\Type $xs, callable $subroutine) {
+			$zs = IHashMap\Type::empty_();
 
-			$xi = IHashIMap\Module::iterator($xs);
+			$xi = IHashMap\Module::iterator($xs);
 			$i = IInt32\Type::zero();
 
 			foreach ($xi as $k => $v) {
 				$entry = ITuple\Type::box2($k, $v);
-				$zs = IHashIMap\Module::putEntry($zs, $subroutine($entry, $i));
+				$zs = IHashMap\Module::putEntry($zs, $subroutine($entry, $i));
 				$i = IInt32\Module::increment($i);
 			}
 
@@ -264,15 +264,15 @@ namespace Saber\Data\IHashIMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashIMap\Type $xs                                  the hash map to be partitioned
+		 * @param IHashMap\Type $xs                                  the hash map to be partitioned
 		 * @param callable $predicate                               the predicate function to be used
 		 * @return ITuple\Type                                       the results
 		 */
-		public static function partition(IHashIMap\Type $xs, callable $predicate) {
-			$passed = IHashIMap\Type::empty_();
-			$failed = IHashIMap\Type::empty_();
+		public static function partition(IHashMap\Type $xs, callable $predicate) {
+			$passed = IHashMap\Type::empty_();
+			$failed = IHashMap\Type::empty_();
 
-			$xi = IHashIMap\Module::iterator($xs);
+			$xi = IHashMap\Module::iterator($xs);
 			$i = IInt32\Type::zero();
 
 			foreach ($xi as $k => $v) {
@@ -294,13 +294,13 @@ namespace Saber\Data\IHashIMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashIMap\Type $xs                                  the hash map
+		 * @param IHashMap\Type $xs                                  the hash map
 		 * @param ITuple\Type $entry                                 the key/value pair to be put
 		 *                                                          in the hash map
-		 * @return IHashIMap\Type                                     the hash map
+		 * @return IHashMap\Type                                     the hash map
 		 */
-		public static function putEntry(IHashIMap\Type $xs, ITuple\Type $entry) {
-			$zs = IHashIMap\Type::box($xs->unbox());
+		public static function putEntry(IHashMap\Type $xs, ITuple\Type $entry) {
+			$zs = IHashMap\Type::box($xs->unbox());
 			$zs->putEntry($entry->first(), $entry->second());
 			return $zs;
 		}
@@ -310,13 +310,13 @@ namespace Saber\Data\IHashIMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashIMap\Type $xs                                  the hash map
+		 * @param IHashMap\Type $xs                                  the hash map
 		 * @param Core\Type $k                                      the key associated with the
 		 *                                                          item to be removed
 		 * @return Core\Type                                        the item removed
 		 */
-		public static function removeKey(IHashIMap\Type $xs, Core\Type $k) {
-			$zs = IHashIMap\Type::box($xs->unbox());
+		public static function removeKey(IHashMap\Type $xs, Core\Type $k) {
+			$zs = IHashMap\Type::box($xs->unbox());
 			$zs->removeKey($k);
 			return $zs;
 		}
@@ -326,10 +326,10 @@ namespace Saber\Data\IHashIMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashIMap\Type $xs                                  the hash map
+		 * @param IHashMap\Type $xs                                  the hash map
 		 * @return IInt32\Type                                       the size of this collection
 		 */
-		public static function size(IHashIMap\Type $xs) {
+		public static function size(IHashMap\Type $xs) {
 			return $xs->size();
 		}
 
@@ -343,12 +343,12 @@ namespace Saber\Data\IHashIMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashIMap\Type $xs                                  the value to be evaluated
-		 * @param IHashIMap\Type $ys                                  the default value
-		 * @return IHashIMap\Type                                     the result
+		 * @param IHashMap\Type $xs                                  the value to be evaluated
+		 * @param IHashMap\Type $ys                                  the default value
+		 * @return IHashMap\Type                                     the result
 		 */
-		public static function nvl(IHashIMap\Type $xs = null, IHashIMap\Type $ys = null) {
-			return ($xs !== null) ? $xs : (($ys !== null) ? $ys : IHashIMap\Type::empty_());
+		public static function nvl(IHashMap\Type $xs = null, IHashMap\Type $ys = null) {
+			return ($xs !== null) ? $xs : (($ys !== null) ? $ys : IHashMap\Type::empty_());
 		}
 
 		/**
@@ -356,12 +356,12 @@ namespace Saber\Data\IHashIMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashIMap\Type $xs                                  the hash map
-		 * @return IHashIMap\Type                                     the hash map as an array list
+		 * @param IHashMap\Type $xs                                  the hash map
+		 * @return IHashMap\Type                                     the hash map as an array list
 		 */
-		public static function toArrayList(IHashIMap\Type $xs) {
+		public static function toArrayList(IHashMap\Type $xs) {
 			$buffer = array();
-			$xi = IHashIMap\Module::iterator($xs);
+			$xi = IHashMap\Module::iterator($xs);
 			foreach ($xi as $x) {
 				$buffer[] = $x;
 			}
@@ -373,12 +373,12 @@ namespace Saber\Data\IHashIMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashIMap\Type $xs                                  the hash map
+		 * @param IHashMap\Type $xs                                  the hash map
 		 * @return ILinkedList\Type                                  the hash map as a linked list
 		 */
-		public static function toLinkedList(IHashIMap\Type $xs) {
+		public static function toLinkedList(IHashMap\Type $xs) {
 			$zs = ILinkedList\Type::nil();
-			$xi = IHashIMap\Module::iterator($xs);
+			$xi = IHashMap\Module::iterator($xs);
 			foreach ($xi as $x) {
 				$zs = ILinkedList\Type::cons($x, $zs);
 			}
@@ -394,16 +394,16 @@ namespace Saber\Data\IHashIMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashIMap\Type $xs                                  the left operand
+		 * @param IHashMap\Type $xs                                  the left operand
 		 * @param Core\Type $ys                                     the right operand
 		 * @return IBool\Type                                        whether the left operand is equal
 		 *                                                          to the right operand
 		 */
-		public static function eq(IHashIMap\Type $xs, Core\Type $ys) { // ==
+		public static function eq(IHashMap\Type $xs, Core\Type $ys) { // ==
 			$type = $xs->__typeOf();
 			if (($ys !== null) && ($ys instanceof $type)) {
 				if (IInt32\Module::__eq($xs->size(), $ys->size())) {
-					return IHashIMap\Module::all($xs, function (ITuple\Type $x, IInt32\Type $i) use ($ys) {
+					return IHashMap\Module::all($xs, function (ITuple\Type $x, IInt32\Type $i) use ($ys) {
 						$key = $x->first();
 						if ($ys->__hasKey($key)) {
 							return $ys->item($key)->eq($x->second());
@@ -420,12 +420,12 @@ namespace Saber\Data\IHashIMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashIMap\Type $xs                                  the left operand
+		 * @param IHashMap\Type $xs                                  the left operand
 		 * @param Core\Type $ys                                     the right operand
 		 * @return IBool\Type                                        whether the left operand is identical
 		 *                                                          to the right operand
 		 */
-		public static function id(IHashIMap\Type $xs, Core\Type $ys) { // ===
+		public static function id(IHashMap\Type $xs, Core\Type $ys) { // ===
 			if (($ys !== null) && ($xs->__typeOf() === $ys->__typeOf())) {
 				if (IInt32\Module::eq($xs->size(), $ys->size())) {
 					return IBool\Type::box((string)serialize($xs) == (string)serialize($ys));
@@ -439,13 +439,13 @@ namespace Saber\Data\IHashIMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashIMap\Type $xs                                  the left operand
+		 * @param IHashMap\Type $xs                                  the left operand
 		 * @param Core\Type $ys                                     the right operand
 		 * @return IBool\Type                                        whether the left operand is NOT equal
 		 *                                                          to the right operand
 		 */
-		public static function ne(IHashIMap\Type $xs, Core\Type $ys) { // !=
-			return IBool\Module::not(IHashIMap\Module::eq($xs, $ys));
+		public static function ne(IHashMap\Type $xs, Core\Type $ys) { // !=
+			return IBool\Module::not(IHashMap\Module::eq($xs, $ys));
 		}
 
 		/**
@@ -453,13 +453,13 @@ namespace Saber\Data\IHashIMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashIMap\Type $xs                                  the left operand
+		 * @param IHashMap\Type $xs                                  the left operand
 		 * @param Core\Type $ys                                     the right operand
 		 * @return IBool\Type                                        whether the left operand is NOT identical
 		 *                                                          to the right operand
 		 */
-		public static function ni(IHashIMap\Type $xs, Core\Type $ys) { // !==
-			return IBool\Module::not(IHashIMap\Module::id($xs, $ys));
+		public static function ni(IHashMap\Type $xs, Core\Type $ys) { // !==
+			return IBool\Module::not(IHashMap\Module::id($xs, $ys));
 		}
 
 		#endregion
@@ -471,18 +471,18 @@ namespace Saber\Data\IHashIMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashIMap\Type $xs                                  the left operand
-		 * @param IHashIMap\Type $ys                                  the object to be compared
+		 * @param IHashMap\Type $xs                                  the left operand
+		 * @param IHashMap\Type $ys                                  the object to be compared
 		 * @return ITrit\Type                                        whether the current object is less than,
 		 *                                                          equal to, or greater than the specified
 		 *                                                          object
 		 */
-		public static function compare(IHashIMap\Type $xs, IHashIMap\Type $ys) {
+		public static function compare(IHashMap\Type $xs, IHashMap\Type $ys) {
 			$x_length = $xs->__size();
 			$y_length = $ys->__size();
 
 			if ($x_length == $y_length) {
-				$xi = IHashIMap\Module::iterator($xs);
+				$xi = IHashMap\Module::iterator($xs);
 
 				foreach ($xi as $k => $v) {
 					if (!$ys->__hasKey($k) || !$ys->item($k)->__eq($v)) {
@@ -505,13 +505,13 @@ namespace Saber\Data\IHashIMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashIMap\Type $xs                                  the left operand
-		 * @param IHashIMap\Type $ys                                  the right operand
+		 * @param IHashMap\Type $xs                                  the left operand
+		 * @param IHashMap\Type $ys                                  the right operand
 		 * @return IBool\Type                                        whether the left operand is greater
 		 *                                                          than or equal to the right operand
 		 */
-		public static function ge(IHashIMap\Type $xs, IHashIMap\Type $ys) { // >=
-			return IBool\Type::box(IHashIMap\Module::compare($xs, $ys)->unbox() >= 0);
+		public static function ge(IHashMap\Type $xs, IHashMap\Type $ys) { // >=
+			return IBool\Type::box(IHashMap\Module::compare($xs, $ys)->unbox() >= 0);
 		}
 
 		/**
@@ -519,13 +519,13 @@ namespace Saber\Data\IHashIMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashIMap\Type $xs                                  the left operand
-		 * @param IHashIMap\Type $ys                                  the right operand
+		 * @param IHashMap\Type $xs                                  the left operand
+		 * @param IHashMap\Type $ys                                  the right operand
 		 * @return IBool\Type                                        whether the left operand is greater
 		 *                                                          than the right operand
 		 */
-		public static function gt(IHashIMap\Type $xs, IHashIMap\Type $ys) { // >
-			return IBool\Type::box(IHashIMap\Module::compare($xs, $ys)->unbox() > 0);
+		public static function gt(IHashMap\Type $xs, IHashMap\Type $ys) { // >
+			return IBool\Type::box(IHashMap\Module::compare($xs, $ys)->unbox() > 0);
 		}
 
 		/**
@@ -533,13 +533,13 @@ namespace Saber\Data\IHashIMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashIMap\Type $xs                                  the left operand
-		 * @param IHashIMap\Type $ys                                  the right operand
+		 * @param IHashMap\Type $xs                                  the left operand
+		 * @param IHashMap\Type $ys                                  the right operand
 		 * @return IBool\Type                                        whether the left operand is less than
 		 *                                                          or equal to the right operand
 		 */
-		public static function le(IHashIMap\Type $xs, IHashIMap\Type $ys) { // <=
-			return IBool\Type::box(IHashIMap\Module::compare($xs, $ys)->unbox() <= 0);
+		public static function le(IHashMap\Type $xs, IHashMap\Type $ys) { // <=
+			return IBool\Type::box(IHashMap\Module::compare($xs, $ys)->unbox() <= 0);
 		}
 
 		/**
@@ -547,13 +547,13 @@ namespace Saber\Data\IHashIMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashIMap\Type $xs                                  the left operand
-		 * @param IHashIMap\Type $ys                                  the right operand
+		 * @param IHashMap\Type $xs                                  the left operand
+		 * @param IHashMap\Type $ys                                  the right operand
 		 * @return IBool\Type                                        whether the left operand is less than
 		 *                                                          the right operand
 		 */
-		public static function lt(IHashIMap\Type $xs, IHashIMap\Type $ys) { // <
-			return IBool\Type::box(IHashIMap\Module::compare($xs, $ys)->unbox() < 0);
+		public static function lt(IHashMap\Type $xs, IHashMap\Type $ys) { // <
+			return IBool\Type::box(IHashMap\Module::compare($xs, $ys)->unbox() < 0);
 		}
 
 		/**
@@ -561,12 +561,12 @@ namespace Saber\Data\IHashIMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashIMap\Type $xs                                  the left operand
-		 * @param IHashIMap\Type $ys                                  the right operand
-		 * @return IHashIMap\Type                                     the maximum value
+		 * @param IHashMap\Type $xs                                  the left operand
+		 * @param IHashMap\Type $ys                                  the right operand
+		 * @return IHashMap\Type                                     the maximum value
 		 */
-		public static function max(IHashIMap\Type $xs, IHashIMap\Type $ys) {
-			return (IHashIMap\Module::compare($xs, $ys)->unbox() >= 0) ? $xs : $ys;
+		public static function max(IHashMap\Type $xs, IHashMap\Type $ys) {
+			return (IHashMap\Module::compare($xs, $ys)->unbox() >= 0) ? $xs : $ys;
 		}
 
 		/**
@@ -574,12 +574,12 @@ namespace Saber\Data\IHashIMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashIMap\Type $xs                                  the left operand
-		 * @param IHashIMap\Type $ys                                  the right operand
-		 * @return IHashIMap\Type                                     the minimum value
+		 * @param IHashMap\Type $xs                                  the left operand
+		 * @param IHashMap\Type $ys                                  the right operand
+		 * @return IHashMap\Type                                     the minimum value
 		 */
-		public static function min(IHashIMap\Type $xs, IHashIMap\Type $ys) {
-			return (IHashIMap\Module::compare($xs, $ys)->unbox() <= 0) ? $xs : $ys;
+		public static function min(IHashMap\Type $xs, IHashMap\Type $ys) {
+			return (IHashMap\Module::compare($xs, $ys)->unbox() <= 0) ? $xs : $ys;
 		}
 
 		#endregion

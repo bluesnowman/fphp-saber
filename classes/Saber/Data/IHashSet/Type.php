@@ -16,13 +16,13 @@
  * limitations under the License.
  */
 
-namespace Saber\Data\IHashISet {
+namespace Saber\Data\IHashSet {
 
 	use \Saber\Core;
 	use \Saber\Data;
 	use \Saber\Data\IArrayList;
 	use \Saber\Data\IBool;
-	use \Saber\Data\IHashISet;
+	use \Saber\Data\IHashSet;
 	use \Saber\Data\IInt32;
 	use \Saber\Data\ISet;
 	use \Saber\Data\IString;
@@ -48,7 +48,7 @@ namespace Saber\Data\IHashISet {
 		 * @static
 		 * @var string
 		 */
-		protected static $module = '\\Saber\\Data\\IHashISet\\Module';
+		protected static $module = '\\Saber\\Data\\IHashSet\\Module';
 
 		/**
 		 * This variable stores the size of the hash set.
@@ -70,10 +70,10 @@ namespace Saber\Data\IHashISet {
 		 * @access public
 		 * @static
 		 * @param array $xs                                         the value(s) to be boxed
-		 * @return IHashISet\Type                                     the boxed object
+		 * @return IHashSet\Type                                     the boxed object
 		 */
 		public static function box(array $xs) {
-			return IHashISet\Type::make($xs);
+			return IHashSet\Type::make($xs);
 		}
 
 		/**
@@ -83,10 +83,10 @@ namespace Saber\Data\IHashISet {
 		 * @access public
 		 * @static
 		 * @param mixed ...$xs                                      the value(s) to be boxed
-		 * @return IHashISet\Type                                     the boxed object
+		 * @return IHashSet\Type                                     the boxed object
 		 */
 		public static function box2(...$xs) {
-			return IHashISet\Type::make($xs);
+			return IHashSet\Type::make($xs);
 		}
 
 		/**
@@ -94,10 +94,10 @@ namespace Saber\Data\IHashISet {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashISet\Type $x                                   the class to be evaluated
-		 * @return IHashISet\Type                                     the class
+		 * @param IHashSet\Type $x                                   the class to be evaluated
+		 * @return IHashSet\Type                                     the class
 		 */
-		public static function covariant(IHashISet\Type $x) {
+		public static function covariant(IHashSet\Type $x) {
 			return $x;
 		}
 		/**
@@ -107,10 +107,10 @@ namespace Saber\Data\IHashISet {
 		 * @access public
 		 * @static
 		 * @param array $xs                                         the value(s) to be boxed
-		 * @return IHashISet\Type                                     the boxed object
+		 * @return IHashSet\Type                                     the boxed object
 		 */
 		public static function make(array $xs) {
-			$zs = new IHashISet\Type();
+			$zs = new IHashSet\Type();
 			foreach ($xs as $x) {
 				$zs->putItem($x);
 			}
@@ -124,10 +124,10 @@ namespace Saber\Data\IHashISet {
 		 * @access public
 		 * @static
 		 * @param mixed ...$xs                                      the value(s) to be boxed
-		 * @return IHashISet\Type                                     the boxed object
+		 * @return IHashSet\Type                                     the boxed object
 		 */
 		public static function make2(...$xs) {
-			return IHashISet\Type::make($xs);
+			return IHashSet\Type::make($xs);
 		}
 
 		/**
@@ -135,10 +135,10 @@ namespace Saber\Data\IHashISet {
 		 *
 		 * @access public
 		 * @static
-		 * @return IHashISet\Type                                     an empty collection
+		 * @return IHashSet\Type                                     an empty collection
 		 */
 		public static function empty_() {
-			return new IHashISet\Type();
+			return new IHashSet\Type();
 		}
 
 		#endregion
@@ -270,7 +270,7 @@ namespace Saber\Data\IHashISet {
 		 *
 		 * @access public
 		 * @final
-		 * @return IHashISet\Type                                     the hash set
+		 * @return IHashSet\Type                                     the hash set
 		 */
 		public final function clear() {
 			$this->value = array();
@@ -317,7 +317,7 @@ namespace Saber\Data\IHashISet {
 		 * @access public
 		 * @final
 		 * @param Core\Type $item                                   the item to be stored
-		 * @return IHashISet\Type                                     the hash set
+		 * @return IHashSet\Type                                     the hash set
 		 *
 		 * @see http://stackoverflow.com/questions/4980757/how-do-hashtables-deal-with-collisions
 		 */
@@ -342,7 +342,7 @@ namespace Saber\Data\IHashISet {
 		 * @access public
 		 * @final
 		 * @param Core\Type $item                                   the item to be removed
-		 * @return IHashISet\Type                                     the hash set
+		 * @return IHashSet\Type                                     the hash set
 		 */
 		public final function removeItem(Core\Type $item) {
 			$hashCode = $item->__hashCode();

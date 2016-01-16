@@ -25,7 +25,7 @@ namespace Saber\Data\IString {
 	use \Saber\Data\IArrayList;
 	use \Saber\Data\IBool;
 	use \Saber\Data\IChar;
-	use \Saber\Data\IHashIMap;
+	use \Saber\Data\IHashMap;
 	use \Saber\Data\IInt32;
 	use \Saber\Data\ILinkedList;
 	use \Saber\Data\IOption;
@@ -368,11 +368,11 @@ namespace Saber\Data\IString {
 		 * @static
 		 * @param IArrayList\Type $xs                                the array list to be processed
 		 * @param callable $subroutine                              the subroutine to be used
-		 * @return IHashIMap\Type                                     a hash map of lists of characters that
+		 * @return IHashMap\Type                                     a hash map of lists of characters that
 		 *                                                          are considered in the same group
 		 */
 		public static function group(IArrayList\Type $xs, callable $subroutine) {
-			$groups = IHashIMap\Type::empty_();
+			$groups = IHashMap\Type::empty_();
 
 			IString\Module::each($xs, function(IChar\Type $x, IInt32\Type $i) use ($groups, $subroutine) {
 				$key = $subroutine($x, $i);

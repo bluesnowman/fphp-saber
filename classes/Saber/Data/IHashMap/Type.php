@@ -16,13 +16,13 @@
  * limitations under the License.
  */
 
-namespace Saber\Data\IHashIMap {
+namespace Saber\Data\IHashMap {
 
 	use \Saber\Core;
 	use \Saber\Data;
 	use \Saber\Data\IArrayList;
 	use \Saber\Data\IBool;
-	use \Saber\Data\IHashIMap;
+	use \Saber\Data\IHashMap;
 	use \Saber\Data\IInt32;
 	use \Saber\Data\IMap;
 	use \Saber\Data\IString;
@@ -48,7 +48,7 @@ namespace Saber\Data\IHashIMap {
 		 * @static
 		 * @var string
 		 */
-		protected static $module = '\\Saber\\Data\\IHashIMap\\Module';
+		protected static $module = '\\Saber\\Data\\IHashMap\\Module';
 
 		/**
 		 * This variable stores the size of the collection.
@@ -70,10 +70,10 @@ namespace Saber\Data\IHashIMap {
 		 * @access public
 		 * @static
 		 * @param array $xss                                        the value(s) to be boxed
-		 * @return IHashIMap\Type                                     the boxed object
+		 * @return IHashMap\Type                                     the boxed object
 		 */
 		public static function box(array $xss) { // an array of tuples
-			return IHashIMap\Type::make($xss);
+			return IHashMap\Type::make($xss);
 		}
 
 		/**
@@ -83,10 +83,10 @@ namespace Saber\Data\IHashIMap {
 		 * @access public
 		 * @static
 		 * @param mixed ...$xss                                     the value(s) to be boxed
-		 * @return IHashIMap\Type                                     the boxed object
+		 * @return IHashMap\Type                                     the boxed object
 		 */
 		public static function box2(...$xss) { // an array of tuples
-			return IHashIMap\Type::make($xss);
+			return IHashMap\Type::make($xss);
 		}
 
 		/**
@@ -94,10 +94,10 @@ namespace Saber\Data\IHashIMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashIMap\Type $x                                   the class to be evaluated
-		 * @return IHashIMap\Type                                     the class
+		 * @param IHashMap\Type $x                                   the class to be evaluated
+		 * @return IHashMap\Type                                     the class
 		 */
-		public static function covariant(IHashIMap\Type $x) {
+		public static function covariant(IHashMap\Type $x) {
 			return $x;
 		}
 
@@ -108,10 +108,10 @@ namespace Saber\Data\IHashIMap {
 		 * @access public
 		 * @static
 		 * @param array $xss                                        the value(s) to be boxed
-		 * @return IHashIMap\Type                                     the boxed object
+		 * @return IHashMap\Type                                     the boxed object
 		 */
 		public static function make(array $xss) { // an array of tuples
-			$zs = new IHashIMap\Type();
+			$zs = new IHashMap\Type();
 			foreach ($xss as $xs) {
 				$zs->putEntry($xs->first(), $xs->second());
 			}
@@ -125,10 +125,10 @@ namespace Saber\Data\IHashIMap {
 		 * @access public
 		 * @static
 		 * @param mixed ...$xss                                     the value(s) to be boxed
-		 * @return IHashIMap\Type                                     the boxed object
+		 * @return IHashMap\Type                                     the boxed object
 		 */
 		public static function make2(...$xss) { // an array of tuples
-			return IHashIMap\Type::make($xss);
+			return IHashMap\Type::make($xss);
 		}
 
 		/**
@@ -136,10 +136,10 @@ namespace Saber\Data\IHashIMap {
 		 *
 		 * @access public
 		 * @static
-		 * @return IHashIMap\Type                                     an empty collection
+		 * @return IHashMap\Type                                     an empty collection
 		 */
 		public static function empty_() {
-			return new IHashIMap\Type();
+			return new IHashMap\Type();
 		}
 
 		#endregion
@@ -317,7 +317,7 @@ namespace Saber\Data\IHashIMap {
 		 *
 		 * @access public
 		 * @final
-		 * @return IHashIMap\Type                                     the collection
+		 * @return IHashMap\Type                                     the collection
 		 */
 		public final function clear() {
 			$this->value = array();
@@ -412,7 +412,7 @@ namespace Saber\Data\IHashIMap {
 		 * @param Core\Type $key                                    the key to associate with
 		 *                                                          the item
 		 * @param Core\Type $item                                   the item to be stored
-		 * @return IHashIMap\Type                                     the hash map
+		 * @return IHashMap\Type                                     the hash map
 		 *
 		 * @see http://stackoverflow.com/questions/4980757/how-do-hashtables-deal-with-collisions
 		 */

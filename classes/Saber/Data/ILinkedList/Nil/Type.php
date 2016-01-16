@@ -44,20 +44,20 @@ namespace Saber\Data\ILinkedList\Nil {
 		 * This method returns the head object in this linked list.
 		 *
 		 * @access public
-		 * @throws Throwable\EmptyICollection\Exception              indicates that the collection is empty
+		 * @throws Throwable\EmptyCollection\Exception              indicates that the collection is empty
 		 */
 		public final function head() {
-			throw new Throwable\EmptyICollection\Exception('Unable to return head object. Linked list is empty.');
+			throw new Throwable\EmptyCollection\Exception('Unable to return head object. Linked list is empty.');
 		}
 
 		/**
 		 * This method returns the tail of this linked list.
 		 *
 		 * @access public
-		 * @throws Throwable\EmptyICollection\Exception              indicates that the collection is empty
+		 * @throws Throwable\EmptyCollection\Exception              indicates that the collection is empty
 		 */
 		public final function tail() {
-			throw new Throwable\EmptyICollection\Exception('Unable to return tail. Linked list is empty.');
+			throw new Throwable\EmptyCollection\Exception('Unable to return tail. Linked list is empty.');
 		}
 
 		/**

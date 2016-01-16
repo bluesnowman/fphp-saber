@@ -274,7 +274,7 @@ Below describes the relationships between data types:
     + IRegex\Type
     + IUnit\Type
   + Throwable\Runtime\Exception
-    + Throwable\EmptyICollection\Exception
+    + Throwable\EmptyCollection\Exception
     + Throwable\InvalidArgument\Exception
     + Throwable\OutOfBounds\Exception
     + Throwable\Parse\Exception

@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-namespace Saber\Throwable\EmptyICollection {
+namespace Saber\Throwable\EmptyCollection {
 
 	use \Saber\Core;
 	use \Saber\Data\IInt32;

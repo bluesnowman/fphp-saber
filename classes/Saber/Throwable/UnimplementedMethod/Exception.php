@@ -19,7 +19,7 @@
 namespace Saber\Throwable\UnimplementedMethod {
 
 	use \Saber\Core;
-	use \Saber\Data\Int32;
+	use \Saber\Data\IInt32;
 	use \Saber\Throwable;
 
 	class Exception extends \BadMethodCallException implements Throwable\Runtime\Exception, Core\Comparable\Type, Core\Equality\Type {
@@ -38,12 +38,12 @@ namespace Saber\Throwable\UnimplementedMethod {
 		 * @access public
 		 * @param string $message                                   the error message
 		 * @param array $values                                     the value to be formatted
-		 * @param Int32\Type $code                                  the exception code
+		 * @param IInt32\Type $code                                  the exception code
 		 */
-		public function __construct($message = '', array $values = null, Int32\Type $code = null) {
+		public function __construct($message = '', array $values = null, IInt32\Type $code = null) {
 			parent::__construct(
 				empty($values) ? (string) $message : strtr( (string) $message, $values),
-				Int32\Module::nvl($code)->unbox()
+				IInt32\Module::nvl($code)->unbox()
 			);
 		}
 

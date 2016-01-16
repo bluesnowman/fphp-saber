@@ -20,7 +20,7 @@ namespace Saber\Control {
 
 	use \Saber\Control;
 	use \Saber\Core;
-	use \Saber\Data\Int32;
+	use \Saber\Data\IInt32;
 
 	/**
 	 * @group TypeTest
@@ -33,33 +33,33 @@ namespace Saber\Control {
 		public function testChoice() {
 			//$this->markTestIncomplete();
 
-			$p0 = Int32\Type::make(0);
+			$p0 = IInt32\Type::make(0);
 			$e0 = 0;
 
-			$p1 = Int32\Type::make(1);
+			$p1 = IInt32\Type::make(1);
 			$e1 = 1;
 
 			Control\Type::choice($p0)
-				->when($p0, function(Int32\Type $x) use($e0) {
+				->when($p0, function(IInt32\Type $x) use($e0) {
 					$this->assertSame($e0, $x->unbox());
 				})
-				->otherwise(function(Int32\Type $x) use($e1) {
+				->otherwise(function(IInt32\Type $x) use($e1) {
 					$this->assertSame($e1, $x->unbox());
 				})
 			->end();
 			Control\Type::choice($p0)
-				->when($p1, function(Int32\Type $x) use($e1) {
+				->when($p1, function(IInt32\Type $x) use($e1) {
 					$this->assertSame($e1, $x->unbox());
 				})
-				->when($p0, function(Int32\Type $x) use($e0) {
+				->when($p0, function(IInt32\Type $x) use($e0) {
 					$this->assertSame($e0, $x->unbox());
 				})
 			->end();
 			Control\Type::choice($p0)
-				->when($p1, function(Int32\Type $x) use($e1) {
+				->when($p1, function(IInt32\Type $x) use($e1) {
 					$this->assertSame($e1, $x->unbox());
 				})
-				->otherwise(function(Int32\Type $x) use($e0) {
+				->otherwise(function(IInt32\Type $x) use($e0) {
 					$this->assertSame($e0, $x->unbox());
 				})
 			->end();

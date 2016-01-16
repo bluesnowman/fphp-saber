@@ -20,7 +20,7 @@ namespace Saber\Core {
 
 	use \Saber\Control;
 	use \Saber\Core;
-	use \Saber\Data\String;
+	use \Saber\Data\IString;
 	use \Saber\Throwable;
 
 	abstract class Module {
@@ -96,7 +96,7 @@ namespace Saber\Core {
 		 * @access public
 		 * @static
 		 * @param Core\Type $x                                      the object to be evaluated
-		 * @return String\Type                                      the object's hash code
+		 * @return IString\Type                                      the object's hash code
 		 */
 		public static function hashCode(Core\Type $x) {
 			return $x->hashCode();
@@ -115,12 +115,12 @@ namespace Saber\Core {
 		}
 
 		/**
-		 * This method returns the value as a String.
+		 * This method returns the value as a IString.
 		 *
 		 * @access public
 		 * @static
 		 * @param Core\Type $x                                      the object to be converted
-		 * @return String\Type                                      the value as a String
+		 * @return IString\Type                                      the value as a IString
 		 */
 		public static function toString(Core\Type $x) {
 			return $x->toString();
@@ -132,7 +132,7 @@ namespace Saber\Core {
 		 * @access public
 		 * @static
 		 * @param Core\Type $x                                      the object to be evaluated
-		 * @return String\Type                                      the object's class type
+		 * @return IString\Type                                      the object's class type
 		 */
 		public static function typeOf(Core\Type $x) {
 			return $x->typeOf();

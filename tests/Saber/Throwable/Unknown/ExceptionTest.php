@@ -19,7 +19,7 @@
 namespace Saber\Throwable\Unknown {
 
 	use \Saber\Core;
-	use \Saber\Data\Int32;
+	use \Saber\Data\IInt32;
 	use \Saber\Throwable;
 
 	/**
@@ -35,7 +35,7 @@ namespace Saber\Throwable\Unknown {
 		public function testType() {
 			//$this->markTestIncomplete();
 
-			$p0 = new Throwable\Unknown\Exception(new Throwable\InvalidArgument\Exception('', array(), Int32\Type::zero()));
+			$p0 = new Throwable\Unknown\Exception(new Throwable\InvalidArgument\Exception('', array(), IInt32\Type::zero()));
 
 			$this->assertInstanceOf('\\Saber\\Throwable\\Runtime\\Exception', $p0);
 			$this->assertInstanceOf('\\Saber\\Throwable\\Unknown\\Exception', $p0);
@@ -54,9 +54,9 @@ namespace Saber\Throwable\Unknown {
 		 */
 		public function dataBox() {
 			$data = array(
-				array(array(new Throwable\InvalidArgument\Exception('', array(), Int32\Type::zero())), array(0)),
+				array(array(new Throwable\InvalidArgument\Exception('', array(), IInt32\Type::zero())), array(0)),
 				array(array(new Throwable\InvalidArgument\Exception('', array(), null)), array(0)),
-				array(array(new Throwable\InvalidArgument\Exception('', array(), Int32\Type::one())), array(1)),
+				array(array(new Throwable\InvalidArgument\Exception('', array(), IInt32\Type::one())), array(1)),
 			);
 			return $data;
 		}
@@ -87,8 +87,8 @@ namespace Saber\Throwable\Unknown {
 			$data = array(
 				array(
 					array(
-						array('', array(), Int32\Type::zero()),
-						array('', array(), Int32\Type::zero())
+						array('', array(), IInt32\Type::zero()),
+						array('', array(), IInt32\Type::zero())
 					),
 					array(0)
 				),
@@ -111,7 +111,7 @@ namespace Saber\Throwable\Unknown {
 			);
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Trit\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\ITrit\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -120,9 +120,9 @@ namespace Saber\Throwable\Unknown {
 		 *
 		 * @return array
 		 */
-		public function data2String() {
+		public function data2IString() {
 			$data = array(
-				array(array(new Throwable\InvalidArgument\Exception('Message', array(), Int32\Type::zero())), array('Saber\\Throwable\\InvalidArgument\\Exception [ 0 ]: Message ~ ')),
+				array(array(new Throwable\InvalidArgument\Exception('Message', array(), IInt32\Type::zero())), array('Saber\\Throwable\\InvalidArgument\\Exception [ 0 ]: Message ~ ')),
 			);
 			return $data;
 		}
@@ -130,9 +130,9 @@ namespace Saber\Throwable\Unknown {
 		/**
 		 * This method tests that a value is converted to a string.
 		 *
-		 * @dataProvider data2String
+		 * @dataProvider data2IString
 		 */
-		public function testToString(array $provided, array $expected) {
+		public function testToIString(array $provided, array $expected) {
 			$p0 = Throwable\Unknown\Exception::make($provided)->__toString();
 			$e0 = $expected[0];
 

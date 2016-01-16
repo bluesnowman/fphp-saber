@@ -19,9 +19,9 @@
 namespace Saber\Control\Exception {
 
 	use \Saber\Control;
-	use \Saber\Data\Int32;
-	use \Saber\Data\Either;
-	use \Saber\Data\Unit;
+	use \Saber\Data\IInt32;
+	use \Saber\Data\IEither;
+	use \Saber\Data\IUnit;
 	use \Saber\Throwable;
 
 	final class Module extends Control\Module {
@@ -51,17 +51,17 @@ namespace Saber\Control\Exception {
 		 * @public
 		 * @static
 		 * @param callable $tryblock                                the try-block to be processed
-		 * @return Either\Type                                      either a Left\Type or a Right\Type
+		 * @return IEither\Type                                      either a Left\Type or a Right\Type
 		 */
 		public static function try_(callable $tryblock) {
 			try {
-				return Either\Type::right($tryblock());
+				return IEither\Type::right($tryblock());
 			}
 			catch (Throwable\Runtime\Exception $re) {
-				return Either\Type::left($re);
+				return IEither\Type::left($re);
 			}
 			catch (\Exception $ue) {
-				return Either\Type::left(new Throwable\Unknown\Exception($ue));
+				return IEither\Type::left(new Throwable\Unknown\Exception($ue));
 			}
 		}
 

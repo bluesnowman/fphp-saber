@@ -16,10 +16,10 @@
  * limitations under the License.
  */
 
-namespace Saber\Throwable\EmptyCollection {
+namespace Saber\Throwable\EmptyICollection {
 
 	use \Saber\Core;
-	use \Saber\Data\Int32;
+	use \Saber\Data\IInt32;
 	use \Saber\Throwable;
 
 	/**
@@ -34,8 +34,8 @@ namespace Saber\Throwable\EmptyCollection {
 		 */
 		public function dataBox() {
 			$data = array(
-				array(array('', array(), Int32\Type::zero()), array('', array(), Int32\Type::zero())),
-				array(array('', array(), null), array('', array(), Int32\Type::zero())),
+				array(array('', array(), IInt32\Type::zero()), array('', array(), IInt32\Type::zero())),
+				array(array('', array(), null), array('', array(), IInt32\Type::zero())),
 			);
 			return $data;
 		}
@@ -46,13 +46,13 @@ namespace Saber\Throwable\EmptyCollection {
 		 * @dataProvider dataBox
 		 */
 		public function testBox(array $provided, array $expected) {
-			$p0 = Throwable\EmptyCollection\Exception::make($provided);
-			$e0 = new Throwable\EmptyCollection\Exception($expected[0], $expected[1], $expected[2]);
+			$p0 = Throwable\EmptyICollection\Exception::make($provided);
+			$e0 = new Throwable\EmptyICollection\Exception($expected[0], $expected[1], $expected[2]);
 
 			$this->assertInstanceOf('\\RuntimeException', $p0);
 			$this->assertInstanceOf('\\Saber\\Core\\Type', $p0);
 			$this->assertInstanceOf('\\Saber\\Throwable\\Runtime\\Exception', $p0);
-			$this->assertInstanceOf('\\Saber\\Throwable\\EmptyCollection\\Exception', $p0);
+			$this->assertInstanceOf('\\Saber\\Throwable\\EmptyICollection\\Exception', $p0);
 			$this->assertEquals($e0, $p0);
 			$this->assertTrue($e0->__eq($p0));
 
@@ -70,7 +70,7 @@ namespace Saber\Throwable\EmptyCollection {
 		 */
 		public function dataCompare() {
 			$data = array(
-				array(array(array('', array(), Int32\Type::zero()), array('', array(), Int32\Type::zero())), array(0)),
+				array(array(array('', array(), IInt32\Type::zero()), array('', array(), IInt32\Type::zero())), array(0)),
 			);
 			return $data;
 		}
@@ -81,10 +81,10 @@ namespace Saber\Throwable\EmptyCollection {
 		 * @dataProvider dataCompare
 		 */
 		public function testCompare(array $provided, array $expected) {
-			$p0 = Throwable\EmptyCollection\Exception::make($provided[0])->compare(Throwable\EmptyCollection\Exception::make($provided[1]));
+			$p0 = Throwable\EmptyICollection\Exception::make($provided[0])->compare(Throwable\EmptyICollection\Exception::make($provided[1]));
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\Trit\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\ITrit\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
@@ -93,9 +93,9 @@ namespace Saber\Throwable\EmptyCollection {
 		 *
 		 * @return array
 		 */
-		public function data2String() {
+		public function data2IString() {
 			$data = array(
-				array(array('Message', array(), Int32\Type::zero()), array('Saber\\Throwable\\EmptyCollection\\Exception [ 0 ]: Message ~ ')),
+				array(array('Message', array(), IInt32\Type::zero()), array('Saber\\Throwable\\EmptyICollection\\Exception [ 0 ]: Message ~ ')),
 			);
 			return $data;
 		}
@@ -103,10 +103,10 @@ namespace Saber\Throwable\EmptyCollection {
 		/**
 		 * This method tests that a value is converted to a string.
 		 *
-		 * @dataProvider data2String
+		 * @dataProvider data2IString
 		 */
-		public function testToString(array $provided, array $expected) {
-			$p0 = Throwable\EmptyCollection\Exception::make($provided)->__toString();
+		public function testToIString(array $provided, array $expected) {
+			$p0 = Throwable\EmptyICollection\Exception::make($provided)->__toString();
 			$e0 = $expected[0];
 
 			$this->assertInternalType('string', $p0);

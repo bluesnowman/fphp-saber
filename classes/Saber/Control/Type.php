@@ -20,7 +20,7 @@ namespace Saber\Control {
 
 	use \Saber\Control;
 	use \Saber\Core;
-	use \Saber\Data\String;
+	use \Saber\Data\IString;
 
 	abstract class Type implements Core\Type {
 
@@ -84,10 +84,10 @@ namespace Saber\Control {
 		 *
 		 * @access public
 		 * @final
-		 * @return String\Type                                      the object's hash code
+		 * @return IString\Type                                      the object's hash code
 		 */
 		public final function hashCode() {
-			return String\Type::box($this->__hashCode());
+			return IString\Type::box($this->__hashCode());
 		}
 
 		/**
@@ -95,10 +95,10 @@ namespace Saber\Control {
 		 *
 		 * @access public
 		 * @final
-		 * @return String\Type                                      the object as a string
+		 * @return IString\Type                                      the object as a string
 		 */
 		public final function toString() {
-			return String\Type::box($this->__toString());
+			return IString\Type::box($this->__toString());
 		}
 
 		/**
@@ -106,10 +106,10 @@ namespace Saber\Control {
 		 *
 		 * @access public
 		 * @final
-		 * @return String\Type                                      the object's class type
+		 * @return IString\Type                                      the object's class type
 		 */
 		public final function typeOf() {
-			return String\Type::box($this->__typeOf());
+			return IString\Type::box($this->__typeOf());
 		}
 
 		#endregion

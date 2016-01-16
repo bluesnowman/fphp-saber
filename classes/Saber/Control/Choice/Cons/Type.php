@@ -20,7 +20,7 @@ namespace Saber\Control\Choice\Cons {
 
 	use \Saber\Control;
 	use \Saber\Core;
-	use \Saber\Data\Unit;
+	use \Saber\Data\IUnit;
 
 	final class Type extends Control\Choice\Type {
 
@@ -104,7 +104,7 @@ namespace Saber\Control\Choice\Cons {
 		 */
 		public final function otherwise(callable $procedure) {
 			$this->predicate = function($x) use ($procedure) {
-				Unit\Type::covariant($procedure($x));
+				IUnit\Type::covariant($procedure($x));
 				return true;
 			};
 			return Control\Choice\Type::cons($this->x, $this);
@@ -124,7 +124,7 @@ namespace Saber\Control\Choice\Cons {
 		public final function unless(Core\Equality\Type $y, callable $procedure) {
 			$this->predicate = function($x) use ($y, $procedure) {
 				if (!$y->__eq($x)) {
-					Unit\Type::covariant($procedure($x));
+					IUnit\Type::covariant($procedure($x));
 					return true;
 				}
 				return false;
@@ -146,7 +146,7 @@ namespace Saber\Control\Choice\Cons {
 		public final function when(Core\Equality\Type $y, callable $procedure) {
 			$this->predicate = function($x) use ($y, $procedure) {
 				if ($y->__eq($x)) {
-					Unit\Type::covariant($procedure($x));
+					IUnit\Type::covariant($procedure($x));
 					return true;
 				}
 				return false;

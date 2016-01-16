@@ -52,7 +52,7 @@ class ClassLoader
     private $fallbackDirsPsr0 = array();
 
     private $useIncludePath = false;
-    private $classMap = array();
+    private $classIMap = array();
 
     public function getPrefixes()
     {
@@ -74,20 +74,20 @@ class ClassLoader
         return $this->fallbackDirsPsr4;
     }
 
-    public function getClassMap()
+    public function getClassIMap()
     {
-        return $this->classMap;
+        return $this->classIMap;
     }
 
     /**
-     * @param array $classMap Class to filename map
+     * @param array $classIMap Class to filename map
      */
-    public function addClassMap(array $classMap)
+    public function addClassIMap(array $classIMap)
     {
-        if ($this->classMap) {
-            $this->classMap = array_merge($this->classMap, $classMap);
+        if ($this->classIMap) {
+            $this->classIMap = array_merge($this->classIMap, $classIMap);
         } else {
-            $this->classMap = $classMap;
+            $this->classIMap = $classIMap;
         }
     }
 
@@ -292,8 +292,8 @@ class ClassLoader
         }
 
         // class map lookup
-        if (isset($this->classMap[$class])) {
-            return $this->classMap[$class];
+        if (isset($this->classIMap[$class])) {
+            return $this->classIMap[$class];
         }
 
         $file = $this->findFileWithExtension($class, '.php');
@@ -305,7 +305,7 @@ class ClassLoader
 
         if ($file === null) {
             // Remember that this class does not exist.
-            return $this->classMap[$class] = false;
+            return $this->classIMap[$class] = false;
         }
 
         return $file;

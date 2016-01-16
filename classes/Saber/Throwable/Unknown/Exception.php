@@ -19,7 +19,7 @@
 namespace Saber\Throwable\Unknown {
 
 	use \Saber\Core;
-	use \Saber\Data\Int32;
+	use \Saber\Data\IInt32;
 	use \Saber\Throwable;
 
 	class Exception extends \RuntimeException implements Throwable\Runtime\Exception, Core\Comparable\Type, Core\Equality\Type {
@@ -122,8 +122,8 @@ namespace Saber\Throwable\Unknown {
 		 * @final
 		 * @return string                                           the backtrace information
 		 */
-		public final function __getTraceAsString() {
-			return $this->exception->getTraceAsString();
+		public final function __getTraceAsIString() {
+			return $this->exception->getTraceAsIString();
 		}
 
 		/**

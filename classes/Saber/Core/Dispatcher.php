@@ -19,7 +19,7 @@
 namespace Saber\Core {
 
 	use \Saber\Core;
-	use \Saber\Data\String;
+	use \Saber\Data\IString;
 	use \Saber\Throwable;
 
 	trait Dispatcher {
@@ -96,10 +96,10 @@ namespace Saber\Core {
 		 *
 		 * @access public
 		 * @static
-		 * @param String\Type $name                                 the name of the mixin
+		 * @param IString\Type $name                                 the name of the mixin
 		 * @param callable $closure                                 the custom utility function
 		 */
-		public static function mixin(String\Type $name, callable $closure) {
+		public static function mixin(IString\Type $name, callable $closure) {
 			static::$mixins[$name->unbox()] = $closure;
 		}
 

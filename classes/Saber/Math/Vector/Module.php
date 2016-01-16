@@ -16,26 +16,26 @@
  * limitations under the License.
  */
 
-namespace Saber\Math\Vector {
+namespace Saber\Math\IVector {
 
 	use \Saber\Data;
-	use \Saber\Data\Double;
-	use \Saber\Data\Vector;
+	use \Saber\Data\IDouble;
+	use \Saber\Data\IVector;
 
-	final class Module extends Data\Module implements Vector\Module {
+	final class Module extends Data\Module implements IVector\Module {
 
 		/**
 		 * This method returns the average of all items in the list.
 		 *
 		 * @access public
 		 * @static
-		 * @param Vector\Type $xs                                   the vector to be processed
-		 * @return Double\Type                                      the result
+		 * @param IVector\Type $xs                                   the vector to be processed
+		 * @return IDouble\Type                                      the result
 		 */
-		public static function average(Vector\Type $xs) {
+		public static function average(IVector\Type $xs) {
 			return ($xs->__isEmpty())
-				? Double\Type::zero()
-				: Double\Module::divide(static::sum($xs), $xs->length()->toDouble());
+				? IDouble\Type::zero()
+				: IDouble\Module::divide(static::sum($xs), $xs->length()->toDouble());
 		}
 
 		/**
@@ -43,13 +43,13 @@ namespace Saber\Math\Vector {
 		 *
 		 * @access public
 		 * @static
-		 * @param Vector\Type $xs                                   the vector to be processed
-		 * @return Double\Type                                      the result
+		 * @param IVector\Type $xs                                   the vector to be processed
+		 * @return IDouble\Type                                      the result
 		 */
-		public static function product(Vector\Type $xs) {
+		public static function product(IVector\Type $xs) {
 			return ($xs->__isEmpty())
-				? Double\Type::one()
-				: Double\Module::multiply($xs->head()->toDouble(), static::product($xs->tail()));
+				? IDouble\Type::one()
+				: IDouble\Module::multiply($xs->head()->toDouble(), static::product($xs->tail()));
 		}
 
 		/**
@@ -57,13 +57,13 @@ namespace Saber\Math\Vector {
 		 *
 		 * @access public
 		 * @static
-		 * @param Vector\Type $xs                                   the vector to be processed
-		 * @return Double\Type                                      the result
+		 * @param IVector\Type $xs                                   the vector to be processed
+		 * @return IDouble\Type                                      the result
 		 */
-		public static function sum(Vector\Type $xs) {
+		public static function sum(IVector\Type $xs) {
 			return ($xs->__isEmpty())
-				? Double\Type::zero()
-				: Double\Module::add($xs->head()->toDouble(), static::sum($xs->tail()));
+				? IDouble\Type::zero()
+				: IDouble\Module::add($xs->head()->toDouble(), static::sum($xs->tail()));
 		}
 
 	}

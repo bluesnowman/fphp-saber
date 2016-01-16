@@ -18,7 +18,7 @@
 
 namespace Saber\Core {
 
-	use \Saber\Data\String;
+	use \Saber\Data\IString;
 
 	interface Type {
 
@@ -56,7 +56,7 @@ namespace Saber\Core {
 		 * This method returns the object's hash code.
 		 *
 		 * @access public
-		 * @return String\Type                                      the object's hash code
+		 * @return IString\Type                                      the object's hash code
 		 */
 		public function hashCode();
 
@@ -65,7 +65,7 @@ namespace Saber\Core {
 		 *
 		 * @access public
 		 * @final
-		 * @return String\Type                                      the object as a string
+		 * @return IString\Type                                      the object as a string
 		 */
 		public function toString();
 
@@ -73,7 +73,7 @@ namespace Saber\Core {
 		 * This method returns the object's class type.
 		 *
 		 * @access public
-		 * @return String\Type                                      the object's class type
+		 * @return IString\Type                                      the object's class type
 		 */
 		public function typeOf();
 

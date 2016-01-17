@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright 2014-2015 Blue Snowman
+ * Copyright 2014-2016 Blue Snowman
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -134,8 +134,8 @@ namespace Saber\Data\IBool {
 		 * @final
 		 * @param boolean $value                                    the value to be assigned
 		 */
-		public final function __construct($value) {
-			$this->value = (bool) $value;
+		public final function __construct(bool $value) {
+			$this->value = $value;
 		}
 
 		/**

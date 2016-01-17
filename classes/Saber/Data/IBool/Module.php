@@ -16,6 +16,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Saber\Data\IBool {
 
 	use \Saber\Core;
@@ -38,11 +40,11 @@ namespace Saber\Data\IBool {
 		 *
 		 * @access public
 		 * @static
-		 * @param IBool\Type $x                                      the value to be evaluated
-		 * @param IBool\Type $y                                      the default value
-		 * @return IBool\Type                                        the result
+		 * @param IBool\Type $x                                     the value to be evaluated
+		 * @param IBool\Type $y                                     the default value
+		 * @return IBool\Type                                       the result
 		 */
-		public static function nvl(IBool\Type $x = null, IBool\Type $y = null) {
+		public static function nvl(IBool\Type $x = null, IBool\Type $y = null) : IBool\Type {
 			return ($x !== null) ? $x : (($y !== null) ? $y : IBool\Type::false());
 		}
 
@@ -52,10 +54,10 @@ namespace Saber\Data\IBool {
 		 *
 		 * @access public
 		 * @static
-		 * @param IBool\Type $x                                      the object to be converted
-		 * @return IDouble\Type                                      the value as a IDouble
+		 * @param IBool\Type $x                                     the object to be converted
+		 * @return IDouble\Type                                     the value as a IDouble
 		 */
-		public static function toDouble(IBool\Type $x) {
+		public static function toDouble(IBool\Type $x) : IDouble\Type {
 			return IDouble\Type::box($x->unbox());
 		}
 
@@ -65,10 +67,10 @@ namespace Saber\Data\IBool {
 		 *
 		 * @access public
 		 * @static
-		 * @param IBool\Type $x                                      the object to be converted
-		 * @return IFloat\Type                                       the value as a IFloat
+		 * @param IBool\Type $x                                     the object to be converted
+		 * @return IFloat\Type                                      the value as a IFloat
 		 */
-		public static function toFloat(IBool\Type $x) {
+		public static function toFloat(IBool\Type $x) : IFloat\Type {
 			return IFloat\Type::box($x->unbox());
 		}
 
@@ -78,10 +80,10 @@ namespace Saber\Data\IBool {
 		 *
 		 * @access public
 		 * @static
-		 * @param IBool\Type $x                                      the object to be converted
-		 * @return IInt32\Type                                       the value as an IInt32
+		 * @param IBool\Type $x                                     the object to be converted
+		 * @return IInt32\Type                                      the value as an IInt32
 		 */
-		public static function toInt32(IBool\Type $x) {
+		public static function toInt32(IBool\Type $x) : IInt32\Type {
 			return IInt32\Type::box($x->unbox());
 		}
 
@@ -91,10 +93,10 @@ namespace Saber\Data\IBool {
 		 *
 		 * @access public
 		 * @static
-		 * @param IBool\Type $x                                      the object to be converted
-		 * @return IInteger\Type                                     the value as an IInteger
+		 * @param IBool\Type $x                                     the object to be converted
+		 * @return IInteger\Type                                    the value as an IInteger
 		 */
-		public static function toInteger(IBool\Type $x) {
+		public static function toInteger(IBool\Type $x) : IInteger\Type {
 			return IInteger\Type::box($x->unbox());
 		}
 
@@ -107,12 +109,12 @@ namespace Saber\Data\IBool {
 		 *
 		 * @access public
 		 * @static
-		 * @param IBool\Type $x                                      the left operand
+		 * @param IBool\Type $x                                     the left operand
 		 * @param Core\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is equal
+		 * @return IBool\Type                                       whether the left operand is equal
 		 *                                                          to the right operand
 		 */
-		public static function eq(IBool\Type $x, Core\Type $y) { // ==
+		public static function eq(IBool\Type $x, Core\Type $y) : IBool\Type { // ==
 			$type = $x->__typeOf();
 			if ($y !== null) {
 				if ($y instanceof $type) {
@@ -127,12 +129,12 @@ namespace Saber\Data\IBool {
 		 *
 		 * @access public
 		 * @static
-		 * @param IBool\Type $x                                      the left operand
+		 * @param IBool\Type $x                                     the left operand
 		 * @param Core\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is identical
+		 * @return IBool\Type                                       whether the left operand is identical
 		 *                                                          to the right operand
 		 */
-		public static function id(IBool\Type $x, Core\Type $y) { // ===
+		public static function id(IBool\Type $x, Core\Type $y) : IBool\Type { // ===
 			if ($y !== null) {
 				if ($x->__typeOf() === $y->__typeOf()) {
 					return IBool\Type::box($x->unbox() === $y->unbox());
@@ -146,12 +148,12 @@ namespace Saber\Data\IBool {
 		 *
 		 * @access public
 		 * @static
-		 * @param IBool\Type $x                                      the left operand
+		 * @param IBool\Type $x                                     the left operand
 		 * @param Core\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is NOT equal
+		 * @return IBool\Type                                       whether the left operand is NOT equal
 		 *                                                          to the right operand
 		 */
-		public static function ne(IBool\Type $x, Core\Type $y) { // !=
+		public static function ne(IBool\Type $x, Core\Type $y) : IBool\Type { // !=
 			return IBool\Module::not(IBool\Module::eq($x, $y));
 		}
 
@@ -160,12 +162,12 @@ namespace Saber\Data\IBool {
 		 *
 		 * @access public
 		 * @static
-		 * @param IBool\Type $x                                      the left operand
+		 * @param IBool\Type $x                                     the left operand
 		 * @param Core\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is NOT identical
+		 * @return IBool\Type                                       whether the left operand is NOT identical
 		 *                                                          to the right operand
 		 */
-		public static function ni(IBool\Type $x, Core\Type $y) { // !==
+		public static function ni(IBool\Type $x, Core\Type $y) : IBool\Type { // !==
 			return IBool\Module::not(IBool\Module::id($x, $y));
 		}
 
@@ -178,13 +180,13 @@ namespace Saber\Data\IBool {
 		 *
 		 * @access public
 		 * @static
-		 * @param IBool\Type $x                                      the left operand
-		 * @param IBool\Type $y                                      the right operand
-		 * @return ITrit\Type                                        the order as to whether the left
+		 * @param IBool\Type $x                                     the left operand
+		 * @param IBool\Type $y                                     the right operand
+		 * @return ITrit\Type                                       the order as to whether the left
 		 *                                                          operand is less than, equals to,
 		 *                                                          or greater than the right operand
 		 */
-		public static function compare(IBool\Type $x, IBool\Type $y) {
+		public static function compare(IBool\Type $x, IBool\Type $y) : ITrit\Type {
 			$__x = $x->unbox();
 			$__y = $y->unbox();
 
@@ -204,12 +206,12 @@ namespace Saber\Data\IBool {
 		 *
 		 * @access public
 		 * @static
-		 * @param IBool\Type $x                                      the left operand
-		 * @param IBool\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is greater
+		 * @param IBool\Type $x                                     the left operand
+		 * @param IBool\Type $y                                     the right operand
+		 * @return IBool\Type                                       whether the left operand is greater
 		 *                                                          than or equal to the right operand
 		 */
-		public static function ge(IBool\Type $x, IBool\Type $y) { // >=
+		public static function ge(IBool\Type $x, IBool\Type $y) : IBool\Type { // >=
 			return IBool\Type::box(IBool\Module::compare($x, $y)->unbox() >= 0);
 		}
 
@@ -218,12 +220,12 @@ namespace Saber\Data\IBool {
 		 *
 		 * @access public
 		 * @static
-		 * @param IBool\Type $x                                      the left operand
-		 * @param IBool\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is greater
+		 * @param IBool\Type $x                                     the left operand
+		 * @param IBool\Type $y                                     the right operand
+		 * @return IBool\Type                                       whether the left operand is greater
 		 *                                                          than the right operand
 		 */
-		public static function gt(IBool\Type $x, IBool\Type $y) { // >
+		public static function gt(IBool\Type $x, IBool\Type $y) : IBool\Type { // >
 			return IBool\Type::box(IBool\Module::compare($x, $y)->unbox() > 0);
 		}
 
@@ -232,12 +234,12 @@ namespace Saber\Data\IBool {
 		 *
 		 * @access public
 		 * @static
-		 * @param IBool\Type $x                                      the left operand
-		 * @param IBool\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is less than
+		 * @param IBool\Type $x                                     the left operand
+		 * @param IBool\Type $y                                     the right operand
+		 * @return IBool\Type                                       whether the left operand is less than
 		 *                                                          or equal to the right operand
 		 */
-		public static function le(IBool\Type $x, IBool\Type $y) { // <=
+		public static function le(IBool\Type $x, IBool\Type $y) : IBool\Type { // <=
 			return IBool\Type::box(IBool\Module::compare($x, $y)->unbox() <= 0);
 		}
 
@@ -246,12 +248,12 @@ namespace Saber\Data\IBool {
 		 *
 		 * @access public
 		 * @static
-		 * @param IBool\Type $x                                      the left operand
-		 * @param IBool\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is less than
+		 * @param IBool\Type $x                                     the left operand
+		 * @param IBool\Type $y                                     the right operand
+		 * @return IBool\Type                                       whether the left operand is less than
 		 *                                                          the right operand
 		 */
-		public static function lt(IBool\Type $x, IBool\Type $y) { // <
+		public static function lt(IBool\Type $x, IBool\Type $y) : IBool\Type { // <
 			return IBool\Type::box(IBool\Module::compare($x, $y)->unbox() < 0);
 		}
 
@@ -260,11 +262,11 @@ namespace Saber\Data\IBool {
 		 *
 		 * @access public
 		 * @static
-		 * @param IBool\Type $x                                      the left operand
-		 * @param IBool\Type $y                                      the right operand
-		 * @return IBool\Type                                        the maximum value
+		 * @param IBool\Type $x                                     the left operand
+		 * @param IBool\Type $y                                     the right operand
+		 * @return IBool\Type                                       the maximum value
 		 */
-		public static function max(IBool\Type $x, IBool\Type $y) {
+		public static function max(IBool\Type $x, IBool\Type $y) : IBool\Type {
 			return (IBool\Module::compare($x, $y)->unbox() >= 0) ? $x : $y;
 		}
 
@@ -273,11 +275,11 @@ namespace Saber\Data\IBool {
 		 *
 		 * @access public
 		 * @static
-		 * @param IBool\Type $x                                      the left operand
-		 * @param IBool\Type $y                                      the right operand
-		 * @return IBool\Type                                        the minimum value
+		 * @param IBool\Type $x                                     the left operand
+		 * @param IBool\Type $y                                     the right operand
+		 * @return IBool\Type                                       the minimum value
 		 */
-		public static function min(IBool\Type $x, IBool\Type $y) {
+		public static function min(IBool\Type $x, IBool\Type $y) : IBool\Type {
 			return (IBool\Module::compare($x, $y)->unbox() <= 0) ? $x : $y;
 		}
 
@@ -290,13 +292,13 @@ namespace Saber\Data\IBool {
 		 *
 		 * @access public
 		 * @static
-		 * @param IBool\Type $x                                      the left operand
-		 * @param IBool\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether both operands are "true"
+		 * @param IBool\Type $x                                     the left operand
+		 * @param IBool\Type $y                                     the right operand
+		 * @return IBool\Type                                       whether both operands are "true"
 		 *
 		 * @see http://en.wikipedia.org/wiki/Truth_table#Logical_conjunction
 		 */
-		public static function and_(IBool\Type $x, IBool\Type $y) {
+		public static function and_(IBool\Type $x, IBool\Type $y) : IBool\Type {
 			return IBool\Type::box($x->unbox() && $y->unbox());
 		}
 
@@ -305,14 +307,14 @@ namespace Saber\Data\IBool {
 		 *
 		 * @access public
 		 * @static
-		 * @param IBool\Type $x                                      the left operand
-		 * @param IBool\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand implies
+		 * @param IBool\Type $x                                     the left operand
+		 * @param IBool\Type $y                                     the right operand
+		 * @return IBool\Type                                       whether the left operand implies
 		 *                                                          the right operand
 		 *
 		 * @see http://en.wikipedia.org/wiki/Truth_table#Logical_implication
 		 */
-		public static function impl(IBool\Type $x, IBool\Type $y) {
+		public static function impl(IBool\Type $x, IBool\Type $y) : IBool\Type {
 			return IBool\Type::box(!$x->unbox() || $y->unbox());
 		}
 
@@ -321,13 +323,13 @@ namespace Saber\Data\IBool {
 		 *
 		 * @access public
 		 * @static
-		 * @param IBool\Type $x                                      the left operand
-		 * @param IBool\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether at least one operand is "false"
+		 * @param IBool\Type $x                                     the left operand
+		 * @param IBool\Type $y                                     the right operand
+		 * @return IBool\Type                                       whether at least one operand is "false"
 		 *
 		 * @see http://en.wikipedia.org/wiki/Truth_table#Logical_NAND
 		 */
-		public static function nand(IBool\Type $x, IBool\Type $y) {
+		public static function nand(IBool\Type $x, IBool\Type $y) : IBool\Type {
 			return IBool\Type::box(!($x->unbox() && $y->unbox()));
 		}
 
@@ -336,13 +338,13 @@ namespace Saber\Data\IBool {
 		 *
 		 * @access public
 		 * @static
-		 * @param IBool\Type $x                                      the left operand
-		 * @param IBool\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether both operands are "false"
+		 * @param IBool\Type $x                                     the left operand
+		 * @param IBool\Type $y                                     the right operand
+		 * @return IBool\Type                                       whether both operands are "false"
 		 *
 		 * @see http://en.wikipedia.org/wiki/Truth_table#Logical_NOR
 		 */
-		public static function nor(IBool\Type $x, IBool\Type $y) {
+		public static function nor(IBool\Type $x, IBool\Type $y) : IBool\Type {
 			return IBool\Type::box(!($x->unbox() || $y->unbox()));
 		}
 
@@ -351,12 +353,12 @@ namespace Saber\Data\IBool {
 		 *
 		 * @access public
 		 * @static
-		 * @param IBool\Type $x                                      the operand
-		 * @return IBool\Type                                        whether the operand is "false"
+		 * @param IBool\Type $x                                     the operand
+		 * @return IBool\Type                                       whether the operand is "false"
 		 *
 		 * @see http://en.wikipedia.org/wiki/Truth_table#Logical_negation
 		 */
-		public static function not(IBool\Type $x) {
+		public static function not(IBool\Type $x) : IBool\Type {
 			return IBool\Type::box(!$x->unbox());
 		}
 
@@ -365,13 +367,13 @@ namespace Saber\Data\IBool {
 		 *
 		 * @access public
 		 * @static
-		 * @param IBool\Type $x                                      the left operand
-		 * @param IBool\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether at least one operand is "true"
+		 * @param IBool\Type $x                                     the left operand
+		 * @param IBool\Type $y                                     the right operand
+		 * @return IBool\Type                                       whether at least one operand is "true"
 		 *
 		 * @see http://en.wikipedia.org/wiki/Truth_table#Logical_disjunction
 		 */
-		public static function or_(IBool\Type $x, IBool\Type $y) {
+		public static function or_(IBool\Type $x, IBool\Type $y) : IBool\Type {
 			return IBool\Type::box($x->unbox() || $y->unbox());
 		}
 
@@ -380,14 +382,14 @@ namespace Saber\Data\IBool {
 		 *
 		 * @access public
 		 * @static
-		 * @param IBool\Type $x                                      the left operand
-		 * @param IBool\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether only if both operands are
+		 * @param IBool\Type $x                                     the left operand
+		 * @param IBool\Type $y                                     the right operand
+		 * @return IBool\Type                                       whether only if both operands are
 		 *                                                          "true" or "false"
 		 *
 		 * @see http://en.wikipedia.org/wiki/Truth_table#Logical_equality
 		 */
-		public static function xnor(IBool\Type $x, IBool\Type $y) {
+		public static function xnor(IBool\Type $x, IBool\Type $y) : IBool\Type {
 			return IBool\Type::box(!($x->unbox() xor $y->unbox()));
 		}
 
@@ -396,13 +398,13 @@ namespace Saber\Data\IBool {
 		 *
 		 * @access public
 		 * @static
-		 * @param IBool\Type $x                                      the left operand
-		 * @param IBool\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether only one operand is "true"
+		 * @param IBool\Type $x                                     the left operand
+		 * @param IBool\Type $y                                     the right operand
+		 * @return IBool\Type                                       whether only one operand is "true"
 		 *
 		 * @see http://en.wikipedia.org/wiki/Truth_table#Exclusive_disjunction
 		 */
-		public static function xor_(IBool\Type $x, IBool\Type $y) {
+		public static function xor_(IBool\Type $x, IBool\Type $y) : IBool\Type {
 			return IBool\Type::box($x->unbox() xor $y->unbox());
 		}
 

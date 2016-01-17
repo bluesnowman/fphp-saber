@@ -310,7 +310,7 @@ namespace Saber\Data\IBool {
 		 *
 		 * @return array
 		 */
-		public function data2IString() {
+		public function data2String() {
 			$data = array(
 				array(array(true), array('true')),
 				array(array(1), array('true')),
@@ -326,9 +326,9 @@ namespace Saber\Data\IBool {
 		/**
 		 * This method tests that a value is converted to a string.
 		 *
-		 * @dataProvider data2IString
+		 * @dataProvider data2String
 		 */
-		public function testToIString(array $provided, array $expected) {
+		public function testToString(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = IBool\Type::make($provided[0])->__toString();

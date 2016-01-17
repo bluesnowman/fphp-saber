@@ -144,7 +144,7 @@ namespace Saber\Data\IUnit {
 		 *
 		 * @return array
 		 */
-		public function data2IString() {
+		public function data2String() {
 			$data = array(
 				array(array(null), array('null')),
 				array(array(''), array('null')),
@@ -156,9 +156,9 @@ namespace Saber\Data\IUnit {
 		/**
 		 * This method tests that a value is converted to a string.
 		 *
-		 * @dataProvider data2IString
+		 * @dataProvider data2String
 		 */
-		public function testToIString(array $provided, array $expected) {
+		public function testToString(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = IUnit\Type::instance($provided[0])->__toString();

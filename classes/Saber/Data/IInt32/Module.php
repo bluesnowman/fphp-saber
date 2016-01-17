@@ -83,7 +83,7 @@ namespace Saber\Data\IInt32 {
 		 * @return IInt32\Type                                       the result
 		 */
 		public static function divide(IInt32\Type $x, IInt32\Type $y) {
-			return IInt32\Type::box($x->unbox() / $y->unbox());
+			return IInt32\Type::box(intdiv($x->unbox(), $y->unbox()));
 		}
 
 		/**
@@ -412,18 +412,7 @@ namespace Saber\Data\IInt32 {
 		 *                                                          or greater than the right operand
 		 */
 		public static function compare(IInt32\Type $x, IInt32\Type $y) {
-			$__x = $x->unbox();
-			$__y = $y->unbox();
-
-			if ($__x < $__y) {
-				return ITrit\Type::negative();
-			}
-			else if ($__x == $__y) {
-				return ITrit\Type::zero();
-			}
-			else { // ($__x > $__y)
-				return ITrit\Type::positive();
-			}
+			return ITrit\Type::box($x->unbox() <=> $y->unbox());
 		}
 
 		/**

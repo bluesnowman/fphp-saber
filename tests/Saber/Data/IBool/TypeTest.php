@@ -61,7 +61,7 @@ namespace Saber\Data\IBool {
 				array(array('true'), array(true)),
 				array(array(false), array(false)),
 				array(array(0), array(false)),
-				array(array(null), array(false)),
+				//array(array(null), array(false)),
 				array(array(''), array(false)),
 			);
 			return $data;
@@ -189,7 +189,7 @@ namespace Saber\Data\IBool {
 		 *
 		 * @return array
 		 */
-		public function data2IString() {
+		public function data2String() {
 			$data = array(
 				array(array(true), array('true')),
 				array(array(false), array('false')),
@@ -200,9 +200,9 @@ namespace Saber\Data\IBool {
 		/**
 		 * This method tests that a value is converted to a string.
 		 *
-		 * @dataProvider data2IString
+		 * @dataProvider data2String
 		 */
-		public function testToIString(array $provided, array $expected) {
+		public function testToString(array $provided, array $expected) {
 			$p0 = IBool\Type::make($provided[0])->__toString();
 			$e0 = $expected[0];
 

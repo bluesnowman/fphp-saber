@@ -197,7 +197,7 @@ namespace Saber\Data\IInt32 {
 		 *
 		 * @return array
 		 */
-		public function data2IString() {
+		public function data2String() {
 			$data = array(
 				array(array(-1), array('-1')),
 				array(array(0), array('0')),
@@ -209,9 +209,9 @@ namespace Saber\Data\IInt32 {
 		/**
 		 * This method tests that a value is converted to a string.
 		 *
-		 * @dataProvider data2IString
+		 * @dataProvider data2String
 		 */
-		public function testToIString(array $provided, array $expected) {
+		public function testToString(array $provided, array $expected) {
 			$p0 = IInt32\Type::make($provided[0])->__toString();
 			$e0 = $expected[0];
 

@@ -16,6 +16,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Saber\Data\IBool {
 
 	use \Saber\Core;
@@ -63,7 +65,7 @@ namespace Saber\Data\IBool {
 		 * @param mixed $value                                      the value(s) to be boxed
 		 * @return IBool\Type                                        the boxed object
 		 */
-		public static function box($value) {
+		public static function box(bool $value) : IBool\Type {
 			return ($value) ? IBool\Type::true() : IBool\Type::false();
 		}
 
@@ -75,7 +77,7 @@ namespace Saber\Data\IBool {
 		 * @param IBool\Type $x                                      the class to be evaluated
 		 * @return IBool\Type                                        the class
 		 */
-		public static function covariant(IBool\Type $x) {
+		public static function covariant(IBool\Type $x) : IBool\Type {
 			return $x;
 		}
 
@@ -88,7 +90,7 @@ namespace Saber\Data\IBool {
 		 * @param mixed $value                                      the value(s) to be boxed
 		 * @return IBool\Type                                        the boxed object
 		 */
-		public static function make($value) {
+		public static function make($value) : IBool\Type {
 			if (is_string($value) && in_array(strtolower($value), array('false', 'f', 'no', 'n', '0', 'null', 'nil'))) {
 				return IBool\Type::false();
 			}
@@ -101,7 +103,7 @@ namespace Saber\Data\IBool {
 		 * @access public
 		 * @return IBool\Type                                        the object
 		 */
-		public static function false() {
+		public static function false() : IBool\Type {
 			if (!isset(static::$singletons[0])) {
 				static::$singletons[0] = new IBool\Type(false);
 			}
@@ -114,7 +116,7 @@ namespace Saber\Data\IBool {
 		 * @access public
 		 * @return IBool\Type                                        the object
 		 */
-		public static function true() {
+		public static function true() : IBool\Type {
 			if (!isset(static::$singletons[1])) {
 				static::$singletons[1] = new IBool\Type(true);
 			}

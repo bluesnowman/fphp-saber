@@ -120,7 +120,7 @@ namespace Saber\Throwable\Unknown {
 		 *
 		 * @return array
 		 */
-		public function data2IString() {
+		public function data2String() {
 			$data = array(
 				array(array(new Throwable\InvalidArgument\Exception('Message', array(), IInt32\Type::zero())), array('Saber\\Throwable\\InvalidArgument\\Exception [ 0 ]: Message ~ ')),
 			);
@@ -130,9 +130,9 @@ namespace Saber\Throwable\Unknown {
 		/**
 		 * This method tests that a value is converted to a string.
 		 *
-		 * @dataProvider data2IString
+		 * @dataProvider data2String
 		 */
-		public function testToIString(array $provided, array $expected) {
+		public function testToString(array $provided, array $expected) {
 			$p0 = Throwable\Unknown\Exception::make($provided)->__toString();
 			$e0 = $expected[0];
 

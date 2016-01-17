@@ -432,7 +432,7 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @return array
 		 */
-		public function data2IString() {
+		public function data2String() {
 			$data = array(
 				array(array(1.0), array('1.000000')),
 				array(array(0.0), array('0.000000')),
@@ -446,9 +446,9 @@ namespace Saber\Data\IFloat {
 		/**
 		 * This method tests that a value is converted to a string.
 		 *
-		 * @dataProvider data2IString
+		 * @dataProvider data2String
 		 */
-		public function testToIString(array $provided, array $expected) {
+		public function testToString(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = IFloat\Type::make($provided[0])->__toString();

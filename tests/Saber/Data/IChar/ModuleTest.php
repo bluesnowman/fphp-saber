@@ -707,7 +707,7 @@ namespace Saber\Data\IChar {
 		 *
 		 * @return array
 		 */
-		public function data2IString() {
+		public function data2String() {
 			$data = array(
 				array(array('a'), array('a')),
 				array(array("\n"), array("\n")),
@@ -719,9 +719,9 @@ namespace Saber\Data\IChar {
 		/**
 		 * This method tests that a value is converted to a string.
 		 *
-		 * @dataProvider data2IString
+		 * @dataProvider data2String
 		 */
-		public function testToIString(array $provided, array $expected) {
+		public function testToString(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = IChar\Type::make($provided[0])->__toString();

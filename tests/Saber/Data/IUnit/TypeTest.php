@@ -86,7 +86,7 @@ namespace Saber\Data\IUnit {
 		/**
 		 * This method tests that a value is converted to a string.
 		 */
-		public function testToIString() {
+		public function testToString() {
 			$p0 = IUnit\Type::instance()->__toString();
 			$e0 = 'null';
 

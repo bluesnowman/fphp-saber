@@ -454,18 +454,7 @@ namespace Saber\Data\IDouble {
 		 *                                                          or greater than the right operand
 		 */
 		public static function compare(IDouble\Type $x, IDouble\Type $y) {
-			$__x = $x->unbox();
-			$__y = $y->unbox();
-
-			if ($__x < $__y) {
-				return ITrit\Type::negative();
-			}
-			else if ($__x == $__y) {
-				return ITrit\Type::zero();
-			}
-			else { // ($__x > $__y)
-				return ITrit\Type::positive();
-			}
+			return ITrit\Type::box($x->unbox() <=> $y->unbox());
 		}
 
 		/**

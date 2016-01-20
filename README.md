@@ -133,7 +133,7 @@ function(Core\Type $c): Core\Type
 function(Core\Type $c, Core\Type $x): Core\Type
 ````
 
-A `$predicate` function is used to find the result of performing a IBoolean evaluation.
+A `$predicate` function is used to find the result of performing a Boolean evaluation.
 
 ````
 function(Core\Type $x): IBool\Type

@@ -287,25 +287,25 @@ Most data types have a module associated with it.
 
 ICollection types also have an iterator class so that the class can be used with PHP's `foreach` loop.  Because these iterator classes must conform to PHP's `Iterator` and `Countable` interfaces, methods in these classes do not necessarily conform to all of the conventions that this library otherwise uses (i.e. some non-doubly underscored methods will return PHP typed primitives instead their respective `Core\Type` objects).
 
-### IUnit Tests
+### Unit Tests
 
-This library provides a convenient `Makefile` for installing, updating, and uninstalling [Composer](https://getcomposer.org/) and [PHPIUnit](http://phpunit.de/).  Similarly, this `Makefile` can also be used to run any unit test included in this library.
+This library provides a convenient `Makefile` for installing, updating, and uninstalling [Composer](https://getcomposer.org/) and [PHPUnit](http://phpunit.de/).  Similarly, this `Makefile` can also be used to run any unit test included in this library.
 
 To run this `Makefile`, navigate to the folder where it is located on your hard-drive and then type any of the following commands:
 
-To install both Composer and PHPIUnit:
+To install both Composer and PHPUnit:
 
 ````
 make install
 ````
 
-To update both Composer and PHPIUnit:
+To update both Composer and PHPUnit:
 
 ````
 make update
 ````
 
-To uninstall both Composer and PHPIUnit:
+To uninstall both Composer and PHPUnit:
 
 ````
 make uninstall

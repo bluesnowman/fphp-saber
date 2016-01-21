@@ -16,6 +16,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Saber\Data\IArrayList {
 
 	use \Saber\Core;
@@ -43,12 +45,12 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
+		 * @param IArrayList\Type $xs                               the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return IBool\Type                                        whether each item passed the
+		 * @return IBool\Type                                       whether each item passed the
 		 *                                                          truthy test
 		 */
-		public static function all(IArrayList\Type $xs, callable $predicate) {
+		public static function all(IArrayList\Type $xs, callable $predicate) : IBool\Type {
 			$length = $xs->length();
 
 			for ($i = IInt32\Type::zero(); IInt32\Module::lt($i, $length)->unbox(); $i = IInt32\Module::increment($i)) {
@@ -66,12 +68,12 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
+		 * @param IArrayList\Type $xs                               the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return IBool\Type                                        whether some of the items
+		 * @return IBool\Type                                       whether some of the items
 		 *                                                          passed the truthy test
 		 */
-		public static function any(IArrayList\Type $xs, callable $predicate) {
+		public static function any(IArrayList\Type $xs, callable $predicate) : IBool\Type {
 			return IOption\Module::isDefined(IArrayList\Module::find($xs, $predicate));
 		}
 
@@ -80,11 +82,11 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
+		 * @param IArrayList\Type $xs                               the left operand
 		 * @param Core\Type $y                                      the object to be appended
-		 * @return IArrayList\Type                                   the list
+		 * @return IArrayList\Type                                  the list
 		 */
-		public static function append(IArrayList\Type $xs, Core\Type $y) {
+		public static function append(IArrayList\Type $xs, Core\Type $y) : IArrayList\Type {
 			$buffer = $xs->unbox();
 			$buffer[] = $y;
 			return IArrayList\Type::box($buffer);
@@ -96,11 +98,11 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the array list
+		 * @param IArrayList\Type $xs                               the array list
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return ITuple\Type                                       the tuple
+		 * @return ITuple\Type                                      the tuple
 		 */
-		public static function break_(IArrayList\Type $xs, callable $predicate) {
+		public static function break_(IArrayList\Type $xs, callable $predicate) : ITuple\Type {
 			return IArrayList\Module::span($xs, function(Core\Type $x, IInt32\Type $i) use ($predicate) {
 				return IBool\Module::not($predicate($x, $i));
 			});
@@ -111,11 +113,11 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
-		 * @param IArrayList\Type $ys                                the list to be concatenated
-		 * @return IArrayList\Type                                   the list
+		 * @param IArrayList\Type $xs                               the left operand
+		 * @param IArrayList\Type $ys                               the list to be concatenated
+		 * @return IArrayList\Type                                  the list
 		 */
-		public static function concat(IArrayList\Type $xs, IArrayList\Type $ys) {
+		public static function concat(IArrayList\Type $xs, IArrayList\Type $ys) : IArrayList\Type {
 			$buffer = $xs->unbox();
 			foreach ($ys->unbox() as $y) {
 				$buffer[] = $y;
@@ -128,12 +130,12 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
+		 * @param IArrayList\Type $xs                               the left operand
 		 * @param Core\Type $y                                      the object to find
-		 * @return IBool\Type                                        whether the specified object is
+		 * @return IBool\Type                                       whether the specified object is
 		 *                                                          contained within the list
 		 */
-		public static function contains(IArrayList\Type $xs, Core\Type $y) {
+		public static function contains(IArrayList\Type $xs, Core\Type $y) : IBool\Type {
 			return IArrayList\Module::any($xs, function(Core\Type $x, IInt32\Type $i) use ($y) {
 				return $x->eq($y);
 			});
@@ -144,11 +146,11 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
+		 * @param IArrayList\Type $xs                               the left operand
 		 * @param Core\Type $y                                      the object to be removed
-		 * @return IArrayList\Type                                   the list
+		 * @return IArrayList\Type                                  the list
 		 */
-		public static function delete(IArrayList\Type $xs, Core\Type $y) {
+		public static function delete(IArrayList\Type $xs, Core\Type $y) : IArrayList\Type {
 			$buffer = array();
 			$skip = false;
 
@@ -168,11 +170,11 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
-		 * @param IInt32\Type $n                                     the number of items to drop
-		 * @return IArrayList\Type                                   the list
+		 * @param IArrayList\Type $xs                               the left operand
+		 * @param IInt32\Type $n                                    the number of items to drop
+		 * @return IArrayList\Type                                  the list
 		 */
-		public static function drop(IArrayList\Type $xs, IInt32\Type $n) {
+		public static function drop(IArrayList\Type $xs, IInt32\Type $n) : IArrayList\Type {
 			$buffer = array();
 			$length = $xs->length();
 
@@ -188,11 +190,11 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
+		 * @param IArrayList\Type $xs                               the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return IArrayList\Type                                   the list
+		 * @return IArrayList\Type                                  the list
 		 */
-		public static function dropWhile(IArrayList\Type $xs, callable $predicate) {
+		public static function dropWhile(IArrayList\Type $xs, callable $predicate) : IArrayList\Type {
 			$buffer = array();
 			$length = $xs->length();
 
@@ -213,11 +215,11 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
+		 * @param IArrayList\Type $xs                               the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return IArrayList\Type                                   the list
+		 * @return IArrayList\Type                                  the list
 		 */
-		public static function dropWhileEnd(IArrayList\Type $xs, callable $predicate) {
+		public static function dropWhileEnd(IArrayList\Type $xs, callable $predicate) : IArrayList\Type {
 			return IArrayList\Module::dropWhile($xs, function(Core\Type $x, IInt32\Type $i) use ($predicate) {
 				return IBool\Module::not($predicate($x, $i));
 			});
@@ -229,7 +231,7 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
+		 * @param IArrayList\Type $xs                               the left operand
 		 * @param callable $procedure                               the procedure function to be used
 		 */
 		public static function each(IArrayList\Type $xs, callable $procedure) {
@@ -245,11 +247,11 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
+		 * @param IArrayList\Type $xs                               the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return IArrayList\Type                                   the list
+		 * @return IArrayList\Type                                  the list
 		 */
-		public static function filter(IArrayList\Type $xs, callable $predicate) {
+		public static function filter(IArrayList\Type $xs, callable $predicate) : IArrayList\Type {
 			$buffer = array();
 			$length = $xs->length();
 
@@ -268,12 +270,12 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
+		 * @param IArrayList\Type $xs                               the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return IOption\Type                                      an option containing the first object
+		 * @return IOption\Type                                     an option containing the first object
 		 *                                                          satisfying the predicate, if any
 		 */
-		public static function find(IArrayList\Type $xs, callable $predicate) {
+		public static function find(IArrayList\Type $xs, callable $predicate) : IOption\Type {
 			$length = $xs->length();
 
 			for ($i = IInt32\Type::zero(); IInt32\Module::lt($i, $length)->unbox(); $i = IInt32\Module::increment($i)) {
@@ -291,10 +293,10 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
-		 * @return IArrayList\Type                                   the flattened array list
+		 * @param IArrayList\Type $xs                               the left operand
+		 * @return IArrayList\Type                                  the flattened array list
 		 */
-		public static function flatten(IArrayList\Type $xs) {
+		public static function flatten(IArrayList\Type $xs) : IArrayList\Type {
 			$buffer = array();
 			$x_length = $xs->length();
 
@@ -320,12 +322,12 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
+		 * @param IArrayList\Type $xs                               the left operand
 		 * @param callable $operator                                the operator function to be used
 		 * @param Core\Type $initial                                the initial value to be used
 		 * @return Core\Type                                        the result
 		 */
-		public static function foldLeft(IArrayList\Type $xs, callable $operator, Core\Type $initial) {
+		public static function foldLeft(IArrayList\Type $xs, callable $operator, Core\Type $initial) : Core\Type {
 			$z = $initial;
 			$length = $xs->length();
 
@@ -341,12 +343,12 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
+		 * @param IArrayList\Type $xs                               the left operand
 		 * @param callable $operator                                the operator function to be used
 		 * @param Core\Type $initial                                the initial value to be used
 		 * @return Core\Type                                        the result
 		 */
-		public static function foldRight(IArrayList\Type $xs, callable $operator, Core\Type $initial) {
+		public static function foldRight(IArrayList\Type $xs, callable $operator, Core\Type $initial) : Core\Type {
 			$z = $initial;
 			$length = $xs->length();
 
@@ -362,12 +364,12 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the array list to be processed
+		 * @param IArrayList\Type $xs                               the array list to be processed
 		 * @param callable $subroutine                              the subroutine to be used
-		 * @return IHashMap\Type                                     a hash map of lists of items that
+		 * @return IHashMap\Type                                    a hash map of lists of items that
 		 *                                                          are considered in the same group
 		 */
-		public static function group(IArrayList\Type $xs, callable $subroutine) {
+		public static function group(IArrayList\Type $xs, callable $subroutine) : IHashMap\Type {
 			$groups = IHashMap\Type::empty_();
 
 			IArrayList\Module::each($xs, function(Core\Type $x, IInt32\Type $i) use ($groups, $subroutine) {
@@ -390,10 +392,10 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
+		 * @param IArrayList\Type $xs                               the left operand
 		 * @return Core\Type                                        the head object in this list
 		 */
-		public static function head(IArrayList\Type $xs) {
+		public static function head(IArrayList\Type $xs) : Core\Type {
 			return $xs->item(IInt32\Type::zero());
 		}
 
@@ -402,10 +404,10 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
-		 * @return IOption\Type                                      the option
+		 * @param IArrayList\Type $xs                               the left operand
+		 * @return IOption\Type                                     the option
 		 */
-		public static function headIOption(IArrayList\Type $xs) {
+		public static function headIOption(IArrayList\Type $xs) : IOption\Type {
 			return (!$xs->__isEmpty())
 				? IOption\Type::some($xs->head())
 				: IOption\Type::none();
@@ -416,12 +418,12 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
+		 * @param IArrayList\Type $xs                               the left operand
 		 * @param Core\Type $y                                      the object to be searched for
-		 * @return IInt32\Type                                       the index of the first occurrence
+		 * @return IInt32\Type                                      the index of the first occurrence
 		 *                                                          or otherwise -1
 		 */
-		public static function indexOf(IArrayList\Type $xs, Core\Type $y) {
+		public static function indexOf(IArrayList\Type $xs, Core\Type $y) : IInt32\Type {
 			$length = $xs->length();
 
 			for ($i = IInt32\Type::zero(); IInt32\Module::lt($i, $length)->unbox(); $i = IInt32\Module::increment($i)) {
@@ -439,11 +441,10 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
-		 * @return IArrayList\Type                                   the list, minus the last
-		 *                                                          item
+		 * @param IArrayList\Type $xs                               the left operand
+		 * @return IArrayList\Type                                  the list, minus the last item
 		 */
-		public static function init(IArrayList\Type $xs) {
+		public static function init(IArrayList\Type $xs) : IArrayList\Type {
 			$buffer = array();
 			$length = IInt32\Module::decrement($xs->length());
 
@@ -459,12 +460,12 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
+		 * @param IArrayList\Type $xs                               the left operand
 		 * @param Core\Type $y                                      the object to be interspersed
-		 * @return IArrayList\Type                                   the list
+		 * @return IArrayList\Type                                  the list
 		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
-		public static function intersperse(IArrayList\Type $xs, Core\Type $y) {
+		public static function intersperse(IArrayList\Type $xs, Core\Type $y) : IArrayList\Type {
 			$buffer = array();
 			$length = $xs->length();
 
@@ -484,10 +485,10 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
-		 * @return IBool\Type                                        whether the list is empty
+		 * @param IArrayList\Type $xs                               the left operand
+		 * @return IBool\Type                                       whether the list is empty
 		 */
-		public static function isEmpty(IArrayList\Type $xs) {
+		public static function isEmpty(IArrayList\Type $xs) : IBool\Type {
 			return $xs->isEmpty();
 		}
 
@@ -496,13 +497,13 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
-		 * @param IInt32\Type $i                                     the index of the item
+		 * @param IArrayList\Type $xs                               the left operand
+		 * @param IInt32\Type $i                                    the index of the item
 		 * @return Core\Type                                        the item at the specified index
 		 * @throws Throwable\OutOfBounds\Exception                  indicates the specified index
 		 *                                                          cannot be found
 		 */
-		public static function item(IArrayList\Type $xs, IInt32\Type $i) {
+		public static function item(IArrayList\Type $xs, IInt32\Type $i) : Core\Type {
 			return $xs->item($i);
 		}
 
@@ -511,10 +512,10 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
-		 * @return IArrayList\Iterator                               an iterator for this collection
+		 * @param IArrayList\Type $xs                               the left operand
+		 * @return IArrayList\Iterator                              an iterator for this collection
 		 */
-		public static function iterator(IArrayList\Type $xs) {
+		public static function iterator(IArrayList\Type $xs) : IArrayList\Iterator {
 			return new IArrayList\Iterator($xs);
 		}
 
@@ -523,7 +524,7 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
+		 * @param IArrayList\Type $xs                               the left operand
 		 * @return mixed                                            the last item in this linked
 		 *                                                          list
 		 */
@@ -536,10 +537,10 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
-		 * @return IOption\Type                                      the option
+		 * @param IArrayList\Type $xs                               the left operand
+		 * @return IOption\Type                                     the option
 		 */
-		public static function lastIOption(IArrayList\Type $xs) {
+		public static function lastIOption(IArrayList\Type $xs) : IOption\Type {
 			return (!$xs->__isEmpty())
 				? IOption\Type::some(IArrayList\Module::last($xs))
 				: IOption\Type::none();
@@ -550,10 +551,10 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
-		 * @return IInt32\Type                                       the length of this array list
+		 * @param IArrayList\Type $xs                               the left operand
+		 * @return IInt32\Type                                      the length of this array list
 		 */
-		public static function length(IArrayList\Type $xs) {
+		public static function length(IArrayList\Type $xs) : IInt32\Type {
 			return $xs->length();
 		}
 
@@ -562,14 +563,14 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xss                               the left operand
+		 * @param IArrayList\Type $xss                              the left operand
 		 * @param Core\Equality\Type $x                             the key being looked up
-		 * @return IOption\Type                                      an option containing the associated
+		 * @return IOption\Type                                     an option containing the associated
 		 *                                                          value
 		 * @throws Throwable\UnexpectedValue\Exception              indicates that the list is not
 		 *                                                          associative
 		 */
-		public static function lookup(IArrayList\Type $xss, Core\Equality\Type $x) {
+		public static function lookup(IArrayList\Type $xss, Core\Equality\Type $x) : IOption\Type {
 			$length = $xss->length();
 
 			for ($i = IInt32\Type::zero(); IInt32\Module::lt($i, $length)->unbox(); $i = IInt32\Module::increment($i)) {
@@ -592,11 +593,11 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
+		 * @param IArrayList\Type $xs                               the left operand
 		 * @param callable $subroutine                              the subroutine function to be used
-		 * @return IArrayList\Type                                   the list
+		 * @return IArrayList\Type                                  the list
 		 */
-		public static function map(IArrayList\Type $xs, callable $subroutine) {
+		public static function map(IArrayList\Type $xs, callable $subroutine) : IArrayList\Type {
 			$buffer = array();
 			$length = $xs->length();
 
@@ -613,12 +614,12 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
+		 * @param IArrayList\Type $xs                               the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return IBool\Type                                        whether each item passed the
+		 * @return IBool\Type                                       whether each item passed the
 		 *                                                          falsy test
 		 */
-		public static function none(IArrayList\Type $xs, callable $predicate) {
+		public static function none(IArrayList\Type $xs, callable $predicate) : IBool\Type {
 			return IArrayList\Module::all($xs, function(Core\Type $x, IInt32\Type $i) use ($predicate) {
 				return IBool\Module::not($predicate($x, $i));
 			});
@@ -630,11 +631,11 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the array list to be processed
-		 * @return IArrayList\Type                                   an array list with the duplicates
+		 * @param IArrayList\Type $xs                               the array list to be processed
+		 * @return IArrayList\Type                                  an array list with the duplicates
 		 *                                                          removed
 		 */
-		public static function nub(IArrayList\Type $xs) {
+		public static function nub(IArrayList\Type $xs) : IArrayList\Type {
 			$zs = IHashSet\Type::empty_();
 
 			return IArrayList\Module::filter($xs, function(Core\Type $x, IInt32\Type $i) use ($zs) {
@@ -652,11 +653,11 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the array list to be partitioned
+		 * @param IArrayList\Type $xs                               the array list to be partitioned
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return ITuple\Type                                       the results
+		 * @return ITuple\Type                                      the results
 		 */
-		public static function partition(IArrayList\Type $xs, callable $predicate) {
+		public static function partition(IArrayList\Type $xs, callable $predicate) : ITuple\Type {
 			$passed = array();
 			$failed = array();
 
@@ -680,13 +681,13 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xss                               the array list to be processed
+		 * @param IArrayList\Type $xss                              the array list to be processed
 		 * @param Core\Type $k                                      the key associated with value to be
 		 *                                                          plucked
-		 * @return IArrayList\Type                                   a list of values matching the specified
+		 * @return IArrayList\Type                                  a list of values matching the specified
 		 *                                                          key
 		 */
-		public static function pluck(IArrayList\Type $xss, Core\Type $k) {
+		public static function pluck(IArrayList\Type $xss, Core\Type $k) : IArrayList\Type {
 			return IArrayList\Module::map($xss, function(IHashMap\Type $xs, IInt32\Type $i) use ($k) {
 				return $xs->item($k);
 			});
@@ -697,11 +698,11 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
+		 * @param IArrayList\Type $xs                               the left operand
 		 * @param Core\Type $y                                      the object to be prepended
-		 * @return IArrayList\Type                                   the list
+		 * @return IArrayList\Type                                  the list
 		 */
-		public static function prepend(IArrayList\Type $xs, Core\Type $y) {
+		public static function prepend(IArrayList\Type $xs, Core\Type $y) : IArrayList\Type {
 			$buffer = $xs->unbox();
 			array_unshift($buffer, $y);
 			return IArrayList\Type::box($buffer);
@@ -712,12 +713,12 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
-		 * @param IInt32\Type $start                                 the starting index
-		 * @param IInt32\Type $end                                   the ending index
-		 * @return IArrayList\Type                                   the list
+		 * @param IArrayList\Type $xs                               the left operand
+		 * @param IInt32\Type $start                                the starting index
+		 * @param IInt32\Type $end                                  the ending index
+		 * @return IArrayList\Type                                  the list
 		 */
-		public static function range(IArrayList\Type $xs, IInt32\Type $start, IInt32\Type $end) {
+		public static function range(IArrayList\Type $xs, IInt32\Type $start, IInt32\Type $end) : IArrayList\Type {
 			return IArrayList\Module::drop(IArrayList\Module::take($xs, $end), $start);
 		}
 
@@ -727,12 +728,12 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the array list
+		 * @param IArrayList\Type $xs                               the array list
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return IArrayList\Type                                   an array list containing those items
+		 * @return IArrayList\Type                                  an array list containing those items
 		 *                                                          that do not satisfy the predicate
 		 */
-		public static function reject(IArrayList\Type $xs, callable $predicate) {
+		public static function reject(IArrayList\Type $xs, callable $predicate) : IArrayList\Type {
 			return IArrayList\Module::filter($xs, function(Core\Type $x, IInt32\Type $i) use ($predicate) {
 				return IBool\Module::not($predicate($x, $i));
 			});
@@ -743,10 +744,10 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
-		 * @return IArrayList\Type                                   the list
+		 * @param IArrayList\Type $xs                               the left operand
+		 * @return IArrayList\Type                                  the list
 		 */
-		public static function reverse(IArrayList\Type $xs) {
+		public static function reverse(IArrayList\Type $xs) : IArrayList\Type {
 			return IArrayList\Type::box(array_reverse($xs->unbox()));
 		}
 
@@ -755,12 +756,12 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the array list to be shuffled
-		 * @return IArrayList\Type                                   the shuffled array list
+		 * @param IArrayList\Type $xs                               the array list to be shuffled
+		 * @return IArrayList\Type                                  the shuffled array list
 		 *
 		 * @see http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
 		 */
-		public static function shuffle(IArrayList\Type $xs) {
+		public static function shuffle(IArrayList\Type $xs) : IArrayList\Type {
 			$buffer = $xs->unbox();
 			$length = count($buffer);
 
@@ -779,12 +780,12 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
-		 * @param IInt32\Type $offset                                the starting index
-		 * @param IInt32\Type $length                                the length of the slice
-		 * @return IArrayList\Type                                   the list
+		 * @param IArrayList\Type $xs                               the left operand
+		 * @param IInt32\Type $offset                               the starting index
+		 * @param IInt32\Type $length                               the length of the slice
+		 * @return IArrayList\Type                                  the list
 		 */
-		public static function slice(IArrayList\Type $xs, IInt32\Type $offset, IInt32\Type $length) {
+		public static function slice(IArrayList\Type $xs, IInt32\Type $offset, IInt32\Type $length) : IArrayList\Type {
 			return IArrayList\Type::box(array_slice($xs->unbox(), $offset->unbox(), $length->unbox()));
 		}
 
@@ -794,11 +795,11 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the array list
+		 * @param IArrayList\Type $xs                               the array list
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return ITuple\Type                                       the tuple
+		 * @return ITuple\Type                                      the tuple
 		 */
-		public static function span(IArrayList\Type $xs, callable $predicate) {
+		public static function span(IArrayList\Type $xs, callable $predicate) : ITuple\Type {
 			return ITuple\Type::box2(
 				IArrayList\Module::takeWhile($xs, $predicate),
 				IArrayList\Module::dropWhile($xs, $predicate)
@@ -811,11 +812,11 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the array list
-		 * @param IInt32\Type $n                                     the number of items to take
-		 * @return ITuple\Type                                       the tuple
+		 * @param IArrayList\Type $xs                               the array list
+		 * @param IInt32\Type $n                                    the number of items to take
+		 * @return ITuple\Type                                      the tuple
 		 */
-		public static function split(IArrayList\Type $xs, IInt32\Type $n) {
+		public static function split(IArrayList\Type $xs, IInt32\Type $n) : ITuple\Type {
 			return ITuple\Type::box2(
 				IArrayList\Module::take($xs, $n),
 				IArrayList\Module::drop($xs, $n)
@@ -827,10 +828,10 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
-		 * @return IArrayList\Type                                   the tail of this list
+		 * @param IArrayList\Type $xs                               the left operand
+		 * @return IArrayList\Type                                  the tail of this list
 		 */
-		public static function tail(IArrayList\Type $xs) {
+		public static function tail(IArrayList\Type $xs) : IArrayList\Type {
 			return $xs->tail();
 		}
 
@@ -839,11 +840,11 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
-		 * @param IInt32\Type $n                                     the number of items to take
-		 * @return IArrayList\Type                                   the list
+		 * @param IArrayList\Type $xs                               the left operand
+		 * @param IInt32\Type $n                                    the number of items to take
+		 * @return IArrayList\Type                                  the list
 		 */
-		public static function take(IArrayList\Type $xs, IInt32\Type $n) {
+		public static function take(IArrayList\Type $xs, IInt32\Type $n) : IArrayList\Type {
 			$buffer = array();
 			$length = IInt32\Module::min($n, $xs->length());
 
@@ -859,11 +860,11 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
+		 * @param IArrayList\Type $xs                               the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return IArrayList\Type                                   the list
+		 * @return IArrayList\Type                                  the list
 		 */
-		public static function takeWhile(IArrayList\Type $xs, callable $predicate) {
+		public static function takeWhile(IArrayList\Type $xs, callable $predicate) : IArrayList\Type {
 			$buffer = array();
 			$length = $xs->length();
 
@@ -883,11 +884,11 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
+		 * @param IArrayList\Type $xs                               the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return IArrayList\Type                                   the list
+		 * @return IArrayList\Type                                  the list
 		 */
-		public static function takeWhileEnd(IArrayList\Type $xs, callable $predicate) {
+		public static function takeWhileEnd(IArrayList\Type $xs, callable $predicate) : IArrayList\Type {
 			return IArrayList\Module::takeWhile($xs, function(Core\Type $x, IInt32\Type $i) use ($predicate) {
 				return IBool\Module::not($predicate($x, $i));
 			});
@@ -899,10 +900,10 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xss                               an array list of tuple groupings
-		 * @return ITuple\Type                                       a tuple of two (or more) array lists
+		 * @param IArrayList\Type $xss                              an array list of tuple groupings
+		 * @return ITuple\Type                                      a tuple of two (or more) array lists
 		 */
-		public static function unzip(IArrayList\Type $xss) {
+		public static function unzip(IArrayList\Type $xss) : ITuple\Type {
 			$as = array();
 			$bs = array();
 
@@ -922,11 +923,11 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
-		 * @param IArrayList\Type $ys                                the right operand
-		 * @return IArrayList\Type                                   a new list of tuple pairings
+		 * @param IArrayList\Type $xs                               the left operand
+		 * @param IArrayList\Type $ys                               the right operand
+		 * @return IArrayList\Type                                  a new list of tuple pairings
 		 */
-		public static function zip(IArrayList\Type $xs, IArrayList\Type $ys) {
+		public static function zip(IArrayList\Type $xs, IArrayList\Type $ys) : IArrayList\Type {
 			$buffer = array();
 			$length = IInt32\Module::min($xs->length(), $ys->length());
 
@@ -947,11 +948,11 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the value to be evaluated
-		 * @param IArrayList\Type $ys                                the default value
-		 * @return IArrayList\Type                                   the result
+		 * @param IArrayList\Type $xs                               the value to be evaluated
+		 * @param IArrayList\Type $ys                               the default value
+		 * @return IArrayList\Type                                  the result
 		 */
-		public static function nvl(IArrayList\Type $xs = null, IArrayList\Type $ys = null) {
+		public static function nvl(IArrayList\Type $xs = null, IArrayList\Type $ys = null) : IArrayList\Type {
 			return ($xs !== null) ? $xs : (($ys !== null) ? $ys : IArrayList\Type::empty_());
 		}
 
@@ -960,10 +961,10 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the operand
-		 * @return IArrayList\Type                                   the collection as an array list
+		 * @param IArrayList\Type $xs                               the operand
+		 * @return IArrayList\Type                                  the collection as an array list
 		 */
-		public static function toArrayList(IArrayList\Type $xs) {
+		public static function toArrayList(IArrayList\Type $xs) : IArrayList\Type {
 			return $xs;
 		}
 
@@ -972,10 +973,10 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the operand
-		 * @return ILinkedList\Type                                  the collection as a linked list
+		 * @param IArrayList\Type $xs                               the operand
+		 * @return ILinkedList\Type                                 the collection as a linked list
 		 */
-		public static function toLinkedList(IArrayList\Type $xs) {
+		public static function toLinkedList(IArrayList\Type $xs) : ILinkedList\Type {
 			$length = $xs->length();
 			$zs = ILinkedList\Type::nil();
 			for ($i = IInt32\Module::decrement($length); IInt32\Module::ge($i, IInt32\Type::zero())->unbox(); $i = IInt32\Module::decrement($i)) {
@@ -993,12 +994,12 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
+		 * @param IArrayList\Type $xs                               the left operand
 		 * @param Core\Type $ys                                     the right operand
-		 * @return IBool\Type                                        whether the left operand is equal
+		 * @return IBool\Type                                       whether the left operand is equal
 		 *                                                          to the right operand
 		 */
-		public static function eq(IArrayList\Type $xs, Core\Type $ys) { // ==
+		public static function eq(IArrayList\Type $xs, Core\Type $ys) : IBool\Type { // ==
 			$type = $xs->__typeOf();
 			if ($ys instanceof $type) {
 				$x_length = $xs->__length();
@@ -1022,12 +1023,12 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
+		 * @param IArrayList\Type $xs                               the left operand
 		 * @param Core\Type $ys                                     the right operand
-		 * @return IBool\Type                                        whether the left operand is identical
+		 * @return IBool\Type                                       whether the left operand is identical
 		 *                                                          to the right operand
 		 */
-		public static function id(IArrayList\Type $xs, Core\Type $ys) { // ===
+		public static function id(IArrayList\Type $xs, Core\Type $ys) : IBool\Type { // ===
 			if ($ys !== null) {
 				if ($xs->__typeOf() === $ys->__typeOf()) {
 					$x_length = $xs->__length();
@@ -1052,12 +1053,12 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
+		 * @param IArrayList\Type $xs                               the left operand
 		 * @param Core\Type $ys                                     the right operand
-		 * @return IBool\Type                                        whether the left operand is NOT equal
+		 * @return IBool\Type                                       whether the left operand is NOT equal
 		 *                                                          to the right operand
 		 */
-		public static function ne(IArrayList\Type $xs, Core\Type $ys) { // !=
+		public static function ne(IArrayList\Type $xs, Core\Type $ys) : IBool\Type { // !=
 			return IBool\Module::not(IArrayList\Module::eq($xs, $ys));
 		}
 
@@ -1066,12 +1067,12 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
+		 * @param IArrayList\Type $xs                               the left operand
 		 * @param Core\Type $ys                                     the right operand
-		 * @return IBool\Type                                        whether the left operand is NOT identical
+		 * @return IBool\Type                                       whether the left operand is NOT identical
 		 *                                                          to the right operand
 		 */
-		public static function ni(IArrayList\Type $xs, Core\Type $ys) { // !==
+		public static function ni(IArrayList\Type $xs, Core\Type $ys) : IBool\Type { // !==
 			return IBool\Module::not(IArrayList\Module::id($xs, $ys));
 		}
 
@@ -1084,13 +1085,13 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
-		 * @param IArrayList\Type $ys                                the object to be compared
-		 * @return ITrit\Type                                        whether the current object is less than,
+		 * @param IArrayList\Type $xs                               the left operand
+		 * @param IArrayList\Type $ys                               the object to be compared
+		 * @return ITrit\Type                                       whether the current object is less than,
 		 *                                                          equal to, or greater than the specified
 		 *                                                          object
 		 */
-		public static function compare(IArrayList\Type $xs, IArrayList\Type $ys) {
+		public static function compare(IArrayList\Type $xs, IArrayList\Type $ys) : ITrit\Type {
 			$x_length = $xs->__length();
 			$y_length = $ys->__length();
 
@@ -1118,12 +1119,12 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
-		 * @param IArrayList\Type $ys                                the right operand
-		 * @return IBool\Type                                        whether the left operand is greater
+		 * @param IArrayList\Type $xs                               the left operand
+		 * @param IArrayList\Type $ys                               the right operand
+		 * @return IBool\Type                                       whether the left operand is greater
 		 *                                                          than or equal to the right operand
 		 */
-		public static function ge(IArrayList\Type $xs, IArrayList\Type $ys) { // >=
+		public static function ge(IArrayList\Type $xs, IArrayList\Type $ys) : IBool\Type { // >=
 			return IBool\Type::box(IArrayList\Module::compare($xs, $ys)->unbox() >= 0);
 		}
 
@@ -1132,12 +1133,12 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
-		 * @param IArrayList\Type $ys                                the right operand
-		 * @return IBool\Type                                        whether the left operand is greater
+		 * @param IArrayList\Type $xs                               the left operand
+		 * @param IArrayList\Type $ys                               the right operand
+		 * @return IBool\Type                                       whether the left operand is greater
 		 *                                                          than the right operand
 		 */
-		public static function gt(IArrayList\Type $xs, IArrayList\Type $ys) { // >
+		public static function gt(IArrayList\Type $xs, IArrayList\Type $ys) : IBool\Type { // >
 			return IBool\Type::box(IArrayList\Module::compare($xs, $ys)->unbox() > 0);
 		}
 
@@ -1146,12 +1147,12 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
-		 * @param IArrayList\Type $ys                                the right operand
-		 * @return IBool\Type                                        whether the left operand is less than
+		 * @param IArrayList\Type $xs                               the left operand
+		 * @param IArrayList\Type $ys                               the right operand
+		 * @return IBool\Type                                       whether the left operand is less than
 		 *                                                          or equal to the right operand
 		 */
-		public static function le(IArrayList\Type $xs, IArrayList\Type $ys) { // <=
+		public static function le(IArrayList\Type $xs, IArrayList\Type $ys) : IBool\Type { // <=
 			return IBool\Type::box(IArrayList\Module::compare($xs, $ys)->unbox() <= 0);
 		}
 
@@ -1160,12 +1161,12 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
-		 * @param IArrayList\Type $ys                                the right operand
-		 * @return IBool\Type                                        whether the left operand is less than
+		 * @param IArrayList\Type $xs                               the left operand
+		 * @param IArrayList\Type $ys                               the right operand
+		 * @return IBool\Type                                       whether the left operand is less than
 		 *                                                          the right operand
 		 */
-		public static function lt(IArrayList\Type $xs, IArrayList\Type $ys) { // <
+		public static function lt(IArrayList\Type $xs, IArrayList\Type $ys) : IBool\Type { // <
 			return IBool\Type::box(IArrayList\Module::compare($xs, $ys)->unbox() < 0);
 		}
 
@@ -1174,11 +1175,11 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
-		 * @param IArrayList\Type $ys                                the right operand
-		 * @return IArrayList\Type                                   the maximum value
+		 * @param IArrayList\Type $xs                               the left operand
+		 * @param IArrayList\Type $ys                               the right operand
+		 * @return IArrayList\Type                                  the maximum value
 		 */
-		public static function max(IArrayList\Type $xs, IArrayList\Type $ys) {
+		public static function max(IArrayList\Type $xs, IArrayList\Type $ys) : IArrayList\Type {
 			return (IArrayList\Module::compare($xs, $ys)->unbox() >= 0) ? $xs : $ys;
 		}
 
@@ -1187,11 +1188,11 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
-		 * @param IArrayList\Type $ys                                the right operand
-		 * @return IArrayList\Type                                   the minimum value
+		 * @param IArrayList\Type $xs                               the left operand
+		 * @param IArrayList\Type $ys                               the right operand
+		 * @return IArrayList\Type                                  the minimum value
 		 */
-		public static function min(IArrayList\Type $xs, IArrayList\Type $ys) {
+		public static function min(IArrayList\Type $xs, IArrayList\Type $ys) : IArrayList\Type {
 			return (IArrayList\Module::compare($xs, $ys)->unbox() <= 0) ? $xs : $ys;
 		}
 
@@ -1205,11 +1206,11 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
-		 * @return IBool\Type                                        whether all of the items of
+		 * @param IArrayList\Type $xs                               the left operand
+		 * @return IBool\Type                                       whether all of the items of
 		 *                                                          the list evaluate to true
 		 */
-		public static function and_(IArrayList\Type $xs) {
+		public static function and_(IArrayList\Type $xs) : IBool\Type {
 			return IArrayList\Module::all($xs, function(IBool\Type $x, IInt32\Type $i) {
 				return $x;
 			});
@@ -1220,11 +1221,11 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the left operand
-		 * @return IBool\Type                                        whether all of the items of
+		 * @param IArrayList\Type $xs                               the left operand
+		 * @return IBool\Type                                       whether all of the items of
 		 *                                                          the list evaluate to false
 		 */
-		public static function or_(IArrayList\Type $xs) {
+		public static function or_(IArrayList\Type $xs) : IBool\Type {
 			return IArrayList\Module::any($xs, function(IBool\Type $x, IInt32\Type $i) {
 				return $x;
 			});

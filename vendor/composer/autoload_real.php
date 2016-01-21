@@ -33,18 +33,13 @@ class ComposerAutoloaderInit69e9f8c2d1370151d0a174daa38a35c6
             $loader->setPsr4($namespace, $path);
         }
 
-        $classIMap = require __DIR__ . '/autoload_classmap.php';
-        if ($classIMap) {
-            $loader->addClassIMap($classIMap);
+        $classMap = require __DIR__ . '/autoload_classmap.php';
+        if ($classMap) {
+            $loader->addClassMap($classMap);
         }
 
         $loader->register(true);
 
         return $loader;
     }
-}
-
-function composerRequire69e9f8c2d1370151d0a174daa38a35c6($file)
-{
-    require $file;
 }

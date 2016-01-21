@@ -16,6 +16,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Saber\Core {
 
 	use \Saber\Data\IString;
@@ -30,7 +32,7 @@ namespace Saber\Core {
 		 * @access public
 		 * @return string                                           the object's hash code
 		 */
-		public function __hashCode();
+		public function __hashCode() : string;
 
 		/**
 		 * This method returns the object as a string.
@@ -46,7 +48,7 @@ namespace Saber\Core {
 		 * @access public
 		 * @return string                                           the object's class type
 		 */
-		public function __typeOf();
+		public function __typeOf() : string;
 
 		#endregion
 
@@ -56,26 +58,26 @@ namespace Saber\Core {
 		 * This method returns the object's hash code.
 		 *
 		 * @access public
-		 * @return IString\Type                                      the object's hash code
+		 * @return IString\Type                                     the object's hash code
 		 */
-		public function hashCode();
+		public function hashCode() : IString\Type;
 
 		/**
 		 * This method returns the object as a string.
 		 *
 		 * @access public
 		 * @final
-		 * @return IString\Type                                      the object as a string
+		 * @return IString\Type                                     the object as a string
 		 */
-		public function toString();
+		public function toString() : IString\Type;
 
 		/**
 		 * This method returns the object's class type.
 		 *
 		 * @access public
-		 * @return IString\Type                                      the object's class type
+		 * @return IString\Type                                     the object's class type
 		 */
-		public function typeOf();
+		public function typeOf() : IString\Type;
 
 		#endregion
 

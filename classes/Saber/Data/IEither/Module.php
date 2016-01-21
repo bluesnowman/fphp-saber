@@ -16,6 +16,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Saber\Data\IEither {
 
 	use \Saber\Core;
@@ -31,12 +33,12 @@ namespace Saber\Data\IEither {
 		 *
 		 * @access public
 		 * @static
-		 * @param IEither\Type $xs                                   the left operand
+		 * @param IEither\Type $xs                                  the left operand
 		 * @param callable $left                                    the operator function to be used
 		 * @param callable $right                                   the operator function to be used
 		 * @return Core\Type                                        the result
 		 */
-		public static function fold(IEither\Type $xs, callable $left, callable $right) {
+		public static function fold(IEither\Type $xs, callable $left, callable $right) : Core\Type {
 			return ($xs->__isLeft()) ? $left($xs->projectLeft()->item()) : $right($xs->projectRight()->item());
 		}
 
@@ -45,10 +47,10 @@ namespace Saber\Data\IEither {
 		 *
 		 * @access public
 		 * @static
-		 * @param IEither\Type $xs                                   the operand
+		 * @param IEither\Type $xs                                  the operand
 		 * @return Core\Type                                        the result
 		 */
-		public static function reduce(IEither\Type $xs) {
+		public static function reduce(IEither\Type $xs) : Core\Type {
 			return ($xs->__isLeft()) ? $xs->projectLeft()->item() : $xs->projectRight()->item();
 		}
 
@@ -57,10 +59,10 @@ namespace Saber\Data\IEither {
 		 *
 		 * @access public
 		 * @static
-		 * @param IEither\Type $x                                    the node to be swapped
-		 * @return IEither\Type                                      a tuple with the item swapped
+		 * @param IEither\Type $x                                   the node to be swapped
+		 * @return IEither\Type                                     a tuple with the item swapped
 		 */
-		public static function swap(IEither\Type $x) {
+		public static function swap(IEither\Type $x) : IEither\Type {
 			$value = $x->unbox();
 			return ($x->__isLeft()) ? IEither\Type::right($value) : IEither\Type::left($value);
 		}
@@ -75,11 +77,11 @@ namespace Saber\Data\IEither {
 		 *
 		 * @access public
 		 * @static
-		 * @param IEither\Type $x                                    the value to be evaluated
-		 * @param IEither\Type $y                                    the default value
-		 * @return IEither\Type                                      the result
+		 * @param IEither\Type $x                                   the value to be evaluated
+		 * @param IEither\Type $y                                   the default value
+		 * @return IEither\Type                                     the result
 		 */
-		public static function nvl(IEither\Type $x = null, IEither\Type $y = null) {
+		public static function nvl(IEither\Type $x = null, IEither\Type $y = null) : IEither\Type {
 			return ($x !== null) ? $x : (($y !== null) ? $y : IEither\Type::left());
 		}
 

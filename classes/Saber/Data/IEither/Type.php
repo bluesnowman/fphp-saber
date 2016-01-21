@@ -16,6 +16,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Saber\Data\IEither {
 
 	use \Saber\Core;
@@ -55,12 +57,12 @@ namespace Saber\Data\IEither {
 		 *
 		 * @access public
 		 * @static
-		 * @param IEither\Type $x                                    the class to be evaluated
-		 * @return IEither\Type                                      the class
+		 * @param IEither\Type $x                                   the class to be evaluated
+		 * @return IEither\Type                                     the class
 		 * @throw Throwable\InvalidArgument\Exception               indicated that the specified class
 		 *                                                          is not a covariant
 		 */
-		public static function covariant(IEither\Type $x) {
+		public static function covariant(IEither\Type $x) : IEither\Type {
 			if (!($x instanceof static)) {
 				throw new Throwable\InvalidArgument\Exception('Invalid class type.  Expected a class of type ":type1", but got ":type2".', array(':type1' => get_called_class(), ':type2' => get_class($x)));
 			}
@@ -73,9 +75,9 @@ namespace Saber\Data\IEither {
 		 * @access public
 		 * @static
 		 * @param Core\Type $x                                      the object to be boxed
-		 * @return IEither\Left\Type                                 a left node
+		 * @return IEither\Left\Type                                a left node
 		 */
-		public static function left(Core\Type $x = null) {
+		public static function left(Core\Type $x = null) : IEither\Left\Type {
 			if ($x === null) {
 				$x = IUnit\Type::instance();
 			}
@@ -88,9 +90,9 @@ namespace Saber\Data\IEither {
 		 * @access public
 		 * @static
 		 * @param Core\Type $x                                      the object to be boxed
-		 * @return IEither\Right\Type                                a right node
+		 * @return IEither\Right\Type                               a right node
 		 */
-		public static function right(Core\Type $x = null) {
+		public static function right(Core\Type $x = null) : IEither\Right\Type {
 			if ($x === null) {
 				$x = IUnit\Type::instance();
 			}
@@ -117,9 +119,9 @@ namespace Saber\Data\IEither {
 		 *
 		 * @access public
 		 * @final
-		 * @return boolean                                          whether the node is a Left\Type
+		 * @return bool                                             whether the node is a Left\Type
 		 */
-		public final function __isLeft() {
+		public final function __isLeft() : bool {
 			return ($this instanceof IEither\Left\Type);
 		}
 
@@ -128,9 +130,9 @@ namespace Saber\Data\IEither {
 		 *
 		 * @access public
 		 * @final
-		 * @return boolean                                          whether the node is a Right\Type
+		 * @return bool                                             whether the node is a Right\Type
 		 */
-		public final function __isRight() {
+		public final function __isRight() : bool {
 			return ($this instanceof IEither\Right\Type);
 		}
 
@@ -165,9 +167,9 @@ namespace Saber\Data\IEither {
 		 *
 		 * @access public
 		 * @final
-		 * @return IBool\Type                                        whether the node is a Left\Type
+		 * @return IBool\Type                                       whether the node is a Left\Type
 		 */
-		public final function isLeft() {
+		public final function isLeft() : IBool\Type {
 			return IBool\Type::box($this->__isLeft());
 		}
 
@@ -176,9 +178,9 @@ namespace Saber\Data\IEither {
 		 *
 		 * @access public
 		 * @final
-		 * @return IBool\Type                                        whether the node is a Right\Type
+		 * @return IBool\Type                                       whether the node is a Right\Type
 		 */
-		public final function isRight() {
+		public final function isRight() : IBool\Type {
 			return IBool\Type::box($this->__isRight());
 		}
 
@@ -189,7 +191,7 @@ namespace Saber\Data\IEither {
 		 * @final
 		 * @return Core\Type                                        the stored item
 		 */
-		public final function item() {
+		public final function item() : Core\Type {
 			return $this->value;
 		}
 
@@ -198,9 +200,9 @@ namespace Saber\Data\IEither {
 		 *
 		 * @access public
 		 * @final
-		 * @return IEither\Left\Projection                           a left projection
+		 * @return IEither\Left\Projection                          a left projection
 		 */
-		public final function projectLeft() {
+		public final function projectLeft() : IEither\Left\Projection {
 			return new IEither\Left\Projection($this);
 		}
 
@@ -209,9 +211,9 @@ namespace Saber\Data\IEither {
 		 *
 		 * @access public
 		 * @final
-		 * @return IEither\Right\Projection                          a right projection
+		 * @return IEither\Right\Projection                         a right projection
 		 */
-		public final function projectRight() {
+		public final function projectRight() : IEither\Right\Projection {
 			return new IEither\Right\Projection($this);
 		}
 
@@ -220,10 +222,10 @@ namespace Saber\Data\IEither {
 		 *
 		 * @access public
 		 * @final
-		 * @param integer $depth                                    how many levels to unbox
+		 * @param int $depth                                        how many levels to unbox
 		 * @return mixed                                            the un-boxed value
 		 */
-		public final function unbox($depth = 0) {
+		public final function unbox(int $depth = 0) {
 			if ($depth > 0) {
 				if ($this->value instanceof Core\Boxable\Type) {
 					$this->value->unbox($depth - 1);

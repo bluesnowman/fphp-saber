@@ -16,6 +16,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Saber\Throwable\Runtime {
 
 	use \Saber\Core;

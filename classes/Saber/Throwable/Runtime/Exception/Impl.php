@@ -16,6 +16,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Saber\Throwable\Runtime\Exception {
 
 	use \Saber\Core;
@@ -175,7 +177,7 @@ namespace Saber\Throwable\Runtime\Exception {
 		 * @access public
 		 * @return string                                           the object's hash code
 		 */
-		public function __hashCode() {
+		public function __hashCode() : string {
 			return spl_object_hash($this);
 		}
 
@@ -202,7 +204,7 @@ namespace Saber\Throwable\Runtime\Exception {
 		 * @access public
 		 * @return string                                           the object's class type
 		 */
-		public function __typeOf() {
+		public function __typeOf() : string {
 			return get_class($this);
 		}
 
@@ -215,9 +217,9 @@ namespace Saber\Throwable\Runtime\Exception {
 		 *
 		 * @access public
 		 * @final
-		 * @return IString\Type                                      the object's hash code
+		 * @return IString\Type                                     the object's hash code
 		 */
-		public final function hashCode() {
+		public final function hashCode() : IString\Type {
 			return IString\Type::box($this->__hashCode());
 		}
 
@@ -226,9 +228,9 @@ namespace Saber\Throwable\Runtime\Exception {
 		 *
 		 * @access public
 		 * @final
-		 * @return IString\Type                                      the object as a string
+		 * @return IString\Type                                     the object as a string
 		 */
-		public final function toString() {
+		public final function toString() : IString\Type {
 			return IString\Type::box($this->__toString());
 		}
 
@@ -237,9 +239,9 @@ namespace Saber\Throwable\Runtime\Exception {
 		 *
 		 * @access public
 		 * @final
-		 * @return IString\Type                                      the object's class type
+		 * @return IString\Type                                     the object's class type
 		 */
-		public final function typeOf() {
+		public final function typeOf() : IString\Type {
 			return IString\Type::box($this->__typeOf());
 		}
 

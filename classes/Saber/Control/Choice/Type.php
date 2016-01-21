@@ -90,7 +90,7 @@ namespace Saber\Control\Choice {
 		 * @final
 		 * @return string                                           the object's hash code
 		 */
-		public final function __hashCode() {
+		public final function __hashCode() : string {
 			return spl_object_hash($this);
 		}
 
@@ -112,7 +112,7 @@ namespace Saber\Control\Choice {
 		 * @final
 		 * @return string                                           the object's class type
 		 */
-		public final function __typeOf() {
+		public final function __typeOf() : string {
 			return get_class($this);
 		}
 
@@ -138,7 +138,7 @@ namespace Saber\Control\Choice {
 		 * @final
 		 * @return IString\Type                                      the object's hash code
 		 */
-		public final function hashCode() {
+		public final function hashCode() : IString\Type {
 			return IString\Type::box($this->__hashCode());
 		}
 
@@ -161,7 +161,7 @@ namespace Saber\Control\Choice {
 		 * @final
 		 * @return IString\Type                                      the object as a string
 		 */
-		public final function toString() {
+		public final function toString() : IString\Type {
 			return IString\Type::box($this->__toString());
 		}
 
@@ -172,7 +172,7 @@ namespace Saber\Control\Choice {
 		 * @final
 		 * @return IString\Type                                      the object's class type
 		 */
-		public final function typeOf() {
+		public final function typeOf() : IString\Type {
 			return IString\Type::box($this->__typeOf());
 		}
 

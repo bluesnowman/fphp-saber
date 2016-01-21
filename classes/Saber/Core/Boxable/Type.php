@@ -16,6 +16,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Saber\Core\Boxable {
 
 	interface Type {
@@ -26,10 +28,10 @@ namespace Saber\Core\Boxable {
 		 * This method returns the value contained within the boxed object.
 		 *
 		 * @access public
-		 * @param integer $depth                                    how many levels to unbox
+		 * @param int $depth                                        how many levels to unbox
 		 * @return mixed                                            the un-boxed value
 		 */
-		public function unbox($depth = 0);
+		public function unbox(int $depth = 0);
 
 		#endregion
 

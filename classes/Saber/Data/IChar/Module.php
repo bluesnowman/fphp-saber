@@ -16,6 +16,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Saber\Data\IChar {
 
 	include_once(implode(DIRECTORY_SEPARATOR, array(dirname(__FILE__), '..', '..', 'Ext', 'mbstring.php')));
@@ -43,11 +45,11 @@ namespace Saber\Data\IChar {
 		 *
 		 * @access public
 		 * @static
-		 * @param IChar\Type $x                                      the value to be evaluated
-		 * @param IChar\Type $y                                      the default value
-		 * @return IChar\Type                                        the result
+		 * @param IChar\Type $x                                     the value to be evaluated
+		 * @param IChar\Type $y                                     the default value
+		 * @return IChar\Type                                       the result
 		 */
-		public static function nvl(IChar\Type $x = null, IChar\Type $y = null) {
+		public static function nvl(IChar\Type $x = null, IChar\Type $y = null) : IChar\Type {
 			return ($x !== null) ? $x : (($y !== null) ? $y : IChar\Type::box(chr(0)));
 		}
 
@@ -57,10 +59,10 @@ namespace Saber\Data\IChar {
 		 *
 		 * @access public
 		 * @static
-		 * @param IChar\Type $x                                      the object to be converted
-		 * @return IInt32\Type                                       the value as an IInt32
+		 * @param IChar\Type $x                                     the object to be converted
+		 * @return IInt32\Type                                      the value as an IInt32
 		 */
-		public static function toInt32(IChar\Type $x) {
+		public static function toInt32(IChar\Type $x) : IInt32\Type {
 			return IInt32\Type::box(ord($x->unbox()));
 		}
 
@@ -69,12 +71,12 @@ namespace Saber\Data\IChar {
 		 *
 		 * @access public
 		 * @static
-		 * @param IChar\Type $x                                      the object to be converted
-		 * @return IChar\Type                                        the lower case letter
+		 * @param IChar\Type $x                                     the object to be converted
+		 * @return IChar\Type                                       the lower case letter
 		 *
 		 * @see http://php.net/manual/en/function.mb-strtolower.php
 		 */
-		public static function toLowerCase(IChar\Type $x) {
+		public static function toLowerCase(IChar\Type $x) : IChar\Type {
 			return IChar\Type::box(mb_strtolower($x->unbox(), IChar\Type::UTF_8_ENCODING));
 		}
 
@@ -83,12 +85,12 @@ namespace Saber\Data\IChar {
 		 *
 		 * @access public
 		 * @static
-		 * @param IChar\Type $x                                      the object to be converted
-		 * @return IChar\Type                                        the upper case letter
+		 * @param IChar\Type $x                                     the object to be converted
+		 * @return IChar\Type                                       the upper case letter
 		 *
 		 * @see http://php.net/manual/en/function.mb-strtoupper.php
 		 */
-		public static function toUpperCase(IChar\Type $x) {
+		public static function toUpperCase(IChar\Type $x) : IChar\Type {
 			return IChar\Type::box(mb_strtoupper($x->unbox(), IChar\Type::UTF_8_ENCODING));
 		}
 
@@ -101,12 +103,12 @@ namespace Saber\Data\IChar {
 		 *
 		 * @access public
 		 * @static
-		 * @param IChar\Type $x                                      the left operand
+		 * @param IChar\Type $x                                     the left operand
 		 * @param Core\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is equal
+		 * @return IBool\Type                                       whether the left operand is equal
 		 *                                                          to the right operand
 		 */
-		public static function eq(IChar\Type $x, Core\Type $y) { // ==
+		public static function eq(IChar\Type $x, Core\Type $y) : IBool\Type { // ==
 			$type = $x->__typeOf();
 			if ($y !== null) {
 				if ($y instanceof $type) {
@@ -121,12 +123,12 @@ namespace Saber\Data\IChar {
 		 *
 		 * @access public
 		 * @static
-		 * @param IChar\Type $x                                      the left operand
+		 * @param IChar\Type $x                                     the left operand
 		 * @param Core\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is identical
+		 * @return IBool\Type                                       whether the left operand is identical
 		 *                                                          to the right operand
 		 */
-		public static function id(IChar\Type $x, Core\Type $y) { // ===
+		public static function id(IChar\Type $x, Core\Type $y) : IBool\Type { // ===
 			if ($y !== null) {
 				if ($x->__typeOf() === $y->__typeOf()) {
 					return IBool\Type::box($x->unbox() === $y->unbox());
@@ -140,12 +142,12 @@ namespace Saber\Data\IChar {
 		 *
 		 * @access public
 		 * @static
-		 * @param IChar\Type $x                                      the left operand
+		 * @param IChar\Type $x                                     the left operand
 		 * @param Core\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is NOT equal
+		 * @return IBool\Type                                       whether the left operand is NOT equal
 		 *                                                          to the right operand
 		 */
-		public static function ne(IChar\Type $x, Core\Type $y) { // !=
+		public static function ne(IChar\Type $x, Core\Type $y) : IBool\Type { // !=
 			return IBool\Module::not(IChar\Module::eq($x, $y));
 		}
 
@@ -154,12 +156,12 @@ namespace Saber\Data\IChar {
 		 *
 		 * @access public
 		 * @static
-		 * @param IChar\Type $x                                      the left operand
+		 * @param IChar\Type $x                                     the left operand
 		 * @param Core\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is NOT identical
+		 * @return IBool\Type                                       whether the left operand is NOT identical
 		 *                                                          to the right operand
 		 */
-		public static function ni(IChar\Type $x, Core\Type $y) { // !==
+		public static function ni(IChar\Type $x, Core\Type $y) : IBool\Type { // !==
 			return IBool\Module::not(IChar\Module::id($x, $y));
 		}
 
@@ -172,13 +174,13 @@ namespace Saber\Data\IChar {
 		 *
 		 * @access public
 		 * @static
-		 * @param IChar\Type $x                                      the left operand
-		 * @param IChar\Type $y                                      the right operand
-		 * @return ITrit\Type                                        the order as to whether the left
+		 * @param IChar\Type $x                                     the left operand
+		 * @param IChar\Type $y                                     the right operand
+		 * @return ITrit\Type                                       the order as to whether the left
 		 *                                                          operand is less than, equals to,
 		 *                                                          or greater than the right operand
 		 */
-		public static function compare(IChar\Type $x, IChar\Type $y) {
+		public static function compare(IChar\Type $x, IChar\Type $y) : ITrit\Type {
 			return ITrit\Type::box($x->unbox() <=> $y->unbox());
 		}
 
@@ -187,12 +189,12 @@ namespace Saber\Data\IChar {
 		 *
 		 * @access public
 		 * @static
-		 * @param IChar\Type $x                                      the left operand
-		 * @param IChar\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is greater
+		 * @param IChar\Type $x                                     the left operand
+		 * @param IChar\Type $y                                     the right operand
+		 * @return IBool\Type                                       whether the left operand is greater
 		 *                                                          than or equal to the right operand
 		 */
-		public static function ge(IChar\Type $x, IChar\Type $y) { // >=
+		public static function ge(IChar\Type $x, IChar\Type $y) : IBool\Type { // >=
 			return IBool\Type::box(IChar\Module::compare($x, $y)->unbox() >= 0);
 		}
 
@@ -201,12 +203,12 @@ namespace Saber\Data\IChar {
 		 *
 		 * @access public
 		 * @static
-		 * @param IChar\Type $x                                      the left operand
-		 * @param IChar\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is greater
+		 * @param IChar\Type $x                                     the left operand
+		 * @param IChar\Type $y                                     the right operand
+		 * @return IBool\Type                                       whether the left operand is greater
 		 *                                                          than the right operand
 		 */
-		public static function gt(IChar\Type $x, IChar\Type $y) { // >
+		public static function gt(IChar\Type $x, IChar\Type $y) : IBool\Type { // >
 			return IBool\Type::box(IChar\Module::compare($x, $y)->unbox() > 0);
 		}
 
@@ -215,12 +217,12 @@ namespace Saber\Data\IChar {
 		 *
 		 * @access public
 		 * @static
-		 * @param IChar\Type $x                                      the left operand
-		 * @param IChar\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is less than
+		 * @param IChar\Type $x                                     the left operand
+		 * @param IChar\Type $y                                     the right operand
+		 * @return IBool\Type                                       whether the left operand is less than
 		 *                                                          or equal to the right operand
 		 */
-		public static function le(IChar\Type $x, IChar\Type $y) { // <=
+		public static function le(IChar\Type $x, IChar\Type $y) : IBool\Type { // <=
 			return IBool\Type::box(IChar\Module::compare($x, $y)->unbox() <= 0);
 		}
 
@@ -229,12 +231,12 @@ namespace Saber\Data\IChar {
 		 *
 		 * @access public
 		 * @static
-		 * @param IChar\Type $x                                      the left operand
-		 * @param IChar\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is less than
+		 * @param IChar\Type $x                                     the left operand
+		 * @param IChar\Type $y                                     the right operand
+		 * @return IBool\Type                                       whether the left operand is less than
 		 *                                                          the right operand
 		 */
-		public static function lt(IChar\Type $x, IChar\Type $y) { // <
+		public static function lt(IChar\Type $x, IChar\Type $y) : IBool\Type { // <
 			return IBool\Type::box(IChar\Module::compare($x, $y)->unbox() < 0);
 		}
 
@@ -243,11 +245,11 @@ namespace Saber\Data\IChar {
 		 *
 		 * @access public
 		 * @static
-		 * @param IChar\Type $x                                      the left operand
-		 * @param IChar\Type $y                                      the right operand
-		 * @return IChar\Type                                        the maximum value
+		 * @param IChar\Type $x                                     the left operand
+		 * @param IChar\Type $y                                     the right operand
+		 * @return IChar\Type                                       the maximum value
 		 */
-		public static function max(IChar\Type $x, IChar\Type $y) {
+		public static function max(IChar\Type $x, IChar\Type $y) : IChar\Type {
 			return (IChar\Module::compare($x, $y)->unbox() >= 0) ? $x : $y;
 		}
 
@@ -256,11 +258,11 @@ namespace Saber\Data\IChar {
 		 *
 		 * @access public
 		 * @static
-		 * @param IChar\Type $x                                      the left operand
-		 * @param IChar\Type $y                                      the right operand
-		 * @return IChar\Type                                        the minimum value
+		 * @param IChar\Type $x                                     the left operand
+		 * @param IChar\Type $y                                     the right operand
+		 * @return IChar\Type                                       the minimum value
 		 */
-		public static function min(IChar\Type $x, IChar\Type $y) {
+		public static function min(IChar\Type $x, IChar\Type $y) : IChar\Type {
 			return (IChar\Module::compare($x, $y)->unbox() <= 0) ? $x : $y;
 		}
 
@@ -273,13 +275,13 @@ namespace Saber\Data\IChar {
 		 *
 		 * @access public
 		 * @static
-		 * @param IChar\Type $x                                      the character to be evaluated
-		 * @return IBool\Type                                        whether this is an alphabetic
+		 * @param IChar\Type $x                                     the character to be evaluated
+		 * @return IBool\Type                                       whether this is an alphabetic
 		 *                                                          character
 		 *
 		 * @see http://php.net/manual/en/function.ctype-alpha.php
 		 */
-		public static function isAlpha(IChar\Type $x) {
+		public static function isAlpha(IChar\Type $x) : IBool\Type {
 			return IBool\Type::box(ctype_alpha($x->unbox()));
 		}
 
@@ -288,13 +290,13 @@ namespace Saber\Data\IChar {
 		 *
 		 * @access public
 		 * @static
-		 * @param IChar\Type $x                                      the character to be evaluated
-		 * @return IBool\Type                                        whether this is an alphanumeric
+		 * @param IChar\Type $x                                     the character to be evaluated
+		 * @return IBool\Type                                       whether this is an alphanumeric
 		 *                                                          character
 		 *
 		 * @see http://php.net/manual/en/function.ctype-alnum.php
 		 */
-		public static function isAlphaNum(IChar\Type $x) {
+		public static function isAlphaNum(IChar\Type $x) : IBool\Type {
 			return IBool\Type::box(ctype_alnum($x->unbox()));
 		}
 
@@ -303,11 +305,11 @@ namespace Saber\Data\IChar {
 		 *
 		 * @access public
 		 * @static
-		 * @param IChar\Type $x                                      the character to be evaluated
-		 * @return IBool\Type                                        whether this is an ASCII
+		 * @param IChar\Type $x                                     the character to be evaluated
+		 * @return IBool\Type                                       whether this is an ASCII
 		 *                                                          character
 		 */
-		public static function isAscii(IChar\Type $x) {
+		public static function isAscii(IChar\Type $x) : IBool\Type {
 			return IBool\Type::box(preg_match('/^[\x20-\x7f]$/', $x->unbox()));
 		}
 
@@ -316,13 +318,13 @@ namespace Saber\Data\IChar {
 		 *
 		 * @access public
 		 * @static
-		 * @param IChar\Type $x                                      the character to be evaluated
-		 * @return IBool\Type                                        whether this is a control
+		 * @param IChar\Type $x                                     the character to be evaluated
+		 * @return IBool\Type                                       whether this is a control
 		 *                                                          character
 		 *
 		 * @see http://php.net/manual/en/function.ctype-cntrl.php
 		 */
-		public static function isControl(IChar\Type $x) {
+		public static function isControl(IChar\Type $x) : IBool\Type {
 			return IBool\Type::box(ctype_cntrl($x->unbox()));
 		}
 
@@ -331,13 +333,13 @@ namespace Saber\Data\IChar {
 		 *
 		 * @access public
 		 * @static
-		 * @param IChar\Type $x                                      the character to be evaluated
-		 * @return IBool\Type                                        whether this is a Cyrillic
+		 * @param IChar\Type $x                                     the character to be evaluated
+		 * @return IBool\Type                                       whether this is a Cyrillic
 		 *                                                          character
 		 *
 		 * @see http://php.net/manual/en/regexp.reference.unicode.php
 		 */
-		public static function isCyrillic(IChar\Type $x) {
+		public static function isCyrillic(IChar\Type $x) : IBool\Type {
 			return IBool\Type::box(preg_match('/^\p{Cyrillic}$/u', $x->unbox()));
 		}
 
@@ -346,12 +348,12 @@ namespace Saber\Data\IChar {
 		 *
 		 * @access public
 		 * @static
-		 * @param IChar\Type $x                                      the character to be evaluated
-		 * @return IBool\Type                                        whether this is a digit
+		 * @param IChar\Type $x                                     the character to be evaluated
+		 * @return IBool\Type                                       whether this is a digit
 		 *
 		 * @see http://php.net/manual/en/function.ctype-digit.php
 		 */
-		public static function isDigit(IChar\Type $x) {
+		public static function isDigit(IChar\Type $x) : IBool\Type {
 			return IBool\Type::box(ctype_digit($x->unbox()));
 		}
 
@@ -360,12 +362,12 @@ namespace Saber\Data\IChar {
 		 *
 		 * @access public
 		 * @static
-		 * @param IChar\Type $x                                      the character to be evaluated
-		 * @return IBool\Type                                        whether this is a hex-digit
+		 * @param IChar\Type $x                                     the character to be evaluated
+		 * @return IBool\Type                                       whether this is a hex-digit
 		 *
 		 * @see http://php.net/manual/en/function.ctype-xdigit.php
 		 */
-		public static function isHexDigit(IChar\Type $x) {
+		public static function isHexDigit(IChar\Type $x) : IBool\Type {
 			return IBool\Type::box(ctype_xdigit($x->unbox()));
 		}
 
@@ -374,13 +376,13 @@ namespace Saber\Data\IChar {
 		 *
 		 * @access public
 		 * @static
-		 * @param IChar\Type $x                                      the character to be evaluated
-		 * @return IBool\Type                                        whether this is an Latin-1
+		 * @param IChar\Type $x                                     the character to be evaluated
+		 * @return IBool\Type                                       whether this is an Latin-1
 		 *                                                          character
 		 *
 		 * @see http://php.net/manual/en/regexp.reference.unicode.php
 		 */
-		public static function isLatin1(IChar\Type $x) {
+		public static function isLatin1(IChar\Type $x) : IBool\Type {
 			return IBool\Type::box(preg_match('/^\p{Latin}$/', $x->unbox()));
 		}
 
@@ -389,13 +391,13 @@ namespace Saber\Data\IChar {
 		 *
 		 * @access public
 		 * @static
-		 * @param IChar\Type $x                                      the character to be evaluated
-		 * @return IBool\Type                                        whether this is a lower case
+		 * @param IChar\Type $x                                     the character to be evaluated
+		 * @return IBool\Type                                       whether this is a lower case
 		 *                                                          character
 		 *
 		 * @see http://php.net/manual/en/function.ctype-lower.php
 		 */
-		public static function isLowerCase(IChar\Type $x) {
+		public static function isLowerCase(IChar\Type $x) : IBool\Type {
 			return IBool\Type::box(ctype_lower($x->unbox()));
 		}
 
@@ -404,12 +406,12 @@ namespace Saber\Data\IChar {
 		 *
 		 * @access public
 		 * @static
-		 * @param IChar\Type $x                                      the character to be evaluated
-		 * @return IBool\Type                                        whether this is a number
+		 * @param IChar\Type $x                                     the character to be evaluated
+		 * @return IBool\Type                                       whether this is a number
 		 *
 		 * @see http://php.net/manual/en/regexp.reference.unicode.php
 		 */
-		public static function isNumber(IChar\Type $x) {
+		public static function isNumber(IChar\Type $x) : IBool\Type {
 			return IBool\Type::box(preg_match('/^\p{N}$/', $x->unbox()));
 		}
 
@@ -418,10 +420,10 @@ namespace Saber\Data\IChar {
 		 *
 		 * @access public
 		 * @static
-		 * @param IChar\Type $x                                      the character to be evaluated
-		 * @return IBool\Type                                        whether this is an oct-digit
+		 * @param IChar\Type $x                                     the character to be evaluated
+		 * @return IBool\Type                                       whether this is an oct-digit
 		 */
-		public static function isOctDigit(IChar\Type $x) {
+		public static function isOctDigit(IChar\Type $x) : IBool\Type {
 			return IBool\Type::box(preg_match('/^[0-7]$/', $x->unbox()));
 		}
 
@@ -430,13 +432,13 @@ namespace Saber\Data\IChar {
 		 *
 		 * @access public
 		 * @static
-		 * @param IChar\Type $x                                      the character to be evaluated
-		 * @return IBool\Type                                        whether this is a printable
+		 * @param IChar\Type $x                                     the character to be evaluated
+		 * @return IBool\Type                                       whether this is a printable
 		 *                                                          character
 		 *
 		 * @see http://php.net/manual/en/function.ctype-print.php
 		 */
-		public static function isPrintable(IChar\Type $x) {
+		public static function isPrintable(IChar\Type $x) : IBool\Type {
 			return IBool\Type::box(ctype_print($x->unbox()));
 		}
 
@@ -445,13 +447,13 @@ namespace Saber\Data\IChar {
 		 *
 		 * @access public
 		 * @static
-		 * @param IChar\Type $x                                      the character to be evaluated
-		 * @return IBool\Type                                        whether this is a punctuation
+		 * @param IChar\Type $x                                     the character to be evaluated
+		 * @return IBool\Type                                       whether this is a punctuation
 		 *                                                          character
 		 *
 		 * @see http://php.net/manual/en/function.ctype-punct.php
 		 */
-		public static function isPunctuation(IChar\Type $x) {
+		public static function isPunctuation(IChar\Type $x) : IBool\Type {
 			return IBool\Type::box(ctype_punct($x->unbox()));
 		}
 
@@ -460,12 +462,12 @@ namespace Saber\Data\IChar {
 		 *
 		 * @access public
 		 * @static
-		 * @param IChar\Type $x                                      the character to be evaluated
-		 * @return IBool\Type                                        whether this is a mark
+		 * @param IChar\Type $x                                     the character to be evaluated
+		 * @return IBool\Type                                       whether this is a mark
 		 *
 		 * @see http://php.net/manual/en/regexp.reference.unicode.php
 		 */
-		public static function isSeparator(IChar\Type $x) {
+		public static function isSeparator(IChar\Type $x) : IBool\Type {
 			return IBool\Type::box(preg_match('/^\p{Z}$/', $x->unbox()));
 		}
 
@@ -474,12 +476,12 @@ namespace Saber\Data\IChar {
 		 *
 		 * @access public
 		 * @static
-		 * @param IChar\Type $x                                      the character to be evaluated
-		 * @return IBool\Type                                        whether this is a space
+		 * @param IChar\Type $x                                     the character to be evaluated
+		 * @return IBool\Type                                       whether this is a space
 		 *
 		 * @see http://php.net/manual/en/function.ctype-space.php
 		 */
-		public static function isSpace(IChar\Type $x) {
+		public static function isSpace(IChar\Type $x) : IBool\Type {
 			return IBool\Type::box(ctype_space($x->unbox()));
 		}
 
@@ -488,12 +490,12 @@ namespace Saber\Data\IChar {
 		 *
 		 * @access public
 		 * @static
-		 * @param IChar\Type $x                                      the character to be evaluated
-		 * @return IBool\Type                                        whether this is a symbol
+		 * @param IChar\Type $x                                     the character to be evaluated
+		 * @return IBool\Type                                       whether this is a symbol
 		 *
 		 * @see http://php.net/manual/en/regexp.reference.unicode.php
 		 */
-		public static function isSymbol(IChar\Type $x) {
+		public static function isSymbol(IChar\Type $x) : IBool\Type {
 			return IBool\Type::box(preg_match('/^\p{S}$/', $x->unbox()));
 		}
 
@@ -502,13 +504,13 @@ namespace Saber\Data\IChar {
 		 *
 		 * @access public
 		 * @static
-		 * @param IChar\Type $x                                      the character to be evaluated
-		 * @return IBool\Type                                        whether this is an upper case
+		 * @param IChar\Type $x                                     the character to be evaluated
+		 * @return IBool\Type                                       whether this is an upper case
 		 *                                                          character
 		 *
 		 * @see http://php.net/manual/en/function.ctype-upper.php
 		 */
-		public static function isUpperCase(IChar\Type $x) {
+		public static function isUpperCase(IChar\Type $x) : IBool\Type {
 			return IBool\Type::box(ctype_upper($x->unbox()));
 		}
 

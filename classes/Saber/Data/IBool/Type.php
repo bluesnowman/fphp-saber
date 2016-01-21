@@ -62,8 +62,8 @@ namespace Saber\Data\IBool {
 		 *
 		 * @access public
 		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return IBool\Type                                        the boxed object
+		 * @param bool $value                                       the value(s) to be boxed
+		 * @return IBool\Type                                       the boxed object
 		 */
 		public static function box(bool $value) : IBool\Type {
 			return ($value) ? IBool\Type::true() : IBool\Type::false();
@@ -88,7 +88,7 @@ namespace Saber\Data\IBool {
 		 * @access public
 		 * @static
 		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return IBool\Type                                        the boxed object
+		 * @return IBool\Type                                       the boxed object
 		 */
 		public static function make($value) : IBool\Type {
 			if (is_string($value) && in_array(strtolower($value), array('false', 'f', 'no', 'n', '0', 'null', 'nil'))) {
@@ -101,7 +101,7 @@ namespace Saber\Data\IBool {
 		 * This method returns an object with a "false" value.
 		 *
 		 * @access public
-		 * @return IBool\Type                                        the object
+		 * @return IBool\Type                                       the object
 		 */
 		public static function false() : IBool\Type {
 			if (!isset(static::$singletons[0])) {
@@ -114,7 +114,7 @@ namespace Saber\Data\IBool {
 		 * This method returns an object with a "true" value.
 		 *
 		 * @access public
-		 * @return IBool\Type                                        the object
+		 * @return IBool\Type                                       the object
 		 */
 		public static function true() : IBool\Type {
 			if (!isset(static::$singletons[1])) {
@@ -145,7 +145,7 @@ namespace Saber\Data\IBool {
 		 * @final
 		 * @return string                                           the object's hash code
 		 */
-		public final function __hashCode() {
+		public final function __hashCode() : string {
 			return $this->__toString();
 		}
 
@@ -169,10 +169,10 @@ namespace Saber\Data\IBool {
 		 *
 		 * @access public
 		 * @final
-		 * @param integer $depth                                    how many levels to unbox
+		 * @param int $depth                                        how many levels to unbox
 		 * @return boolean                                          the un-boxed value
 		 */
-		public final function unbox($depth = 0) {
+		public final function unbox(int $depth = 0) {
 			return $this->value;
 		}
 

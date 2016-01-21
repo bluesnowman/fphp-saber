@@ -16,6 +16,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Saber\Data\IOption {
 
 	use \Saber\Core;
@@ -113,7 +115,7 @@ namespace Saber\Data\IOption {
 		 * @final
 		 * @return string                                           the object's hash code
 		 */
-		public final function __hashCode() {
+		public final function __hashCode() : string {
 			return spl_object_hash($this->item());
 		}
 

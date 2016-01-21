@@ -16,6 +16,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Saber\Core {
 
 	abstract class Iterator implements \Countable, \Iterator { }

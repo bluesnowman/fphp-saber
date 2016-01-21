@@ -16,6 +16,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Saber\Data\ILinkedList\Cons {
 
 	use \Saber\Core;
@@ -114,10 +116,10 @@ namespace Saber\Data\ILinkedList\Cons {
 		 *
 		 * @access public
 		 * @final
-		 * @param integer $depth                                    how many levels to unbox
+		 * @param int $depth                                        how many levels to unbox
 		 * @return array                                            the un-boxed value
 		 */
-		public final function unbox($depth = 0) {
+		public final function unbox(int $depth = 0) {
 			$buffer = array();
 			for ($zs = $this; ! $zs->__isEmpty(); $zs = $zs->tail()) {
 				$z = $zs->head();

@@ -16,6 +16,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Saber\Data\IDouble {
 
 	include_once(implode(DIRECTORY_SEPARATOR, array(dirname(__FILE__), '..', '..', 'Ext', 'mtrand.php')));
@@ -43,10 +45,10 @@ namespace Saber\Data\IDouble {
 		 *
 		 * @access public
 		 * @static
-		 * @param IDouble\Type $x                                    the operand
-		 * @return IDouble\Type                                      the result
+		 * @param IDouble\Type $x                                   the operand
+		 * @return IDouble\Type                                     the result
 		 */
-		public static function abs(IDouble\Type $x) {
+		public static function abs(IDouble\Type $x) : IDouble\Type {
 			return IDouble\Type::box(abs($x->unbox()));
 		}
 
@@ -55,11 +57,11 @@ namespace Saber\Data\IDouble {
 		 *
 		 * @access public
 		 * @static
-		 * @param IDouble\Type $x                                    the left operand
-		 * @param IDouble\Type $y                                    the right operand
-		 * @return IDouble\Type                                      the result
+		 * @param IDouble\Type $x                                   the left operand
+		 * @param IDouble\Type $y                                   the right operand
+		 * @return IDouble\Type                                     the result
 		 */
-		public static function add(IDouble\Type $x, IDouble\Type $y) {
+		public static function add(IDouble\Type $x, IDouble\Type $y) : IDouble\Type {
 			return IDouble\Type::box($x->unbox() + $y->unbox());
 		}
 
@@ -68,10 +70,10 @@ namespace Saber\Data\IDouble {
 		 *
 		 * @access public
 		 * @static
-		 * @param IDouble\Type $x                                    the operand
-		 * @return IDouble\Type                                      the result
+		 * @param IDouble\Type $x                                   the operand
+		 * @return IDouble\Type                                     the result
 		 */
-		public static function ceil(IDouble\Type $x) {
+		public static function ceil(IDouble\Type $x) : IDouble\Type {
 			return IDouble\Type::box(ceil($x->unbox()));
 		}
 
@@ -80,10 +82,10 @@ namespace Saber\Data\IDouble {
 		 *
 		 * @access public
 		 * @static
-		 * @param IDouble\Type $x                                    the operand
-		 * @return IDouble\Type                                      the result
+		 * @param IDouble\Type $x                                   the operand
+		 * @return IDouble\Type                                     the result
 		 */
-		public static function decrement(IDouble\Type $x) {
+		public static function decrement(IDouble\Type $x) : IDouble\Type {
 			return IDouble\Module::subtract($x, IDouble\Type::one());
 		}
 
@@ -93,11 +95,11 @@ namespace Saber\Data\IDouble {
 		 *
 		 * @access public
 		 * @static
-		 * @param IDouble\Type $x                                    the left operand
-		 * @param IDouble\Type $y                                    the right operand
-		 * @return IDouble\Type                                      the result
+		 * @param IDouble\Type $x                                   the left operand
+		 * @param IDouble\Type $y                                   the right operand
+		 * @return IDouble\Type                                     the result
 		 */
-		public static function divide(IDouble\Type $x, IDouble\Type $y) {
+		public static function divide(IDouble\Type $x, IDouble\Type $y) : IDouble\Type {
 			return IDouble\Type::box($x->unbox() / $y->unbox());
 		}
 
@@ -106,10 +108,10 @@ namespace Saber\Data\IDouble {
 		 *
 		 * @access public
 		 * @static
-		 * @param IDouble\Type $x                                    the operand
-		 * @return IDouble\Type                                      the result
+		 * @param IDouble\Type $x                                   the operand
+		 * @return IDouble\Type                                     the result
 		 */
-		public static function floor(IDouble\Type $x) {
+		public static function floor(IDouble\Type $x) : IDouble\Type {
 			return IDouble\Type::box(floor($x->unbox()));
 		}
 
@@ -118,10 +120,10 @@ namespace Saber\Data\IDouble {
 		 *
 		 * @access public
 		 * @static
-		 * @param IDouble\Type $x                                    the operand
-		 * @return IDouble\Type                                      the result
+		 * @param IDouble\Type $x                                   the operand
+		 * @return IDouble\Type                                     the result
 		 */
-		public static function increment(IDouble\Type $x) {
+		public static function increment(IDouble\Type $x) : IDouble\Type {
 			return IDouble\Module::add($x, IDouble\Type::one());
 		}
 
@@ -131,11 +133,11 @@ namespace Saber\Data\IDouble {
 		 *
 		 * @access public
 		 * @static
-		 * @param IDouble\Type $x                                    the left operand
-		 * @param IDouble\Type $y                                    the right operand
-		 * @return IDouble\Type                                      the result
+		 * @param IDouble\Type $x                                   the left operand
+		 * @param IDouble\Type $y                                   the right operand
+		 * @return IDouble\Type                                     the result
 		 */
-		public static function modulo(IDouble\Type $x, IDouble\Type $y) {
+		public static function modulo(IDouble\Type $x, IDouble\Type $y) : IDouble\Type {
 			return IDouble\Type::box(fmod($x->unbox(), $y->unbox()));
 		}
 
@@ -145,11 +147,11 @@ namespace Saber\Data\IDouble {
 		 *
 		 * @access public
 		 * @static
-		 * @param IDouble\Type $x                                    the left operand
-		 * @param IDouble\Type $y                                    the right operand
-		 * @return IDouble\Type                                      the result
+		 * @param IDouble\Type $x                                   the left operand
+		 * @param IDouble\Type $y                                   the right operand
+		 * @return IDouble\Type                                     the result
 		 */
-		public static function multiply(IDouble\Type $x, IDouble\Type $y) {
+		public static function multiply(IDouble\Type $x, IDouble\Type $y) : IDouble\Type {
 			return IDouble\Type::box($x->unbox() * $y->unbox());
 		}
 
@@ -158,10 +160,10 @@ namespace Saber\Data\IDouble {
 		 *
 		 * @access public
 		 * @static
-		 * @param IDouble\Type $x                                    the operand
-		 * @return IDouble\Type                                      the result
+		 * @param IDouble\Type $x                                   the operand
+		 * @return IDouble\Type                                     the result
 		 */
-		public static function negate(IDouble\Type $x) {
+		public static function negate(IDouble\Type $x) : IDouble\Type {
 			return IDouble\Type::box($x->unbox() * -1.0);
 		}
 
@@ -170,11 +172,11 @@ namespace Saber\Data\IDouble {
 		 *
 		 * @access public
 		 * @static
-		 * @param IDouble\Type $x                                    the operand
-		 * @param IInt32\Type $exponent                              the exponent to be raised by
-		 * @return IDouble\Type                                      the result
+		 * @param IDouble\Type $x                                   the operand
+		 * @param IInt32\Type $exponent                             the exponent to be raised by
+		 * @return IDouble\Type                                     the result
 		 */
-		public static function pow(IDouble\Type $x, IInt32\Type $exponent) {
+		public static function pow(IDouble\Type $x, IInt32\Type $exponent) : IDouble\Type {
 			return IDouble\Type::box(pow($x->unbox(), $exponent->unbox()));
 		}
 
@@ -183,11 +185,11 @@ namespace Saber\Data\IDouble {
 		 *
 		 * @access public
 		 * @static
-		 * @param IDouble\Type $x                                    the min operand
-		 * @param IDouble\Type $y                                    the max operand
-		 * @return IDouble\Type                                      the result
+		 * @param IDouble\Type $x                                   the min operand
+		 * @param IDouble\Type $y                                   the max operand
+		 * @return IDouble\Type                                     the result
 		 */
-		public static function random(IDouble\Type $x = null, IDouble\Type $y = null) {
+		public static function random(IDouble\Type $x = null, IDouble\Type $y = null) : IDouble\Type {
 			$x = IDouble\Module::nvl($x);
 			$y = IDouble\Module::nvl($y, IDouble\Type::box(mt_getrandmax()));
 			return IDouble\Type::box(mt_rand($x->unbox(), $y->unbox()));
@@ -198,11 +200,11 @@ namespace Saber\Data\IDouble {
 		 *
 		 * @access public
 		 * @static
-		 * @param IDouble\Type $x                                    the operand
-		 * @param IInt32\Type $precision                             the precision to use when rounding
-		 * @return IDouble\Type                                      the result
+		 * @param IDouble\Type $x                                   the operand
+		 * @param IInt32\Type $precision                            the precision to use when rounding
+		 * @return IDouble\Type                                     the result
 		 */
-		public static function round(IDouble\Type $x, IInt32\Type $precision = null) {
+		public static function round(IDouble\Type $x, IInt32\Type $precision = null) : IDouble\Type {
 			return IDouble\Type::box(round($x->unbox(), IInt32\Module::nvl($precision)->unbox()));
 		}
 
@@ -212,11 +214,11 @@ namespace Saber\Data\IDouble {
 		 *
 		 * @access public
 		 * @static
-		 * @param IDouble\Type $x                                    the left operand
-		 * @param IDouble\Type $y                                    the right operand
-		 * @return IDouble\Type                                      the result
+		 * @param IDouble\Type $x                                   the left operand
+		 * @param IDouble\Type $y                                   the right operand
+		 * @return IDouble\Type                                     the result
 		 */
-		public static function subtract(IDouble\Type $x, IDouble\Type $y) {
+		public static function subtract(IDouble\Type $x, IDouble\Type $y) : IDouble\Type {
 			return IDouble\Type::box($x->unbox() - $y->unbox());
 		}
 
@@ -229,13 +231,13 @@ namespace Saber\Data\IDouble {
 		 *
 		 * @access public
 		 * @static
-		 * @param IDouble\Type $x                                    where to start
+		 * @param IDouble\Type $x                                   where to start
 		 * @param Core\Type $y                                      either an integer representing
 		 *                                                          the end of the sequence or a
 		 *                                                          tuple describing the sequence
-		 * @return IArrayList\Type                                   an empty array list
+		 * @return IArrayList\Type                                  an empty array list
 		 */
-		public static function sequence(IDouble\Type $x, Core\Type $y) {
+		public static function sequence(IDouble\Type $x, Core\Type $y) : IArrayList\Type {
 			$buffer = array();
 
 			if ($y instanceof ITuple\Type) {
@@ -266,10 +268,10 @@ namespace Saber\Data\IDouble {
 		 *
 		 * @access public
 		 * @static
-		 * @param IDouble\Type $x                                    the number to be evaluated
-		 * @return ITrit\Type                                        the result
+		 * @param IDouble\Type $x                                   the number to be evaluated
+		 * @return ITrit\Type                                       the result
 		 */
-		public static function signum(IDouble\Type $x) {
+		public static function signum(IDouble\Type $x) : ITrit\Type {
 			return ITrit\Type::make($x->unbox());
 		}
 
@@ -283,11 +285,11 @@ namespace Saber\Data\IDouble {
 		 *
 		 * @access public
 		 * @static
-		 * @param IDouble\Type $x                                    the value to be evaluated
-		 * @param IDouble\Type $y                                    the default value
-		 * @return IDouble\Type                                      the result
+		 * @param IDouble\Type $x                                   the value to be evaluated
+		 * @param IDouble\Type $y                                   the default value
+		 * @return IDouble\Type                                     the result
 		 */
-		public static function nvl(IDouble\Type $x = null, IDouble\Type $y = null) {
+		public static function nvl(IDouble\Type $x = null, IDouble\Type $y = null) : IDouble\Type {
 			return ($x !== null) ? $x : (($y !== null) ? $y : IDouble\Type::zero());
 		}
 
@@ -296,10 +298,10 @@ namespace Saber\Data\IDouble {
 		 *
 		 * @access public
 		 * @static
-		 * @param IDouble\Type $x                                    the object to be converted
-		 * @return IDouble\Type                                      the value as a IDouble
+		 * @param IDouble\Type $x                                   the object to be converted
+		 * @return IDouble\Type                                     the value as a IDouble
 		 */
-		public static function toDegrees(IDouble\Type $x) {
+		public static function toDegrees(IDouble\Type $x) : IDouble\Type {
 			return IDouble\Type::box(deg2rad($x->unbox()));
 		}
 
@@ -309,10 +311,10 @@ namespace Saber\Data\IDouble {
 		 *
 		 * @access public
 		 * @static
-		 * @param IDouble\Type $x                                    the object to be converted
-		 * @return IDouble\Type                                      the value as a IDouble
+		 * @param IDouble\Type $x                                   the object to be converted
+		 * @return IDouble\Type                                     the value as a IDouble
 		 */
-		public static function toDouble(IDouble\Type $x) {
+		public static function toDouble(IDouble\Type $x) : IDouble\Type {
 			return IDouble\Type::box($x->unbox());
 		}
 
@@ -322,10 +324,10 @@ namespace Saber\Data\IDouble {
 		 *
 		 * @access public
 		 * @static
-		 * @param IDouble\Type $x                                    the object to be converted
-		 * @return IFloat\Type                                       the value as a IFloat
+		 * @param IDouble\Type $x                                   the object to be converted
+		 * @return IFloat\Type                                      the value as a IFloat
 		 */
-		public static function toFloat(IDouble\Type $x) {
+		public static function toFloat(IDouble\Type $x) : IFloat\Type {
 			return IFloat\Type::box($x->unbox());
 		}
 
@@ -335,10 +337,10 @@ namespace Saber\Data\IDouble {
 		 *
 		 * @access public
 		 * @static
-		 * @param IDouble\Type $x                                    the object to be converted
-		 * @return IInt32\Type                                       the value as an IInt32
+		 * @param IDouble\Type $x                                   the object to be converted
+		 * @return IInt32\Type                                      the value as an IInt32
 		 */
-		public static function toInt32(IDouble\Type $x) {
+		public static function toInt32(IDouble\Type $x) : IInt32\Type {
 			return IInt32\Type::box($x->unbox());
 		}
 
@@ -348,10 +350,10 @@ namespace Saber\Data\IDouble {
 		 *
 		 * @access public
 		 * @static
-		 * @param IDouble\Type $x                                    the object to be converted
-		 * @return IInteger\Type                                     the value as an IInteger
+		 * @param IDouble\Type $x                                   the object to be converted
+		 * @return IInteger\Type                                    the value as an IInteger
 		 */
-		public static function toInteger(IDouble\Type $x) {
+		public static function toInteger(IDouble\Type $x) : IInteger\Type {
 			return IInteger\Type::box($x->unbox());
 		}
 
@@ -360,10 +362,10 @@ namespace Saber\Data\IDouble {
 		 *
 		 * @access public
 		 * @static
-		 * @param IDouble\Type $x                                    the object to be converted
-		 * @return IDouble\Type                                      the value as a IDouble
+		 * @param IDouble\Type $x                                   the object to be converted
+		 * @return IDouble\Type                                     the value as a IDouble
 		 */
-		public static function toRadian(IDouble\Type $x) {
+		public static function toRadian(IDouble\Type $x) : IDouble\Type {
 			return IDouble\Type::box(rad2deg($x->unbox()));
 		}
 
@@ -376,12 +378,12 @@ namespace Saber\Data\IDouble {
 		 *
 		 * @access public
 		 * @static
-		 * @param IDouble\Type $x                                    the left operand
+		 * @param IDouble\Type $x                                   the left operand
 		 * @param Core\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is equal
+		 * @return IBool\Type                                       whether the left operand is equal
 		 *                                                          to the right operand
 		 */
-		public static function eq(IDouble\Type $x, Core\Type $y) { // ==
+		public static function eq(IDouble\Type $x, Core\Type $y) : IBool\Type { // ==
 			$type = $x->__typeOf();
 			if ($y !== null) {
 				if ($y instanceof $type) {
@@ -396,12 +398,12 @@ namespace Saber\Data\IDouble {
 		 *
 		 * @access public
 		 * @static
-		 * @param IDouble\Type $x                                    the left operand
+		 * @param IDouble\Type $x                                   the left operand
 		 * @param Core\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is identical
+		 * @return IBool\Type                                       whether the left operand is identical
 		 *                                                          to the right operand
 		 */
-		public static function id(IDouble\Type $x, Core\Type $y) { // ===
+		public static function id(IDouble\Type $x, Core\Type $y) : IBool\Type { // ===
 			if ($y !== null) {
 				if ($x->__typeOf() === $y->__typeOf()) {
 					return IBool\Type::box($x->unbox() === $y->unbox());
@@ -415,12 +417,12 @@ namespace Saber\Data\IDouble {
 		 *
 		 * @access public
 		 * @static
-		 * @param IDouble\Type $x                                    the left operand
+		 * @param IDouble\Type $x                                   the left operand
 		 * @param Core\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is NOT equal
+		 * @return IBool\Type                                       whether the left operand is NOT equal
 		 *                                                          to the right operand
 		 */
-		public static function ne(IDouble\Type $x, Core\Type $y) { // !=
+		public static function ne(IDouble\Type $x, Core\Type $y) : IBool\Type { // !=
 			return IBool\Module::not(IDouble\Module::eq($x, $y));
 		}
 
@@ -429,12 +431,12 @@ namespace Saber\Data\IDouble {
 		 *
 		 * @access public
 		 * @static
-		 * @param IDouble\Type $x                                    the left operand
+		 * @param IDouble\Type $x                                   the left operand
 		 * @param Core\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is NOT identical
+		 * @return IBool\Type                                       whether the left operand is NOT identical
 		 *                                                          to the right operand
 		 */
-		public static function ni(IDouble\Type $x, Core\Type $y) { // !==
+		public static function ni(IDouble\Type $x, Core\Type $y) : IBool\Type { // !==
 			return IBool\Module::not(IDouble\Module::id($x, $y));
 		}
 
@@ -447,13 +449,13 @@ namespace Saber\Data\IDouble {
 		 *
 		 * @access public
 		 * @static
-		 * @param IDouble\Type $x                                    the left operand
-		 * @param IDouble\Type $y                                    the right operand
-		 * @return ITrit\Type                                        the order as to whether the left
+		 * @param IDouble\Type $x                                   the left operand
+		 * @param IDouble\Type $y                                   the right operand
+		 * @return ITrit\Type                                       the order as to whether the left
 		 *                                                          operand is less than, equals to,
 		 *                                                          or greater than the right operand
 		 */
-		public static function compare(IDouble\Type $x, IDouble\Type $y) {
+		public static function compare(IDouble\Type $x, IDouble\Type $y) : ITrit\Type {
 			return ITrit\Type::box($x->unbox() <=> $y->unbox());
 		}
 
@@ -462,12 +464,12 @@ namespace Saber\Data\IDouble {
 		 *
 		 * @access public
 		 * @static
-		 * @param IDouble\Type $x                                    the left operand
-		 * @param IDouble\Type $y                                    the right operand
-		 * @return IBool\Type                                        whether the left operand is greater
+		 * @param IDouble\Type $x                                   the left operand
+		 * @param IDouble\Type $y                                   the right operand
+		 * @return IBool\Type                                       whether the left operand is greater
 		 *                                                          than or equal to the right operand
 		 */
-		public static function ge(IDouble\Type $x, IDouble\Type $y) { // >=
+		public static function ge(IDouble\Type $x, IDouble\Type $y) : IBool\Type { // >=
 			return IBool\Type::box(IDouble\Module::compare($x, $y)->unbox() >= 0);
 		}
 
@@ -476,12 +478,12 @@ namespace Saber\Data\IDouble {
 		 *
 		 * @access public
 		 * @static
-		 * @param IDouble\Type $x                                    the left operand
-		 * @param IDouble\Type $y                                    the right operand
-		 * @return IBool\Type                                        whether the left operand is greater
+		 * @param IDouble\Type $x                                   the left operand
+		 * @param IDouble\Type $y                                   the right operand
+		 * @return IBool\Type                                       whether the left operand is greater
 		 *                                                          than the right operand
 		 */
-		public static function gt(IDouble\Type $x, IDouble\Type $y) { // >
+		public static function gt(IDouble\Type $x, IDouble\Type $y) : IBool\Type { // >
 			return IBool\Type::box(IDouble\Module::compare($x, $y)->unbox() > 0);
 		}
 
@@ -490,12 +492,12 @@ namespace Saber\Data\IDouble {
 		 *
 		 * @access public
 		 * @static
-		 * @param IDouble\Type $x                                    the left operand
-		 * @param IDouble\Type $y                                    the right operand
-		 * @return IBool\Type                                        whether the left operand is less than
+		 * @param IDouble\Type $x                                   the left operand
+		 * @param IDouble\Type $y                                   the right operand
+		 * @return IBool\Type                                       whether the left operand is less than
 		 *                                                          or equal to the right operand
 		 */
-		public static function le(IDouble\Type $x, IDouble\Type $y) { // <=
+		public static function le(IDouble\Type $x, IDouble\Type $y) : IBool\Type { // <=
 			return IBool\Type::box(IDouble\Module::compare($x, $y)->unbox() <= 0);
 		}
 
@@ -504,12 +506,12 @@ namespace Saber\Data\IDouble {
 		 *
 		 * @access public
 		 * @static
-		 * @param IDouble\Type $x                                    the left operand
-		 * @param IDouble\Type $y                                    the right operand
-		 * @return IBool\Type                                        whether the left operand is less than
+		 * @param IDouble\Type $x                                   the left operand
+		 * @param IDouble\Type $y                                   the right operand
+		 * @return IBool\Type                                       whether the left operand is less than
 		 *                                                          the right operand
 		 */
-		public static function lt(IDouble\Type $x, IDouble\Type $y) { // <
+		public static function lt(IDouble\Type $x, IDouble\Type $y) : IBool\Type { // <
 			return IBool\Type::box(IDouble\Module::compare($x, $y)->unbox() < 0);
 		}
 
@@ -518,11 +520,11 @@ namespace Saber\Data\IDouble {
 		 *
 		 * @access public
 		 * @static
-		 * @param IDouble\Type $x                                    the left operand
-		 * @param IDouble\Type $y                                    the right operand
-		 * @return IDouble\Type                                      the maximum value
+		 * @param IDouble\Type $x                                   the left operand
+		 * @param IDouble\Type $y                                   the right operand
+		 * @return IDouble\Type                                     the maximum value
 		 */
-		public static function max(IDouble\Type $x, IDouble\Type $y) {
+		public static function max(IDouble\Type $x, IDouble\Type $y) : IDouble\Type {
 			return (IDouble\Module::compare($x, $y)->unbox() >= 0) ? $x : $y;
 		}
 
@@ -531,11 +533,11 @@ namespace Saber\Data\IDouble {
 		 *
 		 * @access public
 		 * @static
-		 * @param IDouble\Type $x                                    the left operand
-		 * @param IDouble\Type $y                                    the right operand
-		 * @return IDouble\Type                                      the minimum value
+		 * @param IDouble\Type $x                                   the left operand
+		 * @param IDouble\Type $y                                   the right operand
+		 * @return IDouble\Type                                     the minimum value
 		 */
-		public static function min(IDouble\Type $x, IDouble\Type $y) {
+		public static function min(IDouble\Type $x, IDouble\Type $y) : IDouble\Type {
 			return (IDouble\Module::compare($x, $y)->unbox() <= 0) ? $x : $y;
 		}
 
@@ -548,11 +550,11 @@ namespace Saber\Data\IDouble {
 		 *
 		 * @access public
 		 * @static
-		 * @param IDouble\Type $x                                    the object to be evaluated
-		 * @return IBool\Type                                        whether the operand is a negative
+		 * @param IDouble\Type $x                                   the object to be evaluated
+		 * @return IBool\Type                                       whether the operand is a negative
 		 *                                                          number
 		 */
-		public static function isNegative(IDouble\Type $x) {
+		public static function isNegative(IDouble\Type $x) : IBool\Type {
 			return IBool\Type::box($x->unbox() < 0);
 		}
 

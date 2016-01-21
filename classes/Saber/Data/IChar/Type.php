@@ -16,6 +16,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Saber\Data\IChar {
 
 	include_once(implode(DIRECTORY_SEPARATOR, array(dirname(__FILE__), '..', '..', 'Ext', 'mbstring.php')));
@@ -77,9 +79,9 @@ namespace Saber\Data\IChar {
 		 * @access public
 		 * @static
 		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return IChar\Type                                        the boxed object
+		 * @return IChar\Type                                       the boxed object
 		 */
-		public static function box($value) {
+		public static function box(string $value) : IChar\Type {
 			return new IChar\Type($value);
 		}
 
@@ -88,10 +90,10 @@ namespace Saber\Data\IChar {
 		 *
 		 * @access public
 		 * @static
-		 * @param IChar\Type $x                                      the class to be evaluated
-		 * @return IChar\Type                                        the class
+		 * @param IChar\Type $x                                     the class to be evaluated
+		 * @return IChar\Type                                       the class
 		 */
-		public static function covariant(IChar\Type $x) {
+		public static function covariant(IChar\Type $x) : IChar\Type {
 			return $x;
 		}
 
@@ -103,10 +105,10 @@ namespace Saber\Data\IChar {
 		 * @static
 		 * @param mixed $value                                      the value(s) to be boxed
 		 * @param string $encoding                                  the character encoding to use
-		 * @return IChar\Type                                        the boxed object
+		 * @return IChar\Type                                       the boxed object
 		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
-		public static function make($value, $encoding = self::UTF_8_ENCODING) {
+		public static function make($value, $encoding = self::UTF_8_ENCODING) : IChar\Type {
 			if (is_string($value)) {
 				if ($encoding != IChar\Type::UTF_8_ENCODING) {
 					$value = mb_convert_encoding($value, IChar\Type::UTF_8_ENCODING, $encoding);
@@ -139,7 +141,7 @@ namespace Saber\Data\IChar {
 		 * @static
 		 * @return IChar\Type                                        the character
 		 */
-		public static function cr() {
+		public static function cr() : IChar\Type {
 			if (!isset(static::$singletons["\r"])) {
 				static::$singletons["\r"] = new IChar\Type("\r");
 			}
@@ -153,7 +155,7 @@ namespace Saber\Data\IChar {
 		 * @static
 		 * @return IChar\Type                                        the character
 		 */
-		public static function lf() {
+		public static function lf() : IChar\Type {
 			if (!isset(static::$singletons["\n"])) {
 				static::$singletons["\n"] = new IChar\Type("\n");
 			}
@@ -167,7 +169,7 @@ namespace Saber\Data\IChar {
 		 * @static
 		 * @return IChar\Type                                        the character
 		 */
-		public static function space() {
+		public static function space() : IChar\Type {
 			if (!isset(static::$singletons[' '])) {
 				static::$singletons[' '] = new IChar\Type(' ');
 			}
@@ -185,8 +187,8 @@ namespace Saber\Data\IChar {
 		 * @final
 		 * @param string $value                                     the value to be assigned
 		 */
-		public final function __construct($value) {
-			$this->value = (string) $value;
+		public final function __construct(string $value) {
+			$this->value = $value;
 		}
 
 		/**
@@ -196,7 +198,7 @@ namespace Saber\Data\IChar {
 		 * @final
 		 * @return string                                           the object's hash code
 		 */
-		public final function __hashCode() {
+		public final function __hashCode() : string {
 			return $this->__toString();
 		}
 
@@ -220,10 +222,10 @@ namespace Saber\Data\IChar {
 		 *
 		 * @access public
 		 * @final
-		 * @param integer $depth                                    how many levels to unbox
+		 * @param int $depth                                        how many levels to unbox
 		 * @return string                                           the un-boxed value
 		 */
-		public final function unbox($depth = 0) {
+		public final function unbox(int $depth = 0) {
 			return $this->value;
 		}
 

@@ -16,6 +16,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Saber\Data\IFloat {
 
 	include_once(implode(DIRECTORY_SEPARATOR, array(dirname(__FILE__), '..', '..', 'Ext', 'mtrand.php')));
@@ -43,10 +45,10 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @access public
 		 * @static
-		 * @param IFloat\Type $x                                     the operand
-		 * @return IFloat\Type                                       the result
+		 * @param IFloat\Type $x                                    the operand
+		 * @return IFloat\Type                                      the result
 		 */
-		public static function abs(IFloat\Type $x) {
+		public static function abs(IFloat\Type $x) : IFloat\Type {
 			return IFloat\Type::box(abs($x->unbox()));
 		}
 
@@ -55,11 +57,11 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @access public
 		 * @static
-		 * @param IFloat\Type $x                                     the left operand
-		 * @param IFloat\Type $y                                     the right operand
-		 * @return IFloat\Type                                       the result
+		 * @param IFloat\Type $x                                    the left operand
+		 * @param IFloat\Type $y                                    the right operand
+		 * @return IFloat\Type                                      the result
 		 */
-		public static function add(IFloat\Type $x, IFloat\Type $y) {
+		public static function add(IFloat\Type $x, IFloat\Type $y) : IFloat\Type {
 			return IFloat\Type::box($x->unbox() + $y->unbox());
 		}
 
@@ -68,10 +70,10 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @access public
 		 * @static
-		 * @param IFloat\Type $x                                     the operand
-		 * @return IFloat\Type                                       the result
+		 * @param IFloat\Type $x                                    the operand
+		 * @return IFloat\Type                                      the result
 		 */
-		public static function ceil(IFloat\Type $x) {
+		public static function ceil(IFloat\Type $x) : IFloat\Type {
 			return IFloat\Type::box(ceil($x->unbox()));
 		}
 
@@ -80,10 +82,10 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @access public
 		 * @static
-		 * @param IFloat\Type $x                                     the operand
-		 * @return IFloat\Type                                       the result
+		 * @param IFloat\Type $x                                    the operand
+		 * @return IFloat\Type                                      the result
 		 */
-		public static function decrement(IFloat\Type $x) {
+		public static function decrement(IFloat\Type $x) : IFloat\Type {
 			return IFloat\Module::subtract($x, IFloat\Type::one());
 		}
 
@@ -93,11 +95,11 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @access public
 		 * @static
-		 * @param IFloat\Type $x                                     the left operand
-		 * @param IFloat\Type $y                                     the right operand
-		 * @return IFloat\Type                                       the result
+		 * @param IFloat\Type $x                                    the left operand
+		 * @param IFloat\Type $y                                    the right operand
+		 * @return IFloat\Type                                      the result
 		 */
-		public static function divide(IFloat\Type $x, IFloat\Type $y) {
+		public static function divide(IFloat\Type $x, IFloat\Type $y) : IFloat\Type {
 			return IFloat\Type::box($x->unbox() / $y->unbox());
 		}
 
@@ -106,10 +108,10 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @access public
 		 * @static
-		 * @param IFloat\Type $x                                     the operand
-		 * @return IFloat\Type                                       the result
+		 * @param IFloat\Type $x                                    the operand
+		 * @return IFloat\Type                                      the result
 		 */
-		public static function floor(IFloat\Type $x) {
+		public static function floor(IFloat\Type $x) : IFloat\Type {
 			return IFloat\Type::box(floor($x->unbox()));
 		}
 
@@ -118,10 +120,10 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @access public
 		 * @static
-		 * @param IFloat\Type $x                                     the operand
-		 * @return IFloat\Type                                       the result
+		 * @param IFloat\Type $x                                    the operand
+		 * @return IFloat\Type                                      the result
 		 */
-		public static function increment(IFloat\Type $x) {
+		public static function increment(IFloat\Type $x) : IFloat\Type {
 			return IFloat\Module::add($x, IFloat\Type::one());
 		}
 
@@ -131,11 +133,11 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @access public
 		 * @static
-		 * @param IFloat\Type $x                                     the left operand
-		 * @param IFloat\Type $y                                     the right operand
-		 * @return IFloat\Type                                       the result
+		 * @param IFloat\Type $x                                    the left operand
+		 * @param IFloat\Type $y                                    the right operand
+		 * @return IFloat\Type                                      the result
 		 */
-		public static function modulo(IFloat\Type $x, IFloat\Type $y) {
+		public static function modulo(IFloat\Type $x, IFloat\Type $y) : IFloat\Type {
 			return IFloat\Type::box(fmod($x->unbox(), $y->unbox()));
 		}
 
@@ -145,11 +147,11 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @access public
 		 * @static
-		 * @param IFloat\Type $x                                     the left operand
-		 * @param IFloat\Type $y                                     the right operand
-		 * @return IFloat\Type                                       the result
+		 * @param IFloat\Type $x                                    the left operand
+		 * @param IFloat\Type $y                                    the right operand
+		 * @return IFloat\Type                                      the result
 		 */
-		public static function multiply(IFloat\Type $x, IFloat\Type $y) {
+		public static function multiply(IFloat\Type $x, IFloat\Type $y) : IFloat\Type {
 			return IFloat\Type::box($x->unbox() * $y->unbox());
 		}
 
@@ -158,10 +160,10 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @access public
 		 * @static
-		 * @param IFloat\Type $x                                     the operand
-		 * @return IFloat\Type                                       the result
+		 * @param IFloat\Type $x                                    the operand
+		 * @return IFloat\Type                                      the result
 		 */
-		public static function negate(IFloat\Type $x) {
+		public static function negate(IFloat\Type $x) : IFloat\Type {
 			return IFloat\Type::box($x->unbox() * -1.0);
 		}
 
@@ -170,11 +172,11 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @access public
 		 * @static
-		 * @param IFloat\Type $x                                     the operand
-		 * @param IInt32\Type $exponent                              the exponent to be raised by
-		 * @return IFloat\Type                                       the result
+		 * @param IFloat\Type $x                                    the operand
+		 * @param IInt32\Type $exponent                             the exponent to be raised by
+		 * @return IFloat\Type                                      the result
 		 */
-		public static function pow(IFloat\Type $x, IInt32\Type $exponent) {
+		public static function pow(IFloat\Type $x, IInt32\Type $exponent) : IFloat\Type {
 			return IFloat\Type::box(pow($x->unbox(), $exponent->unbox()));
 		}
 
@@ -183,11 +185,11 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @access public
 		 * @static
-		 * @param IFloat\Type $x                                     the min operand
-		 * @param IFloat\Type $y                                     the max operand
-		 * @return IFloat\Type                                       the result
+		 * @param IFloat\Type $x                                    the min operand
+		 * @param IFloat\Type $y                                    the max operand
+		 * @return IFloat\Type                                      the result
 		 */
-		public static function random(IFloat\Type $x = null, IFloat\Type $y = null) {
+		public static function random(IFloat\Type $x = null, IFloat\Type $y = null) : IFloat\Type {
 			$x = IFloat\Module::nvl($x);
 			$y = IFloat\Module::nvl($y, IFloat\Type::box(mt_getrandmax()));
 			return IFloat\Type::box(mt_rand($x->unbox(), $y->unbox()));
@@ -198,11 +200,11 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @access public
 		 * @static
-		 * @param IFloat\Type $x                                     the operand
-		 * @param IInt32\Type $precision                             the precision to use when rounding
-		 * @return IFloat\Type                                       the result
+		 * @param IFloat\Type $x                                    the operand
+		 * @param IInt32\Type $precision                            the precision to use when rounding
+		 * @return IFloat\Type                                      the result
 		 */
-		public static function round(IFloat\Type $x, IInt32\Type $precision = null) {
+		public static function round(IFloat\Type $x, IInt32\Type $precision = null) : IFloat\Type {
 			return IFloat\Type::box(round($x->unbox(), IInt32\Module::nvl($precision)->unbox()));
 		}
 
@@ -212,11 +214,11 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @access public
 		 * @static
-		 * @param IFloat\Type $x                                     the left operand
-		 * @param IFloat\Type $y                                     the right operand
-		 * @return IFloat\Type                                       the result
+		 * @param IFloat\Type $x                                    the left operand
+		 * @param IFloat\Type $y                                    the right operand
+		 * @return IFloat\Type                                      the result
 		 */
-		public static function subtract(IFloat\Type $x, IFloat\Type $y) {
+		public static function subtract(IFloat\Type $x, IFloat\Type $y) : IFloat\Type {
 			return IFloat\Type::box($x->unbox() - $y->unbox());
 		}
 
@@ -229,13 +231,13 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @access public
 		 * @static
-		 * @param IFloat\Type $x                                     where to start
+		 * @param IFloat\Type $x                                    where to start
 		 * @param Core\Type $y                                      either an integer representing
 		 *                                                          the end of the sequence or a
 		 *                                                          tuple describing the sequence
-		 * @return IArrayList\Type                                   an empty array list
+		 * @return IArrayList\Type                                  an empty array list
 		 */
-		public static function sequence(IFloat\Type $x, Core\Type $y) {
+		public static function sequence(IFloat\Type $x, Core\Type $y) : IArrayList\Type {
 			$buffer = array();
 
 			if ($y instanceof ITuple\Type) {
@@ -266,10 +268,10 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @access public
 		 * @static
-		 * @param IFloat\Type $x                                     the number to be evaluated
-		 * @return ITrit\Type                                        the result
+		 * @param IFloat\Type $x                                    the number to be evaluated
+		 * @return ITrit\Type                                       the result
 		 */
-		public static function signum(IFloat\Type $x) {
+		public static function signum(IFloat\Type $x) : ITrit\Type {
 			return ITrit\Type::make($x->unbox());
 		}
 
@@ -283,11 +285,11 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @access public
 		 * @static
-		 * @param IFloat\Type $x                                     the value to be evaluated
-		 * @param IFloat\Type $y                                     the default value
-		 * @return IFloat\Type                                       the result
+		 * @param IFloat\Type $x                                    the value to be evaluated
+		 * @param IFloat\Type $y                                    the default value
+		 * @return IFloat\Type                                      the result
 		 */
-		public static function nvl(IFloat\Type $x = null, IFloat\Type $y = null) {
+		public static function nvl(IFloat\Type $x = null, IFloat\Type $y = null) : IFloat\Type {
 			return ($x !== null) ? $x : (($y !== null) ? $y : IFloat\Type::zero());
 		}
 
@@ -297,10 +299,10 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @access public
 		 * @static
-		 * @param IFloat\Type $x                                     the object to be converted
-		 * @return IDouble\Type                                      the value as a IDouble
+		 * @param IFloat\Type $x                                    the object to be converted
+		 * @return IDouble\Type                                     the value as a IDouble
 		 */
-		public static function toDouble(IFloat\Type $x) {
+		public static function toDouble(IFloat\Type $x) : IDouble\Type {
 			return IDouble\Type::box($x->unbox());
 		}
 
@@ -310,10 +312,10 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @access public
 		 * @static
-		 * @param IFloat\Type $x                                     the object to be converted
-		 * @return IFloat\Type                                       the value as a IFloat
+		 * @param IFloat\Type $x                                    the object to be converted
+		 * @return IFloat\Type                                      the value as a IFloat
 		 */
-		public static function toFloat(IFloat\Type $x) {
+		public static function toFloat(IFloat\Type $x) : IFloat\Type {
 			return IFloat\Type::box($x->unbox());
 		}
 
@@ -323,10 +325,10 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @access public
 		 * @static
-		 * @param IFloat\Type $x                                     the object to be converted
-		 * @return IInt32\Type                                       the value as an IInt32
+		 * @param IFloat\Type $x                                    the object to be converted
+		 * @return IInt32\Type                                      the value as an IInt32
 		 */
-		public static function toInt32(IFloat\Type $x) {
+		public static function toInt32(IFloat\Type $x) : IInt32\Type {
 			return IInt32\Type::box($x->unbox());
 		}
 
@@ -336,10 +338,10 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @access public
 		 * @static
-		 * @param IFloat\Type $x                                     the object to be converted
-		 * @return IInteger\Type                                     the value as an IInteger
+		 * @param IFloat\Type $x                                    the object to be converted
+		 * @return IInteger\Type                                    the value as an IInteger
 		 */
-		public static function toInteger(IFloat\Type $x) {
+		public static function toInteger(IFloat\Type $x) : IInteger\Type {
 			return IInteger\Type::box($x->unbox());
 		}
 
@@ -352,12 +354,12 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @access public
 		 * @static
-		 * @param IFloat\Type $x                                     the left operand
+		 * @param IFloat\Type $x                                    the left operand
 		 * @param Core\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is equal
+		 * @return IBool\Type                                       whether the left operand is equal
 		 *                                                          to the right operand
 		 */
-		public static function eq(IFloat\Type $x, Core\Type $y) { // ==
+		public static function eq(IFloat\Type $x, Core\Type $y) : IBool\Type { // ==
 			$type = $x->__typeOf();
 			if ($y !== null) {
 				if ($y instanceof $type) {
@@ -372,12 +374,12 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @access public
 		 * @static
-		 * @param IFloat\Type $x                                     the left operand
+		 * @param IFloat\Type $x                                    the left operand
 		 * @param Core\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is identical
+		 * @return IBool\Type                                       whether the left operand is identical
 		 *                                                          to the right operand
 		 */
-		public static function id(IFloat\Type $x, Core\Type $y) { // ===
+		public static function id(IFloat\Type $x, Core\Type $y) : IBool\Type { // ===
 			if ($y !== null) {
 				if ($x->__typeOf() === $y->__typeOf()) {
 					return IBool\Type::box($x->unbox() === $y->unbox());
@@ -391,12 +393,12 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @access public
 		 * @static
-		 * @param IFloat\Type $x                                     the left operand
+		 * @param IFloat\Type $x                                    the left operand
 		 * @param Core\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is NOT equal
+		 * @return IBool\Type                                       whether the left operand is NOT equal
 		 *                                                          to the right operand
 		 */
-		public static function ne(IFloat\Type $x, Core\Type $y) { // !=
+		public static function ne(IFloat\Type $x, Core\Type $y) : IBool\Type { // !=
 			return IBool\Module::not(IFloat\Module::eq($x, $y));
 		}
 
@@ -405,12 +407,12 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @access public
 		 * @static
-		 * @param IFloat\Type $x                                     the left operand
+		 * @param IFloat\Type $x                                    the left operand
 		 * @param Core\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is NOT identical
+		 * @return IBool\Type                                       whether the left operand is NOT identical
 		 *                                                          to the right operand
 		 */
-		public static function ni(IFloat\Type $x, Core\Type $y) { // !==
+		public static function ni(IFloat\Type $x, Core\Type $y) : IBool\Type { // !==
 			return IBool\Module::not(IFloat\Module::id($x, $y));
 		}
 
@@ -423,13 +425,13 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @access public
 		 * @static
-		 * @param IFloat\Type $x                                     the left operand
-		 * @param IFloat\Type $y                                     the right operand
-		 * @return ITrit\Type                                        the order as to whether the left
+		 * @param IFloat\Type $x                                    the left operand
+		 * @param IFloat\Type $y                                    the right operand
+		 * @return ITrit\Type                                       the order as to whether the left
 		 *                                                          operand is less than, equals to,
 		 *                                                          or greater than the right operand
 		 */
-		public static function compare(IFloat\Type $x, IFloat\Type $y) {
+		public static function compare(IFloat\Type $x, IFloat\Type $y) : ITrit\Type {
 			return ITrit\Type::box($x->unbox() <=> $y->unbox());
 		}
 
@@ -438,12 +440,12 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @access public
 		 * @static
-		 * @param IFloat\Type $x                                     the left operand
-		 * @param IFloat\Type $y                                     the right operand
-		 * @return IBool\Type                                        whether the left operand is greater
+		 * @param IFloat\Type $x                                    the left operand
+		 * @param IFloat\Type $y                                    the right operand
+		 * @return IBool\Type                                       whether the left operand is greater
 		 *                                                          than or equal to the right operand
 		 */
-		public static function ge(IFloat\Type $x, IFloat\Type $y) { // >=
+		public static function ge(IFloat\Type $x, IFloat\Type $y) : IBool\Type { // >=
 			return IBool\Type::box(IFloat\Module::compare($x, $y)->unbox() >= 0);
 		}
 
@@ -452,12 +454,12 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @access public
 		 * @static
-		 * @param IFloat\Type $x                                     the left operand
-		 * @param IFloat\Type $y                                     the right operand
-		 * @return IBool\Type                                        whether the left operand is greater
+		 * @param IFloat\Type $x                                    the left operand
+		 * @param IFloat\Type $y                                    the right operand
+		 * @return IBool\Type                                       whether the left operand is greater
 		 *                                                          than the right operand
 		 */
-		public static function gt(IFloat\Type $x, IFloat\Type $y) { // >
+		public static function gt(IFloat\Type $x, IFloat\Type $y) : IBool\Type { // >
 			return IBool\Type::box(IFloat\Module::compare($x, $y)->unbox() > 0);
 		}
 
@@ -466,12 +468,12 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @access public
 		 * @static
-		 * @param IFloat\Type $x                                     the left operand
-		 * @param IFloat\Type $y                                     the right operand
-		 * @return IBool\Type                                        whether the left operand is less than
+		 * @param IFloat\Type $x                                    the left operand
+		 * @param IFloat\Type $y                                    the right operand
+		 * @return IBool\Type                                       whether the left operand is less than
 		 *                                                          or equal to the right operand
 		 */
-		public static function le(IFloat\Type $x, IFloat\Type $y) { // <=
+		public static function le(IFloat\Type $x, IFloat\Type $y) : IBool\Type { // <=
 			return IBool\Type::box(IFloat\Module::compare($x, $y)->unbox() <= 0);
 		}
 
@@ -480,12 +482,12 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @access public
 		 * @static
-		 * @param IFloat\Type $x                                     the left operand
-		 * @param IFloat\Type $y                                     the right operand
-		 * @return IBool\Type                                        whether the left operand is less than
+		 * @param IFloat\Type $x                                    the left operand
+		 * @param IFloat\Type $y                                    the right operand
+		 * @return IBool\Type                                       whether the left operand is less than
 		 *                                                          the right operand
 		 */
-		public static function lt(IFloat\Type $x, IFloat\Type $y) { // <
+		public static function lt(IFloat\Type $x, IFloat\Type $y) : IBool\Type { // <
 			return IBool\Type::box(IFloat\Module::compare($x, $y)->unbox() < 0);
 		}
 
@@ -494,11 +496,11 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @access public
 		 * @static
-		 * @param IFloat\Type $x                                     the left operand
-		 * @param IFloat\Type $y                                     the right operand
-		 * @return IFloat\Type                                       the maximum value
+		 * @param IFloat\Type $x                                    the left operand
+		 * @param IFloat\Type $y                                    the right operand
+		 * @return IFloat\Type                                      the maximum value
 		 */
-		public static function max(IFloat\Type $x, IFloat\Type $y) {
+		public static function max(IFloat\Type $x, IFloat\Type $y) : IFloat\Type {
 			return (IFloat\Module::compare($x, $y)->unbox() >= 0) ? $x : $y;
 		}
 
@@ -507,16 +509,16 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @access public
 		 * @static
-		 * @param IFloat\Type $x                                     the left operand
-		 * @param IFloat\Type $y                                     the right operand
-		 * @return IFloat\Type                                       the minimum value
+		 * @param IFloat\Type $x                                    the left operand
+		 * @param IFloat\Type $y                                    the right operand
+		 * @return IFloat\Type                                      the minimum value
 		 */
-		public static function min(IFloat\Type $x, IFloat\Type $y) {
+		public static function min(IFloat\Type $x, IFloat\Type $y) : IFloat\Type {
 			return (IFloat\Module::compare($x, $y)->unbox() <= 0) ? $x : $y;
 		}
 
 		#endregion
-		
+
 		#region Methods -> Evaluating Operations
 
 		/**
@@ -524,11 +526,11 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @access public
 		 * @static
-		 * @param IFloat\Type $x                                     the object to be evaluated
-		 * @return IBool\Type                                        whether the operand is a negative
+		 * @param IFloat\Type $x                                    the object to be evaluated
+		 * @return IBool\Type                                       whether the operand is a negative
 		 *                                                          number
 		 */
-		public static function isNegative(IFloat\Type $x) {
+		public static function isNegative(IFloat\Type $x) : IBool\Type {
 			return IBool\Type::box($x->unbox() < 0);
 		}
 

@@ -16,6 +16,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Saber\Data\IEither {
 
 	use \Saber\Core;
@@ -56,10 +58,10 @@ namespace Saber\Data\IEither {
 		 * @access public
 		 * @abstract
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return IBool\Type                                        whether each item passed the
+		 * @return IBool\Type                                       whether each item passed the
 		 *                                                          truthy test
 		 */
-		public abstract function all(callable $predicate);
+		public abstract function all(callable $predicate) : IBool\Type;
 
 		/**
 		 * This method (aka "exists" or "some") returns whether some of the items in the collection
@@ -68,10 +70,10 @@ namespace Saber\Data\IEither {
 		 * @access public
 		 * @abstract
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return IBool\Type                                        whether some of the items
+		 * @return IBool\Type                                       whether some of the items
 		 *                                                          passed the truthy test
 		 */
-		public abstract function any(callable $predicate);
+		public abstract function any(callable $predicate) : IBool\Type;
 
 		/**
 		 * This method binds the specified subroutine to the projection's object.
@@ -79,9 +81,9 @@ namespace Saber\Data\IEither {
 		 * @access public
 		 * @abstract
 		 * @param callable $subroutine                              the subroutine to bind
-		 * @return IEither\Type                                      the either
+		 * @return IEither\Type                                     the either
 		 */
-		public abstract function bind(callable $subroutine);
+		public abstract function bind(callable $subroutine) : IEither\Type;
 
 		/**
 		 * This method iterates over the items in the either, yielding each item to the
@@ -98,9 +100,9 @@ namespace Saber\Data\IEither {
 		 *
 		 * @access public
 		 * @final
-		 * @return IEither\Type                                      the either
+		 * @return IEither\Type                                     the either
 		 */
-		public final function either() {
+		public final function either() : IEither\Type {
 			$this->either;
 		}
 
@@ -110,9 +112,9 @@ namespace Saber\Data\IEither {
 		 * @access public
 		 * @abstract
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return IEither\Type                                      the either
+		 * @return IEither\Type                                     the either
 		 */
-		public abstract function filter(callable $predicate);
+		public abstract function filter(callable $predicate) : IEither\Type;
 
 		/**
 		 * This method returns the item stored within the option.
@@ -121,16 +123,16 @@ namespace Saber\Data\IEither {
 		 * @abstract
 		 * @return Core\Type                                        the stored item
 		 */
-		public abstract function item();
+		public abstract function item() : Core\Type;
 
 		/**
 		 * This method returns an iterator for this collection.
 		 *
 		 * @access public
 		 * @final
-		 * @return IArrayList\Iterator                               an iterator for this collection
+		 * @return IArrayList\Iterator                              an iterator for this collection
 		 */
-		public final function iterator() {
+		public final function iterator() : IArrayList\Iterator {
 			return IArrayList\Module::iterator($this->toArrayList());
 		}
 
@@ -140,9 +142,9 @@ namespace Saber\Data\IEither {
 		 * @access public
 		 * @abstract
 		 * @param callable $subroutine                              the subroutine function to be used
-		 * @return IEither\Type                                      the either
+		 * @return IEither\Type                                     the either
 		 */
-		public abstract function map(callable $subroutine);
+		public abstract function map(callable $subroutine) : IEither\Type;
 
 		/**
 		 * This method returns this either's object if is has "some" object; otherwise, it will
@@ -153,7 +155,7 @@ namespace Saber\Data\IEither {
 		 * @param Core\Type $y                                      the alternative object
 		 * @return Core\Type                                        the boxed object
 		 */
-		public abstract function orSome(Core\Type $y);
+		public abstract function orSome(Core\Type $y) : Core\Type;
 
 		#endregion
 
@@ -164,27 +166,27 @@ namespace Saber\Data\IEither {
 		 *
 		 * @access public
 		 * @abstract
-		 * @return IArrayList\Type                                   the either as an array list
+		 * @return IArrayList\Type                                  the either as an array list
 		 */
-		public abstract function toArrayList();
+		public abstract function toArrayList() : IArrayList\Type;
 
 		/**
 		 * This method returns the either as a linked list.
 		 *
 		 * @access public
 		 * @abstract
-		 * @return ILinkedList\Type                                  the either as a linked list
+		 * @return ILinkedList\Type                                 the either as a linked list
 		 */
-		public abstract function toLinkedList();
+		public abstract function toLinkedList() : ILinkedList;
 
 		/**
 		 * This method returns the either as an option.
 		 *
 		 * @access public
 		 * @abstract
-		 * @return IOption\Type                                      the either as an option
+		 * @return IOption\Type                                     the either as an option
 		 */
-		public abstract function toOption();
+		public abstract function toOption() : IOption\Type;
 
 		#endregion
 

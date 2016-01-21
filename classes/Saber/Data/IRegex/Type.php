@@ -16,6 +16,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Saber\Data\IRegex {
 
 	use \Saber\Core;
@@ -107,7 +109,7 @@ namespace Saber\Data\IRegex {
 		 * @final
 		 * @return string                                           the object's hash code
 		 */
-		public final function __hashCode() {
+		public final function __hashCode() : string {
 			return spl_object_hash($this);
 		}
 
@@ -131,10 +133,10 @@ namespace Saber\Data\IRegex {
 		 *
 		 * @access public
 		 * @final
-		 * @param integer $depth                                    how many levels to unbox
+		 * @param int $depth                                        how many levels to unbox
 		 * @return string                                           the un-boxed value
 		 */
-		public final function unbox($depth = 0) {
+		public final function unbox(int $depth = 0) {
 			return $this->value;
 		}
 

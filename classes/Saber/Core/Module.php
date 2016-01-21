@@ -16,6 +16,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Saber\Core {
 
 	use \Saber\Control;
@@ -39,7 +41,7 @@ namespace Saber\Core {
 		 * @throws Throwable\UnimplementedMethod\Exception          indicates that the class has not
 		 *                                                          implemented the called method
 		 */
-		public static function __callStatic($method, $args) {
+		public static function __callStatic(string $method, array $args) {
 			$class = get_called_class();
 			if (preg_match('/^__[a-z_][a-z0-9_]*$/i', $method)) {
 				$method = substr($method, 2);
@@ -71,7 +73,7 @@ namespace Saber\Core {
 		 * @return Core\Type                                        a reference to this object
 		 * @throws Throwable\UnexpectedValue\Exception              indicates that the test failed
 		 */
-		public static function assert(Core\Type $x, callable $predicate, $z = null) {
+		public static function assert(Core\Type $x, callable $predicate, $z = null) : Core\Type {
 			if (!$predicate($x, $z)->unbox()) {
 				throw new Throwable\UnexpectedValue\Exception('Failed assertion in class ":type".', array(':type' => $x->__typeOf()));
 			}
@@ -86,7 +88,7 @@ namespace Saber\Core {
 		 * @param Core\Equality\Type $x                             the object to be evaluated
 		 * @return Control\Choice\Type                              the choice monad
 		 */
-		public static function choice(Core\Equality\Type $x) {
+		public static function choice(Core\Equality\Type $x) : Control\Choice\Type {
 			return Control\Type::choice($x);
 		}
 
@@ -96,9 +98,9 @@ namespace Saber\Core {
 		 * @access public
 		 * @static
 		 * @param Core\Type $x                                      the object to be evaluated
-		 * @return IString\Type                                      the object's hash code
+		 * @return IString\Type                                     the object's hash code
 		 */
-		public static function hashCode(Core\Type $x) {
+		public static function hashCode(Core\Type $x) : IString\Type {
 			return $x->hashCode();
 		}
 
@@ -110,7 +112,7 @@ namespace Saber\Core {
 		 * @param Core\Type $x                                      the object being passed
 		 * @return Core\Type                                        the identity of the object
 		 */
-		public static function identity(Core\Type $x) {
+		public static function identity(Core\Type $x) : Core\Type {
 			return $x;
 		}
 
@@ -120,9 +122,9 @@ namespace Saber\Core {
 		 * @access public
 		 * @static
 		 * @param Core\Type $x                                      the object to be converted
-		 * @return IString\Type                                      the value as a IString
+		 * @return IString\Type                                     the value as a IString
 		 */
-		public static function toString(Core\Type $x) {
+		public static function toString(Core\Type $x) : IString\Type {
 			return $x->toString();
 		}
 
@@ -132,9 +134,9 @@ namespace Saber\Core {
 		 * @access public
 		 * @static
 		 * @param Core\Type $x                                      the object to be evaluated
-		 * @return IString\Type                                      the object's class type
+		 * @return IString\Type                                     the object's class type
 		 */
-		public static function typeOf(Core\Type $x) {
+		public static function typeOf(Core\Type $x) : IString\Type {
 			return $x->typeOf();
 		}
 

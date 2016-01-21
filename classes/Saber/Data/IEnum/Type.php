@@ -16,6 +16,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Saber\Data\IEnum {
 
 	use \Saber\Core;
@@ -30,7 +32,7 @@ namespace Saber\Data\IEnum {
 		 * This variable stores the name assigned to the enumeration.
 		 *
 		 * @access protected
-		 * @var IString\Type                                         the name of the enumeration
+		 * @var IString\Type                                        the name of the enumeration
 		 */
 		protected $name;
 
@@ -38,7 +40,7 @@ namespace Saber\Data\IEnum {
 		 * This variable stores the ordinal value assigned to the enumeration.
 		 *
 		 * @access protected
-		 * @var IInt32\Type                                          the ordinal value assigned to the enumeration
+		 * @var IInt32\Type                                         the ordinal value assigned to the enumeration
 		 */
 		protected $ordinal;
 
@@ -49,7 +51,7 @@ namespace Saber\Data\IEnum {
 		 *
 		 * @abstract
 		 * @access protected
-		 * @param IString\Type $name                                 the name associated with the item
+		 * @param IString\Type $name                                the name associated with the item
 		 * @param Core\Type $item                                   the item to be stored
 		 */
 		protected abstract function __construct(IString\Type $name, Core\Type $item);
@@ -82,7 +84,7 @@ namespace Saber\Data\IEnum {
 		 * @access public
 		 * @return string                                           the name assigned to the enumeration
 		 */
-		public function __name() {
+		public function __name() : string {
 			return $this->name->unbox();
 		}
 
@@ -92,7 +94,7 @@ namespace Saber\Data\IEnum {
 		 * @access public
 		 * @return integer                                          the ordinal value assigned to the enumeration
 		 */
-		public function __ordinal() {
+		public function __ordinal() : int {
 			return $this->ordinal->unbox();
 		}
 
@@ -127,9 +129,9 @@ namespace Saber\Data\IEnum {
 		 *
 		 * @access public
 		 * @final
-		 * @return IString\Type                                      the name assigned to the enumeration
+		 * @return IString\Type                                     the name assigned to the enumeration
 		 */
-		public final function name() {
+		public final function name() : IString\Type {
 			return $this->name;
 		}
 
@@ -138,9 +140,9 @@ namespace Saber\Data\IEnum {
 		 *
 		 * @access public
 		 * @final
-		 * @return IInt32\Type                                       the ordinal value assigned to the enumeration
+		 * @return IInt32\Type                                      the ordinal value assigned to the enumeration
 		 */
-		public final function ordinal() {
+		public final function ordinal() : IInt32\Type {
 			return $this->ordinal;
 		}
 
@@ -149,10 +151,10 @@ namespace Saber\Data\IEnum {
 		 *
 		 * @access public
 		 * @final
-		 * @param integer $depth                                    how many levels to unbox
+		 * @param int $depth                                        how many levels to unbox
 		 * @return mixed                                            the un-boxed value
 		 */
-		public final function unbox($depth = 0) {
+		public final function unbox(int $depth = 0) {
 			if ($depth > 0) {
 				if ($this->value instanceof Core\Boxable\Type) {
 					$this->value->unbox($depth - 1);

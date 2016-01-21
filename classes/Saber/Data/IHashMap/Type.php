@@ -16,6 +16,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Saber\Data\IHashMap {
 
 	use \Saber\Core;
@@ -479,10 +481,10 @@ namespace Saber\Data\IHashMap {
 		 *
 		 * @access public
 		 * @final
-		 * @param integer $depth                                    how many levels to unbox
+		 * @param int $depth                                        how many levels to unbox
 		 * @return array                                            the un-boxed value
 		 */
-		public final function unbox($depth = 0) {
+		public final function unbox(int $depth = 0) {
 			$buffer = array();
 			foreach ($this->value as $bucket) {
 				foreach ($bucket as $entry) {

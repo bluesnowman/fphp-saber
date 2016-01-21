@@ -16,6 +16,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Saber\Data\IFunct {
 
 	use \Saber\Core;
@@ -46,7 +48,7 @@ namespace Saber\Data\IFunct {
 		 * @param callable $closure                                 the closure to be called
 		 * @return Core\Type                                        the result returned by the closure
 		 */
-		public static function curry(callable $closure/*, Core\Type... $args*/) {
+		public static function curry(callable $closure/*, Core\Type... $args*/) : Core\Type {
 			$args = func_get_args();
 			$args = array_slice($args, 1);
 			return function() use ($closure, $args) {
@@ -63,7 +65,7 @@ namespace Saber\Data\IFunct {
 		 * @param callable $closure                                 the closure to be called
 		 * @return Core\Type                                        the result returned by the closure
 		 */
-		public static function memoize(callable $closure) {
+		public static function memoize(callable $closure) : Core\Type {
 			return function() use ($closure) {
 				static $results = array();
 				$args = func_get_args();

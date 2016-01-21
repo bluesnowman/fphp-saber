@@ -16,6 +16,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Saber\Data\IOption\None {
 
 	use \Saber\Core;
@@ -44,12 +46,12 @@ namespace Saber\Data\IOption\None {
 		 *
 		 * @access public
 		 * @final
-		 * @param integer $depth                                    how many levels to unbox
+		 * @param int $depth                                        how many levels to unbox
 		 * @return mixed                                            the un-boxed value
 		 * @throws Throwable\UnimplementedMethod\Exception          indicates that this method cannot
 		 *                                                          be called
 		 */
-		public final function unbox($depth = 0) {
+		public final function unbox(int $depth = 0) {
 			throw new Throwable\UnimplementedMethod\Exception('Method :method has not been implemented.', array(':method' => __FUNCTION__));
 		}
 

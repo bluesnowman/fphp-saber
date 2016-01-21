@@ -16,6 +16,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Saber\Data\IBool {
 
 	use \Saber\Core;
@@ -57,12 +59,7 @@ namespace Saber\Data\IBool {
 		public function dataBox() {
 			$data = array(
 				array(array(true), array(true)),
-				array(array(1), array(true)),
-				array(array('true'), array(true)),
 				array(array(false), array(false)),
-				array(array(0), array(false)),
-				//array(array(null), array(false)),
-				array(array(''), array(false)),
 			);
 			return $data;
 		}

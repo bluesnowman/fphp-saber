@@ -13,9 +13,7 @@
 namespace Composer\Autoload;
 
 /**
- * ClassLoader implements a PSR-0 class loader
- *
- * See https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md
+ * ClassLoader implements a PSR-0, PSR-4 and classmap class loader.
  *
  *     $loader = new \Composer\Autoload\ClassLoader();
  *
@@ -39,6 +37,8 @@ namespace Composer\Autoload;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  * @author Jordi Boggiano <j.boggiano@seld.be>
+ * @see    http://www.php-fig.org/psr/psr-0/
+ * @see    http://www.php-fig.org/psr/psr-4/
  */
 class ClassLoader
 {
@@ -52,11 +52,17 @@ class ClassLoader
     private $fallbackDirsPsr0 = array();
 
     private $useIncludePath = false;
-    private $classIMap = array();
+    private $classMap = array();
+
+    private $classMapAuthoritative = false;
 
     public function getPrefixes()
     {
-        return call_user_func_array('array_merge', $this->prefixesPsr0);
+        if (!empty($this->prefixesPsr0)) {
+            return call_user_func_array('array_merge', $this->prefixesPsr0);
+        }
+
+        return array();
     }
 
     public function getPrefixesPsr4()
@@ -74,20 +80,20 @@ class ClassLoader
         return $this->fallbackDirsPsr4;
     }
 
-    public function getClassIMap()
+    public function getClassMap()
     {
-        return $this->classIMap;
+        return $this->classMap;
     }
 
     /**
-     * @param array $classIMap Class to filename map
+     * @param array $classMap Class to filename map
      */
-    public function addClassIMap(array $classIMap)
+    public function addClassMap(array $classMap)
     {
-        if ($this->classIMap) {
-            $this->classIMap = array_merge($this->classIMap, $classIMap);
+        if ($this->classMap) {
+            $this->classMap = array_merge($this->classMap, $classMap);
         } else {
-            $this->classIMap = $classIMap;
+            $this->classMap = $classMap;
         }
     }
 
@@ -141,7 +147,7 @@ class ClassLoader
      * appending or prepending to the ones previously set for this namespace.
      *
      * @param string       $prefix  The prefix/namespace, with trailing '\\'
-     * @param array|string $paths   The PSR-0 base directories
+     * @param array|string $paths   The PSR-4 base directories
      * @param bool         $prepend Whether to prepend the directories
      *
      * @throws \InvalidArgumentException
@@ -245,6 +251,27 @@ class ClassLoader
     }
 
     /**
+     * Turns off searching the prefix and fallback directories for classes
+     * that have not been registered with the class map.
+     *
+     * @param bool $classMapAuthoritative
+     */
+    public function setClassMapAuthoritative($classMapAuthoritative)
+    {
+        $this->classMapAuthoritative = $classMapAuthoritative;
+    }
+
+    /**
+     * Should class lookup fail if not found in the current class map?
+     *
+     * @return bool
+     */
+    public function isClassMapAuthoritative()
+    {
+        return $this->classMapAuthoritative;
+    }
+
+    /**
      * Registers this instance as an autoloader.
      *
      * @param bool $prepend Whether to prepend the autoloader or not
@@ -292,8 +319,11 @@ class ClassLoader
         }
 
         // class map lookup
-        if (isset($this->classIMap[$class])) {
-            return $this->classIMap[$class];
+        if (isset($this->classMap[$class])) {
+            return $this->classMap[$class];
+        }
+        if ($this->classMapAuthoritative) {
+            return false;
         }
 
         $file = $this->findFileWithExtension($class, '.php');
@@ -305,7 +335,7 @@ class ClassLoader
 
         if ($file === null) {
             // Remember that this class does not exist.
-            return $this->classIMap[$class] = false;
+            return $this->classMap[$class] = false;
         }
 
         return $file;

@@ -16,6 +16,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Saber\Data\IArrayList {
 
 	use \Saber\Core;
@@ -66,9 +68,9 @@ namespace Saber\Data\IArrayList {
 		 * @access public
 		 * @static
 		 * @param array $xs                                         the value(s) to be boxed
-		 * @return IArrayList\Type                                   the boxed object
+		 * @return IArrayList\Type                                  the boxed object
 		 */
-		public static function box(array $xs) {
+		public static function box(array $xs) : IArrayList\Type {
 			return new IArrayList\Type($xs);
 		}
 
@@ -79,9 +81,9 @@ namespace Saber\Data\IArrayList {
 		 * @access public
 		 * @static
 		 * @param mixed ...$xs                                      the value(s) to be boxed
-		 * @return IArrayList\Type                                   the boxed object
+		 * @return IArrayList\Type                                  the boxed object
 		 */
-		public static function box2(...$xs) {
+		public static function box2(...$xs) : IArrayList\Type {
 			return IArrayList\Type::box($xs);
 		}
 
@@ -90,10 +92,10 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $x                                 the class to be evaluated
-		 * @return IArrayList\Type                                   the class
+		 * @param IArrayList\Type $x                                the class to be evaluated
+		 * @return IArrayList\Type                                  the class
 		 */
-		public static function covariant(IArrayList\Type $x) {
+		public static function covariant(IArrayList\Type $x) : IArrayList\Type {
 			return $x;
 		}
 
@@ -104,10 +106,10 @@ namespace Saber\Data\IArrayList {
 		 * @access public
 		 * @static
 		 * @param array $xs                                         the value(s) to be boxed
-		 * @return IArrayList\Type                                   the boxed object
+		 * @return IArrayList\Type                                  the boxed object
 		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
-		public static function make(array $xs) {
+		public static function make(array $xs) : IArrayList\Type {
 			foreach ($xs as $x) {
 				if (!(is_object($x) && ($x instanceof Core\Type))) {
 					$type = gettype($x);
@@ -127,10 +129,10 @@ namespace Saber\Data\IArrayList {
 		 * @access public
 		 * @static
 		 * @param mixed ...$xs                                      the value(s) to be boxed
-		 * @return IArrayList\Type                                   the boxed object
+		 * @return IArrayList\Type                                  the boxed object
 		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
-		public static function make2(...$xs) {
+		public static function make2(...$xs) : IArrayList\Type {
 			return IArrayList\Type::make($xs);
 		}
 
@@ -139,9 +141,9 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @static
-		 * @return IArrayList\Type                                   an empty array list
+		 * @return IArrayList\Type                                  an empty array list
 		 */
-		public static function empty_() {
+		public static function empty_() : IArrayList\Type {
 			if (!isset(static::$singletons[0])) {
 				static::$singletons[0] = new IArrayList\Type(array());
 			}
@@ -153,10 +155,10 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @param Core\Type $x                                      the object to be replicated
-		 * @param IInt32\Type $n                                     the number of times to replicate
-		 * @return IArrayList\Type                                   the collection
+		 * @param IInt32\Type $n                                    the number of times to replicate
+		 * @return IArrayList\Type                                  the collection
 		 */
-		public static function replicate(Core\Type $x, IInt32\Type $n) {
+		public static function replicate(Core\Type $x, IInt32\Type $n) : IArrayList\Type {
 			$buffer = array();
 
 			for ($i = $n->unbox() - 1; $i >= 0; $i--) {
@@ -197,9 +199,9 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @final
-		 * @return boolean                                          whether the list is empty
+		 * @return bool                                             whether the list is empty
 		 */
-		public final function __isEmpty() {
+		public final function __isEmpty() : bool {
 			return empty($this->value);
 		}
 
@@ -208,7 +210,7 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @final
-		 * @param IInt32\Type $i                                     the index of the item
+		 * @param IInt32\Type $i                                    the index of the item
 		 * @return mixed                                            the item at the specified index
 		 */
 		public final function __item(IInt32\Type $i) {
@@ -220,9 +222,9 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @final
-		 * @return integer                                          the length of this array list
+		 * @return int                                              the length of this array list
 		 */
-		public final function __length() {
+		public final function __length() : int {
 			return count($this->value);
 		}
 
@@ -268,9 +270,9 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @final
-		 * @return IBool\Type                                        whether the list is empty
+		 * @return IBool\Type                                       whether the list is empty
 		 */
-		public final function isEmpty() {
+		public final function isEmpty() : IBool\Type {
 			return IBool\Type::box($this->__isEmpty());
 		}
 
@@ -279,9 +281,9 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @final
-		 * @return IInt32\Type                                       the length of this array list
+		 * @return IInt32\Type                                      the length of this array list
 		 */
-		public final function length() {
+		public final function length() : IInt32\Type {
 			return IInt32\Type::box($this->__length());
 		}
 
@@ -290,7 +292,7 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @final
-		 * @param IInt32\Type $i                                     the index of the item
+		 * @param IInt32\Type $i                                    the index of the item
 		 * @return mixed                                            the item at the specified index
 		 */
 		public final function item(IInt32\Type $i) {
@@ -302,7 +304,7 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @final
-		 * @return IArrayList\Type                                   the tail of this list
+		 * @return IArrayList\Type                                  the tail of this list
 		 */
 		public final function tail() {
 			return new IArrayList\Type($this->__tail());
@@ -313,10 +315,10 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @final
-		 * @param integer $depth                                    how many levels to unbox
+		 * @param int $depth                                        how many levels to unbox
 		 * @return array                                            the un-boxed value
 		 */
-		public final function unbox($depth = 0) {
+		public final function unbox(int $depth = 0) {
 			if ($depth > 0) {
 				$buffer = array();
 				foreach ($this->value as $item) {

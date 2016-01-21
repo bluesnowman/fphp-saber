@@ -16,6 +16,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Saber\Data\IArrayList {
 
 	use \Saber\Data;
@@ -47,7 +49,7 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @final
-		 * @param IArrayList\Type $xs                                the collection to be iterated
+		 * @param IArrayList\Type $xs                               the collection to be iterated
 		 */
 		public final function __construct(IArrayList\Type $xs) {
 			$this->xs = $xs;
@@ -70,9 +72,9 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @final
-		 * @return integer                                          the length of the collection
+		 * @return int                                              the length of the collection
 		 */
-		public final function count() {
+		public final function count() : int {
 			return $this->xs->__length();
 		}
 
@@ -92,9 +94,9 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @final
-		 * @return IInt32\Type                                       the current key
+		 * @return IInt32\Type                                      the current key
 		 */
-		public final function key() {
+		public final function key() : IInt32\Type {
 			return $this->i;
 		}
 
@@ -103,9 +105,9 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @final
-		 * @return IBool\Type                                        whether there are more objects
+		 * @return IBool\Type                                       whether there are more objects
 		 */
-		public final function next() {
+		public final function next() : IBool\Type {
 			$this->i = IInt32\Module::increment($this->i);
 			return IBool\Type::box($this->valid());
 		}
@@ -125,9 +127,9 @@ namespace Saber\Data\IArrayList {
 		 *
 		 * @access public
 		 * @final
-		 * @return boolean                                          whether there are more objects
+		 * @return bool                                             whether there are more objects
 		 */
-		public final function valid() {
+		public final function valid() : bool {
 			return ($this->i->unbox() < $this->xs->__length());
 		}
 

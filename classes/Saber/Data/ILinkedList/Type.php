@@ -16,6 +16,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Saber\Data\ILinkedList {
 
 	use \Saber\Core;
@@ -334,10 +336,10 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @abstract
-		 * @param integer $depth                                    how many levels to unbox
+		 * @param int $depth                                        how many levels to unbox
 		 * @return array                                            the un-boxed value
 		 */
-		public abstract function unbox($depth = 0);
+		public abstract function unbox(int $depth = 0);
 
 		#endregion
 

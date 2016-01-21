@@ -16,6 +16,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Saber\Data\IOption\Some {
 
 	use \Saber\Core;
@@ -54,10 +56,10 @@ namespace Saber\Data\IOption\Some {
 		 *
 		 * @access public
 		 * @final
-		 * @param integer $depth                                    how many levels to unbox
+		 * @param int $depth                                        how many levels to unbox
 		 * @return mixed                                            the un-boxed value
 		 */
-		public final function unbox($depth = 0) {
+		public final function unbox(int $depth = 0) {
 			if ($depth > 0) {
 				if ($this->value instanceof Core\Boxable\Type) {
 					$this->value->unbox($depth - 1);

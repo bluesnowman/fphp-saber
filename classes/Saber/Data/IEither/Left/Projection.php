@@ -16,6 +16,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Saber\Data\IEither\Left {
 
 	use \Saber\Core;
@@ -39,10 +41,10 @@ namespace Saber\Data\IEither\Left {
 		 * @access public
 		 * @final
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return IBool\Type                                        whether each item passed the
+		 * @return IBool\Type                                       whether each item passed the
 		 *                                                          truthy test
 		 */
-		public final function all(callable $predicate) {
+		public final function all(callable $predicate) : IBool\Type {
 			return IBool\Type::box($this->either->__isRight() || $predicate($this->either->item(), IInt32\Type::zero())->unbox());
 		}
 
@@ -53,10 +55,10 @@ namespace Saber\Data\IEither\Left {
 		 * @access public
 		 * @final
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return IBool\Type                                        whether some of the items
+		 * @return IBool\Type                                       whether some of the items
 		 *                                                          passed the truthy test
 		 */
-		public final function any(callable $predicate) {
+		public final function any(callable $predicate) : IBool\Type {
 			return IBool\Type::box($this->either->__isLeft() && $predicate($this->either->item(), IInt32\Type::zero())->unbox());
 		}
 
@@ -66,9 +68,9 @@ namespace Saber\Data\IEither\Left {
 		 * @access public
 		 * @final
 		 * @param callable $subroutine                              the subroutine to bind
-		 * @return IEither\Type                                      the either
+		 * @return IEither\Type                                     the either
 		 */
-		public final function bind(callable $subroutine) {
+		public final function bind(callable $subroutine) : IEither\Type {
 			return ($this->either->__isLeft())
 				? IEither\Type::covariant($subroutine($this->either->item(), IInt32\Type::zero()))
 				: IEither\Type::right($this->either->projectLeft()->item());
@@ -94,9 +96,9 @@ namespace Saber\Data\IEither\Left {
 		 * @access public
 		 * @final
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return IEither\Type                                      the either
+		 * @return IEither\Type                                     the either
 		 */
-		public final function filter(callable $predicate) {
+		public final function filter(callable $predicate) : IEither\Type {
 			return ($this->either->__isLeft())
 				? ($predicate($this->either->item(), IInt32\Type::zero())->unbox())
 					? IOption\Type::some(IEither\Type::left($this->either->item()))
@@ -111,7 +113,7 @@ namespace Saber\Data\IEither\Left {
 		 * @final
 		 * @return Core\Type                                        the stored item
 		 */
-		public final function item() {
+		public final function item() : Core\Type {
 			if (!$this->either->__isLeft()) {
 				throw new Throwable\UnimplementedMethod\Exception('Method :method has not been implemented.', array(':method' => __FUNCTION__));
 			}
@@ -124,9 +126,9 @@ namespace Saber\Data\IEither\Left {
 		 * @access public
 		 * @final
 		 * @param callable $subroutine                              the subroutine function to be used
-		 * @return IEither\Type                                      the either
+		 * @return IEither\Type                                     the either
 		 */
-		public final function map(callable $subroutine) {
+		public final function map(callable $subroutine) : IEither\Type {
 			return ($this->either->__isLeft())
 				? IEither\Type::left($subroutine($this->either->item(), IInt32\Type::zero()))
 				: IEither\Type::right($this->either->projectRight()->item());
@@ -141,7 +143,7 @@ namespace Saber\Data\IEither\Left {
 		 * @param Core\Type $y                                      the alternative object
 		 * @return Core\Type                                        the boxed object
 		 */
-		public final function orSome(Core\Type $y) {
+		public final function orSome(Core\Type $y) : Core\Type {
 			return ($this->either->__isLeft())
 				? $this->either->item()
 				: $y;
@@ -156,9 +158,9 @@ namespace Saber\Data\IEither\Left {
 		 *
 		 * @access public
 		 * @final
-		 * @return IArrayList\Type                                   the either as an array list
+		 * @return IArrayList\Type                                  the either as an array list
 		 */
-		public final function toArrayList() {
+		public final function toArrayList() : IArrayList\Type {
 			return ($this->either->__isLeft())
 				? IArrayList\Type::box(array($this->either->item()))
 				: IArrayList\Type::empty_();
@@ -169,9 +171,9 @@ namespace Saber\Data\IEither\Left {
 		 *
 		 * @access public
 		 * @final
-		 * @return ILinkedList\Type                                  the either as a linked list
+		 * @return ILinkedList\Type                                 the either as a linked list
 		 */
-		public final function toLinkedList() {
+		public final function toLinkedList() : ILinkedList\Type {
 			return ($this->either->__isLeft())
 				? ILinkedList\Type::cons($this->either->item())
 				: ILinkedList\Type::nil();
@@ -182,9 +184,9 @@ namespace Saber\Data\IEither\Left {
 		 *
 		 * @access public
 		 * @final
-		 * @return IOption\Type                                      the either as an option
+		 * @return IOption\Type                                     the either as an option
 		 */
-		public final function toOption() {
+		public final function toOption() : IOption\Type {
 			return ($this->either->__isLeft())
 				? IOption\Type::some($this->either->item())
 				: IOption\Type::none();

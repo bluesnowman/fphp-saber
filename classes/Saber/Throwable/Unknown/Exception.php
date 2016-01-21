@@ -16,6 +16,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Saber\Throwable\Unknown {
 
 	use \Saber\Core;
@@ -133,7 +135,7 @@ namespace Saber\Throwable\Unknown {
 		 * @final
 		 * @return string                                           the object's hash code
 		 */
-		public final function __hashCode() {
+		public final function __hashCode() : string {
 			return spl_object_hash($this->exception);
 		}
 
@@ -162,7 +164,7 @@ namespace Saber\Throwable\Unknown {
 		 * @final
 		 * @return string                                           the object's class type
 		 */
-		public final function __typeOf() {
+		public final function __typeOf() : string {
 			return get_class($this->exception);
 		}
 

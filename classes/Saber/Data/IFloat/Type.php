@@ -16,6 +16,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 namespace Saber\Data\IFloat {
 
 	use \Saber\Core;
@@ -64,10 +66,10 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @access public
 		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return IFloat\Type                                       the boxed object
+		 * @param float $value                                      the value(s) to be boxed
+		 * @return IFloat\Type                                      the boxed object
 		 */
-		public static function box($value) {
+		public static function box(float $value) : IFloat\Type {
 			return new IFloat\Type($value);
 		}
 
@@ -76,10 +78,10 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @access public
 		 * @static
-		 * @param IFloat\Type $x                                     the class to be evaluated
-		 * @return IFloat\Type                                       the class
+		 * @param IFloat\Type $x                                    the class to be evaluated
+		 * @return IFloat\Type                                      the class
 		 */
-		public static function covariant(IFloat\Type $x) {
+		public static function covariant(IFloat\Type $x) : IFloat\Type {
 			return $x;
 		}
 
@@ -90,10 +92,10 @@ namespace Saber\Data\IFloat {
 		 * @access public
 		 * @static
 		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return IFloat\Type                                       the boxed object
+		 * @return IFloat\Type                                      the boxed object
 		 */
-		public static function make($value) {
-			return new IFloat\Type($value);
+		public static function make($value) : IFloat\Type {
+			return new IFloat\Type((float) $value);
 		}
 
 		/**
@@ -101,9 +103,9 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @access public
 		 * @static
-		 * @return IFloat\Type                                       the object
+		 * @return IFloat\Type                                      the object
 		 */
-		public static function negative() {
+		public static function negative() : IFloat\Type {
 			if (!isset(static::$singletons[-1])) {
 				static::$singletons[-1] = new IFloat\Type(-1.0);
 			}
@@ -115,9 +117,9 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @access public
 		 * @static
-		 * @return IFloat\Type                                       the object
+		 * @return IFloat\Type                                      the object
 		 */
-		public static function one() {
+		public static function one() : IFloat\Type {
 			if (!isset(static::$singletons[1])) {
 				static::$singletons[1] = new IFloat\Type(1.0);
 			}
@@ -129,9 +131,9 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @access public
 		 * @static
-		 * @return IFloat\Type                                       the object
+		 * @return IFloat\Type                                      the object
 		 */
-		public static function zero() {
+		public static function zero() : IFloat\Type {
 			if (!isset(static::$singletons[0])) {
 				static::$singletons[0] = new IFloat\Type(0.0);
 			}
@@ -149,8 +151,8 @@ namespace Saber\Data\IFloat {
 		 * @final
 		 * @param float $value                                      the value to be assigned
 		 */
-		public final function __construct($value) {
-			$this->value = (double) $value;
+		public final function __construct(float $value) {
+			$this->value = $value;
 		}
 
 		/**
@@ -160,7 +162,7 @@ namespace Saber\Data\IFloat {
 		 * @final
 		 * @return string                                           the object's hash code
 		 */
-		public final function __hashCode() {
+		public final function __hashCode() : string {
 			return $this->__toString() . 'f';
 		}
 
@@ -184,10 +186,10 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @access public
 		 * @final
-		 * @param integer $depth                                    how many levels to unbox
+		 * @param int $depth                                        how many levels to unbox
 		 * @return float                                            the un-boxed value
 		 */
-		public final function unbox($depth = 0) {
+		public final function unbox(int $depth = 0) {
 			return $this->value;
 		}
 

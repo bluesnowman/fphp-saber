@@ -63,10 +63,10 @@ namespace Saber\Data\IUnit {
 		 *
 		 * @access public
 		 * @static
-		 * @param IUnit\Type $x                                      the class to be evaluated
-		 * @return IUnit\Type                                        the class
+		 * @param IUnit\Type $x                                     the class to be evaluated
+		 * @return IUnit\Type                                       the class
 		 */
-		public static function covariant(IUnit\Type $x = null) {
+		public static function covariant(IUnit\Type $x = null) : IUnit\Type {
 			if ($x === null) {
 				return IUnit\Type::instance();
 			}
@@ -78,9 +78,9 @@ namespace Saber\Data\IUnit {
 		 *
 		 * @access public
 		 * @static
-		 * @return IUnit\Type                                        an instance of this type
+		 * @return IUnit\Type                                       an instance of this type
 		 */
-		public static function instance() {
+		public static function instance() : IUnit\Type {
 			if (!isset(static::$singletons[0])) {
 				static::$singletons[0] = new IUnit\Type();
 			}

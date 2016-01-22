@@ -61,9 +61,8 @@ namespace Saber\Data\IInt32 {
 		 */
 		public function dataBox() {
 			$data = array(
+				array(array(0), array(0)),
 				array(array(1), array(1)),
-				array(array(null), array(0)),
-				array(array(''), array(0)),
 			);
 			return $data;
 		}

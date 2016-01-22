@@ -15,7 +15,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
+declare(strict_types = 1);
+
 namespace Saber\Control\Choice\Cons {
 
 	use \Saber\Control;
@@ -79,9 +81,9 @@ namespace Saber\Control\Choice\Cons {
 		 *
 		 * @access public
 		 * @final
-		 * @return boolean                                          whether a clause has executed
+		 * @return bool                                             whether a clause has executed
 		 */
-		public final function __end() {
+		public final function __end() : bool {
 			if (!$this->xs->__end()) {
 				$predicate = $this->predicate;
 				if (($predicate !== null) && is_callable($predicate)) {
@@ -102,7 +104,7 @@ namespace Saber\Control\Choice\Cons {
 		 * @return Control\Choice\Type                              a reference to the next choice
 		 *                                                          monad node
 		 */
-		public final function otherwise(callable $procedure) {
+		public final function otherwise(callable $procedure) : Control\Choice\Type {
 			$this->predicate = function($x) use ($procedure) {
 				IUnit\Type::covariant($procedure($x));
 				return true;
@@ -121,7 +123,7 @@ namespace Saber\Control\Choice\Cons {
 		 * @return Control\Choice\Type                              a reference to the next choice
 		 *                                                          monad node
 		 */
-		public final function unless(Core\Equality\Type $y, callable $procedure) {
+		public final function unless(Core\Equality\Type $y, callable $procedure) : Control\Choice\Type {
 			$this->predicate = function($x) use ($y, $procedure) {
 				if (!$y->__eq($x)) {
 					IUnit\Type::covariant($procedure($x));
@@ -143,7 +145,7 @@ namespace Saber\Control\Choice\Cons {
 		 * @return Control\Choice\Type                              a reference to the next choice
 		 *                                                          monad node
 		 */
-		public final function when(Core\Equality\Type $y, callable $procedure) {
+		public final function when(Core\Equality\Type $y, callable $procedure) : Control\Choice\Type {
 			$this->predicate = function($x) use ($y, $procedure) {
 				if ($y->__eq($x)) {
 					IUnit\Type::covariant($procedure($x));

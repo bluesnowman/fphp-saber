@@ -60,28 +60,28 @@ namespace Saber\Data\IInteger {
 		#region Methods -> Initialization
 
 		/**
-		 * This method enforces that the specified class is a covariant.
-		 *
-		 * @access public
-		 * @static
-		 * @param IInteger\Type $x                                   the class to be evaluated
-		 * @return IInteger\Type                                     the class
-		 */
-		public static function covariant(IInteger\Type $x) {
-			return $x;
-		}
-
-		/**
 		 * This method returns a value as a boxed object.  A value is typically a PHP typed
 		 * primitive or object.  It is considered "not" type-safe.
 		 *
 		 * @access public
 		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return IInteger\Type                                     the boxed object
+		 * @param string $value                                     the value(s) to be boxed
+		 * @return IInteger\Type                                    the boxed object
 		 */
-		public static function box($value) {
+		public static function box(string $value) : IInteger\Type {
 			return new IInteger\Type($value);
+		}
+
+		/**
+		 * This method enforces that the specified class is a covariant.
+		 *
+		 * @access public
+		 * @static
+		 * @param IInteger\Type $x                                  the class to be evaluated
+		 * @return IInteger\Type                                    the class
+		 */
+		public static function covariant(IInteger\Type $x) : IInteger\Type {
+			return $x;
 		}
 
 		/**
@@ -91,17 +91,20 @@ namespace Saber\Data\IInteger {
 		 * @access public
 		 * @static
 		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return Core\Type                                        the boxed object
+		 * @return IInteger\Type                                    the boxed object
 		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
-		public static function make($value) {
+		public static function make($value) : IInteger\Type {
 			if (($value === null) || ($value == '')) {
-				$value = 0;
+				$value = '0';
 			}
 			else if (is_numeric($value)) {
 				settype($value, 'integer');
+				$value = strval($value);
 			}
-			$value = '' . $value;
+			else {
+				$value = strval($value);
+			}
 			if (!preg_match('/^-?[1-9]?[0-9]+$/', $value)) {
 				throw new Throwable\InvalidArgument\Exception('Unable to box value. Expected an integer, but got ":value".', array(':value' => $value));
 			}
@@ -113,11 +116,11 @@ namespace Saber\Data\IInteger {
 		 *
 		 * @access public
 		 * @static
-		 * @return IInteger\Type                                     the object
+		 * @return IInteger\Type                                    the object
 		 */
-		public static function negative() {
+		public static function negative() : IInteger\Type {
 			if (!isset(static::$singletons[-1])) {
-				static::$singletons[-1] = new IInteger\Type(-1);
+				static::$singletons[-1] = new IInteger\Type('-1');
 			}
 			return static::$singletons[-1];
 		}
@@ -127,11 +130,11 @@ namespace Saber\Data\IInteger {
 		 *
 		 * @access public
 		 * @static
-		 * @return IInteger\Type                                     the object
+		 * @return IInteger\Type                                    the object
 		 */
-		public static function one() {
+		public static function one() : IInteger\Type {
 			if (!isset(static::$singletons[1])) {
-				static::$singletons[1] = new IInteger\Type(1);
+				static::$singletons[1] = new IInteger\Type('1');
 			}
 			return static::$singletons[1];
 		}
@@ -141,11 +144,11 @@ namespace Saber\Data\IInteger {
 		 *
 		 * @access public
 		 * @static
-		 * @return IInteger\Type                                     the object
+		 * @return IInteger\Type                                    the object
 		 */
-		public static function zero() {
+		public static function zero() : IInteger\Type {
 			if (!isset(static::$singletons[0])) {
-				static::$singletons[0] = new IInteger\Type(0);
+				static::$singletons[0] = new IInteger\Type('0');
 			}
 			return static::$singletons[0];
 		}
@@ -161,8 +164,8 @@ namespace Saber\Data\IInteger {
 		 * @final
 		 * @param string $value                                     the value to be assigned
 		 */
-		public final function __construct($value) {
-			$this->value = (string) $value;
+		public final function __construct(string $value) {
+			$this->value = $value;
 		}
 
 		/**

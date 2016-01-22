@@ -37,11 +37,11 @@ namespace Saber\Data\IUnit {
 		 *
 		 * @access public
 		 * @static
-		 * @param IUnit\Type $x                                      the value to be evaluated
-		 * @param IUnit\Type $y                                      the default value
-		 * @return IUnit\Type                                        the result
+		 * @param IUnit\Type $x                                     the value to be evaluated
+		 * @param IUnit\Type $y                                     the default value
+		 * @return IUnit\Type                                       the result
 		 */
-		public static function nvl(IUnit\Type $x = null, IUnit\Type $y = null) {
+		public static function nvl(IUnit\Type $x = null, IUnit\Type $y = null) : IUnit\Type {
 			return ($x !== null) ? $x : (($y !== null) ? $y : IUnit\Type::instance());
 		}
 
@@ -54,12 +54,12 @@ namespace Saber\Data\IUnit {
 		 *
 		 * @access public
 		 * @static
-		 * @param IUnit\Type $x                                      the left operand
+		 * @param IUnit\Type $x                                     the left operand
 		 * @param Core\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is equal
+		 * @return IBool\Type                                       whether the left operand is equal
 		 *                                                          to the right operand
 		 */
-		public static function eq(IUnit\Type $x, Core\Type $y) { // ==
+		public static function eq(IUnit\Type $x, Core\Type $y) : IBool\Type { // ==
 			$type = ($x === null) ? '\\Saber\\Data\\IUnit\\Type' : $x->__typeOf();
 			return IBool\Type::box(($y === null) || ($y instanceof $type));
 		}
@@ -69,12 +69,12 @@ namespace Saber\Data\IUnit {
 		 *
 		 * @access public
 		 * @static
-		 * @param IUnit\Type $x                                      the left operand
+		 * @param IUnit\Type $x                                     the left operand
 		 * @param Core\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is identical
+		 * @return IBool\Type                                       whether the left operand is identical
 		 *                                                          to the right operand
 		 */
-		public static function id(IUnit\Type $x, Core\Type $y) { // ===
+		public static function id(IUnit\Type $x, Core\Type $y) : IBool\Type { // ===
 			$type = ($x === null) ? '\\Saber\\Data\\IUnit\\Type' : $x->__typeOf();
 			return IBool\Type::box(($y === null) || ($type === $y->__typeOf()));
 		}
@@ -84,12 +84,12 @@ namespace Saber\Data\IUnit {
 		 *
 		 * @access public
 		 * @static
-		 * @param IUnit\Type $x                                      the left operand
+		 * @param IUnit\Type $x                                     the left operand
 		 * @param Core\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is NOT equal
+		 * @return IBool\Type                                       whether the left operand is NOT equal
 		 *                                                          to the right operand
 		 */
-		public static function ne(IUnit\Type $x, Core\Type $y) { // !=
+		public static function ne(IUnit\Type $x, Core\Type $y) : IBool\Type { // !=
 			return IBool\Module::not(IUnit\Module::eq($x, $y));
 		}
 
@@ -98,12 +98,12 @@ namespace Saber\Data\IUnit {
 		 *
 		 * @access public
 		 * @static
-		 * @param IUnit\Type $x                                      the left operand
+		 * @param IUnit\Type $x                                     the left operand
 		 * @param Core\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is NOT identical
+		 * @return IBool\Type                                       whether the left operand is NOT identical
 		 *                                                          to the right operand
 		 */
-		public static function ni(IUnit\Type $x, Core\Type $y) { // !==
+		public static function ni(IUnit\Type $x, Core\Type $y) : IBool\Type { // !==
 			return IBool\Module::not(IUnit\Module::id($x, $y));
 		}
 
@@ -116,13 +116,13 @@ namespace Saber\Data\IUnit {
 		 *
 		 * @access public
 		 * @static
-		 * @param IUnit\Type $x                                      the left operand
-		 * @param IUnit\Type $y                                      the right operand
-		 * @return ITrit\Type                                        the order as to whether the left
+		 * @param IUnit\Type $x                                     the left operand
+		 * @param IUnit\Type $y                                     the right operand
+		 * @return ITrit\Type                                       the order as to whether the left
 		 *                                                          operand is less than, equals to,
 		 *                                                          or greater than the right operand
 		 */
-		public static function compare(IUnit\Type $x, IUnit\Type $y) {
+		public static function compare(IUnit\Type $x, IUnit\Type $y) : ITrit\Type {
 			if (IUnit\Module::eq($x, $y)->unbox()) {
 				return ITrit\Type::zero();
 			}
@@ -134,12 +134,12 @@ namespace Saber\Data\IUnit {
 		 *
 		 * @access public
 		 * @static
-		 * @param IUnit\Type $x                                      the left operand
-		 * @param IUnit\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is greater
+		 * @param IUnit\Type $x                                     the left operand
+		 * @param IUnit\Type $y                                     the right operand
+		 * @return IBool\Type                                       whether the left operand is greater
 		 *                                                          than or equal to the right operand
 		 */
-		public static function ge(IUnit\Type $x, IUnit\Type $y) { // >=
+		public static function ge(IUnit\Type $x, IUnit\Type $y) : IBool\Type { // >=
 			return IBool\Type::box(IUnit\Module::compare($x, $y)->unbox() >= 0);
 		}
 
@@ -148,12 +148,12 @@ namespace Saber\Data\IUnit {
 		 *
 		 * @access public
 		 * @static
-		 * @param IUnit\Type $x                                      the left operand
-		 * @param IUnit\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is greater
+		 * @param IUnit\Type $x                                     the left operand
+		 * @param IUnit\Type $y                                     the right operand
+		 * @return IBool\Type                                       whether the left operand is greater
 		 *                                                          than the right operand
 		 */
-		public static function gt(IUnit\Type $x, IUnit\Type $y) { // >
+		public static function gt(IUnit\Type $x, IUnit\Type $y) : IBool\Type { // >
 			return IBool\Type::box(IUnit\Module::compare($x, $y)->unbox() > 0);
 		}
 
@@ -162,12 +162,12 @@ namespace Saber\Data\IUnit {
 		 *
 		 * @access public
 		 * @static
-		 * @param IUnit\Type $x                                      the left operand
-		 * @param IUnit\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is less than
+		 * @param IUnit\Type $x                                     the left operand
+		 * @param IUnit\Type $y                                     the right operand
+		 * @return IBool\Type                                       whether the left operand is less than
 		 *                                                          or equal to the right operand
 		 */
-		public static function le(IUnit\Type $x, IUnit\Type $y) { // <=
+		public static function le(IUnit\Type $x, IUnit\Type $y) : IBool\Type { // <=
 			return IBool\Type::box(IUnit\Module::compare($x, $y)->unbox() <= 0);
 		}
 
@@ -176,12 +176,12 @@ namespace Saber\Data\IUnit {
 		 *
 		 * @access public
 		 * @static
-		 * @param IUnit\Type $x                                      the left operand
-		 * @param IUnit\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is less than
+		 * @param IUnit\Type $x                                     the left operand
+		 * @param IUnit\Type $y                                     the right operand
+		 * @return IBool\Type                                       whether the left operand is less than
 		 *                                                          the right operand
 		 */
-		public static function lt(IUnit\Type $x, IUnit\Type $y) { // <
+		public static function lt(IUnit\Type $x, IUnit\Type $y) : IBool\Type { // <
 			return IBool\Type::box(IUnit\Module::compare($x, $y)->unbox() < 0);
 		}
 
@@ -190,11 +190,11 @@ namespace Saber\Data\IUnit {
 		 *
 		 * @access public
 		 * @static
-		 * @param IUnit\Type $x                                      the left operand
-		 * @param IUnit\Type $y                                      the right operand
-		 * @return IUnit\Type                                        the maximum value
+		 * @param IUnit\Type $x                                     the left operand
+		 * @param IUnit\Type $y                                     the right operand
+		 * @return IUnit\Type                                       the maximum value
 		 */
-		public static function max(IUnit\Type $x, IUnit\Type $y) {
+		public static function max(IUnit\Type $x, IUnit\Type $y) : IUnit\Type {
 			return (IUnit\Module::compare($x, $y)->unbox() >= 0) ? $x : $y;
 		}
 
@@ -203,11 +203,11 @@ namespace Saber\Data\IUnit {
 		 *
 		 * @access public
 		 * @static
-		 * @param IUnit\Type $x                                      the left operand
-		 * @param IUnit\Type $y                                      the right operand
-		 * @return IUnit\Type                                        the minimum value
+		 * @param IUnit\Type $x                                     the left operand
+		 * @param IUnit\Type $y                                     the right operand
+		 * @return IUnit\Type                                       the minimum value
 		 */
-		public static function min(IUnit\Type $x, IUnit\Type $y) {
+		public static function min(IUnit\Type $x, IUnit\Type $y) : IUnit\Type {
 			return (IUnit\Module::compare($x, $y)->unbox() <= 0) ? $x : $y;
 		}
 

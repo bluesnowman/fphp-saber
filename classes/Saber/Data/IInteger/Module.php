@@ -47,10 +47,10 @@ namespace Saber\Data\IInteger {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInteger\Type $x                                   the operand
-		 * @return IInteger\Type                                     the result
+		 * @param IInteger\Type $x                                  the operand
+		 * @return IInteger\Type                                    the result
 		 */
-		public static function abs(IInteger\Type $x) {
+		public static function abs(IInteger\Type $x) : IInteger\Type {
 			return IInteger\Type::box(gmp_strval(gmp_abs($x->unbox())));
 		}
 
@@ -59,11 +59,11 @@ namespace Saber\Data\IInteger {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInteger\Type $x                                   the left operand
-		 * @param IInteger\Type $y                                   the right operand
-		 * @return IInteger\Type                                     the result
+		 * @param IInteger\Type $x                                  the left operand
+		 * @param IInteger\Type $y                                  the right operand
+		 * @return IInteger\Type                                    the result
 		 */
-		public static function add(IInteger\Type $x, IInteger\Type $y) {
+		public static function add(IInteger\Type $x, IInteger\Type $y) : IInteger\Type {
 			return IInteger\Type::box(gmp_strval(gmp_add($x->unbox(), $y->unbox())));
 		}
 
@@ -72,10 +72,10 @@ namespace Saber\Data\IInteger {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInteger\Type $x                                   the operand
-		 * @return IInteger\Type                                     the result
+		 * @param IInteger\Type $x                                  the operand
+		 * @return IInteger\Type                                    the result
 		 */
-		public static function decrement(IInteger\Type $x) {
+		public static function decrement(IInteger\Type $x) : IInteger\Type {
 			return IInteger\Module::subtract($x, IInteger\Type::one());
 		}
 
@@ -85,11 +85,11 @@ namespace Saber\Data\IInteger {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInteger\Type $x                                   the left operand
-		 * @param IInteger\Type $y                                   the right operand
-		 * @return IInteger\Type                                     the result
+		 * @param IInteger\Type $x                                  the left operand
+		 * @param IInteger\Type $y                                  the right operand
+		 * @return IInteger\Type                                    the result
 		 */
-		public static function divide(IInteger\Type $x, IInteger\Type $y) {
+		public static function divide(IInteger\Type $x, IInteger\Type $y) : IInteger\Type {
 			return IInteger\Type::box(gmp_strval(gmp_div_q($x->unbox(), $y->unbox())));
 		}
 
@@ -98,10 +98,10 @@ namespace Saber\Data\IInteger {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInteger\Type $n                                   the operand
-		 * @return IInteger\Type                                     the result
+		 * @param IInteger\Type $n                                  the operand
+		 * @return IInteger\Type                                    the result
 		 */
-		public static function factorial(IInteger\Type $n) {
+		public static function factorial(IInteger\Type $n) : IInteger\Type {
 			return (IInteger\Module::eq($n, IInteger\Type::zero())->unbox())
 				? IInteger\Type::one()
 				: IInteger\Module::multiply($n, IInteger\Module::factorial(IInteger\Module::decrement($n)));
@@ -112,10 +112,10 @@ namespace Saber\Data\IInteger {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInteger\Type $n                                   the operand
-		 * @return IInteger\Type                                     the result
+		 * @param IInteger\Type $n                                  the operand
+		 * @return IInteger\Type                                    the result
 		 */
-		public static function fibonacci(IInteger\Type $n) {
+		public static function fibonacci(IInteger\Type $n) : IInteger\Type {
 			return (IInteger\Module::le($n, IInteger\Type::one())->unbox())
 				? $n
 				: IInteger\Module::add(IInteger\Module::fibonacci(IInteger\Module::decrement($n)), IInteger\Module::fibonacci(IInteger\Module::subtract($n, IInteger\Type::box(2))));
@@ -126,11 +126,11 @@ namespace Saber\Data\IInteger {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInteger\Type $x                                   the left operand
-		 * @param IInteger\Type $y                                   the right operand
-		 * @return IInteger\Type                                     the result
+		 * @param IInteger\Type $x                                  the left operand
+		 * @param IInteger\Type $y                                  the right operand
+		 * @return IInteger\Type                                    the result
 		 */
-		public static function gcd(IInteger\Type $x, IInteger\Type $y) {
+		public static function gcd(IInteger\Type $x, IInteger\Type $y) : IInteger\Type {
 			return IInteger\Type::box(gmp_strval(gmp_gcd($x->unbox(), $y->unbox())));
 		}
 
@@ -139,10 +139,10 @@ namespace Saber\Data\IInteger {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInteger\Type $x                                   the operand
-		 * @return IInteger\Type                                     the result
+		 * @param IInteger\Type $x                                  the operand
+		 * @return IInteger\Type                                    the result
 		 */
-		public static function increment(IInteger\Type $x) {
+		public static function increment(IInteger\Type $x) : IInteger\Type {
 			return IInteger\Module::add($x, IInteger\Type::one());
 		}
 
@@ -152,11 +152,11 @@ namespace Saber\Data\IInteger {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInteger\Type $x                                   the left operand
-		 * @param IInteger\Type $y                                   the right operand
-		 * @return IInteger\Type                                     the result
+		 * @param IInteger\Type $x                                  the left operand
+		 * @param IInteger\Type $y                                  the right operand
+		 * @return IInteger\Type                                    the result
 		 */
-		public static function modulo(IInteger\Type $x, IInteger\Type $y) {
+		public static function modulo(IInteger\Type $x, IInteger\Type $y) : IInteger\Type {
 			return IInteger\Type::box(gmp_strval(gmp_div_r($x->unbox(), $y->unbox())));
 		}
 
@@ -166,11 +166,11 @@ namespace Saber\Data\IInteger {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInteger\Type $x                                   the left operand
-		 * @param IInteger\Type $y                                   the right operand
-		 * @return IInteger\Type                                     the result
+		 * @param IInteger\Type $x                                  the left operand
+		 * @param IInteger\Type $y                                  the right operand
+		 * @return IInteger\Type                                    the result
 		 */
-		public static function multiply(IInteger\Type $x, IInteger\Type $y) {
+		public static function multiply(IInteger\Type $x, IInteger\Type $y) : IInteger\Type {
 			return IInteger\Type::box(gmp_strval(gmp_mul($x->unbox(), $y->unbox())));
 		}
 
@@ -179,10 +179,10 @@ namespace Saber\Data\IInteger {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInteger\Type $x                                   the operand
-		 * @return IInteger\Type                                     the result
+		 * @param IInteger\Type $x                                  the operand
+		 * @return IInteger\Type                                    the result
 		 */
-		public static function negate(IInteger\Type $x) {
+		public static function negate(IInteger\Type $x) : IInteger\Type {
 			return IInteger\Type::box(gmp_strval(gmp_neg($x->unbox())));
 		}
 
@@ -191,11 +191,11 @@ namespace Saber\Data\IInteger {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInteger\Type $x                                   the operand
-		 * @param IInt32\Type $exponent                              the exponent to be raised by
-		 * @return IInteger\Type                                     the result
+		 * @param IInteger\Type $x                                  the operand
+		 * @param IInt32\Type $exponent                             the exponent to be raised by
+		 * @return IInteger\Type                                    the result
 		 */
-		public static function pow(IInteger\Type $x, IInt32\Type $exponent) {
+		public static function pow(IInteger\Type $x, IInt32\Type $exponent) : IInteger\Type {
 			return IInteger\Type::box(gmp_strval(gmp_pow($x->unbox(), $exponent->unbox())));
 		}
 
@@ -205,11 +205,11 @@ namespace Saber\Data\IInteger {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInteger\Type $x                                   the left operand
-		 * @param IInteger\Type $y                                   the right operand
-		 * @return IInteger\Type                                     the result
+		 * @param IInteger\Type $x                                  the left operand
+		 * @param IInteger\Type $y                                  the right operand
+		 * @return IInteger\Type                                    the result
 		 */
-		public static function subtract(IInteger\Type $x, IInteger\Type $y) {
+		public static function subtract(IInteger\Type $x, IInteger\Type $y) : IInteger\Type {
 			return IInteger\Type::box(gmp_strval(gmp_sub($x->unbox(), $y->unbox())));
 		}
 
@@ -222,13 +222,13 @@ namespace Saber\Data\IInteger {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInteger\Type $x                                   where to start
+		 * @param IInteger\Type $x                                  where to start
 		 * @param Core\Type $y                                      either an integer representing
 		 *                                                          the end of the sequence or a
 		 *                                                          tuple describing the sequence
-		 * @return IArrayList\Type                                   an empty array list
+		 * @return IArrayList\Type                                  an empty array list
 		 */
-		public static function sequence(IInteger\Type $x, Core\Type $y) {
+		public static function sequence(IInteger\Type $x, Core\Type $y) : IArrayList\Type {
 			$buffer = array();
 
 			if ($y instanceof ITuple\Type) {
@@ -259,10 +259,10 @@ namespace Saber\Data\IInteger {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInteger\Type $x                                   the number to be evaluated
-		 * @return ITrit\Type                                        the result
+		 * @param IInteger\Type $x                                  the number to be evaluated
+		 * @return ITrit\Type                                       the result
 		 */
-		public static function signum(IInteger\Type $x) {
+		public static function signum(IInteger\Type $x) : ITrit\Type {
 			return ITrit\Type::make($x->unbox());
 		}
 
@@ -276,11 +276,11 @@ namespace Saber\Data\IInteger {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInteger\Type $x                                   the value to be evaluated
-		 * @param IInteger\Type $y                                   the default value
-		 * @return IInteger\Type                                     the result
+		 * @param IInteger\Type $x                                  the value to be evaluated
+		 * @param IInteger\Type $y                                  the default value
+		 * @return IInteger\Type                                    the result
 		 */
-		public static function nvl(IInteger\Type $x = null, IInteger\Type $y = null) {
+		public static function nvl(IInteger\Type $x = null, IInteger\Type $y = null) : IInteger\Type {
 			return ($x !== null) ? $x : (($y !== null) ? $y : IInteger\Type::zero());
 		}
 
@@ -290,11 +290,11 @@ namespace Saber\Data\IInteger {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInteger\Type $x                                   the object to be converted
-		 * @return IDouble\Type                                      the value as a IDouble
+		 * @param IInteger\Type $x                                  the object to be converted
+		 * @return IDouble\Type                                     the value as a IDouble
 		 */
-		public static function toDouble(IInteger\Type $x) {
-			return IDouble\Type::box($x->unbox());
+		public static function toDouble(IInteger\Type $x) : IDouble\Type {
+			return IDouble\Type::make($x->unbox());
 		}
 
 		/**
@@ -303,11 +303,11 @@ namespace Saber\Data\IInteger {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInteger\Type $x                                   the object to be converted
-		 * @return IFloat\Type                                       the value as a IFloat
+		 * @param IInteger\Type $x                                  the object to be converted
+		 * @return IFloat\Type                                      the value as a IFloat
 		 */
-		public static function toFloat(IInteger\Type $x) {
-			return IFloat\Type::box($x->unbox());
+		public static function toFloat(IInteger\Type $x) : IFloat\Type {
+			return IFloat\Type::make($x->unbox());
 		}
 
 		/**
@@ -316,11 +316,11 @@ namespace Saber\Data\IInteger {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInteger\Type $x                                   the object to be converted
-		 * @return IInt32\Type                                       the value as an IInt32
+		 * @param IInteger\Type $x                                  the object to be converted
+		 * @return IInt32\Type                                      the value as an IInt32
 		 */
-		public static function toInt32(IInteger\Type $x) {
-			return IInt32\Type::box($x->unbox());
+		public static function toInt32(IInteger\Type $x) : IInt32\Type {
+			return IInt32\Type::make($x->unbox());
 		}
 
 		/**
@@ -329,11 +329,11 @@ namespace Saber\Data\IInteger {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInteger\Type $x                                   the object to be converted
-		 * @return IInteger\Type                                     the value as an IInteger
+		 * @param IInteger\Type $x                                  the object to be converted
+		 * @return IInteger\Type                                    the value as an IInteger
 		 */
-		public static function toInteger(IInteger\Type $x) {
-			return IInteger\Type::box($x->unbox());
+		public static function toInteger(IInteger\Type $x) : IInteger\Type {
+			return $x;
 		}
 
 		#endregion
@@ -345,12 +345,12 @@ namespace Saber\Data\IInteger {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInteger\Type $x                                   the left operand
+		 * @param IInteger\Type $x                                  the left operand
 		 * @param Core\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is equal
+		 * @return IBool\Type                                       whether the left operand is equal
 		 *                                                          to the right operand
 		 */
-		public static function eq(IInteger\Type $x, Core\Type $y) { // ==
+		public static function eq(IInteger\Type $x, Core\Type $y) : IBool\Type { // ==
 			$type = $x->__typeOf();
 			if ($y !== null) {
 				if ($y instanceof $type) {
@@ -365,12 +365,12 @@ namespace Saber\Data\IInteger {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInteger\Type $x                                   the left operand
+		 * @param IInteger\Type $x                                  the left operand
 		 * @param Core\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is identical
+		 * @return IBool\Type                                       whether the left operand is identical
 		 *                                                          to the right operand
 		 */
-		public static function id(IInteger\Type $x, Core\Type $y) { // ===
+		public static function id(IInteger\Type $x, Core\Type $y) : IBool\Type { // ===
 			if ($y !== null) {
 				if ($x->__typeOf() === $y->__typeOf()) {
 					return IBool\Type::box($x->unbox() === $y->unbox());
@@ -384,12 +384,12 @@ namespace Saber\Data\IInteger {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInteger\Type $x                                   the left operand
+		 * @param IInteger\Type $x                                  the left operand
 		 * @param Core\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is NOT equal
+		 * @return IBool\Type                                       whether the left operand is NOT equal
 		 *                                                          to the right operand
 		 */
-		public static function ne(IInteger\Type $x, Core\Type $y) { // !=
+		public static function ne(IInteger\Type $x, Core\Type $y) : IBool\Type { // !=
 			return IBool\Module::not(IInteger\Module::eq($x, $y));
 		}
 
@@ -398,12 +398,12 @@ namespace Saber\Data\IInteger {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInteger\Type $x                                   the left operand
+		 * @param IInteger\Type $x                                  the left operand
 		 * @param Core\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is NOT identical
+		 * @return IBool\Type                                       whether the left operand is NOT identical
 		 *                                                          to the right operand
 		 */
-		public static function ni(IInteger\Type $x, Core\Type $y) { // !==
+		public static function ni(IInteger\Type $x, Core\Type $y) : IBool\Type { // !==
 			return IBool\Module::not(IInteger\Module::id($x, $y));
 		}
 
@@ -416,13 +416,13 @@ namespace Saber\Data\IInteger {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInteger\Type $x                                   the left operand
-		 * @param IInteger\Type $y                                   the right operand
-		 * @return ITrit\Type                                        the order as to whether the left
+		 * @param IInteger\Type $x                                  the left operand
+		 * @param IInteger\Type $y                                  the right operand
+		 * @return ITrit\Type                                       the order as to whether the left
 		 *                                                          operand is less than, equals to,
 		 *                                                          or greater than the right operand
 		 */
-		public static function compare(IInteger\Type $x, IInteger\Type $y) {
+		public static function compare(IInteger\Type $x, IInteger\Type $y) : ITrit\Type {
 			return ITrit\Type::make(gmp_cmp($x->unbox(), $y->unbox()));
 		}
 
@@ -433,12 +433,12 @@ namespace Saber\Data\IInteger {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInteger\Type $x                                   the left operand
-		 * @param IInteger\Type $y                                   the right operand
-		 * @return IBool\Type                                        whether the left operand is greater
+		 * @param IInteger\Type $x                                  the left operand
+		 * @param IInteger\Type $y                                  the right operand
+		 * @return IBool\Type                                       whether the left operand is greater
 		 *                                                          than or equal to the right operand
 		 */
-		public static function ge(IInteger\Type $x, IInteger\Type $y) { // >=
+		public static function ge(IInteger\Type $x, IInteger\Type $y) : IBool\Type { // >=
 			return IBool\Type::box(IInteger\Module::compare($x, $y)->unbox() >= 0);
 		}
 
@@ -447,12 +447,12 @@ namespace Saber\Data\IInteger {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInteger\Type $x                                   the left operand
-		 * @param IInteger\Type $y                                   the right operand
-		 * @return IBool\Type                                        whether the left operand is greater
+		 * @param IInteger\Type $x                                  the left operand
+		 * @param IInteger\Type $y                                  the right operand
+		 * @return IBool\Type                                       whether the left operand is greater
 		 *                                                          than the right operand
 		 */
-		public static function gt(IInteger\Type $x, IInteger\Type $y) { // >
+		public static function gt(IInteger\Type $x, IInteger\Type $y) : IBool\Type { // >
 			return IBool\Type::box(IInteger\Module::compare($x, $y)->unbox() > 0);
 		}
 
@@ -461,12 +461,12 @@ namespace Saber\Data\IInteger {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInteger\Type $x                                   the left operand
-		 * @param IInteger\Type $y                                   the right operand
-		 * @return IBool\Type                                        whether the left operand is less than
+		 * @param IInteger\Type $x                                  the left operand
+		 * @param IInteger\Type $y                                  the right operand
+		 * @return IBool\Type                                       whether the left operand is less than
 		 *                                                          or equal to the right operand
 		 */
-		public static function le(IInteger\Type $x, IInteger\Type $y) { // <=
+		public static function le(IInteger\Type $x, IInteger\Type $y) : IBool\Type { // <=
 			return IBool\Type::box(IInteger\Module::compare($x, $y)->unbox() <= 0);
 		}
 
@@ -475,12 +475,12 @@ namespace Saber\Data\IInteger {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInteger\Type $x                                   the left operand
-		 * @param IInteger\Type $y                                   the right operand
-		 * @return IBool\Type                                        whether the left operand is less than
+		 * @param IInteger\Type $x                                  the left operand
+		 * @param IInteger\Type $y                                  the right operand
+		 * @return IBool\Type                                       whether the left operand is less than
 		 *                                                          the right operand
 		 */
-		public static function lt(IInteger\Type $x, IInteger\Type $y) { // <
+		public static function lt(IInteger\Type $x, IInteger\Type $y) : IBool\Type { // <
 			return IBool\Type::box(IInteger\Module::compare($x, $y)->unbox() < 0);
 		}
 
@@ -489,11 +489,11 @@ namespace Saber\Data\IInteger {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInteger\Type $x                                   the left operand
-		 * @param IInteger\Type $y                                   the right operand
-		 * @return IInteger\Type                                     the maximum value
+		 * @param IInteger\Type $x                                  the left operand
+		 * @param IInteger\Type $y                                  the right operand
+		 * @return IInteger\Type                                    the maximum value
 		 */
-		public static function max(IInteger\Type $x, IInteger\Type $y) {
+		public static function max(IInteger\Type $x, IInteger\Type $y) : IInteger\Type {
 			return (IInteger\Module::compare($x, $y)->unbox() >= 0) ? $x : $y;
 		}
 
@@ -502,11 +502,11 @@ namespace Saber\Data\IInteger {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInteger\Type $x                                   the left operand
-		 * @param IInteger\Type $y                                   the right operand
-		 * @return IInteger\Type                                     the minimum value
+		 * @param IInteger\Type $x                                  the left operand
+		 * @param IInteger\Type $y                                  the right operand
+		 * @return IInteger\Type                                    the minimum value
 		 */
-		public static function min(IInteger\Type $x, IInteger\Type $y) {
+		public static function min(IInteger\Type $x, IInteger\Type $y) : IInteger\Type {
 			return (IInteger\Module::compare($x, $y)->unbox() <= 0) ? $x : $y;
 		}
 
@@ -519,11 +519,11 @@ namespace Saber\Data\IInteger {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInteger\Type $x                                   the object to be evaluated
-		 * @return IBool\Type                                        whether the operand is an even
+		 * @param IInteger\Type $x                                  the object to be evaluated
+		 * @return IBool\Type                                       whether the operand is an even
 		 *                                                          number
 		 */
-		public static function isEven(IInteger\Type $x) {
+		public static function isEven(IInteger\Type $x) : IBool\Type {
 			return IBool\Type::box(gmp_strval(gmp_div_r($x->unbox(), '2')) == '0');
 		}
 
@@ -532,11 +532,11 @@ namespace Saber\Data\IInteger {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInteger\Type $x                                   the object to be evaluated
-		 * @return IBool\Type                                        whether the operand is a negative
+		 * @param IInteger\Type $x                                  the object to be evaluated
+		 * @return IBool\Type                                       whether the operand is a negative
 		 *                                                          number
 		 */
-		public static function isNegative(IInteger\Type $x) {
+		public static function isNegative(IInteger\Type $x) : IBool\Type {
 			return IBool\Type::box(gmp_sign($x->unbox()) == -1);
 		}
 
@@ -545,11 +545,11 @@ namespace Saber\Data\IInteger {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInteger\Type $x                                   the object to be evaluated
-		 * @return IBool\Type                                        whether the operand is an odd
+		 * @param IInteger\Type $x                                  the object to be evaluated
+		 * @return IBool\Type                                       whether the operand is an odd
 		 *                                                          number
 		 */
-		public static function isOdd(IInteger\Type $x) {
+		public static function isOdd(IInteger\Type $x) : IBool\Type {
 			return IBool\Type::box(gmp_strval(gmp_div_r($x->unbox(), '2')) != '0');
 		}
 

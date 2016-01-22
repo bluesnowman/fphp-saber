@@ -49,7 +49,7 @@ namespace Saber\Data\IHashMap {
 		 *
 		 * @access public
 		 * @final
-		 * @param IHashMap\Type $xs                                  the collection to be iterated
+		 * @param IHashMap\Type $xs                                 the collection to be iterated
 		 */
 		public final function __construct(IHashMap\Type $xs) {
 			$this->iterator = new \RecursiveIteratorIterator(new IHashMap\RecursiveArrayOnlyIterator($xs->unbox()));
@@ -74,7 +74,7 @@ namespace Saber\Data\IHashMap {
 		 * @final
 		 * @return integer                                          the size of the collection
 		 */
-		public final function count() {
+		public final function count() : int {
 			return $this->xs->__size();
 		}
 
@@ -97,7 +97,7 @@ namespace Saber\Data\IHashMap {
 		 * @final
 		 * @return Core\Type                                        the current key
 		 */
-		public final function key() {
+		public final function key() : Core\Type {
 			$entry = $this->iterator->current();
 			return $entry->first();
 		}
@@ -107,9 +107,9 @@ namespace Saber\Data\IHashMap {
 		 *
 		 * @access public
 		 * @final
-		 * @return IBool\Type                                        whether there are more objects
+		 * @return IBool\Type                                       whether there are more objects
 		 */
-		public final function next() {
+		public final function next() : IBool\Type {
 			$this->iterator->next();
 			return IBool\Type::box($this->valid());
 		}
@@ -131,7 +131,7 @@ namespace Saber\Data\IHashMap {
 		 * @final
 		 * @return boolean                                          whether there are more objects
 		 */
-		public final function valid() {
+		public final function valid() : bool {
 			return $this->iterator->valid();
 		}
 
@@ -145,7 +145,7 @@ namespace Saber\Data\IHashMap {
 		 * @access public
 		 * @return boolean                                          whether the current has children
 		 */
-		public function hasChildren() {
+		public function hasChildren() : bool {
 			return is_array($this->current());
 		}
 

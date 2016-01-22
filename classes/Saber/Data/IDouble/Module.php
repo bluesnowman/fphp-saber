@@ -315,7 +315,7 @@ namespace Saber\Data\IDouble {
 		 * @return IDouble\Type                                     the value as a IDouble
 		 */
 		public static function toDouble(IDouble\Type $x) : IDouble\Type {
-			return IDouble\Type::box($x->unbox());
+			return $x;
 		}
 
 		/**
@@ -328,7 +328,7 @@ namespace Saber\Data\IDouble {
 		 * @return IFloat\Type                                      the value as a IFloat
 		 */
 		public static function toFloat(IDouble\Type $x) : IFloat\Type {
-			return IFloat\Type::box($x->unbox());
+			return IFloat\Type::make($x->unbox());
 		}
 
 		/**
@@ -341,7 +341,7 @@ namespace Saber\Data\IDouble {
 		 * @return IInt32\Type                                      the value as an IInt32
 		 */
 		public static function toInt32(IDouble\Type $x) : IInt32\Type {
-			return IInt32\Type::box($x->unbox());
+			return IInt32\Type::make($x->unbox());
 		}
 
 		/**
@@ -354,7 +354,7 @@ namespace Saber\Data\IDouble {
 		 * @return IInteger\Type                                    the value as an IInteger
 		 */
 		public static function toInteger(IDouble\Type $x) : IInteger\Type {
-			return IInteger\Type::box($x->unbox());
+			return IInteger\Type::make($x->unbox());
 		}
 
 		/**

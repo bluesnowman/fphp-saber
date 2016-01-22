@@ -60,28 +60,28 @@ namespace Saber\Data\IInt32 {
 		#region Methods -> Initialization
 
 		/**
-		 * This method enforces that the specified class is a covariant.
-		 *
-		 * @access public
-		 * @static
-		 * @param IInt32\Type $x                                     the class to be evaluated
-		 * @return IInt32\Type                                       the class
-		 */
-		public static function covariant(IInt32\Type $x) {
-			return $x;
-		}
-
-		/**
 		 * This method returns a value as a boxed object.  A value is typically a PHP typed
 		 * primitive or object.  It is considered "not" type-safe.
 		 *
 		 * @access public
 		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return IInt32\Type                                       the boxed object
+		 * @param int $value                                        the value(s) to be boxed
+		 * @return IInt32\Type                                      the boxed object
 		 */
-		public static function box($value) {
+		public static function box(int $value) : IInt32\Type {
 			return new IInt32\Type($value);
+		}
+
+		/**
+		 * This method enforces that the specified class is a covariant.
+		 *
+		 * @access public
+		 * @static
+		 * @param IInt32\Type $x                                    the class to be evaluated
+		 * @return IInt32\Type                                      the class
+		 */
+		public static function covariant(IInt32\Type $x) : IInt32\Type {
+			return $x;
 		}
 
 		/**
@@ -91,10 +91,10 @@ namespace Saber\Data\IInt32 {
 		 * @access public
 		 * @static
 		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return IInt32\Type                                       the boxed object
+		 * @return IInt32\Type                                      the boxed object
 		 */
-		public static function make($value) {
-			return new IInt32\Type($value);
+		public static function make($value) : IInt32\Type {
+			return new IInt32\Type((int) $value);
 		}
 
 		/**
@@ -102,9 +102,9 @@ namespace Saber\Data\IInt32 {
 		 *
 		 * @access public
 		 * @static
-		 * @return IInt32\Type                                       the object
+		 * @return IInt32\Type                                      the object
 		 */
-		public static function negative() {
+		public static function negative() : IInt32\Type {
 			if (!isset(static::$singletons[-1])) {
 				static::$singletons[-1] = new IInt32\Type(-1);
 			}
@@ -116,9 +116,9 @@ namespace Saber\Data\IInt32 {
 		 *
 		 * @access public
 		 * @static
-		 * @return IInt32\Type                                       the object
+		 * @return IInt32\Type                                      the object
 		 */
-		public static function one() {
+		public static function one() : IInt32\Type {
 			if (!isset(static::$singletons[1])) {
 				static::$singletons[1] = new IInt32\Type(1);
 			}
@@ -130,9 +130,9 @@ namespace Saber\Data\IInt32 {
 		 *
 		 * @access public
 		 * @static
-		 * @return IInt32\Type                                       the object
+		 * @return IInt32\Type                                      the object
 		 */
-		public static function zero() {
+		public static function zero() : IInt32\Type {
 			if (!isset(static::$singletons[0])) {
 				static::$singletons[0] = new IInt32\Type(0);
 			}
@@ -150,8 +150,8 @@ namespace Saber\Data\IInt32 {
 		 * @final
 		 * @param integer $value                                    the value to be assigned
 		 */
-		public final function __construct($value) {
-			$this->value = (int) $value;
+		public final function __construct(int $value) {
+			$this->value = $value;
 		}
 
 		/**

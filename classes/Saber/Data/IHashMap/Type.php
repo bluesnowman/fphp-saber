@@ -72,9 +72,9 @@ namespace Saber\Data\IHashMap {
 		 * @access public
 		 * @static
 		 * @param array $xss                                        the value(s) to be boxed
-		 * @return IHashMap\Type                                     the boxed object
+		 * @return IHashMap\Type                                    the boxed object
 		 */
-		public static function box(array $xss) { // an array of tuples
+		public static function box(array $xss) : IHashMap\Type { // an array of tuples
 			return IHashMap\Type::make($xss);
 		}
 
@@ -85,9 +85,9 @@ namespace Saber\Data\IHashMap {
 		 * @access public
 		 * @static
 		 * @param mixed ...$xss                                     the value(s) to be boxed
-		 * @return IHashMap\Type                                     the boxed object
+		 * @return IHashMap\Type                                    the boxed object
 		 */
-		public static function box2(...$xss) { // an array of tuples
+		public static function box2(...$xss) : IHashMap\Type { // an array of tuples
 			return IHashMap\Type::make($xss);
 		}
 
@@ -96,10 +96,10 @@ namespace Saber\Data\IHashMap {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashMap\Type $x                                   the class to be evaluated
-		 * @return IHashMap\Type                                     the class
+		 * @param IHashMap\Type $x                                  the class to be evaluated
+		 * @return IHashMap\Type                                    the class
 		 */
-		public static function covariant(IHashMap\Type $x) {
+		public static function covariant(IHashMap\Type $x) : IHashMap\Type {
 			return $x;
 		}
 
@@ -110,9 +110,9 @@ namespace Saber\Data\IHashMap {
 		 * @access public
 		 * @static
 		 * @param array $xss                                        the value(s) to be boxed
-		 * @return IHashMap\Type                                     the boxed object
+		 * @return IHashMap\Type                                    the boxed object
 		 */
-		public static function make(array $xss) { // an array of tuples
+		public static function make(array $xss) : IHashMap\Type { // an array of tuples
 			$zs = new IHashMap\Type();
 			foreach ($xss as $xs) {
 				$zs->putEntry($xs->first(), $xs->second());
@@ -127,9 +127,9 @@ namespace Saber\Data\IHashMap {
 		 * @access public
 		 * @static
 		 * @param mixed ...$xss                                     the value(s) to be boxed
-		 * @return IHashMap\Type                                     the boxed object
+		 * @return IHashMap\Type                                    the boxed object
 		 */
-		public static function make2(...$xss) { // an array of tuples
+		public static function make2(...$xss) : IHashMap\Type { // an array of tuples
 			return IHashMap\Type::make($xss);
 		}
 
@@ -138,9 +138,9 @@ namespace Saber\Data\IHashMap {
 		 *
 		 * @access public
 		 * @static
-		 * @return IHashMap\Type                                     an empty collection
+		 * @return IHashMap\Type                                    an empty collection
 		 */
-		public static function empty_() {
+		public static function empty_() : IHashMap\Type {
 			return new IHashMap\Type();
 		}
 
@@ -155,7 +155,7 @@ namespace Saber\Data\IHashMap {
 		 * @final
 		 * @return array                                            the collection
 		 */
-		public final function __clear() {
+		public final function __clear() : array {
 			return $this->clear()->unbox();
 		}
 
@@ -177,7 +177,7 @@ namespace Saber\Data\IHashMap {
 		 * @return array                                            all key/value pairs in the
 		 *                                                          collection
 		 */
-		public final function __entries() {
+		public final function __entries() : array {
 			return $this->unbox();
 		}
 
@@ -187,9 +187,9 @@ namespace Saber\Data\IHashMap {
 		 * @access public
 		 * @final
 		 * @param Core\Type $key                                    the key to be found
-		 * @return boolean                                          whether the key exists
+		 * @return bool                                             whether the key exists
 		 */
-		public final function __hasKey(Core\Type $key) {
+		public final function __hasKey(Core\Type $key) : bool {
 			$hashCode = $key->__hashCode();
 			if (array_key_exists($hashCode, $this->value)) {
 				$bucket = $this->value[$hashCode];
@@ -207,9 +207,9 @@ namespace Saber\Data\IHashMap {
 		 *
 		 * @access public
 		 * @final
-		 * @return boolean                                          whether the list is empty
+		 * @return bool                                             whether the list is empty
 		 */
-		public final function __isEmpty() {
+		public final function __isEmpty() : bool {
 			return empty($this->value);
 		}
 
@@ -233,7 +233,7 @@ namespace Saber\Data\IHashMap {
 		 * @final
 		 * @return array                                            all items in the collection
 		 */
-		public final function __items() {
+		public final function __items() : array {
 			$items = array();
 			foreach ($this->value as $bucket) {
 				foreach ($bucket as $entry) {
@@ -250,7 +250,7 @@ namespace Saber\Data\IHashMap {
 		 * @final
 		 * @return array                                            all keys in the collection
 		 */
-		public final function __keys() {
+		public final function __keys() : array {
 			$keys = array();
 			foreach ($this->value as $bucket) {
 				foreach ($bucket as $entry) {
@@ -293,9 +293,9 @@ namespace Saber\Data\IHashMap {
 		 *
 		 * @access public
 		 * @final
-		 * @return integer                                          the size of this collection
+		 * @return int                                              the size of this collection
 		 */
-		public final function __size() {
+		public final function __size() : int {
 			return count($this->__items());
 		}
 
@@ -319,9 +319,9 @@ namespace Saber\Data\IHashMap {
 		 *
 		 * @access public
 		 * @final
-		 * @return IHashMap\Type                                     the collection
+		 * @return IHashMap\Type                                    the collection
 		 */
-		public final function clear() {
+		public final function clear() : IHashMap\Type {
 			$this->value = array();
 			return $this;
 		}
@@ -331,10 +331,10 @@ namespace Saber\Data\IHashMap {
 		 *
 		 * @access public
 		 * @final
-		 * @return IArrayList\Type                                   all key/value pairs in the
+		 * @return IArrayList\Type                                  all key/value pairs in the
 		 *                                                          collection
 		 */
-		public final function entries() {
+		public final function entries() : IArrayList\Type {
 			return IArrayList\Type::box($this->__entries());
 		}
 
@@ -344,9 +344,9 @@ namespace Saber\Data\IHashMap {
 		 * @access public
 		 * @final
 		 * @param Core\Type $key                                    the key to be found
-		 * @return IBool\Type                                        whether the key exists
+		 * @return IBool\Type                                       whether the key exists
 		 */
-		public final function hasKey(Core\Type $key) {
+		public final function hasKey(Core\Type $key) : IBool\Type {
 			return IBool\Type::box($this->__hasKey($key));
 		}
 
@@ -355,9 +355,9 @@ namespace Saber\Data\IHashMap {
 		 *
 		 * @access public
 		 * @final
-		 * @return IBool\Type                                        whether the list is empty
+		 * @return IBool\Type                                       whether the list is empty
 		 */
-		public final function isEmpty() {
+		public final function isEmpty() : IBool\Type {
 			return IBool\Type::box($this->__isEmpty());
 		}
 
@@ -370,7 +370,7 @@ namespace Saber\Data\IHashMap {
 		 * @return Core\Type                                        the item associated with the
 		 *                                                          specified key
 		 */
-		public final function item(Core\Type $key) {
+		public final function item(Core\Type $key) : Core\Type {
 			$hashCode = $key->__hashCode();
 			if (array_key_exists($hashCode, $this->value)) {
 				$bucket = $this->value[$hashCode];
@@ -388,9 +388,9 @@ namespace Saber\Data\IHashMap {
 		 *
 		 * @access public
 		 * @final
-		 * @return IArrayList\Type                                   all items in the collection
+		 * @return IArrayList\Type                                  all items in the collection
 		 */
-		public final function items() {
+		public final function items() : IArrayList\Type {
 			return IArrayList\Type::box($this->__items());
 		}
 
@@ -399,9 +399,9 @@ namespace Saber\Data\IHashMap {
 		 *
 		 * @access public
 		 * @final
-		 * @return IArrayList\Type                                   all keys in the collection
+		 * @return IArrayList\Type                                  all keys in the collection
 		 */
-		public final function keys() {
+		public final function keys() : IArrayList\Type {
 			return IArrayList\Type::box($this->__keys());
 		}
 
@@ -414,11 +414,11 @@ namespace Saber\Data\IHashMap {
 		 * @param Core\Type $key                                    the key to associate with
 		 *                                                          the item
 		 * @param Core\Type $item                                   the item to be stored
-		 * @return IHashMap\Type                                     the hash map
+		 * @return IHashMap\Type                                    the hash map
 		 *
 		 * @see http://stackoverflow.com/questions/4980757/how-do-hashtables-deal-with-collisions
 		 */
-		public final function putEntry(Core\Type $key, Core\Type $item) {
+		public final function putEntry(Core\Type $key, Core\Type $item) : IHashMap\Type {
 			$hashCode = $key->__hashCode();
 			if (array_key_exists($hashCode, $this->value)) {
 				$bucket = $this->value[$hashCode];
@@ -441,7 +441,7 @@ namespace Saber\Data\IHashMap {
 		 *                                                          item to be removed
 		 * @return Core\Type                                        the item removed
 		 */
-		public final function removeKey(Core\Type $key) {
+		public final function removeKey(Core\Type $key) : Core\Type {
 			$hashCode = $key->__hashCode();
 			$item = IUnit\Type::instance();
 			if (array_key_exists($hashCode, $this->value)) {
@@ -470,9 +470,9 @@ namespace Saber\Data\IHashMap {
 		 *
 		 * @access public
 		 * @final
-		 * @return IInt32\Type                                       the size of this collection
+		 * @return IInt32\Type                                      the size of this collection
 		 */
-		public final function size() {
+		public final function size() : IInt32\Type {
 			return IInt32\Type::box($this->__size());
 		}
 

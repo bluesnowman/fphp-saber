@@ -42,10 +42,10 @@ namespace Saber\Data\IInt32 {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInt32\Type $x                                     the operand
-		 * @return IInt32\Type                                       the result
+		 * @param IInt32\Type $x                                    the operand
+		 * @return IInt32\Type                                      the result
 		 */
-		public static function abs(IInt32\Type $x) {
+		public static function abs(IInt32\Type $x) : IInt32\Type {
 			return IInt32\Type::box(abs($x->unbox()));
 		}
 
@@ -54,11 +54,11 @@ namespace Saber\Data\IInt32 {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInt32\Type $x                                     the left operand
-		 * @param IInt32\Type $y                                     the right operand
-		 * @return IInt32\Type                                       the result
+		 * @param IInt32\Type $x                                    the left operand
+		 * @param IInt32\Type $y                                    the right operand
+		 * @return IInt32\Type                                      the result
 		 */
-		public static function add(IInt32\Type $x, IInt32\Type $y) {
+		public static function add(IInt32\Type $x, IInt32\Type $y) : IInt32\Type {
 			return IInt32\Type::box($x->unbox() + $y->unbox());
 		}
 
@@ -67,10 +67,10 @@ namespace Saber\Data\IInt32 {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInt32\Type $x                                     the operand
-		 * @return IInt32\Type                                       the result
+		 * @param IInt32\Type $x                                    the operand
+		 * @return IInt32\Type                                      the result
 		 */
-		public static function decrement(IInt32\Type $x) {
+		public static function decrement(IInt32\Type $x) : IInt32\Type {
 			return IInt32\Module::subtract($x, IInt32\Type::one());
 		}
 
@@ -80,11 +80,11 @@ namespace Saber\Data\IInt32 {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInt32\Type $x                                     the left operand
-		 * @param IInt32\Type $y                                     the right operand
-		 * @return IInt32\Type                                       the result
+		 * @param IInt32\Type $x                                    the left operand
+		 * @param IInt32\Type $y                                    the right operand
+		 * @return IInt32\Type                                      the result
 		 */
-		public static function divide(IInt32\Type $x, IInt32\Type $y) {
+		public static function divide(IInt32\Type $x, IInt32\Type $y) : IInt32\Type {
 			return IInt32\Type::box(intdiv($x->unbox(), $y->unbox()));
 		}
 
@@ -93,10 +93,10 @@ namespace Saber\Data\IInt32 {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInt32\Type $n                                     the operand
-		 * @return IInt32\Type                                       the result
+		 * @param IInt32\Type $n                                    the operand
+		 * @return IInt32\Type                                      the result
 		 */
-		public static function factorial(IInt32\Type $n) {
+		public static function factorial(IInt32\Type $n) : IInt32\Type {
 			return (IInt32\Module::eq($n, IInt32\Type::zero())->unbox())
 				? IInt32\Type::one()
 				: IInt32\Module::multiply($n, IInt32\Module::factorial(IInt32\Module::decrement($n)));
@@ -107,10 +107,10 @@ namespace Saber\Data\IInt32 {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInt32\Type $n                                     the operand
-		 * @return IInt32\Type                                       the result
+		 * @param IInt32\Type $n                                    the operand
+		 * @return IInt32\Type                                      the result
 		 */
-		public static function fibonacci(IInt32\Type $n) {
+		public static function fibonacci(IInt32\Type $n) : IInt32\Type {
 			return (IInt32\Module::le($n, IInt32\Type::one())->unbox())
 				? $n
 				: IInt32\Module::add(IInt32\Module::fibonacci(IInt32\Module::decrement($n)), IInt32\Module::fibonacci(IInt32\Module::subtract($n, IInt32\Type::box(2))));
@@ -121,11 +121,11 @@ namespace Saber\Data\IInt32 {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInt32\Type $x                                     the left operand
-		 * @param IInt32\Type $y                                     the right operand
-		 * @return IInt32\Type                                       the result
+		 * @param IInt32\Type $x                                    the left operand
+		 * @param IInt32\Type $y                                    the right operand
+		 * @return IInt32\Type                                      the result
 		 */
-		public static function gcd(IInt32\Type $x, IInt32\Type $y) {
+		public static function gcd(IInt32\Type $x, IInt32\Type $y) : IInt32\Type {
 			return ($y->unbox() == 0) ? $x : IInt32\Module::gcd($y, IInt32\Module::modulo($x, $y));
 		}
 
@@ -134,10 +134,10 @@ namespace Saber\Data\IInt32 {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInt32\Type $x                                     the operand
-		 * @return IInt32\Type                                       the result
+		 * @param IInt32\Type $x                                    the operand
+		 * @return IInt32\Type                                      the result
 		 */
-		public static function increment(IInt32\Type $x) {
+		public static function increment(IInt32\Type $x) : IInt32\Type {
 			return IInt32\Module::add($x, IInt32\Type::one());
 		}
 
@@ -147,11 +147,11 @@ namespace Saber\Data\IInt32 {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInt32\Type $x                                     the left operand
-		 * @param IInt32\Type $y                                     the right operand
-		 * @return IInt32\Type                                       the result
+		 * @param IInt32\Type $x                                    the left operand
+		 * @param IInt32\Type $y                                    the right operand
+		 * @return IInt32\Type                                      the result
 		 */
-		public static function modulo(IInt32\Type $x, IInt32\Type $y) {
+		public static function modulo(IInt32\Type $x, IInt32\Type $y) : IInt32\Type {
 			return IInt32\Type::box($x->unbox() % $y->unbox());
 		}
 
@@ -161,11 +161,11 @@ namespace Saber\Data\IInt32 {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInt32\Type $x                                     the left operand
-		 * @param IInt32\Type $y                                     the right operand
-		 * @return IInt32\Type                                       the result
+		 * @param IInt32\Type $x                                    the left operand
+		 * @param IInt32\Type $y                                    the right operand
+		 * @return IInt32\Type                                      the result
 		 */
-		public static function multiply(IInt32\Type $x, IInt32\Type $y) {
+		public static function multiply(IInt32\Type $x, IInt32\Type $y) : IInt32\Type {
 			return IInt32\Type::box($x->unbox() * $y->unbox());
 		}
 
@@ -174,10 +174,10 @@ namespace Saber\Data\IInt32 {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInt32\Type $x                                     the operand
-		 * @return IInt32\Type                                       the result
+		 * @param IInt32\Type $x                                    the operand
+		 * @return IInt32\Type                                      the result
 		 */
-		public static function negate(IInt32\Type $x) {
+		public static function negate(IInt32\Type $x) : IInt32\Type {
 			return IInt32\Type::box($x->unbox() * -1);
 		}
 
@@ -186,11 +186,11 @@ namespace Saber\Data\IInt32 {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInt32\Type $x                                     the operand
-		 * @param IInt32\Type $exponent                              the exponent to be raised by
-		 * @return IInt32\Type                                       the result
+		 * @param IInt32\Type $x                                    the operand
+		 * @param IInt32\Type $exponent                             the exponent to be raised by
+		 * @return IInt32\Type                                      the result
 		 */
-		public static function pow(IInt32\Type $x, IInt32\Type $exponent) {
+		public static function pow(IInt32\Type $x, IInt32\Type $exponent) : IInt32\Type {
 			return IInt32\Type::box(pow($x->unbox(), $exponent->unbox()));
 		}
 
@@ -200,11 +200,11 @@ namespace Saber\Data\IInt32 {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInt32\Type $x                                     the left operand
-		 * @param IInt32\Type $y                                     the right operand
-		 * @return IInt32\Type                                       the result
+		 * @param IInt32\Type $x                                    the left operand
+		 * @param IInt32\Type $y                                    the right operand
+		 * @return IInt32\Type                                      the result
 		 */
-		public static function subtract(IInt32\Type $x, IInt32\Type $y) {
+		public static function subtract(IInt32\Type $x, IInt32\Type $y) : IInt32\Type {
 			return IInt32\Type::box($x->unbox() - $y->unbox());
 		}
 
@@ -217,13 +217,13 @@ namespace Saber\Data\IInt32 {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInt32\Type $x                                     where to start
+		 * @param IInt32\Type $x                                    where to start
 		 * @param Core\Type $y                                      either an integer representing
 		 *                                                          the end of the sequence or a
 		 *                                                          tuple describing the sequence
-		 * @return IArrayList\Type                                   an empty array list
+		 * @return IArrayList\Type                                  an empty array list
 		 */
-		public static function sequence(IInt32\Type $x, Core\Type $y) {
+		public static function sequence(IInt32\Type $x, Core\Type $y) : IArrayList\Type {
 			$buffer = array();
 
 			if ($y instanceof ITuple\Type) {
@@ -254,10 +254,10 @@ namespace Saber\Data\IInt32 {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInt32\Type $x                                     the number to be evaluated
-		 * @return ITrit\Type                                        the result
+		 * @param IInt32\Type $x                                    the number to be evaluated
+		 * @return ITrit\Type                                       the result
 		 */
-		public static function signum(IInt32\Type $x) {
+		public static function signum(IInt32\Type $x) : ITrit\Type {
 			return ITrit\Type::make($x->unbox());
 		}
 
@@ -271,11 +271,11 @@ namespace Saber\Data\IInt32 {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInt32\Type $x                                     the value to be evaluated
-		 * @param IInt32\Type $y                                     the default value
-		 * @return IInt32\Type                                       the result
+		 * @param IInt32\Type $x                                    the value to be evaluated
+		 * @param IInt32\Type $y                                    the default value
+		 * @return IInt32\Type                                      the result
 		 */
-		public static function nvl(IInt32\Type $x = null, IInt32\Type $y = null) {
+		public static function nvl(IInt32\Type $x = null, IInt32\Type $y = null) : IInt32\Type {
 			return ($x !== null) ? $x : (($y !== null) ? $y : IInt32\Type::zero());
 		}
 
@@ -285,11 +285,11 @@ namespace Saber\Data\IInt32 {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInt32\Type $x                                     the object to be converted
-		 * @return IDouble\Type                                      the value as a IDouble
+		 * @param IInt32\Type $x                                    the object to be converted
+		 * @return IDouble\Type                                     the value as a IDouble
 		 */
-		public static function toDouble(IInt32\Type $x) {
-			return IDouble\Type::box($x->unbox());
+		public static function toDouble(IInt32\Type $x) : IDouble\Type {
+			return IDouble\Type::make($x->unbox());
 		}
 
 		/**
@@ -298,11 +298,11 @@ namespace Saber\Data\IInt32 {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInt32\Type $x                                     the object to be converted
-		 * @return IFloat\Type                                       the value as a IFloat
+		 * @param IInt32\Type $x                                    the object to be converted
+		 * @return IFloat\Type                                      the value as a IFloat
 		 */
-		public static function toFloat(IInt32\Type $x) {
-			return IFloat\Type::box($x->unbox());
+		public static function toFloat(IInt32\Type $x) : IFloat\Type {
+			return IFloat\Type::make($x->unbox());
 		}
 
 		/**
@@ -311,11 +311,11 @@ namespace Saber\Data\IInt32 {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInt32\Type $x                                     the object to be converted
-		 * @return IInt32\Type                                       the value as an IInt32
+		 * @param IInt32\Type $x                                    the object to be converted
+		 * @return IInt32\Type                                      the value as an IInt32
 		 */
-		public static function toInt32(IInt32\Type $x) {
-			return IInt32\Type::box($x->unbox());
+		public static function toInt32(IInt32\Type $x) : IInt32\Type {
+			return $x;
 		}
 
 		/**
@@ -324,11 +324,11 @@ namespace Saber\Data\IInt32 {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInt32\Type $x                                     the object to be converted
-		 * @return IInteger\Type                                     the value as an IInteger
+		 * @param IInt32\Type $x                                    the object to be converted
+		 * @return IInteger\Type                                    the value as an IInteger
 		 */
-		public static function toInteger(IInt32\Type $x) {
-			return IInteger\Type::box($x->unbox());
+		public static function toInteger(IInt32\Type $x) : IInteger\Type {
+			return IInteger\Type::make($x->unbox());
 		}
 
 		#endregion
@@ -340,12 +340,12 @@ namespace Saber\Data\IInt32 {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInt32\Type $x                                     the left operand
+		 * @param IInt32\Type $x                                    the left operand
 		 * @param Core\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is equal
+		 * @return IBool\Type                                       whether the left operand is equal
 		 *                                                          to the right operand
 		 */
-		public static function eq(IInt32\Type $x, Core\Type $y) { // ==
+		public static function eq(IInt32\Type $x, Core\Type $y) : IBool\Type { // ==
 			$type = $x->__typeOf();
 			if ($y instanceof $type) {
 				return IBool\Type::box($x->unbox() == $y->unbox());
@@ -358,12 +358,12 @@ namespace Saber\Data\IInt32 {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInt32\Type $x                                     the left operand
+		 * @param IInt32\Type $x                                    the left operand
 		 * @param Core\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is identical
+		 * @return IBool\Type                                       whether the left operand is identical
 		 *                                                          to the right operand
 		 */
-		public static function id(IInt32\Type $x, Core\Type $y) { // ===
+		public static function id(IInt32\Type $x, Core\Type $y) : IBool\Type { // ===
 			if ($x->__typeOf() === $y->__typeOf()) {
 				return IBool\Type::box($x->unbox() === $y->unbox());
 			}
@@ -375,12 +375,12 @@ namespace Saber\Data\IInt32 {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInt32\Type $x                                     the left operand
+		 * @param IInt32\Type $x                                    the left operand
 		 * @param Core\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is NOT equal
+		 * @return IBool\Type                                       whether the left operand is NOT equal
 		 *                                                          to the right operand
 		 */
-		public static function ne(IInt32\Type $x, Core\Type $y) { // !=
+		public static function ne(IInt32\Type $x, Core\Type $y) : IBool\Type { // !=
 			return IBool\Module::not(IInt32\Module::eq($x, $y));
 		}
 
@@ -389,12 +389,12 @@ namespace Saber\Data\IInt32 {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInt32\Type $x                                     the left operand
+		 * @param IInt32\Type $x                                    the left operand
 		 * @param Core\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is NOT identical
+		 * @return IBool\Type                                       whether the left operand is NOT identical
 		 *                                                          to the right operand
 		 */
-		public static function ni(IInt32\Type $x, Core\Type $y) { // !==
+		public static function ni(IInt32\Type $x, Core\Type $y) : IBool\Type { // !==
 			return IBool\Module::not(IInt32\Module::id($x, $y));
 		}
 
@@ -407,13 +407,13 @@ namespace Saber\Data\IInt32 {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInt32\Type $x                                     the left operand
-		 * @param IInt32\Type $y                                     the right operand
-		 * @return ITrit\Type                                        the order as to whether the left
+		 * @param IInt32\Type $x                                    the left operand
+		 * @param IInt32\Type $y                                    the right operand
+		 * @return ITrit\Type                                       the order as to whether the left
 		 *                                                          operand is less than, equals to,
 		 *                                                          or greater than the right operand
 		 */
-		public static function compare(IInt32\Type $x, IInt32\Type $y) {
+		public static function compare(IInt32\Type $x, IInt32\Type $y) : ITrit\Type {
 			return ITrit\Type::box($x->unbox() <=> $y->unbox());
 		}
 
@@ -422,12 +422,12 @@ namespace Saber\Data\IInt32 {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInt32\Type $x                                     the left operand
-		 * @param IInt32\Type $y                                     the right operand
-		 * @return IBool\Type                                        whether the left operand is greater
+		 * @param IInt32\Type $x                                    the left operand
+		 * @param IInt32\Type $y                                    the right operand
+		 * @return IBool\Type                                       whether the left operand is greater
 		 *                                                          than or equal to the right operand
 		 */
-		public static function ge(IInt32\Type $x, IInt32\Type $y) { // >=
+		public static function ge(IInt32\Type $x, IInt32\Type $y) : IBool\Type { // >=
 			return IBool\Type::box(IInt32\Module::compare($x, $y)->unbox() >= 0);
 		}
 
@@ -436,12 +436,12 @@ namespace Saber\Data\IInt32 {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInt32\Type $x                                     the left operand
-		 * @param IInt32\Type $y                                     the right operand
-		 * @return IBool\Type                                        whether the left operand is greater
+		 * @param IInt32\Type $x                                    the left operand
+		 * @param IInt32\Type $y                                    the right operand
+		 * @return IBool\Type                                       whether the left operand is greater
 		 *                                                          than the right operand
 		 */
-		public static function gt(IInt32\Type $x, IInt32\Type $y) { // >
+		public static function gt(IInt32\Type $x, IInt32\Type $y) : IBool\Type { // >
 			return IBool\Type::box(IInt32\Module::compare($x, $y)->unbox() > 0);
 		}
 
@@ -450,12 +450,12 @@ namespace Saber\Data\IInt32 {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInt32\Type $x                                     the left operand
-		 * @param IInt32\Type $y                                     the right operand
-		 * @return IBool\Type                                        whether the left operand is less than
+		 * @param IInt32\Type $x                                    the left operand
+		 * @param IInt32\Type $y                                    the right operand
+		 * @return IBool\Type                                       whether the left operand is less than
 		 *                                                          or equal to the right operand
 		 */
-		public static function le(IInt32\Type $x, IInt32\Type $y) { // <=
+		public static function le(IInt32\Type $x, IInt32\Type $y) : IBool\Type { // <=
 			return IBool\Type::box(IInt32\Module::compare($x, $y)->unbox() <= 0);
 		}
 
@@ -464,12 +464,12 @@ namespace Saber\Data\IInt32 {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInt32\Type $x                                     the left operand
-		 * @param IInt32\Type $y                                     the right operand
-		 * @return IBool\Type                                        whether the left operand is less than
+		 * @param IInt32\Type $x                                    the left operand
+		 * @param IInt32\Type $y                                    the right operand
+		 * @return IBool\Type                                       whether the left operand is less than
 		 *                                                          the right operand
 		 */
-		public static function lt(IInt32\Type $x, IInt32\Type $y) { // <
+		public static function lt(IInt32\Type $x, IInt32\Type $y) : IBool\Type { // <
 			return IBool\Type::box(IInt32\Module::compare($x, $y)->unbox() < 0);
 		}
 
@@ -478,11 +478,11 @@ namespace Saber\Data\IInt32 {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInt32\Type $x                                     the left operand
-		 * @param IInt32\Type $y                                     the right operand
-		 * @return IInt32\Type                                       the maximum value
+		 * @param IInt32\Type $x                                    the left operand
+		 * @param IInt32\Type $y                                    the right operand
+		 * @return IInt32\Type                                      the maximum value
 		 */
-		public static function max(IInt32\Type $x, IInt32\Type $y) {
+		public static function max(IInt32\Type $x, IInt32\Type $y) : IInt32\Type {
 			return (IInt32\Module::compare($x, $y)->unbox() >= 0) ? $x : $y;
 		}
 
@@ -491,11 +491,11 @@ namespace Saber\Data\IInt32 {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInt32\Type $x                                     the left operand
-		 * @param IInt32\Type $y                                     the right operand
-		 * @return IInt32\Type                                       the minimum value
+		 * @param IInt32\Type $x                                    the left operand
+		 * @param IInt32\Type $y                                    the right operand
+		 * @return IInt32\Type                                      the minimum value
 		 */
-		public static function min(IInt32\Type $x, IInt32\Type $y) {
+		public static function min(IInt32\Type $x, IInt32\Type $y) : IInt32\Type {
 			return (IInt32\Module::compare($x, $y)->unbox() <= 0) ? $x : $y;
 		}
 
@@ -508,11 +508,11 @@ namespace Saber\Data\IInt32 {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInt32\Type $x                                     the object to be evaluated
-		 * @return IBool\Type                                        whether the operand is an even
+		 * @param IInt32\Type $x                                    the object to be evaluated
+		 * @return IBool\Type                                       whether the operand is an even
 		 *                                                          number
 		 */
-		public static function isEven(IInt32\Type $x) {
+		public static function isEven(IInt32\Type $x) : IBool\Type {
 			return IBool\Type::box(($x->unbox() % 2) == 0);
 		}
 
@@ -521,11 +521,11 @@ namespace Saber\Data\IInt32 {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInt32\Type $x                                     the object to be evaluated
-		 * @return IBool\Type                                        whether the operand is a negative
+		 * @param IInt32\Type $x                                    the object to be evaluated
+		 * @return IBool\Type                                       whether the operand is a negative
 		 *                                                          number
 		 */
-		public static function isNegative(IInt32\Type $x) {
+		public static function isNegative(IInt32\Type $x) : IBool\Type {
 			return IBool\Type::box($x->unbox() < 0);
 		}
 
@@ -534,11 +534,11 @@ namespace Saber\Data\IInt32 {
 		 *
 		 * @access public
 		 * @static
-		 * @param IInt32\Type $x                                     the object to be evaluated
-		 * @return IBool\Type                                        whether the operand is an odd
+		 * @param IInt32\Type $x                                    the object to be evaluated
+		 * @return IBool\Type                                       whether the operand is an odd
 		 *                                                          number
 		 */
-		public static function isOdd(IInt32\Type $x) {
+		public static function isOdd(IInt32\Type $x) : IBool\Type {
 			return IBool\Type::box(($x->unbox() % 2) != 0);
 		}
 

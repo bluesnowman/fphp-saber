@@ -39,12 +39,12 @@ namespace Saber\Data\IRegex {
 		 *
 		 * @access public
 		 * @static
-		 * @param IRegex\Type $x                                     the regular expression
+		 * @param IRegex\Type $x                                    the regular expression
 		 * @param Core\Type $ys                                     the object to be evaluated
-		 * @return IBool\Type                                        whether the specified object matches
+		 * @return IBool\Type                                       whether the specified object matches
 		 *                                                          the regular expression
 		 */
-		public static function match(IRegex\Type $x, Core\Type $ys) {
+		public static function match(IRegex\Type $x, Core\Type $ys) : IBool\Type {
 			return IBool\Type::box(preg_match($x->unbox(), $ys->__toString()));
 		}
 
@@ -54,12 +54,12 @@ namespace Saber\Data\IRegex {
 		 *
 		 * @access public
 		 * @static
-		 * @param IRegex\Type $x                                     the regular expression
-		 * @param ITuple\Type $ys                                    a tuple containing the replacement
+		 * @param IRegex\Type $x                                    the regular expression
+		 * @param ITuple\Type $ys                                   a tuple containing the replacement
 		 *                                                          and the object that is the subject
-		 * @return IString\Type                                      the string after being processed
+		 * @return IString\Type                                     the string after being processed
 		 */
-		public static function replace(IRegex\Type $x, ITuple\Type $ys) {
+		public static function replace(IRegex\Type $x, ITuple\Type $ys) : IString\Type {
 			return IString\Type::box(preg_replace($x->unbox(), $ys->first()->__toString(), $ys->second()->__toString()));
 		}
 
@@ -68,11 +68,11 @@ namespace Saber\Data\IRegex {
 		 *
 		 * @access public
 		 * @static
-		 * @param IRegex\Type $x                                     the regular expression
+		 * @param IRegex\Type $x                                    the regular expression
 		 * @param Core\Type $ys                                     the object to be split
-		 * @return IArrayList\Type                                   an array of sub-strings
+		 * @return IArrayList\Type                                  an array of sub-strings
 		 */
-		public static function split(IRegex\Type $x, Core\Type $ys) {
+		public static function split(IRegex\Type $x, Core\Type $ys) : IArrayList\Type {
 			$zs = ($ys instanceof ITuple\Type)
 				? preg_split($x->unbox(), $ys->first()->__toString(), $ys->second()->__toString())
 				: preg_split($x->unbox(), $ys->__toString());
@@ -91,11 +91,11 @@ namespace Saber\Data\IRegex {
 		 *
 		 * @access public
 		 * @static
-		 * @param IRegex\Type $x                                     the value to be evaluated
-		 * @param IRegex\Type $y                                     the default value
-		 * @return IRegex\Type                                       the result
+		 * @param IRegex\Type $x                                    the value to be evaluated
+		 * @param IRegex\Type $y                                    the default value
+		 * @return IRegex\Type                                      the result
 		 */
-		public static function nvl(IRegex\Type $x = null, IRegex\Type $y = null) {
+		public static function nvl(IRegex\Type $x = null, IRegex\Type $y = null) : IRegex\Type {
 			return ($x !== null) ? $x : (($y !== null) ? $y : IRegex\Type::box('/^.*$/'));
 		}
 
@@ -108,12 +108,12 @@ namespace Saber\Data\IRegex {
 		 *
 		 * @access public
 		 * @static
-		 * @param IRegex\Type $xs                                    the left operand
+		 * @param IRegex\Type $xs                                   the left operand
 		 * @param Core\Type $ys                                     the object to be evaluated
-		 * @return IBool\Type                                        whether the specified object is equal
+		 * @return IBool\Type                                       whether the specified object is equal
 		 *                                                          to the current object
 		 */
-		public static function eq(IRegex\Type $xs, Core\Type $ys) {
+		public static function eq(IRegex\Type $xs, Core\Type $ys) : IBool\Type {
 			$type = $xs->__typeOf();
 			if ($ys !== null) {
 				if ($ys instanceof $type) {
@@ -128,12 +128,12 @@ namespace Saber\Data\IRegex {
 		 *
 		 * @access public
 		 * @static
-		 * @param IRegex\Type $xs                                    the left operand
+		 * @param IRegex\Type $xs                                   the left operand
 		 * @param Core\Type $ys                                     the object to be evaluated
-		 * @return IBool\Type                                        whether the specified object is identical
+		 * @return IBool\Type                                       whether the specified object is identical
 		 *                                                          to the current object
 		 */
-		public static function id(IRegex\Type $xs, Core\Type $ys) {
+		public static function id(IRegex\Type $xs, Core\Type $ys) : IBool\Type {
 			if ($ys !== null) {
 				if ($xs->__typeOf() === $ys->__typeOf()) {
 					return IBool\Type::box($xs->unbox() === $ys->unbox());
@@ -147,12 +147,12 @@ namespace Saber\Data\IRegex {
 		 *
 		 * @access public
 		 * @static
-		 * @param IRegex\Type $xs                                    the left operand
+		 * @param IRegex\Type $xs                                   the left operand
 		 * @param Core\Type $ys                                     the right operand
-		 * @return IBool\Type                                        whether the left operand is NOT equal
+		 * @return IBool\Type                                       whether the left operand is NOT equal
 		 *                                                          to the right operand
 		 */
-		public static function ne(IRegex\Type $xs, Core\Type $ys) { // !=
+		public static function ne(IRegex\Type $xs, Core\Type $ys) : IBool\Type { // !=
 			return IBool\Module::not(IRegex\Module::eq($xs, $ys));
 		}
 
@@ -161,12 +161,12 @@ namespace Saber\Data\IRegex {
 		 *
 		 * @access public
 		 * @static
-		 * @param IRegex\Type $xs                                    the left operand
+		 * @param IRegex\Type $xs                                   the left operand
 		 * @param Core\Type $ys                                     the right operand
-		 * @return IBool\Type                                        whether the left operand is NOT identical
+		 * @return IBool\Type                                       whether the left operand is NOT identical
 		 *                                                          to the right operand
 		 */
-		public static function ni(IRegex\Type $xs, Core\Type $ys) { // !==
+		public static function ni(IRegex\Type $xs, Core\Type $ys) : IBool\Type { // !==
 			return IBool\Module::not(IRegex\Module::id($xs, $ys));
 		}
 
@@ -179,13 +179,13 @@ namespace Saber\Data\IRegex {
 		 *
 		 * @access public
 		 * @static
-		 * @param IRegex\Type $xs                                    the left operand
-		 * @param IRegex\Type $ys                                    the object to be compared
-		 * @return ITrit\Type                                        whether the current object is less than,
+		 * @param IRegex\Type $xs                                   the left operand
+		 * @param IRegex\Type $ys                                   the object to be compared
+		 * @return ITrit\Type                                       whether the current object is less than,
 		 *                                                          equal to, or greater than the specified
 		 *                                                          object
 		 */
-		public static function compare(IRegex\Type $xs, IRegex\Type $ys) {
+		public static function compare(IRegex\Type $xs, IRegex\Type $ys) : ITrit\Type {
 			return ITrit\Type::make(strcmp($xs->unbox(), $ys->unbox()));
 		}
 
@@ -194,12 +194,12 @@ namespace Saber\Data\IRegex {
 		 *
 		 * @access public
 		 * @static
-		 * @param IRegex\Type $xs                                    the left operand
-		 * @param IRegex\Type $ys                                    the right operand
-		 * @return IBool\Type                                        whether the left operand is greater
+		 * @param IRegex\Type $xs                                   the left operand
+		 * @param IRegex\Type $ys                                   the right operand
+		 * @return IBool\Type                                       whether the left operand is greater
 		 *                                                          than or equal to the right operand
 		 */
-		public static function ge(IRegex\Type $xs, IRegex\Type $ys) { // >=
+		public static function ge(IRegex\Type $xs, IRegex\Type $ys) : IBool\Type { // >=
 			return IBool\Type::box(IRegex\Module::compare($xs, $ys)->unbox() >= 0);
 		}
 
@@ -208,12 +208,12 @@ namespace Saber\Data\IRegex {
 		 *
 		 * @access public
 		 * @static
-		 * @param IRegex\Type $xs                                    the left operand
-		 * @param IRegex\Type $ys                                    the right operand
-		 * @return IBool\Type                                        whether the left operand is greater
+		 * @param IRegex\Type $xs                                   the left operand
+		 * @param IRegex\Type $ys                                   the right operand
+		 * @return IBool\Type                                       whether the left operand is greater
 		 *                                                          than the right operand
 		 */
-		public static function gt(IRegex\Type $xs, IRegex\Type $ys) { // >
+		public static function gt(IRegex\Type $xs, IRegex\Type $ys) : IBool\Type { // >
 			return IBool\Type::box(IRegex\Module::compare($xs, $ys)->unbox() > 0);
 		}
 
@@ -222,12 +222,12 @@ namespace Saber\Data\IRegex {
 		 *
 		 * @access public
 		 * @static
-		 * @param IRegex\Type $xs                                    the left operand
-		 * @param IRegex\Type $ys                                    the right operand
-		 * @return IBool\Type                                        whether the left operand is less than
+		 * @param IRegex\Type $xs                                   the left operand
+		 * @param IRegex\Type $ys                                   the right operand
+		 * @return IBool\Type                                       whether the left operand is less than
 		 *                                                          or equal to the right operand
 		 */
-		public static function le(IRegex\Type $xs, IRegex\Type $ys) { // <=
+		public static function le(IRegex\Type $xs, IRegex\Type $ys) : IBool\Type { // <=
 			return IBool\Type::box(IRegex\Module::compare($xs, $ys)->unbox() <= 0);
 		}
 
@@ -236,12 +236,12 @@ namespace Saber\Data\IRegex {
 		 *
 		 * @access public
 		 * @static
-		 * @param IRegex\Type $xs                                    the left operand
-		 * @param IRegex\Type $ys                                    the right operand
-		 * @return IBool\Type                                        whether the left operand is less than
+		 * @param IRegex\Type $xs                                   the left operand
+		 * @param IRegex\Type $ys                                   the right operand
+		 * @return IBool\Type                                       whether the left operand is less than
 		 *                                                          the right operand
 		 */
-		public static function lt(IRegex\Type $xs, IRegex\Type $ys) { // <
+		public static function lt(IRegex\Type $xs, IRegex\Type $ys) : IBool\Type { // <
 			return IBool\Type::box(IRegex\Module::compare($xs, $ys)->unbox() < 0);
 		}
 
@@ -250,11 +250,11 @@ namespace Saber\Data\IRegex {
 		 *
 		 * @access public
 		 * @static
-		 * @param IRegex\Type $xs                                    the left operand
-		 * @param IRegex\Type $ys                                    the right operand
-		 * @return IRegex\Type                                       the maximum value
+		 * @param IRegex\Type $xs                                   the left operand
+		 * @param IRegex\Type $ys                                   the right operand
+		 * @return IRegex\Type                                      the maximum value
 		 */
-		public static function max(IRegex\Type $xs, IRegex\Type $ys) {
+		public static function max(IRegex\Type $xs, IRegex\Type $ys) : IRegex\Type {
 			return (IRegex\Module::compare($xs, $ys)->unbox() >= 0) ? $xs : $ys;
 		}
 
@@ -263,11 +263,11 @@ namespace Saber\Data\IRegex {
 		 *
 		 * @access public
 		 * @static
-		 * @param IRegex\Type $xs                                    the left operand
-		 * @param IRegex\Type $ys                                    the right operand
-		 * @return IRegex\Type                                       the minimum value
+		 * @param IRegex\Type $xs                                   the left operand
+		 * @param IRegex\Type $ys                                   the right operand
+		 * @return IRegex\Type                                      the minimum value
 		 */
-		public static function min(IRegex\Type $xs, IRegex\Type $ys) {
+		public static function min(IRegex\Type $xs, IRegex\Type $ys) : IRegex\Type {
 			return (IRegex\Module::compare($xs, $ys)->unbox() <= 0) ? $xs : $ys;
 		}
 

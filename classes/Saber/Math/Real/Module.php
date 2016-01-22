@@ -31,10 +31,10 @@ namespace Saber\Math\IReal {
 		 *
 		 * @access public
 		 * @static
-		 * @param IReal\Type $x                                      the operand
-		 * @return IDouble\Type                                      the result
+		 * @param IReal\Type $x                                     the operand
+		 * @return IDouble\Type                                     the result
 		 */
-		public static function acos(IReal\Type $x) {
+		public static function acos(IReal\Type $x) : IDouble\Type {
 			return IDouble\Type::box(acos($x->unbox()));
 		}
 
@@ -43,10 +43,10 @@ namespace Saber\Math\IReal {
 		 *
 		 * @access public
 		 * @static
-		 * @param IReal\Type $x                                      the operand
-		 * @return IDouble\Type                                      the result
+		 * @param IReal\Type $x                                     the operand
+		 * @return IDouble\Type                                     the result
 		 */
-		public static function acosh(IReal\Type $x) {
+		public static function acosh(IReal\Type $x) : IDouble\Type {
 			return IDouble\Type::box(acosh($x->unbox()));
 		}
 
@@ -55,10 +55,10 @@ namespace Saber\Math\IReal {
 		 *
 		 * @access public
 		 * @static
-		 * @param IReal\Type $x                                      the operand
-		 * @return IDouble\Type                                      the result
+		 * @param IReal\Type $x                                     the operand
+		 * @return IDouble\Type                                     the result
 		 */
-		public static function asin(IReal\Type $x) {
+		public static function asin(IReal\Type $x) : IDouble\Type {
 			return IDouble\Type::box(asin($x->unbox()));
 		}
 
@@ -67,10 +67,10 @@ namespace Saber\Math\IReal {
 		 *
 		 * @access public
 		 * @static
-		 * @param IReal\Type $x                                      the operand
-		 * @return IDouble\Type                                      the result
+		 * @param IReal\Type $x                                     the operand
+		 * @return IDouble\Type                                     the result
 		 */
-		public static function asinh(IReal\Type $x) {
+		public static function asinh(IReal\Type $x) : IDouble\Type {
 			return IDouble\Type::box(asinh($x->unbox()));
 		}
 
@@ -79,10 +79,10 @@ namespace Saber\Math\IReal {
 		 *
 		 * @access public
 		 * @static
-		 * @param IReal\Type $x                                      the operand
-		 * @return IDouble\Type                                      the result
+		 * @param IReal\Type $x                                     the operand
+		 * @return IDouble\Type                                     the result
 		 */
-		public static function atan(IReal\Type $x) {
+		public static function atan(IReal\Type $x) : IDouble\Type {
 			return IDouble\Type::box(atan($x->unbox()));
 		}
 
@@ -92,11 +92,11 @@ namespace Saber\Math\IReal {
 		 *
 		 * @access public
 		 * @static
-		 * @param IReal\Type $y                                      the left operand
-		 * @param IReal\Type $x                                      the right operand
-		 * @return IDouble\Type                                      the result
+		 * @param IReal\Type $y                                     the left operand
+		 * @param IReal\Type $x                                     the right operand
+		 * @return IDouble\Type                                     the result
 		 */
-		public static function atan2(IReal\Type $y, IReal\Type $x) {
+		public static function atan2(IReal\Type $y, IReal\Type $x) : IDouble\Type {
 			return IDouble\Type::box(atan2($y->unbox(), $x->unbox()));
 		}
 
@@ -105,10 +105,10 @@ namespace Saber\Math\IReal {
 		 *
 		 * @access public
 		 * @static
-		 * @param IReal\Type $x                                      the operand
-		 * @return IDouble\Type                                      the result
+		 * @param IReal\Type $x                                     the operand
+		 * @return IDouble\Type                                     the result
 		 */
-		public static function atanh(IReal\Type $x) {
+		public static function atanh(IReal\Type $x) : IDouble\Type {
 			return IDouble\Type::box(atanh($x->unbox()));
 		}
 
@@ -117,10 +117,10 @@ namespace Saber\Math\IReal {
 		 *
 		 * @access public
 		 * @static
-		 * @param IReal\Type $x                                      the operand
-		 * @return IDouble\Type                                      the result
+		 * @param IReal\Type $x                                     the operand
+		 * @return IDouble\Type                                     the result
 		 */
-		public static function cos(IReal\Type $x) {
+		public static function cos(IReal\Type $x) : IDouble\Type {
 			return IDouble\Type::box(cos($x->unbox()));
 		}
 
@@ -129,10 +129,10 @@ namespace Saber\Math\IReal {
 		 *
 		 * @access public
 		 * @static
-		 * @param IReal\Type $x                                      the operand
-		 * @return IDouble\Type                                      the result
+		 * @param IReal\Type $x                                     the operand
+		 * @return IDouble\Type                                     the result
 		 */
-		public static function cosh(IReal\Type $x) {
+		public static function cosh(IReal\Type $x) : IDouble\Type {
 			return IDouble\Type::box(cosh($x->unbox()));
 		}
 
@@ -141,10 +141,10 @@ namespace Saber\Math\IReal {
 		 *
 		 * @access public
 		 * @static
-		 * @param IReal\Type $x                                      the operand
-		 * @return IDouble\Type                                      the result
+		 * @param IReal\Type $x                                     the operand
+		 * @return IDouble\Type                                     the result
 		 */
-		public static function exp(IReal\Type $x) {
+		public static function exp(IReal\Type $x) : IDouble\Type {
 			return IDouble\Type::box(exp($x->unbox()));
 		}
 
@@ -153,10 +153,10 @@ namespace Saber\Math\IReal {
 		 *
 		 * @access public
 		 * @static
-		 * @param IReal\Type $x                                      the operand
-		 * @return IDouble\Type                                      the result
+		 * @param IReal\Type $x                                     the operand
+		 * @return IDouble\Type                                     the result
 		 */
-		public static function expm1(IReal\Type $x) {
+		public static function expm1(IReal\Type $x) : IDouble\Type {
 			return IDouble\Type::box(expm1($x->unbox()));
 		}
 
@@ -165,11 +165,11 @@ namespace Saber\Math\IReal {
 		 *
 		 * @access public
 		 * @static
-		 * @param IReal\Type $x                                      the left operand
-		 * @param IReal\Type $y                                      the right operand
-		 * @return IDouble\Type                                      the result
+		 * @param IReal\Type $x                                     the left operand
+		 * @param IReal\Type $y                                     the right operand
+		 * @return IDouble\Type                                     the result
 		 */
-		public static function hypot(IReal\Type $x, IReal\Type $y) {
+		public static function hypot(IReal\Type $x, IReal\Type $y) : IDouble\Type {
 			return IDouble\Type::box(hypot($x->unbox(), $y->unbox()));
 		}
 
@@ -178,10 +178,10 @@ namespace Saber\Math\IReal {
 		 *
 		 * @access public
 		 * @static
-		 * @param IReal\Type $x                                      the operand
-		 * @return IDouble\Type                                      the result
+		 * @param IReal\Type $x                                     the operand
+		 * @return IDouble\Type                                     the result
 		 */
-		public static function log(IReal\Type $x) {
+		public static function log(IReal\Type $x) : IDouble\Type {
 			return IDouble\Type::box(log($x->unbox()));
 		}
 
@@ -190,10 +190,10 @@ namespace Saber\Math\IReal {
 		 *
 		 * @access public
 		 * @static
-		 * @param IReal\Type $x                                      the operand
-		 * @return IDouble\Type                                      the result
+		 * @param IReal\Type $x                                     the operand
+		 * @return IDouble\Type                                     the result
 		 */
-		public static function log10(IReal\Type $x) {
+		public static function log10(IReal\Type $x) : IDouble\Type {
 			return IDouble\Type::box(log10($x->unbox()));
 		}
 
@@ -202,10 +202,10 @@ namespace Saber\Math\IReal {
 		 *
 		 * @access public
 		 * @static
-		 * @param IReal\Type $x                                      the operand
-		 * @return IDouble\Type                                      the result
+		 * @param IReal\Type $x                                     the operand
+		 * @return IDouble\Type                                     the result
 		 */
-		public static function log1p(IReal\Type $x) {
+		public static function log1p(IReal\Type $x) : IDouble\Type {
 			return IDouble\Type::box(log1p($x->unbox()));
 		}
 
@@ -215,10 +215,10 @@ namespace Saber\Math\IReal {
 		 *
 		 * @access public
 		 * @static
-		 * @param IReal\Type $x                                      the operand
-		 * @return IDouble\Type                                      the result
+		 * @param IReal\Type $x                                     the operand
+		 * @return IDouble\Type                                     the result
 		 */
-		public static function sin(IReal\Type $x) {
+		public static function sin(IReal\Type $x) : IDouble\Type {
 			return IDouble\Type::box(sin($x->unbox()));
 		}
 
@@ -227,10 +227,10 @@ namespace Saber\Math\IReal {
 		 *
 		 * @access public
 		 * @static
-		 * @param IReal\Type $x                                      the operand
-		 * @return IDouble\Type                                      the result
+		 * @param IReal\Type $x                                     the operand
+		 * @return IDouble\Type                                     the result
 		 */
-		public static function sinh(IReal\Type $x) {
+		public static function sinh(IReal\Type $x) : IDouble\Type {
 			return IDouble\Type::box(sinh($x->unbox()));
 		}
 
@@ -239,10 +239,10 @@ namespace Saber\Math\IReal {
 		 *
 		 * @access public
 		 * @static
-		 * @param IReal\Type $x                                      the operand
-		 * @return IDouble\Type                                      the result
+		 * @param IReal\Type $x                                     the operand
+		 * @return IDouble\Type                                     the result
 		 */
-		public static function sqrt(IReal\Type $x) {
+		public static function sqrt(IReal\Type $x) : IDouble\Type {
 			return IDouble\Type::box(sqrt($x->unbox()));
 		}
 
@@ -251,10 +251,10 @@ namespace Saber\Math\IReal {
 		 *
 		 * @access public
 		 * @static
-		 * @param IReal\Type $x                                      the operand
-		 * @return IDouble\Type                                      the result
+		 * @param IReal\Type $x                                     the operand
+		 * @return IDouble\Type                                     the result
 		 */
-		public static function tan(IReal\Type $x) {
+		public static function tan(IReal\Type $x) : IDouble\Type {
 			return IDouble\Type::box(tan($x->unbox()));
 		}
 
@@ -263,10 +263,10 @@ namespace Saber\Math\IReal {
 		 *
 		 * @access public
 		 * @static
-		 * @param IReal\Type $x                                      the operand
-		 * @return IDouble\Type                                      the result
+		 * @param IReal\Type $x                                     the operand
+		 * @return IDouble\Type                                     the result
 		 */
-		public static function tanh(IReal\Type $x) {
+		public static function tanh(IReal\Type $x) : IDouble\Type {
 			return IDouble\Type::box(tanh($x->unbox()));
 		}
 

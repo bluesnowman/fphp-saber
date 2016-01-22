@@ -36,7 +36,7 @@ namespace Saber\Control {
 		 * @param Core\Equality\Type $x                             the object to be evaluated
 		 * @return Control\Choice\Type                              the choice monad
 		 */
-		public static function choice(Core\Equality\Type $x) {
+		public static function choice(Core\Equality\Type $x) : Control\Choice\Type {
 			return Control\Choice\Type::cons($x, Control\Choice\Type::nil());
 		}
 
@@ -86,7 +86,7 @@ namespace Saber\Control {
 		 *
 		 * @access public
 		 * @final
-		 * @return IString\Type                                      the object's hash code
+		 * @return IString\Type                                     the object's hash code
 		 */
 		public final function hashCode() : IString\Type {
 			return IString\Type::box($this->__hashCode());
@@ -97,7 +97,7 @@ namespace Saber\Control {
 		 *
 		 * @access public
 		 * @final
-		 * @return IString\Type                                      the object as a string
+		 * @return IString\Type                                     the object as a string
 		 */
 		public final function toString() : IString\Type {
 			return IString\Type::box($this->__toString());
@@ -108,7 +108,7 @@ namespace Saber\Control {
 		 *
 		 * @access public
 		 * @final
-		 * @return IString\Type                                      the object's class type
+		 * @return IString\Type                                     the object's class type
 		 */
 		public final function typeOf() : IString\Type {
 			return IString\Type::box($this->__typeOf());

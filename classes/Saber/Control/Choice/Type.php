@@ -15,7 +15,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
+declare(strict_types = 1);
+
 namespace Saber\Control\Choice {
 
 	use \Saber\Control;
@@ -49,7 +51,7 @@ namespace Saber\Control\Choice {
 		 * @param Control\Choice\Type $xs                           the tail
 		 * @return Control\Choice\Type                              the "cons" object
 		 */
-		public static function cons(Core\Equality\Type $x, Control\Choice\Type $xs) {
+		public static function cons(Core\Equality\Type $x, Control\Choice\Type $xs) : Control\Choice\Type {
 			if ($xs !== null) {
 				return new Control\Choice\Cons\Type($x, $xs);
 			}
@@ -63,7 +65,7 @@ namespace Saber\Control\Choice {
 		 * @static
 		 * @return Control\Choice\Type                              the "nil" object
 		 */
-		public static function nil() {
+		public static function nil() : Control\Choice\Type {
 			if (!isset(static::$singletons[0])) {
 				static::$singletons[0] = new Control\Choice\Nil\Type();
 			}
@@ -79,9 +81,9 @@ namespace Saber\Control\Choice {
 		 *
 		 * @access public
 		 * @abstract
-		 * @return boolean                                          whether a clause has executed
+		 * @return bool                                             whether a clause has executed
 		 */
-		public abstract function __end();
+		public abstract function __end() : bool;
 
 		/**
 		 * This method returns the object's hash code.
@@ -125,9 +127,9 @@ namespace Saber\Control\Choice {
 		 *
 		 * @access public
 		 * @final
-		 * @return IBool\Type                                        whether a clause has executed
+		 * @return IBool\Type                                       whether a clause has executed
 		 */
-		public final function end() {
+		public final function end() : IBool\Type {
 			return IBool\Type::box($this->__end());
 		}
 
@@ -136,7 +138,7 @@ namespace Saber\Control\Choice {
 		 *
 		 * @access public
 		 * @final
-		 * @return IString\Type                                      the object's hash code
+		 * @return IString\Type                                     the object's hash code
 		 */
 		public final function hashCode() : IString\Type {
 			return IString\Type::box($this->__hashCode());
@@ -152,14 +154,14 @@ namespace Saber\Control\Choice {
 		 * @return Control\Choice\Type                              a reference to the next choice
 		 *                                                          monad node
 		 */
-		public abstract function otherwise(callable $procedure);
+		public abstract function otherwise(callable $procedure) : Control\Choice\Type;
 
 		/**
 		 * This method returns the object as a string.
 		 *
 		 * @access public
 		 * @final
-		 * @return IString\Type                                      the object as a string
+		 * @return IString\Type                                     the object as a string
 		 */
 		public final function toString() : IString\Type {
 			return IString\Type::box($this->__toString());
@@ -170,7 +172,7 @@ namespace Saber\Control\Choice {
 		 *
 		 * @access public
 		 * @final
-		 * @return IString\Type                                      the object's class type
+		 * @return IString\Type                                     the object's class type
 		 */
 		public final function typeOf() : IString\Type {
 			return IString\Type::box($this->__typeOf());
@@ -187,7 +189,7 @@ namespace Saber\Control\Choice {
 		 * @return Control\Choice\Type                              a reference to the next choice
 		 *                                                          monad node
 		 */
-		public abstract function unless(Core\Equality\Type $y, callable $procedure);
+		public abstract function unless(Core\Equality\Type $y, callable $procedure) : Control\Choice\Type;
 
 		/**
 		 * This method sets the procedure that will be executed should "y" equal "x".
@@ -200,7 +202,7 @@ namespace Saber\Control\Choice {
 		 * @return Control\Choice\Type                              a reference to the next choice
 		 *                                                          monad node
 		 */
-		public abstract function when(Core\Equality\Type $y, callable $procedure);
+		public abstract function when(Core\Equality\Type $y, callable $procedure) : Control\Choice\Type;
 
 		#endregion
 

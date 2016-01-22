@@ -15,7 +15,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
+declare(strict_types = 1);
+
 namespace Saber\Control\Exception {
 
 	use \Saber\Control;
@@ -51,9 +53,9 @@ namespace Saber\Control\Exception {
 		 * @public
 		 * @static
 		 * @param callable $tryblock                                the try-block to be processed
-		 * @return IEither\Type                                      either a Left\Type or a Right\Type
+		 * @return IEither\Type                                     either a Left\Type or a Right\Type
 		 */
-		public static function try_(callable $tryblock) {
+		public static function try_(callable $tryblock) : IEither\Type {
 			try {
 				return IEither\Type::right($tryblock());
 			}

@@ -31,10 +31,10 @@ namespace Saber\Math\IVector {
 		 *
 		 * @access public
 		 * @static
-		 * @param IVector\Type $xs                                   the vector to be processed
-		 * @return IDouble\Type                                      the result
+		 * @param IVector\Type $xs                                  the vector to be processed
+		 * @return IDouble\Type                                     the result
 		 */
-		public static function average(IVector\Type $xs) {
+		public static function average(IVector\Type $xs) : IDouble\Type {
 			return ($xs->__isEmpty())
 				? IDouble\Type::zero()
 				: IDouble\Module::divide(static::sum($xs), $xs->length()->toDouble());
@@ -45,10 +45,10 @@ namespace Saber\Math\IVector {
 		 *
 		 * @access public
 		 * @static
-		 * @param IVector\Type $xs                                   the vector to be processed
-		 * @return IDouble\Type                                      the result
+		 * @param IVector\Type $xs                                  the vector to be processed
+		 * @return IDouble\Type                                     the result
 		 */
-		public static function product(IVector\Type $xs) {
+		public static function product(IVector\Type $xs) : IDouble\Type {
 			return ($xs->__isEmpty())
 				? IDouble\Type::one()
 				: IDouble\Module::multiply($xs->head()->toDouble(), static::product($xs->tail()));
@@ -59,10 +59,10 @@ namespace Saber\Math\IVector {
 		 *
 		 * @access public
 		 * @static
-		 * @param IVector\Type $xs                                   the vector to be processed
-		 * @return IDouble\Type                                      the result
+		 * @param IVector\Type $xs                                  the vector to be processed
+		 * @return IDouble\Type                                     the result
 		 */
-		public static function sum(IVector\Type $xs) {
+		public static function sum(IVector\Type $xs) : IDouble\Type {
 			return ($xs->__isEmpty())
 				? IDouble\Type::zero()
 				: IDouble\Module::add($xs->head()->toDouble(), static::sum($xs->tail()));

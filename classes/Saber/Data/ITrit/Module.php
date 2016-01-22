@@ -70,7 +70,7 @@ namespace Saber\Data\ITrit {
 		 * @return IDouble\Type                                      the value as a IDouble
 		 */
 		public static function toDouble(ITrit\Type $x) {
-			return IDouble\Type::box($x->unbox());
+			return IDouble\Type::make($x->unbox());
 		}
 
 		/**
@@ -83,7 +83,7 @@ namespace Saber\Data\ITrit {
 		 * @return IFloat\Type                                       the value as a IFloat
 		 */
 		public static function toFloat(ITrit\Type $x) {
-			return IFloat\Type::box($x->unbox());
+			return IFloat\Type::make($x->unbox());
 		}
 
 		/**
@@ -96,7 +96,7 @@ namespace Saber\Data\ITrit {
 		 * @return IInt32\Type                                       the value as an IInt32
 		 */
 		public static function toInt32(ITrit\Type $x) {
-			return IInt32\Type::box($x->unbox());
+			return IInt32\Type::make($x->unbox());
 		}
 
 		/**
@@ -109,7 +109,7 @@ namespace Saber\Data\ITrit {
 		 * @return IInteger\Type                                     the value as an IInteger
 		 */
 		public static function toInteger(ITrit\Type $x) {
-			return IInteger\Type::box($x->unbox());
+			return IInteger\Type::make($x->unbox());
 		}
 
 		#endregion

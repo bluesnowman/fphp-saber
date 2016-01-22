@@ -72,9 +72,9 @@ namespace Saber\Data\IHashSet {
 		 * @access public
 		 * @static
 		 * @param array $xs                                         the value(s) to be boxed
-		 * @return IHashSet\Type                                     the boxed object
+		 * @return IHashSet\Type                                    the boxed object
 		 */
-		public static function box(array $xs) {
+		public static function box(array $xs) : IHashSet\Type {
 			return IHashSet\Type::make($xs);
 		}
 
@@ -85,9 +85,9 @@ namespace Saber\Data\IHashSet {
 		 * @access public
 		 * @static
 		 * @param mixed ...$xs                                      the value(s) to be boxed
-		 * @return IHashSet\Type                                     the boxed object
+		 * @return IHashSet\Type                                    the boxed object
 		 */
-		public static function box2(...$xs) {
+		public static function box2(...$xs) : IHashSet\Type {
 			return IHashSet\Type::make($xs);
 		}
 
@@ -96,10 +96,10 @@ namespace Saber\Data\IHashSet {
 		 *
 		 * @access public
 		 * @static
-		 * @param IHashSet\Type $x                                   the class to be evaluated
-		 * @return IHashSet\Type                                     the class
+		 * @param IHashSet\Type $x                                  the class to be evaluated
+		 * @return IHashSet\Type                                    the class
 		 */
-		public static function covariant(IHashSet\Type $x) {
+		public static function covariant(IHashSet\Type $x) : IHashSet\Type {
 			return $x;
 		}
 		/**
@@ -109,9 +109,9 @@ namespace Saber\Data\IHashSet {
 		 * @access public
 		 * @static
 		 * @param array $xs                                         the value(s) to be boxed
-		 * @return IHashSet\Type                                     the boxed object
+		 * @return IHashSet\Type                                    the boxed object
 		 */
-		public static function make(array $xs) {
+		public static function make(array $xs) : IHashSet\Type {
 			$zs = new IHashSet\Type();
 			foreach ($xs as $x) {
 				$zs->putItem($x);
@@ -126,9 +126,9 @@ namespace Saber\Data\IHashSet {
 		 * @access public
 		 * @static
 		 * @param mixed ...$xs                                      the value(s) to be boxed
-		 * @return IHashSet\Type                                     the boxed object
+		 * @return IHashSet\Type                                    the boxed object
 		 */
-		public static function make2(...$xs) {
+		public static function make2(...$xs) : IHashSet\Type {
 			return IHashSet\Type::make($xs);
 		}
 
@@ -137,9 +137,9 @@ namespace Saber\Data\IHashSet {
 		 *
 		 * @access public
 		 * @static
-		 * @return IHashSet\Type                                     an empty collection
+		 * @return IHashSet\Type                                    an empty collection
 		 */
-		public static function empty_() {
+		public static function empty_() : IHashSet\Type {
 			return new IHashSet\Type();
 		}
 
@@ -154,7 +154,7 @@ namespace Saber\Data\IHashSet {
 		 * @final
 		 * @return array                                            the hash set
 		 */
-		public final function __clear() {
+		public final function __clear() : array {
 			return $this->clear()->unbox();
 		}
 
@@ -174,9 +174,9 @@ namespace Saber\Data\IHashSet {
 		 * @access public
 		 * @final
 		 * @param Core\Type $item                                   the item to be found
-		 * @return boolean                                          whether the item exists
+		 * @return bool                                             whether the item exists
 		 */
-		public final function __hasItem(Core\Type $item) {
+		public final function __hasItem(Core\Type $item) : bool {
 			$hashCode = $item->__hashCode();
 			if (array_key_exists($hashCode, $this->value)) {
 				$bucket = $this->value[$hashCode];
@@ -194,9 +194,9 @@ namespace Saber\Data\IHashSet {
 		 *
 		 * @access public
 		 * @final
-		 * @return boolean                                          whether the list is empty
+		 * @return bool                                             whether the list is empty
 		 */
-		public final function __isEmpty() {
+		public final function __isEmpty() : bool {
 			return empty($this->value);
 		}
 
@@ -207,7 +207,7 @@ namespace Saber\Data\IHashSet {
 		 * @final
 		 * @return array                                            all items in the hash set
 		 */
-		public final function __items() {
+		public final function __items() : array {
 			$items = array();
 			foreach ($this->value as $bucket) {
 				foreach ($bucket as $entry) {
@@ -246,9 +246,9 @@ namespace Saber\Data\IHashSet {
 		 *
 		 * @access public
 		 * @final
-		 * @return integer                                          the size of this collection
+		 * @return int                                              the size of this collection
 		 */
-		public final function __size() {
+		public final function __size() : int {
 			return count($this->__items());
 		}
 
@@ -272,9 +272,9 @@ namespace Saber\Data\IHashSet {
 		 *
 		 * @access public
 		 * @final
-		 * @return IHashSet\Type                                     the hash set
+		 * @return IHashSet\Type                                    the hash set
 		 */
-		public final function clear() {
+		public final function clear() : IHashSet\Type {
 			$this->value = array();
 			return $this;
 		}
@@ -285,9 +285,9 @@ namespace Saber\Data\IHashSet {
 		 * @access public
 		 * @final
 		 * @param Core\Type $item                                   the item to be found
-		 * @return IBool\Type                                        whether the item exists
+		 * @return IBool\Type                                       whether the item exists
 		 */
-		public final function hasItem(Core\Type $item) {
+		public final function hasItem(Core\Type $item) : IBool\Type {
 			return IBool\Type::box($this->__hasItem($item));
 		}
 
@@ -296,9 +296,9 @@ namespace Saber\Data\IHashSet {
 		 *
 		 * @access public
 		 * @final
-		 * @return IBool\Type                                        whether the list is empty
+		 * @return IBool\Type                                       whether the list is empty
 		 */
-		public final function isEmpty() {
+		public final function isEmpty() : IBool\Type {
 			return IBool\Type::box($this->__isEmpty());
 		}
 
@@ -307,9 +307,9 @@ namespace Saber\Data\IHashSet {
 		 *
 		 * @access public
 		 * @final
-		 * @return IArrayList\Type                                   all items in the hash set
+		 * @return IArrayList\Type                                  all items in the hash set
 		 */
-		public final function items() {
+		public final function items() : IArrayList\Type {
 			return IArrayList\Type::box($this->__items());
 		}
 
@@ -319,11 +319,11 @@ namespace Saber\Data\IHashSet {
 		 * @access public
 		 * @final
 		 * @param Core\Type $item                                   the item to be stored
-		 * @return IHashSet\Type                                     the hash set
+		 * @return IHashSet\Type                                    the hash set
 		 *
 		 * @see http://stackoverflow.com/questions/4980757/how-do-hashtables-deal-with-collisions
 		 */
-		public final function putItem(Core\Type $item) {
+		public final function putItem(Core\Type $item) : IHashSet\Type {
 			$hashCode = $item->__hashCode();
 			if (array_key_exists($hashCode, $this->value)) {
 				$bucket = $this->value[$hashCode];
@@ -344,9 +344,9 @@ namespace Saber\Data\IHashSet {
 		 * @access public
 		 * @final
 		 * @param Core\Type $item                                   the item to be removed
-		 * @return IHashSet\Type                                     the hash set
+		 * @return IHashSet\Type                                    the hash set
 		 */
-		public final function removeItem(Core\Type $item) {
+		public final function removeItem(Core\Type $item) : IHashSet\Type {
 			$hashCode = $item->__hashCode();
 			if (array_key_exists($hashCode, $this->value)) {
 				$bucket = $this->value[$hashCode];
@@ -372,9 +372,9 @@ namespace Saber\Data\IHashSet {
 		 *
 		 * @access public
 		 * @final
-		 * @return IInt32\Type                                       the size of this collection
+		 * @return IInt32\Type                                      the size of this collection
 		 */
-		public final function size() {
+		public final function size() : IInt32\Type {
 			return IInt32\Type::box($this->__size());
 		}
 

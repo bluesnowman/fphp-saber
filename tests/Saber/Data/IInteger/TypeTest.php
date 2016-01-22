@@ -37,7 +37,7 @@ namespace Saber\Data\IInteger {
 		public function testType() {
 			//$this->markTestIncomplete();
 
-			$p0 = new IInteger\Type(0);
+			$p0 = new IInteger\Type('0');
 
 			$this->assertInstanceOf('\\Saber\\Data\\IInteger\\Type', $p0);
 			$this->assertInstanceOf('\\Saber\\Data\\IIntegral\\Type', $p0);
@@ -62,9 +62,9 @@ namespace Saber\Data\IInteger {
 		 */
 		public function dataBox() {
 			$data = array(
-				array(array(-1), array('-1')),
-				array(array(0), array('0')),
-				array(array(1), array('1')),
+				array(array('-1'), array('-1')),
+				array(array('0'), array('0')),
+				array(array('1'), array('1')),
 			);
 			return $data;
 		}

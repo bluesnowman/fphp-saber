@@ -56,9 +56,9 @@ namespace Saber\Data\IRegex {
 		 * @access public
 		 * @static
 		 * @param string $value                                     the value(s) to be boxed
-		 * @return IRegex\Type                                       the boxed expression
+		 * @return IRegex\Type                                      the boxed expression
 		 */
-		public static function box($value) {
+		public static function box(string $value) : IRegex\Type {
 			return new IRegex\Type($value);
 		}
 
@@ -67,10 +67,10 @@ namespace Saber\Data\IRegex {
 		 *
 		 * @access public
 		 * @static
-		 * @param IRegex\Type $x                                     the class to be evaluated
-		 * @return IRegex\Type                                       the class
+		 * @param IRegex\Type $x                                    the class to be evaluated
+		 * @return IRegex\Type                                      the class
 		 */
-		public static function covariant(IRegex\Type $x) {
+		public static function covariant(IRegex\Type $x) : IRegex\Type {
 			return $x;
 		}
 
@@ -81,9 +81,9 @@ namespace Saber\Data\IRegex {
 		 * @access public
 		 * @static
 		 * @param string $value                                     the value(s) to be boxed
-		 * @return IRegex\Type                                       the boxed expression
+		 * @return IRegex\Type                                      the boxed expression
 		 */
-		public static function make($value) {
+		public static function make($value) : IRegex\Type {
 			return new IRegex\Type(preg_quote($value));
 		}
 
@@ -98,8 +98,8 @@ namespace Saber\Data\IRegex {
 		 * @final
 		 * @param string $value                                     the value to be assigned
 		 */
-		public final function __construct($value) {
-			$this->value = (string) $value;
+		public final function __construct(string $value) {
+			$this->value = $value;
 		}
 
 		/**

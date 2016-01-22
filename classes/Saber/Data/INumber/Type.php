@@ -22,6 +22,6 @@ namespace Saber\Data\INumber {
 
 	use \Saber\Core;
 
-	interface Type { }
+	interface Type extends Core\Type { }
 
 }

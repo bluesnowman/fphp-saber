@@ -1,0 +1,23 @@
+---
+engines:
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - php
+  fixme:
+    enabled: true
+    strings:
+    - BUG
+    - CUSTOM
+    - FIXME
+    - HACK
+    - TODO
+  phpmd:
+    enabled: true
+ratings:
+  paths:
+  - "**.inc"
+  - "**.php"
+exclude_paths:
+- vendor/**/*

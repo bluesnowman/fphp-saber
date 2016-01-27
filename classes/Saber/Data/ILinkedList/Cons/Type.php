@@ -49,7 +49,7 @@ namespace Saber\Data\ILinkedList\Cons {
 		 * @final
 		 * @param Core\Type $head                                   the object to be assigned
 		 *                                                          to the head
-		 * @param ILinkedList\Type $tail                             the tail to be linked
+		 * @param ILinkedList\Type $tail                            the tail to be linked
 		 */
 		public final function __construct(Core\Type $head, ILinkedList\Type $tail) {
 			$this->value = $head;
@@ -96,7 +96,7 @@ namespace Saber\Data\ILinkedList\Cons {
 		 * @return Core\Type                                        the head object in this linked
 		 *                                                          list
 		 */
-		public final function head() {
+		public final function head() : Core\Type {
 			return $this->value;
 		}
 
@@ -105,9 +105,9 @@ namespace Saber\Data\ILinkedList\Cons {
 		 *
 		 * @access public
 		 * @final
-		 * @return ILinkedList\Type                                  the tail of this linked list
+		 * @return ILinkedList\Type                                 the tail of this linked list
 		 */
-		public final function tail() {
+		public final function tail() : ILinkedList\Type {
 			return $this->tail;
 		}
 

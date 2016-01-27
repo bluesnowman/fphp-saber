@@ -56,9 +56,9 @@ namespace Saber\Data\IObject {
 		 * @access public
 		 * @static
 		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return IObject\Type                                      the boxed object
+		 * @return IObject\Type                                     the boxed object
 		 */
-		public static function box($value) {
+		public static function box($value) : IObject\Type {
 			return new IObject\Type($value);
 		}
 
@@ -67,10 +67,10 @@ namespace Saber\Data\IObject {
 		 *
 		 * @access public
 		 * @static
-		 * @param IObject\Type $x                                    the class to be evaluated
-		 * @return IObject\Type                                      the class
+		 * @param IObject\Type $x                                   the class to be evaluated
+		 * @return IObject\Type                                     the class
 		 */
-		public static function covariant(IObject\Type $x) {
+		public static function covariant(IObject\Type $x) : IObject\Type {
 			return $x;
 		}
 
@@ -81,9 +81,9 @@ namespace Saber\Data\IObject {
 		 * @access public
 		 * @static
 		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return IObject\Type                                      the boxed object
+		 * @return IObject\Type                                     the boxed object
 		 */
-		public static function make($value) {
+		public static function make($value) : IObject\Type {
 			return new IObject\Type($value);
 		}
 

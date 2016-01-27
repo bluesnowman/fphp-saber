@@ -48,7 +48,7 @@ namespace Saber\Data\ILinkedList\Nil {
 		 * @access public
 		 * @throws Throwable\EmptyCollection\Exception              indicates that the collection is empty
 		 */
-		public final function head() {
+		public final function head() : Core\Type {
 			throw new Throwable\EmptyCollection\Exception('Unable to return head object. Linked list is empty.');
 		}
 
@@ -58,7 +58,7 @@ namespace Saber\Data\ILinkedList\Nil {
 		 * @access public
 		 * @throws Throwable\EmptyCollection\Exception              indicates that the collection is empty
 		 */
-		public final function tail() {
+		public final function tail() : ILinkedList\Type {
 			throw new Throwable\EmptyCollection\Exception('Unable to return tail. Linked list is empty.');
 		}
 

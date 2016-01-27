@@ -68,9 +68,9 @@ namespace Saber\Data\ILinkedList {
 		 * @access public
 		 * @static
 		 * @param array $xs                                         the value(s) to be boxed
-		 * @return ILinkedList\Type                                  the boxed object
+		 * @return ILinkedList\Type                                 the boxed object
 		 */
-		public static function box(array $xs) {
+		public static function box(array $xs) : ILinkedList\Type {
 			return ILinkedList\Type::make($xs);
 		}
 
@@ -81,9 +81,9 @@ namespace Saber\Data\ILinkedList {
 		 * @access public
 		 * @static
 		 * @param mixed ...$xs                                      the value(s) to be boxed
-		 * @return ILinkedList\Type                                  the boxed object
+		 * @return ILinkedList\Type                                 the boxed object
 		 */
-		public static function box2(...$xs) {
+		public static function box2(...$xs) : ILinkedList\Type {
 			return ILinkedList\Type::make($xs);
 		}
 
@@ -92,12 +92,12 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $x                                the class to be evaluated
-		 * @return ILinkedList\Type                                  the class
+		 * @param ILinkedList\Type $x                               the class to be evaluated
+		 * @return ILinkedList\Type                                 the class
 		 * @throw Throwable\InvalidArgument\Exception               indicated that the specified class
 		 *                                                          is not a covariant
 		 */
-		public static function covariant(ILinkedList\Type $x) {
+		public static function covariant(ILinkedList\Type $x) : ILinkedList\Type {
 			if (!($x instanceof static)) {
 				throw new Throwable\InvalidArgument\Exception('Invalid class type.  Expected a class of type ":type1", but got ":type2".', array(':type1' => get_called_class(), ':type2' => get_class($x)));
 			}
@@ -111,9 +111,9 @@ namespace Saber\Data\ILinkedList {
 		 * @access public
 		 * @static
 		 * @param array $xs                                         the value(s) to be boxed
-		 * @return Core\Type                                        the boxed object
+		 * @return ILinkedList\Type                                 the boxed object
 		 */
-		public static function make(array $xs) {
+		public static function make(array $xs) : ILinkedList\Type {
 			$zs = ILinkedList\Type::nil();
 			for ($i = count($xs) - 1; $i >= 0; $i--) {
 				$zs = ILinkedList\Type::cons($xs[$i], $zs);
@@ -128,9 +128,9 @@ namespace Saber\Data\ILinkedList {
 		 * @access public
 		 * @static
 		 * @param mixed ...$xs                                      the value(s) to be boxed
-		 * @return Core\Type                                        the boxed object
+		 * @return ILinkedList\Type                                 the boxed object
 		 */
-		public static function make2(...$xs) {
+		public static function make2(...$xs) : ILinkedList\Type {
 			return ILinkedList\Type::make($xs);
 		}
 
@@ -140,10 +140,10 @@ namespace Saber\Data\ILinkedList {
 		 * @access public
 		 * @static
 		 * @param Core\Type $head                                   the head to be used
-		 * @param ILinkedList\Type $tail                             the tail to be used
-		 * @return ILinkedList\Cons\Type                             the "cons" object
+		 * @param ILinkedList\Type $tail                            the tail to be used
+		 * @return ILinkedList\Cons\Type                            the "cons" object
 		 */
-		public static function cons(Core\Type $head, ILinkedList\Type $tail = null) {
+		public static function cons(Core\Type $head, ILinkedList\Type $tail = null) : ILinkedList\Cons\Type {
 			if ($tail !== null) {
 				return new ILinkedList\Cons\Type($head, $tail);
 			}
@@ -155,9 +155,9 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @return ILinkedList\Nil\Type                              the "nil" object
+		 * @return ILinkedList\Nil\Type                             the "nil" object
 		 */
-		public static function nil() {
+		public static function nil() : ILinkedList\Nil\Type {
 			if (!isset(static::$singletons[0])) {
 				static::$singletons[0] = new ILinkedList\Nil\Type();
 			}
@@ -169,9 +169,9 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @return ILinkedList\Nil\Type                              the "nil" object
+		 * @return ILinkedList\Nil\Type                             the "nil" object
 		 */
-		public static function empty_() {
+		public static function empty_() : ILinkedList\Nil\Type {
 			return ILinkedList\Type::nil();
 		}
 
@@ -181,10 +181,10 @@ namespace Saber\Data\ILinkedList {
 		 * @access public
 		 * @static
 		 * @param Core\Type $x                                      the object to be replicated
-		 * @param IInt32\Type $n                                     the number of times to replicate
-		 * @return ILinkedList\Type                                  the collection
+		 * @param IInt32\Type $n                                    the number of times to replicate
+		 * @return ILinkedList\Type                                 the collection
 		 */
-		public static function replicate(Core\Type $x, IInt32\Type $n) {
+		public static function replicate(Core\Type $x, IInt32\Type $n) : ILinkedList\Type {
 			if ($n->unbox() <= 0) {
 				return ILinkedList\Type::nil();
 			}
@@ -211,9 +211,9 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @final
-		 * @return boolean                                          whether the linked list is empty
+		 * @return bool                                             whether the linked list is empty
 		 */
-		public final function __isEmpty() {
+		public final function __isEmpty() : bool {
 			return ($this instanceof ILinkedList\Nil\Type);
 		}
 
@@ -222,7 +222,7 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @final
-		 * @param IInt32\Type $i                                     the index of the item
+		 * @param IInt32\Type $i                                    the index of the item
 		 * @return mixed                                            the item at the specified index
 		 */
 		public final function __item(IInt32\Type $i) {
@@ -234,9 +234,9 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @final
-		 * @return integer                                          the length of this linked list
+		 * @return int                                              the length of this linked list
 		 */
-		public final function __length() {
+		public final function __length() : int {
 			return $this->length()->unbox();
 		}
 
@@ -258,7 +258,7 @@ namespace Saber\Data\ILinkedList {
 		 * @final
 		 * @return array                                            the tail of this linked list
 		 */
-		public final function __tail() {
+		public final function __tail() : array {
 			return $this->tail()->unbox();
 		}
 
@@ -271,18 +271,18 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @abstract
-		 * @return mixed                                            the head object in this linked list
+		 * @return Core\Type                                        the head object in this linked list
 		 */
-		public abstract function head();
+		public abstract function head() : Core\Type;
 
 		/**
 		 * This method (aka "null") returns whether this linked list is empty.
 		 *
 		 * @access public
 		 * @final
-		 * @return IBool\Type                                        whether the linked list is empty
+		 * @return IBool\Type                                       whether the linked list is empty
 		 */
-		public final function isEmpty() {
+		public final function isEmpty() : IBool\Type {
 			return IBool\Type::box($this->__isEmpty());
 		}
 
@@ -291,7 +291,7 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @final
-		 * @param IInt32\Type $i                                     the index of the item
+		 * @param IInt32\Type $i                                    the index of the item
 		 * @return mixed                                            the item at the specified index
 		 */
 		public final function item(IInt32\Type $i) {
@@ -312,9 +312,9 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @final
-		 * @return IInt32\Type                                       the length of this linked list
+		 * @return IInt32\Type                                      the length of this linked list
 		 */
-		public final function length() {
+		public final function length() : IInt32\Type {
 			$c = IInt32\Type::zero();
 			for ($zs = $this; ! $zs->__isEmpty(); $zs = $zs->tail()) {
 				$c = IInt32\Module::increment($c);
@@ -327,9 +327,9 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @abstract
-		 * @return ILinkedList\Type                                  the tail of this linked list
+		 * @return ILinkedList\Type                                 the tail of this linked list
 		 */
-		public abstract function tail();
+		public abstract function tail() : ILinkedList\Type;
 
 		/**
 		 * This method returns the value contained within the boxed object.

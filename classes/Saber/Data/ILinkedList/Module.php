@@ -46,12 +46,12 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
+		 * @param ILinkedList\Type $xs                              the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return IBool\Type                                        whether each item passed the
+		 * @return IBool\Type                                       whether each item passed the
 		 *                                                          truthy test
 		 */
-		public static function all(ILinkedList\Type $xs, callable $predicate) {
+		public static function all(ILinkedList\Type $xs, callable $predicate) : IBool\Type {
 			$i = IInt32\Type::zero();
 
 			for ($zs = $xs; !$zs->__isEmpty(); $zs = $zs->tail()) {
@@ -71,12 +71,12 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
+		 * @param ILinkedList\Type $xs                              the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return IBool\Type                                        whether some of the items
+		 * @return IBool\Type                                       whether some of the items
 		 *                                                          passed the truthy test
 		 */
-		public static function any(ILinkedList\Type $xs, callable $predicate) {
+		public static function any(ILinkedList\Type $xs, callable $predicate) : IBool\Type {
 			return IOption\Module::isDefined(ILinkedList\Module::find($xs, $predicate));
 		}
 
@@ -85,11 +85,11 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
+		 * @param ILinkedList\Type $xs                              the left operand
 		 * @param Core\Type $y                                      the object to be appended
-		 * @return ILinkedList\Type                                  the collection
+		 * @return ILinkedList\Type                                 the collection
 		 */
-		public static function append(ILinkedList\Type $xs, Core\Type $y) {
+		public static function append(ILinkedList\Type $xs, Core\Type $y) : ILinkedList\Type {
 			return ILinkedList\Module::concat($xs, ILinkedList\Type::cons($y));
 		}
 
@@ -99,12 +99,12 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the linked list
+		 * @param ILinkedList\Type $xs                              the linked list
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return ITuple\Type                                       the tuple
+		 * @return ITuple\Type                                      the tuple
 		 */
-		public static function break_(ILinkedList\Type $xs, callable $predicate) {
-			return ILinkedList\Module::span($xs, function(Core\Type $x, IInt32\Type $i) use ($predicate) {
+		public static function break_(ILinkedList\Type $xs, callable $predicate) : ITuple\Type {
+			return ILinkedList\Module::span($xs, function(Core\Type $x, IInt32\Type $i) use ($predicate) : IBool\Type {
 				return IBool\Module::not($predicate($x, $i));
 			});
 		}
@@ -114,11 +114,11 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
-		 * @param ILinkedList\Type $ys                               the collection to be concatenated
-		 * @return ILinkedList\Type                                  the collection
+		 * @param ILinkedList\Type $xs                              the left operand
+		 * @param ILinkedList\Type $ys                              the collection to be concatenated
+		 * @return ILinkedList\Type                                 the collection
 		 */
-		public static function concat(ILinkedList\Type $xs, ILinkedList\Type $ys) {
+		public static function concat(ILinkedList\Type $xs, ILinkedList\Type $ys) : ILinkedList\Type {
 			if (!$xs->__isEmpty()) {
 				$zs = $xs;
 				while (!$zs->tail()->__isEmpty()) {
@@ -135,13 +135,13 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
+		 * @param ILinkedList\Type $xs                              the left operand
 		 * @param Core\Type $y                                      the object to find
-		 * @return IBool\Type                                        whether the specified object is
+		 * @return IBool\Type                                       whether the specified object is
 		 *                                                          contained within the collection
 		 */
-		public static function contains(ILinkedList\Type $xs, Core\Type $y) {
-			return ILinkedList\Module::any($xs, function(Core\Type $x, IInt32\Type $i) use ($y) {
+		public static function contains(ILinkedList\Type $xs, Core\Type $y) : IBool\Type {
+			return ILinkedList\Module::any($xs, function(Core\Type $x, IInt32\Type $i) use ($y) : IBool\Type {
 				return $x->eq($y);
 			});
 		}
@@ -151,11 +151,11 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
+		 * @param ILinkedList\Type $xs                              the left operand
 		 * @param Core\Type $y                                      the object to be removed
-		 * @return ILinkedList\Type                                  the collection
+		 * @return ILinkedList\Type                                 the collection
 		 */
-		public static function delete(ILinkedList\Type $xs, Core\Type $y) {
+		public static function delete(ILinkedList\Type $xs, Core\Type $y) : ILinkedList\Type {
 			$start = ILinkedList\Type::nil();
 			$tail = null;
 
@@ -197,11 +197,11 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
-		 * @param IInt32\Type $n                                     the number of items to drop
-		 * @return ILinkedList\Type                                  the collection
+		 * @param ILinkedList\Type $xs                              the left operand
+		 * @param IInt32\Type $n                                    the number of items to drop
+		 * @return ILinkedList\Type                                 the collection
 		 */
-		public static function drop(ILinkedList\Type $xs, IInt32\Type $n) {
+		public static function drop(ILinkedList\Type $xs, IInt32\Type $n) : ILinkedList\Type {
 			$i = IInt32\Type::zero();
 
 			for ($zs = $xs; ($i->unbox() < $n->unbox()) && !$zs->__isEmpty(); $zs = $zs->tail()) {
@@ -216,11 +216,11 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
+		 * @param ILinkedList\Type $xs                              the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return ILinkedList\Type                                  the collection
+		 * @return ILinkedList\Type                                 the collection
 		 */
-		public static function dropWhile(ILinkedList\Type $xs, callable $predicate) {
+		public static function dropWhile(ILinkedList\Type $xs, callable $predicate) : ILinkedList\Type {
 			$i = IInt32\Type::zero();
 
 			for ($zs = $xs; !$zs->__isEmpty() && $predicate($zs->head(), $i)->unbox(); $zs = $zs->tail()) {
@@ -235,12 +235,12 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
+		 * @param ILinkedList\Type $xs                              the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return ILinkedList\Type                                  the collection
+		 * @return ILinkedList\Type                                 the collection
 		 */
-		public static function dropWhileEnd(ILinkedList\Type $xs, callable $predicate) {
-			return ILinkedList\Module::dropWhile($xs, function(Core\Type $x, IInt32\Type $i) use ($predicate) {
+		public static function dropWhileEnd(ILinkedList\Type $xs, callable $predicate) : ILinkedList\Type {
+			return ILinkedList\Module::dropWhile($xs, function(Core\Type $x, IInt32\Type $i) use ($predicate) : IBool\Type {
 				return IBool\Module::not($predicate($x, $i));
 			});
 		}
@@ -251,7 +251,7 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
+		 * @param ILinkedList\Type $xs                              the left operand
 		 * @param callable $procedure                               the procedure function to be used
 		 */
 		public static function each(ILinkedList\Type $xs, callable $procedure) {
@@ -265,11 +265,11 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
+		 * @param ILinkedList\Type $xs                              the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return ILinkedList\Type                                  the collection
+		 * @return ILinkedList\Type                                 the collection
 		 */
-		public static function filter(ILinkedList\Type $xs, callable $predicate) {
+		public static function filter(ILinkedList\Type $xs, callable $predicate) : ILinkedList\Type {
 			$start = ILinkedList\Type::nil();
 			$tail = null;
 
@@ -299,12 +299,12 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
+		 * @param ILinkedList\Type $xs                              the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return IOption\Type                                      an option containing the first object
+		 * @return IOption\Type                                     an option containing the first object
 		 *                                                          satisfying the predicate, if any
 		 */
-		public static function find(ILinkedList\Type $xs, callable $predicate) {
+		public static function find(ILinkedList\Type $xs, callable $predicate) : IOption\Type {
 			$i = IInt32\Type::zero();
 
 			for ($zs = $xs; !$zs->__isEmpty(); $zs = $zs->tail()) {
@@ -323,10 +323,10 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
-		 * @return ILinkedList\Type                                  the flattened linked list
+		 * @param ILinkedList\Type $xs                              the left operand
+		 * @return ILinkedList\Type                                 the flattened linked list
 		 */
-		public static function flatten(ILinkedList\Type $xs) {
+		public static function flatten(ILinkedList\Type $xs) : ILinkedList\Type {
 			$start = ILinkedList\Type::nil();
 			$tail = null;
 
@@ -355,12 +355,12 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
+		 * @param ILinkedList\Type $xs                              the left operand
 		 * @param callable $operator                                the operator function to be used
 		 * @param Core\Type $initial                                the initial value to be used
 		 * @return Core\Type                                        the result
 		 */
-		public static function foldLeft(ILinkedList\Type $xs, callable $operator, Core\Type $initial) {
+		public static function foldLeft(ILinkedList\Type $xs, callable $operator, Core\Type $initial) : Core\Type {
 			$c = $initial;
 
 			for ($zs = $xs; !$zs->__isEmpty(); $zs = $zs->tail()) {
@@ -376,12 +376,12 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
+		 * @param ILinkedList\Type $xs                              the left operand
 		 * @param callable $operator                                the operator function to be used
 		 * @param Core\Type $initial                                the initial value to be used
 		 * @return Core\Type                                        the result
 		 */
-		public static function foldRight(ILinkedList\Type $xs, callable $operator, Core\Type $initial) {
+		public static function foldRight(ILinkedList\Type $xs, callable $operator, Core\Type $initial) : Core\Type {
 			$z = $initial;
 
 			if ($xs->__isEmpty()) {
@@ -396,11 +396,11 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
+		 * @param ILinkedList\Type $xs                              the left operand
 		 * @return Core\Type                                        the head object in this linked
 		 *                                                          collection
 		 */
-		public static function head(ILinkedList\Type $xs) {
+		public static function head(ILinkedList\Type $xs) : Core\Type {
 			return $xs->head();
 		}
 
@@ -409,10 +409,10 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
-		 * @return IOption\Type                                      the option
+		 * @param ILinkedList\Type $xs                              the left operand
+		 * @return IOption\Type                                     the option
 		 */
-		public static function headIOption(ILinkedList\Type $xs) {
+		public static function headIOption(ILinkedList\Type $xs) : IOption\Type {
 			return (!$xs->__isEmpty()) ? IOption\Type::some($xs->head()) : IOption\Type::none();
 		}
 
@@ -421,12 +421,12 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
+		 * @param ILinkedList\Type $xs                              the left operand
 		 * @param Core\Type $y                                      the object to be searched for
-		 * @return IInt32\Type                                       the index of the first occurrence
+		 * @return IInt32\Type                                      the index of the first occurrence
 		 *                                                          or otherwise -1
 		 */
-		public static function indexOf(ILinkedList\Type $xs, Core\Type $y) {
+		public static function indexOf(ILinkedList\Type $xs, Core\Type $y) : IInt32\Type {
 			$i = IInt32\Type::zero();
 
 			for ($zs = $xs; !$zs->__isEmpty(); $zs = $zs->tail()) {
@@ -445,11 +445,11 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
-		 * @return ILinkedList\Type                                  the collection, minus the last
+		 * @param ILinkedList\Type $xs                              the left operand
+		 * @return ILinkedList\Type                                 the collection, minus the last
 		 *                                                          item
 		 */
-		public static function init(ILinkedList\Type $xs) {
+		public static function init(ILinkedList\Type $xs) : ILinkedList\Type {
 			$start = ILinkedList\Type::nil();
 			$tail = null;
 
@@ -474,11 +474,11 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
+		 * @param ILinkedList\Type $xs                              the left operand
 		 * @param Core\Type $y                                      the object to be interspersed
-		 * @return ILinkedList\Type                                  the collection
+		 * @return ILinkedList\Type                                 the collection
 		 */
-		public static function intersperse(ILinkedList\Type $xs, Core\Type $y) {
+		public static function intersperse(ILinkedList\Type $xs, Core\Type $y) : ILinkedList\Type {
 			return ($xs->__isEmpty() || $xs->tail()->__isEmpty())
 				? $xs
 				: ILinkedList\Type::cons($xs->head(), ILinkedList\Type::cons($y, ILinkedList\Module::intersperse($xs->tail(), $y)));
@@ -489,10 +489,10 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
-		 * @return IBool\Type                                        whether the collection is empty
+		 * @param ILinkedList\Type $xs                              the left operand
+		 * @return IBool\Type                                       whether the collection is empty
 		 */
-		public static function isEmpty(ILinkedList\Type $xs) {
+		public static function isEmpty(ILinkedList\Type $xs) : IBool\Type {
 			return $xs->isEmpty();
 		}
 
@@ -501,13 +501,13 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
-		 * @param IInt32\Type $i                                     the index of the item
+		 * @param ILinkedList\Type $xs                              the left operand
+		 * @param IInt32\Type $i                                    the index of the item
 		 * @return Core\Type                                        the item at the specified index
 		 * @throws Throwable\OutOfBounds\Exception                  indicates the specified index
 		 *                                                          cannot be found
 		 */
-		public static function item(ILinkedList\Type $xs, IInt32\Type $i) {
+		public static function item(ILinkedList\Type $xs, IInt32\Type $i) : Core\Type {
 			return $xs->item($i);
 		}
 
@@ -516,10 +516,10 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
-		 * @return ILinkedList\Iterator                              an iterator for this collection
+		 * @param ILinkedList\Type $xs                              the left operand
+		 * @return ILinkedList\Iterator                             an iterator for this collection
 		 */
-		public static function iterator(ILinkedList\Type $xs) {
+		public static function iterator(ILinkedList\Type $xs) : ILinkedList\Iterator {
 			return new ILinkedList\Iterator($xs);
 		}
 
@@ -528,10 +528,10 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
+		 * @param ILinkedList\Type $xs                              the left operand
 		 * @return Core\Type                                        the last item in this collection
 		 */
-		public static function last(ILinkedList\Type $xs) {
+		public static function last(ILinkedList\Type $xs) : Core\Type {
 			$z = $xs->head();
 			for ($zs = $xs->tail(); !$zs->__isEmpty(); $zs = $zs->tail()) {
 				$z = $zs->head();
@@ -544,10 +544,10 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
-		 * @return IOption\Type                                      the option
+		 * @param ILinkedList\Type $xs                              the left operand
+		 * @return IOption\Type                                     the option
 		 */
-		public static function lastIOption(ILinkedList\Type $xs) {
+		public static function lastIOption(ILinkedList\Type $xs) : IOption\Type {
 			return (!$xs->__isEmpty()) ? IOption\Type::some(ILinkedList\Module::last($xs)) : IOption\Type::none();
 		}
 
@@ -556,10 +556,10 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
-		 * @return IInt32\Type                                       the length of this collection
+		 * @param ILinkedList\Type $xs                              the left operand
+		 * @return IInt32\Type                                      the length of this collection
 		 */
-		public static function length(ILinkedList\Type $xs) {
+		public static function length(ILinkedList\Type $xs) : IInt32\Type {
 			return $xs->length();
 		}
 
@@ -568,14 +568,14 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xss                              the left operand
+		 * @param ILinkedList\Type $xss                             the left operand
 		 * @param Core\Equality\Type $x                             the key being looked up
-		 * @return IOption\Type                                      an option containing the associated
+		 * @return IOption\Type                                     an option containing the associated
 		 *                                                          value
 		 * @throws Throwable\UnexpectedValue\Exception              indicates that the list is not
 		 *                                                          associative
 		 */
-		public static function lookup(ILinkedList\Type $xss, Core\Equality\Type $x) {
+		public static function lookup(ILinkedList\Type $xss, Core\Equality\Type $x) : IOption\Type {
 			if ($xss->__isEmpty()) {
 				return IOption\Type::none();
 			}
@@ -598,11 +598,11 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
+		 * @param ILinkedList\Type $xs                              the left operand
 		 * @param callable $subroutine                              the subroutine function to be used
-		 * @return ILinkedList\Type                                  the collection
+		 * @return ILinkedList\Type                                 the collection
 		 */
-		public static function map(ILinkedList\Type $xs, callable $subroutine) {
+		public static function map(ILinkedList\Type $xs, callable $subroutine) : ILinkedList\Type {
 			$start = ILinkedList\Type::nil();
 			$tail = null;
 
@@ -630,13 +630,13 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
+		 * @param ILinkedList\Type $xs                              the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return IBool\Type                                        whether each item passed the
+		 * @return IBool\Type                                       whether each item passed the
 		 *                                                          falsy test
 		 */
-		public static function none(ILinkedList\Type $xs, callable $predicate) {
-			return ILinkedList\Module::all($xs, function(Core\Type $x, IInt32\Type $i) use ($predicate) {
+		public static function none(ILinkedList\Type $xs, callable $predicate) : IBool\Type {
+			return ILinkedList\Module::all($xs, function(Core\Type $x, IInt32\Type $i) use ($predicate) : IBool\Type {
 				return IBool\Module::not($predicate($x, $i));
 			});
 		}
@@ -647,14 +647,14 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the linked list to be processed
-		 * @return ILinkedList\Type                                  an linked list with the duplicates
+		 * @param ILinkedList\Type $xs                              the linked list to be processed
+		 * @return ILinkedList\Type                                 an linked list with the duplicates
 		 *                                                          removed
 		 */
-		public static function nub(ILinkedList\Type $xs) {
+		public static function nub(ILinkedList\Type $xs) : ILinkedList\Type {
 			$zs = IHashSet\Type::empty_();
 
-			return ILinkedList\Module::filter($xs, function(Core\Type $x, IInt32\Type $i) use ($zs) {
+			return ILinkedList\Module::filter($xs, function(Core\Type $x, IInt32\Type $i) use ($zs) : IBool\Type {
 				if ($zs->__hasItem($x)) {
 					return IBool\Type::false();
 				}
@@ -669,11 +669,11 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the linked list to be partitioned
+		 * @param ILinkedList\Type $xs                              the linked list to be partitioned
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return ITuple\Type                                       the results
+		 * @return ITuple\Type                                      the results
 		 */
-		public static function partition(ILinkedList\Type $xs, callable $predicate) {
+		public static function partition(ILinkedList\Type $xs, callable $predicate) : ITuple\Type {
 			return ITuple\Type::box2(
 				ILinkedList\Module::filter($xs, $predicate),
 				ILinkedList\Module::reject($xs, $predicate)
@@ -685,14 +685,14 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xss                              the linked list to be processed
+		 * @param ILinkedList\Type $xss                             the linked list to be processed
 		 * @param Core\Type $k                                      the key associated with value to be
 		 *                                                          plucked
-		 * @return ILinkedList\Type                                  a list of values matching the specified
+		 * @return ILinkedList\Type                                 a list of values matching the specified
 		 *                                                          key
 		 */
-		public static function pluck(ILinkedList\Type $xss, Core\Type $k) {
-			return ILinkedList\Module::map($xss, function(IHashMap\Type $xs, IInt32\Type $i) use ($k) {
+		public static function pluck(ILinkedList\Type $xss, Core\Type $k) : ILinkedList\Type {
+			return ILinkedList\Module::map($xss, function(IHashMap\Type $xs, IInt32\Type $i) use ($k) : Core\Type {
 				return $xs->item($k);
 			});
 		}
@@ -702,11 +702,11 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
+		 * @param ILinkedList\Type $xs                              the left operand
 		 * @param Core\Type $y                                      the object to be prepended
-		 * @return ILinkedList\Type                                  the collection
+		 * @return ILinkedList\Type                                 the collection
 		 */
-		public static function prepend(ILinkedList\Type $xs, Core\Type $y) {
+		public static function prepend(ILinkedList\Type $xs, Core\Type $y) : ILinkedList\Type {
 			return ILinkedList\Type::cons($y, $xs);
 		}
 
@@ -715,12 +715,12 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
-		 * @param IInt32\Type $start                                 the starting index
-		 * @param IInt32\Type $end                                   the ending index
-		 * @return ILinkedList\Type                                  the collection
+		 * @param ILinkedList\Type $xs                              the left operand
+		 * @param IInt32\Type $start                                the starting index
+		 * @param IInt32\Type $end                                  the ending index
+		 * @return ILinkedList\Type                                 the collection
 		 */
-		public static function range(ILinkedList\Type $xs, IInt32\Type $start, IInt32\Type $end) {
+		public static function range(ILinkedList\Type $xs, IInt32\Type $start, IInt32\Type $end) : ILinkedList\Type {
 			return ILinkedList\Module::drop(ILinkedList\Module::take($xs, $end), $start);
 		}
 
@@ -730,13 +730,13 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the linked list
+		 * @param ILinkedList\Type $xs                              the linked list
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return ILinkedList\Type                                  a linked list containing those items
+		 * @return ILinkedList\Type                                 a linked list containing those items
 		 *                                                          that do not satisfy the predicate
 		 */
-		public static function reject(ILinkedList\Type $xs, callable $predicate) {
-			return ILinkedList\Module::filter($xs, function(Core\Type $x, IInt32\Type $i) use ($predicate) {
+		public static function reject(ILinkedList\Type $xs, callable $predicate) : ILinkedList\Type {
+			return ILinkedList\Module::filter($xs, function(Core\Type $x, IInt32\Type $i) use ($predicate) : IBool\Type {
 				return IBool\Module::not($predicate($x, $i));
 			});
 		}
@@ -746,11 +746,11 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
-		 * @return ILinkedList\Type                                  the collection
+		 * @param ILinkedList\Type $xs                              the left operand
+		 * @return ILinkedList\Type                                 the collection
 		 */
-		public static function reverse(ILinkedList\Type $xs) {
-			return ILinkedList\Module::foldLeft($xs, function(ILinkedList\Type $tail, Core\Type $head) {
+		public static function reverse(ILinkedList\Type $xs) : ILinkedList\Type {
+			return ILinkedList\Module::foldLeft($xs, function(ILinkedList\Type $tail, Core\Type $head) : ILinkedList\Type {
 				return ILinkedList\Type::cons($head, $tail);
 			}, ILinkedList\Type::nil());
 		}
@@ -760,12 +760,12 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the linked list to be shuffled
-		 * @return ILinkedList\Type                                  the shuffled linked list
+		 * @param ILinkedList\Type $xs                              the linked list to be shuffled
+		 * @return ILinkedList\Type                                 the shuffled linked list
 		 *
 		 * @see http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
 		 */
-		public static function shuffle(ILinkedList\Type $xs) {
+		public static function shuffle(ILinkedList\Type $xs) : ILinkedList\Type {
 			$buffer = $xs->unbox();
 			$length = count($buffer);
 
@@ -784,12 +784,12 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
-		 * @param IInt32\Type $offset                                the starting index
-		 * @param IInt32\Type $length                                the length of the slice
-		 * @return ILinkedList\Type                                  the collection
+		 * @param ILinkedList\Type $xs                              the left operand
+		 * @param IInt32\Type $offset                               the starting index
+		 * @param IInt32\Type $length                               the length of the slice
+		 * @return ILinkedList\Type                                 the collection
 		 */
-		public static function slice(ILinkedList\Type $xs, IInt32\Type $offset, IInt32\Type $length) {
+		public static function slice(ILinkedList\Type $xs, IInt32\Type $offset, IInt32\Type $length) : ILinkedList\Type {
 			return ILinkedList\Module::drop(ILinkedList\Module::take($xs, IInt32\Module::add($length, $offset)), $offset);
 		}
 
@@ -799,11 +799,11 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the linked list
+		 * @param ILinkedList\Type $xs                              the linked list
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return ITuple\Type                                       the tuple
+		 * @return ITuple\Type                                      the tuple
 		 */
-		public static function span(ILinkedList\Type $xs, callable $predicate) {
+		public static function span(ILinkedList\Type $xs, callable $predicate) : ITuple\Type {
 			return ITuple\Type::box2(
 				ILinkedList\Module::takeWhile($xs, $predicate),
 				ILinkedList\Module::dropWhile($xs, $predicate)
@@ -816,11 +816,11 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the linked list
-		 * @param IInt32\Type $n                                     the number of items to take
-		 * @return ITuple\Type                                       the tuple
+		 * @param ILinkedList\Type $xs                              the linked list
+		 * @param IInt32\Type $n                                    the number of items to take
+		 * @return ITuple\Type                                      the tuple
 		 */
-		public static function split(ILinkedList\Type $xs, IInt32\Type $n) {
+		public static function split(ILinkedList\Type $xs, IInt32\Type $n) : ITuple\Type {
 			return ITuple\Type::box2(
 				ILinkedList\Module::take($xs, $n),
 				ILinkedList\Module::drop($xs, $n)
@@ -832,10 +832,10 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
-		 * @return ILinkedList\Type                                  the tail of this list
+		 * @param ILinkedList\Type $xs                              the left operand
+		 * @return ILinkedList\Type                                 the tail of this list
 		 */
-		public static function tail(ILinkedList\Type $xs) {
+		public static function tail(ILinkedList\Type $xs) : ILinkedList\Type {
 			return $xs->tail();
 		}
 
@@ -844,11 +844,11 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
-		 * @param IInt32\Type $n                                     the number of items to take
-		 * @return ILinkedList\Type                                  the collection
+		 * @param ILinkedList\Type $xs                              the left operand
+		 * @param IInt32\Type $n                                    the number of items to take
+		 * @return ILinkedList\Type                                 the collection
 		 */
-		public static function take(ILinkedList\Type $xs, IInt32\Type $n) {
+		public static function take(ILinkedList\Type $xs, IInt32\Type $n) : ILinkedList\Type {
 			if (($n->unbox() <= 0) || $xs->__isEmpty()) {
 				return ILinkedList\Type::nil();
 			}
@@ -860,11 +860,11 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
+		 * @param ILinkedList\Type $xs                              the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return ILinkedList\Type                                  the collection
+		 * @return ILinkedList\Type                                 the collection
 		 */
-		public static function takeWhile(ILinkedList\Type $xs, callable $predicate) {
+		public static function takeWhile(ILinkedList\Type $xs, callable $predicate) : ILinkedList\Type {
 			$start = ILinkedList\Type::nil();
 			$tail = null;
 
@@ -901,12 +901,12 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
+		 * @param ILinkedList\Type $xs                              the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return ILinkedList\Type                                  the collection
+		 * @return ILinkedList\Type                                 the collection
 		 */
-		public static function takeWhileEnd(ILinkedList\Type $xs, callable $predicate) {
-			return ILinkedList\Module::takeWhile($xs, function(Core\Type $x, IInt32\Type $i) use ($predicate) {
+		public static function takeWhileEnd(ILinkedList\Type $xs, callable $predicate) : ILinkedList\Type {
+			return ILinkedList\Module::takeWhile($xs, function(Core\Type $x, IInt32\Type $i) use ($predicate) : IBool\Type {
 				return IBool\Module::not($predicate($x, $i));
 			});
 		}
@@ -917,10 +917,10 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xss                              a linked list of tuple groupings
-		 * @return ITuple\Type                                       a tuple of two (or more) linked lists
+		 * @param ILinkedList\Type $xss                             a linked list of tuple groupings
+		 * @return ITuple\Type                                      a tuple of two (or more) linked lists
 		 */
-		public static function unzip(ILinkedList\Type $xss) {
+		public static function unzip(ILinkedList\Type $xss) : ITuple\Type {
 			$as = array();
 			$bs = array();
 
@@ -937,11 +937,11 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
-		 * @param ILinkedList\Type $ys                               the right operand
-		 * @return ILinkedList\Type                                  a new list of tuple pairings
+		 * @param ILinkedList\Type $xs                              the left operand
+		 * @param ILinkedList\Type $ys                              the right operand
+		 * @return ILinkedList\Type                                 a new list of tuple pairings
 		 */
-		public static function zip(ILinkedList\Type $xs, ILinkedList\Type $ys) {
+		public static function zip(ILinkedList\Type $xs, ILinkedList\Type $ys) : ILinkedList\Type {
 			$start = ILinkedList\Type::nil();
 			$tail = null;
 
@@ -973,11 +973,11 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the value to be evaluated
-		 * @param ILinkedList\Type $ys                               the default value
-		 * @return ILinkedList\Type                                  the result
+		 * @param ILinkedList\Type $xs                              the value to be evaluated
+		 * @param ILinkedList\Type $ys                              the default value
+		 * @return ILinkedList\Type                                 the result
 		 */
-		public static function nvl(ILinkedList\Type $xs = null, ILinkedList\Type $ys = null) {
+		public static function nvl(ILinkedList\Type $xs = null, ILinkedList\Type $ys = null) : ILinkedList\Type {
 			return ($xs !== null) ? $xs : (($ys !== null) ? $ys : ILinkedList\Type::empty_());
 		}
 
@@ -986,10 +986,10 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the operand
-		 * @return IArrayList\Type                                   the collection as an array list
+		 * @param ILinkedList\Type $xs                              the operand
+		 * @return IArrayList\Type                                  the collection as an array list
 		 */
-		public static function toArrayList(ILinkedList\Type $xs) {
+		public static function toArrayList(ILinkedList\Type $xs) : IArrayList\Type {
 			$buffer = array();
 			ILinkedList\Module::each($xs, function(Core\Type $x) use ($buffer) {
 				$buffer[] = $x;
@@ -1002,10 +1002,10 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the operand
-		 * @return ILinkedList\Type                                  the collection as a linked list
+		 * @param ILinkedList\Type $xs                              the operand
+		 * @return ILinkedList\Type                                 the collection as a linked list
 		 */
-		public static function toLinkedList(ILinkedList\Type $xs) {
+		public static function toLinkedList(ILinkedList\Type $xs) : ILinkedList\Type {
 			return $xs;
 		}
 
@@ -1018,12 +1018,12 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
+		 * @param ILinkedList\Type $xs                              the left operand
 		 * @param Core\Type $ys                                     the right operand
-		 * @return IBool\Type                                        whether the left operand is equal
+		 * @return IBool\Type                                       whether the left operand is equal
 		 *                                                          to the right operand
 		 */
-		public static function eq(ILinkedList\Type $xs, Core\Type $ys) { // ==
+		public static function eq(ILinkedList\Type $xs, Core\Type $ys) : IBool\Type { // ==
 			if ($ys instanceof ILinkedList\Type) {
 				for ($as = $xs, $bs = $ys; !$as->__isEmpty() && !$bs->__isEmpty(); $as = $as->tail(), $bs = $bs->tail()) {
 					$r = $as->head()->eq($bs->head());
@@ -1047,12 +1047,12 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
+		 * @param ILinkedList\Type $xs                              the left operand
 		 * @param Core\Type $ys                                     the right operand
-		 * @return IBool\Type                                        whether the left operand is identical
+		 * @return IBool\Type                                       whether the left operand is identical
 		 *                                                          to the right operand
 		 */
-		public static function id(ILinkedList\Type $xs, Core\Type $ys) { // ===
+		public static function id(ILinkedList\Type $xs, Core\Type $ys) : IBool\Type { // ===
 			if (($ys !== null) && ($xs->__typeOf() == $ys->typeOf())) {
 				for ($as = $xs, $bs = $ys; !$as->__isEmpty() && !$bs->__isEmpty(); $as = $as->tail(), $bs = $bs->tail()) {
 					$r = $as->head()->id($bs->head());
@@ -1076,12 +1076,12 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
+		 * @param ILinkedList\Type $xs                              the left operand
 		 * @param Core\Type $ys                                     the right operand
-		 * @return IBool\Type                                        whether the left operand is NOT equal
+		 * @return IBool\Type                                       whether the left operand is NOT equal
 		 *                                                          to the right operand
 		 */
-		public static function ne(ILinkedList\Type $xs, Core\Type $ys) { // !=
+		public static function ne(ILinkedList\Type $xs, Core\Type $ys) : IBool\Type { // !=
 			return IBool\Module::not(ILinkedList\Module::eq($xs, $ys));
 		}
 
@@ -1090,12 +1090,12 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
+		 * @param ILinkedList\Type $xs                              the left operand
 		 * @param Core\Type $ys                                     the right operand
-		 * @return IBool\Type                                        whether the left operand is NOT identical
+		 * @return IBool\Type                                       whether the left operand is NOT identical
 		 *                                                          to the right operand
 		 */
-		public static function ni(ILinkedList\Type $xs, Core\Type $ys) { // !==
+		public static function ni(ILinkedList\Type $xs, Core\Type $ys) : IBool\Type { // !==
 			return IBool\Module::not(ILinkedList\Module::id($xs, $ys));
 		}
 
@@ -1108,13 +1108,13 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
-		 * @param ILinkedList\Type $ys                               the right operand
-		 * @return ITrit\Type                                        the order as to whether the left
+		 * @param ILinkedList\Type $xs                              the left operand
+		 * @param ILinkedList\Type $ys                              the right operand
+		 * @return ITrit\Type                                       the order as to whether the left
 		 *                                                          operand is less than, equals to,
 		 *                                                          or greater than the right operand
 		 */
-		public static function compare(ILinkedList\Type $xs, ILinkedList\Type $ys) {
+		public static function compare(ILinkedList\Type $xs, ILinkedList\Type $ys) : ITrit\Type {
 			for ($as = $xs, $bs = $ys; !$as->__isEmpty() && !$bs->__isEmpty(); $as = $as->tail(), $bs = $bs->tail()) {
 				$r = $as->head()->compare($bs->head());
 				if ($r->unbox() != 0) {
@@ -1141,12 +1141,12 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
-		 * @param ILinkedList\Type $ys                               the right operand
-		 * @return IBool\Type                                        whether the left operand is greater
+		 * @param ILinkedList\Type $xs                              the left operand
+		 * @param ILinkedList\Type $ys                              the right operand
+		 * @return IBool\Type                                       whether the left operand is greater
 		 *                                                          than or equal to the right operand
 		 */
-		public static function ge(ILinkedList\Type $xs, ILinkedList\Type $ys) { // >=
+		public static function ge(ILinkedList\Type $xs, ILinkedList\Type $ys) : IBool\Type { // >=
 			return IBool\Type::box(ILinkedList\Module::compare($xs, $ys)->unbox() >= 0);
 		}
 
@@ -1155,12 +1155,12 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
-		 * @param ILinkedList\Type $ys                               the right operand
-		 * @return IBool\Type                                        whether the left operand is greater
+		 * @param ILinkedList\Type $xs                              the left operand
+		 * @param ILinkedList\Type $ys                              the right operand
+		 * @return IBool\Type                                       whether the left operand is greater
 		 *                                                          than the right operand
 		 */
-		public static function gt(ILinkedList\Type $xs, ILinkedList\Type $ys) { // >
+		public static function gt(ILinkedList\Type $xs, ILinkedList\Type $ys) : IBool\Type { // >
 			return IBool\Type::box(ILinkedList\Module::compare($xs, $ys)->unbox() > 0);
 		}
 
@@ -1169,12 +1169,12 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
-		 * @param ILinkedList\Type $ys                               the right operand
-		 * @return IBool\Type                                        whether the left operand is less than
+		 * @param ILinkedList\Type $xs                              the left operand
+		 * @param ILinkedList\Type $ys                              the right operand
+		 * @return IBool\Type                                       whether the left operand is less than
 		 *                                                          or equal to the right operand
 		 */
-		public static function le(ILinkedList\Type $xs, ILinkedList\Type $ys) { // <=
+		public static function le(ILinkedList\Type $xs, ILinkedList\Type $ys) : IBool\Type { // <=
 			return IBool\Type::box(ILinkedList\Module::compare($xs, $ys)->unbox() <= 0);
 		}
 
@@ -1183,12 +1183,12 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
-		 * @param ILinkedList\Type $ys                               the right operand
-		 * @return IBool\Type                                        whether the left operand is less than
+		 * @param ILinkedList\Type $xs                              the left operand
+		 * @param ILinkedList\Type $ys                              the right operand
+		 * @return IBool\Type                                       whether the left operand is less than
 		 *                                                          the right operand
 		 */
-		public static function lt(ILinkedList\Type $xs, ILinkedList\Type $ys) { // <
+		public static function lt(ILinkedList\Type $xs, ILinkedList\Type $ys) : IBool\Type { // <
 			return IBool\Type::box(ILinkedList\Module::compare($xs, $ys)->unbox() < 0);
 		}
 
@@ -1197,11 +1197,11 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
-		 * @param ILinkedList\Type $ys                               the right operand
-		 * @return IInt32\Type                                       the maximum value
+		 * @param ILinkedList\Type $xs                              the left operand
+		 * @param ILinkedList\Type $ys                              the right operand
+		 * @return ILinkedList\Type                                 the maximum value
 		 */
-		public static function max(ILinkedList\Type $xs, ILinkedList\Type $ys) {
+		public static function max(ILinkedList\Type $xs, ILinkedList\Type $ys) : ILinkedList\Type {
 			return (ILinkedList\Module::compare($xs, $ys)->unbox() >= 0) ? $xs : $ys;
 		}
 
@@ -1210,11 +1210,11 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
-		 * @param ILinkedList\Type $ys                               the right operand
-		 * @return IInt32\Type                                       the minimum value
+		 * @param ILinkedList\Type $xs                              the left operand
+		 * @param ILinkedList\Type $ys                              the right operand
+		 * @return ILinkedList\Type                                 the minimum value
 		 */
-		public static function min(ILinkedList\Type $xs, ILinkedList\Type $ys) {
+		public static function min(ILinkedList\Type $xs, ILinkedList\Type $ys) : ILinkedList\Type {
 			return (ILinkedList\Module::compare($xs, $ys)->unbox() <= 0) ? $xs : $ys;
 		}
 
@@ -1228,12 +1228,12 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
-		 * @return IBool\Type                                        whether all of the items of
+		 * @param ILinkedList\Type $xs                              the left operand
+		 * @return IBool\Type                                       whether all of the items of
 		 *                                                          the collection evaluate to true
 		 */
-		public static function and_(ILinkedList\Type $xs) {
-			return ILinkedList\Module::all($xs, function(IBool\Type $x, IInt32\Type $i) {
+		public static function and_(ILinkedList\Type $xs) : IBool\Type {
+			return ILinkedList\Module::all($xs, function(IBool\Type $x, IInt32\Type $i) : IBool\Type {
 				return $x;
 			});
 		}
@@ -1243,12 +1243,12 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @static
-		 * @param ILinkedList\Type $xs                               the left operand
-		 * @return IBool\Type                                        whether all of the items of
+		 * @param ILinkedList\Type $xs                              the left operand
+		 * @return IBool\Type                                       whether all of the items of
 		 *                                                          the collection evaluate to false
 		 */
-		public static function or_(ILinkedList\Type $xs) {
-			return ILinkedList\Module::any($xs, function(IBool\Type $x, IInt32\Type $i) {
+		public static function or_(ILinkedList\Type $xs) : IBool\Type {
+			return ILinkedList\Module::any($xs, function(IBool\Type $x, IInt32\Type $i) : IBool\Type {
 				return $x;
 			});
 		}

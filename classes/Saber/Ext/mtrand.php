@@ -16,6 +16,8 @@
  * limitations under the License.
  */
 
+declare(strict_types = 1);
+
 if (!function_exists('mt_rand')) {
 	function mt_rand($min, $max) {
 		return rand($min, $max);

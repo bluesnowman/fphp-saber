@@ -37,11 +37,11 @@ namespace Saber\Data\IObject {
 		 *
 		 * @access public
 		 * @static
-		 * @param IObject\Type $x                                    the value to be evaluated
-		 * @param IObject\Type $y                                    the default value
-		 * @return IObject\Type                                      the result
+		 * @param IObject\Type $x                                   the value to be evaluated
+		 * @param IObject\Type $y                                   the default value
+		 * @return IObject\Type                                     the result
 		 */
-		public static function nvl(IObject\Type $x = null, IObject\Type $y = null) {
+		public static function nvl(IObject\Type $x = null, IObject\Type $y = null) : IObject\Type {
 			return ($x !== null) ? $x : (($y !== null) ? $y : IObject\Type::box(null));
 		}
 
@@ -54,12 +54,12 @@ namespace Saber\Data\IObject {
 		 *
 		 * @access public
 		 * @static
-		 * @param IObject\Type $x                                    the left operand
+		 * @param IObject\Type $x                                   the left operand
 		 * @param Core\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is equal
+		 * @return IBool\Type                                       whether the left operand is equal
 		 *                                                          to the right operand
 		 */
-		public static function eq(IObject\Type $x, Core\Type $y) { // ==
+		public static function eq(IObject\Type $x, Core\Type $y) : IBool\Type { // ==
 			$type = $x->__typeOf();
 			if ($y !== null) {
 				if ($y instanceof $type) {
@@ -74,12 +74,12 @@ namespace Saber\Data\IObject {
 		 *
 		 * @access public
 		 * @static
-		 * @param IObject\Type $x                                    the left operand
+		 * @param IObject\Type $x                                   the left operand
 		 * @param Core\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is identical
+		 * @return IBool\Type                                       whether the left operand is identical
 		 *                                                          to the right operand
 		 */
-		public static function id(IObject\Type $x, Core\Type $y) { // ===
+		public static function id(IObject\Type $x, Core\Type $y) : IBool\Type { // ===
 			if ($y !== null) {
 				if ($x->__typeOf() === $y->__typeOf()) {
 					return IBool\Type::box($x->unbox() === $y->unbox());
@@ -93,12 +93,12 @@ namespace Saber\Data\IObject {
 		 *
 		 * @access public
 		 * @static
-		 * @param IObject\Type $x                                    the left operand
+		 * @param IObject\Type $x                                   the left operand
 		 * @param Core\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is NOT equal
+		 * @return IBool\Type                                       whether the left operand is NOT equal
 		 *                                                          to the right operand
 		 */
-		public static function ne(IObject\Type $x, Core\Type $y) { // !=
+		public static function ne(IObject\Type $x, Core\Type $y) : IBool\Type { // !=
 			return IBool\Module::not(IObject\Module::eq($x, $y));
 		}
 
@@ -107,12 +107,12 @@ namespace Saber\Data\IObject {
 		 *
 		 * @access public
 		 * @static
-		 * @param IObject\Type $x                                    the left operand
+		 * @param IObject\Type $x                                   the left operand
 		 * @param Core\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is NOT identical
+		 * @return IBool\Type                                       whether the left operand is NOT identical
 		 *                                                          to the right operand
 		 */
-		public static function ni(IObject\Type $x, Core\Type $y) { // !==
+		public static function ni(IObject\Type $x, Core\Type $y) : IBool\Type { // !==
 			return IBool\Module::not(IObject\Module::id($x, $y));
 		}
 
@@ -125,13 +125,13 @@ namespace Saber\Data\IObject {
 		 *
 		 * @access public
 		 * @static
-		 * @param IObject\Type $x                                    the left operand
-		 * @param IObject\Type $y                                    the right operand
-		 * @return ITrit\Type                                        the order as to whether the left
+		 * @param IObject\Type $x                                   the left operand
+		 * @param IObject\Type $y                                   the right operand
+		 * @return ITrit\Type                                       the order as to whether the left
 		 *                                                          operand is less than, equals to,
 		 *                                                          or greater than the right operand
 		 */
-		public static function compare(IObject\Type $x, IObject\Type $y) {
+		public static function compare(IObject\Type $x, IObject\Type $y) : ITrit\Type {
 			$__x = $x->unbox();
 			$__y = $y->unbox();
 
@@ -151,12 +151,12 @@ namespace Saber\Data\IObject {
 		 *
 		 * @access public
 		 * @static
-		 * @param IObject\Type $x                                    the left operand
-		 * @param IObject\Type $y                                    the right operand
-		 * @return IBool\Type                                        whether the left operand is greater
+		 * @param IObject\Type $x                                   the left operand
+		 * @param IObject\Type $y                                   the right operand
+		 * @return IBool\Type                                       whether the left operand is greater
 		 *                                                          than or equal to the right operand
 		 */
-		public static function ge(IObject\Type $x, IObject\Type $y) { // >=
+		public static function ge(IObject\Type $x, IObject\Type $y) : IBool\Type { // >=
 			return IBool\Type::box(IObject\Module::compare($x, $y)->unbox() >= 0);
 		}
 
@@ -165,12 +165,12 @@ namespace Saber\Data\IObject {
 		 *
 		 * @access public
 		 * @static
-		 * @param IObject\Type $x                                    the left operand
-		 * @param IObject\Type $y                                    the right operand
-		 * @return IBool\Type                                        whether the left operand is greater
+		 * @param IObject\Type $x                                   the left operand
+		 * @param IObject\Type $y                                   the right operand
+		 * @return IBool\Type                                       whether the left operand is greater
 		 *                                                          than the right operand
 		 */
-		public static function gt(IObject\Type $x, IObject\Type $y) { // >
+		public static function gt(IObject\Type $x, IObject\Type $y) : IBool\Type { // >
 			return IBool\Type::box(IObject\Module::compare($x, $y)->unbox() > 0);
 		}
 
@@ -179,12 +179,12 @@ namespace Saber\Data\IObject {
 		 *
 		 * @access public
 		 * @static
-		 * @param IObject\Type $x                                    the left operand
-		 * @param IObject\Type $y                                    the right operand
-		 * @return IBool\Type                                        whether the left operand is less than
+		 * @param IObject\Type $x                                   the left operand
+		 * @param IObject\Type $y                                   the right operand
+		 * @return IBool\Type                                       whether the left operand is less than
 		 *                                                          or equal to the right operand
 		 */
-		public static function le(IObject\Type $x, IObject\Type $y) { // <=
+		public static function le(IObject\Type $x, IObject\Type $y) : IBool\Type { // <=
 			return IBool\Type::box(IObject\Module::compare($x, $y)->unbox() <= 0);
 		}
 
@@ -193,12 +193,12 @@ namespace Saber\Data\IObject {
 		 *
 		 * @access public
 		 * @static
-		 * @param IObject\Type $x                                    the left operand
-		 * @param IObject\Type $y                                    the right operand
-		 * @return IBool\Type                                        whether the left operand is less than
+		 * @param IObject\Type $x                                   the left operand
+		 * @param IObject\Type $y                                   the right operand
+		 * @return IBool\Type                                       whether the left operand is less than
 		 *                                                          the right operand
 		 */
-		public static function lt(IObject\Type $x, IObject\Type $y) { // <
+		public static function lt(IObject\Type $x, IObject\Type $y) : IBool\Type { // <
 			return IBool\Type::box(IObject\Module::compare($x, $y)->unbox() < 0);
 		}
 
@@ -207,11 +207,11 @@ namespace Saber\Data\IObject {
 		 *
 		 * @access public
 		 * @static
-		 * @param IObject\Type $x                                    the left operand
-		 * @param IObject\Type $y                                    the right operand
-		 * @return IObject\Type                                      the maximum value
+		 * @param IObject\Type $x                                   the left operand
+		 * @param IObject\Type $y                                   the right operand
+		 * @return IObject\Type                                     the maximum value
 		 */
-		public static function max(IObject\Type $x, IObject\Type $y) {
+		public static function max(IObject\Type $x, IObject\Type $y) : IObject\Type {
 			return (IObject\Module::compare($x, $y)->unbox() >= 0) ? $x : $y;
 		}
 
@@ -220,11 +220,11 @@ namespace Saber\Data\IObject {
 		 *
 		 * @access public
 		 * @static
-		 * @param IObject\Type $x                                    the left operand
-		 * @param IObject\Type $y                                    the right operand
-		 * @return IObject\Type                                      the minimum value
+		 * @param IObject\Type $x                                   the left operand
+		 * @param IObject\Type $y                                   the right operand
+		 * @return IObject\Type                                     the minimum value
 		 */
-		public static function min(IObject\Type $x, IObject\Type $y) {
+		public static function min(IObject\Type $x, IObject\Type $y) : IObject\Type {
 			return (IObject\Module::compare($x, $y)->unbox() <= 0) ? $x : $y;
 		}
 

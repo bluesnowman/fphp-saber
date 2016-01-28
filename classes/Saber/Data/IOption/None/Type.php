@@ -37,7 +37,7 @@ namespace Saber\Data\IOption\None {
 		 * @throws Throwable\UnimplementedMethod\Exception          indicates that this method cannot
 		 *                                                          be called
 		 */
-		public final function item() {
+		public final function item() : Core\Type {
 			throw new Throwable\UnimplementedMethod\Exception('Method :method has not been implemented.', array(':method' => __FUNCTION__));
 		}
 

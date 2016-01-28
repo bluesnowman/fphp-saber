@@ -34,7 +34,7 @@ namespace Saber\Data\IHashSet {
 		/**
 		 * This method tests the data type.
 		 */
-		public function testType() {
+		public function test_instanceOf() {
 			//$this->markTestIncomplete();
 
 			$p0 = new IHashSet\Type();
@@ -59,7 +59,7 @@ namespace Saber\Data\IHashSet {
 		 *
 		 * @return array
 		 */
-		public function dataBox() {
+		public function data_box() {
 			$data = array(
 				array(array(), array(0)),
 				array(array(IInt32\Type::zero()), array(1)),
@@ -71,9 +71,9 @@ namespace Saber\Data\IHashSet {
 		/**
 		 * This method tests the boxing of a value.
 		 *
-		 * @dataProvider dataBox
+		 * @dataProvider data_box
 		 */
-		public function testBox(array $provided, array $expected) {
+		public function test_box(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = IHashSet\Type::box($provided);
@@ -90,9 +90,9 @@ namespace Saber\Data\IHashSet {
 		/**
 		 * This method tests the boxing of a value.
 		 *
-		 * @dataProvider dataBox
+		 * @dataProvider data_box
 		 */
-		public function testBox2(array $provided, array $expected) {
+		public function test_box2(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = call_user_func_array(array('\\Saber\\Data\\IHashSet\\Type', 'box2'), $provided);
@@ -111,7 +111,7 @@ namespace Saber\Data\IHashSet {
 		 *
 		 * @return array
 		 */
-		public function dataMake() {
+		public function data_make() {
 			$data = array(
 				array(array(), array(0)),
 				array(array(IInt32\Type::zero()), array(1)),
@@ -123,9 +123,9 @@ namespace Saber\Data\IHashSet {
 		/**
 		 * This method tests the making of a value.
 		 *
-		 * @dataProvider dataMake
+		 * @dataProvider data_make
 		 */
-		public function testMake(array $provided, array $expected) {
+		public function test_make(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = IHashSet\Type::make($provided);
@@ -142,9 +142,9 @@ namespace Saber\Data\IHashSet {
 		/**
 		 * This method tests the making of a value.
 		 *
-		 * @dataProvider dataMake
+		 * @dataProvider data_make
 		 */
-		public function testMake2(array $provided, array $expected) {
+		public function test_make2(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = call_user_func_array(array('\\Saber\\Data\\IHashSet\\Type', 'make2'), $provided);

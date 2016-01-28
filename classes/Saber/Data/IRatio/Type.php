@@ -65,10 +65,10 @@ namespace Saber\Data\IRatio {
 		 *
 		 * @access public
 		 * @static
-		 * @param IRatio\Type $x                                     the class to be evaluated
-		 * @return IRatio\Type                                       the class
+		 * @param IRatio\Type $x                                    the class to be evaluated
+		 * @return IRatio\Type                                      the class
 		 */
-		public static function covariant(IRatio\Type $x) {
+		public static function covariant(IRatio\Type $x) : IRatio\Type {
 			return $x;
 		}
 
@@ -79,9 +79,9 @@ namespace Saber\Data\IRatio {
 		 * @access public
 		 * @static
 		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return IRatio\Type                                       the boxed object
+		 * @return IRatio\Type                                      the boxed object
 		 */
-		public static function box($value/*...*/) {
+		public static function box($value/*...*/) : IRatio\Type {
 			$values = (is_array($value)) ? $value : func_get_args();
 			$values = array_map(function($value) {
 				return ($value instanceof IInt32\Type) ? $value : IInt32\Type::box($value);
@@ -96,9 +96,9 @@ namespace Saber\Data\IRatio {
 		 * @access public
 		 * @static
 		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return IRatio\Type                                       the boxed object
+		 * @return IRatio\Type                                      the boxed object
 		 */
-		public static function make($value/*...*/) {
+		public static function make($value/*...*/) : IRatio\Type {
 			$values = (is_array($value)) ? $value : func_get_args();
 			$values = array_map(function($value) {
 				return ($value instanceof IInt32\Type) ? $value : IInt32\Type::make($value);
@@ -136,9 +136,9 @@ namespace Saber\Data\IRatio {
 		 *
 		 * @access public
 		 * @static
-		 * @return IInt32\Type                                       the object
+		 * @return IRatio\Type                                      the object
 		 */
-		public static function negative() {
+		public static function negative() : IRatio\Type {
 			if (!isset(static::$singletons[-1])) {
 				static::$singletons[-1] = new IRatio\Type(IInt32\Type::negative(), IInt32\Type::one());
 			}
@@ -150,7 +150,7 @@ namespace Saber\Data\IRatio {
 		 *
 		 * @access public
 		 * @static
-		 * @return IInt32\Type                                       the object
+		 * @return IRatio\Type                                      the object
 		 */
 		public static function one() {
 			if (!isset(static::$singletons[1])) {
@@ -164,7 +164,7 @@ namespace Saber\Data\IRatio {
 		 *
 		 * @access public
 		 * @static
-		 * @return IInt32\Type                                       the object
+		 * @return IRatio\Type                                      the object
 		 */
 		public static function zero() {
 			if (!isset(static::$singletons[0])) {
@@ -182,8 +182,8 @@ namespace Saber\Data\IRatio {
 		 *
 		 * @access public
 		 * @final
-		 * @param IInt32\Type $numerator                             the numerator
-		 * @param IInt32\Type $denominator                           the denominator
+		 * @param IInt32\Type $numerator                            the numerator
+		 * @param IInt32\Type $denominator                          the denominator
 		 */
 		public final function __construct(IInt32\Type $numerator, IInt32\Type $denominator) {
 			$this->value = array($numerator, $denominator);
@@ -194,9 +194,9 @@ namespace Saber\Data\IRatio {
 		 *
 		 * @access public
 		 * @final
-		 * @return IInt32\Type                                       the denominator
+		 * @return int                                              the denominator
 		 */
-		public final function __denominator() {
+		public final function __denominator() : int {
 			return $this->denominator()->unbox();
 		}
 
@@ -216,9 +216,9 @@ namespace Saber\Data\IRatio {
 		 *
 		 * @access public
 		 * @final
-		 * @return IInt32\Type                                       the numerator
+		 * @return int                                              the numerator
 		 */
-		public final function __numerator() {
+		public final function __numerator() : int {
 			return $this->numerator()->unbox();
 		}
 
@@ -242,9 +242,9 @@ namespace Saber\Data\IRatio {
 		 *
 		 * @access public
 		 * @final
-		 * @return IInt32\Type                                       the denominator
+		 * @return IInt32\Type                                      the denominator
 		 */
-		public final function denominator() {
+		public final function denominator() : IInt32\Type {
 			return $this->value[1];
 		}
 
@@ -253,9 +253,9 @@ namespace Saber\Data\IRatio {
 		 *
 		 * @access public
 		 * @final
-		 * @return IInt32\Type                                       the numerator
+		 * @return IInt32\Type                                      the numerator
 		 */
-		public final function numerator() {
+		public final function numerator() : IInt32\Type {
 			return $this->value[0];
 		}
 

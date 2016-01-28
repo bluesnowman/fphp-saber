@@ -43,12 +43,12 @@ namespace Saber\Data\IOption {
 		 *
 		 * @access public
 		 * @static
-		 * @param IOption\Type $xs                                   the left operand
+		 * @param IOption\Type $xs                                  the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return IBool\Type                                        whether each item passed the
+		 * @return IBool\Type                                       whether each item passed the
 		 *                                                          truthy test
 		 */
-		public static function all(IOption\Type $xs, callable $predicate) {
+		public static function all(IOption\Type $xs, callable $predicate) : IBool\Type {
 			return IBool\Module::or_(IBool\Module::not($xs->isDefined()), $predicate($xs->item(), IInt32\Type::zero()));
 		}
 
@@ -58,12 +58,12 @@ namespace Saber\Data\IOption {
 		 *
 		 * @access public
 		 * @static
-		 * @param IOption\Type $xs                                   the left operand
+		 * @param IOption\Type $xs                                  the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return IBool\Type                                        whether some of the items
+		 * @return IBool\Type                                       whether some of the items
 		 *                                                          passed the truthy test
 		 */
-		public static function any(IOption\Type $xs, callable $predicate) {
+		public static function any(IOption\Type $xs, callable $predicate) : IBool\Type {
 			return IOption\Module::find($xs, $predicate)->isDefined();
 		}
 
@@ -72,11 +72,11 @@ namespace Saber\Data\IOption {
 		 *
 		 * @access public
 		 * @static
-		 * @param IOption\Type $xs                                   the left operand
+		 * @param IOption\Type $xs                                  the left operand
 		 * @param callable $subroutine                              the subroutine function to be applied
-		 * @return IOption\Type                                      the option
+		 * @return IOption\Type                                     the option
 		 */
-		public static function bind(IOption\Type $xs, callable $subroutine) {
+		public static function bind(IOption\Type $xs, callable $subroutine) : IOption\Type {
 			return ($xs->__isDefined())
 				? IOption\Type::covariant($subroutine($xs->item(), IInt32\Type::zero()))
 				: IOption\Type::none();
@@ -88,7 +88,7 @@ namespace Saber\Data\IOption {
 		 *
 		 * @access public
 		 * @static
-		 * @param IOption\Type $xs                                   the left operand
+		 * @param IOption\Type $xs                                  the left operand
 		 * @param callable $procedure                               the procedure function to be used
 		 */
 		public static function each(IOption\Type $xs, callable $procedure) {
@@ -102,11 +102,11 @@ namespace Saber\Data\IOption {
 		 *
 		 * @access public
 		 * @static
-		 * @param IOption\Type $xs                                   the left operand
+		 * @param IOption\Type $xs                                  the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return IOption\Type                                      the option
+		 * @return IOption\Type                                     the option
 		 */
-		public static function filter(IOption\Type $xs, callable $predicate) {
+		public static function filter(IOption\Type $xs, callable $predicate) : IOption\Type {
 			if (IBool\Module::and_($xs->isDefined(), $predicate($xs->item(), IInt32\Type::zero()))->unbox()) {
 				return $xs;
 			}
@@ -118,12 +118,12 @@ namespace Saber\Data\IOption {
 		 *
 		 * @access public
 		 * @static
-		 * @param IOption\Type $xs                                   the left operand
+		 * @param IOption\Type $xs                                  the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return IOption\Type                                      an option containing the first object
+		 * @return IOption\Type                                     an option containing the first object
 		 *                                                          satisfying the predicate, if any
 		 */
-		public static function find(IOption\Type $xs, callable $predicate) {
+		public static function find(IOption\Type $xs, callable $predicate) : IOption\Type {
 			if (IBool\Module::and_($xs->isDefined(), $predicate($xs->item(), IInt32\Type::zero()))->unbox()) {
 				return $xs;
 			}
@@ -135,10 +135,10 @@ namespace Saber\Data\IOption {
 		 *
 		 * @access public
 		 * @static
-		 * @param IOption\Type $xs                                   the left operand
+		 * @param IOption\Type $xs                                  the left operand
 		 * @return Core\Type                                        the stored item
 		 */
-		public static function item(IOption\Type $xs) {
+		public static function item(IOption\Type $xs) : Core\Type {
 			return $xs->item();
 		}
 		
@@ -147,10 +147,10 @@ namespace Saber\Data\IOption {
 		 *
 		 * @access public
 		 * @static
-		 * @param IOption\Type $xs                                   the left operand
-		 * @return IOption\Iterator                                  an iterator for this collection
+		 * @param IOption\Type $xs                                  the left operand
+		 * @return IOption\Iterator                                 an iterator for this collection
 		 */
-		public static function iterator(IOption\Type $xs) {
+		public static function iterator(IOption\Type $xs) : IOption\Iterator {
 			return new IOption\Iterator($xs);
 		}
 
@@ -159,10 +159,10 @@ namespace Saber\Data\IOption {
 		 *
 		 * @access public
 		 * @static
-		 * @param IOption\Type $xs                                   the left operand
-		 * @return IInt32\Type                                       the length of this option
+		 * @param IOption\Type $xs                                  the left operand
+		 * @return IInt32\Type                                      the length of this option
 		 */
-		public static function length(IOption\Type $xs) {
+		public static function length(IOption\Type $xs) : IInt32\Type {
 			return $xs->size();
 		}
 
@@ -171,11 +171,11 @@ namespace Saber\Data\IOption {
 		 *
 		 * @access public
 		 * @static
-		 * @param IOption\Type $xs                                   the left operand
+		 * @param IOption\Type $xs                                  the left operand
 		 * @param callable $subroutine                              the subroutine function to be used
-		 * @return IOption\Type                                      the option
+		 * @return IOption\Type                                     the option
 		 */
-		public static function map(IOption\Type $xs, callable $subroutine) {
+		public static function map(IOption\Type $xs, callable $subroutine) : IOption\Type {
 			return ($xs->__isDefined())
 				? IOption\Type::some($subroutine($xs->item()))
 				: IOption\Type::none();
@@ -187,11 +187,11 @@ namespace Saber\Data\IOption {
 		 *
 		 * @access public
 		 * @static
-		 * @param IOption\Type $xs                                   the left operand
-		 * @param IOption\Type $ys                                   the alternative option
-		 * @return IOption\Type                                      the option
+		 * @param IOption\Type $xs                                  the left operand
+		 * @param IOption\Type $ys                                  the alternative option
+		 * @return IOption\Type                                     the option
 		 */
-		public static function orElse(IOption\Type $xs, IOption\Type $ys) {
+		public static function orElse(IOption\Type $xs, IOption\Type $ys) : IOption\Type {
 			return ($xs->__isDefined()) ? $xs : $ys;
 		}
 
@@ -201,11 +201,11 @@ namespace Saber\Data\IOption {
 		 *
 		 * @access public
 		 * @static
-		 * @param IOption\Type $xs                                   the left operand
+		 * @param IOption\Type $xs                                  the left operand
 		 * @param Core\Type $y                                      the alternative object
 		 * @return Core\Type                                        the boxed object
 		 */
-		public static function orSome(IOption\Type $xs, Core\Type $y) {
+		public static function orSome(IOption\Type $xs, Core\Type $y) : Core\Type {
 			return ($xs->__isDefined()) ? $xs->item() : $y;
 		}
 
@@ -219,11 +219,11 @@ namespace Saber\Data\IOption {
 		 *
 		 * @access public
 		 * @static
-		 * @param IOption\Type $xs                                   the value to be evaluated
-		 * @param IOption\Type $ys                                   the default value
-		 * @return IOption\Type                                      the result
+		 * @param IOption\Type $xs                                  the value to be evaluated
+		 * @param IOption\Type $ys                                  the default value
+		 * @return IOption\Type                                     the result
 		 */
-		public static function nvl(IOption\Type $xs = null, IOption\Type $ys = null) {
+		public static function nvl(IOption\Type $xs = null, IOption\Type $ys = null) : IOption\Type {
 			return ($xs !== null) ? $xs : (($ys !== null) ? $ys : IOption\Type::none());
 		}
 
@@ -232,10 +232,10 @@ namespace Saber\Data\IOption {
 		 *
 		 * @access public
 		 * @static
-		 * @param IOption\Type $xs                                   the operand
-		 * @return IArrayList\Type                                   the option as an array list
+		 * @param IOption\Type $xs                                  the operand
+		 * @return IArrayList\Type                                  the option as an array list
 		 */
-		public static function toArrayList(IOption\Type $xs) {
+		public static function toArrayList(IOption\Type $xs) : IArrayList\Type {
 			$buffer = array();
 
 			if ($xs->__isDefined()) {
@@ -251,12 +251,12 @@ namespace Saber\Data\IOption {
 		 *
 		 * @access public
 		 * @static
-		 * @param IOption\Type $xs                                   the operand
+		 * @param IOption\Type $xs                                  the operand
 		 * @param Core\Type $x                                      the object to be returned
 		 *                                                          if option is not defined
-		 * @return IEither\Type                                      the either
+		 * @return IEither\Type                                     the either
 		 */
-		public static function toLeft(IOption\Type $xs, Core\Type $x) {
+		public static function toLeft(IOption\Type $xs, Core\Type $x) : IEither\Type {
 			return ($xs->__isDefined())
 				? IEither\Type::left($xs->item())
 				: IEither\Type::right($x);
@@ -267,10 +267,10 @@ namespace Saber\Data\IOption {
 		 *
 		 * @access public
 		 * @static
-		 * @param IOption\Type $xs                                   the operand
-		 * @return ILinkedList\Type                                  the option as a linked list
+		 * @param IOption\Type $xs                                  the operand
+		 * @return ILinkedList\Type                                 the option as a linked list
 		 */
-		public static function toLinkedList(IOption\Type $xs) {
+		public static function toLinkedList(IOption\Type $xs) : ILinkedList\Type {
 			return ($xs->__isDefined())
 				? ILinkedList\Type::cons($xs->item())
 				: ILinkedList\Type::nil();
@@ -281,10 +281,10 @@ namespace Saber\Data\IOption {
 		 *
 		 * @access public
 		 * @static
-		 * @param IOption\Type $xs                                   the operand
-		 * @return ILinkedList\Type                                  the option
+		 * @param IOption\Type $xs                                  the operand
+		 * @return IOption\Type                                     the option
 		 */
-		public static function toOption(IOption\Type $xs) {
+		public static function toOption(IOption\Type $xs) : IOption\Type {
 			return $xs;
 		}
 
@@ -294,12 +294,12 @@ namespace Saber\Data\IOption {
 		 *
 		 * @access public
 		 * @static
-		 * @param IOption\Type $xs                                   the operand
+		 * @param IOption\Type $xs                                  the operand
 		 * @param Core\Type $x                                      the object to be returned
 		 *                                                          if option is not defined
-		 * @return IEither\Type                                      the either
+		 * @return IEither\Type                                     the either
 		 */
-		public static function toRight(IOption\Type $xs, Core\Type $x) {
+		public static function toRight(IOption\Type $xs, Core\Type $x) : IEither\Type {
 			return ($xs->__isDefined())
 				? IEither\Type::right($xs->item())
 				: IEither\Type::left($x);
@@ -314,11 +314,11 @@ namespace Saber\Data\IOption {
 		 *
 		 * @access public
 		 * @static
-		 * @param IOption\Type $xs                                   the operand
-		 * @return IBool\Type                                        whether this instance is a "some"
+		 * @param IOption\Type $xs                                  the operand
+		 * @return IBool\Type                                       whether this instance is a "some"
 		 *                                                          option
 		 */
-		public static function isDefined(IOption\Type $xs) {
+		public static function isDefined(IOption\Type $xs) : IBool\Type {
 			return $xs->isDefined();
 		}
 
@@ -331,12 +331,12 @@ namespace Saber\Data\IOption {
 		 *
 		 * @access public
 		 * @static
-		 * @param IOption\Type $xs                                   the left operand
+		 * @param IOption\Type $xs                                  the left operand
 		 * @param Core\Type $ys                                     the object to be evaluated
-		 * @return IBool\Type                                        whether the specified object is equal
+		 * @return IBool\Type                                       whether the specified object is equal
 		 *                                                          to the current object
 		 */
-		public static function eq(IOption\Type $xs, Core\Type $ys) {
+		public static function eq(IOption\Type $xs, Core\Type $ys) : IBool\Type {
 			if ($ys !== null) {
 				$type = $xs->__typeOf();
 				if ($ys instanceof $type) {
@@ -366,12 +366,12 @@ namespace Saber\Data\IOption {
 		 *
 		 * @access public
 		 * @static
-		 * @param IOption\Type $xs                                   the left operand
+		 * @param IOption\Type $xs                                  the left operand
 		 * @param Core\Type $ys                                     the object to be evaluated
-		 * @return IBool\Type                                        whether the specified object is identical
+		 * @return IBool\Type                                       whether the specified object is identical
 		 *                                                          to the current object
 		 */
-		public static function id(IOption\Type $xs, Core\Type $ys) {
+		public static function id(IOption\Type $xs, Core\Type $ys) : IBool\Type {
 			if ($ys !== null) {
 				if ($xs->__typeOf() === $ys->__typeOf()) {
 					if ($ys instanceof IOption\Some\Type) {
@@ -400,12 +400,12 @@ namespace Saber\Data\IOption {
 		 *
 		 * @access public
 		 * @static
-		 * @param IOption\Type $xs                                   the left operand
+		 * @param IOption\Type $xs                                  the left operand
 		 * @param Core\Type $ys                                     the right operand
-		 * @return IBool\Type                                        whether the left operand is NOT equal
+		 * @return IBool\Type                                       whether the left operand is NOT equal
 		 *                                                          to the right operand
 		 */
-		public static function ne(IOption\Type $xs, Core\Type $ys) { // !=
+		public static function ne(IOption\Type $xs, Core\Type $ys) : IBool\Type { // !=
 			return IBool\Module::not(IOption\Module::eq($xs, $ys));
 		}
 
@@ -414,12 +414,12 @@ namespace Saber\Data\IOption {
 		 *
 		 * @access public
 		 * @static
-		 * @param IOption\Type $xs                                   the left operand
+		 * @param IOption\Type $xs                                  the left operand
 		 * @param Core\Type $ys                                     the right operand
-		 * @return IBool\Type                                        whether the left operand is NOT identical
+		 * @return IBool\Type                                       whether the left operand is NOT identical
 		 *                                                          to the right operand
 		 */
-		public static function ni(IOption\Type $xs, Core\Type $ys) { // !==
+		public static function ni(IOption\Type $xs, Core\Type $ys) : IBool\Type { // !==
 			return IBool\Module::not(IOption\Module::id($xs, $ys));
 		}
 
@@ -432,13 +432,13 @@ namespace Saber\Data\IOption {
 		 *
 		 * @access public
 		 * @static
-		 * @param IOption\Type $xs                                   the left operand
-		 * @param IOption\Type $ys                                   the object to be compared
-		 * @return ITrit\Type                                        whether the current object is less than,
+		 * @param IOption\Type $xs                                  the left operand
+		 * @param IOption\Type $ys                                  the object to be compared
+		 * @return ITrit\Type                                       whether the current object is less than,
 		 *                                                          equal to, or greater than the specified
 		 *                                                          object
 		 */
-		public static function compare(IOption\Type $xs, IOption\Type $ys) {
+		public static function compare(IOption\Type $xs, IOption\Type $ys) : ITrit\Type {
 			$x = $xs->__isDefined();
 			$y = $ys->__isDefined();
 
@@ -477,12 +477,12 @@ namespace Saber\Data\IOption {
 		 *
 		 * @access public
 		 * @static
-		 * @param IOption\Type $xs                                   the left operand
-		 * @param IOption\Type $ys                                   the right operand
-		 * @return IBool\Type                                        whether the left operand is greater
+		 * @param IOption\Type $xs                                  the left operand
+		 * @param IOption\Type $ys                                  the right operand
+		 * @return IBool\Type                                       whether the left operand is greater
 		 *                                                          than or equal to the right operand
 		 */
-		public static function ge(IOption\Type $xs, IOption\Type $ys) { // >=
+		public static function ge(IOption\Type $xs, IOption\Type $ys) : IBool\Type { // >=
 			return IBool\Type::box(IOption\Module::compare($xs, $ys)->unbox() >= 0);
 		}
 
@@ -491,12 +491,12 @@ namespace Saber\Data\IOption {
 		 *
 		 * @access public
 		 * @static
-		 * @param IOption\Type $xs                                   the left operand
-		 * @param IOption\Type $ys                                   the right operand
-		 * @return IBool\Type                                        whether the left operand is greater
+		 * @param IOption\Type $xs                                  the left operand
+		 * @param IOption\Type $ys                                  the right operand
+		 * @return IBool\Type                                       whether the left operand is greater
 		 *                                                          than the right operand
 		 */
-		public static function gt(IOption\Type $xs, IOption\Type $ys) { // >
+		public static function gt(IOption\Type $xs, IOption\Type $ys) : IBool\Type { // >
 			return IBool\Type::box(IOption\Module::compare($xs, $ys)->unbox() > 0);
 		}
 
@@ -505,12 +505,12 @@ namespace Saber\Data\IOption {
 		 *
 		 * @access public
 		 * @static
-		 * @param IOption\Type $xs                                   the left operand
-		 * @param IOption\Type $ys                                   the right operand
-		 * @return IBool\Type                                        whether the left operand is less than
+		 * @param IOption\Type $xs                                  the left operand
+		 * @param IOption\Type $ys                                  the right operand
+		 * @return IBool\Type                                       whether the left operand is less than
 		 *                                                          or equal to the right operand
 		 */
-		public static function le(IOption\Type $xs, IOption\Type $ys) { // <=
+		public static function le(IOption\Type $xs, IOption\Type $ys) : IBool\Type { // <=
 			return IBool\Type::box(IOption\Module::compare($xs, $ys)->unbox() <= 0);
 		}
 
@@ -519,12 +519,12 @@ namespace Saber\Data\IOption {
 		 *
 		 * @access public
 		 * @static
-		 * @param IOption\Type $xs                                   the left operand
-		 * @param IOption\Type $ys                                   the right operand
-		 * @return IBool\Type                                        whether the left operand is less than
+		 * @param IOption\Type $xs                                  the left operand
+		 * @param IOption\Type $ys                                  the right operand
+		 * @return IBool\Type                                       whether the left operand is less than
 		 *                                                          the right operand
 		 */
-		public static function lt(IOption\Type $xs, IOption\Type $ys) { // <
+		public static function lt(IOption\Type $xs, IOption\Type $ys) : IBool\Type { // <
 			return IBool\Type::box(IOption\Module::compare($xs, $ys)->unbox() < 0);
 		}
 
@@ -533,11 +533,11 @@ namespace Saber\Data\IOption {
 		 *
 		 * @access public
 		 * @static
-		 * @param IOption\Type $xs                                   the left operand
-		 * @param IOption\Type $ys                                   the right operand
-		 * @return IOption\Type                                      the maximum value
+		 * @param IOption\Type $xs                                  the left operand
+		 * @param IOption\Type $ys                                  the right operand
+		 * @return IOption\Type                                     the maximum value
 		 */
-		public static function max(IOption\Type $xs, IOption\Type $ys) {
+		public static function max(IOption\Type $xs, IOption\Type $ys) : IOption\Type {
 			return (IOption\Module::compare($xs, $ys)->unbox() >= 0) ? $xs : $ys;
 		}
 
@@ -546,11 +546,11 @@ namespace Saber\Data\IOption {
 		 *
 		 * @access public
 		 * @static
-		 * @param IOption\Type $xs                                   the left operand
-		 * @param IOption\Type $ys                                   the right operand
-		 * @return IOption\Type                                      the minimum value
+		 * @param IOption\Type $xs                                  the left operand
+		 * @param IOption\Type $ys                                  the right operand
+		 * @return IOption\Type                                     the minimum value
 		 */
-		public static function min(IOption\Type $xs, IOption\Type $ys) {
+		public static function min(IOption\Type $xs, IOption\Type $ys) : IOption\Type {
 			return (IOption\Module::compare($xs, $ys)->unbox() <= 0) ? $xs : $ys;
 		}
 

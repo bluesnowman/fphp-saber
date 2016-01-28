@@ -31,11 +31,9 @@ namespace Saber\Data\IBool {
 		#region Tests -> Inheritance
 
 		/**
-		 * This method tests the data type.
+		 * This method tests the "instanceOf" property.
 		 */
-		public function testType() {
-			//$this->markTestIncomplete();
-
+		public function test_instanceOf() {
 			$p0 = new IBool\Type(false);
 
 			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p0);
@@ -52,11 +50,11 @@ namespace Saber\Data\IBool {
 		#region Tests -> Initialization
 
 		/**
-		 * This method provides the data for testing the boxing of a value.
+		 * This method provides the data for testing the "box" method.
 		 *
 		 * @return array
 		 */
-		public function dataBox() {
+		public function data_box() {
 			$data = array(
 				array(array(true), array(true)),
 				array(array(false), array(false)),
@@ -65,13 +63,11 @@ namespace Saber\Data\IBool {
 		}
 
 		/**
-		 * This method tests the boxing of a value.
+		 * This method tests the "box" method.
 		 *
-		 * @dataProvider dataBox
+		 * @dataProvider data_box
 		 */
-		public function testBox(array $provided, array $expected) {
-			//$this->markTestIncomplete();
-
+		public function test_box(array $provided, array $expected) {
 			$p0 = IBool\Type::box($provided[0]);
 
 			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p0);
@@ -84,11 +80,41 @@ namespace Saber\Data\IBool {
 		}
 
 		/**
-		 * This method provides the data for testing the making of a value.
+		 * This method provides the data for testing the "covariant" method.
 		 *
 		 * @return array
 		 */
-		public function dataMake() {
+		public function data_covariant() {
+			$data = array(
+				array(array(true), array(true)),
+				array(array(false), array(false)),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "covariant" method.
+		 *
+		 * @dataProvider data_covariant
+		 */
+		public function test_covariant(array $provided, array $expected) {
+			$p0 = IBool\Type::covariant(IBool\Type::box($provided[0]));
+
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p0);
+
+			$p1 = $p0->unbox();
+			$e1 = $expected[0];
+
+			$this->assertInternalType('boolean', $p1);
+			$this->assertSame($e1, $p1);
+		}
+
+		/**
+		 * This method provides the data for testing the "make" method.
+		 *
+		 * @return array
+		 */
+		public function data_make() {
 			$data = array(
 				array(array(true), array(true)),
 				array(array(1), array(true)),
@@ -102,13 +128,11 @@ namespace Saber\Data\IBool {
 		}
 
 		/**
-		 * This method tests the making of a value.
+		 * This method tests the "make" method.
 		 *
-		 * @dataProvider dataMake
+		 * @dataProvider data_make
 		 */
-		public function testMake(array $provided, array $expected) {
-			//$this->markTestIncomplete();
-
+		public function test_make(array $provided, array $expected) {
 			$p0 = IBool\Type::make($provided[0]);
 
 			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p0);
@@ -121,11 +145,9 @@ namespace Saber\Data\IBool {
 		}
 
 		/**
-		 * This method tests the initialization of a singleton, boxed value.
+		 * This method tests the "singletons" methods.
 		 */
-		public function testSingletons() {
-			//$this->markTestIncomplete();
-
+		public function test_singletons() {
 			$p0 = IBool\Type::true();
 			$e0 = IBool\Type::true();
 
@@ -156,11 +178,11 @@ namespace Saber\Data\IBool {
 		#region Tests -> Interface
 
 		/**
-		 * This method provides the data for testing that an object has a unique hash code.
+		 * This method provides the data for testing the "hashCode" method.
 		 *
 		 * @return array
 		 */
-		public function dataHashCode() {
+		public function data_hashCode() {
 			$data = array(
 				array(array(true), array('true')),
 				array(array(false), array('false')),
@@ -169,11 +191,11 @@ namespace Saber\Data\IBool {
 		}
 
 		/**
-		 * This method tests that an object has a unique hash code.
+		 * This method tests the "hashCode" method.
 		 *
-		 * @dataProvider dataHashCode
+		 * @dataProvider data_hashCode
 		 */
-		public function testHashCode(array $provided, array $expected) {
+		public function test_hashCode(array $provided, array $expected) {
 			$p0 = IBool\Type::make($provided[0])->__hashCode();
 			$e0 = $expected[0];
 
@@ -182,11 +204,11 @@ namespace Saber\Data\IBool {
 		}
 
 		/**
-		 * This method provides the data for testing that a value is converted to a string.
+		 * This method provides the data for testing the "toString" method.
 		 *
 		 * @return array
 		 */
-		public function data2String() {
+		public function data_toString() {
 			$data = array(
 				array(array(true), array('true')),
 				array(array(false), array('false')),
@@ -195,11 +217,11 @@ namespace Saber\Data\IBool {
 		}
 
 		/**
-		 * This method tests that a value is converted to a string.
+		 * This method tests the "toString" method.
 		 *
-		 * @dataProvider data2String
+		 * @dataProvider data_toString
 		 */
-		public function testToString(array $provided, array $expected) {
+		public function test_toString(array $provided, array $expected) {
 			$p0 = IBool\Type::make($provided[0])->__toString();
 			$e0 = $expected[0];
 

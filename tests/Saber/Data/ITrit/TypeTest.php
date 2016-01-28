@@ -33,7 +33,7 @@ namespace Saber\Data\ITrit {
 		/**
 		 * This method tests the data type.
 		 */
-		public function testType() {
+		public function test_instanceOf() {
 			//$this->markTestIncomplete();
 
 			$p0 = new ITrit\Type(0);
@@ -59,12 +59,10 @@ namespace Saber\Data\ITrit {
 		 *
 		 * @return array
 		 */
-		public function dataBox() {
+		public function data_box() {
 			$data = array(
 				array(array(-1), array(-1)),
 				array(array(0), array(0)),
-				array(array(null), array(0)),
-				array(array(''), array(0)),
 				array(array(1), array(1)),
 			);
 			return $data;
@@ -73,9 +71,9 @@ namespace Saber\Data\ITrit {
 		/**
 		 * This method tests the boxing of a value.
 		 *
-		 * @dataProvider dataBox
+		 * @dataProvider data_box
 		 */
-		public function testBox(array $provided, array $expected) {
+		public function test_box(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = ITrit\Type::box($provided[0]);
@@ -94,7 +92,7 @@ namespace Saber\Data\ITrit {
 		 *
 		 * @return array
 		 */
-		public function dataMake() {
+		public function data_make() {
 			$data = array(
 				array(array(-1), array(-1)),
 				array(array(0), array(0)),
@@ -108,9 +106,9 @@ namespace Saber\Data\ITrit {
 		/**
 		 * This method tests the making of a value.
 		 *
-		 * @dataProvider dataMake
+		 * @dataProvider data_make
 		 */
-		public function testMake(array $provided, array $expected) {
+		public function test_make(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = ITrit\Type::make($provided[0]);
@@ -127,7 +125,7 @@ namespace Saber\Data\ITrit {
 		/**
 		 * This method tests the initialization of a singleton, boxed value.
 		 */
-		public function testSingletons() {
+		public function test_singletons() {
 			//$this->markTestIncomplete();
 
 			$p0 = ITrit\Type::negative();
@@ -176,7 +174,7 @@ namespace Saber\Data\ITrit {
 		 *
 		 * @return array
 		 */
-		public function dataHashCode() {
+		public function data_hashCode() {
 			$data = array(
 				array(array(-1), array('negative')),
 				array(array(0), array('zero')),
@@ -188,9 +186,9 @@ namespace Saber\Data\ITrit {
 		/**
 		 * This method tests that an object has a unique hash code.
 		 *
-		 * @dataProvider dataHashCode
+		 * @dataProvider data_hashCode
 		 */
-		public function testHashCode(array $provided, array $expected) {
+		public function test_hashCode(array $provided, array $expected) {
 			$p0 = ITrit\Type::make($provided[0])->__hashCode();
 			$e0 = $expected[0];
 
@@ -203,7 +201,7 @@ namespace Saber\Data\ITrit {
 		 *
 		 * @return array
 		 */
-		public function data2String() {
+		public function data_toString() {
 			$data = array(
 				array(array(-1), array('-1')),
 				array(array(0), array('0')),
@@ -215,9 +213,9 @@ namespace Saber\Data\ITrit {
 		/**
 		 * This method tests that a value is converted to a string.
 		 *
-		 * @dataProvider data2String
+		 * @dataProvider data_toString
 		 */
-		public function testToString(array $provided, array $expected) {
+		public function test_toString(array $provided, array $expected) {
 			$p0 = ITrit\Type::make($provided[0])->__toString();
 			$e0 = $expected[0];
 

@@ -34,7 +34,7 @@ namespace Saber\Data\IUnit {
 		/**
 		 * This method tests the data type.
 		 */
-		public function testType() {
+		public function test_instanceOf() {
 			//$this->markTestIncomplete();
 
 			$p0 = new IUnit\Type();
@@ -77,7 +77,7 @@ namespace Saber\Data\IUnit {
 		/**
 		 * This method tests that an object has a unique hash code.
 		 */
-		public function testHashCode() {
+		public function test_hashCode() {
 			$p0 = IUnit\Type::instance()->__hashCode();
 			$e0 = 'null';
 
@@ -88,7 +88,7 @@ namespace Saber\Data\IUnit {
 		/**
 		 * This method tests that a value is converted to a string.
 		 */
-		public function testToString() {
+		public function test_toString() {
 			$p0 = IUnit\Type::instance()->__toString();
 			$e0 = 'null';
 

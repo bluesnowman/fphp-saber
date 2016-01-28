@@ -40,8 +40,7 @@ namespace Saber\Data\IChar {
 		#region Methods -> Conversion Operations
 
 		/**
-		 * This method returns the latter value should the former value evaluates
-		 * to null.
+		 * This method returns the latter value should the former value evaluate to null.
 		 *
 		 * @access public
 		 * @static

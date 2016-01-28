@@ -39,11 +39,11 @@ namespace Saber\Data\ITrit {
 		 *
 		 * @access public
 		 * @static
-		 * @param ITrit\Type $x                                      the value to be evaluated
-		 * @param ITrit\Type $y                                      the default value
-		 * @return ITrit\Type                                        the result
+		 * @param ITrit\Type $x                                     the value to be evaluated
+		 * @param ITrit\Type $y                                     the default value
+		 * @return ITrit\Type                                       the result
 		 */
-		public static function nvl(ITrit\Type $x = null, ITrit\Type $y = null) {
+		public static function nvl(ITrit\Type $x = null, ITrit\Type $y = null) : ITrit\Type {
 			return ($x !== null) ? $x : (($y !== null) ? $y : ITrit\Type::zero());
 		}
 
@@ -53,10 +53,10 @@ namespace Saber\Data\ITrit {
 		 *
 		 * @access public
 		 * @static
-		 * @param ITrit\Type $x                                      the object to be converted
-		 * @return IBool\Type                                        the value as a IBool
+		 * @param ITrit\Type $x                                     the object to be converted
+		 * @return IBool\Type                                       the value as a IBool
 		 */
-		public static function toBool(ITrit\Type $x) {
+		public static function toBool(ITrit\Type $x) : IBool\Type {
 			return ITrit\Module::eq($x, ITrit\Type::zero());
 		}
 
@@ -66,10 +66,10 @@ namespace Saber\Data\ITrit {
 		 *
 		 * @access public
 		 * @static
-		 * @param ITrit\Type $x                                      the object to be converted
-		 * @return IDouble\Type                                      the value as a IDouble
+		 * @param ITrit\Type $x                                     the object to be converted
+		 * @return IDouble\Type                                     the value as a IDouble
 		 */
-		public static function toDouble(ITrit\Type $x) {
+		public static function toDouble(ITrit\Type $x) : IDouble\Type {
 			return IDouble\Type::make($x->unbox());
 		}
 
@@ -79,10 +79,10 @@ namespace Saber\Data\ITrit {
 		 *
 		 * @access public
 		 * @static
-		 * @param ITrit\Type $x                                      the object to be converted
-		 * @return IFloat\Type                                       the value as a IFloat
+		 * @param ITrit\Type $x                                     the object to be converted
+		 * @return IFloat\Type                                      the value as a IFloat
 		 */
-		public static function toFloat(ITrit\Type $x) {
+		public static function toFloat(ITrit\Type $x) : IFloat\Type {
 			return IFloat\Type::make($x->unbox());
 		}
 
@@ -92,10 +92,10 @@ namespace Saber\Data\ITrit {
 		 *
 		 * @access public
 		 * @static
-		 * @param ITrit\Type $x                                      the object to be converted
-		 * @return IInt32\Type                                       the value as an IInt32
+		 * @param ITrit\Type $x                                     the object to be converted
+		 * @return IInt32\Type                                      the value as an IInt32
 		 */
-		public static function toInt32(ITrit\Type $x) {
+		public static function toInt32(ITrit\Type $x) : IInt32\Type {
 			return IInt32\Type::make($x->unbox());
 		}
 
@@ -105,10 +105,10 @@ namespace Saber\Data\ITrit {
 		 *
 		 * @access public
 		 * @static
-		 * @param ITrit\Type $x                                      the object to be converted
-		 * @return IInteger\Type                                     the value as an IInteger
+		 * @param ITrit\Type $x                                     the object to be converted
+		 * @return IInteger\Type                                    the value as an IInteger
 		 */
-		public static function toInteger(ITrit\Type $x) {
+		public static function toInteger(ITrit\Type $x) : IInteger\Type {
 			return IInteger\Type::make($x->unbox());
 		}
 
@@ -121,12 +121,12 @@ namespace Saber\Data\ITrit {
 		 *
 		 * @access public
 		 * @static
-		 * @param ITrit\Type $x                                      the left operand
+		 * @param ITrit\Type $x                                     the left operand
 		 * @param Core\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is equal
+		 * @return IBool\Type                                       whether the left operand is equal
 		 *                                                          to the right operand
 		 */
-		public static function eq(ITrit\Type $x, Core\Type $y) { // ==
+		public static function eq(ITrit\Type $x, Core\Type $y) : IBool\Type { // ==
 			$type = $x->__typeOf();
 			if (($y !== null) && ($y instanceof $type)) {
 				return IBool\Type::box($x->unbox() == $y->unbox());
@@ -139,12 +139,12 @@ namespace Saber\Data\ITrit {
 		 *
 		 * @access public
 		 * @static
-		 * @param ITrit\Type $x                                      the left operand
+		 * @param ITrit\Type $x                                     the left operand
 		 * @param Core\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is identical
+		 * @return IBool\Type                                       whether the left operand is identical
 		 *                                                          to the right operand
 		 */
-		public static function id(ITrit\Type $x, Core\Type $y) { // ===
+		public static function id(ITrit\Type $x, Core\Type $y) : IBool\Type { // ===
 			if ($y !== null) {
 				if ($x->__typeOf() === $y->__typeOf()) {
 					return IBool\Type::box($x->unbox() === $y->unbox());
@@ -158,12 +158,12 @@ namespace Saber\Data\ITrit {
 		 *
 		 * @access public
 		 * @static
-		 * @param ITrit\Type $x                                      the left operand
+		 * @param ITrit\Type $x                                     the left operand
 		 * @param Core\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is NOT equal
+		 * @return IBool\Type                                       whether the left operand is NOT equal
 		 *                                                          to the right operand
 		 */
-		public static function ne(ITrit\Type $x, Core\Type $y) { // !=
+		public static function ne(ITrit\Type $x, Core\Type $y) : IBool\Type { // !=
 			return IBool\Module::not(ITrit\Module::eq($x, $y));
 		}
 
@@ -172,12 +172,12 @@ namespace Saber\Data\ITrit {
 		 *
 		 * @access public
 		 * @static
-		 * @param ITrit\Type $x                                      the left operand
+		 * @param ITrit\Type $x                                     the left operand
 		 * @param Core\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is NOT identical
+		 * @return IBool\Type                                       whether the left operand is NOT identical
 		 *                                                          to the right operand
 		 */
-		public static function ni(ITrit\Type $x, Core\Type $y) { // !==
+		public static function ni(ITrit\Type $x, Core\Type $y) : IBool\Type { // !==
 			return IBool\Module::not(ITrit\Module::id($x, $y));
 		}
 
@@ -190,13 +190,13 @@ namespace Saber\Data\ITrit {
 		 *
 		 * @access public
 		 * @static
-		 * @param ITrit\Type $x                                      the left operand
-		 * @param ITrit\Type $y                                      the right operand
-		 * @return ITrit\Type                                        the order as to whether the left
+		 * @param ITrit\Type $x                                     the left operand
+		 * @param ITrit\Type $y                                     the right operand
+		 * @return ITrit\Type                                       the order as to whether the left
 		 *                                                          operand is less than, equals to,
 		 *                                                          or greater than the right operand
 		 */
-		public static function compare(ITrit\Type $x, ITrit\Type $y) {
+		public static function compare(ITrit\Type $x, ITrit\Type $y) : ITrit\Type {
 			$__x = $x->unbox();
 			$__y = $y->unbox();
 
@@ -216,12 +216,12 @@ namespace Saber\Data\ITrit {
 		 *
 		 * @access public
 		 * @static
-		 * @param ITrit\Type $x                                      the left operand
-		 * @param ITrit\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is greater
+		 * @param ITrit\Type $x                                     the left operand
+		 * @param ITrit\Type $y                                     the right operand
+		 * @return IBool\Type                                       whether the left operand is greater
 		 *                                                          than or equal to the right operand
 		 */
-		public static function ge(ITrit\Type $x, ITrit\Type $y) { // >=
+		public static function ge(ITrit\Type $x, ITrit\Type $y) : IBool\Type { // >=
 			return IBool\Type::box(ITrit\Module::compare($x, $y)->unbox() >= 0);
 		}
 
@@ -230,12 +230,12 @@ namespace Saber\Data\ITrit {
 		 *
 		 * @access public
 		 * @static
-		 * @param ITrit\Type $x                                      the left operand
-		 * @param ITrit\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is greater
+		 * @param ITrit\Type $x                                     the left operand
+		 * @param ITrit\Type $y                                     the right operand
+		 * @return IBool\Type                                       whether the left operand is greater
 		 *                                                          than the right operand
 		 */
-		public static function gt(ITrit\Type $x, ITrit\Type $y) { // >
+		public static function gt(ITrit\Type $x, ITrit\Type $y) : IBool\Type { // >
 			return IBool\Type::box(ITrit\Module::compare($x, $y)->unbox() > 0);
 		}
 
@@ -244,12 +244,12 @@ namespace Saber\Data\ITrit {
 		 *
 		 * @access public
 		 * @static
-		 * @param ITrit\Type $x                                      the left operand
-		 * @param ITrit\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is less than
+		 * @param ITrit\Type $x                                     the left operand
+		 * @param ITrit\Type $y                                     the right operand
+		 * @return IBool\Type                                       whether the left operand is less than
 		 *                                                          or equal to the right operand
 		 */
-		public static function le(ITrit\Type $x, ITrit\Type $y) { // <=
+		public static function le(ITrit\Type $x, ITrit\Type $y) : IBool\Type { // <=
 			return IBool\Type::box(ITrit\Module::compare($x, $y)->unbox() <= 0);
 		}
 
@@ -258,12 +258,12 @@ namespace Saber\Data\ITrit {
 		 *
 		 * @access public
 		 * @static
-		 * @param ITrit\Type $x                                      the left operand
-		 * @param ITrit\Type $y                                      the right operand
-		 * @return IBool\Type                                        whether the left operand is less than
+		 * @param ITrit\Type $x                                     the left operand
+		 * @param ITrit\Type $y                                     the right operand
+		 * @return IBool\Type                                       whether the left operand is less than
 		 *                                                          the right operand
 		 */
-		public static function lt(ITrit\Type $x, ITrit\Type $y) { // <
+		public static function lt(ITrit\Type $x, ITrit\Type $y) : IBool\Type { // <
 			return IBool\Type::box(ITrit\Module::compare($x, $y)->unbox() < 0);
 		}
 
@@ -272,11 +272,11 @@ namespace Saber\Data\ITrit {
 		 *
 		 * @access public
 		 * @static
-		 * @param ITrit\Type $x                                      the left operand
-		 * @param ITrit\Type $y                                      the right operand
-		 * @return ITrit\Type                                        the maximum value
+		 * @param ITrit\Type $x                                     the left operand
+		 * @param ITrit\Type $y                                     the right operand
+		 * @return ITrit\Type                                       the maximum value
 		 */
-		public static function max(ITrit\Type $x, ITrit\Type $y) {
+		public static function max(ITrit\Type $x, ITrit\Type $y) : ITrit\Type {
 			return (ITrit\Module::compare($x, $y)->unbox() >= 0) ? $x : $y;
 		}
 
@@ -285,11 +285,11 @@ namespace Saber\Data\ITrit {
 		 *
 		 * @access public
 		 * @static
-		 * @param ITrit\Type $x                                      the left operand
-		 * @param ITrit\Type $y                                      the right operand
-		 * @return ITrit\Type                                        the minimum value
+		 * @param ITrit\Type $x                                     the left operand
+		 * @param ITrit\Type $y                                     the right operand
+		 * @return ITrit\Type                                       the minimum value
 		 */
-		public static function min(ITrit\Type $x, ITrit\Type $y) {
+		public static function min(ITrit\Type $x, ITrit\Type $y) : ITrit\Type {
 			return (ITrit\Module::compare($x, $y)->unbox() <= 0) ? $x : $y;
 		}
 

@@ -28,355 +28,493 @@ namespace Saber\Data\IBool {
 	 */
 	final class ModuleTest extends Core\ModuleTest {
 
-		/**
-		 * This method provides the data for testing the evaluation of one value "AND" another.
-		 *
-		 * @return array
-		 */
-		public function dataAND() {
-			$data = array(
-				array(array(true, true), array(true)),
-				array(array(true, false), array(false)),
-				array(array(true, null), array(false)),
-				array(array(true, ''), array(false)),
-				array(array(false, true), array(false)),
-				array(array(null, true), array(false)),
-				array(array('', true), array(false)),
-				array(array(false, false), array(false)),
-				array(array(null, null), array(false)),
-				array(array('', ''), array(false)),
-				array(array(null, ''), array(false)),
-				array(array('', null), array(false)),
-			);
-			return $data;
-		}
+		#region Methods -> Conversion Operations
 
 		/**
-		 * This method tests the evaluation of one value "AND" another.
-		 *
-		 * @dataProvider dataAND
+		 * This method tests the "nvl" method.
 		 */
-		public function testAND(array $provided, array $expected) {
-			//$this->markTestIncomplete();
-
-			$p0 = IBool\Module::and_(IBool\Type::make($provided[0]), IBool\Type::make($provided[1]));
-			$e0 = $expected[0];
-
-			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p0);
-			$this->assertSame($e0, $p0->unbox());
-		}
-
-		/**
-		 * This method tests the ability to make a choice.
-		 */
-		public function testChoice() {
-			//$this->markTestIncomplete();
-
+		public function test_nvl() {
 			$x = IBool\Type::true();
+			$y = IBool\Type::false();
 
-			$p0 = $x->choice();
+			$z = IBool\Module::nvl($x, $y);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(true, $z->unbox());
 
-			$this->assertInstanceOf('\\Saber\\Control\\Choice\\Type', $p0);
+			$z = IBool\Module::nvl(null, $x);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(true, $z->unbox());
 
-			$p1 = $x->choice()->when(IBool\Type::true(), function(IBool\Type $x) {})->end()->unbox();
-
-			$this->assertInternalType('boolean', $p1);
-			$this->assertTrue($p1);
-
-			$p2 = $x->choice()->when(IBool\Type::false(), function(IBool\Type $x) {})->end()->unbox();
-
-			$this->assertInternalType('boolean', $p2);
-			$this->assertFalse($p2);
+			$z = IBool\Module::nvl(null, null);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(false, $z->unbox());
 		}
 
 		/**
-		 * This method provides the data for testing the evaluation of one value compared to another.
-		 *
-		 * @return array
+		 * This method tests the "toDouble" method.
 		 */
-		public function dataCompare() {
-			$data = array(
-				array(array(true, true), array(0)),
-				array(array(true, false), array(1)),
-				array(array(true, null), array(1)),
-				array(array(true, ''), array(1)),
-				array(array(false, true), array(-1)),
-				array(array(null, true), array(-1)),
-				array(array('', true), array(-1)),
-				array(array(false, false), array(0)),
-				array(array(null, null), array(0)),
-				array(array('', ''), array(0)),
-				array(array(null, ''), array(0)),
-				array(array('', null), array(0)),
-			);
-			return $data;
+		public function test_toDouble() {
+			$x = IBool\Type::true();
+			$y = IBool\Type::false();
+
+			$z = IBool\Module::toDouble($x);
+			$this->assertInstanceOf('\\Saber\\Data\\IDouble\\Type', $z);
+			$this->assertSame(1.0, $z->unbox());
+
+			$z = IBool\Module::toDouble($y);
+			$this->assertInstanceOf('\\Saber\\Data\\IDouble\\Type', $z);
+			$this->assertSame(0.0, $z->unbox());
 		}
 
 		/**
-		 * This method tests the evaluation of one value compared to another.
-		 *
-		 * @dataProvider dataCompare
+		 * This method tests the "toFloat" method.
 		 */
-		public function testCompare(array $provided, array $expected) {
-			//$this->markTestIncomplete();
+		public function test_toFloat() {
+			$x = IBool\Type::true();
+			$y = IBool\Type::false();
 
-			$p0 = IBool\Module::compare(IBool\Type::make($provided[0]), IBool\Type::make($provided[1]));
-			$e0 = $expected[0];
+			$z = IBool\Module::toFloat($x);
+			$this->assertInstanceOf('\\Saber\\Data\\IFloat\\Type', $z);
+			$this->assertSame(1.0, $z->unbox());
 
-			$this->assertInstanceOf('\\Saber\\Data\\ITrit\\Type', $p0);
-			$this->assertSame($e0, $p0->unbox());
+			$z = IBool\Module::toFloat($y);
+			$this->assertInstanceOf('\\Saber\\Data\\IFloat\\Type', $z);
+			$this->assertSame(0.0, $z->unbox());
 		}
 
 		/**
-		 * This method provides the data for testing the evaluation of one value "OR" another.
-		 *
-		 * @return array
+		 * This method tests the "toInt32" method.
 		 */
-		public function dataOR() {
-			$data = array(
-				array(array(true, true), array(true)),
-				array(array(true, false), array(true)),
-				array(array(true, null), array(true)),
-				array(array(true, ''), array(true)),
-				array(array(false, true), array(true)),
-				array(array(null, true), array(true)),
-				array(array('', true), array(true)),
-				array(array(false, false), array(false)),
-				array(array(null, null), array(false)),
-				array(array('', ''), array(false)),
-				array(array(null, ''), array(false)),
-				array(array('', null), array(false)),
-			);
-			return $data;
+		public function test_toInt32() {
+			$x = IBool\Type::true();
+			$y = IBool\Type::false();
+
+			$z = IBool\Module::toInt32($x);
+			$this->assertInstanceOf('\\Saber\\Data\\IInt32\\Type', $z);
+			$this->assertSame(1, $z->unbox());
+
+			$z = IBool\Module::toInt32($y);
+			$this->assertInstanceOf('\\Saber\\Data\\IInt32\\Type', $z);
+			$this->assertSame(0, $z->unbox());
 		}
 
 		/**
-		 * This method tests the evaluation of one value "OR" another.
-		 *
-		 * @dataProvider dataOR
+		 * This method tests the "toInteger" method.
 		 */
-		public function testOR(array $provided, array $expected) {
-			//$this->markTestIncomplete();
+		public function test_toInteger() {
+			$x = IBool\Type::true();
+			$y = IBool\Type::false();
 
-			$p0 = IBool\Module::or_(IBool\Type::make($provided[0]), IBool\Type::make($provided[1]));
-			$e0 = $expected[0];
+			$z = IBool\Module::toInteger($x);
+			$this->assertInstanceOf('\\Saber\\Data\\IInteger\\Type', $z);
+			$this->assertSame('1', $z->unbox());
 
-			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p0);
-			$this->assertSame($e0, $p0->unbox());
+			$z = IBool\Module::toInteger($y);
+			$this->assertInstanceOf('\\Saber\\Data\\IInteger\\Type', $z);
+			$this->assertSame('0', $z->unbox());
+		}
+
+		#endregion
+
+		#region Methods -> Equality Operations
+
+		/**
+		 * This method tests the "eq" method.
+		 */
+		public function test_eq() {
+			$x = IBool\Type::true();
+			$y = IBool\Type::false();
+
+			$z = IBool\Module::eq($x, $x);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(true, $z->unbox());
+
+			$z = IBool\Module::eq($x, $y);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(false, $z->unbox());
 		}
 
 		/**
-		 * This method provides the data for testing the evaluation of one value "NAND" another.
-		 *
-		 * @return array
+		 * This method tests the "id" method.
 		 */
-		public function dataNAND() {
-			$data = array(
-				array(array(true, true), array(false)),
-				array(array(true, false), array(true)),
-				array(array(true, null), array(true)),
-				array(array(true, ''), array(true)),
-				array(array(false, true), array(true)),
-				array(array(null, true), array(true)),
-				array(array('', true), array(true)),
-				array(array(false, false), array(true)),
-				array(array(null, null), array(true)),
-				array(array('', ''), array(true)),
-				array(array(null, ''), array(true)),
-				array(array('', null), array(true)),
-			);
-			return $data;
+		public function test_id() {
+			$x = IBool\Type::true();
+			$y = IBool\Type::false();
+
+			$z = IBool\Module::id($x, $x);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(true, $z->unbox());
+
+			$z = IBool\Module::id($x, $y);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(false, $z->unbox());
 		}
 
 		/**
-		 * This method tests the evaluation of one value "NAND" another.
-		 *
-		 * @dataProvider dataNAND
+		 * This method tests the "ne" method.
 		 */
-		public function testNAND(array $provided, array $expected) {
-			//$this->markTestIncomplete();
+		public function test_ne() {
+			$x = IBool\Type::true();
+			$y = IBool\Type::false();
 
-			$p0 = IBool\Module::nand(IBool\Type::make($provided[0]), IBool\Type::make($provided[1]));
-			$e0 = $expected[0];
+			$z = IBool\Module::ne($x, $x);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(false, $z->unbox());
 
-			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p0);
-			$this->assertSame($e0, $p0->unbox());
+			$z = IBool\Module::ne($x, $y);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(true, $z->unbox());
 		}
 
 		/**
-		 * This method provides the data for testing the evaluation of one value "NOR" another.
-		 *
-		 * @return array
+		 * This method tests the "ni" method.
 		 */
-		public function dataNOR() {
-			$data = array(
-				array(array(true, true), array(false)),
-				array(array(true, false), array(false)),
-				array(array(true, null), array(false)),
-				array(array(true, ''), array(false)),
-				array(array(false, true), array(false)),
-				array(array(null, true), array(false)),
-				array(array('', true), array(false)),
-				array(array(false, false), array(true)),
-				array(array(null, null), array(true)),
-				array(array('', ''), array(true)),
-				array(array(null, ''), array(true)),
-				array(array('', null), array(true)),
-			);
-			return $data;
+		public function test_ni() {
+			$x = IBool\Type::true();
+			$y = IBool\Type::false();
+
+			$z = IBool\Module::ni($x, $x);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(false, $z->unbox());
+
+			$z = IBool\Module::ni($x, $y);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(true, $z->unbox());
+		}
+
+		#endregion
+
+		#region Methods -> Ordering Operations
+
+		/**
+		 * This method tests the "compare" method.
+		 */
+		public function test_compare() {
+			$x = IBool\Type::true();
+			$y = IBool\Type::false();
+
+			$z = IBool\Module::compare($x, $y);
+			$this->assertInstanceOf('\\Saber\\Data\\ITrit\\Type', $z);
+			$this->assertSame(1, $z->unbox());
+
+			$z = IBool\Module::compare($x, $x);
+			$this->assertInstanceOf('\\Saber\\Data\\ITrit\\Type', $z);
+			$this->assertSame(0, $z->unbox());
+
+			$z = IBool\Module::compare($y, $x);
+			$this->assertInstanceOf('\\Saber\\Data\\ITrit\\Type', $z);
+			$this->assertSame(-1, $z->unbox());
 		}
 
 		/**
-		 * This method tests the evaluation of one value "NOR" another.
-		 *
-		 * @dataProvider dataNOR
+		 * This method tests the "ge" method.
 		 */
-		public function testNOR(array $provided, array $expected) {
-			//$this->markTestIncomplete();
+		public function test_ge() {
+			$x = IBool\Type::true();
+			$y = IBool\Type::false();
 
-			$p0 = IBool\Module::nor(IBool\Type::make($provided[0]), IBool\Type::make($provided[1]));
-			$e0 = $expected[0];
+			$z = IBool\Module::ge($x, $y);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(true, $z->unbox());
 
-			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p0);
-			$this->assertSame($e0, $p0->unbox());
+			$z = IBool\Module::ge($x, $x);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(true, $z->unbox());
+
+			$z = IBool\Module::ge($y, $x);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(false, $z->unbox());
 		}
 
 		/**
-		 * This method provides the data for testing the evaluation of the negation of one value.
-		 *
-		 * @return array
+		 * This method tests the "gt" method.
 		 */
-		public function dataNOT() {
-			$data = array(
-				array(array(true), array(false)),
-				array(array(1), array(false)),
-				array(array('true'), array(false)),
-				array(array(false), array(true)),
-				array(array(0), array(true)),
-				array(array(null), array(true)),
-				array(array(''), array(true)),
-			);
-			return $data;
+		public function test_gt() {
+			$x = IBool\Type::true();
+			$y = IBool\Type::false();
+
+			$z = IBool\Module::gt($x, $y);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(true, $z->unbox());
+
+			$z = IBool\Module::gt($x, $x);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(false, $z->unbox());
+
+			$z = IBool\Module::gt($y, $x);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(false, $z->unbox());
 		}
 
 		/**
-		 * This method tests the evaluation of the negation of one value.
-		 *
-		 * @dataProvider dataNOT
+		 * This method tests the "le" method.
 		 */
-		public function testNOT(array $provided, array $expected) {
-			//$this->markTestIncomplete();
+		public function test_le() {
+			$x = IBool\Type::true();
+			$y = IBool\Type::false();
 
-			$p0 = IBool\Module::not(IBool\Type::make($provided[0]));
-			$e0 = $expected[0];
+			$z = IBool\Module::le($x, $y);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(false, $z->unbox());
 
-			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p0);
-			$this->assertSame($e0, $p0->unbox());
+			$z = IBool\Module::le($x, $x);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(true, $z->unbox());
+
+			$z = IBool\Module::le($y, $x);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(true, $z->unbox());
 		}
 
 		/**
-		 * This method provides the data for testing that a value is casted to an int(32).
-		 *
-		 * @return array
+		 * This method tests the "lt" method.
 		 */
-		public function dataToIInt32() {
-			$data = array(
-				array(array(true), array(1)),
-				array(array(1), array(1)),
-				array(array('true'), array(1)),
-				array(array(false), array(0)),
-				array(array(0), array(0)),
-				array(array(null), array(0)),
-				array(array(''), array(0)),
-			);
-			return $data;
+		public function test_lt() {
+			$x = IBool\Type::true();
+			$y = IBool\Type::false();
+
+			$z = IBool\Module::lt($x, $y);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(false, $z->unbox());
+
+			$z = IBool\Module::lt($x, $x);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(false, $z->unbox());
+
+			$z = IBool\Module::lt($y, $x);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(true, $z->unbox());
 		}
 
 		/**
-		 * This method tests that a value is casted to an int(32).
-		 *
-		 * @dataProvider dataToIInt32
+		 * This method tests the "max" method.
 		 */
-		public function testToIInt32(array $provided, array $expected) {
-			//$this->markTestIncomplete();
+		public function test_max() {
+			$x = IBool\Type::true();
+			$y = IBool\Type::false();
 
-			$p0 = IBool\Module::toInt32(IBool\Type::make($provided[0]));
-			$e0 = $expected[0];
+			$z = IBool\Module::max($x, $y);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(true, $z->unbox());
 
-			$this->assertInstanceOf('\\Saber\\Data\\IInt32\\Type', $p0);
-			$this->assertSame($e0, $p0->unbox());
+			$z = IBool\Module::max($x, $x);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(true, $z->unbox());
+
+			$z = IBool\Module::max($y, $x);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(true, $z->unbox());
 		}
 
 		/**
-		 * This method provides the data for testing that a value is converted to a string.
-		 *
-		 * @return array
+		 * This method tests the "min" method.
 		 */
-		public function data2String() {
-			$data = array(
-				array(array(true), array('true')),
-				array(array(1), array('true')),
-				array(array('true'), array('true')),
-				array(array(false), array('false')),
-				array(array(0), array('false')),
-				array(array(null), array('false')),
-				array(array(''), array('false')),
-			);
-			return $data;
+		public function test_min() {
+			$x = IBool\Type::true();
+			$y = IBool\Type::false();
+
+			$z = IBool\Module::min($x, $y);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(false, $z->unbox());
+
+			$z = IBool\Module::min($x, $x);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(true, $z->unbox());
+
+			$z = IBool\Module::min($y, $x);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(false, $z->unbox());
+		}
+
+		#endregion
+
+		#region Methods -> Logical Operations
+
+		/**
+		 * This method tests the "and_" method.
+		 */
+		public function test_and_() {
+			$x = IBool\Type::true();
+			$y = IBool\Type::false();
+
+			$z = IBool\Module::and_($x, $y);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(false, $z->unbox());
+
+			$z = IBool\Module::and_($x, $x);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(true, $z->unbox());
+
+			$z = IBool\Module::and_($y, $x);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(false, $z->unbox());
+
+			$z = IBool\Module::and_($y, $y);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(false, $z->unbox());
 		}
 
 		/**
-		 * This method tests that a value is converted to a string.
-		 *
-		 * @dataProvider data2String
+		 * This method tests the "impl" method.
 		 */
-		public function testToString(array $provided, array $expected) {
-			//$this->markTestIncomplete();
+		public function test_impl() {
+			$x = IBool\Type::true();
+			$y = IBool\Type::false();
 
-			$p0 = IBool\Type::make($provided[0])->__toString();
-			$e0 = $expected[0];
+			$z = IBool\Module::impl($x, $y);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(false, $z->unbox());
 
-			$this->assertInternalType('string', $p0);
-			$this->assertSame($e0, $p0);
+			$z = IBool\Module::impl($x, $x);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(true, $z->unbox());
+
+			$z = IBool\Module::impl($y, $x);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(true, $z->unbox());
+
+			$z = IBool\Module::impl($y, $y);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(true, $z->unbox());
 		}
 
 		/**
-		 * This method provides the data for testing the evaluation of one value "XOR" another.
-		 *
-		 * @return array
+		 * This method tests the "nand" method.
 		 */
-		public function dataXOR() {
-			$data = array(
-				array(array(true, true), array(false)),
-				array(array(true, false), array(true)),
-				array(array(true, null), array(true)),
-				array(array(true, ''), array(true)),
-				array(array(false, true), array(true)),
-				array(array(null, true), array(true)),
-				array(array('', true), array(true)),
-				array(array(false, false), array(false)),
-				array(array(null, null), array(false)),
-				array(array('', ''), array(false)),
-				array(array(null, ''), array(false)),
-				array(array('', null), array(false)),
-			);
-			return $data;
+		public function test_nand() {
+			$x = IBool\Type::true();
+			$y = IBool\Type::false();
+
+			$z = IBool\Module::nand($x, $y);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(true, $z->unbox());
+
+			$z = IBool\Module::nand($x, $x);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(false, $z->unbox());
+
+			$z = IBool\Module::nand($y, $x);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(true, $z->unbox());
+
+			$z = IBool\Module::nand($y, $y);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(true, $z->unbox());
 		}
 
 		/**
-		 * This method tests the evaluation of one value "XOR" another.
-		 *
-		 * @dataProvider dataXOR
+		 * This method tests the "nor" method.
 		 */
-		public function testXOR(array $provided, array $expected) {
-			//$this->markTestIncomplete();
+		public function test_nor() {
+			$x = IBool\Type::true();
+			$y = IBool\Type::false();
 
-			$p0 = IBool\Module::xor_(IBool\Type::make($provided[0]), IBool\Type::make($provided[1]));
-			$e0 = $expected[0];
+			$z = IBool\Module::nor($x, $y);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(false, $z->unbox());
 
-			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p0);
-			$this->assertSame($e0, $p0->unbox());
+			$z = IBool\Module::nor($x, $x);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(false, $z->unbox());
+
+			$z = IBool\Module::nor($y, $x);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(false, $z->unbox());
+
+			$z = IBool\Module::nor($y, $y);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(true, $z->unbox());
 		}
+
+		/**
+		 * This method tests the "not" method.
+		 */
+		public function test_not() {
+			$x = IBool\Type::true();
+			$y = IBool\Type::false();
+
+			$z = IBool\Module::not($x);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(false, $z->unbox());
+
+			$z = IBool\Module::not($y);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(true, $z->unbox());
+		}
+
+		/**
+		 * This method tests the "or_" method.
+		 */
+		public function test_or_() {
+			$x = IBool\Type::true();
+			$y = IBool\Type::false();
+
+			$z = IBool\Module::or_($x, $y);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(true, $z->unbox());
+
+			$z = IBool\Module::or_($x, $x);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(true, $z->unbox());
+
+			$z = IBool\Module::or_($y, $x);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(true, $z->unbox());
+
+			$z = IBool\Module::or_($y, $y);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(false, $z->unbox());
+		}
+
+		/**
+		 * This method tests the "xnor" method.
+		 */
+		public function test_xnor() {
+			$x = IBool\Type::true();
+			$y = IBool\Type::false();
+
+			$z = IBool\Module::xnor($x, $y);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(false, $z->unbox());
+
+			$z = IBool\Module::xnor($x, $x);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(true, $z->unbox());
+
+			$z = IBool\Module::xnor($y, $x);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(false, $z->unbox());
+
+			$z = IBool\Module::xnor($y, $y);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(true, $z->unbox());
+		}
+
+		/**
+		 * This method tests the "xor_" method.
+		 */
+		public function test_xor_() {
+			$x = IBool\Type::true();
+			$y = IBool\Type::false();
+
+			$z = IBool\Module::xor_($x, $y);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(true, $z->unbox());
+
+			$z = IBool\Module::xor_($x, $x);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(false, $z->unbox());
+
+			$z = IBool\Module::xor_($y, $x);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(true, $z->unbox());
+
+			$z = IBool\Module::xor_($y, $y);
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $z);
+			$this->assertSame(false, $z->unbox());
+		}
+
+		#endregion
 
 	}
 

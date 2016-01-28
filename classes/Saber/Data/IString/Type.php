@@ -64,28 +64,28 @@ namespace Saber\Data\IString {
 		#region Methods -> Initialization
 
 		/**
-		 * This method enforces that the specified class is a covariant.
-		 *
-		 * @access public
-		 * @static
-		 * @param IString\Type $x                                    the class to be evaluated
-		 * @return IString\Type                                      the class
-		 */
-		public static function covariant(IString\Type $x) {
-			return $x;
-		}
-
-		/**
 		 * This method returns a value as a boxed object.  A value is typically a PHP typed
 		 * primitive or object.  It is considered "not" type-safe.
 		 *
 		 * @access public
 		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return IString\Type                                      the boxed object
+		 * @param string $value                                     the value(s) to be boxed
+		 * @return IString\Type                                     the boxed object
 		 */
-		public static function box($value) {
+		public static function box(string $value) : IString\Type {
 			return new IString\Type($value);
+		}
+
+		/**
+		 * This method enforces that the specified class is a covariant.
+		 *
+		 * @access public
+		 * @static
+		 * @param IString\Type $x                                   the class to be evaluated
+		 * @return IString\Type                                     the class
+		 */
+		public static function covariant(IString\Type $x) : IString\Type {
+			return $x;
 		}
 
 		/**
@@ -95,10 +95,10 @@ namespace Saber\Data\IString {
 		 * @access public
 		 * @static
 		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return IString\Type                                      the boxed object
+		 * @return IString\Type                                     the boxed object
 		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
-		public static function make($value) {
+		public static function make($value) : IString\Type {
 			if (!is_string($value)) {
 				$type = gettype($value);
 				if ($type == 'object') {
@@ -118,9 +118,9 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @return IString\Type                                      the string
+		 * @return IString\Type                                     the string
 		 */
-		public static function empty_() {
+		public static function empty_() : IString\Type {
 			if (!isset(static::$singletons[0])) {
 				static::$singletons[0] = new IString\Type('');
 			}
@@ -132,11 +132,11 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IChar\Type $x                                      the object to be replicated
-		 * @param IInt32\Type $n                                     the number of times to replicate
-		 * @return IString\Type                                      the string
+		 * @param IChar\Type $x                                     the object to be replicated
+		 * @param IInt32\Type $n                                    the number of times to replicate
+		 * @return IString\Type                                     the string
 		 */
-		public static function replicate(IChar\Type $x, IInt32\Type $n) {
+		public static function replicate(IChar\Type $x, IInt32\Type $n) : IString\Type {
 			$buffer = '';
 			$length = $n->unbox();
 
@@ -158,8 +158,8 @@ namespace Saber\Data\IString {
 		 * @final
 		 * @param string $value                                     the value to be assigned
 		 */
-		public final function __construct($value) {
-			$this->value = (string) $value;
+		public final function __construct(string $value) {
+			$this->value = $value;
 		}
 
 		/**
@@ -179,7 +179,7 @@ namespace Saber\Data\IString {
 		 * @final
 		 * @return string                                           the head object in this list
 		 */
-		public final function __head() {
+		public final function __head() : string {
 			return mb_substr($this->value, 0, 1, IChar\Type::UTF_8_ENCODING);
 		}
 
@@ -188,9 +188,9 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @final
-		 * @return boolean                                          whether the list is empty
+		 * @return bool                                             whether the list is empty
 		 */
-		public final function __isEmpty() {
+		public final function __isEmpty() : bool {
 			return (($this->value === null) || ($this->value === ''));
 		}
 
@@ -199,10 +199,10 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @final
-		 * @param IInt32\Type $i                                     the index of the item
+		 * @param IInt32\Type $i                                    the index of the item
 		 * @return string                                           the item at the specified index
 		 */
-		public final function __item(IInt32\Type $i) {
+		public final function __item(IInt32\Type $i) : string {
 			return mb_substr($this->value, $i->unbox(), 1, IChar\Type::UTF_8_ENCODING);
 		}
 
@@ -211,9 +211,9 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @final
-		 * @return integer                                          the length of this array list
+		 * @return int                                              the length of this array list
 		 */
-		public final function __length() {
+		public final function __length() : int {
 			return mb_strlen($this->value, IChar\Type::UTF_8_ENCODING);
 		}
 
@@ -235,7 +235,7 @@ namespace Saber\Data\IString {
 		 * @final
 		 * @return string                                           the tail of this string
 		 */
-		public final function __tail() {
+		public final function __tail() : string {
 			return mb_substr($this->value, 1, $this->__length(), IChar\Type::UTF_8_ENCODING);
 		}
 
@@ -248,9 +248,9 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @final
-		 * @return IChar\Type                                        the head char in this string
+		 * @return IChar\Type                                       the head char in this string
 		 */
-		public final function head() {
+		public final function head() : IChar\Type {
 			return IChar\Type::box($this->__head());
 		}
 
@@ -259,9 +259,9 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @final
-		 * @return IBool\Type                                        whether the string is empty
+		 * @return IBool\Type                                       whether the string is empty
 		 */
-		public final function isEmpty() {
+		public final function isEmpty() : IBool\Type {
 			return IBool\Type::box($this->__isEmpty());
 		}
 
@@ -270,10 +270,10 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @final
-		 * @param IInt32\Type $i                                     the index of the item
-		 * @return IChar\Type                                        the item at the specified index
+		 * @param IInt32\Type $i                                    the index of the item
+		 * @return IChar\Type                                       the item at the specified index
 		 */
-		public final function item(IInt32\Type $i) {
+		public final function item(IInt32\Type $i) : IChar\Type {
 			return IChar\Type::box($this->__item($i));
 		}
 
@@ -282,9 +282,9 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @final
-		 * @return IInt32\Type                                       the length of this string
+		 * @return IInt32\Type                                      the length of this string
 		 */
-		public final function length() {
+		public final function length() : IInt32\Type {
 			return IInt32\Type::box($this->__length());
 		}
 
@@ -293,9 +293,9 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @final
-		 * @return IString\Type                                      the tail of this string
+		 * @return IString\Type                                     the tail of this string
 		 */
-		public final function tail() {
+		public final function tail() : IString\Type {
 			return new IString\Type($this->__tail());
 		}
 

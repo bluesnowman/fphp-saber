@@ -34,7 +34,7 @@ namespace Saber\Throwable\Unknown {
 		/**
 		 * This method tests the data type.
 		 */
-		public function testType() {
+		public function test_instanceOf() {
 			//$this->markTestIncomplete();
 
 			$p0 = new Throwable\Unknown\Exception(new Throwable\InvalidArgument\Exception('', array(), IInt32\Type::zero()));
@@ -54,7 +54,7 @@ namespace Saber\Throwable\Unknown {
 		 *
 		 * @return array
 		 */
-		public function dataBox() {
+		public function data_box() {
 			$data = array(
 				array(array(new Throwable\InvalidArgument\Exception('', array(), IInt32\Type::zero())), array(0)),
 				array(array(new Throwable\InvalidArgument\Exception('', array(), null)), array(0)),
@@ -66,9 +66,9 @@ namespace Saber\Throwable\Unknown {
 		/**
 		 * This method tests the boxing of a value.
 		 *
-		 * @dataProvider dataBox
+		 * @dataProvider data_box
 		 */
-		public function testBox(array $provided, array $expected) {
+		public function test_box(array $provided, array $expected) {
 			$p0 = Throwable\Unknown\Exception::box($provided);
 
 			$this->assertInstanceOf('\\Saber\\Throwable\\Unknown\\Exception', $p0);
@@ -122,7 +122,7 @@ namespace Saber\Throwable\Unknown {
 		 *
 		 * @return array
 		 */
-		public function data2String() {
+		public function data_toString() {
 			$data = array(
 				array(array(new Throwable\InvalidArgument\Exception('Message', array(), IInt32\Type::zero())), array('Saber\\Throwable\\InvalidArgument\\Exception [ 0 ]: Message ~ ')),
 			);
@@ -132,9 +132,9 @@ namespace Saber\Throwable\Unknown {
 		/**
 		 * This method tests that a value is converted to a string.
 		 *
-		 * @dataProvider data2String
+		 * @dataProvider data_toString
 		 */
-		public function testToString(array $provided, array $expected) {
+		public function test_toString(array $provided, array $expected) {
 			$p0 = Throwable\Unknown\Exception::make($provided)->__toString();
 			$e0 = $expected[0];
 

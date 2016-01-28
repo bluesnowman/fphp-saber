@@ -37,12 +37,12 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the delimiter
-		 * @param IVector\Type $ys                                   the vector of substrings
-		 * @return IString\Type                                      the string
+		 * @param IString\Type $xs                                  the delimiter
+		 * @param IVector\Type $ys                                  the vector of substrings
+		 * @return IString\Type                                     the string
 		 */
 		public static function join(IString\Type $xs, IVector\Type $ys) {
-			$zs = array_map(function(IString\Type $y) {
+			$zs = array_map(function(IString\Type $y) : bool {
 				return $y->unbox();
 			}, $ys->unbox());
 			return IString\Type::box(implode($xs->unbox(), $zs));
@@ -54,8 +54,8 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
-		 * @return IArrayList\Type                                   an array list of substrings
+		 * @param IString\Type $xs                                  the left operand
+		 * @return IArrayList\Type                                  an array list of substrings
 		 */
 		public static function lines(IString\Type $xs) {
 			return IRegex\Module::split(IRegex\Type::box('/\R+/'), $xs);
@@ -73,7 +73,7 @@ namespace Saber\Data\IString {
 		 */
 		public static function split(IString\Type $xs, IString\Type $ys) {
 			$zs = explode($xs->unbox(), $ys->unbox());
-			return IArrayList\Type::box(array_map(function($z) {
+			return IArrayList\Type::box(array_map(function($z) : IString\Type {
 				return IString\Type::box($z);
 			}, $zs));
 		}

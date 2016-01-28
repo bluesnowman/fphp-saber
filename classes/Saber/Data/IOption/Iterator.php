@@ -20,6 +20,7 @@ declare(strict_types = 1);
 
 namespace Saber\Data\IOption {
 
+	use \Saber\Core;
 	use \Saber\Data;
 	use \Saber\Data\IBool;
 	use \Saber\Data\ICollection;
@@ -49,7 +50,7 @@ namespace Saber\Data\IOption {
 		 *
 		 * @access public
 		 * @final
-		 * @param IOption\Type $xs                                   the collection to be iterated
+		 * @param IOption\Type $xs                                  the collection to be iterated
 		 */
 		public final function __construct(IOption\Type $xs) {
 			$this->xs = $xs;
@@ -72,9 +73,9 @@ namespace Saber\Data\IOption {
 		 *
 		 * @access public
 		 * @final
-		 * @return integer                                          the length of the collection
+		 * @return int                                              the length of the collection
 		 */
-		public final function count() {
+		public final function count() : int {
 			return $this->xs->__size();
 		}
 
@@ -85,7 +86,7 @@ namespace Saber\Data\IOption {
 		 * @final
 		 * @return mixed                                            the current object
 		 */
-		public final function current() {
+		public final function current() : Core\Type {
 			$this->xs->item();
 		}
 
@@ -94,9 +95,9 @@ namespace Saber\Data\IOption {
 		 *
 		 * @access public
 		 * @final
-		 * @return IInt32\Type                                       the current key
+		 * @return IInt32\Type                                      the current key
 		 */
-		public final function key() {
+		public final function key() : IInt32\Type {
 			return $this->i;
 		}
 
@@ -105,9 +106,9 @@ namespace Saber\Data\IOption {
 		 *
 		 * @access public
 		 * @final
-		 * @return IBool\Type                                        whether there are more objects
+		 * @return IBool\Type                                       whether there are more objects
 		 */
-		public final function next() {
+		public final function next() : IBool\Type {
 			$this->i = IInt32\Module::increment($this->i);
 			return IBool\Type::box($this->valid());
 		}
@@ -127,9 +128,9 @@ namespace Saber\Data\IOption {
 		 *
 		 * @access public
 		 * @final
-		 * @return boolean                                          whether there are more objects
+		 * @return bool                                             whether there are more objects
 		 */
-		public final function valid() {
+		public final function valid() : bool {
 			return ($this->i->unbox() < $this->xs->__size());
 		}
 

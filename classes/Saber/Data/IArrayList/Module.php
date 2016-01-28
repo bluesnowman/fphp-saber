@@ -103,7 +103,7 @@ namespace Saber\Data\IArrayList {
 		 * @return ITuple\Type                                      the tuple
 		 */
 		public static function break_(IArrayList\Type $xs, callable $predicate) : ITuple\Type {
-			return IArrayList\Module::span($xs, function(Core\Type $x, IInt32\Type $i) use ($predicate) {
+			return IArrayList\Module::span($xs, function(Core\Type $x, IInt32\Type $i) use ($predicate) : IBool\Type {
 				return IBool\Module::not($predicate($x, $i));
 			});
 		}
@@ -136,7 +136,7 @@ namespace Saber\Data\IArrayList {
 		 *                                                          contained within the list
 		 */
 		public static function contains(IArrayList\Type $xs, Core\Type $y) : IBool\Type {
-			return IArrayList\Module::any($xs, function(Core\Type $x, IInt32\Type $i) use ($y) {
+			return IArrayList\Module::any($xs, function(Core\Type $x, IInt32\Type $i) use ($y) : IBool\Type {
 				return $x->eq($y);
 			});
 		}
@@ -220,7 +220,7 @@ namespace Saber\Data\IArrayList {
 		 * @return IArrayList\Type                                  the list
 		 */
 		public static function dropWhileEnd(IArrayList\Type $xs, callable $predicate) : IArrayList\Type {
-			return IArrayList\Module::dropWhile($xs, function(Core\Type $x, IInt32\Type $i) use ($predicate) {
+			return IArrayList\Module::dropWhile($xs, function(Core\Type $x, IInt32\Type $i) use ($predicate) : IBool\Type {
 				return IBool\Module::not($predicate($x, $i));
 			});
 		}
@@ -620,7 +620,7 @@ namespace Saber\Data\IArrayList {
 		 *                                                          falsy test
 		 */
 		public static function none(IArrayList\Type $xs, callable $predicate) : IBool\Type {
-			return IArrayList\Module::all($xs, function(Core\Type $x, IInt32\Type $i) use ($predicate) {
+			return IArrayList\Module::all($xs, function(Core\Type $x, IInt32\Type $i) use ($predicate) : IBool\Type {
 				return IBool\Module::not($predicate($x, $i));
 			});
 		}
@@ -638,7 +638,7 @@ namespace Saber\Data\IArrayList {
 		public static function nub(IArrayList\Type $xs) : IArrayList\Type {
 			$zs = IHashSet\Type::empty_();
 
-			return IArrayList\Module::filter($xs, function(Core\Type $x, IInt32\Type $i) use ($zs) {
+			return IArrayList\Module::filter($xs, function(Core\Type $x, IInt32\Type $i) use ($zs) : IBool\Type {
 				if ($zs->__hasItem($x)) {
 					return IBool\Type::false();
 				}
@@ -688,7 +688,7 @@ namespace Saber\Data\IArrayList {
 		 *                                                          key
 		 */
 		public static function pluck(IArrayList\Type $xss, Core\Type $k) : IArrayList\Type {
-			return IArrayList\Module::map($xss, function(IHashMap\Type $xs, IInt32\Type $i) use ($k) {
+			return IArrayList\Module::map($xss, function(IHashMap\Type $xs, IInt32\Type $i) use ($k) : Core\Type {
 				return $xs->item($k);
 			});
 		}
@@ -734,7 +734,7 @@ namespace Saber\Data\IArrayList {
 		 *                                                          that do not satisfy the predicate
 		 */
 		public static function reject(IArrayList\Type $xs, callable $predicate) : IArrayList\Type {
-			return IArrayList\Module::filter($xs, function(Core\Type $x, IInt32\Type $i) use ($predicate) {
+			return IArrayList\Module::filter($xs, function(Core\Type $x, IInt32\Type $i) use ($predicate) : IBool\Type {
 				return IBool\Module::not($predicate($x, $i));
 			});
 		}
@@ -889,7 +889,7 @@ namespace Saber\Data\IArrayList {
 		 * @return IArrayList\Type                                  the list
 		 */
 		public static function takeWhileEnd(IArrayList\Type $xs, callable $predicate) : IArrayList\Type {
-			return IArrayList\Module::takeWhile($xs, function(Core\Type $x, IInt32\Type $i) use ($predicate) {
+			return IArrayList\Module::takeWhile($xs, function(Core\Type $x, IInt32\Type $i) use ($predicate) : IBool\Type {
 				return IBool\Module::not($predicate($x, $i));
 			});
 		}
@@ -1211,7 +1211,7 @@ namespace Saber\Data\IArrayList {
 		 *                                                          the list evaluate to true
 		 */
 		public static function and_(IArrayList\Type $xs) : IBool\Type {
-			return IArrayList\Module::all($xs, function(IBool\Type $x, IInt32\Type $i) {
+			return IArrayList\Module::all($xs, function(IBool\Type $x, IInt32\Type $i) : IBool\Type {
 				return $x;
 			});
 		}
@@ -1226,7 +1226,7 @@ namespace Saber\Data\IArrayList {
 		 *                                                          the list evaluate to false
 		 */
 		public static function or_(IArrayList\Type $xs) : IBool\Type {
-			return IArrayList\Module::any($xs, function(IBool\Type $x, IInt32\Type $i) {
+			return IArrayList\Module::any($xs, function(IBool\Type $x, IInt32\Type $i) : IBool\Type {
 				return $x;
 			});
 		}

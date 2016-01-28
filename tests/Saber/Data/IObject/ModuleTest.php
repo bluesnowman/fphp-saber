@@ -32,7 +32,7 @@ namespace Saber\Data\IObject {
 		 * This method tests the ability to make a choice.
 		 */
 		public function testChoice() {
-			//$this->markTestIncomplete();
+			$this->markTestIncomplete();
 
 			$x = IObject\Type::make(null);
 
@@ -72,7 +72,7 @@ namespace Saber\Data\IObject {
 		 * @dataProvider dataCompare
 		 */
 		public function testCompare(array $provided, array $expected) {
-			//$this->markTestIncomplete();
+			$this->markTestIncomplete();
 
 			$p0 = IObject\Type::make($provided[0])->compare(IObject\Type::make($provided[1]));
 			$e0 = $expected[0];
@@ -86,7 +86,7 @@ namespace Saber\Data\IObject {
 		 *
 		 * @return array
 		 */
-		public function data2String() {
+		public function data_toString() {
 			$data = array(
 				array(array(null), array('null')),
 				array(array(''), array('')),
@@ -98,10 +98,10 @@ namespace Saber\Data\IObject {
 		/**
 		 * This method tests that a value is converted to a string.
 		 *
-		 * @dataProvider data2String
+		 * @dataProvider data_toString
 		 */
-		public function testToString(array $provided, array $expected) {
-			//$this->markTestIncomplete();
+		public function test_toString(array $provided, array $expected) {
+			$this->markTestIncomplete();
 
 			$p0 = IObject\Type::make($provided[0])->__toString();
 			$e0 = $expected[0];

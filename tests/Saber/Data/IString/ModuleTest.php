@@ -153,7 +153,7 @@ namespace Saber\Data\IString {
 		 * @dataProvider dataReverse
 		 */
 		public function testReverse(array $provided, array $expected) {
-			//$this->markTestIncomplete();
+			$this->markTestIncomplete();
 
 			$p0 = IString\Type::make($provided[0])->reverse();
 			$e0 = $expected[0];

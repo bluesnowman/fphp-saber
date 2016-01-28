@@ -59,9 +59,9 @@ namespace Saber\Data\ITuple {
 		 * @access public
 		 * @static
 		 * @param array $xs                                         the value(s) to be boxed
-		 * @return ITuple\Type                                       the boxed object
+		 * @return ITuple\Type                                      the boxed object
 		 */
-		public static function box(array $xs) {
+		public static function box(array $xs) : ITuple\Type {
 			return new ITuple\Type($xs);
 		}
 
@@ -72,9 +72,9 @@ namespace Saber\Data\ITuple {
 		 * @access public
 		 * @static
 		 * @param mixed ...$xs                                      the value(s) to be boxed
-		 * @return ITuple\Type                                       the boxed object
+		 * @return ITuple\Type                                      the boxed object
 		 */
-		public static function box2(...$xs) {
+		public static function box2(...$xs) : ITuple\Type {
 			return ITuple\Type::box($xs);
 		}
 
@@ -83,10 +83,10 @@ namespace Saber\Data\ITuple {
 		 *
 		 * @access public
 		 * @static
-		 * @param ITuple\Type $x                                     the class to be evaluated
-		 * @return ITuple\Type                                       the class
+		 * @param ITuple\Type $x                                    the class to be evaluated
+		 * @return ITuple\Type                                      the class
 		 */
-		public static function covariant(ITuple\Type $x) {
+		public static function covariant(ITuple\Type $x) : ITuple\Type {
 			return $x;
 		}
 
@@ -97,10 +97,10 @@ namespace Saber\Data\ITuple {
 		 * @access public
 		 * @static
 		 * @param array $xs                                         the value(s) to be boxed
-		 * @return ITuple\Type                                       the boxed object
+		 * @return ITuple\Type                                      the boxed object
 		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
-		public static function make(array $xs) {
+		public static function make(array $xs) : ITuple\Type {
 			$count = count($xs);
 			if ($count < 2) {
 				throw new Throwable\InvalidArgument\Exception('Unable to box value(s). ITuple must have at least 2 objects, but got ":count".', array(':count' => $count));
@@ -124,10 +124,10 @@ namespace Saber\Data\ITuple {
 		 * @access public
 		 * @static
 		 * @param mixed ...$xs                                      the value(s) to be boxed
-		 * @return ITuple\Type                                       the boxed object
+		 * @return ITuple\Type                                      the boxed object
 		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
-		public static function make2(...$xs) {
+		public static function make2(...$xs) : ITuple\Type {
 			return ITuple\Type::make($xs);
 		}
 
@@ -162,9 +162,9 @@ namespace Saber\Data\ITuple {
 		 *
 		 * @access public
 		 * @final
-		 * @return boolean                                          whether the list is empty
+		 * @return bool                                             whether the list is empty
 		 */
-		public final function __isEmpty() {
+		public final function __isEmpty() : bool {
 			return empty($this->value);
 		}
 
@@ -173,9 +173,9 @@ namespace Saber\Data\ITuple {
 		 *
 		 * @access public
 		 * @final
-		 * @return boolean                                          whether the tuple is a pair
+		 * @return bool                                             whether the tuple is a pair
 		 */
-		public final function __isPair() {
+		public final function __isPair() : bool {
 			return ($this->__length() == 2);
 		}
 
@@ -184,7 +184,7 @@ namespace Saber\Data\ITuple {
 		 *
 		 * @access public
 		 * @final
-		 * @param IInt32\Type $i                                     the index of the item
+		 * @param IInt32\Type $i                                    the index of the item
 		 * @return mixed                                            the item at the specified index
 		 */
 		public final function __item(IInt32\Type $i) {
@@ -196,9 +196,9 @@ namespace Saber\Data\ITuple {
 		 *
 		 * @access public
 		 * @final
-		 * @return integer                                          the length of this array list
+		 * @return int                                              the length of this array list
 		 */
-		public final function __length() {
+		public final function __length() : int {
 			return count($this->value);
 		}
 
@@ -233,9 +233,9 @@ namespace Saber\Data\ITuple {
 		 *
 		 * @access public
 		 * @final
-		 * @return mixed                                            the first item in the tuple
+		 * @return Core\Type                                        the first item in the tuple
 		 */
-		public final function first() {
+		public final function first() : Core\Type {
 			return $this->value[0];
 		}
 
@@ -244,9 +244,9 @@ namespace Saber\Data\ITuple {
 		 *
 		 * @access public
 		 * @final
-		 * @return IBool\Type                                        whether the list is empty
+		 * @return IBool\Type                                       whether the list is empty
 		 */
-		public final function isEmpty() {
+		public final function isEmpty() : IBool\Type {
 			return IBool\Type::box($this->__isEmpty());
 		}
 
@@ -255,9 +255,9 @@ namespace Saber\Data\ITuple {
 		 *
 		 * @access public
 		 * @final
-		 * @return IBool\Type                                        whether the tuple is a pair
+		 * @return IBool\Type                                       whether the tuple is a pair
 		 */
-		public final function isPair() {
+		public final function isPair() : IBool\Type {
 			return IBool\Type::box($this->__isPair());
 		}
 
@@ -266,10 +266,10 @@ namespace Saber\Data\ITuple {
 		 *
 		 * @access public
 		 * @final
-		 * @param IInt32\Type $i                                     the index of the item
+		 * @param IInt32\Type $i                                    the index of the item
 		 * @return Core\Type                                        the item at the specified index
 		 */
-		public final function item(IInt32\Type $i) {
+		public final function item(IInt32\Type $i) : Core\Type {
 			return $this->value[$i->unbox()];
 		}
 
@@ -278,9 +278,9 @@ namespace Saber\Data\ITuple {
 		 *
 		 * @access public
 		 * @final
-		 * @return IInt32\Type                                       the length of this array list
+		 * @return IInt32\Type                                      the length of this array list
 		 */
-		public final function length() {
+		public final function length() : IInt32\Type {
 			return IInt32\Type::box($this->__length());
 		}
 
@@ -289,9 +289,9 @@ namespace Saber\Data\ITuple {
 		 *
 		 * @access public
 		 * @final
-		 * @return mixed                                            the second item in the tuple
+		 * @return Core\Type                                        the second item in the tuple
 		 */
-		public final function second() {
+		public final function second() : Core\Type {
 			return $this->value[1];
 		}
 

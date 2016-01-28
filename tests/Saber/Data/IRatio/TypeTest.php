@@ -34,7 +34,7 @@ namespace Saber\Data\IRatio {
 		/**
 		 * This method tests the data type.
 		 */
-		public function testType() {
+		public function test_instanceOf() {
 			//$this->markTestIncomplete();
 
 			$p0 = new IRatio\Type(IInt32\Type::one(), IInt32\Type::box(2));
@@ -57,7 +57,7 @@ namespace Saber\Data\IRatio {
 		 *
 		 * @return array
 		 */
-		public function dataBox() {
+		public function data_box() {
 			$data = array(
 				array(array(IInt32\Type::one(), IInt32\Type::one()), array(IInt32\Type::one(), IInt32\Type::one())),
 				array(array(1, 1), array(IInt32\Type::one(), IInt32\Type::one())),
@@ -70,9 +70,9 @@ namespace Saber\Data\IRatio {
 		/**
 		 * This method tests the boxing of a boxed value.
 		 *
-		 * @dataProvider dataBox
+		 * @dataProvider data_box
 		 */
-		public function testBox(array $provided, array $expected) {
+		public function test_box(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = IRatio\Type::box($provided[0], $provided[1]);
@@ -118,7 +118,7 @@ namespace Saber\Data\IRatio {
 		 *
 		 * @return array
 		 */
-		public function dataMake() {
+		public function data_make() {
 			$data = array(
 				array(array(IInt32\Type::one(), IInt32\Type::one()), array(IInt32\Type::one(), IInt32\Type::one())),
 				array(array(1, 1), array(IInt32\Type::one(), IInt32\Type::one())),
@@ -132,9 +132,9 @@ namespace Saber\Data\IRatio {
 		/**
 		 * This method tests the making of a boxed value.
 		 *
-		 * @dataProvider dataMake
+		 * @dataProvider data_make
 		 */
-		public function testMake(array $provided, array $expected) {
+		public function test_make(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = IRatio\Type::make($provided[0], $provided[1]);

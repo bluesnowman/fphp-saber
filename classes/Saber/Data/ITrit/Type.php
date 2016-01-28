@@ -80,10 +80,10 @@ namespace Saber\Data\ITrit {
 		 *
 		 * @access public
 		 * @static
-		 * @param ITrit\Type $x                                      the class to be evaluated
-		 * @return ITrit\Type                                        the class
+		 * @param ITrit\Type $x                                     the class to be evaluated
+		 * @return ITrit\Type                                       the class
 		 */
-		public static function covariant(ITrit\Type $x) {
+		public static function covariant(ITrit\Type $x) : ITrit\Type {
 			return $x;
 		}
 
@@ -93,10 +93,10 @@ namespace Saber\Data\ITrit {
 		 *
 		 * @access public
 		 * @static
-		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return ITrit\Type                                        the boxed object
+		 * @param int $value                                        the value(s) to be boxed
+		 * @return ITrit\Type                                       the boxed object
 		 */
-		public static function box($value) {
+		public static function box(int $value) : ITrit\Type {
 			return new ITrit\Type($value);
 		}
 
@@ -107,9 +107,9 @@ namespace Saber\Data\ITrit {
 		 * @access public
 		 * @static
 		 * @param mixed $value                                      the value(s) to be boxed
-		 * @return ITrit\Type                                        the boxed object
+		 * @return ITrit\Type                                       the boxed object
 		 */
-		public static function make($value) {
+		public static function make($value) : ITrit\Type {
 			if ($value < 0) {
 				return ITrit\Type::negative();
 			}
@@ -126,9 +126,9 @@ namespace Saber\Data\ITrit {
 		 *
 		 * @access public
 		 * @static
-		 * @return ITrit\Type                                        the object
+		 * @return ITrit\Type                                       the object
 		 */
-		public static function negative() {
+		public static function negative() : ITrit\Type {
 			if (!isset(static::$singletons[-1])) {
 				static::$singletons[-1] = new ITrit\Type(-1);
 			}
@@ -140,9 +140,9 @@ namespace Saber\Data\ITrit {
 		 *
 		 * @access public
 		 * @static
-		 * @return ITrit\Type                                        the object
+		 * @return ITrit\Type                                       the object
 		 */
-		public static function positive() {
+		public static function positive() : ITrit\Type {
 			if (!isset(static::$singletons[1])) {
 				static::$singletons[1] = new ITrit\Type(1);
 			}
@@ -154,9 +154,9 @@ namespace Saber\Data\ITrit {
 		 *
 		 * @access public
 		 * @static
-		 * @return ITrit\Type                                        the object
+		 * @return ITrit\Type                                       the object
 		 */
-		public static function zero() {
+		public static function zero() : ITrit\Type {
 			if (!isset(static::$singletons[0])) {
 				static::$singletons[0] = new ITrit\Type(0);
 			}
@@ -172,10 +172,10 @@ namespace Saber\Data\ITrit {
 		 *
 		 * @access public
 		 * @final
-		 * @param integer $value                                    the value to be assigned
+		 * @param int $value                                        the value to be assigned
 		 */
-		public final function __construct($value) {
-			$this->value = (int) $value;
+		public final function __construct(int $value) {
+			$this->value = $value;
 		}
 
 		/**

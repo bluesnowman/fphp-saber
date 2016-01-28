@@ -33,7 +33,7 @@ namespace Saber\Data\IObject {
 		/**
 		 * This method tests the data type.
 		 */
-		public function testType() {
+		public function test_instanceOf() {
 			//$this->markTestIncomplete();
 
 			$p0 = new IObject\Type('test');
@@ -56,7 +56,7 @@ namespace Saber\Data\IObject {
 		 *
 		 * @return array
 		 */
-		public function dataBox() {
+		public function data_box() {
 			$data = array(
 				array(array(1), array(1)),
 				array(array(null), array(null)),
@@ -69,9 +69,9 @@ namespace Saber\Data\IObject {
 		/**
 		 * This method tests the boxing of a value.
 		 *
-		 * @dataProvider dataBox
+		 * @dataProvider data_box
 		 */
-		public function testBox(array $provided, array $expected) {
+		public function test_box(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = IObject\Type::box($provided[0]);
@@ -96,7 +96,7 @@ namespace Saber\Data\IObject {
 		 *
 		 * @return array
 		 */
-		public function dataMake() {
+		public function data_make() {
 			$data = array(
 				array(array(1), array(1)),
 				array(array(null), array(null)),
@@ -109,9 +109,9 @@ namespace Saber\Data\IObject {
 		/**
 		 * This method tests the boxing of a value.
 		 *
-		 * @dataProvider dataMake
+		 * @dataProvider data_make
 		 */
-		public function testMake(array $provided, array $expected) {
+		public function test_make(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = IObject\Type::make($provided[0]);
@@ -140,7 +140,7 @@ namespace Saber\Data\IObject {
 		 *
 		 * @return array
 		 */
-		public function data2String() {
+		public function data_toString() {
 			$data = array(
 				array(array(1), array('1')),
 				array(array(null), array('null')),
@@ -152,9 +152,9 @@ namespace Saber\Data\IObject {
 		/**
 		 * This method tests that a value is converted to a string.
 		 *
-		 * @dataProvider data2String
+		 * @dataProvider data_toString
 		 */
-		public function testToString(array $provided, array $expected) {
+		public function test_toString(array $provided, array $expected) {
 			$p0 = IObject\Type::make($provided[0])->__toString();
 			$e0 = $expected[0];
 

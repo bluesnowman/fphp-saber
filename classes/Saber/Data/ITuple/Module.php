@@ -39,10 +39,10 @@ namespace Saber\Data\ITuple {
 		 *
 		 * @access public
 		 * @static
-		 * @param ITuple\Type $xs                                    the left operand
-		 * @return mixed                                            the first item in the tuple
+		 * @param ITuple\Type $xs                                   the left operand
+		 * @return Core\Type                                        the first item in the tuple
 		 */
-		public static function first(ITuple\Type $xs) {
+		public static function first(ITuple\Type $xs) : Core\Type {
 			return $xs->first();
 		}
 
@@ -51,11 +51,11 @@ namespace Saber\Data\ITuple {
 		 *
 		 * @access public
 		 * @static
-		 * @param ITuple\Type $xs                                    the left operand
-		 * @param IInt32\Type $i                                     the index of the item
-		 * @return mixed                                            the item at the specified index
+		 * @param ITuple\Type $xs                                   the left operand
+		 * @param IInt32\Type $i                                    the index of the item
+		 * @return Core\Type                                        the item at the specified index
 		 */
-		public static function item(ITuple\Type $xs, IInt32\Type $i) {
+		public static function item(ITuple\Type $xs, IInt32\Type $i) : Core\Type {
 			return $xs->item($i);
 		}
 
@@ -64,10 +64,10 @@ namespace Saber\Data\ITuple {
 		 *
 		 * @access public
 		 * @static
-		 * @param ITuple\Type $xs                                    the left operand
-		 * @return IInt32\Type                                       the length of this array list
+		 * @param ITuple\Type $xs                                   the left operand
+		 * @return IInt32\Type                                      the length of this array list
 		 */
-		public static function length(ITuple\Type $xs) {
+		public static function length(ITuple\Type $xs) : IInt32\Type {
 			return $xs->length();
 		}
 
@@ -76,10 +76,10 @@ namespace Saber\Data\ITuple {
 		 *
 		 * @access public
 		 * @static
-		 * @param ITuple\Type $xs                                    the left operand
-		 * @return mixed                                            the second item in the tuple
+		 * @param ITuple\Type $xs                                   the left operand
+		 * @return Core\Type                                        the second item in the tuple
 		 */
-		public static function second(ITuple\Type $xs) {
+		public static function second(ITuple\Type $xs) : Core\Type {
 			return $xs->second();
 		}
 
@@ -88,10 +88,10 @@ namespace Saber\Data\ITuple {
 		 *
 		 * @access public
 		 * @static
-		 * @param ITuple\Type $xs                                    the left operand
-		 * @return ITuple\Type                                       a tuple with the item swapped
+		 * @param ITuple\Type $xs                                   the left operand
+		 * @return ITuple\Type                                      a tuple with the item swapped
 		 */
-		public static function swap(ITuple\Type $xs) {
+		public static function swap(ITuple\Type $xs) : ITuple\Type {
 			return ITuple\Type::box2($xs->second(), $xs->first());
 		}
 
@@ -105,11 +105,11 @@ namespace Saber\Data\ITuple {
 		 *
 		 * @access public
 		 * @static
-		 * @param ITuple\Type $xs                                     the value to be evaluated
-		 * @param ITuple\Type $ys                                     the default value
-		 * @return ITuple\Type                                        the result
+		 * @param ITuple\Type $xs                                   the value to be evaluated
+		 * @param ITuple\Type $ys                                   the default value
+		 * @return ITuple\Type                                      the result
 		 */
-		public static function nvl(ITuple\Type $xs = null, ITuple\Type $ys = null) {
+		public static function nvl(ITuple\Type $xs = null, ITuple\Type $ys = null) : ITuple\Type {
 			return ($xs !== null) ? $xs : (($ys !== null) ? $ys : ITuple\Type::box2(null, null));
 		}
 
@@ -118,10 +118,10 @@ namespace Saber\Data\ITuple {
 		 *
 		 * @access public
 		 * @static
-		 * @param ITuple\Type $xs                                    the operand
-		 * @return IArrayList\Type                                   the tuple as an array list
+		 * @param ITuple\Type $xs                                   the operand
+		 * @return IArrayList\Type                                  the tuple as an array list
 		 */
-		public static function toArrayList(ITuple\Type $xs) {
+		public static function toArrayList(ITuple\Type $xs) : IArrayList\Type {
 			return IArrayList\Type::box($xs->unbox());
 		}
 
@@ -130,10 +130,10 @@ namespace Saber\Data\ITuple {
 		 *
 		 * @access public
 		 * @static
-		 * @param ITuple\Type $xs                                    the operand
-		 * @return ILinkedList\Type                                  the tuple as a linked list
+		 * @param ITuple\Type $xs                                   the operand
+		 * @return ILinkedList\Type                                 the tuple as a linked list
 		 */
-		public static function toLinkedList(ITuple\Type $xs) {
+		public static function toLinkedList(ITuple\Type $xs) : ILinkedList\Type {
 			$length = $xs->length();
 			$zs = ILinkedList\Type::nil();
 			for ($i = IInt32\Module::decrement($length); IInt32\Module::ge($i, IInt32\Type::zero())->unbox(); $i = IInt32\Module::decrement($i)) {
@@ -151,12 +151,12 @@ namespace Saber\Data\ITuple {
 		 *
 		 * @access public
 		 * @static
-		 * @param ITuple\Type $xs                                    the left operand
+		 * @param ITuple\Type $xs                                   the left operand
 		 * @param Core\Type $ys                                     the right operand
-		 * @return IBool\Type                                        whether the left operand is equal
+		 * @return IBool\Type                                       whether the left operand is equal
 		 *                                                          to the right operand
 		 */
-		public static function eq(ITuple\Type $xs, Core\Type $ys) { // ==
+		public static function eq(ITuple\Type $xs, Core\Type $ys) : IBool\Type { // ==
 			$type = $xs->__typeOf();
 			if ($ys !== null) {
 				if ($ys instanceof $type) {
@@ -171,12 +171,12 @@ namespace Saber\Data\ITuple {
 		 *
 		 * @access public
 		 * @static
-		 * @param ITuple\Type $xs                                    the left operand
+		 * @param ITuple\Type $xs                                   the left operand
 		 * @param Core\Type $ys                                     the right operand
-		 * @return IBool\Type                                        whether the left operand is identical
+		 * @return IBool\Type                                       whether the left operand is identical
 		 *                                                          to the right operand
 		 */
-		public static function id(ITuple\Type $xs, Core\Type $ys) { // ===
+		public static function id(ITuple\Type $xs, Core\Type $ys) : IBool\Type { // ===
 			if ($ys !== null) {
 				if ($xs->__typeOf() === $ys->__typeOf()) {
 					return IInt32\Module::id(ITuple\Module::compare($xs, $ys), IInt32\Type::zero());
@@ -190,12 +190,12 @@ namespace Saber\Data\ITuple {
 		 *
 		 * @access public
 		 * @static
-		 * @param ITuple\Type $xs                                    the left operand
+		 * @param ITuple\Type $xs                                   the left operand
 		 * @param Core\Type $ys                                     the right operand
-		 * @return IBool\Type                                        whether the left operand is NOT equal
+		 * @return IBool\Type                                       whether the left operand is NOT equal
 		 *                                                          to the right operand
 		 */
-		public static function ne(ITuple\Type $xs, Core\Type $ys) { // !=
+		public static function ne(ITuple\Type $xs, Core\Type $ys) : IBool\Type { // !=
 			return IBool\Module::not(ITuple\Module::eq($xs, $ys));
 		}
 
@@ -204,12 +204,12 @@ namespace Saber\Data\ITuple {
 		 *
 		 * @access public
 		 * @static
-		 * @param ITuple\Type $xs                                    the left operand
+		 * @param ITuple\Type $xs                                   the left operand
 		 * @param Core\Type $ys                                     the right operand
-		 * @return IBool\Type                                        whether the left operand is NOT identical
+		 * @return IBool\Type                                       whether the left operand is NOT identical
 		 *                                                          to the right operand
 		 */
-		public static function ni(ITuple\Type $xs, Core\Type $ys) { // !==
+		public static function ni(ITuple\Type $xs, Core\Type $ys) : IBool\Type { // !==
 			return IBool\Module::not(ITuple\Module::id($xs, $ys));
 		}
 
@@ -222,13 +222,13 @@ namespace Saber\Data\ITuple {
 		 *
 		 * @access public
 		 * @static
-		 * @param ITuple\Type $xs                                    the left operand
-		 * @param ITuple\Type $ys                                    the right operand
-		 * @return ITrit\Type                                        the order as to whether the left
+		 * @param ITuple\Type $xs                                   the left operand
+		 * @param ITuple\Type $ys                                   the right operand
+		 * @return ITrit\Type                                       the order as to whether the left
 		 *                                                          operand is less than, equals to,
 		 *                                                          or greater than the right operand
 		 */
-		public static function compare(ITuple\Type $xs, ITuple\Type $ys) {
+		public static function compare(ITuple\Type $xs, ITuple\Type $ys) : ITrit\Type {
 			$length = IInt32\Module::min($xs->length(), $ys->length());
 
 			for ($i = IInt32\Type::zero(); IInt32\Module::lt($i, $length)->unbox(); $i = IInt32\Module::increment($i)) {
@@ -268,12 +268,12 @@ namespace Saber\Data\ITuple {
 		 *
 		 * @access public
 		 * @static
-		 * @param ITuple\Type $xs                                    the left operand
-		 * @param ITuple\Type $ys                                    the right operand
-		 * @return IBool\Type                                        whether the left operand is greater
+		 * @param ITuple\Type $xs                                   the left operand
+		 * @param ITuple\Type $ys                                   the right operand
+		 * @return IBool\Type                                       whether the left operand is greater
 		 *                                                          than or equal to the right operand
 		 */
-		public static function ge(ITuple\Type $xs, ITuple\Type $ys) { // >=
+		public static function ge(ITuple\Type $xs, ITuple\Type $ys) : IBool\Type { // >=
 			return IBool\Type::box(ITuple\Module::compare($xs, $ys)->unbox() >= 0);
 		}
 
@@ -282,12 +282,12 @@ namespace Saber\Data\ITuple {
 		 *
 		 * @access public
 		 * @static
-		 * @param ITuple\Type $xs                                    the left operand
-		 * @param ITuple\Type $ys                                    the right operand
-		 * @return IBool\Type                                        whether the left operand is greater
+		 * @param ITuple\Type $xs                                   the left operand
+		 * @param ITuple\Type $ys                                   the right operand
+		 * @return IBool\Type                                       whether the left operand is greater
 		 *                                                          than the right operand
 		 */
-		public static function gt(ITuple\Type $xs, ITuple\Type $ys) { // >
+		public static function gt(ITuple\Type $xs, ITuple\Type $ys) : IBool\Type { // >
 			return IBool\Type::box(ITuple\Module::compare($xs, $ys)->unbox() > 0);
 		}
 
@@ -296,12 +296,12 @@ namespace Saber\Data\ITuple {
 		 *
 		 * @access public
 		 * @static
-		 * @param ITuple\Type $xs                                    the left operand
-		 * @param ITuple\Type $ys                                    the right operand
-		 * @return IBool\Type                                        whether the left operand is less than
+		 * @param ITuple\Type $xs                                   the left operand
+		 * @param ITuple\Type $ys                                   the right operand
+		 * @return IBool\Type                                       whether the left operand is less than
 		 *                                                          or equal to the right operand
 		 */
-		public static function le(ITuple\Type $xs, ITuple\Type $ys) { // <=
+		public static function le(ITuple\Type $xs, ITuple\Type $ys) : IBool\Type { // <=
 			return IBool\Type::box(ITuple\Module::compare($xs, $ys)->unbox() <= 0);
 		}
 
@@ -310,12 +310,12 @@ namespace Saber\Data\ITuple {
 		 *
 		 * @access public
 		 * @static
-		 * @param ITuple\Type $xs                                    the left operand
-		 * @param ITuple\Type $ys                                    the right operand
-		 * @return IBool\Type                                        whether the left operand is less than
+		 * @param ITuple\Type $xs                                   the left operand
+		 * @param ITuple\Type $ys                                   the right operand
+		 * @return IBool\Type                                       whether the left operand is less than
 		 *                                                          the right operand
 		 */
-		public static function lt(ITuple\Type $xs, ITuple\Type $ys) { // <
+		public static function lt(ITuple\Type $xs, ITuple\Type $ys) : IBool\Type { // <
 			return IBool\Type::box(ITuple\Module::compare($xs, $ys)->unbox() < 0);
 		}
 
@@ -324,11 +324,11 @@ namespace Saber\Data\ITuple {
 		 *
 		 * @access public
 		 * @static
-		 * @param ITuple\Type $xs                                    the left operand
-		 * @param ITuple\Type $ys                                    the right operand
-		 * @return ITuple\Type                                       the maximum value
+		 * @param ITuple\Type $xs                                   the left operand
+		 * @param ITuple\Type $ys                                   the right operand
+		 * @return ITuple\Type                                      the maximum value
 		 */
-		public static function max(ITuple\Type $xs, ITuple\Type $ys) {
+		public static function max(ITuple\Type $xs, ITuple\Type $ys) : ITuple\Type {
 			return (ITuple\Module::compare($xs, $ys)->unbox() >= 0) ? $xs : $ys;
 		}
 
@@ -337,11 +337,11 @@ namespace Saber\Data\ITuple {
 		 *
 		 * @access public
 		 * @static
-		 * @param ITuple\Type $xs                                    the left operand
-		 * @param ITuple\Type $ys                                    the right operand
-		 * @return ITuple\Type                                       the minimum value
+		 * @param ITuple\Type $xs                                   the left operand
+		 * @param ITuple\Type $ys                                   the right operand
+		 * @return ITuple\Type                                      the minimum value
 		 */
-		public static function min(ITuple\Type $xs, ITuple\Type $ys) {
+		public static function min(ITuple\Type $xs, ITuple\Type $ys) : ITuple\Type {
 			return (ITuple\Module::compare($xs, $ys)->unbox() <= 0) ? $xs : $ys;
 		}
 
@@ -354,10 +354,10 @@ namespace Saber\Data\ITuple {
 		 *
 		 * @access public
 		 * @static
-		 * @param ITuple\Type $x                                     the object to be evaluated
-		 * @return IBool\Type                                        whether the tuple is a pair
+		 * @param ITuple\Type $x                                    the object to be evaluated
+		 * @return IBool\Type                                       whether the tuple is a pair
 		 */
-		public static function isPair(ITuple\Type $x) {
+		public static function isPair(ITuple\Type $x) : IBool\Type {
 			return $x->isPair();
 		}
 

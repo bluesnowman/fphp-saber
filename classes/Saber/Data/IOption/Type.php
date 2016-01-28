@@ -66,12 +66,12 @@ namespace Saber\Data\IOption {
 		 *
 		 * @access public
 		 * @static
-		 * @param IOption\Type $x                                    the class to be evaluated
-		 * @return IOption\Type                                      the class
+		 * @param IOption\Type $x                                   the class to be evaluated
+		 * @return IOption\Type                                     the class
 		 * @throw Throwable\InvalidArgument\Exception               indicated that the specified class
 		 *                                                          is not a covariant
 		 */
-		public static function covariant(IOption\Type $x) {
+		public static function covariant(IOption\Type $x) : IOption\Type {
 			if (!($x instanceof static)) {
 				throw new Throwable\InvalidArgument\Exception('Invalid class type.  Expected a class of type ":type1", but got ":type2".', array(':type1' => get_called_class(), ':type2' => get_class($x)));
 			}
@@ -83,9 +83,9 @@ namespace Saber\Data\IOption {
 		 *
 		 * @access public
 		 * @static
-		 * @return IOption\None\Type                                 the "none" option
+		 * @return IOption\None\Type                                the "none" option
 		 */
-		public static function none() {
+		public static function none() : IOption\None\Type {
 			if (!isset(static::$singletons[0])) {
 				static::$singletons[0] = new IOption\None\Type();
 			}
@@ -98,9 +98,9 @@ namespace Saber\Data\IOption {
 		 * @access public
 		 * @static
 		 * @param Core\Type $x                                      the item to be stored
-		 * @return IOption\Some\Type                                 the "some" option
+		 * @return IOption\Some\Type                                the "some" option
 		 */
-		public static function some(Core\Type $x) {
+		public static function some(Core\Type $x) : IOption\Some\Type {
 			return new IOption\Some\Type($x);
 		}
 
@@ -147,9 +147,9 @@ namespace Saber\Data\IOption {
 		 *
 		 * @access public
 		 * @final
-		 * @return integer                                          the size of this option
+		 * @return int                                              the size of this option
 		 */
-		public final function __size() {
+		public final function __size() : int {
 			return ($this->__isDefined()) ? 1 : 0;
 		}
 
@@ -173,10 +173,10 @@ namespace Saber\Data\IOption {
 		 *
 		 * @access public
 		 * @final
-		 * @return IBool\Type                                        whether this instance is a "some"
+		 * @return IBool\Type                                       whether this instance is a "some"
 		 *                                                          option
 		 */
-		public final function isDefined() {
+		public final function isDefined() : IBool\Type {
 			return IBool\Type::box($this->__isDefined());
 		}
 
@@ -187,16 +187,16 @@ namespace Saber\Data\IOption {
 		 * @abstract
 		 * @return Core\Type                                        the stored item
 		 */
-		public abstract function item();
+		public abstract function item() : Core\Type;
 
 		/**
 		 * This method returns the size of this option.
 		 *
 		 * @access public
 		 * @final
-		 * @return IInt32\Type                                       the size of this option
+		 * @return IInt32\Type                                      the size of this option
 		 */
-		public final function size() {
+		public final function size() : IInt32\Type {
 			return IInt32\Type::box($this->__size());
 		}
 

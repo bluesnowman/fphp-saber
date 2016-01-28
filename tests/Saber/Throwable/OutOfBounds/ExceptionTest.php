@@ -34,7 +34,7 @@ namespace Saber\Throwable\OutOfBounds {
 		 *
 		 * @return array
 		 */
-		public function dataBox() {
+		public function data_box() {
 			$data = array(
 				array(array('', array(), IInt32\Type::zero()), array('', array(), IInt32\Type::zero())),
 				array(array('', array(), null), array('', array(), IInt32\Type::zero())),
@@ -45,9 +45,9 @@ namespace Saber\Throwable\OutOfBounds {
 		/**
 		 * This method tests the boxing of a value.
 		 *
-		 * @dataProvider dataBox
+		 * @dataProvider data_box
 		 */
-		public function testBox(array $provided, array $expected) {
+		public function test_box(array $provided, array $expected) {
 			$p0 = Throwable\OutOfBounds\Exception::make($provided);
 			$e0 = new Throwable\OutOfBounds\Exception($expected[0], $expected[1], $expected[2]);
 
@@ -95,7 +95,7 @@ namespace Saber\Throwable\OutOfBounds {
 		 *
 		 * @return array
 		 */
-		public function data2String() {
+		public function data_toString() {
 			$data = array(
 				array(array('Message', array(), IInt32\Type::zero()), array('Saber\\Throwable\\OutOfBounds\\Exception [ 0 ]: Message ~ ')),
 			);
@@ -105,9 +105,9 @@ namespace Saber\Throwable\OutOfBounds {
 		/**
 		 * This method tests that a value is converted to a string.
 		 *
-		 * @dataProvider data2String
+		 * @dataProvider data_toString
 		 */
-		public function testToString(array $provided, array $expected) {
+		public function test_toString(array $provided, array $expected) {
 			$p0 = Throwable\OutOfBounds\Exception::make($provided)->__toString();
 			$e0 = $expected[0];
 

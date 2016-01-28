@@ -33,7 +33,7 @@ namespace Saber\Data\IFloat {
 		/**
 		 * This method tests the data type.
 		 */
-		public function testType() {
+		public function test_instanceOf() {
 			//$this->markTestIncomplete();
 
 			$p0 = new IFloat\Type(0);
@@ -60,7 +60,7 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @return array
 		 */
-		public function dataBox() {
+		public function data_box() {
 			$data = array(
 				array(array(1.0), array(1.0)),
 				array(array(1), array(1.0)),
@@ -71,9 +71,9 @@ namespace Saber\Data\IFloat {
 		/**
 		 * This method tests the boxing of a value.
 		 *
-		 * @dataProvider dataBox
+		 * @dataProvider data_box
 		 */
-		public function testBox(array $provided, array $expected) {
+		public function test_box(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = IFloat\Type::box($provided[0]);
@@ -92,7 +92,7 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @return array
 		 */
-		public function dataMake() {
+		public function data_make() {
 			$data = array(
 				array(array(1.0), array(1.0)),
 				array(array(1), array(1.0)),
@@ -105,9 +105,9 @@ namespace Saber\Data\IFloat {
 		/**
 		 * This method tests the making of a value.
 		 *
-		 * @dataProvider dataMake
+		 * @dataProvider data_make
 		 */
-		public function testMake(array $provided, array $expected) {
+		public function test_make(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = IFloat\Type::make($provided[0]);
@@ -124,7 +124,7 @@ namespace Saber\Data\IFloat {
 		/**
 		 * This method tests the initialization of a singleton, boxed value.
 		 */
-		public function testSingletons() {
+		public function test_singletons() {
 			//$this->markTestIncomplete();
 
 			$p0 = IFloat\Type::negative();
@@ -173,7 +173,7 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @return array
 		 */
-		public function dataHashCode() {
+		public function data_hashCode() {
 			$data = array(
 				array(array(-1.0), array('-1.000000f')),
 				array(array(0.0), array('0.000000f')),
@@ -185,9 +185,9 @@ namespace Saber\Data\IFloat {
 		/**
 		 * This method tests that an object has a unique hash code.
 		 *
-		 * @dataProvider dataHashCode
+		 * @dataProvider data_hashCode
 		 */
-		public function testHashCode(array $provided, array $expected) {
+		public function test_hashCode(array $provided, array $expected) {
 			$p0 = IFloat\Type::make($provided[0])->__hashCode();
 			$e0 = $expected[0];
 
@@ -200,7 +200,7 @@ namespace Saber\Data\IFloat {
 		 *
 		 * @return array
 		 */
-		public function data2String() {
+		public function data_toString() {
 			$data = array(
 				array(array(-1.0), array('-1.000000')),
 				array(array(0.0), array('0.000000')),
@@ -212,9 +212,9 @@ namespace Saber\Data\IFloat {
 		/**
 		 * This method tests that a value is converted to a string.
 		 *
-		 * @dataProvider data2String
+		 * @dataProvider data_toString
 		 */
-		public function testToString(array $provided, array $expected) {
+		public function test_toString(array $provided, array $expected) {
 			$p0 = IFloat\Type::make($provided[0])->__toString();
 			$e0 = $expected[0];
 

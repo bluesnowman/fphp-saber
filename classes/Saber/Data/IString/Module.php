@@ -48,12 +48,12 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
+		 * @param IString\Type $xs                                  the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return IBool\Type                                        whether each item passed the
+		 * @return IBool\Type                                       whether each item passed the
 		 *                                                          truthy test
 		 */
-		public static function all(IString\Type $xs, callable $predicate) {
+		public static function all(IString\Type $xs, callable $predicate) : IBool\Type {
 			$length = $xs->length();
 
 			for ($i = IInt32\Type::zero(); IInt32\Module::lt($i, $length)->unbox(); $i = IInt32\Module::increment($i)) {
@@ -72,12 +72,12 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
+		 * @param IString\Type $xs                                  the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return IBool\Type                                        whether some of the items
+		 * @return IBool\Type                                       whether some of the items
 		 *                                                          passed the truthy test
 		 */
-		public static function any(IString\Type $xs, callable $predicate) {
+		public static function any(IString\Type $xs, callable $predicate) : IBool\Type {
 			return IOption\Module::isDefined(IString\Module::find($xs, $predicate));
 		}
 
@@ -86,11 +86,11 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
-		 * @param IChar\Type $y                                      the object to be appended
-		 * @return IString\Type                                      the string
+		 * @param IString\Type $xs                                  the left operand
+		 * @param IChar\Type $y                                     the object to be appended
+		 * @return IString\Type                                     the string
 		 */
-		public static function append(IString\Type $xs, IChar\Type $y) {
+		public static function append(IString\Type $xs, IChar\Type $y) : IString\Type {
 			return IString\Type::box($xs->unbox() . $y->unbox());
 		}
 
@@ -100,11 +100,11 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the string
+		 * @param IString\Type $xs                                  the string
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return ITuple\Type                                       the tuple
+		 * @return ITuple\Type                                      the tuple
 		 */
-		public static function break_(IString\Type $xs, callable $predicate) {
+		public static function break_(IString\Type $xs, callable $predicate) : ITuple\Type {
 			return IString\Module::span($xs, function(Core\Type $x, IInt32\Type $i) use ($predicate) {
 				return IBool\Module::not($predicate($x, $i));
 			});
@@ -115,11 +115,11 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
-		 * @param IString\Type $ys                                   the string to be concatenated
-		 * @return IString\Type                                      the string
+		 * @param IString\Type $xs                                  the left operand
+		 * @param IString\Type $ys                                  the string to be concatenated
+		 * @return IString\Type                                     the string
 		 */
-		public static function concat(IString\Type $xs, IString\Type $ys) {
+		public static function concat(IString\Type $xs, IString\Type $ys) : IString\Type {
 			return IString\Type::box($xs->unbox() . $ys->unbox());
 		}
 
@@ -128,12 +128,12 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
-		 * @param IChar\Type $y                                      the object to find
-		 * @return IBool\Type                                        whether the specified object is
+		 * @param IString\Type $xs                                  the left operand
+		 * @param IChar\Type $y                                     the object to find
+		 * @return IBool\Type                                       whether the specified object is
 		 *                                                          contained within the string
 		 */
-		public static function contains(IString\Type $xs, IChar\Type $y) {
+		public static function contains(IString\Type $xs, IChar\Type $y) : IBool\Type {
 			return IString\Module::any($xs, function(IChar\Type $x, IInt32\Type $i) use ($y) {
 				return IChar\Module::eq($x, $y);
 			});
@@ -144,11 +144,11 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
-		 * @param IChar\Type $y                                      the object to be removed
-		 * @return IString\Type                                      the string
+		 * @param IString\Type $xs                                  the left operand
+		 * @param IChar\Type $y                                     the object to be removed
+		 * @return IString\Type                                     the string
 		 */
-		public static function delete(IString\Type $xs, IChar\Type $y) {
+		public static function delete(IString\Type $xs, IChar\Type $y) : IString\Type {
 			$buffer = '';
 			$length = $xs->length();
 			$skip = false;
@@ -170,11 +170,11 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
-		 * @param IInt32\Type $n                                     the number of items to drop
-		 * @return IString\Type                                      the string
+		 * @param IString\Type $xs                                  the left operand
+		 * @param IInt32\Type $n                                    the number of items to drop
+		 * @return IString\Type                                     the string
 		 */
-		public static function drop(IString\Type $xs, IInt32\Type $n) {
+		public static function drop(IString\Type $xs, IInt32\Type $n) : IString\Type {
 			$buffer = '';
 			$length = $xs->length();
 
@@ -190,11 +190,11 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
+		 * @param IString\Type $xs                                  the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return IString\Type                                      the string
+		 * @return IString\Type                                     the string
 		 */
-		public static function dropWhile(IString\Type $xs, callable $predicate) {
+		public static function dropWhile(IString\Type $xs, callable $predicate) : IString\Type {
 			$buffer = '';
 			$length = $xs->length();
 
@@ -215,11 +215,11 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
+		 * @param IString\Type $xs                                  the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return IString\Type                                      the string
+		 * @return IString\Type                                     the string
 		 */
-		public static function dropWhileEnd(IString\Type $xs, callable $predicate) {
+		public static function dropWhileEnd(IString\Type $xs, callable $predicate) : IString\Type {
 			return IString\Module::dropWhile($xs, function(Core\Type $x, IInt32\Type $i) use ($predicate) {
 				return $predicate($x, $i)->not();
 			});
@@ -231,7 +231,7 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
+		 * @param IString\Type $xs                                  the left operand
 		 * @param callable $procedure                               the procedure function to be used
 		 */
 		public static function each(IString\Type $xs, callable $procedure) {
@@ -247,11 +247,11 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
+		 * @param IString\Type $xs                                  the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return IString\Type                                      the string
+		 * @return IString\Type                                     the string
 		 */
-		public static function filter(IString\Type $xs, callable $predicate) {
+		public static function filter(IString\Type $xs, callable $predicate) : IString\Type {
 			$buffer = '';
 			$length = $xs->length();
 
@@ -270,12 +270,12 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
+		 * @param IString\Type $xs                                  the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return IOption\Type                                      an option containing the first object
+		 * @return IOption\Type                                     an option containing the first object
 		 *                                                          satisfying the predicate, if any
 		 */
-		public static function find(IString\Type $xs, callable $predicate) {
+		public static function find(IString\Type $xs, callable $predicate) : IOption\Type {
 			$length = $xs->length();
 
 			for ($i = IInt32\Type::zero(); IInt32\Module::lt($i, $length)->unbox(); $i = IInt32\Module::increment($i)) {
@@ -293,10 +293,10 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
-		 * @return IString\Type                                      the flattened string
+		 * @param IString\Type $xs                                  the left operand
+		 * @return IString\Type                                     the flattened string
 		 */
-		public static function flatten(IString\Type $xs) {
+		public static function flatten(IString\Type $xs) : IString\Type {
 			return $xs;
 		}
 
@@ -305,12 +305,12 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
+		 * @param IString\Type $xs                                  the left operand
 		 * @param callable $operator                                the operator function to be used
-		 * @param IChar\Type $initial                                the initial value to be used
-		 * @return IChar\Type                                        the result
+		 * @param IChar\Type $initial                               the initial value to be used
+		 * @return IChar\Type                                       the result
 		 */
-		public static function foldLeft(IString\Type $xs, callable $operator, IChar\Type $initial) {
+		public static function foldLeft(IString\Type $xs, callable $operator, IChar\Type $initial) : IChar\Type {
 			$z = $initial;
 			$length = $xs->length();
 
@@ -326,12 +326,12 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
+		 * @param IString\Type $xs                                  the left operand
 		 * @param callable $operator                                the operator function to be used
-		 * @param IChar\Type $initial                                the initial value to be used
-		 * @return IChar\Type                                        the result
+		 * @param IChar\Type $initial                               the initial value to be used
+		 * @return IChar\Type                                       the result
 		 */
-		public static function foldRight(IString\Type $xs, callable $operator, IChar\Type $initial) {
+		public static function foldRight(IString\Type $xs, callable $operator, IChar\Type $initial) : IChar\Type {
 			$z = $initial;
 			$length = $xs->length();
 
@@ -347,11 +347,11 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the string to be formatted
-		 * @param IVector\Type $args                                 the objects to be incorporated
-		 * @return IString\Type                                      the newly formatted string
+		 * @param IString\Type $xs                                  the string to be formatted
+		 * @param IVector\Type $ys                                  the objects to be incorporated
+		 * @return IString\Type                                     the newly formatted string
 		 */
-		public static function format(IString\Type $xs, IVector\Type $ys) {
+		public static function format(IString\Type $xs, IVector\Type $ys) : IString\Type {
 			$buffer = $xs->unbox();
 			$length = $ys->length();
 
@@ -368,12 +368,12 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IArrayList\Type $xs                                the array list to be processed
+		 * @param IArrayList\Type $xs                               the array list to be processed
 		 * @param callable $subroutine                              the subroutine to be used
-		 * @return IHashMap\Type                                     a hash map of lists of characters that
+		 * @return IHashMap\Type                                    a hash map of lists of characters that
 		 *                                                          are considered in the same group
 		 */
-		public static function group(IArrayList\Type $xs, callable $subroutine) {
+		public static function group(IArrayList\Type $xs, callable $subroutine) : IHashMap\Type {
 			$groups = IHashMap\Type::empty_();
 
 			IString\Module::each($xs, function(IChar\Type $x, IInt32\Type $i) use ($groups, $subroutine) {
@@ -396,10 +396,10 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
-		 * @return IChar\Type                                        the head object in this string
+		 * @param IString\Type $xs                                  the left operand
+		 * @return IChar\Type                                       the head object in this string
 		 */
-		public static function head(IString\Type $xs) {
+		public static function head(IString\Type $xs) : IChar\Type {
 			return $xs->head();
 		}
 
@@ -408,10 +408,10 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
-		 * @return IOption\Type                                      the option
+		 * @param IString\Type $xs                                  the left operand
+		 * @return IOption\Type                                     the option
 		 */
-		public static function headIOption(IString\Type $xs) {
+		public static function headIOption(IString\Type $xs) : IOption\Type {
 			return (!$xs->__isEmpty())
 				? IOption\Type::some($xs->head())
 				: IOption\Type::none();
@@ -422,12 +422,12 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
+		 * @param IString\Type $xs                                  the left operand
 		 * @param Core\Type $object                                 the object to be searched for
-		 * @return IInt32\Type                                       the index of the first occurrence
+		 * @return IInt32\Type                                      the index of the first occurrence
 		 *                                                          or otherwise -1
 		 */
-		public static function indexOf(IString\Type $xs, Core\Type $object) {
+		public static function indexOf(IString\Type $xs, Core\Type $object) : IInt32\Type {
 			$length = $xs->length();
 
 			for ($i = IInt32\Type::zero(); IInt32\Module::lt($i, $length)->unbox(); $i = IInt32\Module::increment($i)) {
@@ -445,11 +445,11 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
-		 * @return IString\Type                                      the string, minus the last
+		 * @param IString\Type $xs                                  the left operand
+		 * @return IString\Type                                     the string, minus the last
 		 *                                                          item
 		 */
-		public static function init(IString\Type $xs) {
+		public static function init(IString\Type $xs) : IString\Type {
 			$buffer = '';
 			$length = IInt32\Module::decrement($xs->length());
 
@@ -465,12 +465,12 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
+		 * @param IString\Type $xs                                  the left operand
 		 * @param Core\Type $y                                      the object to be interspersed
-		 * @return IString\Type                                      the string
+		 * @return IString\Type                                     the string
 		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
-		public static function intersperse(IString\Type $xs, Core\Type $y) {
+		public static function intersperse(IString\Type $xs, Core\Type $y) : IString\Type {
 			$buffer = '';
 			$length = $xs->length();
 
@@ -490,10 +490,10 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
-		 * @return IBool\Type                                        whether the string is empty
+		 * @param IString\Type $xs                                  the left operand
+		 * @return IBool\Type                                       whether the string is empty
 		 */
-		public static function isEmpty(IString\Type $xs) {
+		public static function isEmpty(IString\Type $xs) : IBool\Type {
 			return $xs->isEmpty();
 		}
 
@@ -502,13 +502,13 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
-		 * @param IInt32\Type $i                                     the index of the item
-		 * @return IChar\Type                                        the item at the specified index
+		 * @param IString\Type $xs                                  the left operand
+		 * @param IInt32\Type $i                                    the index of the item
+		 * @return IChar\Type                                       the item at the specified index
 		 * @throws Throwable\OutOfBounds\Exception                  indicates the specified index
 		 *                                                          cannot be found
 		 */
-		public static function item(IString\Type $xs, IInt32\Type $i) {
+		public static function item(IString\Type $xs, IInt32\Type $i) : IChar\Type {
 			return $xs->item($i);
 		}
 
@@ -517,10 +517,10 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
-		 * @return IString\Iterator                                  an iterator for this collection
+		 * @param IString\Type $xs                                  the left operand
+		 * @return IString\Iterator                                 an iterator for this collection
 		 */
-		public static function iterator(IString\Type $xs) {
+		public static function iterator(IString\Type $xs) : IString\Iterator {
 			return new IString\Iterator($xs);
 		}
 
@@ -529,11 +529,11 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
-		 * @return IChar\Type                                        the last item in this linked
+		 * @param IString\Type $xs                                  the left operand
+		 * @return IChar\Type                                       the last item in this linked
 		 *                                                          string
 		 */
-		public static function last(IString\Type $xs) {
+		public static function last(IString\Type $xs) : IChar\Type {
 			return $xs->item(IInt32\Module::decrement($xs->length()));
 		}
 
@@ -542,10 +542,10 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
-		 * @return IOption\Type                                      the option
+		 * @param IString\Type $xs                                  the left operand
+		 * @return IOption\Type                                     the option
 		 */
-		public static function lastIOption(IString\Type $xs) {
+		public static function lastIOption(IString\Type $xs) : IOption\Type {
 			return (!$xs->__isEmpty())
 				? IOption\Type::some(IString\Module::last($xs))
 				: IOption\Type::none();
@@ -556,10 +556,10 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
-		 * @return IInt32\Type                                       the length of this string
+		 * @param IString\Type $xs                                  the left operand
+		 * @return IInt32\Type                                      the length of this string
 		 */
-		public static function length(IString\Type $xs) {
+		public static function length(IString\Type $xs) : IInt32\Type {
 			return $xs->length();
 		}
 
@@ -568,11 +568,11 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
+		 * @param IString\Type $xs                                  the left operand
 		 * @param callable $subroutine                              the subroutine function to be used
-		 * @return IString\Type                                      the string
+		 * @return IString\Type                                     the string
 		 */
-		public static function map(IString\Type $xs, callable $subroutine) {
+		public static function map(IString\Type $xs, callable $subroutine) : IString\Type {
 			$buffer = '';
 			$length = $xs->length();
 
@@ -589,12 +589,12 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
+		 * @param IString\Type $xs                                  the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return IBool\Type                                        whether each item passed the
+		 * @return IBool\Type                                       whether each item passed the
 		 *                                                          falsy test
 		 */
-		public static function none(IString\Type $xs, callable $predicate) {
+		public static function none(IString\Type $xs, callable $predicate) : IBool\Type {
 			return IString\Module::all($xs, function(Core\Type $object, IInt32\Type $index) use ($predicate) {
 				return IBool\Module::not($predicate($object, $index));
 			});
@@ -606,11 +606,11 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the string to be partitioned
+		 * @param IString\Type $xs                                  the string to be partitioned
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return ITuple\Type                                       the results
+		 * @return ITuple\Type                                      the results
 		 */
-		public static function partition(IString\Type $xs, callable $predicate) {
+		public static function partition(IString\Type $xs, callable $predicate) : ITuple\Type {
 			$passed = '';
 			$failed = '';
 
@@ -634,11 +634,11 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
+		 * @param IString\Type $xs                                  the left operand
 		 * @param Core\Type $object                                 the object to be prepended
-		 * @return IString\Type                                      the string
+		 * @return IString\Type                                     the string
 		 */
-		public static function prepend(IString\Type $xs, Core\Type $object) {
+		public static function prepend(IString\Type $xs, Core\Type $object) : IString\Type {
 			return IString\Type::box($object->__toString() . $xs->__toString());
 		}
 
@@ -647,12 +647,12 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
-		 * @param IInt32\Type $start                                 the starting index
-		 * @param IInt32\Type $end                                   the ending index
-		 * @return IString\Type                                      the string
+		 * @param IString\Type $xs                                  the left operand
+		 * @param IInt32\Type $start                                the starting index
+		 * @param IInt32\Type $end                                  the ending index
+		 * @return IString\Type                                     the string
 		 */
-		public static function range(IString\Type $xs, IInt32\Type $start, IInt32\Type $end) {
+		public static function range(IString\Type $xs, IInt32\Type $start, IInt32\Type $end) : IString\Type {
 			return IString\Module::drop(IString\Module::take($xs, $end), $start);
 		}
 
@@ -662,12 +662,12 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the string
+		 * @param IString\Type $xs                                  the string
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return IString\Type                                      a string containing those characters
+		 * @return IString\Type                                     a string containing those characters
 		 *                                                          that do not satisfy the predicate
 		 */
-		public static function reject(IString\Type $xs, callable $predicate) {
+		public static function reject(IString\Type $xs, callable $predicate) : IString\Type {
 			return IString\Module::filter($xs, function(Core\Type $x, IInt32\Type $i) use ($predicate) {
 				return IBool\Module::not($predicate($x, $i));
 			});
@@ -678,10 +678,10 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
-		 * @return IString\Type                                      the string
+		 * @param IString\Type $xs                                  the left operand
+		 * @return IString\Type                                     the string
 		 */
-		public static function reverse(IString\Type $xs) {
+		public static function reverse(IString\Type $xs) : IString\Type {
 			$buffer = '';
 			$length = $xs->length();
 
@@ -697,12 +697,12 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
-		 * @param IInt32\Type $offset                                the starting index
-		 * @param IInt32\Type $length                                the length of the slice
-		 * @return IString\Type                                      the string
+		 * @param IString\Type $xs                                  the left operand
+		 * @param IInt32\Type $offset                               the starting index
+		 * @param IInt32\Type $length                               the length of the slice
+		 * @return IString\Type                                     the string
 		 */
-		public static function slice(IString\Type $xs, IInt32\Type $offset, IInt32\Type $length) {
+		public static function slice(IString\Type $xs, IInt32\Type $offset, IInt32\Type $length) : IString\Type {
 			return IString\Type::box(mb_substr($xs->unbox(), $offset->unbox(), $length->unbox(), IChar\Type::UTF_8_ENCODING));
 		}
 
@@ -712,11 +712,11 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the string
+		 * @param IString\Type $xs                                  the string
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return ITuple\Type                                       the tuple
+		 * @return ITuple\Type                                      the tuple
 		 */
-		public static function span(IString\Type $xs, callable $predicate) {
+		public static function span(IString\Type $xs, callable $predicate) : ITuple\Type {
 			return ITuple\Type::box2(
 				IString\Module::takeWhile($xs, $predicate),
 				IString\Module::dropWhile($xs, $predicate)
@@ -729,11 +729,11 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the string
-		 * @param IInt32\Type $n                                     the number of characters to take
-		 * @return ITuple\Type                                       the tuple
+		 * @param IString\Type $xs                                  the string
+		 * @param IInt32\Type $n                                    the number of characters to take
+		 * @return ITuple\Type                                      the tuple
 		 */
-		public static function split(IString\Type $xs, IInt32\Type $n) {
+		public static function split(IString\Type $xs, IInt32\Type $n) : ITuple\Type {
 			return ITuple\Type::box2(
 				IString\Module::take($xs, $n),
 				IString\Module::drop($xs, $n)
@@ -745,10 +745,10 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
-		 * @return IString\Type                                      the tail of this string
+		 * @param IString\Type $xs                                  the left operand
+		 * @return IString\Type                                     the tail of this string
 		 */
-		public static function tail(IString\Type $xs) {
+		public static function tail(IString\Type $xs) : IString\Type {
 			return $xs->tail();
 		}
 
@@ -757,11 +757,11 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
-		 * @param IInt32\Type $n                                     the number of items to take
-		 * @return IString\Type                                      the string
+		 * @param IString\Type $xs                                  the left operand
+		 * @param IInt32\Type $n                                    the number of items to take
+		 * @return IString\Type                                     the string
 		 */
-		public static function take(IString\Type $xs, IInt32\Type $n) {
+		public static function take(IString\Type $xs, IInt32\Type $n) : IString\Type {
 			$buffer = '';
 			$length = IInt32\Module::min($n, $xs->length());
 
@@ -777,11 +777,11 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
+		 * @param IString\Type $xs                                  the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return IString\Type                                      the string
+		 * @return IString\Type                                     the string
 		 */
-		public static function takeWhile(IString\Type $xs, callable $predicate) {
+		public static function takeWhile(IString\Type $xs, callable $predicate) : IString\Type {
 			$buffer = '';
 			$length = $xs->length();
 
@@ -801,11 +801,11 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
+		 * @param IString\Type $xs                                  the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return IString\Type                                      the string
+		 * @return IString\Type                                     the string
 		 */
-		public static function takeWhileEnd(IString\Type $xs, callable $predicate) {
+		public static function takeWhileEnd(IString\Type $xs, callable $predicate) : IString\Type {
 			return IString\Module::takeWhile($xs, function(Core\Type $x, IInt32\Type $i) use ($predicate) {
 				return IBool\Module::not($predicate($x, $i));
 			});
@@ -821,11 +821,11 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the value to be evaluated
-		 * @param IString\Type $ys                                   the default value
-		 * @return IString\Type                                      the result
+		 * @param IString\Type $xs                                  the value to be evaluated
+		 * @param IString\Type $ys                                  the default value
+		 * @return IString\Type                                     the result
 		 */
-		public static function nvl(IString\Type $xs = null, IString\Type $ys = null) {
+		public static function nvl(IString\Type $xs = null, IString\Type $ys = null) : IString\Type {
 			return ($xs !== null) ? $xs : (($ys !== null) ? $ys : IString\Type::empty_());
 		}
 
@@ -834,10 +834,10 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the operand
-		 * @return IString\Type                                      the collection as an array list
+		 * @param IString\Type $xs                                  the operand
+		 * @return IArrayList\Type                                  the collection as an array list
 		 */
-		public static function toArrayList(IString\Type $xs) {
+		public static function toArrayList(IString\Type $xs) : IArrayList\Type {
 			$buffer = array();
 			IString\Module::each($xs, function(IChar\Type $x, IInt32\Type $i) use ($buffer) {
 				$buffer[] = $x;
@@ -850,10 +850,10 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the operand
-		 * @return ILinkedList\Type                                  the collection as a linked list
+		 * @param IString\Type $xs                                  the operand
+		 * @return ILinkedList\Type                                 the collection as a linked list
 		 */
-		public static function toLinkedList(IString\Type $xs) {
+		public static function toLinkedList(IString\Type $xs) : ILinkedList\Type {
 			$length = $xs->length();
 			$zs = ILinkedList\Type::nil();
 			for ($i = IInt32\Module::decrement($length); IInt32\Module::ge($i, IInt32\Type::zero())->unbox(); $i = IInt32\Module::decrement($i)) {
@@ -871,12 +871,12 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
+		 * @param IString\Type $xs                                  the left operand
 		 * @param Core\Type $ys                                     the object to be evaluated
-		 * @return IBool\Type                                        whether the specified object is equal
+		 * @return IBool\Type                                       whether the specified object is equal
 		 *                                                          to the current object
 		 */
-		public static function eq(IString\Type $xs, Core\Type $ys) {
+		public static function eq(IString\Type $xs, Core\Type $ys) : IBool\Type {
 			$type = $xs->__typeOf();
 			if ($ys !== null) {
 				if ($ys instanceof $type) {
@@ -891,12 +891,12 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
+		 * @param IString\Type $xs                                  the left operand
 		 * @param Core\Type $ys                                     the object to be evaluated
-		 * @return IBool\Type                                        whether the specified object is identical
+		 * @return IBool\Type                                       whether the specified object is identical
 		 *                                                          to the current object
 		 */
-		public static function id(IString\Type $xs, Core\Type $ys) {
+		public static function id(IString\Type $xs, Core\Type $ys) : IBool\Type {
 			if ($ys !== null) {
 				if ($xs->__typeOf() === $ys->__typeOf()) {
 					return IBool\Type::box($xs->unbox() === $ys->unbox());
@@ -910,12 +910,12 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
+		 * @param IString\Type $xs                                  the left operand
 		 * @param Core\Type $ys                                     the right operand
-		 * @return IBool\Type                                        whether the left operand is NOT equal
+		 * @return IBool\Type                                       whether the left operand is NOT equal
 		 *                                                          to the right operand
 		 */
-		public static function ne(IString\Type $xs, Core\Type $ys) { // !=
+		public static function ne(IString\Type $xs, Core\Type $ys) : IBool\Type { // !=
 			return IBool\Module::not(IString\Module::eq($xs, $ys));
 		}
 
@@ -924,12 +924,12 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
+		 * @param IString\Type $xs                                  the left operand
 		 * @param Core\Type $ys                                     the right operand
-		 * @return IBool\Type                                        whether the left operand is NOT identical
+		 * @return IBool\Type                                       whether the left operand is NOT identical
 		 *                                                          to the right operand
 		 */
-		public static function ni(IString\Type $xs, Core\Type $ys) { // !==
+		public static function ni(IString\Type $xs, Core\Type $ys) : IBool\Type { // !==
 			return IBool\Module::not(IString\Module::id($xs, $ys));
 		}
 
@@ -942,13 +942,13 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
-		 * @param IString\Type $ys                                   the object to be compared
-		 * @return ITrit\Type                                        whether the current object is less than,
+		 * @param IString\Type $xs                                  the left operand
+		 * @param IString\Type $ys                                  the object to be compared
+		 * @return ITrit\Type                                       whether the current object is less than,
 		 *                                                          equal to, or greater than the specified
 		 *                                                          object
 		 */
-		public static function compare(IString\Type $xs, IString\Type $ys) {
+		public static function compare(IString\Type $xs, IString\Type $ys) : ITrit\Type {
 			return ITrit\Type::make(strcmp($xs->unbox(), $ys->unbox()));
 		}
 
@@ -957,12 +957,12 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
-		 * @param IString\Type $ys                                   the right operand
-		 * @return IBool\Type                                        whether the left operand is greater
+		 * @param IString\Type $xs                                  the left operand
+		 * @param IString\Type $ys                                  the right operand
+		 * @return IBool\Type                                       whether the left operand is greater
 		 *                                                          than or equal to the right operand
 		 */
-		public static function ge(IString\Type $xs, IString\Type $ys) { // >=
+		public static function ge(IString\Type $xs, IString\Type $ys) : IBool\Type { // >=
 			return IBool\Type::box(IString\Module::compare($xs, $ys)->unbox() >= 0);
 		}
 
@@ -971,12 +971,12 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
-		 * @param IString\Type $ys                                   the right operand
-		 * @return IBool\Type                                        whether the left operand is greater
+		 * @param IString\Type $xs                                  the left operand
+		 * @param IString\Type $ys                                  the right operand
+		 * @return IBool\Type                                       whether the left operand is greater
 		 *                                                          than the right operand
 		 */
-		public static function gt(IString\Type $xs, IString\Type $ys) { // >
+		public static function gt(IString\Type $xs, IString\Type $ys) : IBool\Type { // >
 			return IBool\Type::box(IString\Module::compare($xs, $ys)->unbox() > 0);
 		}
 
@@ -985,12 +985,12 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
-		 * @param IString\Type $ys                                   the right operand
-		 * @return IBool\Type                                        whether the left operand is less than
+		 * @param IString\Type $xs                                  the left operand
+		 * @param IString\Type $ys                                  the right operand
+		 * @return IBool\Type                                       whether the left operand is less than
 		 *                                                          or equal to the right operand
 		 */
-		public static function le(IString\Type $xs, IString\Type $ys) { // <=
+		public static function le(IString\Type $xs, IString\Type $ys) : IBool\Type { // <=
 			return IBool\Type::box(IString\Module::compare($xs, $ys)->unbox() <= 0);
 		}
 
@@ -999,12 +999,12 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
-		 * @param IString\Type $ys                                   the right operand
-		 * @return IBool\Type                                        whether the left operand is less than
+		 * @param IString\Type $xs                                  the left operand
+		 * @param IString\Type $ys                                  the right operand
+		 * @return IBool\Type                                       whether the left operand is less than
 		 *                                                          the right operand
 		 */
-		public static function lt(IString\Type $xs, IString\Type $ys) { // <
+		public static function lt(IString\Type $xs, IString\Type $ys) : IBool\Type { // <
 			return IBool\Type::box(IString\Module::compare($xs, $ys)->unbox() < 0);
 		}
 
@@ -1013,11 +1013,11 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
-		 * @param IString\Type $ys                                   the right operand
-		 * @return IString\Type                                      the maximum value
+		 * @param IString\Type $xs                                  the left operand
+		 * @param IString\Type $ys                                  the right operand
+		 * @return IString\Type                                     the maximum value
 		 */
-		public static function max(IString\Type $xs, IString\Type $ys) {
+		public static function max(IString\Type $xs, IString\Type $ys) : IString\Type {
 			return (IString\Module::compare($xs, $ys)->unbox() >= 0) ? $xs : $ys;
 		}
 
@@ -1026,11 +1026,11 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param IString\Type $xs                                   the left operand
-		 * @param IString\Type $ys                                   the right operand
-		 * @return IString\Type                                      the minimum value
+		 * @param IString\Type $xs                                  the left operand
+		 * @param IString\Type $ys                                  the right operand
+		 * @return IString\Type                                     the minimum value
 		 */
-		public static function min(IString\Type $xs, IString\Type $ys) {
+		public static function min(IString\Type $xs, IString\Type $ys) : IString\Type {
 			return (IString\Module::compare($xs, $ys)->unbox() <= 0) ? $xs : $ys;
 		}
 

@@ -47,7 +47,7 @@ namespace Saber\Data\IOption\Some {
 		 * @final
 		 * @return Core\Type                                        the stored item
 		 */
-		public final function item() {
+		public final function item() : Core\Type {
 			return $this->value;
 		}
 

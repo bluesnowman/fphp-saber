@@ -32,7 +32,7 @@ namespace Saber\Data\IChar {
 		 * This method tests the ability to make a choice.
 		 */
 		public function testChoice() {
-			//$this->markTestIncomplete();
+			$this->markTestIncomplete();
 
 			$x = IChar\Type::make('m');
 
@@ -71,7 +71,7 @@ namespace Saber\Data\IChar {
 		 * @dataProvider dataCompare
 		 */
 		public function testCompare(array $provided, array $expected) {
-			//$this->markTestIncomplete();
+			$this->markTestIncomplete();
 
 			$p0 = IChar\Type::make($provided[0])->compare(IChar\Type::make($provided[1]));
 			$e0 = $expected[0];
@@ -104,7 +104,7 @@ namespace Saber\Data\IChar {
 		 * @dataProvider dataIsAlpha
 		 */
 		public function testIsAlpha(array $provided, array $expected) {
-			//$this->markTestIncomplete();
+			$this->markTestIncomplete();
 
 			$p0 = IChar\Type::make($provided[0])->isAlpha();
 			$e0 = $expected[0];
@@ -138,7 +138,7 @@ namespace Saber\Data\IChar {
 		 * @dataProvider dataIsAlphaNum
 		 */
 		public function testIsAlphaNum(array $provided, array $expected) {
-			//$this->markTestIncomplete();
+			$this->markTestIncomplete();
 
 			$p0 = IChar\Type::make($provided[0])->isAlphaNum();
 			$e0 = $expected[0];
@@ -172,7 +172,7 @@ namespace Saber\Data\IChar {
 		 * @dataProvider dataIsAscii
 		 */
 		public function testIsAscii(array $provided, array $expected) {
-			//$this->markTestIncomplete();
+			$this->markTestIncomplete();
 
 			$p0 = IChar\Type::make($provided[0])->isAscii();
 			$e0 = $expected[0];
@@ -201,7 +201,7 @@ namespace Saber\Data\IChar {
 		 * @dataProvider dataIsControl
 		 */
 		public function testIsControl(array $provided, array $expected) {
-			//$this->markTestIncomplete();
+			$this->markTestIncomplete();
 
 			$p0 = IChar\Type::make($provided[0])->isControl();
 			$e0 = $expected[0];
@@ -231,7 +231,7 @@ namespace Saber\Data\IChar {
 		 * @dataProvider dataIsCyrillic
 		 */
 		public function testIsCyrillic(array $provided, array $expected) {
-			//$this->markTestIncomplete();
+			$this->markTestIncomplete();
 
 			$p0 = IChar\Type::make($provided[0])->isCyrillic();
 			$e0 = $expected[0];
@@ -270,7 +270,7 @@ namespace Saber\Data\IChar {
 		 * @dataProvider dataIsDigit
 		 */
 		public function testIsHexadecimal(array $provided, array $expected) {
-			//$this->markTestIncomplete();
+			$this->markTestIncomplete();
 
 			$p0 = IChar\Type::make($provided[0])->isDigit();
 			$e0 = $expected[0];
@@ -321,7 +321,7 @@ namespace Saber\Data\IChar {
 		 * @dataProvider dataIsHexDigit
 		 */
 		public function testIsHexDigit(array $provided, array $expected) {
-			//$this->markTestIncomplete();
+			$this->markTestIncomplete();
 
 			$p0 = IChar\Type::make($provided[0])->isHexDigit();
 			$e0 = $expected[0];
@@ -352,7 +352,7 @@ namespace Saber\Data\IChar {
 		 * @dataProvider dataIsLatin1
 		 */
 		public function testIsLatin1(array $provided, array $expected) {
-			//$this->markTestIncomplete();
+			$this->markTestIncomplete();
 
 			$p0 = IChar\Type::make($provided[0])->isLatin1();
 			$e0 = $expected[0];
@@ -386,7 +386,7 @@ namespace Saber\Data\IChar {
 		 * @dataProvider dataIsLowerCase
 		 */
 		public function testIsLowerCase(array $provided, array $expected) {
-			//$this->markTestIncomplete();
+			$this->markTestIncomplete();
 
 			$p0 = IChar\Type::make($provided[0])->isLowerCase();
 			$e0 = $expected[0];
@@ -417,7 +417,7 @@ namespace Saber\Data\IChar {
 		 * @dataProvider dataIsINumber
 		 */
 		public function testIsINumber(array $provided, array $expected) {
-			//$this->markTestIncomplete();
+			$this->markTestIncomplete();
 
 			$p0 = IChar\Type::make($provided[0])->isNumber();
 			$e0 = $expected[0];
@@ -455,7 +455,7 @@ namespace Saber\Data\IChar {
 		 * @dataProvider dataIsOctDigit
 		 */
 		public function testIsOctDigit(array $provided, array $expected) {
-			//$this->markTestIncomplete();
+			$this->markTestIncomplete();
 
 			$p0 = IChar\Type::make($provided[0])->isOctDigit();
 			$e0 = $expected[0];
@@ -484,7 +484,7 @@ namespace Saber\Data\IChar {
 		 * @dataProvider dataIsPrintable
 		 */
 		public function testIsPrintable(array $provided, array $expected) {
-			//$this->markTestIncomplete();
+			$this->markTestIncomplete();
 
 			$p0 = IChar\Type::make($provided[0])->isPrintable();
 			$e0 = $expected[0];
@@ -514,7 +514,7 @@ namespace Saber\Data\IChar {
 		 * @dataProvider dataIsPunctuation
 		 */
 		public function testIsPunctuation(array $provided, array $expected) {
-			//$this->markTestIncomplete();
+			$this->markTestIncomplete();
 
 			$p0 = IChar\Type::make($provided[0])->isPunctuation();
 			$e0 = $expected[0];
@@ -544,7 +544,7 @@ namespace Saber\Data\IChar {
 		 * @dataProvider dataIsSeparator
 		 */
 		public function testIsSeparator(array $provided, array $expected) {
-			//$this->markTestIncomplete();
+			$this->markTestIncomplete();
 
 			$p0 = IChar\Type::make($provided[0])->isSeparator();
 			$e0 = $expected[0];
@@ -574,7 +574,7 @@ namespace Saber\Data\IChar {
 		 * @dataProvider dataIsSpace
 		 */
 		public function testIsSpace(array $provided, array $expected) {
-			//$this->markTestIncomplete();
+			$this->markTestIncomplete();
 
 			$p0 = IChar\Type::make($provided[0])->isSpace();
 			$e0 = $expected[0];
@@ -605,7 +605,7 @@ namespace Saber\Data\IChar {
 		 * @dataProvider dataIsSymbol
 		 */
 		public function testIsSymbol(array $provided, array $expected) {
-			//$this->markTestIncomplete();
+			$this->markTestIncomplete();
 
 			$p0 = IChar\Type::make($provided[0])->isSymbol();
 			$e0 = $expected[0];
@@ -639,7 +639,7 @@ namespace Saber\Data\IChar {
 		 * @dataProvider dataIsUpperCase
 		 */
 		public function testIsUpperCase(array $provided, array $expected) {
-			//$this->markTestIncomplete();
+			$this->markTestIncomplete();
 
 			$p0 = IChar\Type::make($provided[0])->isUpperCase();
 			$e0 = $expected[0];
@@ -667,7 +667,7 @@ namespace Saber\Data\IChar {
 		 * @dataProvider dataToIInt32
 		 */
 		public function testToIInt32(array $provided, array $expected) {
-			//$this->markTestIncomplete();
+			$this->markTestIncomplete();
 
 			$p0 = IChar\Type::make($provided[0])->toInt32();
 			$e0 = $expected[0];
@@ -695,7 +695,7 @@ namespace Saber\Data\IChar {
 		 * @dataProvider dataToLowerCase
 		 */
 		public function testToLowerCase(array $provided, array $expected) {
-			//$this->markTestIncomplete();
+			$this->markTestIncomplete();
 
 			$p0 = IChar\Type::make($provided[0])->toLowerCase();
 			$e0 = $expected[0];
@@ -709,7 +709,7 @@ namespace Saber\Data\IChar {
 		 *
 		 * @return array
 		 */
-		public function data2String() {
+		public function data_toString() {
 			$data = array(
 				array(array('a'), array('a')),
 				array(array("\n"), array("\n")),
@@ -721,10 +721,10 @@ namespace Saber\Data\IChar {
 		/**
 		 * This method tests that a value is converted to a string.
 		 *
-		 * @dataProvider data2String
+		 * @dataProvider data_toString
 		 */
-		public function testToString(array $provided, array $expected) {
-			//$this->markTestIncomplete();
+		public function test_toString(array $provided, array $expected) {
+			$this->markTestIncomplete();
 
 			$p0 = IChar\Type::make($provided[0])->__toString();
 			$e0 = $expected[0];
@@ -752,7 +752,7 @@ namespace Saber\Data\IChar {
 		 * @dataProvider dataToUpperCase
 		 */
 		public function testToUpperCase(array $provided, array $expected) {
-			//$this->markTestIncomplete();
+			$this->markTestIncomplete();
 
 			$p0 = IChar\Type::make($provided[0])->toUpperCase();
 			$e0 = $expected[0];

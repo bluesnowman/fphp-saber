@@ -35,7 +35,7 @@ namespace Saber\Data\IString {
 		/**
 		 * This method tests the data type.
 		 */
-		public function testType() {
+		public function test_instanceOf() {
 			//$this->markTestIncomplete();
 
 			$p0 = new IString\Type('test');
@@ -60,7 +60,7 @@ namespace Saber\Data\IString {
 		 *
 		 * @return array
 		 */
-		public function dataBox() {
+		public function data_box() {
 			$data = array(
 				array(array('string'), array('string')),
 			);
@@ -70,9 +70,9 @@ namespace Saber\Data\IString {
 		/**
 		 * This method tests the boxing of a value.
 		 *
-		 * @dataProvider dataBox
+		 * @dataProvider data_box
 		 */
-		public function testBox(array $provided, array $expected) {
+		public function test_box(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = IString\Type::box($provided[0]);
@@ -93,7 +93,7 @@ namespace Saber\Data\IString {
 		 *
 		 * @return array
 		 */
-		public function dataMake() {
+		public function data_make() {
 			$data = array(
 				array(array('string'), array('string')),
 			);
@@ -103,9 +103,9 @@ namespace Saber\Data\IString {
 		/**
 		 * This method tests the making of a value.
 		 *
-		 * @dataProvider dataMake
+		 * @dataProvider data_make
 		 */
-		public function testMake(array $provided, array $expected) {
+		public function test_make(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = IString\Type::make($provided[0]);

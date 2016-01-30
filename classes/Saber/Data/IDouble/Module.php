@@ -181,21 +181,6 @@ namespace Saber\Data\IDouble {
 		}
 
 		/**
-		 * This method returns a random number with the range of x and y.
-		 *
-		 * @access public
-		 * @static
-		 * @param IDouble\Type $x                                   the min operand
-		 * @param IDouble\Type $y                                   the max operand
-		 * @return IDouble\Type                                     the result
-		 */
-		public static function random(IDouble\Type $x = null, IDouble\Type $y = null) : IDouble\Type {
-			$x = IDouble\Module::nvl($x);
-			$y = IDouble\Module::nvl($y, IDouble\Type::box(mt_getrandmax()));
-			return IDouble\Type::box(mt_rand($x->unbox(), $y->unbox()));
-		}
-
-		/**
 		 * This method returns the result of rounding this object's value.
 		 *
 		 * @access public
@@ -272,7 +257,7 @@ namespace Saber\Data\IDouble {
 		 * @return ITrit\Type                                       the result
 		 */
 		public static function signum(IDouble\Type $x) : ITrit\Type {
-			return ITrit\Type::make($x->unbox());
+			return IDouble\Module::compare($x, IDouble\Type::zero());
 		}
 
 		#endregion
@@ -470,7 +455,7 @@ namespace Saber\Data\IDouble {
 		 *                                                          than or equal to the right operand
 		 */
 		public static function ge(IDouble\Type $x, IDouble\Type $y) : IBool\Type { // >=
-			return IBool\Type::box(IDouble\Module::compare($x, $y)->unbox() >= 0);
+			return IBool\Type::box(IDouble\Module::compare($x, $y)->unbox() >= 0.0);
 		}
 
 		/**
@@ -484,7 +469,7 @@ namespace Saber\Data\IDouble {
 		 *                                                          than the right operand
 		 */
 		public static function gt(IDouble\Type $x, IDouble\Type $y) : IBool\Type { // >
-			return IBool\Type::box(IDouble\Module::compare($x, $y)->unbox() > 0);
+			return IBool\Type::box(IDouble\Module::compare($x, $y)->unbox() > 0.0);
 		}
 
 		/**
@@ -498,7 +483,7 @@ namespace Saber\Data\IDouble {
 		 *                                                          or equal to the right operand
 		 */
 		public static function le(IDouble\Type $x, IDouble\Type $y) : IBool\Type { // <=
-			return IBool\Type::box(IDouble\Module::compare($x, $y)->unbox() <= 0);
+			return IBool\Type::box(IDouble\Module::compare($x, $y)->unbox() <= 0.0);
 		}
 
 		/**
@@ -512,7 +497,7 @@ namespace Saber\Data\IDouble {
 		 *                                                          the right operand
 		 */
 		public static function lt(IDouble\Type $x, IDouble\Type $y) : IBool\Type { // <
-			return IBool\Type::box(IDouble\Module::compare($x, $y)->unbox() < 0);
+			return IBool\Type::box(IDouble\Module::compare($x, $y)->unbox() < 0.0);
 		}
 
 		/**
@@ -525,7 +510,7 @@ namespace Saber\Data\IDouble {
 		 * @return IDouble\Type                                     the maximum value
 		 */
 		public static function max(IDouble\Type $x, IDouble\Type $y) : IDouble\Type {
-			return (IDouble\Module::compare($x, $y)->unbox() >= 0) ? $x : $y;
+			return (IDouble\Module::compare($x, $y)->unbox() >= 0.0) ? $x : $y;
 		}
 
 		/**
@@ -538,7 +523,7 @@ namespace Saber\Data\IDouble {
 		 * @return IDouble\Type                                     the minimum value
 		 */
 		public static function min(IDouble\Type $x, IDouble\Type $y) : IDouble\Type {
-			return (IDouble\Module::compare($x, $y)->unbox() <= 0) ? $x : $y;
+			return (IDouble\Module::compare($x, $y)->unbox() <= 0.0) ? $x : $y;
 		}
 
 		#endregion
@@ -555,7 +540,7 @@ namespace Saber\Data\IDouble {
 		 *                                                          number
 		 */
 		public static function isNegative(IDouble\Type $x) : IBool\Type {
-			return IBool\Type::box($x->unbox() < 0);
+			return IBool\Type::box($x->unbox() < 0.0);
 		}
 
 		#endregion

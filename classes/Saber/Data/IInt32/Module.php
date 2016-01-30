@@ -195,6 +195,21 @@ namespace Saber\Data\IInt32 {
 		}
 
 		/**
+		 * This method returns a random number with the range of x and y.
+		 *
+		 * @access public
+		 * @static
+		 * @param IInt32\Type $x                                    the min operand
+		 * @param IInt32\Type $y                                    the max operand
+		 * @return IInt32\Type                                      the result
+		 */
+		public static function random(IInt32\Type $x = null, IInt32\Type $y = null) : IInt32\Type {
+			$x = IInt32\Module::nvl($x);
+			$y = IInt32\Module::nvl($y, IInt32\Type::box(mt_getrandmax()));
+			return IInt32\Type::box(mt_rand($x->unbox(), $y->unbox()));
+		}
+
+		/**
 		 * This method returns the result of subtracting the specified value from this object's
 		 * value.
 		 *
@@ -218,35 +233,23 @@ namespace Saber\Data\IInt32 {
 		 * @access public
 		 * @static
 		 * @param IInt32\Type $x                                    where to start
-		 * @param Core\Type $y                                      either an integer representing
+		 * @param Core\Boxable\Type $y                              either an integer representing
 		 *                                                          the end of the sequence or a
 		 *                                                          tuple describing the sequence
 		 * @return IArrayList\Type                                  an empty array list
 		 */
-		public static function sequence(IInt32\Type $x, Core\Type $y) : IArrayList\Type {
-			$buffer = array();
-
+		public static function sequence(IInt32\Type $x, Core\Boxable\Type $y) : IArrayList\Type {
 			if ($y instanceof ITuple\Type) {
-				$s = IInt32\Module::subtract($y->first(), $x);
+				$s = $y->first();
 				$n = $y->second();
 			}
-			else { // ($y instanceof IInt32\Type)
+			else {
 				$s = IInt32\Type::one();
 				$n = $y;
 			}
-
-			if (IInt32\Module::isNegative($s)->unbox()) {
-				for ($i = $x; IInt32\Module::ge($i, $n)->unbox(); $i = IInt32\Module::add($i, $s)) {
-					$buffer[] = $i;
-				}
-			}
-			else {
-				for ($i = $x; IInt32\Module::le($i, $n)->unbox(); $i = IInt32\Module::add($i, $s)) {
-					$buffer[] = $i;
-				}
-			}
-
-			return IArrayList\Type::box($buffer);
+			return IArrayList\Type::box(array_map(function(int $value) : IInt32\Type {
+				return IInt32\Type::box($value);
+			}, range($x->unbox(), $n->unbox(), $s->unbox())));
 		}
 
 		/**

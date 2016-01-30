@@ -181,21 +181,6 @@ namespace Saber\Data\IFloat {
 		}
 
 		/**
-		 * This method returns a random number with the range of x and y.
-		 *
-		 * @access public
-		 * @static
-		 * @param IFloat\Type $x                                    the min operand
-		 * @param IFloat\Type $y                                    the max operand
-		 * @return IFloat\Type                                      the result
-		 */
-		public static function random(IFloat\Type $x = null, IFloat\Type $y = null) : IFloat\Type {
-			$x = IFloat\Module::nvl($x);
-			$y = IFloat\Module::nvl($y, IFloat\Type::box(mt_getrandmax()));
-			return IFloat\Type::box(mt_rand($x->unbox(), $y->unbox()));
-		}
-
-		/**
 		 * This method returns the result of rounding this object's value.
 		 *
 		 * @access public
@@ -272,7 +257,7 @@ namespace Saber\Data\IFloat {
 		 * @return ITrit\Type                                       the result
 		 */
 		public static function signum(IFloat\Type $x) : ITrit\Type {
-			return ITrit\Type::make($x->unbox());
+			return IFloat\Module::compare($x, IFloat\Type::zero());
 		}
 
 		#endregion
@@ -446,7 +431,7 @@ namespace Saber\Data\IFloat {
 		 *                                                          than or equal to the right operand
 		 */
 		public static function ge(IFloat\Type $x, IFloat\Type $y) : IBool\Type { // >=
-			return IBool\Type::box(IFloat\Module::compare($x, $y)->unbox() >= 0);
+			return IBool\Type::box(IFloat\Module::compare($x, $y)->unbox() >= 0.0);
 		}
 
 		/**
@@ -460,7 +445,7 @@ namespace Saber\Data\IFloat {
 		 *                                                          than the right operand
 		 */
 		public static function gt(IFloat\Type $x, IFloat\Type $y) : IBool\Type { // >
-			return IBool\Type::box(IFloat\Module::compare($x, $y)->unbox() > 0);
+			return IBool\Type::box(IFloat\Module::compare($x, $y)->unbox() > 0.0);
 		}
 
 		/**
@@ -474,7 +459,7 @@ namespace Saber\Data\IFloat {
 		 *                                                          or equal to the right operand
 		 */
 		public static function le(IFloat\Type $x, IFloat\Type $y) : IBool\Type { // <=
-			return IBool\Type::box(IFloat\Module::compare($x, $y)->unbox() <= 0);
+			return IBool\Type::box(IFloat\Module::compare($x, $y)->unbox() <= 0.0);
 		}
 
 		/**
@@ -488,7 +473,7 @@ namespace Saber\Data\IFloat {
 		 *                                                          the right operand
 		 */
 		public static function lt(IFloat\Type $x, IFloat\Type $y) : IBool\Type { // <
-			return IBool\Type::box(IFloat\Module::compare($x, $y)->unbox() < 0);
+			return IBool\Type::box(IFloat\Module::compare($x, $y)->unbox() < 0.0);
 		}
 
 		/**
@@ -501,7 +486,7 @@ namespace Saber\Data\IFloat {
 		 * @return IFloat\Type                                      the maximum value
 		 */
 		public static function max(IFloat\Type $x, IFloat\Type $y) : IFloat\Type {
-			return (IFloat\Module::compare($x, $y)->unbox() >= 0) ? $x : $y;
+			return (IFloat\Module::compare($x, $y)->unbox() >= 0.0) ? $x : $y;
 		}
 
 		/**
@@ -514,7 +499,7 @@ namespace Saber\Data\IFloat {
 		 * @return IFloat\Type                                      the minimum value
 		 */
 		public static function min(IFloat\Type $x, IFloat\Type $y) : IFloat\Type {
-			return (IFloat\Module::compare($x, $y)->unbox() <= 0) ? $x : $y;
+			return (IFloat\Module::compare($x, $y)->unbox() <= 0.0) ? $x : $y;
 		}
 
 		#endregion
@@ -531,7 +516,7 @@ namespace Saber\Data\IFloat {
 		 *                                                          number
 		 */
 		public static function isNegative(IFloat\Type $x) : IBool\Type {
-			return IBool\Type::box($x->unbox() < 0);
+			return IBool\Type::box($x->unbox() < 0.0);
 		}
 
 		#endregion

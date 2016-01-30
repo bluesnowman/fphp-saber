@@ -118,7 +118,7 @@ namespace Saber\Data\IInteger {
 		public static function fibonacci(IInteger\Type $n) : IInteger\Type {
 			return (IInteger\Module::le($n, IInteger\Type::one())->unbox())
 				? $n
-				: IInteger\Module::add(IInteger\Module::fibonacci(IInteger\Module::decrement($n)), IInteger\Module::fibonacci(IInteger\Module::subtract($n, IInteger\Type::box(2))));
+				: IInteger\Module::add(IInteger\Module::fibonacci(IInteger\Module::decrement($n)), IInteger\Module::fibonacci(IInteger\Module::subtract($n, IInteger\Type::box('2'))));
 		}
 
 		/**
@@ -200,6 +200,19 @@ namespace Saber\Data\IInteger {
 		}
 
 		/**
+		 * This method returns a random number with the range of x and y.
+		 *
+		 * @access public
+		 * @static
+		 * @param IInteger\Type $x                                  the min operand
+		 * @param IInt32\Type $y                                    the max operand
+		 * @return IInteger\Type                                    the result
+		 */
+		public static function random(IInteger\Type $x = null, IInt32\Type $y = null) : IInteger\Type {
+			return IInteger\Type::box(gmp_strval(gmp_random(IInt32\Module::nvl($y, IInt32\Type::one())->unbox())));
+		}
+
+		/**
 		 * This method returns the result of subtracting the specified value from this object's
 		 * value.
 		 *
@@ -263,7 +276,7 @@ namespace Saber\Data\IInteger {
 		 * @return ITrit\Type                                       the result
 		 */
 		public static function signum(IInteger\Type $x) : ITrit\Type {
-			return ITrit\Type::make($x->unbox());
+			return IInteger\Module::compare($x, IInteger\Type::zero());
 		}
 
 		#endregion

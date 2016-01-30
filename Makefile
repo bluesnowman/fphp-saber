@@ -22,7 +22,7 @@
 # Definitions
 ########################################################################
 
-BOOTSTRAP_FILE = tests/Bootstrap.php
+BOOTSTRAP_FILE = ./tests/Bootstrap.php
 BOOTSTRAP_SWITCH = --bootstrap $(BOOTSTRAP_FILE)
 
 COMPOSER_DIR = vendor
@@ -31,10 +31,10 @@ COMPOSER_URL = http://getcomposer.org/installer
 
 PHPUNIT_DIR = ./
 PHPUNIT_EXE = phpunit
-PHPUNIT_PHAR = phpunit.phar
+PHPUNIT_PHAR = phpunit-5.1.4.phar
 PHPUNIT_URL = https://phar.phpunit.de/$(PHPUNIT_PHAR)
 
-UNIT_TESTS = tests
+UNIT_TESTS = ./tests
 
 ########################################################################
 # Rules (for Testing)

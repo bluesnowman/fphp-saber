@@ -17,8 +17,11 @@ engines:
     enabled: true
     config:
       file_extensions: "php"
+      rulesets: "phpmd.xml"
 ratings:
   paths:
   - "**.php"
 exclude_paths:
+- setup/**/*
+- tests/**/*
 - vendor/**/*

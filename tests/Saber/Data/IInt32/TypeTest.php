@@ -59,8 +59,9 @@ namespace Saber\Data\IInt32 {
 		 */
 		public function data_box() {
 			$data = array(
-				array(array(0), array(0)),
 				array(array(1), array(1)),
+				array(array(0), array(0)),
+				array(array(-1), array(-1)),
 			);
 			return $data;
 		}
@@ -89,8 +90,9 @@ namespace Saber\Data\IInt32 {
 		 */
 		public function data_covariant() {
 			$data = array(
-				array(array(0), array(0)),
 				array(array(1), array(1)),
+				array(array(0), array(0)),
+				array(array(-1), array(-1)),
 			);
 			return $data;
 		}
@@ -208,7 +210,7 @@ namespace Saber\Data\IInt32 {
 		 * @dataProvider data_hashCode
 		 */
 		public function test_hashCode(array $provided, array $expected) {
-			$p0 = IInt32\Type::make($provided[0])->__hashCode();
+			$p0 = IInt32\Type::box($provided[0])->__hashCode();
 			$e0 = $expected[0];
 
 			$this->assertInternalType('string', $p0);
@@ -235,7 +237,7 @@ namespace Saber\Data\IInt32 {
 		 * @dataProvider data_toString
 		 */
 		public function test_toString(array $provided, array $expected) {
-			$p0 = IInt32\Type::make($provided[0])->__toString();
+			$p0 = IInt32\Type::box($provided[0])->__toString();
 			$e0 = $expected[0];
 
 			$this->assertInternalType('string', $p0);

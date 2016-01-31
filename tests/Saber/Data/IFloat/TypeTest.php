@@ -31,11 +31,9 @@ namespace Saber\Data\IFloat {
 		#region Tests -> Inheritance
 
 		/**
-		 * This method tests the data type.
+		 * This method tests the "instanceOf" property.
 		 */
 		public function test_instanceOf() {
-			//$this->markTestIncomplete();
-
 			$p0 = new IFloat\Type(0);
 
 			$this->assertInstanceOf('\\Saber\\Data\\IFloat\\Type', $p0);
@@ -56,7 +54,7 @@ namespace Saber\Data\IFloat {
 		#region Tests -> Initialization
 
 		/**
-		 * This method provides the data for testing the boxing of a value.
+		 * This method provides the data for testing the "box" method.
 		 *
 		 * @return array
 		 */
@@ -69,13 +67,11 @@ namespace Saber\Data\IFloat {
 		}
 
 		/**
-		 * This method tests the boxing of a value.
+		 * This method tests the "box" method.
 		 *
 		 * @dataProvider data_box
 		 */
 		public function test_box(array $provided, array $expected) {
-			//$this->markTestIncomplete();
-
 			$p0 = IFloat\Type::box($provided[0]);
 
 			$this->assertInstanceOf('\\Saber\\Data\\IFloat\\Type', $p0);
@@ -88,7 +84,38 @@ namespace Saber\Data\IFloat {
 		}
 
 		/**
-		 * This method provides the data for testing the making of a value.
+		 * This method provides the data for testing the "covariant" method.
+		 *
+		 * @return array
+		 */
+		public function data_covariant() {
+			$data = array(
+				array(array(1.0), array(1.0)),
+				array(array(0.0), array(0.0)),
+				array(array(-1.0), array(-1.0)),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "covariant" method.
+		 *
+		 * @dataProvider data_covariant
+		 */
+		public function test_covariant(array $provided, array $expected) {
+			$p0 = IFloat\Type::covariant(IFloat\Type::box($provided[0]));
+
+			$this->assertInstanceOf('\\Saber\\Data\\IFloat\\Type', $p0);
+
+			$p1 = $p0->unbox();
+			$e1 = $expected[0];
+
+			$this->assertInternalType('float', $p1);
+			$this->assertSame($e1, $p1);
+		}
+
+		/**
+		 * This method provides the data for testing the "make" method.
 		 *
 		 * @return array
 		 */
@@ -103,13 +130,11 @@ namespace Saber\Data\IFloat {
 		}
 
 		/**
-		 * This method tests the making of a value.
+		 * This method tests the "make" method.
 		 *
 		 * @dataProvider data_make
 		 */
 		public function test_make(array $provided, array $expected) {
-			//$this->markTestIncomplete();
-
 			$p0 = IFloat\Type::make($provided[0]);
 
 			$this->assertInstanceOf('\\Saber\\Data\\IFloat\\Type', $p0);
@@ -122,11 +147,9 @@ namespace Saber\Data\IFloat {
 		}
 
 		/**
-		 * This method tests the initialization of a singleton, boxed value.
+		 * This method tests the "singletons" methods.
 		 */
 		public function test_singletons() {
-			//$this->markTestIncomplete();
-
 			$p0 = IFloat\Type::negative();
 			$e0 = IFloat\Type::negative();
 
@@ -169,7 +192,7 @@ namespace Saber\Data\IFloat {
 		#region Tests -> Interface
 
 		/**
-		 * This method provides the data for testing that an object has a unique hash code.
+		 * This method provides the data for testing the "hashCode" method.
 		 *
 		 * @return array
 		 */
@@ -183,12 +206,12 @@ namespace Saber\Data\IFloat {
 		}
 
 		/**
-		 * This method tests that an object has a unique hash code.
+		 * This method tests the "hashCode" method.
 		 *
 		 * @dataProvider data_hashCode
 		 */
 		public function test_hashCode(array $provided, array $expected) {
-			$p0 = IFloat\Type::make($provided[0])->__hashCode();
+			$p0 = IFloat\Type::box($provided[0])->__hashCode();
 			$e0 = $expected[0];
 
 			$this->assertInternalType('string', $p0);
@@ -196,7 +219,7 @@ namespace Saber\Data\IFloat {
 		}
 
 		/**
-		 * This method provides the data for testing that a value is converted to a string.
+		 * This method provides the data for testing the "toString" method.
 		 *
 		 * @return array
 		 */
@@ -210,12 +233,12 @@ namespace Saber\Data\IFloat {
 		}
 
 		/**
-		 * This method tests that a value is converted to a string.
+		 * This method tests the "toString" method.
 		 *
 		 * @dataProvider data_toString
 		 */
 		public function test_toString(array $provided, array $expected) {
-			$p0 = IFloat\Type::make($provided[0])->__toString();
+			$p0 = IFloat\Type::box($provided[0])->__toString();
 			$e0 = $expected[0];
 
 			$this->assertInternalType('string', $p0);

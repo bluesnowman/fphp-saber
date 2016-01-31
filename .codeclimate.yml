@@ -15,9 +15,10 @@ engines:
     - TODO
   phpmd:
     enabled: true
+    config:
+      file_extensions: "php"
 ratings:
   paths:
-  - "**.inc"
   - "**.php"
 exclude_paths:
 - vendor/**/*

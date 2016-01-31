@@ -55,7 +55,7 @@ namespace Saber\Data\IUnit {
 		/**
 		 * This method tests the initialization of a singleton, boxed value.
 		 */
-		public function testSingleton() {
+		public function test_singleton() {
 			//$this->markTestIncomplete();
 
 			$p0 = IUnit\Type::instance();

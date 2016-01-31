@@ -180,7 +180,7 @@ namespace Saber\Data\IRatio {
 		 *
 		 * @return array
 		 */
-		public function dataSingleton() {
+		public function data_singleton() {
 			$data = array(
 				array(array(IRatio\Type::one()), array(IInt32\Type::one(), IInt32\Type::one())),
 				array(array(IRatio\Type::zero()), array(IInt32\Type::zero(), IInt32\Type::one())),
@@ -192,9 +192,9 @@ namespace Saber\Data\IRatio {
 		/**
 		 * This method tests the initialization of a singleton, boxed value.
 		 *
-		 * @dataProvider dataSingleton
+		 * @dataProvider data_singleton
 		 */
-		public function testSingleton(array $provided, array $expected) {
+		public function test_singleton(array $provided, array $expected) {
 			//$this->markTestIncomplete();
 
 			$p0 = $provided[0];

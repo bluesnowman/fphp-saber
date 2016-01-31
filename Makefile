@@ -22,6 +22,10 @@
 # Definitions
 ########################################################################
 
+DOCKER_APP = saber-app
+DOCKER_GIT = bluesnowman/fphp-saber
+DOCKER_PORT = 5000
+
 BOOTSTRAP_FILE = ./tests/Bootstrap.php
 BOOTSTRAP_SWITCH = --bootstrap $(BOOTSTRAP_FILE)
 
@@ -40,9 +44,9 @@ UNIT_TESTS = ./tests
 # Rules (for Testing)
 ########################################################################
 
-# make execute
-# make execute GROUP=the_group_name
-execute:
+# make unit-test
+# make unit-test GROUP=the_group_name
+unit-test:
 ifndef GROUP
 	$(PHPUNIT_DIR)$(PHPUNIT_EXE) $(BOOTSTRAP_SWITCH) $(UNIT_TESTS)
 else
@@ -97,3 +101,28 @@ uninstall-composer:
 # make uninstall-phpunit
 uninstall-phpunit:
 	rm -f $(PHPUNIT_EXE)
+
+########################################################################
+# Rules (for Docker)
+########################################################################
+
+# make start-docker
+start-docker:
+	sudo service docker restart; sleep 10; docker --version
+
+# make build-docker
+build-docker:
+	docker build -t $(DOCKER_GIT) .
+
+# make run-docker
+run-docker: build-docker clean-docker
+	docker run -d -p 80:$(DOCKER_PORT) --name="$(DOCKER_APP)" \
+	$(DOCKER_GIT) /bin/bash -c "php-fpm -D && nginx -g 'daemon off;'"
+
+clean-docker:
+	-docker stop $(DOCKER_APP)
+	-docker rm -f $(DOCKER_APP)
+
+# make clean
+.PHONY: clean
+clean: uninstall clean-docker

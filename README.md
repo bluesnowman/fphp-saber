@@ -314,13 +314,13 @@ make uninstall
 To run all unit tests:
 
 ````
-make execute
+make unit-test
 ````
 
 To run just a specific group of unit tests, for example:
 
 ````
-make execute GROUP=TypeTest
+make unit-test GROUP=TypeTest
 ````
 
 For more information regarding additional commands, see the [documentation](https://github.com/bluesnowman/fphp-saber/blob/master/Makefile) in the `Makefile` itself.

@@ -25,7 +25,7 @@ namespace Saber\Data\IUnit {
 	use \Saber\Data\IUnit;
 
 	/**
-	 * @group ModuleTest
+	 * @group ModuleTest2
 	 */
 	final class ModuleTest extends Core\TypeTest {
 

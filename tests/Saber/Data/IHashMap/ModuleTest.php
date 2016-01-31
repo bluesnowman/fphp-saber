@@ -24,7 +24,7 @@ namespace Saber\Data\IHashMap {
 	use \Saber\Data\IHashMap;
 
 	/**
-	 * @group ModuleTest
+	 * @group ModuleTest2
 	 */
 	final class ModuleTest extends Core\ModuleTest {
 

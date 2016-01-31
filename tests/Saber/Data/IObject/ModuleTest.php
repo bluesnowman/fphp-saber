@@ -24,7 +24,7 @@ namespace Saber\Data\IObject {
 	use \Saber\Data\IObject;
 
 	/**
-	 * @group ModuleTest
+	 * @group ModuleTest2
 	 */
 	final class ModuleTest extends Core\ModuleTest {
 

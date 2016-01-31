@@ -24,7 +24,7 @@ namespace Saber\Math\IReal {
 	use \Saber\Data\IReal;
 
 	/**
-	 * @group ModuleTest
+	 * @group ModuleTest2
 	 */
 	final class ModuleTest extends Core\ModuleTest {
 

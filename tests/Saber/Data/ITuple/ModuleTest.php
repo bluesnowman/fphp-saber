@@ -24,7 +24,7 @@ namespace Saber\Data\ITuple {
 	use \Saber\Data\ITuple;
 
 	/**
-	 * @group ModuleTest
+	 * @group ModuleTest2
 	 */
 	final class ModuleTest extends Core\ModuleTest {
 

@@ -24,7 +24,7 @@ namespace Saber\Data\IOption {
 	use \Saber\Data\IOption;
 
 	/**
-	 * @group ModuleTest
+	 * @group ModuleTest2
 	 */
 	final class ModuleTest extends Core\ModuleTest {
 

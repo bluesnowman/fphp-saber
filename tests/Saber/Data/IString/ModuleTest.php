@@ -26,7 +26,7 @@ namespace Saber\Data\IString {
 	use \Saber\Data\IString;
 
 	/**
-	 * @group ModuleTest
+	 * @group ModuleTest2
 	 */
 	final class ModuleTest extends Core\TypeTest {
 

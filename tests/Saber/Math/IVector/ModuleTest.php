@@ -24,7 +24,7 @@ namespace Saber\Math\IVector {
 	use \Saber\Data\IVector;
 
 	/**
-	 * @group ModuleTest
+	 * @group ModuleTest2
 	 */
 	final class ModuleTest extends Core\ModuleTest {
 

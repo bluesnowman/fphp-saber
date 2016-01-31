@@ -24,7 +24,7 @@ namespace Saber\Data\IRatio {
 	use \Saber\Data\IRatio;
 
 	/**
-	 * @group ModuleTest
+	 * @group ModuleTest2
 	 */
 	final class ModuleTest extends Core\ModuleTest {
 

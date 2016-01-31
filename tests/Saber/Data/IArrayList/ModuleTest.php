@@ -24,7 +24,7 @@ namespace Saber\Data\IArrayList {
 	use \Saber\Data\IArrayList;
 
 	/**
-	 * @group ModuleTest
+	 * @group ModuleTest2
 	 */
 	final class ModuleTest extends Core\ModuleTest {
 

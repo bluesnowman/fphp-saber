@@ -111,7 +111,8 @@ namespace Saber\Data\IInteger {
 			$p1 = $p0->unbox();
 			$e1 = $expected[0];
 
-			$this->assertInternalType('integer', $p1);
+			$this->assertInternalType('string', $p1);
+			$this->assertRegExp('/^[+-]?(0|([1-9][0-9]*))$/', $p1);
 			$this->assertSame($e1, $p1);
 		}
 
@@ -130,6 +131,7 @@ namespace Saber\Data\IInteger {
 				array(array(1), array('1')),
 				array(array(null), array('0')),
 				array(array(''), array('0')),
+				array(array('+1'), array('1')),
 			);
 			return $data;
 		}
@@ -148,6 +150,7 @@ namespace Saber\Data\IInteger {
 			$e1 = $expected[0];
 
 			$this->assertInternalType('string', $p1);
+			$this->assertRegExp('/^[+-]?(0|([1-9][0-9]*))$/', $p1);
 			$this->assertSame($e1, $p1);
 		}
 

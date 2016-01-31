@@ -24,7 +24,7 @@ namespace Saber\Data\ITrit {
 	use \Saber\Data\ITrit;
 
 	/**
-	 * @group ModuleTest
+	 * @group ModuleTest2
 	 */
 	final class ModuleTest extends Core\ModuleTest {
 

@@ -11,4 +11,7 @@ install:
   - make install-composer
   - make install-phpunit
 script:
-  - make unit-test
+  - make unit-test GROUP=TypeTest
+  - make unit-test GROUP=ExceptionTest
+  - make unit-test GROUP=ModuleTest
+  - make unit-test GROUP=UtilitiesTest

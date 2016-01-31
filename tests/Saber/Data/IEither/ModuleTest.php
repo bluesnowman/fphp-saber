@@ -24,7 +24,7 @@ namespace Saber\Data\IEither {
 	use \Saber\Data\IEither;
 
 	/**
-	 * @group ModuleTest
+	 * @group ModuleTest2
 	 */
 	final class ModuleTest extends Core\ModuleTest {
 

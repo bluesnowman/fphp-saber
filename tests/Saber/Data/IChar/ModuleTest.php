@@ -24,7 +24,7 @@ namespace Saber\Data\IChar {
 	use \Saber\Data\IChar;
 
 	/**
-	 * @group ModuleTest
+	 * @group ModuleTest2
 	 */
 	final class ModuleTest extends Core\ModuleTest {
 

@@ -24,7 +24,7 @@ namespace Saber\Data\IHashSet {
 	use \Saber\Data\IHashSet;
 
 	/**
-	 * @group ModuleTest
+	 * @group ModuleTest2
 	 */
 	final class ModuleTest extends Core\ModuleTest {
 

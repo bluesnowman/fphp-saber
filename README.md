@@ -3,9 +3,12 @@ Saber
 
 A functional PHP library, which promotes strong typing, immutable objects, and lazy evaluation.
 
-[![Dependency Status](https://www.versioneye.com/user/projects/5531e96410e7149066000cf8/badge.svg?style=flat)](https://www.versioneye.com/user/projects/5531e96410e7149066000cf8)
+[![License](https://poser.pugx.org/bluesnowman/fphp-saber/license.svg)](https://packagist.org/packages/bluesnowman/fphp-saber)
+[![Latest Stable Version](https://poser.pugx.org/bluesnowman/fphp-saber/v/stable.svg)](https://packagist.org/packages/bluesnowman/fphp-saber)
 [![Build Status](https://secure.travis-ci.org/bluesnowman/fphp-saber.svg)](http://travis-ci.org/bluesnowman/fphp-saber)
+[![Dependency Status](https://www.versioneye.com/user/projects/5531e96410e7149066000cf8/badge.svg?style=flat)](https://www.versioneye.com/user/projects/5531e96410e7149066000cf8)
 [![Code Coverage](https://codeclimate.com/github/bluesnowman/fphp-saber/badges/gpa.svg)](https://codeclimate.com/github/bluesnowman/fphp-saber)
+[![Issue Count](https://codeclimate.com/github/bluesnowman/fphp-saber/badges/issue_count.svg)](https://codeclimate.com/github/bluesnowman/fphp-saber)
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/bluesnowman/fphp-saber.svg)](http://isitmaintained.com/project/bluesnowman/fphp-saber "Average time to resolve an issue")
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/bluesnowman/fphp-saber.svg)](http://isitmaintained.com/project/bluesnowman/fphp-saber "Percentage of issues still open")
 [More...](https://www.openhub.net/p/fphp-saber)

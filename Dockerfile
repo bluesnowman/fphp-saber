@@ -17,7 +17,7 @@ RUN yum install -y php70w-fpm php70w-common php70w-mbstring
 
 RUN echo "date.timezone=America/New_York" >> /etc/php.ini
 
+COPY ./classes /usr/share/nginx/classes
 COPY ./setup/nginx.saber.conf /etc/nginx/default.d/
-COPY ./src/classes /usr/share/nginx/classes
 
 EXPOSE 80

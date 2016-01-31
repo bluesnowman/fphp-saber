@@ -455,7 +455,7 @@ namespace Saber\Data\IDouble {
 		 *                                                          than or equal to the right operand
 		 */
 		public static function ge(IDouble\Type $x, IDouble\Type $y) : IBool\Type { // >=
-			return IBool\Type::box(IDouble\Module::compare($x, $y)->unbox() >= 0.0);
+			return IBool\Type::box(IDouble\Module::compare($x, $y)->unbox() >= 0);
 		}
 
 		/**
@@ -469,7 +469,7 @@ namespace Saber\Data\IDouble {
 		 *                                                          than the right operand
 		 */
 		public static function gt(IDouble\Type $x, IDouble\Type $y) : IBool\Type { // >
-			return IBool\Type::box(IDouble\Module::compare($x, $y)->unbox() > 0.0);
+			return IBool\Type::box(IDouble\Module::compare($x, $y)->unbox() > 0);
 		}
 
 		/**
@@ -483,7 +483,7 @@ namespace Saber\Data\IDouble {
 		 *                                                          or equal to the right operand
 		 */
 		public static function le(IDouble\Type $x, IDouble\Type $y) : IBool\Type { // <=
-			return IBool\Type::box(IDouble\Module::compare($x, $y)->unbox() <= 0.0);
+			return IBool\Type::box(IDouble\Module::compare($x, $y)->unbox() <= 0);
 		}
 
 		/**
@@ -497,7 +497,7 @@ namespace Saber\Data\IDouble {
 		 *                                                          the right operand
 		 */
 		public static function lt(IDouble\Type $x, IDouble\Type $y) : IBool\Type { // <
-			return IBool\Type::box(IDouble\Module::compare($x, $y)->unbox() < 0.0);
+			return IBool\Type::box(IDouble\Module::compare($x, $y)->unbox() < 0);
 		}
 
 		/**
@@ -510,7 +510,7 @@ namespace Saber\Data\IDouble {
 		 * @return IDouble\Type                                     the maximum value
 		 */
 		public static function max(IDouble\Type $x, IDouble\Type $y) : IDouble\Type {
-			return (IDouble\Module::compare($x, $y)->unbox() >= 0.0) ? $x : $y;
+			return (IDouble\Module::compare($x, $y)->unbox() >= 0) ? $x : $y;
 		}
 
 		/**
@@ -523,7 +523,7 @@ namespace Saber\Data\IDouble {
 		 * @return IDouble\Type                                     the minimum value
 		 */
 		public static function min(IDouble\Type $x, IDouble\Type $y) : IDouble\Type {
-			return (IDouble\Module::compare($x, $y)->unbox() <= 0.0) ? $x : $y;
+			return (IDouble\Module::compare($x, $y)->unbox() <= 0) ? $x : $y;
 		}
 
 		#endregion

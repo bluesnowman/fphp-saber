@@ -309,7 +309,7 @@ namespace Saber\Data\IChar {
 		 *                                                          character
 		 */
 		public static function isAscii(IChar\Type $x) : IBool\Type {
-			return IBool\Type::box(preg_match('/^[\x20-\x7f]$/', $x->unbox()));
+			return IBool\Type::make(preg_match('/^[\x20-\x7f]$/', $x->unbox()));
 		}
 
 		/**
@@ -339,7 +339,7 @@ namespace Saber\Data\IChar {
 		 * @see http://php.net/manual/en/regexp.reference.unicode.php
 		 */
 		public static function isCyrillic(IChar\Type $x) : IBool\Type {
-			return IBool\Type::box(preg_match('/^\p{Cyrillic}$/u', $x->unbox()));
+			return IBool\Type::make(preg_match('/^\p{Cyrillic}$/u', $x->unbox()));
 		}
 
 		/**
@@ -382,7 +382,7 @@ namespace Saber\Data\IChar {
 		 * @see http://php.net/manual/en/regexp.reference.unicode.php
 		 */
 		public static function isLatin1(IChar\Type $x) : IBool\Type {
-			return IBool\Type::box(preg_match('/^\p{Latin}$/', $x->unbox()));
+			return IBool\Type::make(preg_match('/^\p{Latin}$/', $x->unbox()));
 		}
 
 		/**
@@ -411,7 +411,7 @@ namespace Saber\Data\IChar {
 		 * @see http://php.net/manual/en/regexp.reference.unicode.php
 		 */
 		public static function isNumber(IChar\Type $x) : IBool\Type {
-			return IBool\Type::box(preg_match('/^\p{N}$/', $x->unbox()));
+			return IBool\Type::make(preg_match('/^\p{N}$/', $x->unbox()));
 		}
 
 		/**
@@ -423,7 +423,7 @@ namespace Saber\Data\IChar {
 		 * @return IBool\Type                                       whether this is an oct-digit
 		 */
 		public static function isOctDigit(IChar\Type $x) : IBool\Type {
-			return IBool\Type::box(preg_match('/^[0-7]$/', $x->unbox()));
+			return IBool\Type::make(preg_match('/^[0-7]$/', $x->unbox()));
 		}
 
 		/**
@@ -467,7 +467,7 @@ namespace Saber\Data\IChar {
 		 * @see http://php.net/manual/en/regexp.reference.unicode.php
 		 */
 		public static function isSeparator(IChar\Type $x) : IBool\Type {
-			return IBool\Type::box(preg_match('/^\p{Z}$/', $x->unbox()));
+			return IBool\Type::make(preg_match('/^\p{Z}$/', $x->unbox()));
 		}
 
 		/**
@@ -495,7 +495,7 @@ namespace Saber\Data\IChar {
 		 * @see http://php.net/manual/en/regexp.reference.unicode.php
 		 */
 		public static function isSymbol(IChar\Type $x) : IBool\Type {
-			return IBool\Type::box(preg_match('/^\p{S}$/', $x->unbox()));
+			return IBool\Type::make(preg_match('/^\p{S}$/', $x->unbox()));
 		}
 
 		/**

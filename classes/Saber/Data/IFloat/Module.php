@@ -431,7 +431,7 @@ namespace Saber\Data\IFloat {
 		 *                                                          than or equal to the right operand
 		 */
 		public static function ge(IFloat\Type $x, IFloat\Type $y) : IBool\Type { // >=
-			return IBool\Type::box(IFloat\Module::compare($x, $y)->unbox() >= 0.0);
+			return IBool\Type::box(IFloat\Module::compare($x, $y)->unbox() >= 0);
 		}
 
 		/**
@@ -445,7 +445,7 @@ namespace Saber\Data\IFloat {
 		 *                                                          than the right operand
 		 */
 		public static function gt(IFloat\Type $x, IFloat\Type $y) : IBool\Type { // >
-			return IBool\Type::box(IFloat\Module::compare($x, $y)->unbox() > 0.0);
+			return IBool\Type::box(IFloat\Module::compare($x, $y)->unbox() > 0);
 		}
 
 		/**
@@ -459,7 +459,7 @@ namespace Saber\Data\IFloat {
 		 *                                                          or equal to the right operand
 		 */
 		public static function le(IFloat\Type $x, IFloat\Type $y) : IBool\Type { // <=
-			return IBool\Type::box(IFloat\Module::compare($x, $y)->unbox() <= 0.0);
+			return IBool\Type::box(IFloat\Module::compare($x, $y)->unbox() <= 0);
 		}
 
 		/**
@@ -473,7 +473,7 @@ namespace Saber\Data\IFloat {
 		 *                                                          the right operand
 		 */
 		public static function lt(IFloat\Type $x, IFloat\Type $y) : IBool\Type { // <
-			return IBool\Type::box(IFloat\Module::compare($x, $y)->unbox() < 0.0);
+			return IBool\Type::box(IFloat\Module::compare($x, $y)->unbox() < 0);
 		}
 
 		/**
@@ -486,7 +486,7 @@ namespace Saber\Data\IFloat {
 		 * @return IFloat\Type                                      the maximum value
 		 */
 		public static function max(IFloat\Type $x, IFloat\Type $y) : IFloat\Type {
-			return (IFloat\Module::compare($x, $y)->unbox() >= 0.0) ? $x : $y;
+			return (IFloat\Module::compare($x, $y)->unbox() >= 0) ? $x : $y;
 		}
 
 		/**
@@ -499,7 +499,7 @@ namespace Saber\Data\IFloat {
 		 * @return IFloat\Type                                      the minimum value
 		 */
 		public static function min(IFloat\Type $x, IFloat\Type $y) : IFloat\Type {
-			return (IFloat\Module::compare($x, $y)->unbox() <= 0.0) ? $x : $y;
+			return (IFloat\Module::compare($x, $y)->unbox() <= 0) ? $x : $y;
 		}
 
 		#endregion

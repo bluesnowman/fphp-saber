@@ -31,11 +31,9 @@ namespace Saber\Data\IChar {
 		#region Tests -> Inheritance
 
 		/**
-		 * This method tests the data type.
+		 * This method tests the "instanceOf" property.
 		 */
 		public function test_instanceOf() {
-			//$this->markTestIncomplete();
-
 			$p0 = new IChar\Type('a');
 
 			$this->assertInstanceOf('\\Saber\\Data\\IChar\\Type', $p0);
@@ -52,7 +50,7 @@ namespace Saber\Data\IChar {
 		#region Tests -> Initialization
 
 		/**
-		 * This method provides the data for testing the boxing of a value.
+		 * This method provides the data for testing the "box" method.
 		 *
 		 * @return array
 		 */
@@ -65,13 +63,11 @@ namespace Saber\Data\IChar {
 		}
 
 		/**
-		 * This method tests the boxing of a value.
+		 * This method tests the "box" method.
 		 *
 		 * @dataProvider data_box
 		 */
 		public function test_box(array $provided, array $expected) {
-			//$this->markTestIncomplete();
-
 			$p0 = IChar\Type::box($provided[0]);
 
 			$this->assertInstanceOf('\\Saber\\Data\\IChar\\Type', $p0);
@@ -80,11 +76,42 @@ namespace Saber\Data\IChar {
 			$e1 = $expected[0];
 
 			$this->assertInternalType('string', $p1);
+			$this->assertSame(1, strlen($p1));
 			$this->assertSame($e1, $p1);
 		}
 
 		/**
-		 * This method provides the data for testing the making of a value.
+		 * This method provides the data for testing the "covariant" method.
+		 *
+		 * @return array
+		 */
+		public function data_covariant() {
+			$data = array(
+				array(array('a'), array('a')),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "covariant" method.
+		 *
+		 * @dataProvider data_covariant
+		 */
+		public function test_covariant(array $provided, array $expected) {
+			$p0 = IChar\Type::covariant(IChar\Type::box($provided[0]));
+
+			$this->assertInstanceOf('\\Saber\\Data\\IChar\\Type', $p0);
+
+			$p1 = $p0->unbox();
+			$e1 = $expected[0];
+
+			$this->assertInternalType('string', $p1);
+			$this->assertSame(1, strlen($p1));
+			$this->assertSame($e1, $p1);
+		}
+
+		/**
+		 * This method provides the data for testing the "make" method.
 		 *
 		 * @return array
 		 */
@@ -98,13 +125,11 @@ namespace Saber\Data\IChar {
 		}
 
 		/**
-		 * This method tests the making of a value.
+		 * This method tests the "make" method.
 		 *
 		 * @dataProvider data_make
 		 */
 		public function test_make(array $provided, array $expected) {
-			//$this->markTestIncomplete();
-
 			$p0 = IChar\Type::make($provided[0]);
 
 			$this->assertInstanceOf('\\Saber\\Data\\IChar\\Type', $p0);
@@ -113,15 +138,14 @@ namespace Saber\Data\IChar {
 			$e1 = $expected[0];
 
 			$this->assertInternalType('string', $p1);
+			$this->assertSame(1, strlen($p1));
 			$this->assertSame($e1, $p1);
 		}
 
 		/**
-		 * This method tests the initialization of a singleton, boxed value.
+		 * This method tests the "singletons" methods.
 		 */
 		public function test_singletons() {
-			//$this->markTestIncomplete();
-
 			$p0 = IChar\Type::cr();
 			$e0 = IChar\Type::cr();
 
@@ -164,7 +188,7 @@ namespace Saber\Data\IChar {
 		#region Tests -> Interface
 
 		/**
-		 * This method provides the data for testing that an object has a unique hash code.
+		 * This method provides the data for testing the "hashCode" method.
 		 *
 		 * @return array
 		 */
@@ -178,7 +202,7 @@ namespace Saber\Data\IChar {
 		}
 
 		/**
-		 * This method tests that an object has a unique hash code.
+		 * This method tests the "hashCode" method.
 		 *
 		 * @dataProvider data_hashCode
 		 */
@@ -191,7 +215,7 @@ namespace Saber\Data\IChar {
 		}
 
 		/**
-		 * This method provides the data for testing that a value is converted to a string.
+		 * This method provides the data for testing the "toString" method.
 		 *
 		 * @return array
 		 */
@@ -205,7 +229,7 @@ namespace Saber\Data\IChar {
 		}
 
 		/**
-		 * This method tests that a value is converted to a string.
+		 * This method tests the "toString" method.
 		 *
 		 * @dataProvider data_toString
 		 */

@@ -32,11 +32,9 @@ namespace Saber\Data\IUnit {
 		#region Tests -> Inheritance
 
 		/**
-		 * This method tests the data type.
+		 * This method tests the "instanceOf" property.
 		 */
 		public function test_instanceOf() {
-			//$this->markTestIncomplete();
-
 			$p0 = new IUnit\Type();
 
 			$this->assertInstanceOf('\\Saber\\Data\\IUnit\\Type', $p0);
@@ -53,21 +51,28 @@ namespace Saber\Data\IUnit {
 		#region Tests -> Initialization
 
 		/**
-		 * This method tests the initialization of a singleton, boxed value.
+		 * This method tests the "covariant" method.
+		 */
+		public function test_covariant() {
+			$p0 = IUnit\Type::covariant(IUnit\Type::instance());
+
+			$this->assertInstanceOf('\\Saber\\Data\\IUnit\\Type', $p0);
+			$this->assertNull($p0->unbox());
+
+			$p1 = IUnit\Type::covariant(null);
+
+			$this->assertInstanceOf('\\Saber\\Data\\IUnit\\Type', $p1);
+			$this->assertNull($p1->unbox());
+		}
+
+		/**
+		 * This method tests the "singleton" method.
 		 */
 		public function test_singleton() {
-			//$this->markTestIncomplete();
-
 			$p0 = IUnit\Type::instance();
 
 			$this->assertInstanceOf('\\Saber\\Data\\IUnit\\Type', $p0);
-
-			$p1 = $p0->unbox();
-			$e1 = null;
-
-			$this->assertInternalType('null', $p1);
-			$this->assertSame($e1, $p1);
-			$this->assertNull($p1);
+			$this->assertNull($p0->unbox());
 		}
 
 		#endregion
@@ -75,7 +80,7 @@ namespace Saber\Data\IUnit {
 		#region Tests -> Interface
 
 		/**
-		 * This method tests that an object has a unique hash code.
+		 * This method tests the "hashCode" method.
 		 */
 		public function test_hashCode() {
 			$p0 = IUnit\Type::instance()->__hashCode();
@@ -86,7 +91,7 @@ namespace Saber\Data\IUnit {
 		}
 
 		/**
-		 * This method tests that a value is converted to a string.
+		 * This method tests the "toString" method.
 		 */
 		public function test_toString() {
 			$p0 = IUnit\Type::instance()->__toString();

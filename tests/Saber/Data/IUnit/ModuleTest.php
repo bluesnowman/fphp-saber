@@ -25,39 +25,85 @@ namespace Saber\Data\IUnit {
 	use \Saber\Data\IUnit;
 
 	/**
-	 * @group ModuleTest2
+	 * @group ModuleTest
 	 */
 	final class ModuleTest extends Core\TypeTest {
 
+		#region Methods -> Conversion Operations
+
 		/**
-		 * This method tests the ability to make a choice.
+		 * This method tests the "nvl" method.
 		 */
-		public function testChoice() {
-			$this->markTestIncomplete();
-
+		public function test_nvl() {
 			$x = IUnit\Type::instance();
+			$y = IUnit\Type::instance();
 
-			$p0 = $x->choice();
+			$z = IUnit\Module::nvl($x, $y);
+			$this->assertInstanceOf('\\Saber\\Data\\IUnit\\Type', $z);
 
-			$this->assertInstanceOf('\\Saber\\Control\\Choice\\Type', $p0);
+			$z = IUnit\Module::nvl(null, $x);
+			$this->assertInstanceOf('\\Saber\\Data\\IUnit\\Type', $z);
 
-			$p1 = $x->choice()->when(IUnit\Type::instance(), function(IUnit\Type $x) {})->end()->unbox();
+			$z = IUnit\Module::nvl(null, null);
+			$this->assertInstanceOf('\\Saber\\Data\\IUnit\\Type', $z);
+		}
 
-			$this->assertInternalType('boolean', $p1);
-			$this->assertTrue($p1);
+		#endregion
 
-			$p2 = $x->choice()->when(IBool\Type::true(), function(IUnit\Type $x) {})->end()->unbox();
+		#region Methods -> Equality Operations
 
-			$this->assertInternalType('boolean', $p2);
-			$this->assertFalse($p2);
+		/**
+		 * This method tests the "eq" method.
+		 */
+		public function test_eq() {
+			$p0 = IUnit\Module::eq(IUnit\Type::instance(), IUnit\Type::instance());
+			$e0 = true;
+
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p0);
+			$this->assertSame($e0, $p0->unbox());
 		}
 
 		/**
-		 * This method tests the evaluation of one value compared to another.
+		 * This method tests the "id" method.
 		 */
-		public function testCompare() {
-			$this->markTestIncomplete();
+		public function test_id() {
+			$p0 = IUnit\Module::id(IUnit\Type::instance(), IUnit\Type::instance());
+			$e0 = true;
 
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p0);
+			$this->assertSame($e0, $p0->unbox());
+		}
+
+		/**
+		 * This method tests the "ne" method.
+		 */
+		public function test_ne() {
+			$p0 = IUnit\Module::ne(IUnit\Type::instance(), IUnit\Type::instance());
+			$e0 = false;
+
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p0);
+			$this->assertSame($e0, $p0->unbox());
+		}
+
+		/**
+		 * This method tests the "ni" method.
+		 */
+		public function test_ni() {
+			$p0 = IUnit\Module::ni(IUnit\Type::instance(), IUnit\Type::instance());
+			$e0 = false;
+
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p0);
+			$this->assertSame($e0, $p0->unbox());
+		}
+
+		#endregion
+
+		#region Methods -> Ordering Operations
+
+		/**
+		 * This method tests the "compare" method.
+		 */
+		public function test_compare() {
 			$p0 = IUnit\Module::compare(IUnit\Type::instance(), IUnit\Type::instance());
 			$e0 = 0;
 
@@ -66,109 +112,70 @@ namespace Saber\Data\IUnit {
 		}
 
 		/**
-		 * This method provides the data for testing equality.
-		 *
-		 * @return array
+		 * This method tests the "ge" method.
 		 */
-		public function dataEquality() {
-			$data = array(
-				array(array(IUnit\Type::instance(), IUnit\Type::instance()), array(true, true, false, false)),
-				array(array(IUnit\Type::instance(), IBool\Type::true()), array(false, false, true, true)),
-			);
-			return $data;
-		}
-
-		/**
-		 * This method tests equality.
-		 *
-		 * @dataProvider dataEquality
-		 */
-		public function testEquality(array $provided, array $expected) {
-			$this->markTestIncomplete();
-
-			$p0 = IUnit\Module::eq($provided[0], $provided[1]);
-			$e0 = $expected[0];
+		public function test_ge() {
+			$p0 = IUnit\Module::ge(IUnit\Type::instance(), IUnit\Type::instance());
+			$e0 = true;
 
 			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
-
-			$p1 = IUnit\Module::id($provided[0], $provided[1]);
-			$e1 = $expected[1];
-
-			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p1);
-			$this->assertSame($e1, $p1->unbox());
-
-			$p2 = IUnit\Module::ne($provided[0], $provided[1]);
-			$e2 = $expected[2];
-
-			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p2);
-			$this->assertSame($e2, $p2->unbox());
-
-			$p3 = IUnit\Module::ni($provided[0], $provided[1]);
-			$e3 = $expected[3];
-
-			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p3);
-			$this->assertSame($e3, $p3->unbox());
 		}
 
 		/**
-		 * This method provides the data for testing the substitution of null values.
-		 *
-		 * @return array
+		 * This method tests the "gt" method.
 		 */
-		public function dataNVL() {
-			$data = array(
-				array(array(IUnit\Type::instance(), IUnit\Type::instance()), array(IUnit\Type::instance())),
-				array(array(IUnit\Type::instance(), null), array(IUnit\Type::instance())),
-				array(array(null, IUnit\Type::instance()), array(IUnit\Type::instance())),
-				array(array(null, null), array(IUnit\Type::instance())),
-			);
-			return $data;
+		public function test_gt() {
+			$p0 = IUnit\Module::gt(IUnit\Type::instance(), IUnit\Type::instance());
+			$e0 = false;
+
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p0);
+			$this->assertSame($e0, $p0->unbox());
 		}
 
 		/**
-		 * This method tests the substitution of null values.
-		 *
-		 * @dataProvider dataNVL
+		 * This method tests the "le" method.
 		 */
-		public function testNVL(array $provided, array $expected) {
-			$this->markTestIncomplete();
+		public function test_le() {
+			$p0 = IUnit\Module::le(IUnit\Type::instance(), IUnit\Type::instance());
+			$e0 = true;
 
-			$p0 = IUnit\Module::nvl($provided[0], $provided[1]);
-			$e0 = $expected[0];
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p0);
+			$this->assertSame($e0, $p0->unbox());
+		}
+
+		/**
+		 * This method tests the "lt" method.
+		 */
+		public function test_lt() {
+			$p0 = IUnit\Module::lt(IUnit\Type::instance(), IUnit\Type::instance());
+			$e0 = false;
+
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p0);
+			$this->assertSame($e0, $p0->unbox());
+		}
+
+		/**
+		 * This method tests the "max" method.
+		 */
+		public function test_max() {
+			$p0 = IUnit\Module::max(IUnit\Type::instance(), IUnit\Type::instance());
 
 			$this->assertInstanceOf('\\Saber\\Data\\IUnit\\Type', $p0);
-			$this->assertEquals($e0, $p0);
+			$this->assertNull($p0->unbox());
 		}
 
 		/**
-		 * This method provides the data for testing that a value is converted to a string.
-		 *
-		 * @return array
+		 * This method tests the "min" method.
 		 */
-		public function data_toString() {
-			$data = array(
-				array(array(null), array('null')),
-				array(array(''), array('null')),
-				array(array(0), array('null')),
-			);
-			return $data;
+		public function test_min() {
+			$p0 = IUnit\Module::min(IUnit\Type::instance(), IUnit\Type::instance());
+
+			$this->assertInstanceOf('\\Saber\\Data\\IUnit\\Type', $p0);
+			$this->assertNull($p0->unbox());
 		}
 
-		/**
-		 * This method tests that a value is converted to a string.
-		 *
-		 * @dataProvider data_toString
-		 */
-		public function test_toString(array $provided, array $expected) {
-			$this->markTestIncomplete();
-
-			$p0 = IUnit\Type::instance($provided[0])->__toString();
-			$e0 = $expected[0];
-
-			$this->assertInternalType('string', $p0);
-			$this->assertSame($e0, $p0);
-		}
+		#endregion
 
 	}
 

@@ -57,7 +57,7 @@ namespace Saber\Data\ITrit {
 		 * @return IBool\Type                                       the value as a IBool
 		 */
 		public static function toBool(ITrit\Type $x) : IBool\Type {
-			return ITrit\Module::eq($x, ITrit\Type::zero());
+			return IBool\Type::box($x->unbox() != 0);
 		}
 
 		/**

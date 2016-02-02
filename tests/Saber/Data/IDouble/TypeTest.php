@@ -124,8 +124,12 @@ namespace Saber\Data\IDouble {
 			$data = array(
 				array(array(1.0), array(1.0)),
 				array(array(1), array(1.0)),
+				array(array(0.0), array(0.0)),
+				array(array(0), array(0.0)),
 				array(array(null), array(0.0)),
 				array(array(''), array(0.0)),
+				array(array(-1.0), array(-1.0)),
+				array(array(-1), array(-1.0)),
 			);
 			return $data;
 		}

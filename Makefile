@@ -119,6 +119,7 @@ run-docker: build-docker clean-docker
 	docker run -d -p 80:$(DOCKER_PORT) --name="$(DOCKER_APP)" \
 	$(DOCKER_GIT) /bin/bash -c "php-fpm -D && nginx -g 'daemon off;'"
 
+# make clean-docker
 clean-docker:
 	-docker stop $(DOCKER_APP)
 	-docker rm -f $(DOCKER_APP)

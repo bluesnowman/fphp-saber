@@ -279,6 +279,19 @@ namespace Saber\Data\IFloat {
 		}
 
 		/**
+		 * This method returns the value as a IBool. Note: Using this method may result in
+		 * lost of precision.
+		 *
+		 * @access public
+		 * @static
+		 * @param IFloat\Type $x                                    the object to be converted
+		 * @return IBool\Type                                       the value as a IBool
+		 */
+		public static function toBool(IFloat\Type $x) : IBool\Type {
+			return IBool\Type::box($x->unbox() != 0.0);
+		}
+
+		/**
 		 * This method returns the value as a IDouble. Note: Using this method may result in
 		 * lost of precision.
 		 *

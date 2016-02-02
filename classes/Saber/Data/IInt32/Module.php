@@ -283,6 +283,19 @@ namespace Saber\Data\IInt32 {
 		}
 
 		/**
+		 * This method returns the value as a IBool. Note: Using this method may result in
+		 * lost of precision.
+		 *
+		 * @access public
+		 * @static
+		 * @param IInt32\Type $x                                    the object to be converted
+		 * @return IBool\Type                                       the value as a IBool
+		 */
+		public static function toBool(IInt32\Type $x) : IBool\Type {
+			return IBool\Type::box($x->unbox() != 0);
+		}
+
+		/**
 		 * This method returns the value as a IDouble. Note: Using this method may result in
 		 * lost of precision.
 		 *

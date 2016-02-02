@@ -298,6 +298,19 @@ namespace Saber\Data\IInteger {
 		}
 
 		/**
+		 * This method returns the value as a IBool. Note: Using this method may result in
+		 * lost of precision.
+		 *
+		 * @access public
+		 * @static
+		 * @param IInteger\Type $x                                  the object to be converted
+		 * @return IBool\Type                                       the value as a IBool
+		 */
+		public static function toBool(IInteger\Type $x) : IBool\Type {
+			return IBool\Type::box($x->unbox() != '0');
+		}
+
+		/**
 		 * This method returns the value as a IDouble. Note: Using this method may result in
 		 * lost of precision.
 		 *

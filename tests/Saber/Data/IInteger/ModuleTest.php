@@ -558,6 +558,33 @@ namespace Saber\Data\IInteger {
 		}
 
 		/**
+		 * This method provides the data for testing the "toBool" method.
+		 *
+		 * @return array
+		 */
+		public function data_toBool() {
+			$data = array(
+				array(array('1'), array(true)),
+				array(array('0'), array(false)),
+				array(array('-1'), array(true)),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "toBool" method.
+		 *
+		 * @dataProvider data_toBool
+		 */
+		public function test_toBool(array $provided, array $expected) {
+			$p0 = IInteger\Module::toBool(IInteger\Type::box($provided[0]));
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p0);
+			$this->assertSame($e0, $p0->unbox());
+		}
+
+		/**
 		 * This method provides the data for testing the "toDouble" method.
 		 *
 		 * @return array

@@ -29,7 +29,7 @@ namespace Saber\Data\ITuple {
 	use \Saber\Data\ITuple;
 	use \Saber\Throwable;
 
-	final class Type extends Data\Type implements Core\Boxable\Type, ICollection\Type {
+	final class Type extends Data\Type implements ICollection\Type {
 
 		#region Traits
 
@@ -221,7 +221,7 @@ namespace Saber\Data\ITuple {
 		 * @return string                                           the object as a string
 		 */
 		public final function __toString() {
-			return (string) serialize($this->unbox());
+			return json_encode($this->unbox());
 		}
 
 		#endregion

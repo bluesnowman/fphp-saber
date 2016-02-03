@@ -83,22 +83,22 @@ namespace Saber\Data\IUnit {
 		 * This method tests the "hashCode" method.
 		 */
 		public function test_hashCode() {
-			$p0 = IUnit\Type::instance()->__hashCode();
+			$p0 = IUnit\Type::instance()->hashCode();
 			$e0 = 'null';
 
-			$this->assertInternalType('string', $p0);
-			$this->assertSame($e0, $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\IString\\Type', $p0);
+			$this->assertSame($e0, $p0->unbox());
 		}
 
 		/**
 		 * This method tests the "toString" method.
 		 */
 		public function test_toString() {
-			$p0 = IUnit\Type::instance()->__toString();
+			$p0 = IUnit\Type::instance()->toString();
 			$e0 = 'null';
 
-			$this->assertInternalType('string', $p0);
-			$this->assertSame($e0, $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\IString\\Type', $p0);
+			$this->assertSame($e0, $p0->unbox());
 		}
 
 		#endregion

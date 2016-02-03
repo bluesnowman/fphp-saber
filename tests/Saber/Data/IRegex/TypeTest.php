@@ -18,10 +18,10 @@
 
 declare(strict_types = 1);
 
-namespace Saber\Data\IChar {
+namespace Saber\Data\IRegex {
 
 	use \Saber\Core;
-	use \Saber\Data\IChar;
+	use \Saber\Data\IRegex;
 
 	/**
 	 * @group TypeTest
@@ -34,9 +34,9 @@ namespace Saber\Data\IChar {
 		 * This method tests the "instanceOf" property.
 		 */
 		public function test_instanceOf() {
-			$p0 = new IChar\Type('a');
+			$p0 = new IRegex\Type('/^.*$/');
 
-			$this->assertInstanceOf('\\Saber\\Data\\IChar\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\IRegex\\Type', $p0);
 			$this->assertInstanceOf('\\Saber\\Data\\Type', $p0);
 			$this->assertInstanceOf('\\Saber\\Core\\Equality\\Type', $p0);
 			$this->assertInstanceOf('\\Saber\\Core\\Comparable\\Type', $p0);
@@ -56,8 +56,7 @@ namespace Saber\Data\IChar {
 		 */
 		public function data_box() {
 			$data = array(
-				array(array('a'), array('a')),
-				array(array("\n"), array("\n")),
+				array(array('/^.*$/'), array('/^.*$/')),
 			);
 			return $data;
 		}
@@ -68,15 +67,14 @@ namespace Saber\Data\IChar {
 		 * @dataProvider data_box
 		 */
 		public function test_box(array $provided, array $expected) {
-			$p0 = IChar\Type::box($provided[0]);
+			$p0 = IRegex\Type::box($provided[0]);
 
-			$this->assertInstanceOf('\\Saber\\Data\\IChar\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\IRegex\\Type', $p0);
 
 			$p1 = $p0->unbox();
 			$e1 = $expected[0];
 
 			$this->assertInternalType('string', $p1);
-			$this->assertSame(1, strlen($p1));
 			$this->assertSame($e1, $p1);
 		}
 
@@ -87,7 +85,7 @@ namespace Saber\Data\IChar {
 		 */
 		public function data_covariant() {
 			$data = array(
-				array(array('a'), array('a')),
+				array(array('/^.*$/'), array('/^.*$/')),
 			);
 			return $data;
 		}
@@ -98,15 +96,14 @@ namespace Saber\Data\IChar {
 		 * @dataProvider data_covariant
 		 */
 		public function test_covariant(array $provided, array $expected) {
-			$p0 = IChar\Type::covariant(IChar\Type::box($provided[0]));
+			$p0 = IRegex\Type::covariant(IRegex\Type::box($provided[0]));
 
-			$this->assertInstanceOf('\\Saber\\Data\\IChar\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\IRegex\\Type', $p0);
 
 			$p1 = $p0->unbox();
 			$e1 = $expected[0];
 
 			$this->assertInternalType('string', $p1);
-			$this->assertSame(1, strlen($p1));
 			$this->assertSame($e1, $p1);
 		}
 
@@ -117,9 +114,7 @@ namespace Saber\Data\IChar {
 		 */
 		public function data_make() {
 			$data = array(
-				array(array('a'), array('a')),
-				array(array("\n"), array("\n")),
-				array(array(97), array('a')),
+				array(array('/^.*$/'), array('/\^\.\*\$/')),
 			);
 			return $data;
 		}
@@ -130,57 +125,15 @@ namespace Saber\Data\IChar {
 		 * @dataProvider data_make
 		 */
 		public function test_make(array $provided, array $expected) {
-			$p0 = IChar\Type::make($provided[0]);
+			$p0 = IRegex\Type::make($provided[0]);
 
-			$this->assertInstanceOf('\\Saber\\Data\\IChar\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\IRegex\\Type', $p0);
 
 			$p1 = $p0->unbox();
 			$e1 = $expected[0];
 
 			$this->assertInternalType('string', $p1);
-			$this->assertSame(1, strlen($p1));
 			$this->assertSame($e1, $p1);
-		}
-
-		/**
-		 * This method tests the "singletons" methods.
-		 */
-		public function test_singletons() {
-			$p0 = IChar\Type::cr();
-			$e0 = IChar\Type::cr();
-
-			$this->assertInstanceOf('\\Saber\\Data\\IChar\\Type', $p0);
-			$this->assertSame($e0->__hashCode(), $p0->__hashCode());
-
-			$p1 = $p0->unbox();
-			$e1 = "\r";
-
-			$this->assertInternalType('string', $p1);
-			$this->assertSame($e1, $p1);
-
-			$p2 = IChar\Type::lf();
-			$e2 = IChar\Type::lf();
-
-			$this->assertInstanceOf('\\Saber\\Data\\IChar\\Type', $p2);
-			$this->assertSame($e2->__hashCode(), $p2->__hashCode());
-
-			$p3 = $p2->unbox();
-			$e3 = "\n";
-
-			$this->assertInternalType('string', $p3);
-			$this->assertSame($e3, $p3);
-
-			$p4 = IChar\Type::space();
-			$e4 = IChar\Type::space();
-
-			$this->assertInstanceOf('\\Saber\\Data\\IChar\\Type', $p4);
-			$this->assertSame($e4->__hashCode(), $p4->__hashCode());
-
-			$p5 = $p4->unbox();
-			$e5 = ' ';
-
-			$this->assertInternalType('string', $p5);
-			$this->assertSame($e5, $p5);
 		}
 
 		#endregion
@@ -194,9 +147,7 @@ namespace Saber\Data\IChar {
 		 */
 		public function data_hashCode() {
 			$data = array(
-				array(array('a'), array('a')),
-				array(array("\n"), array("\n")),
-				array(array(97), array('a')),
+				array(array('/^.*$/')),
 			);
 			return $data;
 		}
@@ -206,12 +157,11 @@ namespace Saber\Data\IChar {
 		 *
 		 * @dataProvider data_hashCode
 		 */
-		public function test_hashCode(array $provided, array $expected) {
-			$p0 = IChar\Type::make($provided[0])->hashCode();
-			$e0 = $expected[0];
+		public function test_hashCode(array $provided) {
+			$p0 = IRegex\Type::box($provided[0])->hashCode();
 
 			$this->assertInstanceOf('\\Saber\\Data\\IString\\Type', $p0);
-			$this->assertSame($e0, $p0->unbox());
+			$this->assertRegExp('/^[0-9a-f]{32}$/', $p0->unbox());
 		}
 
 		/**
@@ -221,9 +171,7 @@ namespace Saber\Data\IChar {
 		 */
 		public function data_toString() {
 			$data = array(
-				array(array('a'), array('a')),
-				array(array("\n"), array("\n")),
-				array(array(97), array('a')),
+				array(array('/^.*$/'), array('/^.*$/')),
 			);
 			return $data;
 		}
@@ -234,7 +182,7 @@ namespace Saber\Data\IChar {
 		 * @dataProvider data_toString
 		 */
 		public function test_toString(array $provided, array $expected) {
-			$p0 = IChar\Type::make($provided[0])->toString();
+			$p0 = IRegex\Type::box($provided[0])->toString();
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\IString\\Type', $p0);

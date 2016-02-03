@@ -45,7 +45,7 @@ namespace Saber\Data\IRegex {
 		 *                                                          the regular expression
 		 */
 		public static function match(IRegex\Type $x, Core\Type $ys) : IBool\Type {
-			return IBool\Type::box(preg_match($x->unbox(), $ys->__toString()));
+			return IBool\Type::make(preg_match($x->unbox(), $ys->__toString()));
 		}
 
 		/**
@@ -74,7 +74,7 @@ namespace Saber\Data\IRegex {
 		 */
 		public static function split(IRegex\Type $x, Core\Type $ys) : IArrayList\Type {
 			$zs = ($ys instanceof ITuple\Type)
-				? preg_split($x->unbox(), $ys->first()->__toString(), $ys->second()->__toString())
+				? preg_split($x->unbox(), $ys->first()->__toString(), (int) $ys->second()->unbox())
 				: preg_split($x->unbox(), $ys->__toString());
 			return IArrayList\Type::box(array_map(function($z) {
 				return IString\Type::box($z);

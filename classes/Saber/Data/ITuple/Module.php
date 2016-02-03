@@ -160,7 +160,7 @@ namespace Saber\Data\ITuple {
 			$type = $xs->__typeOf();
 			if ($ys !== null) {
 				if ($ys instanceof $type) {
-					return IInt32\Module::eq(ITuple\Module::compare($xs, $ys), IInt32\Type::zero());
+					return ITrit\Module::eq(ITuple\Module::compare($xs, $ys), ITrit\Type::zero());
 				}
 			}
 			return IBool\Type::false();
@@ -179,7 +179,7 @@ namespace Saber\Data\ITuple {
 		public static function id(ITuple\Type $xs, Core\Type $ys) : IBool\Type { // ===
 			if ($ys !== null) {
 				if ($xs->__typeOf() === $ys->__typeOf()) {
-					return IInt32\Module::id(ITuple\Module::compare($xs, $ys), IInt32\Type::zero());
+					return ITrit\Module::id(ITuple\Module::compare($xs, $ys), ITrit\Type::zero());
 				}
 			}
 			return IBool\Type::false();

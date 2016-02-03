@@ -187,10 +187,10 @@ namespace Saber\Data\IObject {
 		 * @dataProvider data_hashCode
 		 */
 		public function test_hashCode(array $provided) {
-			$p0 = IObject\Type::box($provided[0])->__hashCode();
+			$p0 = IObject\Type::box($provided[0])->hashCode();
 
-			$this->assertInternalType('string', $p0);
-			$this->assertRegExp('/^[0-9a-f]{32}$/', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\IString\\Type', $p0);
+			$this->assertRegExp('/^[0-9a-f]{32}$/', $p0->unbox());
 		}
 
 		/**
@@ -213,11 +213,11 @@ namespace Saber\Data\IObject {
 		 * @dataProvider data_toString
 		 */
 		public function test_toString(array $provided, array $expected) {
-			$p0 = IObject\Type::make($provided[0])->__toString();
+			$p0 = IObject\Type::make($provided[0])->toString();
 			$e0 = $expected[0];
 
-			$this->assertInternalType('string', $p0);
-			$this->assertSame($e0, $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\IString\\Type', $p0);
+			$this->assertSame($e0, $p0->unbox());
 		}
 
 		#endregion

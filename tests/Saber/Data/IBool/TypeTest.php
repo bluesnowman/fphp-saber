@@ -196,11 +196,11 @@ namespace Saber\Data\IBool {
 		 * @dataProvider data_hashCode
 		 */
 		public function test_hashCode(array $provided, array $expected) {
-			$p0 = IBool\Type::make($provided[0])->__hashCode();
+			$p0 = IBool\Type::box($provided[0])->hashCode();
 			$e0 = $expected[0];
 
-			$this->assertInternalType('string', $p0);
-			$this->assertSame($e0, $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\IString\\Type', $p0);
+			$this->assertSame($e0, $p0->unbox());
 		}
 
 		/**
@@ -222,11 +222,11 @@ namespace Saber\Data\IBool {
 		 * @dataProvider data_toString
 		 */
 		public function test_toString(array $provided, array $expected) {
-			$p0 = IBool\Type::make($provided[0])->__toString();
+			$p0 = IBool\Type::box($provided[0])->toString();
 			$e0 = $expected[0];
 
-			$this->assertInternalType('string', $p0);
-			$this->assertSame($e0, $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\IString\\Type', $p0);
+			$this->assertSame($e0, $p0->unbox());
 		}
 
 		#endregion

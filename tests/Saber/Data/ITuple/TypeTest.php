@@ -22,8 +22,8 @@ namespace Saber\Data\ITuple {
 
 	use \Saber\Core;
 	use \Saber\Data\IInt32;
+	use \Saber\Data\IObject;
 	use \Saber\Data\ITuple;
-	use \Saber\Data\IUnit;
 
 	/**
 	 * @group TypeTest
@@ -33,11 +33,9 @@ namespace Saber\Data\ITuple {
 		#region Tests -> Inheritance
 
 		/**
-		 * This method tests the data type.
+		 * This method tests the "instanceOf" property.
 		 */
 		public function test_instanceOf() {
-			//$this->markTestIncomplete();
-
 			$p0 = new ITuple\Type(array());
 
 			$this->assertInstanceOf('\\Saber\\Data\\ITuple\\Type', $p0);
@@ -52,104 +50,141 @@ namespace Saber\Data\ITuple {
 
 		#endregion
 
+		#region Tests -> Initialization
+
 		/**
-		 * This method provides the data for testing the boxing of a value.
+		 * This method provides the data for testing the "box" method.
 		 *
 		 * @return array
 		 */
 		public function data_box() {
 			$data = array(
-				array(array(IUnit\Type::instance(), IUnit\Type::instance()), array(IUnit\Type::instance(), IUnit\Type::instance())),
+				array(array(array(1, 2)), array(array(1, 2))),
 			);
 			return $data;
 		}
 
 		/**
-		 * This method tests the boxing of a value.
+		 * This method tests the "box" method.
 		 *
 		 * @dataProvider data_box
 		 */
 		public function test_box(array $provided, array $expected) {
-			//$this->markTestIncomplete();
-
-			$p0 = ITuple\Type::box($provided);
+			$p0 = ITuple\Type::box(array_map(function($item) {
+				return IObject\Type::box($item);
+			}, $provided[0]));
+			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\ITuple\\Type', $p0);
-
-			$p1 = $p0->unbox();
-			$e1 = count($expected);
-
-			$this->assertInternalType('array', $p1);
-			$this->assertCount($e1, $p1);
+			$this->assertSame($e0, $p0->unbox(1));
 		}
 
 		/**
-		 * This method tests the boxing of a value.
+		 * This method provides the data for testing the "box2" method.
 		 *
-		 * @dataProvider data_box
+		 * @return array
+		 */
+		public function data_box2() {
+			$data = array(
+				array(array(array(1, 2)), array(array(1, 2))),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "box2" method.
+		 *
+		 * @dataProvider data_box2
 		 */
 		public function test_box2(array $provided, array $expected) {
-			//$this->markTestIncomplete();
-
-			$p0 = call_user_func_array(array('\\Saber\\Data\\ITuple\\Type', 'box2'), $provided);
+			$p0 = call_user_func_array(array('\\Saber\\Data\\ITuple\\Type', 'box2'), array_map(function($item) {
+				return IObject\Type::box($item);
+			}, $provided[0]));
+			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\ITuple\\Type', $p0);
-
-			$p1 = $p0->unbox();
-			$e1 = count($expected);
-
-			$this->assertInternalType('array', $p1);
-			$this->assertCount($e1, $p1);
+			$this->assertSame($e0, $p0->unbox(1));
 		}
 
 		/**
-		 * This method provides the data for testing the making of a value.
+		 * This method provides the data for testing the "covariant" method.
+		 *
+		 * @return array
+		 */
+		public function data_covariant() {
+			$data = array(
+				array(array(array(1, 2)), array(array(1, 2))),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "covariant" method.
+		 *
+		 * @dataProvider data_covariant
+		 */
+		public function test_covariant(array $provided, array $expected) {
+			$p0 = ITuple\Type::covariant(ITuple\Type::box(array_map(function($item) {
+				return IObject\Type::box($item);
+			}, $provided[0])));
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\ITuple\\Type', $p0);
+			$this->assertSame($e0, $p0->unbox(1));
+		}
+
+		/**
+		 * This method provides the data for testing the "make" method.
 		 *
 		 * @return array
 		 */
 		public function data_make() {
 			$data = array(
-				array(array(IUnit\Type::instance(), IUnit\Type::instance()), array(IUnit\Type::instance(), IUnit\Type::instance())),
+				array(array(array(1, 2)), array(array(1, 2))),
 			);
 			return $data;
 		}
 
 		/**
-		 * This method tests the making of a value.
+		 * This method tests the "make" method.
 		 *
 		 * @dataProvider data_make
 		 */
 		public function test_make(array $provided, array $expected) {
-			//$this->markTestIncomplete();
-
-			$p0 = ITuple\Type::make($provided);
+			$p0 = ITuple\Type::make(array_map(function($item) {
+				return IObject\Type::box($item);
+			}, $provided[0]));
+			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\ITuple\\Type', $p0);
-
-			$p1 = $p0->unbox();
-			$e1 = count($expected);
-
-			$this->assertInternalType('array', $p1);
-			$this->assertCount($e1, $p1);
+			$this->assertSame($e0, $p0->unbox(1));
 		}
 
 		/**
-		 * This method tests the making of a value.
+		 * This method provides the data for testing the "make2" method.
 		 *
-		 * @dataProvider data_make
+		 * @return array
+		 */
+		public function data_make2() {
+			$data = array(
+				array(array(array(1, 2)), array(array(1, 2))),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "make2" method.
+		 *
+		 * @dataProvider data_make2
 		 */
 		public function test_make2(array $provided, array $expected) {
-			//$this->markTestIncomplete();
-
-			$p0 = call_user_func_array(array('\\Saber\\Data\\ITuple\\Type', 'make2'), $provided);
+			$p0 = call_user_func_array(array('\\Saber\\Data\\ITuple\\Type', 'make2'), array_map(function($item) {
+				return IObject\Type::box($item);
+			}, $provided[0]));
+			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\ITuple\\Type', $p0);
-
-			$p1 = $p0->unbox();
-			$e1 = count($expected);
-
-			$this->assertInternalType('array', $p1);
-			$this->assertCount($e1, $p1);
+			$this->assertSame($e0, $p0->unbox(1));
 		}
 
 		#endregion
@@ -157,11 +192,94 @@ namespace Saber\Data\ITuple {
 		#region Tests -> Interface
 
 		/**
-		 * This method tests that an item is accessible.
+		 * This method provides the data for testing the "hashCode" method.
+		 *
+		 * @return array
 		 */
-		public function testItems() {
-			//$this->markTestIncomplete();
+		public function data_hashCode() {
+			$data = array(
+				array(array(array(1, 2))),
+			);
+			return $data;
+		}
 
+		/**
+		 * This method tests the "hashCode" method.
+		 *
+		 * @dataProvider data_hashCode
+		 */
+		public function test_hashCode(array $provided) {
+			$p0 = ITuple\Type::box(array_map(function($item) {
+				return IObject\Type::box($item);
+			}, $provided[0]))->hashCode();
+
+			$this->assertInstanceOf('\\Saber\\Data\\IString\\Type', $p0);
+			$this->assertRegExp('/^[0-9a-f]{32}$/', $p0->unbox());
+		}
+
+		/**
+		 * This method provides the data for testing the "isEmpty" method.
+		 *
+		 * @return array
+		 */
+		public function data_isEmpty() {
+			$data = array(
+				array(array(array()), array(true)),
+				array(array(array(1)), array(false)),
+				array(array(array(1, 2)), array(false)),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "isEmpty" method.
+		 *
+		 * @dataProvider data_isEmpty
+		 */
+		public function test_isEmpty(array $provided, array $expected) {
+			$p0 = ITuple\Type::box(array_map(function($item) {
+				return IObject\Type::box($item);
+			}, $provided[0]))->isEmpty();
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p0);
+			$this->assertSame($e0, $p0->unbox());
+		}
+
+		/**
+		 * This method provides the data for testing the "isPair" method.
+		 *
+		 * @return array
+		 */
+		public function data_isPair() {
+			$data = array(
+				array(array(array()), array(false)),
+				array(array(array(1)), array(false)),
+				array(array(array(1, 2)), array(true)),
+				array(array(array(1, 2, 3)), array(false)),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "isPair" method.
+		 *
+		 * @dataProvider data_isPair
+		 */
+		public function test_isPair(array $provided, array $expected) {
+			$p0 = ITuple\Type::box(array_map(function($item) {
+				return IObject\Type::box($item);
+			}, $provided[0]))->isPair();
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p0);
+			$this->assertSame($e0, $p0->unbox());
+		}
+
+		/**
+		 * This method tests the "item" related methods.
+		 */
+		public function test_items() {
 			$p0 = ITuple\Type::box2(IInt32\Type::zero(), IInt32\Type::one(), IInt32\Type::box(2));
 
 			$this->assertSame(0, $p0->item(IInt32\Type::zero())->unbox());
@@ -173,90 +291,62 @@ namespace Saber\Data\ITuple {
 		}
 
 		/**
-		 * This method provides the data for testing that a value is empty.
+		 * This method provides the data for testing the "length" method.
 		 *
 		 * @return array
 		 */
-		public function dataIsEmpty() {
+		public function data_length() {
 			$data = array(
-				array(array(), array(true)),
-				array(array(IUnit\Type::instance()), array(false)),
-				array(array(IUnit\Type::instance(), IUnit\Type::instance(), IUnit\Type::instance()), array(false)),
+				array(array(array()), array(0)),
+				array(array(array(1)), array(1)),
+				array(array(array(1, 2)), array(2)),
+				array(array(array(1, 2, 3)), array(3)),
 			);
 			return $data;
 		}
 
 		/**
-		 * This method tests that a value is empty.
+		 * This method tests the "length" method.
 		 *
-		 * @dataProvider dataIsEmpty
+		 * @dataProvider data_length
 		 */
-		public function testIsEmpty(array $provided, array $expected) {
-			//$this->markTestIncomplete();
-
-			$p0 = ITuple\Type::box($provided)->isEmpty();
-			$e0 = $expected[0];
-
-			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p0);
-			$this->assertSame($e0, $p0->unbox());
-		}
-
-		/**
-		 * This method provides the data for testing that the tuple is a pair.
-		 *
-		 * @return array
-		 */
-		public function dataIsPair() {
-			$data = array(
-				array(array(), array(false)),
-				array(array(IUnit\Type::instance()), array(false)),
-				array(array(IUnit\Type::instance(), IUnit\Type::instance()), array(true)),
-				array(array(IUnit\Type::instance(), IUnit\Type::instance(), IUnit\Type::instance()), array(false)),
-			);
-			return $data;
-		}
-
-		/**
-		 * This method tests that the tuple is a pair.
-		 *
-		 * @dataProvider dataIsPair
-		 */
-		public function testIsPair(array $provided, array $expected) {
-			//$this->markTestIncomplete();
-
-			$p0 = ITuple\Type::box($provided)->isPair();
-			$e0 = $expected[0];
-
-			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p0);
-			$this->assertSame($e0, $p0->unbox());
-		}
-
-		/**
-		 * This method provides the data for testing that a value is of a particular length.
-		 *
-		 * @return array
-		 */
-		public function dataLength() {
-			$data = array(
-				array(array(), array(0)),
-				array(array(IUnit\Type::instance()), array(1)),
-				array(array(IUnit\Type::instance(), IUnit\Type::instance(), IUnit\Type::instance()), array(3)),
-			);
-			return $data;
-		}
-
-		/**
-		 * This method tests that a value is of a particular length.
-		 *
-		 * @dataProvider dataLength
-		 */
-		public function testLength(array $provided, array $expected) {
-			//$this->markTestIncomplete();
-
-			$p0 = ITuple\Type::box($provided)->length();
+		public function test_length(array $provided, array $expected) {
+			$p0 = ITuple\Type::box(array_map(function($item) {
+				return IObject\Type::box($item);
+			}, $provided[0]))->length();
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\IInt32\\Type', $p0);
+			$this->assertSame($e0, $p0->unbox());
+		}
+
+		/**
+		 * This method provides the data for testing the "toString" method.
+		 *
+		 * @return array
+		 */
+		public function data_toString() {
+			$data = array(
+				array(array(array()), array('[]')),
+				array(array(array(1)), array('[1]')),
+				array(array(array(1, 2)), array('[1,2]')),
+				array(array(array(1, 2, 3)), array('[1,2,3]')),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "toString" method.
+		 *
+		 * @dataProvider data_toString
+		 */
+		public function test_toString(array $provided, array $expected) {
+			$p0 = ITuple\Type::box(array_map(function($item) {
+				return IObject\Type::box($item);
+			}, $provided[0]))->toString();
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\IString\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 

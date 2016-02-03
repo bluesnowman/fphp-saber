@@ -84,7 +84,7 @@ namespace Saber\Data\IRegex {
 		 * @return IRegex\Type                                      the boxed expression
 		 */
 		public static function make($value) : IRegex\Type {
-			return new IRegex\Type(preg_quote($value));
+			return new IRegex\Type(preg_quote((string) $value));
 		}
 
 		#endregion

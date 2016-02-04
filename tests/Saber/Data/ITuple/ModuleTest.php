@@ -185,7 +185,7 @@ namespace Saber\Data\ITuple {
 
 			$z = ITuple\Module::nvl(null, null);
 			$this->assertInstanceOf('\\Saber\\Data\\ITuple\\Type', $z);
-			$this->assertSame(array(null, null), $z->unbox(1));
+			$this->assertSame(array(), $z->unbox(1));
 		}
 
 		/**

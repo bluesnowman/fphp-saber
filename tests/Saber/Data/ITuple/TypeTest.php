@@ -134,6 +134,16 @@ namespace Saber\Data\ITuple {
 		}
 
 		/**
+		 * This method tests the "empty" method.
+		 */
+		public function test_empty() {
+			$p0 = ITuple\Type::empty_();
+
+			$this->assertInstanceOf('\\Saber\\Data\\ITuple\\Type', $p0);
+			$this->assertCount(0, $p0->unbox());
+		}
+
+		/**
 		 * This method provides the data for testing the "make" method.
 		 *
 		 * @return array

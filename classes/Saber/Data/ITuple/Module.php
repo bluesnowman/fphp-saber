@@ -110,7 +110,7 @@ namespace Saber\Data\ITuple {
 		 * @return ITuple\Type                                      the result
 		 */
 		public static function nvl(ITuple\Type $xs = null, ITuple\Type $ys = null) : ITuple\Type {
-			return $xs ?? $ys ?? ITuple\Type::box2(null, null);
+			return $xs ?? $ys ?? ITuple\Type::empty_();
 		}
 
 		/**

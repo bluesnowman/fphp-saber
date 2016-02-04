@@ -109,14 +109,10 @@ namespace Saber\Data\ITrit {
 		 */
 		public function test_covariant(array $provided, array $expected) {
 			$p0 = ITrit\Type::covariant(ITrit\Type::box($provided[0]));
+			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\ITrit\\Type', $p0);
-
-			$p1 = $p0->unbox();
-			$e1 = $expected[0];
-
-			$this->assertInternalType('integer', $p1);
-			$this->assertSame($e1, $p1);
+			$this->assertSame($e0, $p0->unbox());
 		}
 
 		/**
@@ -142,14 +138,10 @@ namespace Saber\Data\ITrit {
 		 */
 		public function test_make(array $provided, array $expected) {
 			$p0 = ITrit\Type::make($provided[0]);
+			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\ITrit\\Type', $p0);
-
-			$p1 = $p0->unbox();
-			$e1 = $expected[0];
-
-			$this->assertInternalType('integer', $p1);
-			$this->assertSame($e1, $p1);
+			$this->assertSame($e0, $p0->unbox());
 		}
 
 		/**

@@ -48,6 +48,15 @@ namespace Saber\Data\ITuple {
 		 */
 		protected static $module = '\\Saber\\Data\\ITuple\\Module';
 
+		/**
+		 * This variable stores references to commonly used singletons.
+		 *
+		 * @access protected
+		 * @static
+		 * @var array
+		 */
+		protected static $singletons = array();
+
 		#endregion
 
 		#region Methods -> Initialization
@@ -88,6 +97,20 @@ namespace Saber\Data\ITuple {
 		 */
 		public static function covariant(ITuple\Type $x) : ITuple\Type {
 			return $x;
+		}
+
+		/**
+		 * This method returns an empty instance.
+		 *
+		 * @access public
+		 * @static
+		 * @return ITuple\Type                                      an empty array list
+		 */
+		public static function empty_() : ITuple\Type {
+			if (!isset(static::$singletons[0])) {
+				static::$singletons[0] = new ITuple\Type(array());
+			}
+			return static::$singletons[0];
 		}
 
 		/**

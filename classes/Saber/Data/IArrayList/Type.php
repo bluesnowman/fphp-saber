@@ -100,6 +100,20 @@ namespace Saber\Data\IArrayList {
 		}
 
 		/**
+		 * This method returns an empty instance.
+		 *
+		 * @access public
+		 * @static
+		 * @return IArrayList\Type                                  an empty array list
+		 */
+		public static function empty_() : IArrayList\Type {
+			if (!isset(static::$singletons[0])) {
+				static::$singletons[0] = new IArrayList\Type(array());
+			}
+			return static::$singletons[0];
+		}
+
+		/**
 		 * This method returns a value as a boxed object.  A value is typically a PHP typed
 		 * primitive or object.  It is considered type-safe.
 		 *
@@ -131,20 +145,6 @@ namespace Saber\Data\IArrayList {
 		 */
 		public static function make2(...$xs) : IArrayList\Type {
 			return IArrayList\Type::make($xs);
-		}
-
-		/**
-		 * This method returns an empty instance.
-		 *
-		 * @access public
-		 * @static
-		 * @return IArrayList\Type                                  an empty array list
-		 */
-		public static function empty_() : IArrayList\Type {
-			if (!isset(static::$singletons[0])) {
-				static::$singletons[0] = new IArrayList\Type(array());
-			}
-			return static::$singletons[0];
 		}
 
 		/**

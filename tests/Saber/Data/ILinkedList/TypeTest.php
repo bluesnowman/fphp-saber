@@ -23,6 +23,7 @@ namespace Saber\Data\ILinkedList {
 	use \Saber\Core;
 	use \Saber\Data\IInt32;
 	use \Saber\Data\ILinkedList;
+	use \Saber\Data\IObject;
 
 	/**
 	 * @group TypeTest
@@ -32,11 +33,9 @@ namespace Saber\Data\ILinkedList {
 		#region Tests -> Inheritance
 
 		/**
-		 * This method tests the data type.
+		 * This method tests the "instanceOf" property.
 		 */
 		public function test_instanceOf() {
-			//$this->markTestIncomplete();
-
 			$p0 = new ILinkedList\Nil\Type();
 
 			$this->assertInstanceOf('\\Saber\\Data\\ILinkedList\\Type', $p0);
@@ -55,151 +54,172 @@ namespace Saber\Data\ILinkedList {
 		#region Tests -> Initialization
 
 		/**
-		 * This method provides the data for testing the boxing of a value.
+		 * This method provides the data for testing the "box" method.
 		 *
 		 * @return array
 		 */
 		public function data_box() {
 			$data = array(
-				array(array(IInt32\Type::zero(), IInt32\Type::one()), array(IInt32\Type::zero(), IInt32\Type::one())),
+				array(array(array(1, 2)), array(array(1, 2))),
 			);
 			return $data;
 		}
 
 		/**
-		 * This method tests the boxing of a value.
+		 * This method tests the "box" method.
 		 *
 		 * @dataProvider data_box
 		 */
 		public function test_box(array $provided, array $expected) {
-			//$this->markTestIncomplete();
-
-			$p0 = ILinkedList\Type::box($provided);
+			$p0 = ILinkedList\Type::box(array_map(function($item) {
+				return IObject\Type::box($item);
+			}, $provided[0]));
+			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\ILinkedList\\Type', $p0);
-
-			$p1 = $p0->unbox();
-			$e1 = count($expected);
-
-			$this->assertInternalType('array', $p1);
-			$this->assertCount($e1, $p1);
+			$this->assertSame($e0, $p0->unbox(1));
 		}
 
 		/**
-		 * This method tests the boxing of a value.
+		 * This method provides the data for testing the "box2" method.
 		 *
-		 * @dataProvider data_box
+		 * @return array
+		 */
+		public function data_box2() {
+			$data = array(
+				array(array(array(1, 2)), array(array(1, 2))),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "box2" method.
+		 *
+		 * @dataProvider data_box2
 		 */
 		public function test_box2(array $provided, array $expected) {
-			//$this->markTestIncomplete();
-
-			$p0 = call_user_func_array(array('\\Saber\\Data\\ILinkedList\\Type', 'box2'), $provided);
+			$p0 = call_user_func_array(array('\\Saber\\Data\\ILinkedList\\Type', 'box2'), array_map(function($item) {
+				return IObject\Type::box($item);
+			}, $provided[0]));
+			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\ILinkedList\\Type', $p0);
-
-			$p1 = $p0->unbox();
-			$e1 = count($expected);
-
-			$this->assertInternalType('array', $p1);
-			$this->assertCount($e1, $p1);
+			$this->assertSame($e0, $p0->unbox(1));
 		}
 
 		/**
-		 * This method provides the data for testing the making of a value.
+		 * This method provides the data for testing the "covariant" method.
+		 *
+		 * @return array
+		 */
+		public function data_covariant() {
+			$data = array(
+				array(array(array(1, 2)), array(array(1, 2))),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "covariant" method.
+		 *
+		 * @dataProvider data_covariant
+		 */
+		public function test_covariant(array $provided, array $expected) {
+			$p0 = ILinkedList\Type::covariant(ILinkedList\Type::box(array_map(function($item) {
+				return IObject\Type::box($item);
+			}, $provided[0])));
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\ILinkedList\\Type', $p0);
+			$this->assertSame($e0, $p0->unbox(1));
+		}
+
+		/**
+		 * This method tests the "empty" method.
+		 */
+		public function test_empty() {
+			$p0 = ILinkedList\Type::empty_();
+
+			$this->assertInstanceOf('\\Saber\\Data\\ILinkedList\\Type', $p0);
+			$this->assertCount(0, $p0->unbox());
+		}
+
+		/**
+		 * This method provides the data for testing the "make" method.
 		 *
 		 * @return array
 		 */
 		public function data_make() {
 			$data = array(
-				array(array(IInt32\Type::zero(), IInt32\Type::one()), array(IInt32\Type::zero(), IInt32\Type::one())),
+				array(array(array(1, 2)), array(array(1, 2))),
 			);
 			return $data;
 		}
 
 		/**
-		 * This method tests the making of a value.
+		 * This method tests the "make" method.
 		 *
 		 * @dataProvider data_make
 		 */
 		public function test_make(array $provided, array $expected) {
-			//$this->markTestIncomplete();
-
-			$p0 = ILinkedList\Type::make($provided);
+			$p0 = ILinkedList\Type::make($provided[0]);
+			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\ILinkedList\\Type', $p0);
-
-			$p1 = $p0->unbox();
-			$e1 = count($expected);
-
-			$this->assertInternalType('array', $p1);
-			$this->assertCount($e1, $p1);
+			$this->assertSame($e0, $p0->unbox(1));
 		}
 
 		/**
-		 * This method tests the making of a value.
-		 *
-		 * @dataProvider data_make
-		 */
-		public function test_make2(array $provided, array $expected) {
-			//$this->markTestIncomplete();
-
-			$p0 = call_user_func_array(array('\\Saber\\Data\\ILinkedList\\Type', 'make2'), $provided);
-
-			$this->assertInstanceOf('\\Saber\\Data\\ILinkedList\\Type', $p0);
-
-			$p1 = $p0->unbox();
-			$e1 = count($expected);
-
-			$this->assertInternalType('array', $p1);
-			$this->assertCount($e1, $p1);
-		}
-
-		/**
-		 * This method tests the creation of an empty list.
-		 */
-		public function testEmpty() {
-			//$this->markTestIncomplete();
-
-			$p0 = ILinkedList\Type::empty_();
-
-			$this->assertInstanceOf('\\Saber\\Data\\ILinkedList\\Type', $p0);
-
-			$p1 = $p0->unbox();
-
-			$this->assertInternalType('array', $p1);
-			$this->assertCount(0, $p1);
-		}
-
-		/**
-		 * This method provides the data for testing that a value is repeated "n" times.
+		 * This method provides the data for testing the "make2" method.
 		 *
 		 * @return array
 		 */
-		public function dataReplicate() {
+		public function data_make2() {
 			$data = array(
-				array(array(IInt32\Type::zero(), 1), array(IInt32\Type::zero())),
-				array(array(IInt32\Type::zero(), 5), array(IInt32\Type::zero(), IInt32\Type::zero(), IInt32\Type::zero(), IInt32\Type::zero(), IInt32\Type::zero())),
+				array(array(array(1, 2)), array(array(1, 2))),
 			);
 			return $data;
 		}
 
 		/**
-		 * This method tests that a value is repeated "n" times.
+		 * This method tests the "make2" method.
 		 *
-		 * @dataProvider dataReplicate
+		 * @dataProvider data_make2
 		 */
-		public function testReplicate(array $provided, array $expected) {
-			//$this->markTestIncomplete();
-
-			$p0 = ILinkedList\Type::replicate($provided[0], IInt32\Type::make($provided[1]));
+		public function test_make2(array $provided, array $expected) {
+			$p0 = call_user_func_array(array('\\Saber\\Data\\ILinkedList\\Type', 'make2'), array_map(function($item) {
+				return IObject\Type::box($item);
+			}, $provided[0]));
+			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\ILinkedList\\Type', $p0);
+			$this->assertSame($e0, $p0->unbox(1));
+		}
 
-			$p1 = $p0->unbox();
-			$e1 = count($expected);
+		/**
+		 * This method provides the data for testing the "replicate" method.
+		 *
+		 * @return array
+		 */
+		public function data_replicate() {
+			$data = array(
+				array(array(123, 1), array(array(123))),
+				array(array(123, 5), array(array(123, 123, 123, 123, 123))),
+			);
+			return $data;
+		}
 
-			$this->assertInternalType('array', $p1);
-			$this->assertCount($e1, $p1);
+		/**
+		 * This method tests the "replicate" method.
+		 *
+		 * @dataProvider data_replicate
+		 */
+		public function test_replicate(array $provided, array $expected) {
+			$p0 = ILinkedList\Type::replicate(IObject\Type::box($provided[0]), IInt32\Type::make($provided[1]));
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\ILinkedList\\Type', $p0);
+			$this->assertSame($e0, $p0->unbox(1));
 		}
 
 		#endregion
@@ -207,12 +227,61 @@ namespace Saber\Data\ILinkedList {
 		#region Tests -> Interface
 
 		/**
-		 * This method tests that an item is accessible.
+		 * This method provides the data for testing the "hashCode" method.
+		 *
+		 * @return array
 		 */
-		public function testItems() {
-			//$this->markTestIncomplete();
+		public function data_hashCode() {
+			$data = array(
+				array(array(array(1, 2))),
+			);
+			return $data;
+		}
 
-			$p0 = ILinkedList\Type::box(array(IInt32\Type::zero(), IInt32\Type::one(), IInt32\Type::box(2)));
+		/**
+		 * This method tests the "hashCode" method.
+		 *
+		 * @dataProvider data_hashCode
+		 */
+		public function test_hashCode(array $provided) {
+			$p0 = ILinkedList\Type::make($provided[0])->hashCode();
+
+			$this->assertInstanceOf('\\Saber\\Data\\IString\\Type', $p0);
+			$this->assertRegExp('/^[0-9a-f]{32}$/', $p0->unbox());
+		}
+
+		/**
+		 * This method provides the data for testing the "isEmpty" method.
+		 *
+		 * @return array
+		 */
+		public function data_isEmpty() {
+			$data = array(
+				array(array(array()), array(true)),
+				array(array(array(1)), array(false)),
+				array(array(array(1, 2)), array(false)),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "isEmpty" method.
+		 *
+		 * @dataProvider data_isEmpty
+		 */
+		public function test_isEmpty(array $provided, array $expected) {
+			$p0 = ILinkedList\Type::make($provided[0])->isEmpty();
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p0);
+			$this->assertSame($e0, $p0->unbox());
+		}
+
+		/**
+		 * This method tests the "item" related methods.
+		 */
+		public function test_items() {
+			$p0 = ILinkedList\Type::box2(IInt32\Type::zero(), IInt32\Type::one(), IInt32\Type::box(2));
 
 			$this->assertSame(0, $p0->item(IInt32\Type::zero())->unbox());
 			$this->assertSame(1, $p0->item(IInt32\Type::one())->unbox());
@@ -223,71 +292,64 @@ namespace Saber\Data\ILinkedList {
 			$p1 = $p0->tail();
 
 			$this->assertInstanceOf('\\Saber\\Data\\ILinkedList\\Type', $p1);
-
-			$p2 = $p1->unbox();
-
-			$this->assertInternalType('array', $p2);
-			$this->assertCount(2, $p2);
-
-			$this->assertSame(1, $p2[0]->unbox());
-			$this->assertSame(2, $p2[1]->unbox());
+			$this->assertSame(array(1, 2), $p1->unbox(1));
 		}
 
 		/**
-		 * This method provides the data for testing that a value is empty.
+		 * This method provides the data for testing the "length" method.
 		 *
 		 * @return array
 		 */
-		public function dataIsEmpty() {
+		public function data_length() {
 			$data = array(
-				array(array(), array(true)),
-				array(array(IInt32\Type::zero()), array(false)),
-				array(array(IInt32\Type::zero(), IInt32\Type::zero(), IInt32\Type::zero()), array(false)),
+				array(array(array()), array(0)),
+				array(array(array(1)), array(1)),
+				array(array(array(1, 2)), array(2)),
+				array(array(array(1, 2, 3)), array(3)),
 			);
 			return $data;
 		}
 
 		/**
-		 * This method tests that a value is empty.
+		 * This method tests the "length" method.
 		 *
-		 * @dataProvider dataIsEmpty
+		 * @dataProvider data_length
 		 */
-		public function testIsEmpty(array $provided, array $expected) {
-			//$this->markTestIncomplete();
-
-			$p0 = ILinkedList\Type::box($provided)->isEmpty();
+		public function test_length(array $provided, array $expected) {
+			$p0 = ILinkedList\Type::make($provided[0])->length();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\IInt32\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 
 		/**
-		 * This method provides the data for testing that a value is of a particular length.
+		 * This method provides the data for testing the "toString" method.
 		 *
 		 * @return array
 		 */
-		public function dataLength() {
+		public function data_toString() {
 			$data = array(
-				array(array(), array(0)),
-				array(array(IInt32\Type::zero()), array(1)),
-				array(array(IInt32\Type::zero(), IInt32\Type::zero(), IInt32\Type::zero()), array(3)),
+				array(array(array()), array('[]')),
+				array(array(array(1)), array('[1]')),
+				array(array(array(1, 2)), array('[1,2]')),
+				array(array(array(1, 2, 3)), array('[1,2,3]')),
 			);
 			return $data;
 		}
 
 		/**
-		 * This method tests that a value is of a particular length.
+		 * This method tests the "toString" method.
 		 *
-		 * @dataProvider dataLength
+		 * @dataProvider data_toString
 		 */
-		public function testLength(array $provided, array $expected) {
-			//$this->markTestIncomplete();
+		public function test_toString(array $provided, array $expected) {
+			$this->markTestIncomplete();
 
-			$p0 = ILinkedList\Type::box($provided)->length();
+			$p0 = ILinkedList\Type::make($provided[0])->toString();
 			$e0 = $expected[0];
 
-			$this->assertInstanceOf('\\Saber\\Data\\IInt32\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\IString\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 

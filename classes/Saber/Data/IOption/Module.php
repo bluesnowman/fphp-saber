@@ -68,7 +68,7 @@ namespace Saber\Data\IOption {
 		}
 
 		/**
-		 * This method binds the subroutine to the object within this option.
+		 * This method (aka "flatMap") binds the subroutine to the object within this option.
 		 *
 		 * @access public
 		 * @static

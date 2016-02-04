@@ -44,7 +44,7 @@ namespace Saber\Data\ITrit {
 		 * @return ITrit\Type                                       the result
 		 */
 		public static function nvl(ITrit\Type $x = null, ITrit\Type $y = null) : ITrit\Type {
-			return ($x !== null) ? $x : (($y !== null) ? $y : ITrit\Type::zero());
+			return $x ?? $y ?? ITrit\Type::zero();
 		}
 
 		/**

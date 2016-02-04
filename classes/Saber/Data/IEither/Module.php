@@ -82,7 +82,7 @@ namespace Saber\Data\IEither {
 		 * @return IEither\Type                                     the result
 		 */
 		public static function nvl(IEither\Type $x = null, IEither\Type $y = null) : IEither\Type {
-			return ($x !== null) ? $x : (($y !== null) ? $y : IEither\Type::left());
+			return $x ?? $y ?? IEither\Type::left();
 		}
 
 		#endregion

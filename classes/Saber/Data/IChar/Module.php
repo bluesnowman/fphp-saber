@@ -49,7 +49,7 @@ namespace Saber\Data\IChar {
 		 * @return IChar\Type                                       the result
 		 */
 		public static function nvl(IChar\Type $x = null, IChar\Type $y = null) : IChar\Type {
-			return ($x !== null) ? $x : (($y !== null) ? $y : IChar\Type::box(chr(0)));
+			return $x ?? $y ?? IChar\Type::box(chr(0));
 		}
 
 		/**

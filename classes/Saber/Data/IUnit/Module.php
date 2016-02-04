@@ -42,7 +42,7 @@ namespace Saber\Data\IUnit {
 		 * @return IUnit\Type                                       the result
 		 */
 		public static function nvl(IUnit\Type $x = null, IUnit\Type $y = null) : IUnit\Type {
-			return ($x !== null) ? $x : (($y !== null) ? $y : IUnit\Type::instance());
+			return IUnit\Type::instance();
 		}
 
 		#endregion

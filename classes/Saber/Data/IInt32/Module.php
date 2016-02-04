@@ -279,7 +279,7 @@ namespace Saber\Data\IInt32 {
 		 * @return IInt32\Type                                      the result
 		 */
 		public static function nvl(IInt32\Type $x = null, IInt32\Type $y = null) : IInt32\Type {
-			return ($x !== null) ? $x : (($y !== null) ? $y : IInt32\Type::zero());
+			return $x ?? $y ?? IInt32\Type::zero();
 		}
 
 		/**

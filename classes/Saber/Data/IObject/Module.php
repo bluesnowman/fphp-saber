@@ -42,7 +42,7 @@ namespace Saber\Data\IObject {
 		 * @return IObject\Type                                     the result
 		 */
 		public static function nvl(IObject\Type $x = null, IObject\Type $y = null) : IObject\Type {
-			return ($x !== null) ? $x : (($y !== null) ? $y : IObject\Type::box(null));
+			return $x ?? $y ?? IObject\Type::box(null);
 		}
 
 		#endregion

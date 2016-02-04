@@ -294,7 +294,7 @@ namespace Saber\Data\IInteger {
 		 * @return IInteger\Type                                    the result
 		 */
 		public static function nvl(IInteger\Type $x = null, IInteger\Type $y = null) : IInteger\Type {
-			return ($x !== null) ? $x : (($y !== null) ? $y : IInteger\Type::zero());
+			return $x ?? $y ?? IInteger\Type::zero();
 		}
 
 		/**

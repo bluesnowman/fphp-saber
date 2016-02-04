@@ -179,7 +179,7 @@ namespace Saber\Data\IRatio {
 		 * @return IRatio\Type                                      the result
 		 */
 		public static function nvl(IRatio\Type $x = null, IRatio\Type $y = null) : IRatio\Type {
-			return ($x !== null) ? $x : (($y !== null) ? $y : IRatio\Type::zero());
+			return $x ?? $y ?? IRatio\Type::zero();
 		}
 
 		/**

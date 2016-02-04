@@ -275,7 +275,7 @@ namespace Saber\Data\IFloat {
 		 * @return IFloat\Type                                      the result
 		 */
 		public static function nvl(IFloat\Type $x = null, IFloat\Type $y = null) : IFloat\Type {
-			return ($x !== null) ? $x : (($y !== null) ? $y : IFloat\Type::zero());
+			return $x ?? $y ?? IFloat\Type::zero();
 		}
 
 		/**

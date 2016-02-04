@@ -826,7 +826,7 @@ namespace Saber\Data\IString {
 		 * @return IString\Type                                     the result
 		 */
 		public static function nvl(IString\Type $xs = null, IString\Type $ys = null) : IString\Type {
-			return ($xs !== null) ? $xs : (($ys !== null) ? $ys : IString\Type::empty_());
+			return $xs ?? $ys ?? IString\Type::empty_();
 		}
 
 		/**

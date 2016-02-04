@@ -439,7 +439,7 @@ namespace Saber\Data\IHashSet {
 		 * @return IHashSet\Type                                    the result
 		 */
 		public static function nvl(IHashSet\Type $xs = null, IHashSet\Type $ys = null) : IHashSet\Type {
-			return ($xs !== null) ? $xs : (($ys !== null) ? $ys : IHashSet\Type::empty_());
+			return $xs ?? $ys ?? IHashSet\Type::empty_();
 		}
 
 		/**

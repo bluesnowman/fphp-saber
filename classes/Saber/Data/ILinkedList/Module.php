@@ -978,7 +978,7 @@ namespace Saber\Data\ILinkedList {
 		 * @return ILinkedList\Type                                 the result
 		 */
 		public static function nvl(ILinkedList\Type $xs = null, ILinkedList\Type $ys = null) : ILinkedList\Type {
-			return ($xs !== null) ? $xs : (($ys !== null) ? $ys : ILinkedList\Type::empty_());
+			return $xs ?? $ys ?? ILinkedList\Type::empty_();
 		}
 
 		/**

@@ -44,7 +44,7 @@ namespace Saber\Data\IBool {
 		 * @return IBool\Type                                       the result
 		 */
 		public static function nvl(IBool\Type $x = null, IBool\Type $y = null) : IBool\Type {
-			return ($x !== null) ? $x : (($y !== null) ? $y : IBool\Type::false());
+			return $x ?? $y ?? IBool\Type::false();
 		}
 
 		/**

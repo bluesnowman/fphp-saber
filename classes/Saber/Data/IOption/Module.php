@@ -224,7 +224,7 @@ namespace Saber\Data\IOption {
 		 * @return IOption\Type                                     the result
 		 */
 		public static function nvl(IOption\Type $xs = null, IOption\Type $ys = null) : IOption\Type {
-			return ($xs !== null) ? $xs : (($ys !== null) ? $ys : IOption\Type::none());
+			return $xs ?? $ys ?? IOption\Type::none();
 		}
 
 		/**

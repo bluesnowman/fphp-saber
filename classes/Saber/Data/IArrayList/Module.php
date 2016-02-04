@@ -953,7 +953,7 @@ namespace Saber\Data\IArrayList {
 		 * @return IArrayList\Type                                  the result
 		 */
 		public static function nvl(IArrayList\Type $xs = null, IArrayList\Type $ys = null) : IArrayList\Type {
-			return ($xs !== null) ? $xs : (($ys !== null) ? $ys : IArrayList\Type::empty_());
+			return $xs ?? $ys ?? IArrayList\Type::empty_();
 		}
 
 		/**

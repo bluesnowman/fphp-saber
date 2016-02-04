@@ -350,7 +350,7 @@ namespace Saber\Data\IHashMap {
 		 * @return IHashMap\Type                                    the result
 		 */
 		public static function nvl(IHashMap\Type $xs = null, IHashMap\Type $ys = null) : IHashMap\Type {
-			return ($xs !== null) ? $xs : (($ys !== null) ? $ys : IHashMap\Type::empty_());
+			return $xs ?? $ys ?? IHashMap\Type::empty_();
 		}
 
 		/**

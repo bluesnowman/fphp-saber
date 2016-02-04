@@ -275,7 +275,7 @@ namespace Saber\Data\IDouble {
 		 * @return IDouble\Type                                     the result
 		 */
 		public static function nvl(IDouble\Type $x = null, IDouble\Type $y = null) : IDouble\Type {
-			return ($x !== null) ? $x : (($y !== null) ? $y : IDouble\Type::zero());
+			return $x ?? $y ?? IDouble\Type::zero();
 		}
 
 		/**

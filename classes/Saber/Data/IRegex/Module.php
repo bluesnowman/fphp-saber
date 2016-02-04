@@ -96,7 +96,7 @@ namespace Saber\Data\IRegex {
 		 * @return IRegex\Type                                      the result
 		 */
 		public static function nvl(IRegex\Type $x = null, IRegex\Type $y = null) : IRegex\Type {
-			return ($x !== null) ? $x : (($y !== null) ? $y : IRegex\Type::box('/^.*$/'));
+			return $x ?? $y ?? IRegex\Type::box('/^.*$/');
 		}
 
 		#endregion

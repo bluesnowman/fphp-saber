@@ -22,6 +22,7 @@ namespace Saber\Math\IVector {
 
 	use \Saber\Data;
 	use \Saber\Data\IDouble;
+	use \Saber\Data\INumber;
 	use \Saber\Data\IVector;
 
 	final class Module extends Data\Module implements IVector\Module {
@@ -49,9 +50,9 @@ namespace Saber\Math\IVector {
 		 * @return IDouble\Type                                     the result
 		 */
 		public static function product(IVector\Type $xs) : IDouble\Type {
-			return ($xs->__isEmpty())
-				? IDouble\Type::one()
-				: IDouble\Module::multiply($xs->head()->toDouble(), static::product($xs->tail()));
+			return $xs->foldLeft(function(IDouble\Type $c, INumber\Type $x) {
+				return IDouble\Module::multiply($c, $x->toDouble());
+			}, IDouble\Type::one());
 		}
 
 		/**
@@ -63,9 +64,9 @@ namespace Saber\Math\IVector {
 		 * @return IDouble\Type                                     the result
 		 */
 		public static function sum(IVector\Type $xs) : IDouble\Type {
-			return ($xs->__isEmpty())
-				? IDouble\Type::zero()
-				: IDouble\Module::add($xs->head()->toDouble(), static::sum($xs->tail()));
+			return $xs->foldLeft(function(IDouble\Type $c, INumber\Type $x) {
+				return IDouble\Module::add($c, $x->toDouble());
+			}, IDouble\Type::zero());
 		}
 
 	}

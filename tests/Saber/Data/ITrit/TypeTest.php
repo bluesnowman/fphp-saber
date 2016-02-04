@@ -75,14 +75,17 @@ namespace Saber\Data\ITrit {
 		 */
 		public function test_box(array $provided, array $expected) {
 			$p0 = ITrit\Type::box($provided[0]);
+			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\ITrit\\Type', $p0);
+			$this->assertSame($e0, $p0->unbox());
 
-			$p1 = $p0->unbox();
-			$e1 = $expected[0];
+			$p1 = ITrit\Type::box($provided[0]);
 
-			$this->assertInternalType('integer', $p1);
-			$this->assertSame($e1, $p1);
+			$this->assertInstanceOf('\\Saber\\Data\\ITrit\\Type', $p1);
+			$this->assertSame($e0, $p1->unbox());
+
+			$this->assertSame(spl_object_hash($p0), spl_object_hash($p1));
 		}
 
 		/**

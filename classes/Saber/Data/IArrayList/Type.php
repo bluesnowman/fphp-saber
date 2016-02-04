@@ -106,20 +106,17 @@ namespace Saber\Data\IArrayList {
 		 * @access public
 		 * @static
 		 * @param array $xs                                         the value(s) to be boxed
+		 * @param string $type                                      the data type to be used to box
+		 *                                                          PHP typed primitives or objects
 		 * @return IArrayList\Type                                  the boxed object
-		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
-		public static function make(array $xs) : IArrayList\Type {
-			foreach ($xs as $x) {
-				if (!(is_object($x) && ($x instanceof Core\Type))) {
-					$type = gettype($x);
-					if ($type == 'object') {
-						$type = get_class($x);
-					}
-					throw new Throwable\InvalidArgument\Exception('Unable to create array list. Expected a boxed value, but got ":type".', array(':type' => $type));
+		public static function make(array $xs, string $type = '\\Saber\\Data\\IObject\\Type') : IArrayList\Type {
+			return new IArrayList\Type(array_map(function($x) use ($type) {
+				if (is_object($x) && ($x instanceof Core\Type)) {
+					return $x;
 				}
-			}
-			return new IArrayList\Type($xs);
+				return $type::make($x, $type);
+			}, $xs));
 		}
 
 		/**

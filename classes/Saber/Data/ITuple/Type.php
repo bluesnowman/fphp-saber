@@ -92,34 +92,27 @@ namespace Saber\Data\ITuple {
 
 		/**
 		 * This method returns a value as a boxed object.  A value is typically a PHP typed
-		 * primitive or object.  It is considered type-safe.
+		 * array.  It is considered type-safe.
 		 *
 		 * @access public
 		 * @static
 		 * @param array $xs                                         the value(s) to be boxed
+		 * @param string $type                                      the data type to be used to box
+		 *                                                          PHP typed primitives or objects
 		 * @return ITuple\Type                                      the boxed object
-		 * @throws Throwable\InvalidArgument\Exception              indicates an invalid argument
 		 */
-		public static function make(array $xs) : ITuple\Type {
-			$count = count($xs);
-			if ($count < 2) {
-				throw new Throwable\InvalidArgument\Exception('Unable to box value(s). ITuple must have at least 2 objects, but got ":count".', array(':count' => $count));
-			}
-			foreach ($xs as $x) {
-				if (!(($x === null) || (is_object($x) && ($x instanceof Core\Type)))) {
-					$type = gettype($x);
-					if ($type == 'object') {
-						$type = get_class($x);
-					}
-					throw new Throwable\InvalidArgument\Exception('Unable to box value(s). Expected a boxed object, but got ":type".', array(':type' => $type));
+		public static function make(array $xs, string $type = '\\Saber\\Data\\IObject\\Type') : ITuple\Type {
+			return new ITuple\Type(array_map(function($x) use ($type) {
+				if (is_object($x) && ($x instanceof Core\Type)) {
+					return $x;
 				}
-			}
-			return new ITuple\Type($xs);
+				return $type::make($x, $type);
+			}, $xs));
 		}
 
 		/**
 		 * This method returns a value as a boxed object.  A value is typically a PHP typed
-		 * primitive or object.  It is considered type-safe.
+		 * array.  It is considered type-safe.
 		 *
 		 * @access public
 		 * @static

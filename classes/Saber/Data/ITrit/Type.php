@@ -23,9 +23,7 @@ namespace Saber\Data\ITrit {
 	use \Saber\Core;
 	use \Saber\Data;
 	use \Saber\Data\IIntegral;
-	use \Saber\Data\IString;
 	use \Saber\Data\ITrit;
-	use \Saber\Throwable;
 
 	/**
 	 * @see http://en.wikipedia.org/wiki/Balanced_ternary
@@ -97,7 +95,10 @@ namespace Saber\Data\ITrit {
 		 * @return ITrit\Type                                       the boxed object
 		 */
 		public static function box(int $value) : ITrit\Type {
-			return new ITrit\Type($value);
+			if (!isset(static::$singletons[-1])) {
+				static::$singletons[$value] = new ITrit\Type($value);
+			}
+			return static::$singletons[$value];
 		}
 
 		/**
@@ -110,15 +111,7 @@ namespace Saber\Data\ITrit {
 		 * @return ITrit\Type                                       the boxed object
 		 */
 		public static function make($value) : ITrit\Type {
-			if ($value < 0) {
-				return ITrit\Type::negative();
-			}
-			else if ($value == 0) {
-				return ITrit\Type::zero();
-			}
-			else { // ($value > 0)
-				return ITrit\Type::positive();
-			}
+			return ITrit\Type::box(((int) $value) <=> 0);
 		}
 
 		/**
@@ -129,10 +122,7 @@ namespace Saber\Data\ITrit {
 		 * @return ITrit\Type                                       the object
 		 */
 		public static function negative() : ITrit\Type {
-			if (!isset(static::$singletons[-1])) {
-				static::$singletons[-1] = new ITrit\Type(-1);
-			}
-			return static::$singletons[-1];
+			return ITrit\Type::box(-1);
 		}
 
 		/**
@@ -143,10 +133,7 @@ namespace Saber\Data\ITrit {
 		 * @return ITrit\Type                                       the object
 		 */
 		public static function positive() : ITrit\Type {
-			if (!isset(static::$singletons[1])) {
-				static::$singletons[1] = new ITrit\Type(1);
-			}
-			return static::$singletons[1];
+			return ITrit\Type::box(1);
 		}
 
 		/**
@@ -157,10 +144,7 @@ namespace Saber\Data\ITrit {
 		 * @return ITrit\Type                                       the object
 		 */
 		public static function zero() : ITrit\Type {
-			if (!isset(static::$singletons[0])) {
-				static::$singletons[0] = new ITrit\Type(0);
-			}
-			return static::$singletons[0];
+			return ITrit\Type::box(0);
 		}
 
 		#endregion

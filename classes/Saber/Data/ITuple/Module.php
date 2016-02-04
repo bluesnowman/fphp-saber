@@ -158,10 +158,8 @@ namespace Saber\Data\ITuple {
 		 */
 		public static function eq(ITuple\Type $xs, Core\Type $ys) : IBool\Type { // ==
 			$type = $xs->__typeOf();
-			if ($ys !== null) {
-				if ($ys instanceof $type) {
-					return ITrit\Module::eq(ITuple\Module::compare($xs, $ys), ITrit\Type::zero());
-				}
+			if ($ys instanceof $type) {
+				return IBool\Type::box(ITuple\Module::compare($xs, $ys)->unbox() == 0);
 			}
 			return IBool\Type::false();
 		}
@@ -177,10 +175,8 @@ namespace Saber\Data\ITuple {
 		 *                                                          to the right operand
 		 */
 		public static function id(ITuple\Type $xs, Core\Type $ys) : IBool\Type { // ===
-			if ($ys !== null) {
-				if ($xs->__typeOf() === $ys->__typeOf()) {
-					return ITrit\Module::id(ITuple\Module::compare($xs, $ys), ITrit\Type::zero());
-				}
+			if ($xs->__typeOf() === $ys->__typeOf()) {
+				return IBool\Type::box(ITuple\Module::compare($xs, $ys)->unbox() == 0);
 			}
 			return IBool\Type::false();
 		}
@@ -229,38 +225,19 @@ namespace Saber\Data\ITuple {
 		 *                                                          or greater than the right operand
 		 */
 		public static function compare(ITuple\Type $xs, ITuple\Type $ys) : ITrit\Type {
-			$length = IInt32\Module::min($xs->length(), $ys->length());
+			$xsl = $xs->length();
+			$ysl = $ys->length();
+
+			$length = IInt32\Module::min($xsl, $ysl);
 
 			for ($i = IInt32\Type::zero(); IInt32\Module::lt($i, $length)->unbox(); $i = IInt32\Module::increment($i)) {
-				$x = $xs->item($i);
-				$y = $ys->item($i);
-
-				if (($x === null) && ($y !== null)) {
-					return ITrit\Type::negative();
-				}
-				else if (($x !== null) && ($y === null)) {
-					return ITrit\Type::positive();
-				}
-				else if (($x !== null) && ($y !== null)) {
-					$r = call_user_func_array(array($x, 'compare'), array($x, $y));
-					if ($r->unbox() != 0) {
-						return $r;
-					}
+				$r = $xs->item($i)->compare($ys->item($i));
+				if ($r->unbox() != 0) {
+					return $r;
 				}
 			}
 
-			$x_length = $xs->__length();
-			$y_length = $ys->__length();
-
-			if ($x_length < $y_length) {
-				return ITrit\Type::negative();
-			}
-			else if ($x_length == $y_length) {
-				return ITrit\Type::zero();
-			}
-			else { // ($x_length > $y_length)
-				return ITrit\Type::positive();
-			}
+			return ITrit\Type::box($xsl->unbox() <=> $ysl->unbox());
 		}
 
 		/**

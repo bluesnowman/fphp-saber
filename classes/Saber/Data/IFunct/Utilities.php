@@ -63,13 +63,13 @@ namespace Saber\Data\IFunct {
 		 * @access public
 		 * @static
 		 * @param callable $closure                                 the closure to be called
-		 * @return Core\Type                                        the result returned by the closure
+		 * @return callable                                         the result returned by the closure
 		 */
-		public static function memoize(callable $closure) : Core\Type {
+		public static function memoize(callable $closure) {
 			return function() use ($closure) {
 				static $results = array();
 				$args = func_get_args();
-				$key = (string) serialize($args);
+				$key = md5(serialize($args));
 				if (!array_key_exists($key, $results)) {
 					$results[$key] = call_user_func_array($closure, $args);
 				}

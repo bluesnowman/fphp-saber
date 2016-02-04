@@ -71,7 +71,11 @@ namespace Saber\Data\ILinkedList {
 		 * @return ILinkedList\Type                                 the boxed object
 		 */
 		public static function box(array $xs) : ILinkedList\Type {
-			return ILinkedList\Type::make($xs);
+			$zs = ILinkedList\Type::nil();
+			for ($i = count($xs) - 1; $i >= 0; $i--) {
+				$zs = ILinkedList\Type::cons($xs[$i], $zs);
+			}
+			return $zs;
 		}
 
 		/**
@@ -84,7 +88,7 @@ namespace Saber\Data\ILinkedList {
 		 * @return ILinkedList\Type                                 the boxed object
 		 */
 		public static function box2(...$xs) : ILinkedList\Type {
-			return ILinkedList\Type::make($xs);
+			return ILinkedList\Type::box($xs);
 		}
 
 		/**
@@ -111,12 +115,18 @@ namespace Saber\Data\ILinkedList {
 		 * @access public
 		 * @static
 		 * @param array $xs                                         the value(s) to be boxed
+		 * @param string $type                                      the data type to be used to box
+		 *                                                          PHP typed primitives or objects
 		 * @return ILinkedList\Type                                 the boxed object
 		 */
-		public static function make(array $xs) : ILinkedList\Type {
+		public static function make(array $xs, string $type = '\\Saber\\Data\\IObject\\Type') : ILinkedList\Type {
 			$zs = ILinkedList\Type::nil();
 			for ($i = count($xs) - 1; $i >= 0; $i--) {
-				$zs = ILinkedList\Type::cons($xs[$i], $zs);
+				$z = $xs[$i];
+				if (!(is_object($z) && ($z instanceof Core\Type))) {
+					$z = $type::make($z, $type);
+				}
+				$zs = ILinkedList\Type::cons($z, $zs);
 			}
 			return $zs;
 		}

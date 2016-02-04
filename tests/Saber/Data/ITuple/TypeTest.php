@@ -151,9 +151,7 @@ namespace Saber\Data\ITuple {
 		 * @dataProvider data_make
 		 */
 		public function test_make(array $provided, array $expected) {
-			$p0 = ITuple\Type::make(array_map(function($item) {
-				return IObject\Type::box($item);
-			}, $provided[0]));
+			$p0 = ITuple\Type::make($provided[0]);
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\ITuple\\Type', $p0);
@@ -209,9 +207,7 @@ namespace Saber\Data\ITuple {
 		 * @dataProvider data_hashCode
 		 */
 		public function test_hashCode(array $provided) {
-			$p0 = ITuple\Type::box(array_map(function($item) {
-				return IObject\Type::box($item);
-			}, $provided[0]))->hashCode();
+			$p0 = ITuple\Type::make($provided[0])->hashCode();
 
 			$this->assertInstanceOf('\\Saber\\Data\\IString\\Type', $p0);
 			$this->assertRegExp('/^[0-9a-f]{32}$/', $p0->unbox());
@@ -237,9 +233,7 @@ namespace Saber\Data\ITuple {
 		 * @dataProvider data_isEmpty
 		 */
 		public function test_isEmpty(array $provided, array $expected) {
-			$p0 = ITuple\Type::box(array_map(function($item) {
-				return IObject\Type::box($item);
-			}, $provided[0]))->isEmpty();
+			$p0 = ITuple\Type::make($provided[0])->isEmpty();
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p0);
@@ -267,9 +261,7 @@ namespace Saber\Data\ITuple {
 		 * @dataProvider data_isPair
 		 */
 		public function test_isPair(array $provided, array $expected) {
-			$p0 = ITuple\Type::box(array_map(function($item) {
-				return IObject\Type::box($item);
-			}, $provided[0]))->isPair();
+			$p0 = ITuple\Type::make($provided[0])->isPair();
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p0);
@@ -311,9 +303,7 @@ namespace Saber\Data\ITuple {
 		 * @dataProvider data_length
 		 */
 		public function test_length(array $provided, array $expected) {
-			$p0 = ITuple\Type::box(array_map(function($item) {
-				return IObject\Type::box($item);
-			}, $provided[0]))->length();
+			$p0 = ITuple\Type::make($provided[0])->length();
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\IInt32\\Type', $p0);
@@ -341,9 +331,7 @@ namespace Saber\Data\ITuple {
 		 * @dataProvider data_toString
 		 */
 		public function test_toString(array $provided, array $expected) {
-			$p0 = ITuple\Type::box(array_map(function($item) {
-				return IObject\Type::box($item);
-			}, $provided[0]))->toString();
+			$p0 = ITuple\Type::make($provided[0])->toString();
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\IString\\Type', $p0);

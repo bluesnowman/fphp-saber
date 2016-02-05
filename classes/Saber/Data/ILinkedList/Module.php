@@ -543,7 +543,7 @@ namespace Saber\Data\ILinkedList {
 		 * @param ILinkedList\Type $xs                              the left operand
 		 * @return IOption\Type                                     the option
 		 */
-		public static function lastIOption(ILinkedList\Type $xs) : IOption\Type {
+		public static function lastOption(ILinkedList\Type $xs) : IOption\Type {
 			return (!$xs->__isEmpty()) ? IOption\Type::some(ILinkedList\Module::last($xs)) : IOption\Type::none();
 		}
 

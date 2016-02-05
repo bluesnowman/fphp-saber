@@ -72,7 +72,7 @@ namespace Saber\Throwable\Runtime {
 		 * @access public
 		 * @return string                                           the backtrace information
 		 */
-		public function __getTraceAsIString();
+		public function __getTraceAsString();
 
 		#endregion
 

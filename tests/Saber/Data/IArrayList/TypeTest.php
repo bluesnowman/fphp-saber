@@ -125,9 +125,7 @@ namespace Saber\Data\IArrayList {
 		 * @dataProvider data_covariant
 		 */
 		public function test_covariant(array $provided, array $expected) {
-			$p0 = IArrayList\Type::covariant(IArrayList\Type::box(array_map(function($item) {
-				return IObject\Type::box($item);
-			}, $provided[0])));
+			$p0 = IArrayList\Type::covariant(IArrayList\Type::make($provided[0]));
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\IArrayList\\Type', $p0);
@@ -215,7 +213,7 @@ namespace Saber\Data\IArrayList {
 		 * @dataProvider data_replicate
 		 */
 		public function test_replicate(array $provided, array $expected) {
-			$p0 = IArrayList\Type::replicate(IObject\Type::box($provided[0]), IInt32\Type::make($provided[1]));
+			$p0 = IArrayList\Type::replicate(IObject\Type::box($provided[0]), IInt32\Type::box($provided[1]));
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\IArrayList\\Type', $p0);

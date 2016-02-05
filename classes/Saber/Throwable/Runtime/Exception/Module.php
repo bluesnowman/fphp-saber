@@ -100,8 +100,8 @@ namespace Saber\Throwable\Runtime\Exception {
 		 * @param Throwable\Runtime\Exception $x                    the exception to be processed
 		 * @return string                                           the backtrace information
 		 */
-		public static function getTraceAsIString(Throwable\Runtime\Exception $x) {
-			return IString\Type::box($x->__getTraceAsIString());
+		public static function getTraceAsString(Throwable\Runtime\Exception $x) {
+			return IString\Type::box($x->__getTraceAsString());
 		}
 
 		#endregion

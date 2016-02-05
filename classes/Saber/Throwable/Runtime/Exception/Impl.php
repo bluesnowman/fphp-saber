@@ -167,8 +167,8 @@ namespace Saber\Throwable\Runtime\Exception {
 		 * @access public
 		 * @return string                                           the backtrace information
 		 */
-		public function __getTraceAsIString() {
-			return $this->getTraceAsIString();
+		public function __getTraceAsString() {
+			return $this->getTraceAsString();
 		}
 
 		/**

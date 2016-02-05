@@ -545,7 +545,7 @@ namespace Saber\Data\IString {
 		 * @param IString\Type $xs                                  the left operand
 		 * @return IOption\Type                                     the option
 		 */
-		public static function lastIOption(IString\Type $xs) : IOption\Type {
+		public static function lastOption(IString\Type $xs) : IOption\Type {
 			return (!$xs->__isEmpty())
 				? IOption\Type::some(IString\Module::last($xs))
 				: IOption\Type::none();

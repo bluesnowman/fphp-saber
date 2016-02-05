@@ -89,6 +89,20 @@ namespace Saber\Data\IString {
 		}
 
 		/**
+		 * This method returns an empty instance.
+		 *
+		 * @access public
+		 * @static
+		 * @return IString\Type                                     the string
+		 */
+		public static function empty_() : IString\Type {
+			if (!isset(static::$singletons[0])) {
+				static::$singletons[0] = new IString\Type('');
+			}
+			return static::$singletons[0];
+		}
+
+		/**
 		 * This method returns a value as a boxed object.  A value is typically a PHP typed
 		 * primitive or object.  It is considered type-safe.
 		 *
@@ -111,20 +125,6 @@ namespace Saber\Data\IString {
 				$value = mb_convert_encoding($value, IChar\Type::UTF_8_ENCODING, $encoding);
 			}
 			return new IString\Type($value);
-		}
-
-		/**
-		 * This method returns an empty instance.
-		 *
-		 * @access public
-		 * @static
-		 * @return IString\Type                                     the string
-		 */
-		public static function empty_() : IString\Type {
-			if (!isset(static::$singletons[0])) {
-				static::$singletons[0] = new IString\Type('');
-			}
-			return static::$singletons[0];
 		}
 
 		/**

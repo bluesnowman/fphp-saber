@@ -124,8 +124,8 @@ namespace Saber\Throwable\Unknown {
 		 * @final
 		 * @return string                                           the backtrace information
 		 */
-		public final function __getTraceAsIString() {
-			return $this->exception->getTraceAsIString();
+		public final function __getTraceAsString() {
+			return $this->exception->getTraceAsString();
 		}
 
 		/**

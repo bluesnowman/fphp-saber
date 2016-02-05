@@ -540,7 +540,7 @@ namespace Saber\Data\IArrayList {
 		 * @param IArrayList\Type $xs                               the left operand
 		 * @return IOption\Type                                     the option
 		 */
-		public static function lastIOption(IArrayList\Type $xs) : IOption\Type {
+		public static function lastOption(IArrayList\Type $xs) : IOption\Type {
 			return (!$xs->__isEmpty())
 				? IOption\Type::some(IArrayList\Module::last($xs))
 				: IOption\Type::none();

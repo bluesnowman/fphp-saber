@@ -33,11 +33,9 @@ namespace Saber\Data\IString {
 		#region Tests -> Inheritance
 
 		/**
-		 * This method tests the data type.
+		 * This method tests the "instanceOf" property.
 		 */
 		public function test_instanceOf() {
-			//$this->markTestIncomplete();
-
 			$p0 = new IString\Type('test');
 
 			$this->assertInstanceOf('\\Saber\\Data\\IString\\Type', $p0);
@@ -56,93 +54,103 @@ namespace Saber\Data\IString {
 		#region Tests -> Initialization
 
 		/**
-		 * This method provides the data for testing the boxing of a value.
+		 * This method provides the data for testing the "box" method.
 		 *
 		 * @return array
 		 */
 		public function data_box() {
 			$data = array(
+				array(array(''), array('')),
+				array(array('s'), array('s')),
 				array(array('string'), array('string')),
 			);
 			return $data;
 		}
 
 		/**
-		 * This method tests the boxing of a value.
+		 * This method tests the "box" method.
 		 *
 		 * @dataProvider data_box
 		 */
 		public function test_box(array $provided, array $expected) {
-			//$this->markTestIncomplete();
-
 			$p0 = IString\Type::box($provided[0]);
+			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\IString\\Type', $p0);
-
-			$p1 = $p0->unbox();
-			$e1 = $expected[0];
-
-			$this->assertInternalType('string', $p1);
-			$this->assertInternalType('string', $e1);
-			$this->assertTrue(strlen($e1) == strlen($p1));
-			$this->assertSame($e1, $p1);
+			$this->assertSame($e0, $p0->unbox(1));
 		}
 
 		/**
-		 * This method provides the data for testing the making of a value.
+		 * This method provides the data for testing the "covariant" method.
+		 *
+		 * @return array
+		 */
+		public function data_covariant() {
+			$data = array(
+				array(array(''), array('')),
+				array(array('s'), array('s')),
+				array(array('string'), array('string')),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "covariant" method.
+		 *
+		 * @dataProvider data_covariant
+		 */
+		public function test_covariant(array $provided, array $expected) {
+			$p0 = IString\Type::covariant(IString\Type::box($provided[0]));
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\IString\\Type', $p0);
+			$this->assertSame($e0, $p0->unbox(1));
+		}
+
+		/**
+		 * This method tests the "empty" method.
+		 */
+		public function test_empty() {
+			$p0 = IString\Type::empty_();
+
+			$this->assertInstanceOf('\\Saber\\Data\\IString\\Type', $p0);
+			$this->assertTrue(0 == strlen($p0->unbox()));
+		}
+
+		#endregion
+		/**
+		 * This method provides the data for testing the "make" method.
 		 *
 		 * @return array
 		 */
 		public function data_make() {
 			$data = array(
+				array(array(''), array('')),
+				array(array('s'), array('s')),
 				array(array('string'), array('string')),
 			);
 			return $data;
 		}
 
 		/**
-		 * This method tests the making of a value.
+		 * This method tests the "make" method.
 		 *
 		 * @dataProvider data_make
 		 */
 		public function test_make(array $provided, array $expected) {
-			//$this->markTestIncomplete();
-
 			$p0 = IString\Type::make($provided[0]);
+			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\IString\\Type', $p0);
-
-			$p1 = $p0->unbox();
-			$e1 = $expected[0];
-
-			$this->assertInternalType('string', $p1);
-			$this->assertInternalType('string', $e1);
-			$this->assertTrue(strlen($e1) == strlen($p1));
-			$this->assertSame($e1, $p1);
+			$this->assertSame($e0, $p0->unbox(1));
 		}
 
 		/**
-		 * This method tests the creation of an empty list.
-		 */
-		public function testEmpty() {
-			//$this->markTestIncomplete();
-
-			$p0 = IString\Type::empty_();
-
-			$this->assertInstanceOf('\\Saber\\Data\\IString\\Type', $p0);
-
-			$p1 = $p0->unbox();
-
-			$this->assertInternalType('string', $p1);
-			$this->assertTrue(0 == strlen($p1));
-		}
-
-		/**
-		 * This method provides the data for testing that a value is repeated "n" times.
+		 * This method provides the data for testing the "replicate" method.
 		 *
 		 * @return array
 		 */
-		public function dataReplicate() {
+		public function data_replicate() {
 			$data = array(
 				array(array('s', 1), array('s')),
 				array(array('s', 5), array('sssss')),
@@ -151,18 +159,16 @@ namespace Saber\Data\IString {
 		}
 
 		/**
-		 * This method tests that a value is repeated "n" times.
+		 * This method tests the "replicate" method.
 		 *
-		 * @dataProvider dataReplicate
+		 * @dataProvider data_replicate
 		 */
-		public function testReplicate(array $provided, array $expected) {
-			//$this->markTestIncomplete();
-
-			$p0 = IString\Type::replicate(IChar\Type::make($provided[0]), IInt32\Type::make($provided[1]));
+		public function test_replicate(array $provided, array $expected) {
+			$p0 = IString\Type::replicate(IChar\Type::box($provided[0]), IInt32\Type::box($provided[1]));
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\IString\\Type', $p0);
-			$this->assertSame($e0, $p0->unbox());
+			$this->assertSame($e0, $p0->unbox(1));
 		}
 
 		#endregion
@@ -170,11 +176,62 @@ namespace Saber\Data\IString {
 		#region Tests -> Interface
 
 		/**
-		 * This method tests that an item is accessible.
+		 * This method provides the data for testing the "hashCode" method.
+		 *
+		 * @return array
 		 */
-		public function testItems() {
-			//$this->markTestIncomplete();
+		public function data_hashCode() {
+			$data = array(
+				array(array('')),
+				array(array('s')),
+				array(array('string')),
+			);
+			return $data;
+		}
 
+		/**
+		 * This method tests the "hashCode" method.
+		 *
+		 * @dataProvider data_hashCode
+		 */
+		public function test_hashCode(array $provided) {
+			$p0 = IString\Type::box($provided[0])->hashCode();
+
+			$this->assertInstanceOf('\\Saber\\Data\\IString\\Type', $p0);
+			$this->assertRegExp('/^[0-9a-f]{32}$/', $p0->unbox());
+		}
+
+		/**
+		 * This method provides the data for testing the "isEmpty" method.
+		 *
+		 * @return array
+		 */
+		public function data_isEmpty() {
+			$data = array(
+				array(array(''), array(true)),
+				array(array('s'), array(false)),
+				array(array('string'), array(false)),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "isEmpty" method.
+		 *
+		 * @dataProvider data_isEmpty
+		 */
+		public function test_isEmpty(array $provided, array $expected) {
+			$p0 = IString\Type::box($provided[0])->isEmpty();
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p0);
+			$this->assertSame($e0, $p0->unbox());
+		}
+
+		/**
+		 * This method tests the "item" related methods.
+		 */
+		public function test_items() {
 			$p0 = IString\Type::box('012');
 
 			$this->assertSame('0', $p0->item(IInt32\Type::zero())->unbox());
@@ -186,49 +243,15 @@ namespace Saber\Data\IString {
 			$p1 = $p0->tail();
 
 			$this->assertInstanceOf('\\Saber\\Data\\IString\\Type', $p1);
-
-			$p2 = $p1->unbox();
-
-			$this->assertInternalType('string', $p2);
-			$this->assertTrue(2 == strlen($p2));
-			$this->assertSame('12', $p2);
+			$this->assertSame('12', $p1->unbox());
 		}
 
 		/**
-		 * This method provides the data for testing that a value is empty.
+		 * This method provides the data for testing the "length" method.
 		 *
 		 * @return array
 		 */
-		public function dataIsEmpty() {
-			$data = array(
-				array(array(''), array(true)),
-				array(array('s'), array(false)),
-				array(array('string'), array(false)),
-			);
-			return $data;
-		}
-
-		/**
-		 * This method tests that a value is empty.
-		 *
-		 * @dataProvider dataIsEmpty
-		 */
-		public function testIsEmpty(array $provided, array $expected) {
-			//$this->markTestIncomplete();
-
-			$p0 = IString\Type::make($provided[0])->isEmpty();
-			$e0 = $expected[0];
-
-			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p0);
-			$this->assertSame($e0, $p0->unbox());
-		}
-
-		/**
-		 * This method provides the data for testing that a value is of a particular length.
-		 *
-		 * @return array
-		 */
-		public function dataLength() {
+		public function data_length() {
 			$data = array(
 				array(array(''), array(0)),
 				array(array('s'), array(1)),
@@ -238,17 +261,42 @@ namespace Saber\Data\IString {
 		}
 
 		/**
-		 * This method tests that a value is of a particular length.
+		 * This method tests the "length" method.
 		 *
-		 * @dataProvider dataLength
+		 * @dataProvider data_length
 		 */
-		public function testLength(array $provided, array $expected) {
-			//$this->markTestIncomplete();
-
-			$p0 = IString\Type::make($provided[0])->length();
+		public function test_length(array $provided, array $expected) {
+			$p0 = IString\Type::box($provided[0])->length();
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\IInt32\\Type', $p0);
+			$this->assertSame($e0, $p0->unbox());
+		}
+
+		/**
+		 * This method provides the data for testing the "toString" method.
+		 *
+		 * @return array
+		 */
+		public function data_toString() {
+			$data = array(
+				array(array(''), array('')),
+				array(array('s'), array('s')),
+				array(array('string'), array('string')),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "toString" method.
+		 *
+		 * @dataProvider data_toString
+		 */
+		public function test_toString(array $provided, array $expected) {
+			$p0 = IString\Type::make($provided[0])->toString();
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\IString\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 		}
 

@@ -125,9 +125,7 @@ namespace Saber\Data\ILinkedList {
 		 * @dataProvider data_covariant
 		 */
 		public function test_covariant(array $provided, array $expected) {
-			$p0 = ILinkedList\Type::covariant(ILinkedList\Type::box(array_map(function($item) {
-				return IObject\Type::box($item);
-			}, $provided[0])));
+			$p0 = ILinkedList\Type::covariant(ILinkedList\Type::make($provided[0]));
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\ILinkedList\\Type', $p0);
@@ -215,7 +213,7 @@ namespace Saber\Data\ILinkedList {
 		 * @dataProvider data_replicate
 		 */
 		public function test_replicate(array $provided, array $expected) {
-			$p0 = ILinkedList\Type::replicate(IObject\Type::box($provided[0]), IInt32\Type::make($provided[1]));
+			$p0 = ILinkedList\Type::replicate(IObject\Type::box($provided[0]), IInt32\Type::box($provided[1]));
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\ILinkedList\\Type', $p0);

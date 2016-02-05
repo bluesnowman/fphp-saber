@@ -407,7 +407,7 @@ namespace Saber\Data\IArrayList {
 		 * @param IArrayList\Type $xs                               the left operand
 		 * @return IOption\Type                                     the option
 		 */
-		public static function headIOption(IArrayList\Type $xs) : IOption\Type {
+		public static function headOption(IArrayList\Type $xs) : IOption\Type {
 			return (!$xs->__isEmpty())
 				? IOption\Type::some($xs->head())
 				: IOption\Type::none();
@@ -428,7 +428,7 @@ namespace Saber\Data\IArrayList {
 
 			for ($i = IInt32\Type::zero(); IInt32\Module::lt($i, $length)->unbox(); $i = IInt32\Module::increment($i)) {
 				$x = $xs->item($i);
-				if (call_user_func_array(array(get_class($x), 'eq'), array($x, $y))->unbox()) {
+				if ($x->__eq($y)) {
 					return $i;
 				}
 			}

@@ -180,7 +180,7 @@ namespace Saber\Data\IChar {
 		 *                                                          or greater than the right operand
 		 */
 		public static function compare(IChar\Type $x, IChar\Type $y) : ITrit\Type {
-			return ITrit\Type::box($x->unbox() <=> $y->unbox());
+			return ITrit\Type::box(ord($x->unbox()) <=> ord($y->unbox()));
 		}
 
 		/**

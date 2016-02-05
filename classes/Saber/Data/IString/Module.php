@@ -411,7 +411,7 @@ namespace Saber\Data\IString {
 		 * @param IString\Type $xs                                  the left operand
 		 * @return IOption\Type                                     the option
 		 */
-		public static function headIOption(IString\Type $xs) : IOption\Type {
+		public static function headOption(IString\Type $xs) : IOption\Type {
 			return (!$xs->__isEmpty())
 				? IOption\Type::some($xs->head())
 				: IOption\Type::none();

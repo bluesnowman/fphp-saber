@@ -412,7 +412,7 @@ namespace Saber\Data\ILinkedList {
 		 * @param ILinkedList\Type $xs                              the left operand
 		 * @return IOption\Type                                     the option
 		 */
-		public static function headIOption(ILinkedList\Type $xs) : IOption\Type {
+		public static function headOption(ILinkedList\Type $xs) : IOption\Type {
 			return (!$xs->__isEmpty()) ? IOption\Type::some($xs->head()) : IOption\Type::none();
 		}
 
@@ -427,16 +427,12 @@ namespace Saber\Data\ILinkedList {
 		 *                                                          or otherwise -1
 		 */
 		public static function indexOf(ILinkedList\Type $xs, Core\Type $y) : IInt32\Type {
-			$i = IInt32\Type::zero();
-
-			for ($zs = $xs; !$zs->__isEmpty(); $zs = $zs->tail()) {
+			for ($i = 0, $zs = $xs; !$zs->__isEmpty(); $i++, $zs = $zs->tail()) {
 				$z = $zs->head();
-				if (call_user_func_array(array(get_class($z), 'eq'), array($z, $y))->unbox()) {
-					return $i;
+				if ($z->__eq($y)) {
+					return IInt32\Type::box($i);
 				}
-				$i = IInt32\Module::increment($i);
 			}
-
 			return IInt32\Type::negative();
 		}
 

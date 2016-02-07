@@ -93,10 +93,10 @@ namespace Saber\Data\ILinkedList {
 		 *
 		 * @access public
 		 * @final
-		 * @return ILinkedList\Type                                 the current object
+		 * @return mixed                                            the current object
 		 */
-		public final function current() : ILinkedList\Type {
-			$this->ys->head();
+		public final function current() {
+			return $this->ys->head();
 		}
 
 		/**

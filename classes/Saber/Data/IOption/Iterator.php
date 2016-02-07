@@ -86,8 +86,8 @@ namespace Saber\Data\IOption {
 		 * @final
 		 * @return mixed                                            the current object
 		 */
-		public final function current() : Core\Type {
-			$this->xs->item();
+		public final function current() {
+			return $this->xs->item();
 		}
 
 		/**

@@ -86,7 +86,7 @@ namespace Saber\Data\IArrayList {
 		 * @return mixed                                            the current object
 		 */
 		public final function current() {
-			$this->xs->item($this->i);
+			return $this->xs->item($this->i);
 		}
 
 		/**

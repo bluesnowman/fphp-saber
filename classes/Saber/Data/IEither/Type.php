@@ -155,7 +155,7 @@ namespace Saber\Data\IEither {
 		 * @return string                                           the object as a string
 		 */
 		public final function __toString() {
-			return (string) serialize($this->value);
+			return $this->item()->__toString();
 		}
 
 		#endregion

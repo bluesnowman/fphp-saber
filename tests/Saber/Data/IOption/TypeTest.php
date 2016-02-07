@@ -35,7 +35,7 @@ namespace Saber\Data\IOption {
 		 * This method tests the "instanceOf" property.
 		 */
 		public function test_instanceOf() {
-			$p0 = IOption\Type::some(IInt32\Type::zero());
+			$p0 = new IOption\Some\Type(IInt32\Type::zero());
 
 			$this->assertInstanceOf('\\Saber\\Data\\IOption\\Some\\Type', $p0);
 			$this->assertInstanceOf('\\Saber\\Data\\IOption\\Type', $p0);
@@ -126,11 +126,11 @@ namespace Saber\Data\IOption {
 			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p0);
 			$this->assertSame($e0, $p0->unbox());
 
-			$p0 = IOption\Type::none()->isDefined();
-			$e0 = false;
+			$p1 = IOption\Type::none()->isDefined();
+			$e1 = false;
 
-			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p0);
-			$this->assertSame($e0, $p0->unbox());
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p1);
+			$this->assertSame($e1, $p1->unbox());
 		}
 
 		/**

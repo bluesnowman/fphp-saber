@@ -438,6 +438,29 @@ namespace Saber\Data\IArrayList {
 		}
 
 		/**
+		 * This method returns the index of the first occurrence that satisfies the predicate; otherwise,
+		 * it returns -1;
+		 *
+		 * @access public
+		 * @static
+		 * @param IArrayList\Type $xs                               the left operand
+		 * @param callable $predicate                               the predicate function to be used
+		 * @return IInt32\Type                                      the index of the first occurrence
+		 *                                                          or otherwise -1
+		 */
+		public static function indexWhere(IArrayList\Type $xs, callable $predicate) : IInt32\Type {
+			$length = $xs->length();
+
+			for ($i = IInt32\Type::zero(); IInt32\Module::lt($i, $length)->unbox(); $i = IInt32\Module::increment($i)) {
+				if ($predicate($xs->item($i), $i)->unbox()) {
+					return $i;
+				}
+			}
+
+			return IInt32\Type::negative();
+		}
+
+		/**
 		 * This method returns all but the last item of in the list.
 		 *
 		 * @access public

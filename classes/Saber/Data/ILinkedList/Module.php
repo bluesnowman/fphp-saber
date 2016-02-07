@@ -439,6 +439,26 @@ namespace Saber\Data\ILinkedList {
 		}
 
 		/**
+		 * This method returns the index of the first occurrence that satisfies the predicate; otherwise,
+		 * it returns -1;
+		 *
+		 * @access public
+		 * @static
+		 * @param ILinkedList\Type $xs                              the left operand
+		 * @param callable $predicate                               the predicate function to be used
+		 * @return IInt32\Type                                      the index of the first occurrence
+		 *                                                          or otherwise -1
+		 */
+		public static function indexWhere(ILinkedList\Type $xs, callable $predicate) : IInt32\Type {
+			for ($i = IInt32\Type::zero(), $zs = $xs; !$zs->__isEmpty(); $i = IInt32\Module::increment($i), $zs = $zs->tail()) {
+				if ($predicate($zs->head(), $i)->unbox()) {
+					return $i;
+				}
+			}
+			return IInt32\Type::negative();
+		}
+
+		/**
 		 * This method returns all but the last item of in the collection.
 		 *
 		 * @access public

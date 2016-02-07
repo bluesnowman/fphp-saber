@@ -178,7 +178,7 @@ namespace Saber\Data\IEither {
 		 * @abstract
 		 * @return ILinkedList\Type                                 the either as a linked list
 		 */
-		public abstract function toLinkedList() : ILinkedList;
+		public abstract function toLinkedList() : ILinkedList\Type;
 
 		/**
 		 * This method returns the either as an option.

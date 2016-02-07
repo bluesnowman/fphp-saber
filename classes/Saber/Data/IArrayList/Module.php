@@ -51,15 +51,13 @@ namespace Saber\Data\IArrayList {
 		 *                                                          truthy test
 		 */
 		public static function all(IArrayList\Type $xs, callable $predicate) : IBool\Type {
-			$length = $xs->length();
-
-			for ($i = IInt32\Type::zero(); IInt32\Module::lt($i, $length)->unbox(); $i = IInt32\Module::increment($i)) {
-				if (!$predicate($xs->item($i), $i)->unbox()) {
+			$xsi = IArrayList\Module::iterator($xs);
+			foreach ($xsi as $i => $x) {
+				if (!$predicate($x, $i)->unbox()) {
 					return IBool\Type::false();
 				}
 			}
-
-			return IBool\Type::true(); // yes, an empty array returns "true"
+			return IBool\Type::true(); // yes, empty returns "true"
 		}
 
 		/**
@@ -236,12 +234,10 @@ namespace Saber\Data\IArrayList {
 		 * @return IArrayList\Type                                  the list
 		 */
 		public static function each(IArrayList\Type $xs, callable $procedure) : IArrayList\Type {
-			$length = $xs->length();
-
-			for ($i = IInt32\Type::zero(); IInt32\Module::lt($i, $length)->unbox(); $i = IInt32\Module::increment($i)) {
-				IUnit\Type::covariant($procedure($xs->item($i), $i));
+			$xsi = IArrayList\Module::iterator($xs);
+			foreach ($xsi as $i => $x) {
+				IUnit\Type::covariant($procedure($x, $i));
 			}
-
 			return $xs;
 		}
 

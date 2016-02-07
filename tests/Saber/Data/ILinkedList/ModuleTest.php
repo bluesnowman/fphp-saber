@@ -21,6 +21,8 @@ declare(strict_types = 1);
 namespace Saber\Data\ILinkedList {
 
 	use \Saber\Core;
+	use \Saber\Data\IBool;
+	use \Saber\Data\IInt32;
 	use \Saber\Data\ILinkedList;
 
 	/**
@@ -30,6 +32,44 @@ namespace Saber\Data\ILinkedList {
 
 
 		#region Methods -> Basic Operations
+
+		/**
+		 * This method provides the data for testing the "all" method.
+		 *
+		 * @return array
+		 */
+		public function data_all() {
+			$predicate = function(Core\Boxable\Type $x, IInt32\Type $i) : IBool\Type {
+				return IBool\Type::box($x->unbox() < 5);
+			};
+			$data = array(
+				array(array(array(), $predicate), array(true)),
+				array(array(array(1), $predicate), array(true)),
+				array(array(array(1, 2), $predicate), array(true)),
+				array(array(array(1, 2, 3), $predicate), array(true)),
+				array(array(array(1, 5, 3), $predicate), array(false)),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "all" method.
+		 *
+		 * @dataProvider data_all
+		 */
+		public function test_all(array $provided, array $expected) {
+			$p0 = ILinkedList\Type::make($provided[0], '\\Saber\\Data\\IInt32\\Type');
+			$p1 = $provided[1];
+
+			$this->assertInstanceOf('\\Saber\\Data\\ILinkedList\\Type', $p0);
+			$this->assertInternalType('callable', $p1);
+
+			$r0 = ILinkedList\Module::all($p0, $p1);
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $r0);
+			$this->assertSame($e0, $r0->unbox());
+		}
 
 		/**
 		 * This method provides the data for testing the "iterator" method.

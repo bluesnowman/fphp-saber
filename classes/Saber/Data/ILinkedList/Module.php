@@ -52,17 +52,13 @@ namespace Saber\Data\ILinkedList {
 		 *                                                          truthy test
 		 */
 		public static function all(ILinkedList\Type $xs, callable $predicate) : IBool\Type {
-			$i = IInt32\Type::zero();
-
-			for ($zs = $xs; !$zs->__isEmpty(); $zs = $zs->tail()) {
-				$z = ILinkedList\Module::head($zs);
-				if (!$predicate($z, $i)->unbox()) {
+			$xsi = ILinkedList\Module::iterator($xs);
+			foreach ($xsi as $i => $x) {
+				if (!$predicate($x, $i)->unbox()) {
 					return IBool\Type::false();
 				}
-				$i = IInt32\Module::increment($i);
 			}
-
-			return IBool\Type::true(); // yes, an empty list returns "true"
+			return IBool\Type::true(); // yes, empty returns "true"
 		}
 
 		/**
@@ -256,8 +252,9 @@ namespace Saber\Data\ILinkedList {
 		 * @return ILinkedList\Type                                 the collection
 		 */
 		public static function each(ILinkedList\Type $xs, callable $procedure) : ILinkedList\Type {
-			for ($i = IInt32\Type::zero(), $zs = $xs; !$zs->__isEmpty(); $i = IInt32\Module::increment($i), $zs = $zs->tail()) {
-				IUnit\Type::covariant($procedure($zs->head(), $i));
+			$xsi = ILinkedList\Module::iterator($xs);
+			foreach ($xsi as $i => $x) {
+				IUnit\Type::covariant($procedure($x, $i));
 			}
 			return $xs;
 		}

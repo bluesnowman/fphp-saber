@@ -86,7 +86,7 @@ namespace Saber\Data\IString {
 		 * @final
 		 * @return mixed                                            the current object
 		 */
-		public final function current() : IChar\Type {
+		public final function current() {
 			return $this->xs->item($this->i);
 		}
 

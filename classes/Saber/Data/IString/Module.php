@@ -54,16 +54,13 @@ namespace Saber\Data\IString {
 		 *                                                          truthy test
 		 */
 		public static function all(IString\Type $xs, callable $predicate) : IBool\Type {
-			$length = $xs->length();
-
-			for ($i = IInt32\Type::zero(); IInt32\Module::lt($i, $length)->unbox(); $i = IInt32\Module::increment($i)) {
-				$x = IString\Module::item($xs, $i);
+			$xsi = IString\Module::iterator($xs);
+			foreach ($xsi as $i => $x) {
 				if (!$predicate($x, $i)->unbox()) {
 					return IBool\Type::false();
 				}
 			}
-
-			return IBool\Type::true(); // yes, an empty string returns "true"
+			return IBool\Type::true(); // yes, empty returns "true"
 		}
 
 		/**
@@ -236,12 +233,10 @@ namespace Saber\Data\IString {
 		 * @return IString\Type                                     the string
 		 */
 		public static function each(IString\Type $xs, callable $procedure) : IString\Type {
-			$length = $xs->length();
-
-			for ($i = IInt32\Type::zero(); IInt32\Module::lt($i, $length)->unbox(); $i = IInt32\Module::increment($i)) {
-				IUnit\Type::covariant($procedure(IString\Module::item($xs, $i), $i));
+			$xsi = IString\Module::iterator($xs);
+			foreach ($xsi as $i => $x) {
+				IUnit\Type::covariant($procedure($x, $i));
 			}
-
 			return $xs;
 		}
 

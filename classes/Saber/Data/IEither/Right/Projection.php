@@ -83,11 +83,13 @@ namespace Saber\Data\IEither\Right {
 		 * @access public
 		 * @final
 		 * @param callable $procedure                               the procedure function to be used
+		 * @return IEither\Projection                               the projection
 		 */
-		public function each(callable $procedure) {
+		public function each(callable $procedure) : IEither\Projection {
 			if ($this->either->__isRight()) {
 				IUnit\Type::covariant($procedure($this->either->item(), IInt32\Type::zero()));
 			}
+			return $this;
 		}
 
 		/**

@@ -90,11 +90,13 @@ namespace Saber\Data\IOption {
 		 * @static
 		 * @param IOption\Type $xs                                  the left operand
 		 * @param callable $procedure                               the procedure function to be used
+		 * @return IOption\Type                                     the option
 		 */
-		public static function each(IOption\Type $xs, callable $procedure) {
+		public static function each(IOption\Type $xs, callable $procedure) : IOption\Type {
 			if ($xs->__isDefined()) {
 				IUnit\Type::covariant($procedure($xs->item(), IInt32\Type::zero()));
 			}
+			return $xs;
 		}
 
 		/**

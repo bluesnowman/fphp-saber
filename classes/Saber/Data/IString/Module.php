@@ -233,13 +233,16 @@ namespace Saber\Data\IString {
 		 * @static
 		 * @param IString\Type $xs                                  the left operand
 		 * @param callable $procedure                               the procedure function to be used
+		 * @return IString\Type                                     the string
 		 */
-		public static function each(IString\Type $xs, callable $procedure) {
+		public static function each(IString\Type $xs, callable $procedure) : IString\Type {
 			$length = $xs->length();
 
 			for ($i = IInt32\Type::zero(); IInt32\Module::lt($i, $length)->unbox(); $i = IInt32\Module::increment($i)) {
 				IUnit\Type::covariant($procedure(IString\Module::item($xs, $i), $i));
 			}
+
+			return $xs;
 		}
 
 		/**
@@ -412,9 +415,7 @@ namespace Saber\Data\IString {
 		 * @return IOption\Type                                     the option
 		 */
 		public static function headOption(IString\Type $xs) : IOption\Type {
-			return (!$xs->__isEmpty())
-				? IOption\Type::some($xs->head())
-				: IOption\Type::none();
+			return ($xs->__isEmpty()) ? IOption\Type::none() : IOption\Type::some($xs->head());
 		}
 
 		/**
@@ -546,9 +547,7 @@ namespace Saber\Data\IString {
 		 * @return IOption\Type                                     the option
 		 */
 		public static function lastOption(IString\Type $xs) : IOption\Type {
-			return (!$xs->__isEmpty())
-				? IOption\Type::some(IString\Module::last($xs))
-				: IOption\Type::none();
+			return ($xs->__isEmpty()) ? IOption\Type::none() : IOption\Type::some(IString\Module::last($xs));
 		}
 
 		/**
@@ -750,6 +749,18 @@ namespace Saber\Data\IString {
 		 */
 		public static function tail(IString\Type $xs) : IString\Type {
 			return $xs->tail();
+		}
+
+		/**
+		 * This method returns an option using the tail for the boxed object.
+		 *
+		 * @access public
+		 * @static
+		 * @param IString\Type $xs                                  the left operand
+		 * @return IOption\Type                                     the option
+		 */
+		public static function tailOption(IString\Type $xs) : IOption\Type {
+			return ($xs->__isEmpty()) ? IOption\Type::none() : IOption\Type::some($xs->tail());
 		}
 
 		/**

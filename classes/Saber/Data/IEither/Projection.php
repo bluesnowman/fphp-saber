@@ -92,8 +92,9 @@ namespace Saber\Data\IEither {
 		 * @access public
 		 * @abstract
 		 * @param callable $procedure                               the procedure function to be used
+		 * @return IEither\Projection                               the projection
 		 */
-		public abstract function each(callable $procedure);
+		public abstract function each(callable $procedure) : IEither\Projection;
 
 		/**
 		 * This method returns the either that the projection was created.
@@ -103,7 +104,7 @@ namespace Saber\Data\IEither {
 		 * @return IEither\Type                                     the either
 		 */
 		public final function either() : IEither\Type {
-			$this->either;
+			return $this->either;
 		}
 
 		/**

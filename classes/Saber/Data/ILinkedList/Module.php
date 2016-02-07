@@ -55,7 +55,7 @@ namespace Saber\Data\ILinkedList {
 			$i = IInt32\Type::zero();
 
 			for ($zs = $xs; !$zs->__isEmpty(); $zs = $zs->tail()) {
-				$z = ILinkedList\Module::head($zs, $i);
+				$z = ILinkedList\Module::head($zs);
 				if (!$predicate($z, $i)->unbox()) {
 					return IBool\Type::false();
 				}
@@ -253,11 +253,13 @@ namespace Saber\Data\ILinkedList {
 		 * @static
 		 * @param ILinkedList\Type $xs                              the left operand
 		 * @param callable $procedure                               the procedure function to be used
+		 * @return ILinkedList\Type                                 the collection
 		 */
-		public static function each(ILinkedList\Type $xs, callable $procedure) {
+		public static function each(ILinkedList\Type $xs, callable $procedure) : ILinkedList\Type {
 			for ($i = IInt32\Type::zero(), $zs = $xs; !$zs->__isEmpty(); $i = IInt32\Module::increment($i), $zs = $zs->tail()) {
 				IUnit\Type::covariant($procedure($zs->head(), $i));
 			}
+			return $xs;
 		}
 
 		/**
@@ -413,7 +415,7 @@ namespace Saber\Data\ILinkedList {
 		 * @return IOption\Type                                     the option
 		 */
 		public static function headOption(ILinkedList\Type $xs) : IOption\Type {
-			return (!$xs->__isEmpty()) ? IOption\Type::some($xs->head()) : IOption\Type::none();
+			return ($xs->__isEmpty()) ? IOption\Type::none() : IOption\Type::some($xs->head());
 		}
 
 		/**
@@ -544,7 +546,7 @@ namespace Saber\Data\ILinkedList {
 		 * @return IOption\Type                                     the option
 		 */
 		public static function lastOption(ILinkedList\Type $xs) : IOption\Type {
-			return (!$xs->__isEmpty()) ? IOption\Type::some(ILinkedList\Module::last($xs)) : IOption\Type::none();
+			return ($xs->__isEmpty()) ? IOption\Type::none() : IOption\Type::some(ILinkedList\Module::last($xs));
 		}
 
 		/**
@@ -833,6 +835,18 @@ namespace Saber\Data\ILinkedList {
 		 */
 		public static function tail(ILinkedList\Type $xs) : ILinkedList\Type {
 			return $xs->tail();
+		}
+
+		/**
+		 * This method returns an option using the tail for the boxed object.
+		 *
+		 * @access public
+		 * @static
+		 * @param ILinkedList\Type $xs                              the left operand
+		 * @return IOption\Type                                     the option
+		 */
+		public static function tailOption(ILinkedList\Type $xs) : IOption\Type {
+			return ($xs->__isEmpty()) ? IOption\Type::none() : IOption\Type::some($xs->tail());
 		}
 
 		/**

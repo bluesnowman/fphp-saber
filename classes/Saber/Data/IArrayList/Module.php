@@ -233,13 +233,16 @@ namespace Saber\Data\IArrayList {
 		 * @static
 		 * @param IArrayList\Type $xs                               the left operand
 		 * @param callable $procedure                               the procedure function to be used
+		 * @return IArrayList\Type                                  the list
 		 */
-		public static function each(IArrayList\Type $xs, callable $procedure) {
+		public static function each(IArrayList\Type $xs, callable $procedure) : IArrayList\Type {
 			$length = $xs->length();
 
 			for ($i = IInt32\Type::zero(); IInt32\Module::lt($i, $length)->unbox(); $i = IInt32\Module::increment($i)) {
 				IUnit\Type::covariant($procedure($xs->item($i), $i));
 			}
+
+			return $xs;
 		}
 
 		/**
@@ -408,9 +411,7 @@ namespace Saber\Data\IArrayList {
 		 * @return IOption\Type                                     the option
 		 */
 		public static function headOption(IArrayList\Type $xs) : IOption\Type {
-			return (!$xs->__isEmpty())
-				? IOption\Type::some($xs->head())
-				: IOption\Type::none();
+			return ($xs->__isEmpty()) ? IOption\Type::none() : IOption\Type::some($xs->tail());
 		}
 
 		/**
@@ -541,9 +542,7 @@ namespace Saber\Data\IArrayList {
 		 * @return IOption\Type                                     the option
 		 */
 		public static function lastOption(IArrayList\Type $xs) : IOption\Type {
-			return (!$xs->__isEmpty())
-				? IOption\Type::some(IArrayList\Module::last($xs))
-				: IOption\Type::none();
+			return ($xs->__isEmpty()) ? IOption\Type::none() : IOption\Type::some(IArrayList\Module::last($xs));
 		}
 
 		/**
@@ -833,6 +832,18 @@ namespace Saber\Data\IArrayList {
 		 */
 		public static function tail(IArrayList\Type $xs) : IArrayList\Type {
 			return $xs->tail();
+		}
+
+		/**
+		 * This method returns an option using the tail for the boxed object.
+		 *
+		 * @access public
+		 * @static
+		 * @param IArrayList\Type $xs                               the left operand
+		 * @return IOption\Type                                     the option
+		 */
+		public static function tailOption(IArrayList\Type $xs) : IOption\Type {
+			return ($xs->__isEmpty()) ? IOption\Type::none() : IOption\Type::some($xs->tail());
 		}
 
 		/**

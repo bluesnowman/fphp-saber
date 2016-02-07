@@ -18,10 +18,10 @@
 
 declare(strict_types = 1);
 
-namespace Saber\Data\IFunct {
+namespace Saber\Data\IFunction {
 
 	use \Saber\Core;
-	use \Saber\Data\IFunct;
+	use \Saber\Data\IFunction;
 	use \Saber\Data\IInt32;
 
 	/**
@@ -33,7 +33,7 @@ namespace Saber\Data\IFunct {
 		 * This method tests the creation of a constant function that wraps an object.
 		 */
 		public function testConstant() {
-			$constant = IFunct\Utilities::constant(IInt32\Type::zero());
+			$constant = IFunction\Utilities::constant(IInt32\Type::zero());
 			$this->assertInternalType('callable', $constant);
 			$this->assertSame(IInt32\Type::zero(), $constant());
 		}

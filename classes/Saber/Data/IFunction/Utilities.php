@@ -18,7 +18,7 @@
 
 declare(strict_types = 1);
 
-namespace Saber\Data\IFunct {
+namespace Saber\Data\IFunction {
 
 	use \Saber\Core;
 	use \Saber\Data;

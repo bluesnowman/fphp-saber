@@ -116,7 +116,7 @@ namespace Saber\Data\IOption {
 		 * @return string                                           the object's hash code
 		 */
 		public final function __hashCode() : string {
-			return spl_object_hash($this->item());
+			return spl_object_hash($this);
 		}
 
 		/**
@@ -161,7 +161,7 @@ namespace Saber\Data\IOption {
 		 * @return string                                           the object as a string
 		 */
 		public final function __toString() {
-			return (string) serialize($this->item());
+			return $this->item()->__toString();
 		}
 
 		#endregion

@@ -40,8 +40,8 @@ namespace Saber\Data\IArrayList {
 		#region Methods -> Basic Operations
 
 		/**
-		 * This method (aka "every" or "forall") iterates over the items in the list, yielding each
-		 * item to the predicate function, or fails the truthy test.  Opposite of "none".
+		 * This method (aka "every", "forall", "true', and "and") iterates over the items in the list,
+		 * yielding each item to the predicate function, or fails the truthy test.  Opposite of "none".
 		 *
 		 * @access public
 		 * @static
@@ -61,8 +61,8 @@ namespace Saber\Data\IArrayList {
 		}
 
 		/**
-		 * This method (aka "exists" or "some") returns whether some of the items in the list passed the truthy
-		 * test.
+		 * This method (aka "exists", "some", or "or") returns whether some of the items in the list
+		 * passed the truthy test.
 		 *
 		 * @access public
 		 * @static
@@ -194,11 +194,10 @@ namespace Saber\Data\IArrayList {
 		 */
 		public static function dropWhile(IArrayList\Type $xs, callable $predicate) : IArrayList\Type {
 			$buffer = array();
-			$length = $xs->length();
-
 			$failed = false;
-			for ($i = IInt32\Type::zero(); IInt32\Module::lt($i, $length)->unbox(); $i = IInt32\Module::increment($i)) {
-				$x = $xs->item($i);
+
+			$xsi = IArrayList\Module::iterator($xs);
+			foreach ($xsi as $i => $x) {
 				if (!$predicate($x, $i)->unbox() || $failed) {
 					$buffer[] = $x;
 					$failed = true;
@@ -251,17 +250,16 @@ namespace Saber\Data\IArrayList {
 		 * @return IArrayList\Type                                  the list
 		 */
 		public static function filter(IArrayList\Type $xs, callable $predicate) : IArrayList\Type {
-			$buffer = array();
-			$length = $xs->length();
+			$zs = array();
 
-			for ($i = IInt32\Type::zero(); IInt32\Module::lt($i, $length)->unbox(); $i = IInt32\Module::increment($i)) {
-				$x = $xs->item($i);
+			$xsi = IArrayList\Module::iterator($xs);
+			foreach ($xsi as $i => $x) {
 				if ($predicate($x, $i)->unbox()) {
-					$buffer[] = $x;
+					$zs[] = $x;
 				}
 			}
 
-			return IArrayList\Type::box($buffer);
+			return IArrayList\Type::box($zs);
 		}
 
 		/**
@@ -275,15 +273,12 @@ namespace Saber\Data\IArrayList {
 		 *                                                          satisfying the predicate, if any
 		 */
 		public static function find(IArrayList\Type $xs, callable $predicate) : IOption\Type {
-			$length = $xs->length();
-
-			for ($i = IInt32\Type::zero(); IInt32\Module::lt($i, $length)->unbox(); $i = IInt32\Module::increment($i)) {
-				$x = $xs->item($i);
+			$xsi = IArrayList\Module::iterator($xs);
+			foreach ($xsi as $i => $x) {
 				if ($predicate($x, $i)->unbox()) {
 					return IOption\Type::some($x);
 				}
 			}
-
 			return IOption\Type::none();
 		}
 
@@ -297,15 +292,13 @@ namespace Saber\Data\IArrayList {
 		 */
 		public static function flatten(IArrayList\Type $xs) : IArrayList\Type {
 			$buffer = array();
-			$x_length = $xs->length();
 
-			for ($i = IInt32\Type::zero(); IInt32\Module::lt($i, $x_length)->unbox(); $i = IInt32\Module::increment($i)) {
-				$x = $xs->item($i);
+			$xsi = IArrayList\Module::iterator($xs);
+			foreach ($xsi as $i => $x) {
 				if ($x instanceof IArrayList\Type) {
-					$ys = IArrayList\Module::flatten($x);
-					$y_length = $ys->length();
-					for ($j = IInt32\Type::zero(); IInt32\Module::lt($j, $y_length)->unbox(); $j = IInt32\Module::increment($j)) {
-						$buffer[] = $ys->item($j);
+					$ysi = IArrayList\Module::iterator(IArrayList\Module::flatten($x));
+					foreach ($ysi as $j => $y) {
+						$buffer[] = $y;
 					}
 				}
 				else {
@@ -328,10 +321,10 @@ namespace Saber\Data\IArrayList {
 		 */
 		public static function foldLeft(IArrayList\Type $xs, callable $operator, Core\Type $initial) : Core\Type {
 			$z = $initial;
-			$length = $xs->length();
 
-			for ($i = IInt32\Type::zero(); IInt32\Module::lt($i, $length)->unbox(); $i = IInt32\Module::increment($i)) {
-				$z = $operator($z, $xs->item($i));
+			$xsi = IArrayList\Module::iterator($xs);
+			foreach ($xsi as $i => $x) {
+				$z = $operator($z, $x);
 			}
 
 			return $z;
@@ -421,15 +414,12 @@ namespace Saber\Data\IArrayList {
 		 *                                                          or otherwise -1
 		 */
 		public static function indexOf(IArrayList\Type $xs, Core\Type $y) : IInt32\Type {
-			$length = $xs->length();
-
-			for ($i = IInt32\Type::zero(); IInt32\Module::lt($i, $length)->unbox(); $i = IInt32\Module::increment($i)) {
-				$x = $xs->item($i);
+			$xsi = IArrayList\Module::iterator($xs);
+			foreach ($xsi as $i => $x) {
 				if ($x->__eq($y)) {
 					return $i;
 				}
 			}
-
 			return IInt32\Type::negative();
 		}
 
@@ -445,14 +435,12 @@ namespace Saber\Data\IArrayList {
 		 *                                                          or otherwise -1
 		 */
 		public static function indexWhere(IArrayList\Type $xs, callable $predicate) : IInt32\Type {
-			$length = $xs->length();
-
-			for ($i = IInt32\Type::zero(); IInt32\Module::lt($i, $length)->unbox(); $i = IInt32\Module::increment($i)) {
-				if ($predicate($xs->item($i), $i)->unbox()) {
+			$xsi = IArrayList\Module::iterator($xs);
+			foreach ($xsi as $i => $x) {
+				if ($predicate($x, $i)->unbox()) {
 					return $i;
 				}
 			}
-
 			return IInt32\Type::negative();
 		}
 
@@ -589,20 +577,15 @@ namespace Saber\Data\IArrayList {
 		 *                                                          associative
 		 */
 		public static function lookup(IArrayList\Type $xss, Core\Equality\Type $x) : IOption\Type {
-			$length = $xss->length();
-
-			for ($i = IInt32\Type::zero(); IInt32\Module::lt($i, $length)->unbox(); $i = IInt32\Module::increment($i)) {
-				$zs = $xss->item($i);
-
-				if (!ITuple\Module::isPair($zs)->unbox()) {
-					throw new Throwable\UnexpectedValue\Exception('Unable to process tuple. Expected a length of "2", but got a length of ":length".', array(':length' => $zs->__length()));
+			$xssi = IArrayList\Module::iterator($xss);
+			foreach ($xssi as $i => $xs) {
+				if (!ITuple\Module::isPair($xs)->unbox()) {
+					throw new Throwable\UnexpectedValue\Exception('Unable to process tuple. Expected a length of "2", but got a length of ":length".', array(':length' => $xs->__length()));
 				}
-
-				if ($x->__eq(ITuple\Module::first($zs))) {
-					return IOption\Type::some(ITuple\Module::second($zs));
+				if ($x->__eq(ITuple\Module::first($xs))) {
+					return IOption\Type::some(ITuple\Module::second($xs));
 				}
 			}
-
 			return IOption\Type::none();
 		}
 
@@ -617,10 +600,10 @@ namespace Saber\Data\IArrayList {
 		 */
 		public static function map(IArrayList\Type $xs, callable $subroutine) : IArrayList\Type {
 			$buffer = array();
-			$length = $xs->length();
 
-			for ($i = IInt32\Type::zero(); IInt32\Module::lt($i, $length)->unbox(); $i = IInt32\Module::increment($i)) {
-				$buffer[] = $subroutine($xs->item($i), $i);
+			$xsi = IArrayList\Module::iterator($xs);
+			foreach ($xsi as $i => $x) {
+				$buffer[] = $subroutine($x, $i);
 			}
 
 			return IArrayList\Type::box($buffer);
@@ -1231,8 +1214,8 @@ namespace Saber\Data\IArrayList {
 		#region Methods -> Logical Operations
 
 		/**
-		 * This method (aka "true") returns whether all of the items of the list evaluate
-		 * to true.
+		 * This method (aka "every", "forall", "true', and "all") returns whether all of the items
+		 * of the list evaluate to true.
 		 *
 		 * @access public
 		 * @static
@@ -1247,7 +1230,8 @@ namespace Saber\Data\IArrayList {
 		}
 
 		/**
-		 * This method returns whether any of the items of the list evaluate to true.
+		 * This method (aka "exists", "some", or "any") returns whether any of the items of the list
+		 * evaluate to true.
 		 *
 		 * @access public
 		 * @static

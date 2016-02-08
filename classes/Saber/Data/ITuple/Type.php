@@ -129,7 +129,7 @@ namespace Saber\Data\ITuple {
 				if (is_object($x) && ($x instanceof Core\Type)) {
 					return $x;
 				}
-				return $type::make($x, $type);
+				return $type::make($x);
 			}, $xs));
 		}
 

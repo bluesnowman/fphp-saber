@@ -124,7 +124,7 @@ namespace Saber\Data\ILinkedList {
 			for ($i = count($xs) - 1; $i >= 0; $i--) {
 				$z = $xs[$i];
 				if (!(is_object($z) && ($z instanceof Core\Type))) {
-					$z = $type::make($z, $type);
+					$z = $type::make($z);
 				}
 				$zs = ILinkedList\Type::cons($z, $zs);
 			}

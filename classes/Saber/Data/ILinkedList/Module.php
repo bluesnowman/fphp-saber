@@ -41,8 +41,8 @@ namespace Saber\Data\ILinkedList {
 		#region Methods -> Basic Operations
 
 		/**
-		 * This method (aka "every" or "forall") iterates over the items in the collection, yielding each
-		 * item to the predicate function, or fails the truthy test.  Opposite of "none".
+		 * This method (aka "every", "forall", "true', and "and") iterates over the items in the list,
+		 * yielding each item to the predicate function, or fails the truthy test.  Opposite of "none".
 		 *
 		 * @access public
 		 * @static
@@ -62,7 +62,7 @@ namespace Saber\Data\ILinkedList {
 		}
 
 		/**
-		 * This method (aka "exists" or "some") returns whether some of the items in the collection
+		 * This method (aka "exists", "some", or "or") returns whether some of the items in the list
 		 * passed the truthy test.
 		 *
 		 * @access public
@@ -304,16 +304,12 @@ namespace Saber\Data\ILinkedList {
 		 *                                                          satisfying the predicate, if any
 		 */
 		public static function find(ILinkedList\Type $xs, callable $predicate) : IOption\Type {
-			$i = IInt32\Type::zero();
-
-			for ($zs = $xs; !$zs->__isEmpty(); $zs = $zs->tail()) {
-				$z = $zs->head();
-				if ($predicate($z, $i)->unbox()) {
-					return IOption\Type::some($z);
+			$xsi = ILinkedList\Module::iterator($xs);
+			foreach ($xsi as $i => $x) {
+				if ($predicate($x, $i)->unbox()) {
+					return IOption\Type::some($x);
 				}
-				$i = IInt32\Module::increment($i);
 			}
-
 			return IOption\Type::none();
 		}
 
@@ -362,9 +358,9 @@ namespace Saber\Data\ILinkedList {
 		public static function foldLeft(ILinkedList\Type $xs, callable $operator, Core\Type $initial) : Core\Type {
 			$c = $initial;
 
-			for ($zs = $xs; !$zs->__isEmpty(); $zs = $zs->tail()) {
-				$z = $zs->head();
-				$c = $operator($c, $z);
+			$xsi = ILinkedList\Module::iterator($xs);
+			foreach ($xsi as $i => $x) {
+				$c = $operator($c, $x);
 			}
 
 			return $c;
@@ -1250,8 +1246,8 @@ namespace Saber\Data\ILinkedList {
 		#region Methods -> Logical Operations
 
 		/**
-		 * This method (aka "true") returns whether all of the items of the collection evaluate
-		 * to true.
+		 * This method (aka "every", "forall", "true', and "all") returns whether all of the items
+		 * of the list evaluate to true.
 		 *
 		 * @access public
 		 * @static
@@ -1266,7 +1262,8 @@ namespace Saber\Data\ILinkedList {
 		}
 
 		/**
-		 * This method returns whether any of the items of the collection evaluate to true.
+		 * This method (aka "exists", "some", or "any") returns whether any of the items of the list
+		 * evaluate to true.
 		 *
 		 * @access public
 		 * @static

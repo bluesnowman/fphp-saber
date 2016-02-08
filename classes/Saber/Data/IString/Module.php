@@ -43,8 +43,8 @@ namespace Saber\Data\IString {
 		#region Methods -> Basic Operations
 
 		/**
-		 * This method (aka "every" or "forall") iterates over the items in the string, yielding each
-		 * item to the predicate function, or fails the truthy test.  Opposite of "none".
+		 * This method (aka "every", "forall", "true', and "and") iterates over the items in the string,
+		 * yielding each item to the predicate function, or fails the truthy test.  Opposite of "none".
 		 *
 		 * @access public
 		 * @static
@@ -64,7 +64,7 @@ namespace Saber\Data\IString {
 		}
 
 		/**
-		 * This method (aka "exists" or "some") returns whether some of the items in the string
+		 * This method (aka "exists", "some", or "or") returns whether some of the items in the string
 		 * passed the truthy test.
 		 *
 		 * @access public

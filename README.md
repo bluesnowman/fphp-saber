@@ -126,41 +126,41 @@ This library has adopted the following naming conventions for certain variables:
 A `$closure` function does not have a predefined signature or return type; but, as a general rule, it should utilize Core\Type objects for parameter and return types.
 
 ````
-function(?Core\Type... $m): ?Core\Type
+function(?Core\Type... $m) : ?Core\Type
 ````
 
 An `$operator` function is used to find the result of applying an operator to one or more operands.
 
 ````
-function(Core\Type $c): Core\Type
-function(Core\Type $c, Core\Type $x): Core\Type
+function(Core\Type $c) : Core\Type
+function(Core\Type $c, Core\Type $x) : Core\Type
 ````
 
 A `$predicate` function is used to find the result of performing a Boolean evaluation.
 
 ````
-function(Core\Type $x): IBool\Type
-function(Core\Type $x, IInt32\Type $i): IBool\Type
+function(Core\Type $x) : IBool\Type
+function(Core\Type $x, IInt32\Type $i) : IBool\Type
 ````
 
 A `$procedure` function is used to perform an operation that does NOT return a value (even though, technically, PHP does return a `null` value by default).  In cases where logic benefits to use a return statement to terminate a procedure prematurely, the return value must be either a `null` value or an `IUnit\Type` object.
 
 ````
-function(Core\Type $x): ?IUnit\Type
-function(Core\Type $x, IInt32\Type $i): ?IUnit\Type
+function(Core\Type $x) : ?IUnit\Type
+function(Core\Type $x, IInt32\Type $i) : ?IUnit\Type
 ````
 
 A `$subroutine` function is used to perform an operation that does return a value.
 
 ````
-function(Core\Type $x): Core\Type
-function(Core\Type $x, IInt32\Type $i): Core\Type
+function(Core\Type $x) : Core\Type
+function(Core\Type $x, IInt32\Type $i) : Core\Type
 ````
 
 A `$tryblock` function is used to process a block of code that may throw a runtime exception.
 
 ````
-function(): Core\Type
+function() : Core\Type
 ````
 
 ### Choices

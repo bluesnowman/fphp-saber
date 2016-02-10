@@ -30,7 +30,6 @@ namespace Saber\Data\ILinkedList {
 	 */
 	final class ModuleTest extends Core\ModuleTest {
 
-
 		#region Methods -> Basic Operations
 
 		/**
@@ -60,9 +59,6 @@ namespace Saber\Data\ILinkedList {
 		public function test_all(array $provided, array $expected) {
 			$p0 = ILinkedList\Type::make($provided[0], '\\Saber\\Data\\IInt32\\Type');
 			$p1 = $provided[1];
-
-			$this->assertInstanceOf('\\Saber\\Data\\ILinkedList\\Type', $p0);
-			$this->assertInternalType('callable', $p1);
 
 			$r0 = ILinkedList\Module::all($p0, $p1);
 			$e0 = $expected[0];
@@ -99,9 +95,6 @@ namespace Saber\Data\ILinkedList {
 			$p0 = ILinkedList\Type::make($provided[0], '\\Saber\\Data\\IInt32\\Type');
 			$p1 = $provided[1];
 
-			$this->assertInstanceOf('\\Saber\\Data\\ILinkedList\\Type', $p0);
-			$this->assertInternalType('callable', $p1);
-
 			$r0 = ILinkedList\Module::any($p0, $p1);
 			$e0 = $expected[0];
 
@@ -132,9 +125,6 @@ namespace Saber\Data\ILinkedList {
 			$p0 = ILinkedList\Type::make($provided[0], '\\Saber\\Data\\IInt32\\Type');
 			$p1 = IInt32\Type::box($provided[1]);
 
-			$this->assertInstanceOf('\\Saber\\Data\\ILinkedList\\Type', $p0);
-			$this->assertInstanceOf('\\Saber\\Data\\IInt32\\Type', $p1);
-
 			$r0 = ILinkedList\Module::append($p0, $p1);
 			$e0 = $expected[0];
 
@@ -164,9 +154,6 @@ namespace Saber\Data\ILinkedList {
 		public function test_concat(array $provided, array $expected) {
 			$p0 = ILinkedList\Type::make($provided[0], '\\Saber\\Data\\IInt32\\Type');
 			$p1 = ILinkedList\Type::make($provided[1], '\\Saber\\Data\\IInt32\\Type');
-
-			$this->assertInstanceOf('\\Saber\\Data\\ILinkedList\\Type', $p0);
-			$this->assertInstanceOf('\\Saber\\Data\\ILinkedList\\Type', $p1);
 
 			$r0 = ILinkedList\Module::concat($p0, $p1);
 			$e0 = $expected[0];
@@ -199,9 +186,6 @@ namespace Saber\Data\ILinkedList {
 		public function test_contains(array $provided, array $expected) {
 			$p0 = ILinkedList\Type::make($provided[0], '\\Saber\\Data\\IInt32\\Type');
 			$p1 = IInt32\Type::box($provided[1]);
-
-			$this->assertInstanceOf('\\Saber\\Data\\ILinkedList\\Type', $p0);
-			$this->assertInstanceOf('\\Saber\\Data\\IInt32\\Type', $p1);
 
 			$r0 = ILinkedList\Module::contains($p0, $p1);
 			$e0 = $expected[0];
@@ -236,9 +220,6 @@ namespace Saber\Data\ILinkedList {
 		public function test_delete(array $provided, array $expected) {
 			$p0 = ILinkedList\Type::make($provided[0], '\\Saber\\Data\\IInt32\\Type');
 			$p1 = IInt32\Type::box($provided[1]);
-
-			$this->assertInstanceOf('\\Saber\\Data\\ILinkedList\\Type', $p0);
-			$this->assertInstanceOf('\\Saber\\Data\\IInt32\\Type', $p1);
 
 			$r0 = ILinkedList\Module::delete($p0, $p1);
 			$e0 = $expected[0];
@@ -292,6 +273,82 @@ namespace Saber\Data\ILinkedList {
 
 		#region Methods -> Conversion Operations
 
+		/**
+		 * This method tests the "nvl" method.
+		 */
+		public function test_nvl() {
+			$x = ILinkedList\Type::make(array(1, 2, 3), '\\Saber\\Data\\IInt32\\Type');
+			$y = ILinkedList\Type::empty_();
+
+			$z = ILinkedList\Module::nvl($x, $y);
+			$this->assertInstanceOf('\\Saber\\Data\\ILinkedList\\Type', $z);
+			$this->assertSame(array(1, 2, 3), $z->unbox(1));
+
+			$z = ILinkedList\Module::nvl(null, $x);
+			$this->assertInstanceOf('\\Saber\\Data\\ILinkedList\\Type', $z);
+			$this->assertSame(array(1, 2, 3), $z->unbox(1));
+
+			$z = ILinkedList\Module::nvl(null, null);
+			$this->assertInstanceOf('\\Saber\\Data\\ILinkedList\\Type', $z);
+			$this->assertSame(array(), $z->unbox(1));
+		}
+
+		/**
+		 * This method provides the data for testing the "toArrayList" method.
+		 *
+		 * @return array
+		 */
+		public function data_toArrayList() {
+			$data = array(
+				array(array(array()), array(array())),
+				array(array(array(1)), array(array(1))),
+				array(array(array(1, 2)), array(array(1, 2))),
+				array(array(array(1, 2, 3)), array(array(1, 2, 3))),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "toArrayList" method.
+		 *
+		 * @dataProvider data_toArrayList
+		 */
+		public function test_toArrayList(array $provided, array $expected) {
+			$p0 = ILinkedList\Module::toArrayList(ILinkedList\Type::make($provided[0], '\\Saber\\Data\\IInt32\\Type'));
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\IArrayList\\Type', $p0);
+			$this->assertSame($e0, $p0->unbox(1));
+		}
+
+		/**
+		 * This method provides the data for testing the "toLinkedList" method.
+		 *
+		 * @return array
+		 */
+		public function data_toLinkedList() {
+			$data = array(
+				array(array(array()), array(array())),
+				array(array(array(1)), array(array(1))),
+				array(array(array(1, 2)), array(array(1, 2))),
+				array(array(array(1, 2, 3)), array(array(1, 2, 3))),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "toLinkedList" method.
+		 *
+		 * @dataProvider data_toLinkedList
+		 */
+		public function test_toLinkedList(array $provided, array $expected) {
+			$p0 = ILinkedList\Module::toLinkedList(ILinkedList\Type::make($provided[0], '\\Saber\\Data\\IInt32\\Type'));
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\ILinkedList\\Type', $p0);
+			$this->assertSame($e0, $p0->unbox(1));
+		}
+
 		#endregion
 
 		#region Methods -> Equality Operations
@@ -300,9 +357,300 @@ namespace Saber\Data\ILinkedList {
 
 		#region Methods -> Ordering Operations
 
+		/**
+		 * This method provides the data for testing the "compare" method.
+		 *
+		 * @return array
+		 */
+		public function data_compare() {
+			$data = array(
+				array(array(array(), array()), array(0)),
+				array(array(array(1, 2), array(1, 2)), array(0)),
+				array(array(array(1, 2), array(3, 4)), array(-1)),
+				array(array(array(1, 2), array(2, 1)), array(-1)),
+				array(array(array(2, 1), array(1, 2)), array(1)),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "compare" method.
+		 *
+		 * @dataProvider data_compare
+		 */
+		public function test_compare(array $provided, array $expected) {
+			$p0 = ILinkedList\Module::compare(
+				ILinkedList\Type::make($provided[0], '\\Saber\\Data\\IInt32\\Type'),
+				ILinkedList\Type::make($provided[1], '\\Saber\\Data\\IInt32\\Type')
+			);
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\ITrit\\Type', $p0);
+			$this->assertSame($e0, $p0->unbox());
+		}
+
+		/**
+		 * This method provides the data for testing the "ge" method.
+		 *
+		 * @return array
+		 */
+		public function data_ge() {
+			$data = array(
+				array(array(array(), array()), array(true)),
+				array(array(array(1, 2), array(1, 2)), array(true)),
+				array(array(array(1, 2), array(3, 4)), array(false)),
+				array(array(array(1, 2), array(2, 1)), array(false)),
+				array(array(array(2, 1), array(1, 2)), array(true)),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "ge" method.
+		 *
+		 * @dataProvider data_ge
+		 */
+		public function test_ge(array $provided, array $expected) {
+			$p0 = ILinkedList\Module::ge(
+				ILinkedList\Type::make($provided[0], '\\Saber\\Data\\IInt32\\Type'),
+				ILinkedList\Type::make($provided[1], '\\Saber\\Data\\IInt32\\Type')
+			);
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p0);
+			$this->assertSame($e0, $p0->unbox());
+		}
+
+		/**
+		 * This method provides the data for testing the "gt" method.
+		 *
+		 * @return array
+		 */
+		public function data_gt() {
+			$data = array(
+				array(array(array(), array()), array(false)),
+				array(array(array(1, 2), array(1, 2)), array(false)),
+				array(array(array(1, 2), array(3, 4)), array(false)),
+				array(array(array(1, 2), array(2, 1)), array(false)),
+				array(array(array(2, 1), array(1, 2)), array(true)),
+				array(array(array(3, 4), array(1, 2)), array(true)),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "gt" method.
+		 *
+		 * @dataProvider data_gt
+		 */
+		public function test_gt(array $provided, array $expected) {
+			$p0 = ILinkedList\Module::gt(
+				ILinkedList\Type::make($provided[0], '\\Saber\\Data\\IInt32\\Type'),
+				ILinkedList\Type::make($provided[1], '\\Saber\\Data\\IInt32\\Type')
+			);
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p0);
+			$this->assertSame($e0, $p0->unbox());
+		}
+
+		/**
+		 * This method provides the data for testing the "le" method.
+		 *
+		 * @return array
+		 */
+		public function data_le() {
+			$data = array(
+				array(array(array(), array()), array(true)),
+				array(array(array(1, 2), array(1, 2)), array(true)),
+				array(array(array(1, 2), array(3, 4)), array(true)),
+				array(array(array(1, 2), array(2, 1)), array(true)),
+				array(array(array(2, 1), array(1, 2)), array(false)),
+				array(array(array(3, 4), array(1, 2)), array(false)),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "le" method.
+		 *
+		 * @dataProvider data_le
+		 */
+		public function test_le(array $provided, array $expected) {
+			$p0 = ILinkedList\Module::le(
+				ILinkedList\Type::make($provided[0], '\\Saber\\Data\\IInt32\\Type'),
+				ILinkedList\Type::make($provided[1], '\\Saber\\Data\\IInt32\\Type')
+			);
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p0);
+			$this->assertSame($e0, $p0->unbox());
+		}
+
+		/**
+		 * This method provides the data for testing the "lt" method.
+		 *
+		 * @return array
+		 */
+		public function data_lt() {
+			$data = array(
+				array(array(array(), array()), array(false)),
+				array(array(array(1, 2), array(1, 2)), array(false)),
+				array(array(array(1, 2), array(3, 4)), array(true)),
+				array(array(array(1, 2), array(2, 1)), array(true)),
+				array(array(array(2, 1), array(1, 2)), array(false)),
+				array(array(array(3, 4), array(1, 2)), array(false)),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "lt" method.
+		 *
+		 * @dataProvider data_lt
+		 */
+		public function test_lt(array $provided, array $expected) {
+			$p0 = ILinkedList\Module::lt(
+				ILinkedList\Type::make($provided[0], '\\Saber\\Data\\IInt32\\Type'),
+				ILinkedList\Type::make($provided[1], '\\Saber\\Data\\IInt32\\Type')
+			);
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $p0);
+			$this->assertSame($e0, $p0->unbox());
+		}
+
+		/**
+		 * This method provides the data for testing the "max" method.
+		 *
+		 * @return array
+		 */
+		public function data_max() {
+			$data = array(
+				array(array(array(), array()), array(array())),
+				array(array(array(1, 2), array(1, 2)), array(array(1, 2))),
+				array(array(array(1, 2), array(3, 4)), array(array(3, 4))),
+				array(array(array(1, 2), array(2, 1)), array(array(2, 1))),
+				array(array(array(2, 1), array(1, 2)), array(array(2, 1))),
+				array(array(array(3, 4), array(1, 2)), array(array(3, 4))),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "max" method.
+		 *
+		 * @dataProvider data_max
+		 */
+		public function test_max(array $provided, array $expected) {
+			$p0 = ILinkedList\Module::max(
+				ILinkedList\Type::make($provided[0], '\\Saber\\Data\\IInt32\\Type'),
+				ILinkedList\Type::make($provided[1], '\\Saber\\Data\\IInt32\\Type')
+			);
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\ILinkedList\\Type', $p0);
+			$this->assertSame($e0, $p0->unbox(1));
+		}
+
+		/**
+		 * This method provides the data for testing the "min" method.
+		 *
+		 * @return array
+		 */
+		public function data_min() {
+			$data = array(
+				array(array(array(), array()), array(array())),
+				array(array(array(1, 2), array(1, 2)), array(array(1, 2))),
+				array(array(array(1, 2), array(3, 4)), array(array(1, 2))),
+				array(array(array(1, 2), array(2, 1)), array(array(1, 2))),
+				array(array(array(2, 1), array(1, 2)), array(array(1, 2))),
+				array(array(array(3, 4), array(1, 2)), array(array(1, 2))),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "min" method.
+		 *
+		 * @dataProvider data_min
+		 */
+		public function test_min(array $provided, array $expected) {
+			$p0 = ILinkedList\Module::min(
+				ILinkedList\Type::make($provided[0], '\\Saber\\Data\\IInt32\\Type'),
+				ILinkedList\Type::make($provided[1], '\\Saber\\Data\\IInt32\\Type')
+			);
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\ILinkedList\\Type', $p0);
+			$this->assertSame($e0, $p0->unbox(1));
+		}
+
 		#endregion
 
 		#region Methods -> Logical Operations
+
+		/**
+		 * This method provides the data for testing the "and" method.
+		 *
+		 * @return array
+		 */
+		public function data_and() {
+			$data = array(
+				array(array(array()), array(true)),
+				array(array(array(true)), array(true)),
+				array(array(array(false)), array(false)),
+				array(array(array(true, false)), array(false)),
+				array(array(array(true, false, true)), array(false)),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "and" method.
+		 *
+		 * @dataProvider data_and
+		 */
+		public function test_and(array $provided, array $expected) {
+			$p0 = ILinkedList\Type::make($provided[0], '\\Saber\\Data\\IBool\\Type');
+
+			$r0 = ILinkedList\Module::and_($p0);
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $r0);
+			$this->assertSame($e0, $r0->unbox());
+		}
+
+		/**
+		 * This method provides the data for testing the "or" method.
+		 *
+		 * @return array
+		 */
+		public function data_or() {
+			$data = array(
+				array(array(array()), array(false)),
+				array(array(array(true)), array(true)),
+				array(array(array(false)), array(false)),
+				array(array(array(true, false)), array(true)),
+				array(array(array(true, false, true)), array(true)),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "or" method.
+		 *
+		 * @dataProvider data_or
+		 */
+		public function test_or(array $provided, array $expected) {
+			$p0 = ILinkedList\Type::make($provided[0], '\\Saber\\Data\\IBool\\Type');
+
+			$r0 = ILinkedList\Module::or_($p0);
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $r0);
+			$this->assertSame($e0, $r0->unbox());
+		}
 
 		#endregion
 

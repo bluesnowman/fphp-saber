@@ -28,7 +28,7 @@ namespace Saber\Data\IString {
 	/**
 	 * @group ModuleTest2
 	 */
-	final class ModuleTest extends Core\TypeTest {
+	final class ModuleTest extends Core\ModuleTest {
 
 		/**
 		 * This method provides the data for testing if all items pass the truthy test.

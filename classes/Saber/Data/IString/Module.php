@@ -43,8 +43,8 @@ namespace Saber\Data\IString {
 		#region Methods -> Basic Operations
 
 		/**
-		 * This method (aka "every", "forall", "true', and "and") iterates over the items in the string,
-		 * yielding each item to the predicate function, or fails the truthy test.  Opposite of "none".
+		 * This method (aka "every" and "forall") iterates over the items in the list, yielding
+		 * each item to the predicate function, or fails the truthy test.  Opposite of "none".
 		 *
 		 * @access public
 		 * @static
@@ -64,7 +64,7 @@ namespace Saber\Data\IString {
 		}
 
 		/**
-		 * This method (aka "exists", "some", or "or") returns whether some of the items in the string
+		 * This method (aka "exists" and "some") returns whether some of the items in the string
 		 * passed the truthy test.
 		 *
 		 * @access public
@@ -250,17 +250,16 @@ namespace Saber\Data\IString {
 		 * @return IString\Type                                     the string
 		 */
 		public static function filter(IString\Type $xs, callable $predicate) : IString\Type {
-			$buffer = '';
-			$length = $xs->length();
+			$zs = '';
 
-			for ($i = IInt32\Type::zero(); IInt32\Module::lt($i, $length)->unbox(); $i = IInt32\Module::increment($i)) {
-				$x = $xs->item($i);
+			$xsi = IString\Module::iterator($xs);
+			foreach ($xsi as $i => $x) {
 				if ($predicate($x, $i)->unbox()) {
-					$buffer .= $x->unbox();
+					$zs .= $x;
 				}
 			}
 
-			return IString\Type::box($buffer);
+			return IString\Type::box($zs);
 		}
 
 		/**
@@ -274,15 +273,12 @@ namespace Saber\Data\IString {
 		 *                                                          satisfying the predicate, if any
 		 */
 		public static function find(IString\Type $xs, callable $predicate) : IOption\Type {
-			$length = $xs->length();
-
-			for ($i = IInt32\Type::zero(); IInt32\Module::lt($i, $length)->unbox(); $i = IInt32\Module::increment($i)) {
-				$x = $xs->item($i);
+			$xsi = IString\Module::iterator($xs);
+			foreach ($xsi as $i => $x) {
 				if ($predicate($x, $i)->unbox()) {
 					return IOption\Type::some($x);
 				}
 			}
-
 			return IOption\Type::none();
 		}
 
@@ -310,10 +306,10 @@ namespace Saber\Data\IString {
 		 */
 		public static function foldLeft(IString\Type $xs, callable $operator, IChar\Type $initial) : IChar\Type {
 			$z = $initial;
-			$length = $xs->length();
 
-			for ($i = IInt32\Type::zero(); IInt32\Module::lt($i, $length)->unbox(); $i = IInt32\Module::increment($i)) {
-				$z = $operator($z, $xs->item($i));
+			$xsi = IString\Module::iterator($xs);
+			foreach ($xsi as $i => $x) {
+				$z = $operator($z, $x);
 			}
 
 			return $z;
@@ -419,20 +415,17 @@ namespace Saber\Data\IString {
 		 * @access public
 		 * @static
 		 * @param IString\Type $xs                                  the left operand
-		 * @param Core\Type $object                                 the object to be searched for
+		 * @param Core\Type $y                                      the object to be searched for
 		 * @return IInt32\Type                                      the index of the first occurrence
 		 *                                                          or otherwise -1
 		 */
-		public static function indexOf(IString\Type $xs, Core\Type $object) : IInt32\Type {
-			$length = $xs->length();
-
-			for ($i = IInt32\Type::zero(); IInt32\Module::lt($i, $length)->unbox(); $i = IInt32\Module::increment($i)) {
-				$x = $xs->item($i);
-				if (IChar\Module::eq($x, $object)->unbox()) {
+		public static function indexOf(IString\Type $xs, Core\Type $y) : IInt32\Type {
+			$xsi = IString\Module::iterator($xs);
+			foreach ($xsi as $i => $x) {
+				if ($x->__eq($y)) {
 					return $i;
 				}
 			}
-
 			return IInt32\Type::negative();
 		}
 
@@ -448,14 +441,12 @@ namespace Saber\Data\IString {
 		 *                                                          or otherwise -1
 		 */
 		public static function indexWhere(IString\Type $xs, callable $predicate) : IInt32\Type {
-			$length = $xs->length();
-
-			for ($i = IInt32\Type::zero(); IInt32\Module::lt($i, $length)->unbox(); $i = IInt32\Module::increment($i)) {
-				if ($predicate($xs->item($i), $i)->unbox()) {
+			$xsi = IString\Module::iterator($xs);
+			foreach ($xsi as $i => $x) {
+				if ($predicate($x, $i)->unbox()) {
 					return $i;
 				}
 			}
-
 			return IInt32\Type::negative();
 		}
 
@@ -591,10 +582,10 @@ namespace Saber\Data\IString {
 		 */
 		public static function map(IString\Type $xs, callable $subroutine) : IString\Type {
 			$buffer = '';
-			$length = $xs->length();
 
-			for ($i = IInt32\Type::zero(); IInt32\Module::lt($i, $length)->unbox(); $i = IInt32\Module::increment($i)) {
-				$buffer .= $subroutine($xs->item($i), $i)->unbox();
+			$xsi = IString\Module::iterator($xs);
+			foreach ($xsi as $i => $x) {
+				$buffer .= $subroutine($x, $i)->unbox();
 			}
 
 			return IString\Type::box($buffer);
@@ -631,10 +622,8 @@ namespace Saber\Data\IString {
 			$passed = '';
 			$failed = '';
 
-			$length = $xs->length();
-
-			for ($i = IInt32\Type::zero(); IInt32\Module::lt($i, $length)->unbox(); $i = IInt32\Module::increment($i)) {
-				$x = $xs->item($i);
+			$xsi = IString\Module::iterator($xs);
+			foreach ($xsi as $i => $x) {
 				if ($predicate($x, $i)->unbox()) {
 					$passed .= $x->unbox();
 				}

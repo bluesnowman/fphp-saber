@@ -41,8 +41,8 @@ namespace Saber\Data\ILinkedList {
 		#region Methods -> Basic Operations
 
 		/**
-		 * This method (aka "every", "forall", "true', and "and") iterates over the items in the list,
-		 * yielding each item to the predicate function, or fails the truthy test.  Opposite of "none".
+		 * This method (aka "every" and "forall") iterates over the items in the list, yielding
+		 * each item to the predicate function, or fails the truthy test.  Opposite of "none".
 		 *
 		 * @access public
 		 * @static
@@ -62,7 +62,7 @@ namespace Saber\Data\ILinkedList {
 		}
 
 		/**
-		 * This method (aka "exists", "some", or "or") returns whether some of the items in the list
+		 * This method (aka "exists" and "some") returns whether some of the items in the list
 		 * passed the truthy test.
 		 *
 		 * @access public
@@ -1013,11 +1013,9 @@ namespace Saber\Data\ILinkedList {
 		 * @return IArrayList\Type                                  the collection as an array list
 		 */
 		public static function toArrayList(ILinkedList\Type $xs) : IArrayList\Type {
-			$buffer = array();
-			ILinkedList\Module::each($xs, function(Core\Type $x) use ($buffer) {
-				$buffer[] = $x;
-			});
-			return IArrayList\Type::box($buffer);
+			return ILinkedList\Module::foldLeft($xs, function(IArrayList\Type $c, Core\Type $x) {
+				return IArrayList\Module::append($c, $x);
+			}, IArrayList\Type::empty_());
 		}
 
 		/**
@@ -1144,19 +1142,7 @@ namespace Saber\Data\ILinkedList {
 					return $r;
 				}
 			}
-
-			$x_length = $xs->__length();
-			$y_length = $ys->__length();
-
-			if ($x_length < $y_length) {
-				return ITrit\Type::negative();
-			}
-			else if ($x_length == $y_length) {
-				return ITrit\Type::zero();
-			}
-			else { // ($x_length > $y_length)
-				return ITrit\Type::positive();
-			}
+			return ITrit\Type::box($xs->__length() <=> $ys->__length());
 		}
 
 		/**
@@ -1246,8 +1232,7 @@ namespace Saber\Data\ILinkedList {
 		#region Methods -> Logical Operations
 
 		/**
-		 * This method (aka "every", "forall", "true', and "all") returns whether all of the items
-		 * of the list evaluate to true.
+		 * This method returns whether all of the items of the list evaluate to true.
 		 *
 		 * @access public
 		 * @static
@@ -1262,8 +1247,7 @@ namespace Saber\Data\ILinkedList {
 		}
 
 		/**
-		 * This method (aka "exists", "some", or "any") returns whether any of the items of the list
-		 * evaluate to true.
+		 * This method returns whether any of the items of the list evaluate to true.
 		 *
 		 * @access public
 		 * @static

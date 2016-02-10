@@ -40,8 +40,8 @@ namespace Saber\Data\IArrayList {
 		#region Methods -> Basic Operations
 
 		/**
-		 * This method (aka "every", "forall", "true', and "and") iterates over the items in the list,
-		 * yielding each item to the predicate function, or fails the truthy test.  Opposite of "none".
+		 * This method (aka "every" and "forall") iterates over the items in the list, yielding
+		 * each item to the predicate function, or fails the truthy test.  Opposite of "none".
 		 *
 		 * @access public
 		 * @static
@@ -61,7 +61,7 @@ namespace Saber\Data\IArrayList {
 		}
 
 		/**
-		 * This method (aka "exists", "some", or "or") returns whether some of the items in the list
+		 * This method (aka "exists" and "some") returns whether some of the items in the list
 		 * passed the truthy test.
 		 *
 		 * @access public
@@ -662,10 +662,8 @@ namespace Saber\Data\IArrayList {
 			$passed = array();
 			$failed = array();
 
-			$length = $xs->length();
-
-			for ($i = IInt32\Type::zero(); IInt32\Module::lt($i, $length)->unbox(); $i = IInt32\Module::increment($i)) {
-				$x = $xs->item($i);
+			$xsi = IArrayList\Module::iterator($xs);
+			foreach ($xsi as $i => $x) {
 				if ($predicate($x, $i)->unbox()) {
 					$passed[] = $x;
 				}
@@ -879,10 +877,9 @@ namespace Saber\Data\IArrayList {
 		 */
 		public static function takeWhile(IArrayList\Type $xs, callable $predicate) : IArrayList\Type {
 			$buffer = array();
-			$length = $xs->length();
 
-			for ($i = IInt32\Type::zero(); IInt32\Module::lt($i, $length)->unbox(); $i = IInt32\Module::increment($i)) {
-				$x = $xs->item($i);
+			$xsi = IArrayList\Module::iterator($xs);
+			foreach ($xsi as $i => $x) {
 				if (!$predicate($x, $i)->unbox()) {
 					break;
 				}
@@ -920,10 +917,8 @@ namespace Saber\Data\IArrayList {
 			$as = array();
 			$bs = array();
 
-			$length = $xss->length();
-
-			for ($i = IInt32\Type::zero(); IInt32\Module::lt($i, $length)->unbox(); $i = IInt32\Module::increment($i)) {
-				$xs = $xss->item($i);
+			$xssi = IArrayList\Module::iterator($xss);
+			foreach ($xssi as $i => $xs) {
 				$as[] = $xs->first();
 				$bs[] = $xs->second();
 			}
@@ -990,12 +985,9 @@ namespace Saber\Data\IArrayList {
 		 * @return ILinkedList\Type                                 the collection as a linked list
 		 */
 		public static function toLinkedList(IArrayList\Type $xs) : ILinkedList\Type {
-			$length = $xs->length();
-			$zs = ILinkedList\Type::nil();
-			for ($i = IInt32\Module::decrement($length); IInt32\Module::ge($i, IInt32\Type::zero())->unbox(); $i = IInt32\Module::decrement($i)) {
-				$zs = ILinkedList\Type::cons($xs->item($i), $zs);
-			}
-			return $zs;
+			return IArrayList\Module::foldLeft($xs, function(ILinkedList\Type $c, Core\Type $x) {
+				return ILinkedList\Module::append($c, $x);
+			}, ILinkedList\Type::empty_());
 		}
 
 		#endregion
@@ -1105,26 +1097,19 @@ namespace Saber\Data\IArrayList {
 		 *                                                          object
 		 */
 		public static function compare(IArrayList\Type $xs, IArrayList\Type $ys) : ITrit\Type {
-			$x_length = $xs->__length();
-			$y_length = $ys->__length();
+			$xsl = $xs->length();
+			$ysl = $ys->length();
 
-			for ($i = 0; ($i < $x_length) && ($i < $y_length); $i++) {
-				$p = IInt32\Type::box($i);
-				$r = $xs->item($p)->compare($ys->item($p));
+			$length = IInt32\Module::min($xsl, $ysl);
+
+			for ($i = IInt32\Type::zero(); IInt32\Module::lt($i, $length)->unbox(); $i = IInt32\Module::increment($i)) {
+				$r = $xs->item($i)->compare($ys->item($i));
 				if ($r->unbox() != 0) {
 					return $r;
 				}
 			}
 
-			if ($x_length < $y_length) {
-				return ITrit\Type::negative();
-			}
-			else if ($x_length == $y_length) {
-				return ITrit\Type::zero();
-			}
-			else { // ($x_length > $y_length)
-				return ITrit\Type::positive();
-			}
+			return ITrit\Type::box($xsl->unbox() <=> $ysl->unbox());
 		}
 
 		/**
@@ -1214,8 +1199,7 @@ namespace Saber\Data\IArrayList {
 		#region Methods -> Logical Operations
 
 		/**
-		 * This method (aka "every", "forall", "true', and "all") returns whether all of the items
-		 * of the list evaluate to true.
+		 * This method returns whether all of the items of the list evaluate to true.
 		 *
 		 * @access public
 		 * @static
@@ -1230,8 +1214,7 @@ namespace Saber\Data\IArrayList {
 		}
 
 		/**
-		 * This method (aka "exists", "some", or "any") returns whether any of the items of the list
-		 * evaluate to true.
+		 * This method returns whether any of the items of the list evaluate to true.
 		 *
 		 * @access public
 		 * @static

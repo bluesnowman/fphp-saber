@@ -95,7 +95,7 @@ namespace Saber\Data\ITrit {
 		 * @return ITrit\Type                                       the boxed object
 		 */
 		public static function box(int $value) : ITrit\Type {
-			if (!isset(static::$singletons[-1])) {
+			if (!isset(static::$singletons[$value])) {
 				static::$singletons[$value] = new ITrit\Type($value);
 			}
 			return static::$singletons[$value];

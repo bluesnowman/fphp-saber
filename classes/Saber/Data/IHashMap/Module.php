@@ -154,8 +154,7 @@ namespace Saber\Data\IHashMap {
 			$z = $initial;
 
 			foreach ($xi as $k => $v) {
-				$entry = ITuple\Type::box2($k, $v);
-				$z = $operator($z, $entry);
+				$z = $operator($z, ITuple\Type::box2($k, $v));
 			}
 
 			return $z;

@@ -27,7 +27,7 @@ namespace Saber\Data\IUnit {
 	/**
 	 * @group ModuleTest
 	 */
-	final class ModuleTest extends Core\TypeTest {
+	final class ModuleTest extends Core\ModuleTest {
 
 		#region Methods -> Conversion Operations
 

@@ -321,13 +321,12 @@ namespace Saber\Data\ITuple {
 		 */
 		public final function unbox(int $depth = 0) {
 			if ($depth > 0) {
-				$buffer = array();
-				foreach ($this->value as $item) {
-					$buffer[] = ($item instanceof Core\Boxable\Type)
+				return array_reduce($this->value, function($carry, $item) use ($depth) {
+					$carry[] = ($item instanceof Core\Boxable\Type)
 						? $item->unbox($depth - 1)
 						: $item;
-				}
-				return $buffer;
+					return $carry;
+				}, array());
 			}
 			return $this->value;
 		}

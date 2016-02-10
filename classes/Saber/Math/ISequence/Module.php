@@ -18,24 +18,24 @@
 
 declare(strict_types = 1);
 
-namespace Saber\Math\IVector {
+namespace Saber\Math\ISequence {
 
 	use \Saber\Data;
 	use \Saber\Data\IDouble;
 	use \Saber\Data\INumber;
-	use \Saber\Data\IVector;
+	use \Saber\Data\ISequence;
 
-	final class Module extends Data\Module implements IVector\Module {
+	final class Module extends Data\Module implements ISequence\Module {
 
 		/**
 		 * This method returns the average of all items in the list.
 		 *
 		 * @access public
 		 * @static
-		 * @param IVector\Type $xs                                  the vector to be processed
+		 * @param ISequence\Type $xs                                the sequence to be processed
 		 * @return IDouble\Type                                     the result
 		 */
-		public static function average(IVector\Type $xs) : IDouble\Type {
+		public static function average(ISequence\Type $xs) : IDouble\Type {
 			return ($xs->__isEmpty())
 				? IDouble\Type::zero()
 				: IDouble\Module::divide(static::sum($xs), $xs->length()->toDouble());
@@ -46,10 +46,10 @@ namespace Saber\Math\IVector {
 		 *
 		 * @access public
 		 * @static
-		 * @param IVector\Type $xs                                  the vector to be processed
+		 * @param ISequence\Type $xs                                the sequence to be processed
 		 * @return IDouble\Type                                     the result
 		 */
-		public static function product(IVector\Type $xs) : IDouble\Type {
+		public static function product(ISequence\Type $xs) : IDouble\Type {
 			return $xs->foldLeft(function(IDouble\Type $c, INumber\Type $x) {
 				return IDouble\Module::multiply($c, $x->toDouble());
 			}, IDouble\Type::one());
@@ -60,10 +60,10 @@ namespace Saber\Math\IVector {
 		 *
 		 * @access public
 		 * @static
-		 * @param IVector\Type $xs                                  the vector to be processed
+		 * @param ISequence\Type $xs                                the sequence to be processed
 		 * @return IDouble\Type                                     the result
 		 */
-		public static function sum(IVector\Type $xs) : IDouble\Type {
+		public static function sum(ISequence\Type $xs) : IDouble\Type {
 			return $xs->foldLeft(function(IDouble\Type $c, INumber\Type $x) {
 				return IDouble\Module::add($c, $x->toDouble());
 			}, IDouble\Type::zero());

@@ -260,7 +260,7 @@ Below describes the relationships between data types:
       + ISet\Type
         + IHashSet\Type
       + ITuple\Type
-      + IVector\Type
+      + ISequence\Type
         + IArrayList\Type
         + ILinkedList\Type
         + IString\Type

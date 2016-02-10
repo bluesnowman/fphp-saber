@@ -25,23 +25,23 @@ namespace Saber\Data\IString {
 	use \Saber\Data\IInt32;
 	use \Saber\Data\IRegex;
 	use \Saber\Data\IString;
-	use \Saber\Data\IVector;
+	use \Saber\Data\ISequence;
 
 	final class Utilities extends Data\Utilities {
 
 		#region Methods -> Basic Operations
 
 		/**
-		 * This method returns a string representing the vector of substring delimited by the
+		 * This method returns a string representing a sequence of substring delimited by the
 		 * specified string.
 		 *
 		 * @access public
 		 * @static
 		 * @param IString\Type $xs                                  the delimiter
-		 * @param IVector\Type $ys                                  the vector of substrings
+		 * @param ISequence\Type $ys                                a sequence of substrings
 		 * @return IString\Type                                     the string
 		 */
-		public static function join(IString\Type $xs, IVector\Type $ys) {
+		public static function join(IString\Type $xs, ISequence\Type $ys) {
 			$zs = array_map(function(IString\Type $y) : bool {
 				return $y->unbox();
 			}, $ys->unbox());
@@ -79,28 +79,28 @@ namespace Saber\Data\IString {
 		}
 
 		/**
-		 * This method returns a string representing the vector of substring delimited by the
+		 * This method returns a string representing a sequence of substring delimited by the
 		 * "line feed" character.
 		 *
 		 * @access public
 		 * @static
-		 * @param IVector\Type $xs                                   the vector of substrings
+		 * @param ISequence\Type $xs                                 a sequence of substrings
 		 * @return IString\Type                                      the string
 		 */
-		public static function unlines(IVector\Type $xs) {
+		public static function unlines(ISequence\Type $xs) {
 			return IString\Utilities::join(IString\Type::box("\n"), $xs);
 		}
 
 		/**
-		 * This method returns a string representing the vector of substring delimited by the
+		 * This method returns a string representing a sequence of substring delimited by the
 		 * "space" character.
 		 *
 		 * @access public
 		 * @static
-		 * @param IVector\Type $xs                                   the vector of substrings
+		 * @param ISequence\Type $xs                                 a sequence of substrings
 		 * @return IString\Type                                      the string
 		 */
-		public static function unwords(IVector\Type $xs) {
+		public static function unwords(ISequence\Type $xs) {
 			return IString\Utilities::join(IString\Type::box(' '), $xs);
 		}
 

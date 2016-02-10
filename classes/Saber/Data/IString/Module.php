@@ -35,10 +35,10 @@ namespace Saber\Data\IString {
 	use \Saber\Data\ITrit;
 	use \Saber\Data\ITuple;
 	use \Saber\Data\IUnit;
-	use \Saber\Data\IVector;
+	use \Saber\Data\ISequence;
 	use \Saber\Throwable;
 
-	final class Module extends Data\Module implements IVector\Module {
+	final class Module extends Data\Module implements ISequence\Module {
 
 		#region Methods -> Basic Operations
 
@@ -337,15 +337,15 @@ namespace Saber\Data\IString {
 		}
 
 		/**
-		 * This method returns a formatted string using the specified vector of objects.
+		 * This method returns a formatted string using the specified sequence of objects.
 		 *
 		 * @access public
 		 * @static
 		 * @param IString\Type $xs                                  the string to be formatted
-		 * @param IVector\Type $ys                                  the objects to be incorporated
+		 * @param ISequence\Type $ys                                the objects to be incorporated
 		 * @return IString\Type                                     the newly formatted string
 		 */
-		public static function format(IString\Type $xs, IVector\Type $ys) : IString\Type {
+		public static function format(IString\Type $xs, ISequence\Type $ys) : IString\Type {
 			$buffer = $xs->unbox();
 			$length = $ys->length();
 

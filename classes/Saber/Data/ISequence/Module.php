@@ -18,10 +18,10 @@
 
 declare(strict_types = 1);
 
-namespace Saber\Data\IVector {
+namespace Saber\Data\ISequence {
 
 	use \Saber\Data\ICollection;
 
-	interface Iterator extends ICollection\Iterator { }
+	interface Module extends ICollection\Module { }
 
 }

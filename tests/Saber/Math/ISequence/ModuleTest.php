@@ -18,10 +18,16 @@
 
 declare(strict_types = 1);
 
-namespace Saber\Data\IVector {
+namespace Saber\Math\ISequence {
 
-	use \Saber\Data\ICollection;
+	use \Saber\Core;
+	use \Saber\Data\ISequence;
 
-	interface Module extends ICollection\Module { }
+	/**
+	 * @group ModuleTest2
+	 */
+	final class ModuleTest extends Core\ModuleTest {
+
+	}
 
 }

@@ -26,10 +26,10 @@ namespace Saber\Data\ILinkedList {
 	use \Saber\Data\IInt32;
 	use \Saber\Data\ILinkedList;
 	use \Saber\Data\IString;
-	use \Saber\Data\IVector;
+	use \Saber\Data\ISequence;
 	use \Saber\Throwable;
 
-	abstract class Type extends Data\Type implements IVector\Type {
+	abstract class Type extends Data\Type implements ISequence\Type {
 
 		#region Traits
 

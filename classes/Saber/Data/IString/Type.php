@@ -28,10 +28,10 @@ namespace Saber\Data\IString {
 	use \Saber\Data\IChar;
 	use \Saber\Data\IInt32;
 	use \Saber\Data\IString;
-	use \Saber\Data\IVector;
+	use \Saber\Data\ISequence;
 	use \Saber\Throwable;
 
-	final class Type extends Data\Type implements Core\Boxable\Type, IVector\Type {
+	final class Type extends Data\Type implements Core\Boxable\Type, ISequence\Type {
 
 		#region Traits
 

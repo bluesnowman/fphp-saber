@@ -18,7 +18,7 @@
 
 declare(strict_types = 1);
 
-namespace Saber\Data\IVector {
+namespace Saber\Data\ISequence {
 
 	use \Saber\Data\ICollection;
 

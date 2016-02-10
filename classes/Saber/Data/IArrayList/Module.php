@@ -32,10 +32,10 @@ namespace Saber\Data\IArrayList {
 	use \Saber\Data\ITrit;
 	use \Saber\Data\ITuple;
 	use \Saber\Data\IUnit;
-	use \Saber\Data\IVector;
+	use \Saber\Data\ISequence;
 	use \Saber\Throwable;
 
-	final class Module extends Data\Module implements IVector\Module {
+	final class Module extends Data\Module implements ISequence\Module {
 
 		#region Methods -> Basic Operations
 

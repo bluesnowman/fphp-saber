@@ -26,10 +26,10 @@ namespace Saber\Data\IArrayList {
 	use \Saber\Data\IBool;
 	use \Saber\Data\IInt32;
 	use \Saber\Data\IString;
-	use \Saber\Data\IVector;
+	use \Saber\Data\ISequence;
 	use \Saber\Throwable;
 
-	final class Type extends Data\Type implements IVector\Type {
+	final class Type extends Data\Type implements ISequence\Type {
 
 		#region Traits
 

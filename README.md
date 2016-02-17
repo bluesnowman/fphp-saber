@@ -257,13 +257,13 @@ Below describes the relationships between data types:
       + IOption\Type
         + Some\Type
         + None\Type
-      + ISet\Type
-        + IHashSet\Type
-      + ITuple\Type
       + ISequence\Type
         + IArrayList\Type
         + ILinkedList\Type
         + IString\Type
+      + ISet\Type
+        + IHashSet\Type
+      + ITuple\Type
     + INumber\Type
       + IFloating\Type : IFractional\Type
         + IDouble\Type : IReal\Type

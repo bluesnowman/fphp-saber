@@ -229,6 +229,37 @@ namespace Saber\Data\ILinkedList {
 		}
 
 		/**
+		 * This method provides the data for testing the "drop" method.
+		 *
+		 * @return array
+		 */
+		public function data_drop() {
+			$data = array(
+				array(array(array(), 2), array(array())),
+				array(array(array(1), 2), array(array())),
+				array(array(array(1, 2), 2), array(array())),
+				array(array(array(1, 2, 3), 2), array(array(3))),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "drop" method.
+		 *
+		 * @dataProvider data_drop
+		 */
+		public function test_drop(array $provided, array $expected) {
+			$p0 = ILinkedList\Type::make($provided[0], '\\Saber\\Data\\IInt32\\Type');
+			$p1 = IInt32\Type::box($provided[1]);
+
+			$r0 = ILinkedList\Module::drop($p0, $p1);
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\ILinkedList\\Type', $r0);
+			$this->assertSame($e0, $r0->unbox(1));
+		}
+
+		/**
 		 * This method provides the data for testing the "iterator" method.
 		 *
 		 * @return array
@@ -267,6 +298,97 @@ namespace Saber\Data\ILinkedList {
 				$this->assertSame($e0[$e1], $item->unbox());
 				$e1++;
 			}
+		}
+
+		/**
+		 * This method provides the data for testing the "prepend" method.
+		 *
+		 * @return array
+		 */
+		public function data_prepend() {
+			$data = array(
+				array(array(array(), 9), array(array(9))),
+				array(array(array(1), 9), array(array(9, 1))),
+				array(array(array(1, 2), 9), array(array(9, 1, 2))),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "prepend" method.
+		 *
+		 * @dataProvider data_prepend
+		 */
+		public function test_prepend(array $provided, array $expected) {
+			$p0 = ILinkedList\Type::make($provided[0], '\\Saber\\Data\\IInt32\\Type');
+			$p1 = IInt32\Type::box($provided[1]);
+
+			$r0 = ILinkedList\Module::prepend($p0, $p1);
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\ILinkedList\\Type', $r0);
+			$this->assertSame($e0, $r0->unbox(1));
+		}
+
+		/**
+		 * This method provides the data for testing the "reverse" method.
+		 *
+		 * @return array
+		 */
+		public function data_reverse() {
+			$data = array(
+				array(array(array()), array(array())),
+				array(array(array(1)), array(array(1))),
+				array(array(array(1, 2)), array(array(2, 1))),
+				array(array(array(1, 2, 3)), array(array(3, 2, 1))),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "reverse" method.
+		 *
+		 * @dataProvider data_reverse
+		 */
+		public function test_reverse(array $provided, array $expected) {
+			$p0 = ILinkedList\Type::make($provided[0], '\\Saber\\Data\\IInt32\\Type');
+
+			$r0 = ILinkedList\Module::reverse($p0);
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\ILinkedList\\Type', $r0);
+			$this->assertSame($e0, $r0->unbox(1));
+		}
+
+		/**
+		 * This method provides the data for testing the "take" method.
+		 *
+		 * @return array
+		 */
+		public function data_take() {
+			$data = array(
+				array(array(array(), 2), array(array())),
+				array(array(array(1), 2), array(array(1))),
+				array(array(array(1, 2), 2), array(array(1, 2))),
+				array(array(array(1, 2, 3), 2), array(array(1, 2))),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "take" method.
+		 *
+		 * @dataProvider data_take
+		 */
+		public function test_take(array $provided, array $expected) {
+			$p0 = ILinkedList\Type::make($provided[0], '\\Saber\\Data\\IInt32\\Type');
+			$p1 = IInt32\Type::box($provided[1]);
+
+			$r0 = ILinkedList\Module::take($p0, $p1);
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\ILinkedList\\Type', $r0);
+			$this->assertSame($e0, $r0->unbox(1));
 		}
 
 		#endregion

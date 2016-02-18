@@ -134,6 +134,53 @@ namespace Saber\Data\IArrayList {
 		}
 
 		/**
+		 * This method provides the data for testing the "break" method.
+		 *
+		 * @return array
+		 */
+		public function data_break() {
+			$predicate = function(Core\Boxable\Type $x, IInt32\Type $i) : IBool\Type {
+				return IBool\Type::box($x->unbox() > 2);
+			};
+			$data = array(
+				array(array(array(), $predicate), array(array(), array())),
+				array(array(array(1), $predicate), array(array(1), array())),
+				array(array(array(1, 2), $predicate), array(array(1, 2), array())),
+				array(array(array(1, 2, 3), $predicate), array(array(1, 2), array(3))),
+				array(array(array(1, 2, 3, 4), $predicate), array(array(1, 2), array(3, 4))),
+				array(array(array(1, 3, 2, 4), $predicate), array(array(1), array(3, 2, 4))),
+				array(array(array(3, 1, 4, 2), $predicate), array(array(), array(3, 1, 4, 2))),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "break" method.
+		 *
+		 * @dataProvider data_break
+		 */
+		public function test_break(array $provided, array $expected) {
+			$p0 = IArrayList\Type::make($provided[0], '\\Saber\\Data\\IInt32\\Type');
+			$p1 = $provided[1];
+
+			$e0 = $expected[0];
+			$e1 = $expected[1];
+
+			$r0 = IArrayList\Module::break_($p0, $p1);
+
+			$this->assertInstanceOf('\\Saber\\Data\\ITuple\\Type', $r0);
+
+			$v0 = $r0->first();
+			$v1 = $r0->second();
+
+			$this->assertInstanceOf('\\Saber\\Data\\IArrayList\\Type', $v0);
+			$this->assertSame($e0, $v0->unbox(1));
+
+			$this->assertInstanceOf('\\Saber\\Data\\IArrayList\\Type', $v1);
+			$this->assertSame($e1, $v1->unbox(1));
+		}
+
+		/**
 		 * This method provides the data for testing the "concat" method.
 		 *
 		 * @return array
@@ -261,6 +308,118 @@ namespace Saber\Data\IArrayList {
 		}
 
 		/**
+		 * This method provides the data for testing the "dropWhile" method.
+		 *
+		 * @return array
+		 */
+		public function data_dropWhile() {
+			$predicate = function(Core\Boxable\Type $x, IInt32\Type $i) : IBool\Type {
+				return IBool\Type::box($x->unbox() <= 2);
+			};
+			$data = array(
+				array(array(array(), $predicate), array(array())),
+				array(array(array(1), $predicate), array(array())),
+				array(array(array(1, 2), $predicate), array(array())),
+				array(array(array(1, 2, 3), $predicate), array(array(3))),
+				array(array(array(2, 3, 1), $predicate), array(array(3, 1))),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "dropWhile" method.
+		 *
+		 * @dataProvider data_dropWhile
+		 */
+		public function test_dropWhile(array $provided, array $expected) {
+			$p0 = IArrayList\Type::make($provided[0], '\\Saber\\Data\\IInt32\\Type');
+			$p1 = $provided[1];
+
+			$r0 = IArrayList\Module::dropWhile($p0, $p1);
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\IArrayList\\Type', $r0);
+			$this->assertSame($e0, $r0->unbox(1));
+		}
+
+		/**
+		 * This method provides the data for testing the "dropWhileEnd" method.
+		 *
+		 * @return array
+		 */
+		public function data_dropWhileEnd() {
+			$predicate = function(Core\Boxable\Type $x, IInt32\Type $i) : IBool\Type {
+				return IBool\Type::box($x->unbox() > 2);
+			};
+			$data = array(
+				array(array(array(), $predicate), array(array())),
+				array(array(array(1), $predicate), array(array())),
+				array(array(array(1, 2), $predicate), array(array())),
+				array(array(array(1, 2, 3), $predicate), array(array(3))),
+				array(array(array(2, 3, 1), $predicate), array(array(3, 1))),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "dropWhileEnd" method.
+		 *
+		 * @dataProvider data_dropWhileEnd
+		 */
+		public function test_dropWhileEnd(array $provided, array $expected) {
+			$p0 = IArrayList\Type::make($provided[0], '\\Saber\\Data\\IInt32\\Type');
+			$p1 = $provided[1];
+
+			$r0 = IArrayList\Module::dropWhileEnd($p0, $p1);
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\IArrayList\\Type', $r0);
+			$this->assertSame($e0, $r0->unbox(1));
+		}
+
+		/**
+		 * This method provides the data for testing the "each" method.
+		 *
+		 * @return array
+		 */
+		public function data_each() {
+			$data = array(
+				array(array(array()), array(array())),
+				array(array(array(1)), array(array(1))),
+				array(array(array(1, 2)), array(array(1, 2))),
+				array(array(array(1, 2, 3)), array(array(1, 2, 3))),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "each" method.
+		 *
+		 * @dataProvider data_each
+		 */
+		public function test_each(array $provided, array $expected) {
+			$p0 = IArrayList\Type::make($provided[0], '\\Saber\\Data\\IInt32\\Type');
+
+			$e0 = $expected[0];
+			$e1 = 0;
+
+			$this->assertInstanceOf('\\Saber\\Data\\IArrayList\\Type', $p0);
+			$this->assertCount(count($e0), $p0->unbox());
+
+			$p1 = IArrayList\Module::each($p0, function($x, $i) use($e0, &$e1) {
+				$this->assertInstanceOf('\\Saber\\Data\\IInt32\\Type', $i);
+				$this->assertSame($e1, $i->unbox());
+				$this->assertInstanceOf('\\Saber\\Core\\Type', $x);
+				$this->assertSame($e0[$e1], $x->unbox());
+				$e1++;
+			});
+			$this->assertCount($e1, $e0);
+
+			$this->assertInstanceOf('\\Saber\\Data\\IArrayList\\Type', $p1);
+			$this->assertSame($e0, $p1->unbox(1));
+		}
+
+		/**
 		 * This method provides the data for testing the "iterator" method.
 		 *
 		 * @return array
@@ -359,6 +518,53 @@ namespace Saber\Data\IArrayList {
 
 			$this->assertInstanceOf('\\Saber\\Data\\IArrayList\\Type', $r0);
 			$this->assertSame($e0, $r0->unbox(1));
+		}
+
+		/**
+		 * This method provides the data for testing the "span" method.
+		 *
+		 * @return array
+		 */
+		public function data_span() {
+			$predicate = function(Core\Boxable\Type $x, IInt32\Type $i) : IBool\Type {
+				return IBool\Type::box($x->unbox() < 3);
+			};
+			$data = array(
+				array(array(array(), $predicate), array(array(), array())),
+				array(array(array(1), $predicate), array(array(1), array())),
+				array(array(array(1, 2), $predicate), array(array(1, 2), array())),
+				array(array(array(1, 2, 3), $predicate), array(array(1, 2), array(3))),
+				array(array(array(1, 2, 3, 4), $predicate), array(array(1, 2), array(3, 4))),
+				array(array(array(1, 3, 2, 4), $predicate), array(array(1), array(3, 2, 4))),
+				array(array(array(3, 1, 4, 2), $predicate), array(array(), array(3, 1, 4, 2))),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "span" method.
+		 *
+		 * @dataProvider data_span
+		 */
+		public function test_span(array $provided, array $expected) {
+			$p0 = IArrayList\Type::make($provided[0], '\\Saber\\Data\\IInt32\\Type');
+			$p1 = $provided[1];
+
+			$e0 = $expected[0];
+			$e1 = $expected[1];
+
+			$r0 = IArrayList\Module::span($p0, $p1);
+
+			$this->assertInstanceOf('\\Saber\\Data\\ITuple\\Type', $r0);
+
+			$v0 = $r0->first();
+			$v1 = $r0->second();
+
+			$this->assertInstanceOf('\\Saber\\Data\\IArrayList\\Type', $v0);
+			$this->assertSame($e0, $v0->unbox(1));
+
+			$this->assertInstanceOf('\\Saber\\Data\\IArrayList\\Type', $v1);
+			$this->assertSame($e1, $v1->unbox(1));
 		}
 
 		/**

@@ -51,8 +51,8 @@ namespace Saber\Data\IArrayList {
 		 *                                                          truthy test
 		 */
 		public static function all(IArrayList\Type $xs, callable $predicate) : IBool\Type {
-			$xsi = IArrayList\Module::iterator($xs);
-			foreach ($xsi as $i => $x) {
+			$xi = IArrayList\Module::iterator($xs);
+			foreach ($xi as $i => $x) {
 				if (!$predicate($x, $i)->unbox()) {
 					return IBool\Type::false();
 				}
@@ -196,8 +196,8 @@ namespace Saber\Data\IArrayList {
 			$buffer = array();
 			$failed = false;
 
-			$xsi = IArrayList\Module::iterator($xs);
-			foreach ($xsi as $i => $x) {
+			$xi = IArrayList\Module::iterator($xs);
+			foreach ($xi as $i => $x) {
 				if (!$predicate($x, $i)->unbox() || $failed) {
 					$buffer[] = $x;
 					$failed = true;
@@ -233,8 +233,8 @@ namespace Saber\Data\IArrayList {
 		 * @return IArrayList\Type                                  the list
 		 */
 		public static function each(IArrayList\Type $xs, callable $procedure) : IArrayList\Type {
-			$xsi = IArrayList\Module::iterator($xs);
-			foreach ($xsi as $i => $x) {
+			$xi = IArrayList\Module::iterator($xs);
+			foreach ($xi as $i => $x) {
 				IUnit\Type::covariant($procedure($x, $i));
 			}
 			return $xs;
@@ -252,8 +252,8 @@ namespace Saber\Data\IArrayList {
 		public static function filter(IArrayList\Type $xs, callable $predicate) : IArrayList\Type {
 			$zs = array();
 
-			$xsi = IArrayList\Module::iterator($xs);
-			foreach ($xsi as $i => $x) {
+			$xi = IArrayList\Module::iterator($xs);
+			foreach ($xi as $i => $x) {
 				if ($predicate($x, $i)->unbox()) {
 					$zs[] = $x;
 				}
@@ -273,8 +273,8 @@ namespace Saber\Data\IArrayList {
 		 *                                                          satisfying the predicate, if any
 		 */
 		public static function find(IArrayList\Type $xs, callable $predicate) : IOption\Type {
-			$xsi = IArrayList\Module::iterator($xs);
-			foreach ($xsi as $i => $x) {
+			$xi = IArrayList\Module::iterator($xs);
+			foreach ($xi as $i => $x) {
 				if ($predicate($x, $i)->unbox()) {
 					return IOption\Type::some($x);
 				}
@@ -293,8 +293,8 @@ namespace Saber\Data\IArrayList {
 		public static function flatten(IArrayList\Type $xs) : IArrayList\Type {
 			$buffer = array();
 
-			$xsi = IArrayList\Module::iterator($xs);
-			foreach ($xsi as $i => $x) {
+			$xi = IArrayList\Module::iterator($xs);
+			foreach ($xi as $i => $x) {
 				if ($x instanceof IArrayList\Type) {
 					$ysi = IArrayList\Module::iterator(IArrayList\Module::flatten($x));
 					foreach ($ysi as $j => $y) {
@@ -322,8 +322,8 @@ namespace Saber\Data\IArrayList {
 		public static function foldLeft(IArrayList\Type $xs, callable $operator, Core\Type $initial) : Core\Type {
 			$z = $initial;
 
-			$xsi = IArrayList\Module::iterator($xs);
-			foreach ($xsi as $i => $x) {
+			$xi = IArrayList\Module::iterator($xs);
+			foreach ($xi as $i => $x) {
 				$z = $operator($z, $x);
 			}
 
@@ -342,9 +342,8 @@ namespace Saber\Data\IArrayList {
 		 */
 		public static function foldRight(IArrayList\Type $xs, callable $operator, Core\Type $initial) : Core\Type {
 			$z = $initial;
-			$length = $xs->length();
 
-			for ($i = IInt32\Module::decrement($length); IInt32\Module::ge($i, IInt32\Type::zero())->unbox(); $i = IInt32\Module::decrement($i)) {
+			for ($i = IInt32\Module::decrement($xs->length()); IInt32\Module::ge($i, IInt32\Type::zero())->unbox(); $i = IInt32\Module::decrement($i)) {
 				$z = $operator($z, $xs->item($i));
 			}
 
@@ -414,8 +413,8 @@ namespace Saber\Data\IArrayList {
 		 *                                                          or otherwise -1
 		 */
 		public static function indexOf(IArrayList\Type $xs, Core\Type $y) : IInt32\Type {
-			$xsi = IArrayList\Module::iterator($xs);
-			foreach ($xsi as $i => $x) {
+			$xi = IArrayList\Module::iterator($xs);
+			foreach ($xi as $i => $x) {
 				if ($x->__eq($y)) {
 					return $i;
 				}
@@ -435,8 +434,8 @@ namespace Saber\Data\IArrayList {
 		 *                                                          or otherwise -1
 		 */
 		public static function indexWhere(IArrayList\Type $xs, callable $predicate) : IInt32\Type {
-			$xsi = IArrayList\Module::iterator($xs);
-			foreach ($xsi as $i => $x) {
+			$xi = IArrayList\Module::iterator($xs);
+			foreach ($xi as $i => $x) {
 				if ($predicate($x, $i)->unbox()) {
 					return $i;
 				}
@@ -601,8 +600,8 @@ namespace Saber\Data\IArrayList {
 		public static function map(IArrayList\Type $xs, callable $subroutine) : IArrayList\Type {
 			$buffer = array();
 
-			$xsi = IArrayList\Module::iterator($xs);
-			foreach ($xsi as $i => $x) {
+			$xi = IArrayList\Module::iterator($xs);
+			foreach ($xi as $i => $x) {
 				$buffer[] = $subroutine($x, $i);
 			}
 
@@ -662,8 +661,8 @@ namespace Saber\Data\IArrayList {
 			$passed = array();
 			$failed = array();
 
-			$xsi = IArrayList\Module::iterator($xs);
-			foreach ($xsi as $i => $x) {
+			$xi = IArrayList\Module::iterator($xs);
+			foreach ($xi as $i => $x) {
 				if ($predicate($x, $i)->unbox()) {
 					$passed[] = $x;
 				}
@@ -878,8 +877,8 @@ namespace Saber\Data\IArrayList {
 		public static function takeWhile(IArrayList\Type $xs, callable $predicate) : IArrayList\Type {
 			$buffer = array();
 
-			$xsi = IArrayList\Module::iterator($xs);
-			foreach ($xsi as $i => $x) {
+			$xi = IArrayList\Module::iterator($xs);
+			foreach ($xi as $i => $x) {
 				if (!$predicate($x, $i)->unbox()) {
 					break;
 				}
@@ -917,8 +916,8 @@ namespace Saber\Data\IArrayList {
 			$as = array();
 			$bs = array();
 
-			$xssi = IArrayList\Module::iterator($xss);
-			foreach ($xssi as $i => $xs) {
+			$xsi = IArrayList\Module::iterator($xss);
+			foreach ($xsi as $i => $xs) {
 				$as[] = $xs->first();
 				$bs[] = $xs->second();
 			}

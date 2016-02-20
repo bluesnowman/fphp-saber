@@ -420,6 +420,38 @@ namespace Saber\Data\IArrayList {
 		}
 
 		/**
+		 * This method provides the data for testing the "indexOf" method.
+		 *
+		 * @return array
+		 */
+		public function data_indexOf() {
+			$data = array(
+				array(array(array(), 2), array(-1)),
+				array(array(array(1), 2), array(-1)),
+				array(array(array(1, 2), 2), array(1)),
+				array(array(array(1, 2, 3), 2), array(1)),
+				array(array(array(1, 2, 3, 1, 2, 3), 2), array(1)),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "indexOf" method.
+		 *
+		 * @dataProvider data_indexOf
+		 */
+		public function test_indexOf(array $provided, array $expected) {
+			$p0 = IArrayList\Type::make($provided[0], '\\Saber\\Data\\IInt32\\Type');
+			$p1 = IInt32\Type::box($provided[1]);
+
+			$r0 = IArrayList\Module::indexOf($p0, $p1);
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\IInt32\\Type', $r0);
+			$this->assertSame($e0, $r0->unbox());
+		}
+
+		/**
 		 * This method provides the data for testing the "iterator" method.
 		 *
 		 * @return array

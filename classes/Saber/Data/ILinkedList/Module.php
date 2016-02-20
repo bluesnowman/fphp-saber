@@ -52,8 +52,8 @@ namespace Saber\Data\ILinkedList {
 		 *                                                          truthy test
 		 */
 		public static function all(ILinkedList\Type $xs, callable $predicate) : IBool\Type {
-			$xsi = ILinkedList\Module::iterator($xs);
-			foreach ($xsi as $i => $x) {
+			$xi = ILinkedList\Module::iterator($xs);
+			foreach ($xi as $i => $x) {
 				if (!$predicate($x, $i)->unbox()) {
 					return IBool\Type::false();
 				}
@@ -252,8 +252,8 @@ namespace Saber\Data\ILinkedList {
 		 * @return ILinkedList\Type                                 the collection
 		 */
 		public static function each(ILinkedList\Type $xs, callable $procedure) : ILinkedList\Type {
-			$xsi = ILinkedList\Module::iterator($xs);
-			foreach ($xsi as $i => $x) {
+			$xi = ILinkedList\Module::iterator($xs);
+			foreach ($xi as $i => $x) {
 				IUnit\Type::covariant($procedure($x, $i));
 			}
 			return $xs;
@@ -304,8 +304,8 @@ namespace Saber\Data\ILinkedList {
 		 *                                                          satisfying the predicate, if any
 		 */
 		public static function find(ILinkedList\Type $xs, callable $predicate) : IOption\Type {
-			$xsi = ILinkedList\Module::iterator($xs);
-			foreach ($xsi as $i => $x) {
+			$xi = ILinkedList\Module::iterator($xs);
+			foreach ($xi as $i => $x) {
 				if ($predicate($x, $i)->unbox()) {
 					return IOption\Type::some($x);
 				}
@@ -328,7 +328,7 @@ namespace Saber\Data\ILinkedList {
 			for ($zs = $xs; !$zs->__isEmpty(); $zs = $zs->tail()) {
 				$z = $zs->head();
 
-				$ys = ($z instanceof ICollection\Type)
+				$ys = ($z instanceof ILinkedList\Type)
 					? ILinkedList\Module::toLinkedList(ILinkedList\Module::flatten($z))
 					: ILinkedList\Type::cons($z);
 
@@ -358,8 +358,8 @@ namespace Saber\Data\ILinkedList {
 		public static function foldLeft(ILinkedList\Type $xs, callable $operator, Core\Type $initial) : Core\Type {
 			$c = $initial;
 
-			$xsi = ILinkedList\Module::iterator($xs);
-			foreach ($xsi as $i => $x) {
+			$xi = ILinkedList\Module::iterator($xs);
+			foreach ($xi as $i => $x) {
 				$c = $operator($c, $x);
 			}
 
@@ -422,10 +422,10 @@ namespace Saber\Data\ILinkedList {
 		 *                                                          or otherwise -1
 		 */
 		public static function indexOf(ILinkedList\Type $xs, Core\Type $y) : IInt32\Type {
-			for ($i = 0, $zs = $xs; !$zs->__isEmpty(); $i++, $zs = $zs->tail()) {
-				$z = $zs->head();
-				if ($z->__eq($y)) {
-					return IInt32\Type::box($i);
+			$xi = ILinkedList\Module::iterator($xs);
+			foreach ($xi as $i => $x) {
+				if ($x->__eq($y)) {
+					return $i;
 				}
 			}
 			return IInt32\Type::negative();
@@ -443,8 +443,9 @@ namespace Saber\Data\ILinkedList {
 		 *                                                          or otherwise -1
 		 */
 		public static function indexWhere(ILinkedList\Type $xs, callable $predicate) : IInt32\Type {
-			for ($i = IInt32\Type::zero(), $zs = $xs; !$zs->__isEmpty(); $i = IInt32\Module::increment($i), $zs = $zs->tail()) {
-				if ($predicate($zs->head(), $i)->unbox()) {
+			$xi = ILinkedList\Module::iterator($xs);
+			foreach ($xi as $i => $x) {
+				if ($predicate($x, $i)->unbox()) {
 					return $i;
 				}
 			}
@@ -617,9 +618,9 @@ namespace Saber\Data\ILinkedList {
 			$start = ILinkedList\Type::nil();
 			$tail = null;
 
-			$i = IInt32\Type::zero();
-			for ($zs = $xs; !$zs->__isEmpty(); $zs = $zs->tail()) {
-				$ys = ILinkedList\Type::cons($subroutine($zs->head(), $i));
+			$xi = ILinkedList\Module::iterator($xs);
+			foreach ($xi as $i => $x) {
+				$ys = ILinkedList\Type::cons($subroutine($x, $i));
 
 				if ($tail !== null) {
 					$tail->tail = $ys;
@@ -629,7 +630,6 @@ namespace Saber\Data\ILinkedList {
 				}
 
 				$tail = $ys;
-				$i = IInt32\Module::increment($i);
 			}
 
 			return $start;
@@ -947,10 +947,11 @@ namespace Saber\Data\ILinkedList {
 			$as = array();
 			$bs = array();
 
-			ILinkedList\Module::each($xss, function(ITuple\Type $xs, IInt32\Type $i) use (&$as, &$bs) {
+			$xsi = ILinkedList\Module::iterator($xss);
+			foreach ($xsi as $i => $xs) {
 				$as[] = $xs->first();
 				$bs[] = $xs->second();
-			});
+			}
 
 			return ITuple\Type::box2(ILinkedList\Type::box($as), ILinkedList\Type::box($bs));
 		}

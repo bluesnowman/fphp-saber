@@ -18,7 +18,7 @@
 
 declare(strict_types = 1);
 
-if (!extension_loaded('mbstring')) {
+//if (!extension_loaded('mbstring')) {
 
 	if (!function_exists('mb_convert_encoding')) {
 		function mb_convert_encoding($string, $to_encoding, $from_encoding = 'UTF-8') {
@@ -43,6 +43,17 @@ if (!extension_loaded('mbstring')) {
 		}
 	}
 
+	if (!function_exists('mb_strrev')) {
+		function mb_strrev($string, $encoding = 'UTF-8') {
+			$length = mb_strlen($string, $encoding);
+			$reversed = '';
+			while ($length-- > 0) {
+				$reversed .= mb_substr($string, $length, 1, $encoding);
+			}
+			return $reversed;
+		}
+	}
+
 	if (!function_exists('mb_strtolower')) {
 		function mb_strtolower($string, $encoding = 'UTF-8') {
 			return strtolower($string);
@@ -64,4 +75,4 @@ if (!extension_loaded('mbstring')) {
 		}
 	}
 
-}
+//}

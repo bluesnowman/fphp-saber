@@ -419,6 +419,145 @@ namespace Saber\Data\ILinkedList {
 		}
 
 		/**
+		 * This method provides the data for testing the "filter" method.
+		 *
+		 * @return array
+		 */
+		public function data_filter() {
+			$predicate = function(Core\Boxable\Type $x, IInt32\Type $i) : IBool\Type {
+				return IBool\Type::box(($x->unbox() % 2) != 0);
+			};
+			$data = array(
+				array(array(array(), $predicate), array(array())),
+				array(array(array(1), $predicate), array(array(1))),
+				array(array(array(1, 2), $predicate), array(array(1))),
+				array(array(array(1, 2, 3), $predicate), array(array(1, 3))),
+				array(array(array(1, 2, 3, 4), $predicate), array(array(1, 3))),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "filter" method.
+		 *
+		 * @dataProvider data_filter
+		 */
+		public function test_filter(array $provided, array $expected) {
+			$p0 = ILinkedList\Type::make($provided[0], '\\Saber\\Data\\IInt32\\Type');
+			$p1 = $provided[1];
+
+			$r0 = ILinkedList\Module::filter($p0, $p1);
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\ILinkedList\\Type', $r0);
+			$this->assertSame($e0, $r0->unbox(1));
+		}
+
+		/**
+		 * This method provides the data for testing the "find" method.
+		 *
+		 * @return array
+		 */
+		public function data_find() {
+			$predicate = function(Core\Boxable\Type $x, IInt32\Type $i) : IBool\Type {
+				return IBool\Type::box($x->unbox() == 2);
+			};
+			$data = array(
+				array(array(array(), $predicate), array('\\Saber\\Data\\IOption\\None\\Type')),
+				array(array(array(1), $predicate), array('\\Saber\\Data\\IOption\\None\\Type')),
+				array(array(array(1, 2), $predicate), array('\\Saber\\Data\\IOption\\Some\\Type')),
+				array(array(array(1, 2, 3), $predicate), array('\\Saber\\Data\\IOption\\Some\\Type')),
+				array(array(array(1, 5, 3), $predicate), array('\\Saber\\Data\\IOption\\None\\Type')),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "find" method.
+		 *
+		 * @dataProvider data_find
+		 */
+		public function test_find(array $provided, array $expected) {
+			$p0 = ILinkedList\Type::make($provided[0], '\\Saber\\Data\\IInt32\\Type');
+			$p1 = $provided[1];
+
+			$r0 = ILinkedList\Module::find($p0, $p1);
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf($e0, $r0);
+		}
+
+		/**
+		 * This method provides the data for testing the "foldLeft" method.
+		 *
+		 * @return array
+		 */
+		public function data_foldLeft() {
+			$predicate = function(IInt32\Type $c, IInt32\Type $x) : IInt32\Type {
+				return IInt32\Module::add($c, $x);
+			};
+			$data = array(
+				array(array(array(), $predicate), array(0)),
+				array(array(array(1), $predicate), array(1)),
+				array(array(array(1, 2), $predicate), array(3)),
+				array(array(array(1, 2, 3), $predicate), array(6)),
+				array(array(array(1, 2, 3, 4), $predicate), array(10)),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "foldLeft" method.
+		 *
+		 * @dataProvider data_foldLeft
+		 */
+		public function test_foldLeft(array $provided, array $expected) {
+			$p0 = ILinkedList\Type::make($provided[0], '\\Saber\\Data\\IInt32\\Type');
+			$p1 = $provided[1];
+
+			$r0 = ILinkedList\Module::foldLeft($p0, $p1, IInt32\Type::zero());
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\IInt32\\Type', $r0);
+			$this->assertSame($e0, $r0->unbox());
+		}
+
+		/**
+		 * This method provides the data for testing the "foldRight" method.
+		 *
+		 * @return array
+		 */
+		public function data_foldRight() {
+			$predicate = function(IInt32\Type $c, IInt32\Type $x) : IInt32\Type {
+				return IInt32\Module::add($c, $x);
+			};
+			$data = array(
+				array(array(array(), $predicate), array(0)),
+				array(array(array(1), $predicate), array(1)),
+				array(array(array(1, 2), $predicate), array(3)),
+				array(array(array(1, 2, 3), $predicate), array(6)),
+				array(array(array(1, 2, 3, 4), $predicate), array(10)),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "foldRight" method.
+		 *
+		 * @dataProvider data_foldRight
+		 */
+		public function test_foldRight(array $provided, array $expected) {
+			$p0 = ILinkedList\Type::make($provided[0], '\\Saber\\Data\\IInt32\\Type');
+			$p1 = $provided[1];
+
+			$r0 = ILinkedList\Module::foldRight($p0, $p1, IInt32\Type::zero());
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\IInt32\\Type', $r0);
+			$this->assertSame($e0, $r0->unbox());
+		}
+
+		/**
 		 * This method provides the data for testing the "indexOf" method.
 		 *
 		 * @return array
@@ -447,6 +586,35 @@ namespace Saber\Data\ILinkedList {
 			$e0 = $expected[0];
 
 			$this->assertInstanceOf('\\Saber\\Data\\IInt32\\Type', $r0);
+			$this->assertSame($e0, $r0->unbox());
+		}
+
+		/**
+		 * This method provides the data for testing the "isEmpty" method.
+		 *
+		 * @return array
+		 */
+		public function data_isEmpty() {
+			$data = array(
+				array(array(array()), array(true)),
+				array(array(array(1)), array(false)),
+				array(array(array(1, 2)), array(false)),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "isEmpty" method.
+		 *
+		 * @dataProvider data_isEmpty
+		 */
+		public function test_isEmpty(array $provided, array $expected) {
+			$p0 = ILinkedList\Type::make($provided[0]);
+
+			$r0 = ILinkedList\Module::isEmpty($p0);
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\IBool\\Type', $r0);
 			$this->assertSame($e0, $r0->unbox());
 		}
 

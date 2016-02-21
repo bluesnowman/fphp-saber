@@ -155,7 +155,6 @@ namespace Saber\Data\ILinkedList {
 			$start = ILinkedList\Type::nil();
 			$tail = null;
 
-			$index = IInt32\Type::zero();
 			for ($zs = $xs; !$zs->__isEmpty(); $zs = $zs->tail()) {
 				$head = $zs->head();
 				if (!$head->__eq($y)) {
@@ -182,7 +181,6 @@ namespace Saber\Data\ILinkedList {
 
 					break;
 				}
-				$index = IInt32\Module::increment($index);
 			}
 
 			return $start;
@@ -325,12 +323,11 @@ namespace Saber\Data\ILinkedList {
 			$start = ILinkedList\Type::nil();
 			$tail = null;
 
-			for ($zs = $xs; !$zs->__isEmpty(); $zs = $zs->tail()) {
-				$z = $zs->head();
-
-				$ys = ($z instanceof ILinkedList\Type)
-					? ILinkedList\Module::toLinkedList(ILinkedList\Module::flatten($z))
-					: ILinkedList\Type::cons($z);
+			$xi = ILinkedList\Module::iterator($xs);
+			foreach ($xi as $i => $x) {
+				$ys = ($x instanceof ISequence\Type)
+					? $x->flatten()->toLinkedList()
+					: ILinkedList\Type::cons($x);
 
 				if ($tail !== null) {
 					$tail->tail = $ys;

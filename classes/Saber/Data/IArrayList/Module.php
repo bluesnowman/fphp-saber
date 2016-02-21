@@ -295,9 +295,9 @@ namespace Saber\Data\IArrayList {
 
 			$xi = IArrayList\Module::iterator($xs);
 			foreach ($xi as $i => $x) {
-				if ($x instanceof IArrayList\Type) {
-					$ysi = IArrayList\Module::iterator(IArrayList\Module::flatten($x));
-					foreach ($ysi as $j => $y) {
+				if ($x instanceof ISequence\Type) {
+					$yi = $x->flatten()->iterator();
+					foreach ($yi as $j => $y) {
 						$buffer[] = $y;
 					}
 				}

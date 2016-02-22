@@ -384,6 +384,35 @@ namespace Saber\Data\ILinkedList {
 		}
 
 		/**
+		 * This method returns a hash map of lists of items that are considered in the same group.
+		 *
+		 * @access public
+		 * @static
+		 * @param ILinkedList\Type $xs                              the linked list to be processed
+		 * @param callable $subroutine                              the subroutine to be used
+		 * @return IHashMap\Type                                    a hash map of lists of items that
+		 *                                                          are considered in the same group
+		 */
+		public static function group(ILinkedList\Type $xs, callable $subroutine) : IHashMap\Type {
+			$groups = IHashMap\Type::empty_();
+
+			$xi = ILinkedList\Module::iterator($xs);
+			foreach ($xi as $i => $x) {
+				$key = $subroutine($x, $i);
+
+				$item = ($groups->__hasKey($key))
+					? $groups->item($key)->unbox()
+					: array();
+
+				$item[] = $x;
+
+				$groups->putEntry($key, ILinkedList\Type::box($item));
+			}
+
+			return $groups;
+		}
+
+		/**
 		 * This method returns the head object in this collection.
 		 *
 		 * @access public

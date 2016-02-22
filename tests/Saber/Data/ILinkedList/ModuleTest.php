@@ -558,6 +558,71 @@ namespace Saber\Data\ILinkedList {
 		}
 
 		/**
+		 * This method provides the data for testing the "head" method.
+		 *
+		 * @return array
+		 */
+		public function data_head() {
+			$data = array(
+				array(array(array(1)), array(1)),
+				array(array(array(1, 2)), array(1)),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "head" method.
+		 *
+		 * @dataProvider data_head
+		 */
+		public function test_head(array $provided, array $expected) {
+			$p0 = ILinkedList\Type::make($provided[0], '\\Saber\\Data\\IInt32\\Type');
+
+			$r0 = ILinkedList\Module::head($p0);
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\IInt32\\Type', $r0);
+			$this->assertSame($e0, $r0->unbox());
+		}
+
+		/**
+		 * This method provides the data for testing the "headOption" method.
+		 *
+		 * @return array
+		 */
+		public function data_headOption() {
+			$data = array(
+				array(array(array()), array(null)),
+				array(array(array(1)), array(1)),
+				array(array(array(1, 2)), array(1)),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "headOption" method.
+		 *
+		 * @dataProvider data_headOption
+		 */
+		public function test_headOption(array $provided, array $expected) {
+			$p0 = ILinkedList\Type::make($provided[0], '\\Saber\\Data\\IInt32\\Type');
+
+			$r0 = ILinkedList\Module::headOption($p0);
+			$e0 = $expected[0];
+
+			if ($e0 !== null) {
+				$this->assertInstanceOf('\\Saber\\Data\\IOption\\Some\\Type', $r0);
+				$v0 = $r0->unbox();
+
+				$this->assertInstanceOf('\\Saber\\Data\\IInt32\\Type', $v0);
+				$this->assertSame($e0, $v0->unbox());
+			}
+			else {
+				$this->assertInstanceOf('\\Saber\\Data\\IOption\\None\\Type', $r0);
+			}
+		}
+
+		/**
 		 * This method provides the data for testing the "indexOf" method.
 		 *
 		 * @return array
@@ -619,6 +684,38 @@ namespace Saber\Data\ILinkedList {
 		}
 
 		/**
+		 * This method provides the data for testing the "item" method.
+		 *
+		 * @return array
+		 */
+		public function data_item() {
+			$data = array(
+				array(array(array(1), 0), array(1)),
+				array(array(array(1, 2), 0), array(1)),
+				array(array(array(1, 2), 1), array(2)),
+				array(array(array(1, 2, 3), 1), array(2)),
+				array(array(array(1, 2, 3), 2), array(3)),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "item" method.
+		 *
+		 * @dataProvider data_item
+		 */
+		public function test_item(array $provided, array $expected) {
+			$p0 = ILinkedList\Type::make($provided[0], '\\Saber\\Data\\IInt32\\Type');
+			$p1 = IInt32\Type::box($provided[1]);
+
+			$r0 = ILinkedList\Module::item($p0, $p1);
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\IInt32\\Type', $r0);
+			$this->assertSame($e0, $r0->unbox());
+		}
+
+		/**
 		 * This method provides the data for testing the "iterator" method.
 		 *
 		 * @return array
@@ -657,6 +754,100 @@ namespace Saber\Data\ILinkedList {
 				$this->assertSame($e0[$e1], $item->unbox());
 				$e1++;
 			}
+		}
+
+		/**
+		 * This method provides the data for testing the "last" method.
+		 *
+		 * @return array
+		 */
+		public function data_last() {
+			$data = array(
+				array(array(array(1)), array(1)),
+				array(array(array(1, 2)), array(2)),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "last" method.
+		 *
+		 * @dataProvider data_last
+		 */
+		public function test_last(array $provided, array $expected) {
+			$p0 = ILinkedList\Type::make($provided[0], '\\Saber\\Data\\IInt32\\Type');
+
+			$r0 = ILinkedList\Module::last($p0);
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\IInt32\\Type', $r0);
+			$this->assertSame($e0, $r0->unbox());
+		}
+
+		/**
+		 * This method provides the data for testing the "lastOption" method.
+		 *
+		 * @return array
+		 */
+		public function data_lastOption() {
+			$data = array(
+				array(array(array()), array(null)),
+				array(array(array(1)), array(1)),
+				array(array(array(1, 2)), array(2)),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "lastOption" method.
+		 *
+		 * @dataProvider data_lastOption
+		 */
+		public function test_lastOption(array $provided, array $expected) {
+			$p0 = ILinkedList\Type::make($provided[0], '\\Saber\\Data\\IInt32\\Type');
+
+			$r0 = ILinkedList\Module::lastOption($p0);
+			$e0 = $expected[0];
+
+			if ($e0 !== null) {
+				$this->assertInstanceOf('\\Saber\\Data\\IOption\\Some\\Type', $r0);
+				$v0 = $r0->unbox();
+
+				$this->assertInstanceOf('\\Saber\\Data\\IInt32\\Type', $v0);
+				$this->assertSame($e0, $v0->unbox());
+			}
+			else {
+				$this->assertInstanceOf('\\Saber\\Data\\IOption\\None\\Type', $r0);
+			}
+		}
+
+		/**
+		 * This method provides the data for testing the "length" method.
+		 *
+		 * @return array
+		 */
+		public function data_length() {
+			$data = array(
+				array(array(array()), array(0)),
+				array(array(array(1)), array(1)),
+				array(array(array(1, 2)), array(2)),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "length" method.
+		 *
+		 * @dataProvider data_length
+		 */
+		public function test_length(array $provided, array $expected) {
+			$p0 = ILinkedList\Type::make($provided[0], '\\Saber\\Data\\IInt32\\Type');
+
+			$r0 = ILinkedList\Module::length($p0);
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\IInt32\\Type', $r0);
+			$this->assertSame($e0, $r0->unbox());
 		}
 
 		/**

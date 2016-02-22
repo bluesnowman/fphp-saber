@@ -363,7 +363,8 @@ namespace Saber\Data\IArrayList {
 		public static function group(IArrayList\Type $xs, callable $subroutine) : IHashMap\Type {
 			$groups = IHashMap\Type::empty_();
 
-			IArrayList\Module::each($xs, function(Core\Type $x, IInt32\Type $i) use ($groups, $subroutine) {
+			$xi = IArrayList\Module::iterator($xs);
+			foreach ($xi as $i => $x) {
 				$key = $subroutine($x, $i);
 
 				$item = ($groups->__hasKey($key))
@@ -373,7 +374,7 @@ namespace Saber\Data\IArrayList {
 				$item[] = $x;
 
 				$groups->putEntry($key, IArrayList\Type::box($item));
-			});
+			}
 
 			return $groups;
 		}
@@ -399,7 +400,7 @@ namespace Saber\Data\IArrayList {
 		 * @return IOption\Type                                     the option
 		 */
 		public static function headOption(IArrayList\Type $xs) : IOption\Type {
-			return ($xs->__isEmpty()) ? IOption\Type::none() : IOption\Type::some($xs->tail());
+			return ($xs->__isEmpty()) ? IOption\Type::none() : IOption\Type::some($xs->head());
 		}
 
 		/**

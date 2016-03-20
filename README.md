@@ -257,7 +257,7 @@ Below describes the relationships between data types:
       + IOption\Type
         + Some\Type
         + None\Type
-      + ISequence\Type
+      + ISeq\Type
         + IArrayList\Type
         + ILinkedList\Type
         + IString\Type

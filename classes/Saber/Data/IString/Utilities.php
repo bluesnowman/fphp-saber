@@ -25,7 +25,7 @@ namespace Saber\Data\IString {
 	use \Saber\Data\IInt32;
 	use \Saber\Data\IRegex;
 	use \Saber\Data\IString;
-	use \Saber\Data\ISequence;
+	use \Saber\Data\ISeq;
 
 	final class Utilities extends Data\Utilities {
 
@@ -38,10 +38,10 @@ namespace Saber\Data\IString {
 		 * @access public
 		 * @static
 		 * @param IString\Type $xs                                  the delimiter
-		 * @param ISequence\Type $ys                                a sequence of substrings
+		 * @param ISeq\Type $ys                                     a sequence of substrings
 		 * @return IString\Type                                     the string
 		 */
-		public static function join(IString\Type $xs, ISequence\Type $ys) {
+		public static function join(IString\Type $xs, ISeq\Type $ys) {
 			$zs = array_map(function(IString\Type $y) : bool {
 				return $y->unbox();
 			}, $ys->unbox());
@@ -84,10 +84,10 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param ISequence\Type $xs                                 a sequence of substrings
+		 * @param ISeq\Type $xs                                      a sequence of substrings
 		 * @return IString\Type                                      the string
 		 */
-		public static function unlines(ISequence\Type $xs) {
+		public static function unlines(ISeq\Type $xs) {
 			return IString\Utilities::join(IString\Type::box("\n"), $xs);
 		}
 
@@ -97,10 +97,10 @@ namespace Saber\Data\IString {
 		 *
 		 * @access public
 		 * @static
-		 * @param ISequence\Type $xs                                 a sequence of substrings
+		 * @param ISeq\Type $xs                                      a sequence of substrings
 		 * @return IString\Type                                      the string
 		 */
-		public static function unwords(ISequence\Type $xs) {
+		public static function unwords(ISeq\Type $xs) {
 			return IString\Utilities::join(IString\Type::box(' '), $xs);
 		}
 

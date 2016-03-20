@@ -28,14 +28,15 @@ namespace Saber\Data\IArrayList {
 	use \Saber\Data\IHashSet;
 	use \Saber\Data\IInt32;
 	use \Saber\Data\ILinkedList;
+	use \Saber\Data\IMap;
 	use \Saber\Data\IOption;
 	use \Saber\Data\ITrit;
 	use \Saber\Data\ITuple;
 	use \Saber\Data\IUnit;
-	use \Saber\Data\ISequence;
+	use \Saber\Data\ISeq;
 	use \Saber\Throwable;
 
-	final class Module extends Data\Module implements ISequence\Module {
+	final class Module extends Data\Module implements ISeq\Module {
 
 		#region Methods -> Basic Operations
 
@@ -91,6 +92,23 @@ namespace Saber\Data\IArrayList {
 		}
 
 		/**
+		 * This method appends all objects in the specified list to this object's list.
+		 *
+		 * @access public
+		 * @static
+		 * @param IArrayList\Type $xs                               the left operand
+		 * @param IArrayList\Type $ys                               the list to be appended
+		 * @return IArrayList\Type                                  the list
+		 */
+		public static function appendAll(IArrayList\Type $xs, IArrayList\Type $ys) : IArrayList\Type {
+			$buffer = $xs->unbox();
+			foreach ($ys->unbox() as $y) {
+				$buffer[] = $y;
+			}
+			return IArrayList\Type::box($buffer);
+		}
+
+		/**
 		 * This method returns a tuple where the first item contains longest prefix of the array
 		 * list that does not satisfy the predicate and the second item contains the remainder.
 		 *
@@ -104,23 +122,6 @@ namespace Saber\Data\IArrayList {
 			return IArrayList\Module::span($xs, function(Core\Type $x, IInt32\Type $i) use ($predicate) : IBool\Type {
 				return IBool\Module::not($predicate($x, $i));
 			});
-		}
-
-		/**
-		 * This method concatenates a list to this object's list.
-		 *
-		 * @access public
-		 * @static
-		 * @param IArrayList\Type $xs                               the left operand
-		 * @param IArrayList\Type $ys                               the list to be concatenated
-		 * @return IArrayList\Type                                  the list
-		 */
-		public static function concat(IArrayList\Type $xs, IArrayList\Type $ys) : IArrayList\Type {
-			$buffer = $xs->unbox();
-			foreach ($ys->unbox() as $y) {
-				$buffer[] = $y;
-			}
-			return IArrayList\Type::box($buffer);
 		}
 
 		/**
@@ -295,7 +296,7 @@ namespace Saber\Data\IArrayList {
 
 			$xi = IArrayList\Module::iterator($xs);
 			foreach ($xi as $i => $x) {
-				if ($x instanceof ISequence\Type) {
+				if ($x instanceof ISeq\Type) {
 					$yi = $x->flatten()->iterator();
 					foreach ($yi as $j => $y) {
 						$buffer[] = $y;
@@ -687,9 +688,12 @@ namespace Saber\Data\IArrayList {
 		 *                                                          key
 		 */
 		public static function pluck(IArrayList\Type $xss, Core\Type $k) : IArrayList\Type {
-			return IArrayList\Module::map($xss, function(IHashMap\Type $xs, IInt32\Type $i) use ($k) : Core\Type {
-				return $xs->item($k);
-			});
+			return IArrayList\Module::foldLeft($xss, function(IArrayList\Type $ys, IMap\Type $xs) use ($k) : IArrayList\Type {
+				if ($xs->__hasKey($k)) {
+					return IArrayList\Module::append($ys, $xs->item($k));
+				}
+				return $ys;
+			}, IArrayList\Type::empty_());
 		}
 
 		/**

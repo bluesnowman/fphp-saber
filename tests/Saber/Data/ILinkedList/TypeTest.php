@@ -39,7 +39,7 @@ namespace Saber\Data\ILinkedList {
 			$p0 = new ILinkedList\Nil\Type();
 
 			$this->assertInstanceOf('\\Saber\\Data\\ILinkedList\\Type', $p0);
-			$this->assertInstanceOf('\\Saber\\Data\\ISequence\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\ISeq\\Type', $p0);
 			$this->assertInstanceOf('\\Saber\\Data\\ICollection\\Type', $p0);
 			$this->assertInstanceOf('\\Saber\\Data\\Type', $p0);
 			$this->assertInstanceOf('\\Saber\\Core\\Equality\\Type', $p0);

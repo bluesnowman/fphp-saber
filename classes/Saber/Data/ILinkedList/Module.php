@@ -29,14 +29,15 @@ namespace Saber\Data\ILinkedList {
 	use \Saber\Data\IHashSet;
 	use \Saber\Data\IInt32;
 	use \Saber\Data\ILinkedList;
+	use \Saber\Data\IMap;
 	use \Saber\Data\IOption;
 	use \Saber\Data\ITrit;
 	use \Saber\Data\ITuple;
 	use \Saber\Data\IUnit;
-	use \Saber\Data\ISequence;
+	use \Saber\Data\ISeq;
 	use \Saber\Throwable;
 
-	final class Module extends Data\Module implements ISequence\Module {
+	final class Module extends Data\Module implements ISeq\Module {
 
 		#region Methods -> Basic Operations
 
@@ -77,16 +78,39 @@ namespace Saber\Data\ILinkedList {
 		}
 
 		/**
-		 * This method appends the specified object to this object's collection. Performs in O(n) time.
+		 * This method appends the specified object to this object's collection. Performs in O(n)
+		 * time.
 		 *
 		 * @access public
 		 * @static
 		 * @param ILinkedList\Type $xs                              the left operand
 		 * @param Core\Type $y                                      the object to be appended
-		 * @return ILinkedList\Type                                 the collection
+		 * @return ILinkedList\Type                                 the list
 		 */
 		public static function append(ILinkedList\Type $xs, Core\Type $y) : ILinkedList\Type {
-			return ILinkedList\Module::concat($xs, ILinkedList\Type::cons($y));
+			return ILinkedList\Module::appendAll($xs, ILinkedList\Type::cons($y));
+		}
+
+		/**
+		 * This method appends all objects in the specified list to this object's list. Performs
+		 * in O(n) time.
+		 *
+		 * @access public
+		 * @static
+		 * @param ILinkedList\Type $xs                              the left operand
+		 * @param ILinkedList\Type $ys                              the list to be appended
+		 * @return ILinkedList\Type                                 the list
+		 */
+		public static function appendAll(ILinkedList\Type $xs, ILinkedList\Type $ys) : ILinkedList\Type {
+			if (!$xs->__isEmpty()) {
+				$zs = $xs;
+				while (!$zs->tail()->__isEmpty()) {
+					$zs = $zs->tail();
+				}
+				$zs->tail = $ys;
+				return $xs;
+			}
+			return $ys;
 		}
 
 		/**
@@ -106,35 +130,14 @@ namespace Saber\Data\ILinkedList {
 		}
 
 		/**
-		 * This method concatenates a collection to this object's collection. Performs in O(n) time.
-		 *
-		 * @access public
-		 * @static
-		 * @param ILinkedList\Type $xs                              the left operand
-		 * @param ILinkedList\Type $ys                              the collection to be concatenated
-		 * @return ILinkedList\Type                                 the collection
-		 */
-		public static function concat(ILinkedList\Type $xs, ILinkedList\Type $ys) : ILinkedList\Type {
-			if (!$xs->__isEmpty()) {
-				$zs = $xs;
-				while (!$zs->tail()->__isEmpty()) {
-					$zs = $zs->tail();
-				}
-				$zs->tail = $ys;
-				return $xs;
-			}
-			return $ys;
-		}
-
-		/**
-		 * This method evaluates whether the specified object is contained within the collection.
+		 * This method evaluates whether the specified object is contained within the list.
 		 *
 		 * @access public
 		 * @static
 		 * @param ILinkedList\Type $xs                              the left operand
 		 * @param Core\Type $y                                      the object to find
 		 * @return IBool\Type                                       whether the specified object is
-		 *                                                          contained within the collection
+		 *                                                          contained within the list
 		 */
 		public static function contains(ILinkedList\Type $xs, Core\Type $y) : IBool\Type {
 			return ILinkedList\Module::any($xs, function(Core\Type $x, IInt32\Type $i) use ($y) : IBool\Type {
@@ -149,7 +152,7 @@ namespace Saber\Data\ILinkedList {
 		 * @static
 		 * @param ILinkedList\Type $xs                              the left operand
 		 * @param Core\Type $y                                      the object to be removed
-		 * @return ILinkedList\Type                                 the collection
+		 * @return ILinkedList\Type                                 the list
 		 */
 		public static function delete(ILinkedList\Type $xs, Core\Type $y) : ILinkedList\Type {
 			$start = ILinkedList\Type::nil();
@@ -187,13 +190,13 @@ namespace Saber\Data\ILinkedList {
 		}
 
 		/**
-		 * This method returns the collection after dropping the first "n" items.
+		 * This method returns the list after dropping the first "n" items.
 		 *
 		 * @access public
 		 * @static
 		 * @param ILinkedList\Type $xs                              the left operand
 		 * @param IInt32\Type $n                                    the number of items to drop
-		 * @return ILinkedList\Type                                 the collection
+		 * @return ILinkedList\Type                                 the list
 		 */
 		public static function drop(ILinkedList\Type $xs, IInt32\Type $n) : ILinkedList\Type {
 			$i = IInt32\Type::zero();
@@ -206,13 +209,13 @@ namespace Saber\Data\ILinkedList {
 		}
 
 		/**
-		 * This method returns the collection from item where the predicate function fails.
+		 * This method returns the list from item where the predicate function fails.
 		 *
 		 * @access public
 		 * @static
 		 * @param ILinkedList\Type $xs                              the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return ILinkedList\Type                                 the collection
+		 * @return ILinkedList\Type                                 the list
 		 */
 		public static function dropWhile(ILinkedList\Type $xs, callable $predicate) : ILinkedList\Type {
 			$i = IInt32\Type::zero();
@@ -225,13 +228,13 @@ namespace Saber\Data\ILinkedList {
 		}
 
 		/**
-		 * This method returns the collection from item where the predicate function doesn't fail.
+		 * This method returns the list from item where the predicate function doesn't fail.
 		 *
 		 * @access public
 		 * @static
 		 * @param ILinkedList\Type $xs                              the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return ILinkedList\Type                                 the collection
+		 * @return ILinkedList\Type                                 the list
 		 */
 		public static function dropWhileEnd(ILinkedList\Type $xs, callable $predicate) : ILinkedList\Type {
 			return ILinkedList\Module::dropWhile($xs, function(Core\Type $x, IInt32\Type $i) use ($predicate) : IBool\Type {
@@ -240,14 +243,14 @@ namespace Saber\Data\ILinkedList {
 		}
 
 		/**
-		 * This method iterates over the items in the collection, yielding each item to the
+		 * This method iterates over the items in the list, yielding each item to the
 		 * callback function.
 		 *
 		 * @access public
 		 * @static
 		 * @param ILinkedList\Type $xs                              the left operand
 		 * @param callable $procedure                               the procedure function to be used
-		 * @return ILinkedList\Type                                 the collection
+		 * @return ILinkedList\Type                                 the list
 		 */
 		public static function each(ILinkedList\Type $xs, callable $procedure) : ILinkedList\Type {
 			$xi = ILinkedList\Module::iterator($xs);
@@ -264,7 +267,7 @@ namespace Saber\Data\ILinkedList {
 		 * @static
 		 * @param ILinkedList\Type $xs                              the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return ILinkedList\Type                                 the collection
+		 * @return ILinkedList\Type                                 the list
 		 */
 		public static function filter(ILinkedList\Type $xs, callable $predicate) : ILinkedList\Type {
 			$start = ILinkedList\Type::nil();
@@ -292,7 +295,7 @@ namespace Saber\Data\ILinkedList {
 		}
 
 		/**
-		 * This method returns the first object in the collection that passes the truthy test, if any.
+		 * This method returns the first object in the list that passes the truthy test, if any.
 		 *
 		 * @access public
 		 * @static
@@ -325,7 +328,7 @@ namespace Saber\Data\ILinkedList {
 
 			$xi = ILinkedList\Module::iterator($xs);
 			foreach ($xi as $i => $x) {
-				$ys = ($x instanceof ISequence\Type)
+				$ys = ($x instanceof ISeq\Type)
 					? $x->flatten()->toLinkedList()
 					: ILinkedList\Type::cons($x);
 
@@ -343,7 +346,7 @@ namespace Saber\Data\ILinkedList {
 		}
 
 		/**
-		 * This method applies a left-fold reduction on the collection using the operator function.
+		 * This method applies a left-fold reduction on the list using the operator function.
 		 *
 		 * @access public
 		 * @static
@@ -364,7 +367,7 @@ namespace Saber\Data\ILinkedList {
 		}
 
 		/**
-		 * This method applies a right-fold reduction on the collection using the operator function.
+		 * This method applies a right-fold reduction on the list using the operator function.
 		 *
 		 * @access public
 		 * @static
@@ -479,12 +482,12 @@ namespace Saber\Data\ILinkedList {
 		}
 
 		/**
-		 * This method returns all but the last item of in the collection.
+		 * This method returns all but the last item of in the list.
 		 *
 		 * @access public
 		 * @static
 		 * @param ILinkedList\Type $xs                              the left operand
-		 * @return ILinkedList\Type                                 the collection, minus the last
+		 * @return ILinkedList\Type                                 the list, minus the last
 		 *                                                          item
 		 */
 		public static function init(ILinkedList\Type $xs) : ILinkedList\Type {
@@ -508,13 +511,13 @@ namespace Saber\Data\ILinkedList {
 		}
 
 		/**
-		 * The method intersperses the specified object between each item in the collection.
+		 * The method intersperses the specified object between each item in the list.
 		 *
 		 * @access public
 		 * @static
 		 * @param ILinkedList\Type $xs                              the left operand
 		 * @param Core\Type $y                                      the object to be interspersed
-		 * @return ILinkedList\Type                                 the collection
+		 * @return ILinkedList\Type                                 the list
 		 */
 		public static function intersperse(ILinkedList\Type $xs, Core\Type $y) : ILinkedList\Type {
 			return ($xs->__isEmpty() || $xs->tail()->__isEmpty())
@@ -528,7 +531,7 @@ namespace Saber\Data\ILinkedList {
 		 * @access public
 		 * @static
 		 * @param ILinkedList\Type $xs                              the left operand
-		 * @return IBool\Type                                       whether the collection is empty
+		 * @return IBool\Type                                       whether the list is empty
 		 */
 		public static function isEmpty(ILinkedList\Type $xs) : IBool\Type {
 			return $xs->isEmpty();
@@ -638,7 +641,7 @@ namespace Saber\Data\ILinkedList {
 		 * @static
 		 * @param ILinkedList\Type $xs                              the left operand
 		 * @param callable $subroutine                              the subroutine function to be used
-		 * @return ILinkedList\Type                                 the collection
+		 * @return ILinkedList\Type                                 the list
 		 */
 		public static function map(ILinkedList\Type $xs, callable $subroutine) : ILinkedList\Type {
 			$start = ILinkedList\Type::nil();
@@ -662,7 +665,7 @@ namespace Saber\Data\ILinkedList {
 		}
 
 		/**
-		 * This method iterates over the items in the collection, yielding each item to the
+		 * This method iterates over the items in the list, yielding each item to the
 		 * predicate function, or fails the falsy test.
 		 *
 		 * @access public
@@ -729,9 +732,12 @@ namespace Saber\Data\ILinkedList {
 		 *                                                          key
 		 */
 		public static function pluck(ILinkedList\Type $xss, Core\Type $k) : ILinkedList\Type {
-			return ILinkedList\Module::map($xss, function(IHashMap\Type $xs, IInt32\Type $i) use ($k) : Core\Type {
-				return $xs->item($k);
-			});
+			return ILinkedList\Module::foldLeft($xss, function(ILinkedList\Type $ys, IMap\Type $xs) use ($k) : ILinkedList\Type {
+				if ($xs->__hasKey($k)) {
+					return ILinkedList\Module::append($ys, $xs->item($k));
+				}
+				return $ys;
+			}, ILinkedList\Type::empty_());
 		}
 
 		/**
@@ -741,21 +747,21 @@ namespace Saber\Data\ILinkedList {
 		 * @static
 		 * @param ILinkedList\Type $xs                              the left operand
 		 * @param Core\Type $y                                      the object to be prepended
-		 * @return ILinkedList\Type                                 the collection
+		 * @return ILinkedList\Type                                 the list
 		 */
 		public static function prepend(ILinkedList\Type $xs, Core\Type $y) : ILinkedList\Type {
 			return ILinkedList\Type::cons($y, $xs);
 		}
 
 		/**
-		 * This method returns the collection within the specified range.
+		 * This method returns the list within the specified range.
 		 *
 		 * @access public
 		 * @static
 		 * @param ILinkedList\Type $xs                              the left operand
 		 * @param IInt32\Type $start                                the starting index
 		 * @param IInt32\Type $end                                  the ending index
-		 * @return ILinkedList\Type                                 the collection
+		 * @return ILinkedList\Type                                 the list
 		 */
 		public static function range(ILinkedList\Type $xs, IInt32\Type $start, IInt32\Type $end) : ILinkedList\Type {
 			return ILinkedList\Module::drop(ILinkedList\Module::take($xs, $end), $start);
@@ -784,7 +790,7 @@ namespace Saber\Data\ILinkedList {
 		 * @access public
 		 * @static
 		 * @param ILinkedList\Type $xs                              the left operand
-		 * @return ILinkedList\Type                                 the collection
+		 * @return ILinkedList\Type                                 the list
 		 */
 		public static function reverse(ILinkedList\Type $xs) : ILinkedList\Type {
 			return ILinkedList\Module::foldLeft($xs, function(ILinkedList\Type $tail, Core\Type $head) : ILinkedList\Type {
@@ -817,14 +823,14 @@ namespace Saber\Data\ILinkedList {
 		}
 
 		/**
-		 * This method returns the extracted slice of the collection.
+		 * This method returns the extracted slice of the list.
 		 *
 		 * @access public
 		 * @static
 		 * @param ILinkedList\Type $xs                              the left operand
 		 * @param IInt32\Type $offset                               the starting index
 		 * @param IInt32\Type $length                               the length of the slice
-		 * @return ILinkedList\Type                                 the collection
+		 * @return ILinkedList\Type                                 the list
 		 */
 		public static function slice(ILinkedList\Type $xs, IInt32\Type $offset, IInt32\Type $length) : ILinkedList\Type {
 			return ILinkedList\Module::drop(ILinkedList\Module::take($xs, IInt32\Module::add($length, $offset)), $offset);
@@ -889,13 +895,13 @@ namespace Saber\Data\ILinkedList {
 		}
 
 		/**
-		 * This method returns the first "n" items in the collection.
+		 * This method returns the first "n" items in the list.
 		 *
 		 * @access public
 		 * @static
 		 * @param ILinkedList\Type $xs                              the left operand
 		 * @param IInt32\Type $n                                    the number of items to take
-		 * @return ILinkedList\Type                                 the collection
+		 * @return ILinkedList\Type                                 the list
 		 */
 		public static function take(ILinkedList\Type $xs, IInt32\Type $n) : ILinkedList\Type {
 			if (($n->unbox() <= 0) || $xs->__isEmpty()) {
@@ -911,7 +917,7 @@ namespace Saber\Data\ILinkedList {
 		 * @static
 		 * @param ILinkedList\Type $xs                              the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return ILinkedList\Type                                 the collection
+		 * @return ILinkedList\Type                                 the list
 		 */
 		public static function takeWhile(ILinkedList\Type $xs, callable $predicate) : ILinkedList\Type {
 			$start = ILinkedList\Type::nil();
@@ -952,7 +958,7 @@ namespace Saber\Data\ILinkedList {
 		 * @static
 		 * @param ILinkedList\Type $xs                              the left operand
 		 * @param callable $predicate                               the predicate function to be used
-		 * @return ILinkedList\Type                                 the collection
+		 * @return ILinkedList\Type                                 the list
 		 */
 		public static function takeWhileEnd(ILinkedList\Type $xs, callable $predicate) : ILinkedList\Type {
 			return ILinkedList\Module::takeWhile($xs, function(Core\Type $x, IInt32\Type $i) use ($predicate) : IBool\Type {
@@ -1032,12 +1038,12 @@ namespace Saber\Data\ILinkedList {
 		}
 
 		/**
-		 * This method returns the collection as an array.
+		 * This method returns the list as an array.
 		 *
 		 * @access public
 		 * @static
 		 * @param ILinkedList\Type $xs                              the operand
-		 * @return IArrayList\Type                                  the collection as an array list
+		 * @return IArrayList\Type                                  the list as an array list
 		 */
 		public static function toArrayList(ILinkedList\Type $xs) : IArrayList\Type {
 			return ILinkedList\Module::foldLeft($xs, function(IArrayList\Type $c, Core\Type $x) {
@@ -1046,12 +1052,12 @@ namespace Saber\Data\ILinkedList {
 		}
 
 		/**
-		 * This method returns the collection as a linked list.
+		 * This method returns the list as a linked list.
 		 *
 		 * @access public
 		 * @static
 		 * @param ILinkedList\Type $xs                              the operand
-		 * @return ILinkedList\Type                                 the collection as a linked list
+		 * @return ILinkedList\Type                                 the list as a linked list
 		 */
 		public static function toLinkedList(ILinkedList\Type $xs) : ILinkedList\Type {
 			return $xs;
@@ -1265,7 +1271,7 @@ namespace Saber\Data\ILinkedList {
 		 * @static
 		 * @param ILinkedList\Type $xs                              the left operand
 		 * @return IBool\Type                                       whether all of the items of
-		 *                                                          the collection evaluate to true
+		 *                                                          the list evaluate to true
 		 */
 		public static function and_(ILinkedList\Type $xs) : IBool\Type {
 			return ILinkedList\Module::all($xs, function(IBool\Type $x, IInt32\Type $i) : IBool\Type {
@@ -1280,7 +1286,7 @@ namespace Saber\Data\ILinkedList {
 		 * @static
 		 * @param ILinkedList\Type $xs                              the left operand
 		 * @return IBool\Type                                       whether all of the items of
-		 *                                                          the collection evaluate to false
+		 *                                                          the list evaluate to false
 		 */
 		public static function or_(ILinkedList\Type $xs) : IBool\Type {
 			return ILinkedList\Module::any($xs, function(IBool\Type $x, IInt32\Type $i) : IBool\Type {

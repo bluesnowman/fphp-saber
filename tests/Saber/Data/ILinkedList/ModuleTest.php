@@ -133,6 +133,36 @@ namespace Saber\Data\ILinkedList {
 		}
 
 		/**
+		 * This method provides the data for testing the "appendAll" method.
+		 *
+		 * @return array
+		 */
+		public function data_appendAll() {
+			$data = array(
+				array(array(array(), array(9, 0)), array(array(9, 0))),
+				array(array(array(1), array(9, 0)), array(array(1, 9, 0))),
+				array(array(array(1, 2), array(9, 0)), array(array(1, 2, 9, 0))),
+			);
+			return $data;
+		}
+
+		/**
+		 * This method tests the "appendAll" method.
+		 *
+		 * @dataProvider data_appendAll
+		 */
+		public function test_appendAll(array $provided, array $expected) {
+			$p0 = ILinkedList\Type::make($provided[0], '\\Saber\\Data\\IInt32\\Type');
+			$p1 = ILinkedList\Type::make($provided[1], '\\Saber\\Data\\IInt32\\Type');
+
+			$r0 = ILinkedList\Module::appendAll($p0, $p1);
+			$e0 = $expected[0];
+
+			$this->assertInstanceOf('\\Saber\\Data\\ILinkedList\\Type', $r0);
+			$this->assertSame($e0, $r0->unbox(1));
+		}
+
+		/**
 		 * This method provides the data for testing the "break" method.
 		 *
 		 * @return array
@@ -177,36 +207,6 @@ namespace Saber\Data\ILinkedList {
 
 			$this->assertInstanceOf('\\Saber\\Data\\ILinkedList\\Type', $v1);
 			$this->assertSame($e1, $v1->unbox(1));
-		}
-
-		/**
-		 * This method provides the data for testing the "concat" method.
-		 *
-		 * @return array
-		 */
-		public function data_concat() {
-			$data = array(
-				array(array(array(), array(9, 0)), array(array(9, 0))),
-				array(array(array(1), array(9, 0)), array(array(1, 9, 0))),
-				array(array(array(1, 2), array(9, 0)), array(array(1, 2, 9, 0))),
-			);
-			return $data;
-		}
-
-		/**
-		 * This method tests the "concat" method.
-		 *
-		 * @dataProvider data_concat
-		 */
-		public function test_concat(array $provided, array $expected) {
-			$p0 = ILinkedList\Type::make($provided[0], '\\Saber\\Data\\IInt32\\Type');
-			$p1 = ILinkedList\Type::make($provided[1], '\\Saber\\Data\\IInt32\\Type');
-
-			$r0 = ILinkedList\Module::concat($p0, $p1);
-			$e0 = $expected[0];
-
-			$this->assertInstanceOf('\\Saber\\Data\\ILinkedList\\Type', $r0);
-			$this->assertSame($e0, $r0->unbox(1));
 		}
 
 		/**

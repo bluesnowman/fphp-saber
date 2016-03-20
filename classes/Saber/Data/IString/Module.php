@@ -35,10 +35,10 @@ namespace Saber\Data\IString {
 	use \Saber\Data\ITrit;
 	use \Saber\Data\ITuple;
 	use \Saber\Data\IUnit;
-	use \Saber\Data\ISequence;
+	use \Saber\Data\ISeq;
 	use \Saber\Throwable;
 
-	final class Module extends Data\Module implements ISequence\Module {
+	final class Module extends Data\Module implements ISeq\Module {
 
 		#region Methods -> Basic Operations
 
@@ -341,10 +341,10 @@ namespace Saber\Data\IString {
 		 * @access public
 		 * @static
 		 * @param IString\Type $xs                                  the string to be formatted
-		 * @param ISequence\Type $ys                                the objects to be incorporated
+		 * @param ISeq\Type $ys                                     the objects to be incorporated
 		 * @return IString\Type                                     the newly formatted string
 		 */
-		public static function format(IString\Type $xs, ISequence\Type $ys) : IString\Type {
+		public static function format(IString\Type $xs, ISeq\Type $ys) : IString\Type {
 			$buffer = $xs->unbox();
 			$length = $ys->length();
 

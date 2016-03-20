@@ -18,24 +18,24 @@
 
 declare(strict_types = 1);
 
-namespace Saber\Math\ISequence {
+namespace Saber\Math\ISeq {
 
 	use \Saber\Data;
 	use \Saber\Data\IDouble;
 	use \Saber\Data\INumber;
-	use \Saber\Data\ISequence;
+	use \Saber\Data\ISeq;
 
-	final class Module extends Data\Module implements ISequence\Module {
+	final class Module extends Data\Module implements ISeq\Module {
 
 		/**
 		 * This method returns the average of all items in the list.
 		 *
 		 * @access public
 		 * @static
-		 * @param ISequence\Type $xs                                the sequence to be processed
+		 * @param ISeq\Type $xs                                     the sequence to be processed
 		 * @return IDouble\Type                                     the result
 		 */
-		public static function average(ISequence\Type $xs) : IDouble\Type {
+		public static function average(ISeq\Type $xs) : IDouble\Type {
 			return ($xs->__isEmpty())
 				? IDouble\Type::zero()
 				: IDouble\Module::divide(static::sum($xs), $xs->length()->toDouble());
@@ -46,10 +46,10 @@ namespace Saber\Math\ISequence {
 		 *
 		 * @access public
 		 * @static
-		 * @param ISequence\Type $xs                                the sequence to be processed
+		 * @param ISeq\Type $xs                                     the sequence to be processed
 		 * @return IDouble\Type                                     the result
 		 */
-		public static function product(ISequence\Type $xs) : IDouble\Type {
+		public static function product(ISeq\Type $xs) : IDouble\Type {
 			return $xs->foldLeft(function(IDouble\Type $c, INumber\Type $x) {
 				return IDouble\Module::multiply($c, $x->toDouble());
 			}, IDouble\Type::one());
@@ -60,10 +60,10 @@ namespace Saber\Math\ISequence {
 		 *
 		 * @access public
 		 * @static
-		 * @param ISequence\Type $xs                                the sequence to be processed
+		 * @param ISeq\Type $xs                                     the sequence to be processed
 		 * @return IDouble\Type                                     the result
 		 */
-		public static function sum(ISequence\Type $xs) : IDouble\Type {
+		public static function sum(ISeq\Type $xs) : IDouble\Type {
 			return $xs->foldLeft(function(IDouble\Type $c, INumber\Type $x) {
 				return IDouble\Module::add($c, $x->toDouble());
 			}, IDouble\Type::zero());

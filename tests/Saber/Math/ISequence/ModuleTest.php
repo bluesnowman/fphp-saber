@@ -18,10 +18,10 @@
 
 declare(strict_types = 1);
 
-namespace Saber\Math\ISequence {
+namespace Saber\Math\ISeq {
 
 	use \Saber\Core;
-	use \Saber\Data\ISequence;
+	use \Saber\Data\ISeq;
 
 	/**
 	 * @group ModuleTest2

@@ -24,9 +24,9 @@ namespace Saber\Data\IArrayList {
 	use \Saber\Data\IArrayList;
 	use \Saber\Data\IBool;
 	use \Saber\Data\IInt32;
-	use \Saber\Data\ISequence;
+	use \Saber\Data\ISeq;
 
-	final class Iterator extends Data\Iterator implements ISequence\Iterator {
+	final class Iterator extends Data\Iterator implements ISeq\Iterator {
 
 		/**
 		 * This variable stores a reference to the collection being iterated.

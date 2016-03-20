@@ -39,7 +39,7 @@ namespace Saber\Data\IArrayList {
 			$p0 = new IArrayList\Type(array());
 
 			$this->assertInstanceOf('\\Saber\\Data\\IArrayList\\Type', $p0);
-			$this->assertInstanceOf('\\Saber\\Data\\ISequence\\Type', $p0);
+			$this->assertInstanceOf('\\Saber\\Data\\ISeq\\Type', $p0);
 			$this->assertInstanceOf('\\Saber\\Data\\ICollection\\Type', $p0);
 			$this->assertInstanceOf('\\Saber\\Data\\Type', $p0);
 			$this->assertInstanceOf('\\Saber\\Core\\Equality\\Type', $p0);
